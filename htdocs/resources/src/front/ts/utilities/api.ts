@@ -1,6 +1,6 @@
 import axios from "axios";
 import * as _ from "lodash";
-import { SubmissionError } from 'redux-form'
+import { SubmissionError } from 'redux-form';
 
 const get = async (url: string): Promise<any> =>
 {

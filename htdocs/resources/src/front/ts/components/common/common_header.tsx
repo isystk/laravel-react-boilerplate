@@ -4,14 +4,11 @@ import * as _ from "lodash";
 import { Link } from "react-router-dom";
 import { URL } from "../../common/constants/url";
 
-import { toggleMenu, closeMenu, authLogout } from "../../actions";
+import { authLogout } from "../../actions";
 
 interface IProps {
     auth;
-    toggleMenu;
-    closeMenu;
     authLogout;
-    parts;
 }
 
 interface IState {
@@ -36,17 +33,10 @@ class CommonHeader extends React.Component<IProps, IState> {
     if (auth.isLogin) {
       return (<a onClick={this.logoutClick}>ログアウト</a>);
     }
-    return (<Link to={URL.LOGIN} onClick={this.props.closeMenu}>ログイン</Link>);
+    return (<Link to={URL.LOGIN} >ログイン</Link>);
   }
 
   render(): JSX.Element {
-
-    const { parts } = this.props;
-
-    let isSideMenuOpen = parts.isSideMenuOpen;
-    let sideMenuClass = isSideMenuOpen ? "open" : "";
-    let menuBtnClass = isSideMenuOpen ? "menu-btn on" : "menu-btn";
-    let layerPanelClass = isSideMenuOpen ? "on" : "";
 
     return (
       <React.Fragment>
@@ -130,6 +120,6 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mapDispatchToProps = { toggleMenu, closeMenu, authLogout };
+const mapDispatchToProps = { authLogout };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommonHeader);

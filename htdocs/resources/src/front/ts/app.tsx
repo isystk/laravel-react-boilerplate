@@ -35,10 +35,10 @@ const Main = () => (
     <Switch>
       <Route exact path={URL.HOME} component={ShopIndex} />
 
-      { /* ★ログインユーザー専用ここから */ }
+      { /* ログインユーザー専用ここから */ }
       <AuthCheck>
       </AuthCheck>
-      { /* ★ログインユーザー専用ここまで */ }
+      { /* ログインユーザー専用ここまで */ }
 
       <Route component={NotFound} />
     </Switch>

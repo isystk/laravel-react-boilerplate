@@ -4,7 +4,7 @@ import * as _ from "lodash";
 import { Link } from "react-router-dom";
 import { URL } from "../../common/constants/url";
 
-import { readShops, showMv, hideMv } from "../../actions";
+import { readShops } from "../../actions";
 import { Stocks } from "../../store/StoreTypes";
 
 interface IProps {

@@ -67,7 +67,7 @@ export class AuthLogin extends React.Component<IProps, IState> {
       if (this.state.redirectUrl) {
         location.href = this.state.redirectUrl;
       } else {
-        this.props.history.push(URL.MEMBER);
+        this.props.history.push(URL.HOME);
       }
     }
   }
@@ -100,7 +100,7 @@ export class AuthLogin extends React.Component<IProps, IState> {
       if (this.state.redirectUrl) {
         location.href = this.state.redirectUrl;
       } else {
-        this.props.history.push(URL.MEMBER);
+        this.props.history.push(URL.HOME);
       }
     }
 
@@ -145,10 +145,6 @@ export class AuthLogin extends React.Component<IProps, IState> {
                 disabled={pristine || submitting || invalid}
               />
             </form>
-            <div style={{ margin: '10px 0' }}>
-              <p><Link to={URL.ENTRY_REGIST} >会員登録</Link></p>
-              <p><Link to={URL.ENTRY_REMIND} >パスワードを忘れた方はこちら</Link></p>
-            </div>
           </div>
         </section>
       </React.Fragment>
