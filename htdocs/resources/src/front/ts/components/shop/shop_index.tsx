@@ -4,12 +4,14 @@ import * as _ from "lodash";
 import { Link } from "react-router-dom";
 import { URL } from "../../common/constants/url";
 
-import { readShops } from "../../actions";
-import { Stocks } from "../../store/StoreTypes";
+import { readShops, readLikes } from "../../actions";
+import { Stocks, Likes } from "../../store/StoreTypes";
 
 interface IProps {
-stocks: Stocks;
-readShops;
+  stocks: Stocks;
+  likes: Likes;
+  readShops;
+  readLikes;
 }
 
 interface IState {
@@ -20,13 +22,16 @@ export class StocksIndex extends React.Component<IProps, IState> {
   componentDidMount(): void {
     // 商品データを取得する
     this.props.readShops();
+
+    // お気に入りデータを取得する
+    this.props.readLikes();
   }
 
   renderStocks(): JSX.Element {
     return _.map(this.props.stocks, (stock, index) => (
         <div className="block01_item" key={index}>
             <div className="text-right mb-2">
-                <a href="#" className="btn btn-secondary btn-sm js-like" data-id="{stock.id}">気になる</a>
+                <a href="#" className={`btn btn-sm ${stock.isLike ? 'btn-success' : 'btn-secondary'}`} data-id="{stock.id}">気になる</a>
             </div>
             <img src={`/uploads/stock/${stock.imgpath}`} alt="" className="block01_img"/>
             <p>{stock.name}</p>
@@ -85,18 +90,20 @@ export class StocksIndex extends React.Component<IProps, IState> {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    const {data, total, current_page} = state.stocks;
+  const {total, current_page, ...stocks} = state.stocks;
+  const likes = state.likes;
   return {
-    stocks: _.map(data, function (stock) {
+    stocks: _.map(stocks.data, function (stock) {
         // 表示用にデータを加工
       return {
           ...stock,
-          price: stock.price+'円'
+          price: stock.price+'円',
+          isLike: likes.data.contain(stock.id)
         };
     })
   };
 };
 
-const mapDispatchToProps = { readShops };
+const mapDispatchToProps = { readShops, readLikes };
 
 export default connect(mapStateToProps, mapDispatchToProps)(StocksIndex);

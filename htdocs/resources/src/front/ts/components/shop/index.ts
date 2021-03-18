@@ -1,3 +1,1 @@
-export * from './shop_index';
-
-
+export * from './shop_index'

@@ -1,2 +1,2 @@
-export * from './auth_check';
-export * from './auth_login';
+export * from './auth_check'
+export * from './auth_login'

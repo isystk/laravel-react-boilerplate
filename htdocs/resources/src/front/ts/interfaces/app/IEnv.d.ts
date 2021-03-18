@@ -3,9 +3,9 @@
  */
 export interface IEnv {
   /** 環境名 */
-  envName: string;
+  envName: string
   /** 内部向けエンドポイント URL */
-  internalEndpointUrl: string;
+  internalEndpointUrl: string
   /** 外部向けエンドポイント URL */
-  externalEndpointUrl: string;
+  externalEndpointUrl: string
 }

@@ -2,8 +2,6 @@ import * as React from "react";
 import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import { Link, withRouter } from "react-router-dom";
-import RaisedButton from "material-ui/RaisedButton";
-import TextField from "material-ui/TextField";
 import { URL } from "../../common/constants/url";
 
 import { Auth } from "../../store/StoreTypes";
@@ -72,25 +70,6 @@ export class AuthLogin extends React.Component<IProps, IState> {
     }
   }
 
-  renderField(field): JSX.Element {
-    const {
-      input,
-      label,
-      type,
-      meta: { touched, error },
-    } = field;
-    return (
-      <TextField
-        hintText={label}
-        floatingLabelText={label}
-        type={type}
-        errorText={touched && error}
-        {...input}
-        fullWidth={true}
-      />
-    );
-  }
-
   async onSubmit(values): Promise<void> {
     await this.props.authLogin(values);
 
@@ -115,38 +94,6 @@ export class AuthLogin extends React.Component<IProps, IState> {
     };
     return (
       <React.Fragment>
-        <section>
-          <div className="entry-header">
-            <h1 className="entry-title">ログイン</h1>
-          </div>
-          <div className="entry-content">
-            <form onSubmit={handleSubmit(this.onSubmit)}>
-              {error && <div className="error">{error}</div>}
-              <div>
-                <Field
-                  label="ログインID"
-                  name="loginId"
-                  type="text"
-                  component={this.renderField}
-                />
-              </div>
-              <div>
-                <Field
-                  label="パスワード"
-                  name="password"
-                  type="password"
-                  component={this.renderField}
-                />
-              </div>
-              <RaisedButton
-                label="ログイン"
-                type="submit"
-                style={style}
-                disabled={pristine || submitting || invalid}
-              />
-            </form>
-          </div>
-        </section>
       </React.Fragment>
     );
   }
