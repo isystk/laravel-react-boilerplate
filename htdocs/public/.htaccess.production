@@ -1,0 +1,18 @@
+DirectoryIndex public/index.php
+<IfModule mod_rewrite.c>
+
+    RewriteEngine On
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+    RewriteRule ^assets(/|$) /public%{REQUEST_URI} [L,NC,R=301,NE]
+    RewriteRule ^uploads(/|$) /public%{REQUEST_URI} [L,NC,R=301,NE]
+    RewriteRule ^fonts(/|$) /public%{REQUEST_URI} [L,NC,R=301,NE]
+
+    # Handle Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ public/index.php [L]
+</IfModule>

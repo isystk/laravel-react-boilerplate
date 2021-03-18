@@ -1,0 +1,8 @@
+{
+  "laravel_goto_view.folders": {
+    "default": "/htdocs/resources/views",
+    "js": "/htdocs/resources/js/Pages",
+    "vendor": "/htdocs/resources/views/vendor"
+  },
+  "git.ignoreLimitWarning": true,
+}

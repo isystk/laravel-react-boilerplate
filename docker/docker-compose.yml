@@ -1,0 +1,93 @@
+version: '3'
+
+services:
+
+  apache:
+    image: laraec/apache
+    container_name: laraec-apache
+    build:
+      context: "./apache"
+      dockerfile: "Dockerfile"
+    ports:
+     - "80:80"
+     - "443:443"
+    restart: always
+    volumes:
+     - ./apache/conf.d:/etc/apache2/conf.d
+     - ./apache/ssl:/etc/apache2/ssl
+     - ./apache/logs:/var/log/apache2
+     - ../htdocs:/var/www/html
+
+  php:
+    image: laraec/php
+    container_name: laraec-php
+    build:
+      context: "./php"
+      dockerfile: "Dockerfile"
+    restart: always
+    volumes:
+     - ./php/logs:/var/log/php
+     - ../htdocs:/var/www/html
+
+  # node:
+  #   image: laraec/node
+  #   container_name: laraec-node
+  #   build:
+  #     context: "./node"
+  #     dockerfile: "Dockerfile"
+  #   volumes:
+  #    - ../frontend:/usr/src/app
+  #   ports:
+  #    - "3000:3000"
+  #   command: sh -c "yarn run dev"
+
+  mysql:
+    image: laraec/mysql
+    container_name: laraec-mysql
+    build:
+      context: "./mysql"
+      dockerfile: "Dockerfile"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+     - "3306:3306"
+    restart: always
+    volumes:
+     - ./mysql/conf.d:/etc/mysql/conf.d
+     - ./mysql/data:/var/lib/mysql
+     - ./mysql/logs:/var/log/mysql
+
+  phpmyadmin:
+    image: laraec/phpmyadmin
+    container_name: laraec-phpmyadmin
+    build:
+      context: "./phpmyadmin"
+      dockerfile: "Dockerfile"
+    ports:
+      - 8888:80
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - PMA_USER=root
+      - PMA_PASSWORD=password
+    volumes:
+      - "./phpmyadmin/sessions:/sessions"
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: laraec-mailhog
+    ports:
+      - 8025:8025
+      - 25:1025
+
+  s3:
+    image: minio/minio:latest
+    container_name: laraec-s3
+    environment:
+      MINIO_ACCESS_KEY: "access_key"
+      MINIO_SECRET_KEY: "secret_key"
+    ports:
+      - 9090:9000 # VSCodeと競合するので9090番ポートを指定
+    command: ["--compat", "server", "/data"]
+    volumes:
+      - ./s3/data:/data

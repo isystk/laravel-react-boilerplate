@@ -1,0 +1,11 @@
+/* ===========================================================================
+  headerNav
+============================================================================= */
+.headerNav {
+	width: $width_base-l;
+	max-width: $width_max-l;
+	margin: 0 auto;
+	padding: 0!important;
+	display: flex;
+	justify-content: space-between;
+}

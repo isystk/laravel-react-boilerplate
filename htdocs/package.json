@@ -1,0 +1,51 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch": "npm run development -- --watch",
+        "watch-poll": "npm run watch -- --watch-poll",
+        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --disable-host-check --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "prod": "npm run production",
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --config=node_modules/laravel-mix/setup/webpack.config.js"
+    },
+    "devDependencies": {
+        "@babel/preset-react": "^7.12.13",
+        "@fortawesome/fontawesome-svg-core": "^1.2.35",
+        "@fortawesome/free-brands-svg-icons": "^5.15.3",
+        "@fortawesome/free-regular-svg-icons": "^5.15.3",
+        "@fortawesome/free-solid-svg-icons": "^5.15.3",
+        "@fortawesome/react-fontawesome": "^0.1.14",
+        "@types/node": "^14.14.35",
+        "@types/react": "^17.0.3",
+        "@types/react-dom": "^17.0.2",
+        "axios": "^0.21",
+        "bootstrap": "^4.0.0",
+        "cross-env": "^7.0",
+        "jquery": "^3.2",
+        "laravel-mix": "^5.0.1",
+        "lodash": "^4.17.19",
+        "material-ui": "^0.20.2",
+        "popper.js": "^1.12",
+        "react": "^16.2.0",
+        "react-dom": "^16.2.0",
+        "react-redux": "^7.2.2",
+        "react-router-dom": "^5.2.0",
+        "react-slick": "^0.28.1",
+        "redux": "^4.0.5",
+        "redux-devtools-extension": "^2.13.9",
+        "redux-form": "^8.3.7",
+        "redux-thunk": "^2.3.0",
+        "resolve-url-loader": "^3.1.0",
+        "sass": "^1.15.2",
+        "sass-loader": "^8.0.0",
+        "slick-carousel": "^1.8.1",
+        "ts-loader": "^8.0.18",
+        "typescript": "^4.2.3",
+        "vue-template-compiler": "^2.6.12"
+    },
+    "dependencies": {
+        "admin-lte": "^3.1.0-rc",
+        "heic2any": "^0.0.3"
+    }
+}
