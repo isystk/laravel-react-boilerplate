@@ -1,15 +1,15 @@
-import * as React from "react";
-import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
-import { Field, reduxForm } from "redux-form";
-import { Auth } from "../../store/StoreTypes";
-import { Link, withRouter } from "react-router-dom";
+import * as React from 'react'
+import { connect, MapStateToProps, MapDispatchToProps } from 'react-redux'
+import { Field, reduxForm } from 'redux-form'
+import { Auth } from '../../store/StoreTypes'
+import { Link, withRouter } from 'react-router-dom'
 
-import { authCheck } from "../../actions";
+import { authCheck } from '../../actions'
 
 interface IProps {
-  auth: Auth;
-  authCheck;
-  history;
+  auth: Auth
+  authCheck
+  history
 }
 
 interface IState {
@@ -18,48 +18,42 @@ interface IState {
 
 export class AuthCheck extends React.Component<IProps, IState> {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      loaded: false
+      loaded: false,
     }
   }
 
-  componentWillMount() {
-    this.checkAuth();
+  UNSAFE_componentWillMount() {
+    this.checkAuth()
   }
 
   async checkAuth() {
-    await this.props.authCheck();
+    await this.props.authCheck()
 
-    this.setState({ loaded: true });
+    this.setState({ loaded: true })
 
     // ログインしてなければログイン画面へとばす
     if (!this.props.auth.isLogin) {
-      this.props.history.push("/login?redirectUrl="+ window.location);
+      this.props.history.push('/login?redirectUrl=' + window.location)
     }
   }
 
   render() {
-
     if (!this.state.loaded) {
-      return (<React.Fragment>Loading...</React.Fragment>)
+      return <React.Fragment>Loading...</React.Fragment>
     } else {
-      return (
-        <React.Fragment>{this.props.children}</React.Fragment>
-      );
+      return <React.Fragment>{this.props.children}</React.Fragment>
     }
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    auth: state.auth
-  };
-};
+    auth: state.auth,
+  }
+}
 
-const mapDispatchToProps = { authCheck };
+const mapDispatchToProps = { authCheck }
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AuthCheck));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AuthCheck))

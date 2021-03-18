@@ -23,6 +23,8 @@ Options:
   php cache                Laravelのキャッシュをクリアします。
   php migrate              Laravelのマイグレードを実行します。
   php seed                 Laravelのテストデータを登録します。
+  build                    フロントエンドをビルドします。
+  build prod               本番用にフロントエンドをビルドします。
   --version, -v     バージョンを表示します。
   --help, -h        ヘルプを表示します。
 EOF
@@ -72,7 +74,7 @@ case ${1} in
               mysql -u root -ppassword -h 127.0.0.1 laraec
           ;;
           export)
-              mysqldump -u root -h 127.0.0.1 -A > ${3}
+              mysqldump --skip-column-statistics -u root -h 127.0.0.1 -A > ${3}
           ;;
           import)
               mysql -u root -h 127.0.0.1 --default-character-set=utf8mb4 < ${3}
@@ -110,6 +112,21 @@ case ${1} in
           ;;
           *)
               usage
+          ;;
+      esac
+    ;;
+    
+    build)
+      case ${2} in
+          prod)
+              pushd htdocs
+              yarn run prod
+              popd
+          ;;
+          *)
+              pushd htdocs
+              yarn run dev
+              popd
           ;;
       esac
     ;;

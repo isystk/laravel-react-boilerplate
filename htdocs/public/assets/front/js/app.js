@@ -312,6 +312,38 @@ module.exports["default"] = module.exports, module.exports.__esModule = true;
 
 /***/ }),
 
+/***/ "./node_modules/@emotion/core/dist/emotion-core.cjs.dev.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/@emotion/core/dist/emotion-core.cjs.dev.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+throw new Error("The `@emotion/core` package has been renamed to `@emotion/react`. Please import it like this `import { jsx } from '@emotion/react'`.");
+
+
+/***/ }),
+
+/***/ "./node_modules/@emotion/core/dist/emotion-core.cjs.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/@emotion/core/dist/emotion-core.cjs.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+if (false) {} else {
+  module.exports = __webpack_require__(/*! ./emotion-core.cjs.dev.js */ "./node_modules/@emotion/core/dist/emotion-core.cjs.dev.js");
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
@@ -86914,9 +86946,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.authLogout = exports.authLogin = exports.authCheck = exports.AUTH_LOGOUT = exports.AUTH_LOGIN = exports.AUTH_CHECK = void 0;
 var api_1 = __webpack_require__(/*! ../common/constants/api */ "./resources/src/front/ts/common/constants/api.ts");
 var utilities_1 = __webpack_require__(/*! ../utilities */ "./resources/src/front/ts/utilities/index.ts");
-exports.AUTH_CHECK = "AUTH_CHECK";
-exports.AUTH_LOGIN = "AUTH_LOGIN";
-exports.AUTH_LOGOUT = "AUTH_LOGOUT";
+exports.AUTH_CHECK = 'AUTH_CHECK';
+exports.AUTH_LOGIN = 'AUTH_LOGIN';
+exports.AUTH_LOGOUT = 'AUTH_LOGOUT';
 var authCheck = function () { return function (dispatch) { return __awaiter(void 0, void 0, void 0, function () {
     var response;
     return __generator(this, function (_a) {
@@ -87009,7 +87041,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.readConst = exports.READ_CONSTS = void 0;
 var api_1 = __webpack_require__(/*! ../common/constants/api */ "./resources/src/front/ts/common/constants/api.ts");
 var utilities_1 = __webpack_require__(/*! ../utilities */ "./resources/src/front/ts/utilities/index.ts");
-exports.READ_CONSTS = "READ_CONSTS";
+exports.READ_CONSTS = 'READ_CONSTS';
 var readConst = function () { return function (dispatch) { return __awaiter(void 0, void 0, void 0, function () {
     var response;
     return __generator(this, function (_a) {
@@ -87104,7 +87136,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.readLikes = exports.READ_LIKES = void 0;
 var api_1 = __webpack_require__(/*! ../common/constants/api */ "./resources/src/front/ts/common/constants/api.ts");
 var utilities_1 = __webpack_require__(/*! ../utilities */ "./resources/src/front/ts/utilities/index.ts");
-exports.READ_LIKES = "READ_LIKES";
+exports.READ_LIKES = 'READ_LIKES';
 var readLikes = function () { return function (dispatch) { return __awaiter(void 0, void 0, void 0, function () {
     var response;
     return __generator(this, function (_a) {
@@ -87171,7 +87203,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.readShops = exports.READ_STOCKS = void 0;
 var api_1 = __webpack_require__(/*! ../common/constants/api */ "./resources/src/front/ts/common/constants/api.ts");
 var utilities_1 = __webpack_require__(/*! ../utilities */ "./resources/src/front/ts/utilities/index.ts");
-exports.READ_STOCKS = "READ_STOCKS";
+exports.READ_STOCKS = 'READ_STOCKS';
 var readShops = function () { return function (dispatch) { return __awaiter(void 0, void 0, void 0, function () {
     var response;
     return __generator(this, function (_a) {
@@ -87248,14 +87280,12 @@ var NotFound_1 = __webpack_require__(/*! ./components/NotFound */ "./resources/s
 __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
 __webpack_require__(/*! heic2any */ "./node_modules/heic2any/dist/heic2any.js");
 // 開発環境の場合は、redux-devtools-extension を利用できるようにする
-var enhancer =  true
-    ? redux_devtools_extension_1.composeWithDevTools(redux_1.applyMiddleware(redux_thunk_1.default))
-    : undefined;
+var enhancer =  true ? redux_devtools_extension_1.composeWithDevTools(redux_1.applyMiddleware(redux_thunk_1.default)) : undefined;
 var store = redux_1.createStore(reducers_1.default, enhancer);
 var Main = function () { return (jsx_runtime_1.jsx("main", __assign({ className: "main" }, { children: jsx_runtime_1.jsxs(react_router_dom_1.Switch, { children: [jsx_runtime_1.jsx(react_router_dom_1.Route, { exact: true, path: url_1.URL.HOME, component: shop_index_1.default }, void 0),
             jsx_runtime_1.jsx(auth_check_1.default, {}, void 0),
             jsx_runtime_1.jsx(react_router_dom_1.Route, { component: NotFound_1.NotFound }, void 0)] }, void 0) }), void 0)); };
-ReactDom.render(jsx_runtime_1.jsx(react_redux_1.Provider, __assign({ store: store }, { children: jsx_runtime_1.jsx(react_router_dom_1.BrowserRouter, { children: jsx_runtime_1.jsx(layout_1.default, { children: jsx_runtime_1.jsx(Main, {}, void 0) }, void 0) }, void 0) }), void 0), document.getElementById("app"));
+ReactDom.render(jsx_runtime_1.jsx(react_redux_1.Provider, __assign({ store: store }, { children: jsx_runtime_1.jsx(react_router_dom_1.BrowserRouter, { children: jsx_runtime_1.jsx(layout_1.default, { children: jsx_runtime_1.jsx(Main, {}, void 0) }, void 0) }, void 0) }), void 0), document.getElementById('app'));
 
 
 /***/ }),
@@ -87280,22 +87310,21 @@ var env_1 = __importDefault(__webpack_require__(/*! ../env/ */ "./resources/src/
  * @param path
  */
 var getBffUrl = function (path) {
-    var url;
-    url = [env_1.default.externalEndpointUrl, path].join("");
+    var url = [env_1.default.externalEndpointUrl, path].join('');
     return url;
 };
 /** API のエンドポイント */
 exports.API_ENDPOINT = {
     /** ログイン状態チェック */
-    LOGIN_CHECK: getBffUrl("/loginCheck"),
+    LOGIN_CHECK: getBffUrl('/loginCheck'),
     /** ログイン */
-    LOGIN: getBffUrl("/authenticate"),
+    LOGIN: getBffUrl('/authenticate'),
     /** ログアウト */
-    LOGOUT: getBffUrl("/logout"),
+    LOGOUT: getBffUrl('/logout'),
     /** 共通定数 */
-    COMMON_CONST: getBffUrl("/common/const"),
+    COMMON_CONST: getBffUrl('/common/const'),
     /** 商品一覧 */
-    SHOPS: getBffUrl("/shops"),
+    SHOPS: getBffUrl('/shops'),
 };
 
 
@@ -87315,9 +87344,9 @@ exports.URL = void 0;
 /** API のエンドポイント */
 exports.URL = {
     /** TOP */
-    HOME: "/",
+    HOME: '/',
     /** ログイン */
-    LOGIN: "/login",
+    LOGIN: '/login',
 };
 
 
@@ -87334,9 +87363,9 @@ exports.URL = {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var Env = {
-    envName: "local",
-    internalEndpointUrl: "https://localhost/api",
-    externalEndpointUrl: "https://localhost/api"
+    envName: 'local',
+    internalEndpointUrl: 'https://localhost/api',
+    externalEndpointUrl: 'https://localhost/api',
 };
 exports.default = Env;
 
@@ -87396,29 +87425,15 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NotFound = void 0;
 var jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-var React = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var core_1 = __webpack_require__(/*! @emotion/core */ "./node_modules/@emotion/core/dist/emotion-core.cjs.js");
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+core_1.jsx;
 var NotFound = /** @class */ (function (_super) {
     __extends(NotFound, _super);
     function NotFound() {
@@ -87428,7 +87443,7 @@ var NotFound = /** @class */ (function (_super) {
         return jsx_runtime_1.jsx("h1", { children: "Not Found" }, void 0);
     };
     return NotFound;
-}(React.Component));
+}(react_1.default.Component));
 exports.NotFound = NotFound;
 
 
@@ -87525,11 +87540,11 @@ var AuthCheck = /** @class */ (function (_super) {
     function AuthCheck(props) {
         var _this = _super.call(this, props) || this;
         _this.state = {
-            loaded: false
+            loaded: false,
         };
         return _this;
     }
-    AuthCheck.prototype.componentWillMount = function () {
+    AuthCheck.prototype.UNSAFE_componentWillMount = function () {
         this.checkAuth();
     };
     AuthCheck.prototype.checkAuth = function () {
@@ -87542,7 +87557,7 @@ var AuthCheck = /** @class */ (function (_super) {
                         this.setState({ loaded: true });
                         // ログインしてなければログイン画面へとばす
                         if (!this.props.auth.isLogin) {
-                            this.props.history.push("/login?redirectUrl=" + window.location);
+                            this.props.history.push('/login?redirectUrl=' + window.location);
                         }
                         return [2 /*return*/];
                 }
@@ -87551,10 +87566,10 @@ var AuthCheck = /** @class */ (function (_super) {
     };
     AuthCheck.prototype.render = function () {
         if (!this.state.loaded) {
-            return (jsx_runtime_1.jsx(React.Fragment, { children: "Loading..." }, void 0));
+            return jsx_runtime_1.jsx(React.Fragment, { children: "Loading..." }, void 0);
         }
         else {
-            return (jsx_runtime_1.jsx(React.Fragment, { children: this.props.children }, void 0));
+            return jsx_runtime_1.jsx(React.Fragment, { children: this.props.children }, void 0);
         }
     };
     return AuthCheck;
@@ -87562,7 +87577,7 @@ var AuthCheck = /** @class */ (function (_super) {
 exports.AuthCheck = AuthCheck;
 var mapStateToProps = function (state, ownProps) {
     return {
-        auth: state.auth
+        auth: state.auth,
     };
 };
 var mapDispatchToProps = { authCheck: actions_1.authCheck };
@@ -87919,9 +87934,9 @@ var Layout = /** @class */ (function (_super) {
     Layout.prototype.logoutLink = function () {
         var auth = this.props.auth;
         if (auth.isLogin) {
-            return (jsx_runtime_1.jsx("a", __assign({ onClick: this.logoutClick }, { children: "\u30ED\u30B0\u30A2\u30A6\u30C8" }), void 0));
+            return jsx_runtime_1.jsx("a", __assign({ onClick: this.logoutClick }, { children: "\u30ED\u30B0\u30A2\u30A6\u30C8" }), void 0);
         }
-        return (jsx_runtime_1.jsx(react_router_dom_1.Link, __assign({ to: url_1.URL.LOGIN }, { children: "\u30ED\u30B0\u30A4\u30F3" }), void 0));
+        return jsx_runtime_1.jsx(react_router_dom_1.Link, __assign({ to: url_1.URL.LOGIN }, { children: "\u30ED\u30B0\u30A4\u30F3" }), void 0);
     };
     Layout.prototype.render = function () {
         return (jsx_runtime_1.jsxs(React.Fragment, { children: [jsx_runtime_1.jsx(common_header_1.default, {}, void 0), this.props.children, jsx_runtime_1.jsx(common_footer_1.default, {}, void 0)] }, void 0));
@@ -87931,7 +87946,7 @@ var Layout = /** @class */ (function (_super) {
 var mapStateToProps = function (state, ownProps) {
     return {
         parts: state.parts,
-        auth: state.auth
+        auth: state.auth,
     };
 };
 var mapDispatchToProps = { authCheck: actions_1.authCheck, authLogout: actions_1.authLogout };
@@ -88030,9 +88045,7 @@ var StocksIndex = /** @class */ (function (_super) {
                 jsx_runtime_1.jsx("p", __assign({ className: "c-red" }, { children: stock.price }), void 0),
                 jsx_runtime_1.jsxs("p", __assign({ className: "mb20" }, { children: [stock.detail, " "] }), void 0),
                 jsx_runtime_1.jsxs("form", __assign({ action: "/shop/addcart", method: "post" }, { children: [jsx_runtime_1.jsx("input", { type: "hidden", name: "stock_id", value: stock.id }, void 0),
-                        (stock.quantity === 0)
-                            ? jsx_runtime_1.jsx("input", { type: "button", value: "\u30AB\u30FC\u30C8\u306B\u5165\u308C\u308B\uFF08\u6B8B\u308A0\u500B\uFF09", className: "btn-gray" }, void 0)
-                            : jsx_runtime_1.jsx("input", { type: "submit", value: "\u30AB\u30FC\u30C8\u306B\u5165\u308C\u308B\uFF08\u6B8B\u308A" + stock.quantity + "\u500B\uFF09", className: "btn-01" }, void 0)] }), void 0)] }), index)); });
+                        stock.quantity === 0 ? (jsx_runtime_1.jsx("input", { type: "button", value: "\u30AB\u30FC\u30C8\u306B\u5165\u308C\u308B\uFF08\u6B8B\u308A0\u500B\uFF09", className: "btn-gray" }, void 0)) : (jsx_runtime_1.jsx("input", { type: "submit", value: "\u30AB\u30FC\u30C8\u306B\u5165\u308C\u308B\uFF08\u6B8B\u308A" + stock.quantity + "\u500B\uFF09", className: "btn-01" }, void 0))] }), void 0)] }), index)); });
     };
     StocksIndex.prototype.render = function () {
         return (jsx_runtime_1.jsx(React.Fragment, { children: jsx_runtime_1.jsxs("div", __assign({ className: "contentsArea" }, { children: [jsx_runtime_1.jsx("div", __assign({ id: "link01", className: "carousel slide mainBunner", "data-ride": "carousel" }, { children: jsx_runtime_1.jsxs("div", __assign({ className: "carousel-inner" }, { children: [jsx_runtime_1.jsx("div", __assign({ className: "carousel-item active" }, { children: jsx_runtime_1.jsx("img", { src: "/assets/front/image/bunner_01.jpg", alt: "" }, void 0) }), void 0),
@@ -88054,7 +88067,7 @@ var mapStateToProps = function (state, ownProps) {
         stocks: _.map(stocks.data, function (stock) {
             // 表示用にデータを加工
             return __assign(__assign({}, stock), { price: stock.price + '円', isLike: likes.data.contain(stock.id) });
-        })
+        }),
     };
 };
 var mapDispatchToProps = { readShops: actions_1.readShops, readLikes: actions_1.readLikes };
@@ -88078,13 +88091,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthReducer = void 0;
 var index_1 = __webpack_require__(/*! ../actions/index */ "./resources/src/front/ts/actions/index.ts");
 var initialState = {
-    isLogin: false
+    isLogin: false,
 };
 function AuthReducer(state, action) {
     if (state === void 0) { state = initialState; }
     switch (action.type) {
         case index_1.AUTH_CHECK:
-        case index_1.AUTH_LOGIN:
+        case index_1.AUTH_LOGIN: {
             var response = action.response;
             if (!response) {
                 return {
@@ -88095,6 +88108,7 @@ function AuthReducer(state, action) {
                 isLogin: true,
                 familyName: response[0].familyName,
             };
+        }
         case index_1.AUTH_LOGOUT:
             return { isLogin: false };
         default:
@@ -88147,7 +88161,7 @@ function ConstsReducer(state, action) {
     if (state === void 0) { state = initialState; }
     switch (action.type) {
         case index_1.READ_CONSTS:
-            return _.mapKeys(action.response, "name");
+            return _.mapKeys(action.response, 'name');
         default:
             return state;
     }
@@ -88198,7 +88212,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LikesReducer = void 0;
 var index_1 = __webpack_require__(/*! ../actions/index */ "./resources/src/front/ts/actions/index.ts");
 var initialState = {
-    data: []
+    data: [],
 };
 function LikesReducer(state, action) {
     if (state === void 0) { state = initialState; }
@@ -88232,7 +88246,7 @@ exports.StocksReducer = void 0;
 var index_1 = __webpack_require__(/*! ../actions/index */ "./resources/src/front/ts/actions/index.ts");
 var initialState = {
     data: [],
-    page: {}
+    page: {},
 };
 function StocksReducer(state, action) {
     if (state === void 0) { state = initialState; }
@@ -88358,12 +88372,13 @@ var request = function (method, url, values, config) { return __awaiter(void 0, 
     var response;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, axios_1.default[method](url, jsonToForm(values, new FormData()), config)
-                    .catch(function (error) {
+            case 0: return [4 /*yield*/, axios_1.default[method](url, jsonToForm(values, new FormData()), config).catch(function (error) {
                     if (error.response) {
                         throw new redux_form_1.SubmissionError({ _error: error.response.data.message });
                     }
-                })];
+                })
+                // console.log('Response:%s', JSON.stringify(response));
+            ];
             case 1:
                 response = _a.sent();
                 // console.log('Response:%s', JSON.stringify(response));
@@ -88402,7 +88417,7 @@ exports.API = {
     get: get,
     post: post,
     put: put,
-    del: del
+    del: del,
 };
 
 
@@ -88443,7 +88458,7 @@ __exportStar(__webpack_require__(/*! ./api */ "./resources/src/front/ts/utilitie
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /c/Users/USER/github/isystk/laravel-react-boilerplate/htdocs/resources/src/front/ts/app.tsx */"./resources/src/front/ts/app.tsx");
+module.exports = __webpack_require__(/*! /Users/iseyoshitaka/github/laravel-react-boilerplate/htdocs/resources/src/front/ts/app.tsx */"./resources/src/front/ts/app.tsx");
 
 
 /***/ })

@@ -1,70 +1,64 @@
-import * as React from "react";
-import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
-import * as _ from "lodash";
-import { Link } from "react-router-dom";
-import { URL } from "../common/constants/url";
-import CommonHeader from "./common/common_header";
-import CommonFooter from "./common/common_footer";
-import { Auth } from "../store/StoreTypes";
+import * as React from 'react'
+import { connect, MapStateToProps, MapDispatchToProps } from 'react-redux'
+import * as _ from 'lodash'
+import { Link } from 'react-router-dom'
+import { URL } from '../common/constants/url'
+import CommonHeader from './common/common_header'
+import CommonFooter from './common/common_footer'
+import { Auth } from '../store/StoreTypes'
 
-import { authCheck, authLogout } from "../actions";
+import { authCheck, authLogout } from '../actions'
 
 interface IProps {
-  auth: Auth;
-  authCheck;
-  authLogout;
+  auth: Auth
+  authCheck
+  authLogout
 }
 
-interface IState {
-}
-
-class Layout extends React.Component<IProps, IState> {
-
+class Layout extends React.Component<IProps> {
   constructor(props) {
-    super(props);
-    this.logoutClick = this.logoutClick.bind(this);
+    super(props)
+    this.logoutClick = this.logoutClick.bind(this)
   }
 
   componentDidMount(): void {
-    this.props.authCheck();
+    this.props.authCheck()
   }
 
   async logoutClick() {
-    await this.props.authLogout();
-    location.reload();
+    await this.props.authLogout()
+    location.reload()
   }
 
   logoutLink(): JSX.Element {
-
-    const {auth} = this.props;
+    const { auth } = this.props
 
     if (auth.isLogin) {
-      return (<a onClick={this.logoutClick}>ログアウト</a>);
+      return <a onClick={this.logoutClick}>ログアウト</a>
     }
-    return (<Link to={URL.LOGIN}>ログイン</Link>);
+    return <Link to={URL.LOGIN}>ログイン</Link>
   }
 
   render(): JSX.Element {
-
     return (
       <React.Fragment>
         <CommonHeader />
 
-        { this.props.children }
+        {this.props.children}
 
         <CommonFooter />
       </React.Fragment>
-    );
+    )
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
     parts: state.parts,
-    auth: state.auth
-  };
-};
+    auth: state.auth,
+  }
+}
 
-const mapDispatchToProps = { authCheck, authLogout };
+const mapDispatchToProps = { authCheck, authLogout }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Layout);
+export default connect(mapStateToProps, mapDispatchToProps)(Layout)

@@ -4,9 +4,9 @@ import Env from '../env/'
  * BFF（バックエンドフォーフロントエンド）用の URL を作成する
  * @param path
  */
-const getBffUrl = (path: string): string => {
-  let url: string
-  url = [Env.externalEndpointUrl, path].join('')
+const getBffUrl = (path: string): string =>
+{
+  const url = [Env.externalEndpointUrl, path].join('')
   return url
 }
 

@@ -11,10 +11,7 @@ interface IProps {
     authLogout;
 }
 
-interface IState {
-}
-
-class CommonHeader extends React.Component<IProps, IState> {
+class CommonHeader extends React.Component<IProps> {
 
   constructor(props) {
     super(props);

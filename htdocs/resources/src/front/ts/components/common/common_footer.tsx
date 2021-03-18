@@ -1,10 +1,7 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 
-interface IProps {}
-interface IState {}
-
-class CommonFooter extends React.Component<IProps, IState> {
+class CommonFooter extends React.Component {
   constructor(props) {
     super(props)
   }

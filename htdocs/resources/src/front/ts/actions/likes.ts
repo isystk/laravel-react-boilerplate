@@ -8,8 +8,7 @@ import { Likes } from '../store/StoreTypes'
 //  ActionCreatorであるstore.dispatch()を使ってStoreに送信しますが、storeについてはこの記事の最後にまとめています。(※ こちら)
 //  ただし、アプリケーションの状態がどのように変化するかはここでは指定しません。(→Reducerがやること)
 //  あくまでどんな挙動があるかだけを定義します。
-export interface LikesAppAction extends Action
-{
+export interface LikesAppAction extends Action {
   response: {
     result: boolean
     likes: Likes
@@ -18,8 +17,7 @@ export interface LikesAppAction extends Action
 
 export const READ_LIKES = 'READ_LIKES'
 
-export const readLikes = () => async (dispatch: Dispatch): Promise<void> =>
-{
+export const readLikes = () => async (dispatch: Dispatch): Promise<void> => {
   const response = await API.get(API_ENDPOINT.SHOPS)
   dispatch({ type: READ_LIKES, response })
 }

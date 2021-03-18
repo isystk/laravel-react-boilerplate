@@ -8,10 +8,12 @@ const initialState: Auth = {
   isLogin: false,
 }
 
-export function AuthReducer(state = initialState, action: AuthAppAction): Auth {
+export function AuthReducer(state = initialState, action: AuthAppAction): Auth
+{
   switch (action.type) {
     case AUTH_CHECK:
-    case AUTH_LOGIN:
+    case AUTH_LOGIN: {
+
       const { response } = action
       if (!response) {
         return {
@@ -22,6 +24,7 @@ export function AuthReducer(state = initialState, action: AuthAppAction): Auth {
         isLogin: true,
         familyName: response[0].familyName,
       }
+    }
     case AUTH_LOGOUT:
       return { isLogin: false }
     default:

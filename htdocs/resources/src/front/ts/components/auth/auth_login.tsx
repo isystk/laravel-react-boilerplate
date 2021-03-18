@@ -32,7 +32,7 @@ export class AuthLogin extends React.Component<IProps, IState> {
     }
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.checkAuth();
     const params = this.getParams();
     this.setState({
