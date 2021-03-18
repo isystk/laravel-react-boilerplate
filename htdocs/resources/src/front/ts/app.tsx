@@ -15,9 +15,13 @@ import { URL } from "./common/constants/url";
 
 import reducers from "./reducers";
 import Layout from "./components/layout";
-import PostsIndex from "./components/posts/posts_index";
+import ShopIndex from "./components/shop/shop_index";
 import AuthCheck from "./components/auth/auth_check";
 import { NotFound } from "./components/NotFound";
+
+import 'bootstrap';
+import 'heic2any';
+
 
 // 開発環境の場合は、redux-devtools-extension を利用できるようにする
 const enhancer =
@@ -27,9 +31,9 @@ const enhancer =
 const store = createStore(reducers, enhancer);
 
 const Main = () => (
-  <main>
+  <main className="main">
     <Switch>
-      <Route exact path={URL.HOME} component={PostsIndex} />
+      <Route exact path={URL.HOME} component={ShopIndex} />
 
       { /* ★ログインユーザー専用ここから */ }
       <AuthCheck>

@@ -60,40 +60,9 @@ class Layout extends React.Component<IProps, IState> {
       <React.Fragment>
         <CommonHeader />
 
-        {
-          (this.props.parts.isShowMv) &&
-          <div className="mv">
-            <img alt="main-visual" src="/assets/img/main-visual.jpg" width="100%"/>
-            <div className="intro">
-              <div className="box"><p className="title">フロントエンド サンプルアプリケーション</p></div>
-            </div>
-          </div>
-        }
-
-        {// ナビゲーション（PC用）
-        }
-        <div id="pc-menu">
-          <div className="wrapper">
-            <nav>
-              <ul>
-                <li><Link to={URL.HOME}>HOME</Link></li>
-                <li><Link to={URL.MEMBER}>マイページ</Link></li>
-                <li>{this.logoutLink()}</li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-
-        <div className="contents">
-          <div className="wrapper">
-            { this.props.children }
-          </div>
-        </div>
+        { this.props.children }
 
         <CommonFooter />
-        {(this.props.parts.isShowLoading) &&
-          <div id="site_loader_overlay"><div className="site_loader_spinner" ></div></div>
-        }
       </React.Fragment>
     );
   }

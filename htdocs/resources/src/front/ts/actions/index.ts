@@ -1,4 +1,5 @@
 export * from './consts';
+export * from './shops';
 export * from './posts';
 export * from './entry';
 export * from './remind';

@@ -22,4 +22,6 @@ Route::group(['middleware' => ['api']], function () {
     Route::resource('likes', 'Api\LikeController');
     Route::post('/likes/store', 'Api\LikeController@store');
     Route::post('/likes/destroy/{id}', 'Api\LikeController@destroy');
+
+    Route::resource('shops', 'Api\ShopController');
 });

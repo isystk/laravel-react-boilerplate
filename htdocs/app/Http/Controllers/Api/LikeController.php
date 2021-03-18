@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use App\Services\CookieUtil;
 
-class LikeController extends Controller
+class LikeController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -82,13 +82,5 @@ class LikeController extends Controller
             return $this->resConversionJson($result, $e->getCode());
         }
         return $this->resConversionJson($result);
-    }
-
-    private function resConversionJson($result, $statusCode = 200)
-    {
-        if (empty($statusCode) || $statusCode < 100 || $statusCode >= 600) {
-            $statusCode = 500;
-        }
-        return response()->json($result, $statusCode, ['Content-Type' => 'application/json'], JSON_UNESCAPED_UNICODE);
     }
 }

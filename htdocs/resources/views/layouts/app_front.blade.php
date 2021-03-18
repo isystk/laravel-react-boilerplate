@@ -23,8 +23,7 @@
 </head>
 
 <body>
-    <main class="main" id="app">
-    </main>
+    <div id="app"></div>
 </body>
 
 </html>

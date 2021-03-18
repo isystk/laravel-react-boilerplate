@@ -37,20 +37,21 @@ Route::prefix('auth')->middleware('guest')->group(function () {
 | 1) User 認証不要
 |--------------------------------------------------------------------------
 */
+// React表示用トップページ
+Route::get('/',      'Front\TopController@index')->name('front.top');
+
 // Route::get('/', 'ShopController@index')->name('shop.list');
 // Route::get('/home', 'HomeController@index')->name('home');
 // Route::get('/contact', 'ContactFormController@index')->name('contact.index');
 // Route::post('/contact/store', 'ContactFormController@store')->name('contact.store');
 // Route::get('/contact/complete', 'ContactFormController@complete')->name('contact.complete');
-// React表示用トップページ
-Route::get('/',      'Front\TopController@index')->name('front.top');
 
 
-/*
-|--------------------------------------------------------------------------
-| 2) User ログイン後
-|--------------------------------------------------------------------------
-*/
+// /*
+// |--------------------------------------------------------------------------
+// | 2) User ログイン後
+// |--------------------------------------------------------------------------
+// */
 // Route::group(['middleware' => 'auth:user'], function () {
 //     Route::post('/mycart', 'ShopController@mycart')->name('shop.mycart');
 //     Route::post('/addMycart', 'ShopController@addMycart')->name('shop.addcart');

@@ -24,7 +24,7 @@
 </head>
 
 <body>
-    <div id="app">
+    <div>
         <header class="header shadow-sm">
             <nav class="navbar navbar-expand-md navbar-light bg-white headerNav">
                 <a class="header_logo" href="{{ url('/') }}">
