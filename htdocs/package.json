@@ -7,7 +7,9 @@
         "watch-poll": "yarn run watch -- --watch-poll",
         "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --disable-host-check --config=node_modules/laravel-mix/setup/webpack.config.js",
         "prod": "yarn run production",
-        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --config=node_modules/laravel-mix/setup/webpack.config.js"
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "lint": "eslint .",
+        "lint-fix": "eslint --fix ."
     },
     "devDependencies": {
         "@babel/preset-react": "^7.12.13",
@@ -15,9 +17,18 @@
         "@types/react": "^17.0.3",
         "@types/react-dom": "^17.0.2",
         "@types/react-redux": "^7.1.16",
+        "@typescript-eslint/eslint-plugin": "^4.18.0",
+        "admin-lte": "^3.1.0-rc",
         "axios": "^0.21",
+        "babel-eslint": "^10.1.0",
         "bootstrap": "^4.0.0",
         "cross-env": "^7.0",
+        "eslint": "^7.22.0",
+        "eslint-config-prettier": "^8.1.0",
+        "eslint-loader": "^4.0.2",
+        "eslint-plugin-prettier": "^3.3.1",
+        "eslint-plugin-react": "^7.22.0",
+        "heic2any": "^0.0.3",
         "jquery": "^3.2",
         "laravel-mix": "^5.0.1",
         "lodash": "^4.17.19",
@@ -34,8 +45,6 @@
         "sass": "^1.15.2",
         "sass-loader": "^8.0.0",
         "ts-loader": "^8.0.18",
-        "typescript": "^4.2.3",
-        "admin-lte": "^3.1.0-rc",
-        "heic2any": "^0.0.3"
+        "typescript": "^4.2.3"
     }
 }
