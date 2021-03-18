@@ -2,18 +2,15 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/php:7.3-node-browsers
-        environment:
-          - APP_DEBUG: true
-          - APP_ENV: laraec
-          - DB_CONNECTION: mysql
-          - DB_DATABASE: laraec
-          - DB_USERNAME: root
+      - image: circleci/php:7.3.9-apache-node-browsers
+      - image: circleci/mysql:5.7
  
-      - image: circleci/mysql:5.7-ram
-        environment:
-          - MYSQL_ALLOW_EMPTY_PASSWORD: true
-          - MYSQL_DATABASE: laraec
+    environment:
+      - APP_DEBUG: true
+      - APP_ENV: circleci
+      - APP_KEY: base64:2Bx3GHUg7lnL/XM0teb8+4H5DfRmhqE9ddM4M9FOmqA=
+      - DB_CONNECTION: circle_test
+      - MYSQL_ALLOW_EMPTY_PASSWORD: true
  
     steps:
       - checkout
@@ -35,16 +32,6 @@ jobs:
           paths:
             - ./htdocs/vendor
  
-      - run: 
-          working_directory: htdocs
-          command: cp -rp .env.circleci .env
-
-      - run: 
-          working_directory: htdocs
-          command: echo "APP_KEY=" > .env
-      - run: 
-          working_directory: htdocs
-          command: php artisan key:generate
       - run: 
           working_directory: htdocs
           command: php artisan migrate:refresh --seed
