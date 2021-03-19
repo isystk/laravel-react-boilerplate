@@ -43,5 +43,5 @@ ReactDom.render(
       </Layout>
     </Router>
   </Provider>,
-  document.getElementById('app'),
+  document.getElementById('react-root'),
 )

@@ -8,10 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title')｜{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Scripts -->
-    <script src="{{ asset('/assets/front/js/app.js') }}" defer></script>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -23,7 +20,17 @@
 </head>
 
 <body>
-    <div id="app"></div>
+    <div id="react-root"></div>
+    <script>
+    var laravelSession = {};
+    laravelSession['status']=@if(session('status'))'{{session('status')}}'@else''@endif;
+    laravelSession['resent']=@if(session('resent'))'{{session('resent')}}'@else''@endif;
+    var laravelErrors=@php print(htmlspecialchars_decode($errors))@endphp;
+    </script>
+
+    <!-- Scripts -->
+    <script src="{{ asset('/assets/front/js/app.js') }}" defer></script>
+
 </body>
 
 </html>
