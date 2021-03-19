@@ -2,6 +2,5 @@
 
 @section('content')
 <div>
-    Loading...
 </div>
 @endsection

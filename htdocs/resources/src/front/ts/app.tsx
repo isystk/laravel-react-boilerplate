@@ -1,17 +1,15 @@
 import * as React from 'react'
 import * as ReactDom from 'react-dom'
 import { createStore, applyMiddleware } from 'redux'
+import { persistStore } from 'redux-persist'
+import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { URL } from './common/constants/url'
+import axios from 'axios'
 
 import reducers from './reducers'
-import Layout from './components/layout'
-import ShopIndex from './components/shop/shop_index'
-import AuthCheck from './components/auth/auth_check'
-import { NotFound } from './components/NotFound'
+import ReactRoot from './ReactRoot'
 
 import 'bootstrap'
 import 'heic2any'
@@ -20,28 +18,27 @@ import 'heic2any'
 const enhancer =
   process.env.NODE_ENV === 'development' ? composeWithDevTools(applyMiddleware(thunk)) : applyMiddleware(thunk)
 const store = createStore(reducers, enhancer)
+const pstore = persistStore(store)
 
-const Main = () => (
-  <main className="main">
-    <Switch>
-      <Route exact path={URL.HOME} component={ShopIndex} />
+const render = (props) => {
+  ReactDom.render(
+    <Provider store={store}>
+      <PersistGate loading={<p>loading...</p>} persistor={pstore}>
+        <ReactRoot history={history} responseSession={props} />
+      </PersistGate>
+    </Provider>,
+    document.getElementById('react-root'),
+  )
+}
 
-      {/* ログインユーザー専用ここから */}
-      <AuthCheck></AuthCheck>
-      {/* ログインユーザー専用ここまで */}
+function authSession()
+{
+  const params = new URLSearchParams();
+  const url = '/session';
+  axios.post(url,params)
+  .then((response)=>{
+      render(response.data)
+  })
+}
 
-      <Route component={NotFound} />
-    </Switch>
-  </main>
-)
-
-ReactDom.render(
-  <Provider store={store}>
-    <Router>
-      <Layout>
-        <Main />
-      </Layout>
-    </Router>
-  </Provider>,
-  document.getElementById('react-root'),
-)
+authSession()

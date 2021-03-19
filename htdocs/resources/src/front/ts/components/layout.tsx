@@ -6,35 +6,21 @@ import CommonHeader from './common/common_header'
 import CommonFooter from './common/common_footer'
 import { Auth } from '../store/StoreTypes'
 
-import { authCheck, authLogout } from '../actions'
-
 interface IProps {
   auth: Auth
-  authCheck
-  authLogout
 }
 
 class Layout extends React.Component<IProps> {
   constructor(props) {
     super(props)
-    this.logoutClick = this.logoutClick.bind(this)
-  }
-
-  componentDidMount(): void {
-    this.props.authCheck()
-  }
-
-  async logoutClick(): Promise<void> {
-    await this.props.authLogout()
-    location.reload()
   }
 
   logoutLink(): JSX.Element {
     const { auth } = this.props
 
-    if (auth.isLogin) {
-      return <a onClick={this.logoutClick}>ログアウト</a>
-    }
+    // if (auth.isLogin) {
+    //   return <a onClick={this.logoutClick}>ログアウト</a>
+    // }
     return <Link to={URL.LOGIN}>ログイン</Link>
   }
 
@@ -58,6 +44,6 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const mapDispatchToProps = { authCheck, authLogout }
+const mapDispatchToProps = {  }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Layout)

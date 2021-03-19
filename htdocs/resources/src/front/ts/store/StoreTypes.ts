@@ -1,7 +1,12 @@
 export interface Auth
 {
-  isLogin: boolean
-  familyName?: string
+  auth: boolean;
+  id?: number | null,
+  name: string | null,
+  email?: string,
+  remember?: string,
+  csrf?: string,
+  request?: string,
 }
 
 export interface Consts

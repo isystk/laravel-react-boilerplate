@@ -323,6 +323,7 @@ $ ./dc.sh stop
 | [LaravelでのStripeの環境を作成する](https://takkublog.net/stripe01/)| Laravel で決算処理を作成する方法で参考にしました。 |
 | [Laravel+Socialiteで簡単ソーシャルログイン実装!](https://qiita.com/KeisukeKudo/items/18dd8a342a4bdd43913c)| Laravel でソーシャルログインを作成する方法で参考にしました。 |
 | [WSL2 で dns の名前解決ができなくなって ネット接続できなくなった場合の対処方法](https://qiita.com/kkato233/items/1fc71bde5a6d94f1b982)| WSL2 で dns の名前解決ができなくなって ネット接続できなくなった際に参考にしました。 |
+| [Laravelの認証画面をReactで全とっかえ](https://qiita.com/shikigamix/items/99a4f2ab5911248f8b2f)| Laravelのフロントエンドの認証周りをReactで作成する方法で参考にしました。 |
 
 
 ## 🎫 Licence

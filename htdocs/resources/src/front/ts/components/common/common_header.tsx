@@ -3,33 +3,10 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { URL } from "../../common/constants/url";
 
-import { authLogout } from "../../actions";
-
-interface IProps {
-    auth;
-    authLogout;
-}
-
-class CommonHeader extends React.Component<IProps> {
+class CommonHeader extends React.Component {
 
   constructor(props) {
     super(props);
-    this.logoutClick = this.logoutClick.bind(this);
-  }
-
-  async logoutClick() {
-    await this.props.authLogout();
-    location.reload();
-  }
-
-  logoutLink(): JSX.Element {
-
-    const {auth} = this.props;
-
-    if (auth.isLogin) {
-      return (<a onClick={this.logoutClick}>ログアウト</a>);
-    }
-    return (<Link to={URL.LOGIN} >ログイン</Link>);
   }
 
   render(): JSX.Element {
@@ -116,6 +93,6 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mapDispatchToProps = { authLogout };
+const mapDispatchToProps = {  };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommonHeader);

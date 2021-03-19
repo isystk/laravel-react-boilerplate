@@ -1,34 +1,52 @@
-import { Auth } from '../store/StoreTypes'
-import { AuthAppAction, AUTH_CHECK, AUTH_LOGIN, AUTH_LOGOUT } from '../actions/index'
+import { Auth } from "../store/StoreTypes";
+import
+{
+  AuthAppAction,
+  SET_SESSION,
+  SET_NAME,
+  SET_EMAIL,
+  SET_REMEMBER,
+  SET_CSRF,
+  SET_PARAMS,
+} from "../actions/index";
 
 const initialState: Auth = {
-  isLogin: false,
-}
+  auth: false,
+  id: null,
+  name: null,
+  email: '',
+  remember: '',
+  csrf: '',
+  request: ''
+};
 
-export function AuthReducer(state = initialState, action: AuthAppAction): Auth
+export function AuthReducer(
+  state = initialState,
+  action: AuthAppAction
+): Auth
 {
-  switch (action.type) {
-    case AUTH_CHECK:
-    case AUTH_LOGIN: {
 
-      const { response } = action
-      if (!response) {
-        return {
-          isLogin: false,
-        }
-      }
-      return {
-        isLogin: true,
-        familyName: response[0].familyName,
-      }
-    }
-    case AUTH_LOGOUT:
-      return { isLogin: false }
+  switch (action.type) {
+    case SET_SESSION:
+      let session = (action.payload.id === undefined)
+        ? ({ auth: false, name: null })
+        : ({ auth: true, name: action.payload.name })
+      return session
+    case SET_NAME:
+      return { ...state, name: action.payload.name };
+    case SET_EMAIL:
+      return { ...state, email: action.payload.email };
+    case SET_REMEMBER:
+      return { ...state, remember: action.payload.remember };
+    case SET_CSRF:
+      return { ...state, csrf: action.payload.csrf };
+    case SET_PARAMS:
+      return { ...state, request: action.payload.request };
     default:
       return state
   }
 
-  return state
+  return state;
 }
 
-export default AuthReducer
+export default AuthReducer;
