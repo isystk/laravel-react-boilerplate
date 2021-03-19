@@ -2,7 +2,7 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import * as _ from 'lodash'
 
-import { readShops, readLikes } from '../../actions'
+import { readShops, readLikes, addLike, removeLike } from '../../actions'
 import { Stocks, Likes, Page } from '../../store/StoreTypes'
 
 interface IProps {
@@ -11,6 +11,8 @@ interface IProps {
   paging: Page
   readShops
   readLikes
+  addLike
+  removeLike
 }
 
 export class StocksIndex extends React.Component<IProps> {
@@ -26,7 +28,16 @@ export class StocksIndex extends React.Component<IProps> {
     return _.map(this.props.stocks, (stock, index) => (
       <div className="block01_item" key={index}>
         <div className="text-right mb-2">
-          <a href="#" className={`btn btn-sm ${stock.isLike ? 'btn-success' : 'btn-secondary'}`} data-id="{stock.id}">
+          <a href="#" onClick={
+                e => {
+                  e.preventDefault()
+                  if ( stock.isLike ) {
+                    this.props.removeLike(stock.id)
+                  } else {
+                    this.props.addLike(stock.id)
+                  }
+                }
+              } className={`btn btn-sm ${stock.isLike ? 'btn-success' : 'btn-secondary'}`} data-id="{stock.id}">
             気になる
           </a>
         </div>
@@ -80,40 +91,44 @@ export class StocksIndex extends React.Component<IProps> {
               }>1</a>
             </li>
           }
-          {(current_page === 1) ?
-            <li className="page-item" aria-current="page">
-              <a className="page-link" href={next_page_url} onClick={
-                e => {
-                  e.preventDefault()
-                  this.props.readShops(next_page_url)
-                }
-              }>{current_page+1}</a>
-            </li>
-            :
-            (current_page === last_page) ?
+          {(2 <= last_page) ?
+            (current_page === 1) ?
               <li className="page-item" aria-current="page">
-                <a className="page-link" href={prev_page_url} onClick={
-                e => {
-                  e.preventDefault()
-                  this.props.readShops(prev_page_url)
-                }
-              }>{current_page-1}</a>
+                <a className="page-link" href={next_page_url} onClick={
+                  e => {
+                    e.preventDefault()
+                    this.props.readShops(next_page_url)
+                  }
+                }>{current_page+1}</a>
               </li>
               :
-              <li className="page-item active" aria-current="page"><span className="page-link">{current_page}</span></li>
+              (current_page === last_page) ?
+                <li className="page-item" aria-current="page">
+                  <a className="page-link" href={prev_page_url} onClick={
+                  e => {
+                    e.preventDefault()
+                    this.props.readShops(prev_page_url)
+                  }
+                }>{current_page-1}</a>
+                </li>
+                :
+                <li className="page-item active" aria-current="page"><span className="page-link">{current_page}</span></li>
+            : ''
           }
-          {(current_page === last_page) ?
-            <li className="page-item active" aria-current="page"><span className="page-link">{last_page}</span></li>
-            :
-            <li className="page-item" aria-current="page">
-              <a className="page-link"
-              href={last_page_url} onClick={
-                e => {
-                  e.preventDefault()
-                  this.props.readShops(last_page_url)
-                }
-              }>{last_page}</a>
-            </li>
+          {(3 <= last_page) ?
+            (current_page === last_page) ?
+              <li className="page-item active" aria-current="page"><span className="page-link">{last_page}</span></li>
+              :
+              <li className="page-item" aria-current="page">
+                <a className="page-link"
+                href={last_page_url} onClick={
+                  e => {
+                    e.preventDefault()
+                    this.props.readShops(last_page_url)
+                  }
+                }>{last_page}</a>
+              </li>
+            : ''
           }
           {next_page_url ?
             <li className="page-item">
@@ -191,6 +206,6 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const mapDispatchToProps = { readShops, readLikes }
+const mapDispatchToProps = { readShops, readLikes, addLike, removeLike }
 
 export default connect(mapStateToProps, mapDispatchToProps)(StocksIndex)

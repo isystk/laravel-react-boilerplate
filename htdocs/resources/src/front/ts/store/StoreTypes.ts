@@ -47,5 +47,5 @@ export interface Stock
 
 export interface Likes
 {
-  data: number[]
+  data: string[]
 }

@@ -8,12 +8,12 @@ let Env: IEnv;
 if (process.env.NODE_ENV === 'production') {
   /** docker のビルド環境の環境変数から値を取ってくる */
   Env = {
-    envName: process.env.envName,
-    internalEndpointUrl: process.env.internalEndpointUrl,
-    externalEndpointUrl: process.env.externalEndpointUrl
+    envName: process.env.MIX_ENV_NAME,
+    internalEndpointUrl: process.env.MIX_INTERNAL_ENDPOINT_URL,
+    externalEndpointUrl: process.env.MIX_EXTERNAL_ENDPOINT_URL
   } as IEnv
 } else {
-/** docker でビルドされていない場合は、 .env.local から値を取ってくる */
+  /** docker でビルドされていない場合は、 .env.local から値を取ってくる */
   Env = EnvLocal;
 }
 

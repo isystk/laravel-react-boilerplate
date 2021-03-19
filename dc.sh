@@ -120,7 +120,11 @@ case ${1} in
       case ${2} in
           prod)
               pushd htdocs
+              mv .env .env_bk
+              cp .env.production .env
               yarn run prod
+              rm .env
+              mv .env_bk .env
               popd
           ;;
           *)
