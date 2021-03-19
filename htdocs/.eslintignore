@@ -14,5 +14,6 @@ tools
 # js vendor file with import/require
 vendor
 
-# dist
+# laravel
+webpack.mix.js
 public/assets/**

@@ -1,15 +1,14 @@
 import * as React from 'react'
-import { connect, MapStateToProps, MapDispatchToProps } from 'react-redux'
+import { connect } from 'react-redux'
 import * as _ from 'lodash'
-import { Link } from 'react-router-dom'
-import { URL } from '../../common/constants/url'
 
 import { readShops, readLikes } from '../../actions'
-import { Stocks, Likes } from '../../store/StoreTypes'
+import { Stocks, Likes, Page } from '../../store/StoreTypes'
 
 interface IProps {
   stocks: Stocks
   likes: Likes
+  paging: Page
   readShops
   readLikes
 }
@@ -48,6 +47,94 @@ export class StocksIndex extends React.Component<IProps> {
     ))
   }
 
+  renderPaging(): JSX.Element {
+
+    const { total, current_page, last_page, first_page_url, prev_page_url, next_page_url, last_page_url } = this.props.paging
+
+    return (
+      <nav>
+        <ul className="pagination">
+          {prev_page_url ?
+            <li className="page-item">
+              <a className="page-link" rel="prev" aria-label="« 前へ" href={prev_page_url} onClick={
+                e => {
+                  e.preventDefault()
+                  this.props.readShops(prev_page_url)
+                }
+              }>‹</a>
+            </li>
+            :
+            <li className="page-item disabled" aria-disabled="true" aria-label="« 前へ">
+              <span className="page-link" aria-hidden="true">‹</span>
+            </li>
+          }
+          {(current_page === 1) ?
+            <li className="page-item active" aria-current="page"><span className="page-link">1</span></li>
+            :
+            <li className="page-item" aria-current="page">
+              <a className="page-link" href={first_page_url} onClick={
+                e => {
+                  e.preventDefault()
+                  this.props.readShops(first_page_url)
+                }
+              }>1</a>
+            </li>
+          }
+          {(current_page === 1) ?
+            <li className="page-item" aria-current="page">
+              <a className="page-link" href={next_page_url} onClick={
+                e => {
+                  e.preventDefault()
+                  this.props.readShops(next_page_url)
+                }
+              }>{current_page+1}</a>
+            </li>
+            :
+            (current_page === last_page) ?
+              <li className="page-item" aria-current="page">
+                <a className="page-link" href={prev_page_url} onClick={
+                e => {
+                  e.preventDefault()
+                  this.props.readShops(prev_page_url)
+                }
+              }>{current_page-1}</a>
+              </li>
+              :
+              <li className="page-item active" aria-current="page"><span className="page-link">{current_page}</span></li>
+          }
+          {(current_page === last_page) ?
+            <li className="page-item active" aria-current="page"><span className="page-link">{last_page}</span></li>
+            :
+            <li className="page-item" aria-current="page">
+              <a className="page-link"
+              href={last_page_url} onClick={
+                e => {
+                  e.preventDefault()
+                  this.props.readShops(last_page_url)
+                }
+              }>{last_page}</a>
+            </li>
+          }
+          {next_page_url ?
+            <li className="page-item">
+              <a className="page-link" rel="next" aria-label="次へ »"
+              href={next_page_url} onClick={
+                e => {
+                  e.preventDefault()
+                  this.props.readShops(next_page_url)
+                }
+              }>›</a>
+            </li>
+            :
+            <li className="page-item disabled" aria-disabled="true" aria-label="次へ »">
+              <span className="page-link" aria-hidden="true">›</span>
+            </li>
+          }
+        </ul>
+      </nav>
+    )
+  }
+
   render(): JSX.Element {
     return (
       <React.Fragment>
@@ -72,9 +159,7 @@ export class StocksIndex extends React.Component<IProps> {
           </div>
           <div className="">
             <div className="block01">{this.renderStocks()}</div>
-            <div className="mt40">{/*
-                  {{ $stocks->links() }}
-                  */}</div>
+            <div className="mt40">{this.renderPaging()}</div>
           </div>
         </div>
       </React.Fragment>
@@ -83,7 +168,7 @@ export class StocksIndex extends React.Component<IProps> {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { total, current_page, ...stocks } = state.stocks
+  const { total, current_page, last_page, first_page_url, prev_page_url, next_page_url, last_page_url, ...stocks } = state.stocks
   const likes = state.likes
   return {
     stocks: _.map(stocks.data, function(stock) {
@@ -91,9 +176,18 @@ const mapStateToProps = (state, ownProps) => {
       return {
         ...stock,
         price: stock.price + '円',
-        isLike: likes.data.contain(stock.id),
+        isLike: likes.data.includes(stock.id+''),
       }
     }),
+    paging: {
+      total: total,
+      current_page: current_page,
+      last_page: last_page,
+      first_page_url: first_page_url,
+      prev_page_url: prev_page_url,
+      next_page_url: next_page_url,
+      last_page_url: last_page_url,
+    }
   }
 }
 

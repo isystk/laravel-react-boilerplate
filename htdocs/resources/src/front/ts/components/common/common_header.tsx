@@ -1,6 +1,5 @@
 import * as React from "react";
-import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
-import * as _ from "lodash";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { URL } from "../../common/constants/url";
 

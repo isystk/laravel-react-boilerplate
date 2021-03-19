@@ -1,8 +1,7 @@
 import * as React from 'react'
-import { connect, MapStateToProps, MapDispatchToProps } from 'react-redux'
-import { Field, reduxForm } from 'redux-form'
+import { connect } from 'react-redux'
 import { Auth } from '../../store/StoreTypes'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 import { authCheck } from '../../actions'
 
@@ -24,11 +23,11 @@ export class AuthCheck extends React.Component<IProps, IState> {
     }
   }
 
-  UNSAFE_componentWillMount() {
+  UNSAFE_componentWillMount():void {
     this.checkAuth()
   }
 
-  async checkAuth() {
+  async checkAuth(): Promise<void> {
     await this.props.authCheck()
 
     this.setState({ loaded: true })
@@ -39,7 +38,7 @@ export class AuthCheck extends React.Component<IProps, IState> {
     }
   }
 
-  render() {
+  render(): JSX.Element {
     if (!this.state.loaded) {
       return <React.Fragment>Loading...</React.Fragment>
     } else {
@@ -48,7 +47,7 @@ export class AuthCheck extends React.Component<IProps, IState> {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
     auth: state.auth,
   }

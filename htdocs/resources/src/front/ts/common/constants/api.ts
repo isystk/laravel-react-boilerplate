@@ -21,6 +21,8 @@ export const API_ENDPOINT = {
   /** 共通定数 */
   COMMON_CONST: getBffUrl('/common/const'),
 
-  /** 商品一覧 */
+  /** 商品一覧データ取得 */
   SHOPS: getBffUrl('/shops'),
+  /** お気に入りデータ取得 */
+  LIKES: getBffUrl('/likes'),
 }

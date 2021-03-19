@@ -1,21 +1,23 @@
-// ↓ 取得用のデータ型
-
-export interface Auth {
+export interface Auth
+{
   isLogin: boolean
   familyName?: string
 }
 
-export interface Consts {
+export interface Consts
+{
   name?: string
   data?: Const[]
 }
 
-export interface Const {
+export interface Const
+{
   code: number
   text: string
 }
 
-export interface Page {
+export interface Page
+{
   total: number
   current_page: number
   last_page: number
@@ -25,12 +27,14 @@ export interface Page {
   last_page_url: string
 }
 
-export interface Stocks {
+export interface Stocks
+{
   data: Stock[]
   page: Page
 }
 
-export interface Stock {
+export interface Stock
+{
   id: number
   name: string
   detail: string
@@ -41,6 +45,7 @@ export interface Stock {
   updated_at: Date
 }
 
-export interface Likes {
+export interface Likes
+{
   data: number[]
 }

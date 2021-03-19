@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { connect, MapStateToProps, MapDispatchToProps } from 'react-redux'
-import * as _ from 'lodash'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { URL } from '../common/constants/url'
 import CommonHeader from './common/common_header'
@@ -25,7 +24,7 @@ class Layout extends React.Component<IProps> {
     this.props.authCheck()
   }
 
-  async logoutClick() {
+  async logoutClick(): Promise<void> {
     await this.props.authLogout()
     location.reload()
   }

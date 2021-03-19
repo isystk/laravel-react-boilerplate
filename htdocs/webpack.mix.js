@@ -29,8 +29,13 @@ if (mix.inProduction()) {
 } else {
   // 本番以外の環境
 
-  // ESLintの実施
+  var HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
   mix.webpackConfig({
+    plugins: [
+      // Webpackのコンパイル速度改善
+      // See：https://qiita.com/Te2/items/4b9dce89950d00d344ea
+      new HardSourceWebpackPlugin()
+    ],
     module: {
       rules: [
         {

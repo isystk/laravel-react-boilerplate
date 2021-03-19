@@ -4,7 +4,7 @@
  * building robust, powerful web applications using React + Laravel.
  */
 
-require('./bootstrap')
+import './bootstrap'
 
-var heic2any = require('heic2any')
+import heic2any from 'heic2any'
 window.heic2any = heic2any

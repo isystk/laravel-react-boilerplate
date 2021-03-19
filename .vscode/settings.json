@@ -3,5 +3,9 @@
     "default": "/htdocs/resources/views",
     "js": "/htdocs/resources/js/Pages",
     "vendor": "/htdocs/resources/views/vendor"
+  },
+  "javascript.format.enable": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
   }
 }

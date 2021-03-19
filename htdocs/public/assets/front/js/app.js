@@ -312,38 +312,6 @@ module.exports["default"] = module.exports, module.exports.__esModule = true;
 
 /***/ }),
 
-/***/ "./node_modules/@emotion/core/dist/emotion-core.cjs.dev.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/@emotion/core/dist/emotion-core.cjs.dev.js ***!
-  \*****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-throw new Error("The `@emotion/core` package has been renamed to `@emotion/react`. Please import it like this `import { jsx } from '@emotion/react'`.");
-
-
-/***/ }),
-
-/***/ "./node_modules/@emotion/core/dist/emotion-core.cjs.js":
-/*!*************************************************************!*\
-  !*** ./node_modules/@emotion/core/dist/emotion-core.cjs.js ***!
-  \*************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-if (false) {} else {
-  module.exports = __webpack_require__(/*! ./emotion-core.cjs.dev.js */ "./node_modules/@emotion/core/dist/emotion-core.cjs.dev.js");
-}
-
-
-/***/ }),
-
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
@@ -87141,7 +87109,7 @@ var readLikes = function () { return function (dispatch) { return __awaiter(void
     var response;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, utilities_1.API.get(api_1.API_ENDPOINT.SHOPS)];
+            case 0: return [4 /*yield*/, utilities_1.API.get(api_1.API_ENDPOINT.LIKES)];
             case 1:
                 response = _a.sent();
                 dispatch({ type: exports.READ_LIKES, response: response });
@@ -87204,18 +87172,21 @@ exports.readShops = exports.READ_STOCKS = void 0;
 var api_1 = __webpack_require__(/*! ../common/constants/api */ "./resources/src/front/ts/common/constants/api.ts");
 var utilities_1 = __webpack_require__(/*! ../utilities */ "./resources/src/front/ts/utilities/index.ts");
 exports.READ_STOCKS = 'READ_STOCKS';
-var readShops = function () { return function (dispatch) { return __awaiter(void 0, void 0, void 0, function () {
-    var response;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, utilities_1.API.get(api_1.API_ENDPOINT.SHOPS)];
-            case 1:
-                response = _a.sent();
-                dispatch({ type: exports.READ_STOCKS, response: response });
-                return [2 /*return*/];
-        }
-    });
-}); }; };
+var readShops = function (url) {
+    if (url === void 0) { url = api_1.API_ENDPOINT.SHOPS; }
+    return function (dispatch) { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, utilities_1.API.get(url)];
+                case 1:
+                    response = _a.sent();
+                    dispatch({ type: exports.READ_STOCKS, response: response });
+                    return [2 /*return*/];
+            }
+        });
+    }); };
+};
 exports.readShops = readShops;
 
 
@@ -87323,8 +87294,10 @@ exports.API_ENDPOINT = {
     LOGOUT: getBffUrl('/logout'),
     /** 共通定数 */
     COMMON_CONST: getBffUrl('/common/const'),
-    /** 商品一覧 */
+    /** 商品一覧データ取得 */
     SHOPS: getBffUrl('/shops'),
+    /** お気に入りデータ取得 */
+    LIKES: getBffUrl('/likes'),
 };
 
 
@@ -87431,9 +87404,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NotFound = void 0;
 var jsx_runtime_1 = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-var core_1 = __webpack_require__(/*! @emotion/core */ "./node_modules/@emotion/core/dist/emotion-core.cjs.js");
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-core_1.jsx;
 var NotFound = /** @class */ (function (_super) {
     __extends(NotFound, _super);
     function NotFound() {
@@ -87575,7 +87546,7 @@ var AuthCheck = /** @class */ (function (_super) {
     return AuthCheck;
 }(React.Component));
 exports.AuthCheck = AuthCheck;
-var mapStateToProps = function (state, ownProps) {
+var mapStateToProps = function (state) {
     return {
         auth: state.auth,
     };
@@ -88047,6 +88018,51 @@ var StocksIndex = /** @class */ (function (_super) {
                 jsx_runtime_1.jsxs("form", __assign({ action: "/shop/addcart", method: "post" }, { children: [jsx_runtime_1.jsx("input", { type: "hidden", name: "stock_id", value: stock.id }, void 0),
                         stock.quantity === 0 ? (jsx_runtime_1.jsx("input", { type: "button", value: "\u30AB\u30FC\u30C8\u306B\u5165\u308C\u308B\uFF08\u6B8B\u308A0\u500B\uFF09", className: "btn-gray" }, void 0)) : (jsx_runtime_1.jsx("input", { type: "submit", value: "\u30AB\u30FC\u30C8\u306B\u5165\u308C\u308B\uFF08\u6B8B\u308A" + stock.quantity + "\u500B\uFF09", className: "btn-01" }, void 0))] }), void 0)] }), index)); });
     };
+    StocksIndex.prototype.renderPaging = function () {
+        var _this = this;
+        var _a = this.props.paging, total = _a.total, current_page = _a.current_page, last_page = _a.last_page, first_page_url = _a.first_page_url, prev_page_url = _a.prev_page_url, next_page_url = _a.next_page_url, last_page_url = _a.last_page_url;
+        return (jsx_runtime_1.jsx("nav", { children: jsx_runtime_1.jsxs("ul", __assign({ className: "pagination" }, { children: [prev_page_url ?
+                        jsx_runtime_1.jsx("li", __assign({ className: "page-item" }, { children: jsx_runtime_1.jsx("a", __assign({ className: "page-link", rel: "prev", "aria-label": "\u00AB \u524D\u3078", href: prev_page_url, onClick: function (e) {
+                                    e.preventDefault();
+                                    _this.props.readShops(prev_page_url);
+                                } }, { children: "\u2039" }), void 0) }), void 0)
+                        :
+                            jsx_runtime_1.jsx("li", __assign({ className: "page-item disabled", "aria-disabled": "true", "aria-label": "\u00AB \u524D\u3078" }, { children: jsx_runtime_1.jsx("span", __assign({ className: "page-link", "aria-hidden": "true" }, { children: "\u2039" }), void 0) }), void 0),
+                    (current_page === 1) ?
+                        jsx_runtime_1.jsx("li", __assign({ className: "page-item active", "aria-current": "page" }, { children: jsx_runtime_1.jsx("span", __assign({ className: "page-link" }, { children: "1" }), void 0) }), void 0)
+                        :
+                            jsx_runtime_1.jsx("li", __assign({ className: "page-item", "aria-current": "page" }, { children: jsx_runtime_1.jsx("a", __assign({ className: "page-link", href: first_page_url, onClick: function (e) {
+                                        e.preventDefault();
+                                        _this.props.readShops(first_page_url);
+                                    } }, { children: "1" }), void 0) }), void 0),
+                    (current_page === 1) ?
+                        jsx_runtime_1.jsx("li", __assign({ className: "page-item", "aria-current": "page" }, { children: jsx_runtime_1.jsx("a", __assign({ className: "page-link", href: next_page_url, onClick: function (e) {
+                                    e.preventDefault();
+                                    _this.props.readShops(next_page_url);
+                                } }, { children: current_page + 1 }), void 0) }), void 0)
+                        :
+                            (current_page === last_page) ?
+                                jsx_runtime_1.jsx("li", __assign({ className: "page-item", "aria-current": "page" }, { children: jsx_runtime_1.jsx("a", __assign({ className: "page-link", href: prev_page_url, onClick: function (e) {
+                                            e.preventDefault();
+                                            _this.props.readShops(prev_page_url);
+                                        } }, { children: current_page - 1 }), void 0) }), void 0)
+                                :
+                                    jsx_runtime_1.jsx("li", __assign({ className: "page-item active", "aria-current": "page" }, { children: jsx_runtime_1.jsx("span", __assign({ className: "page-link" }, { children: current_page }), void 0) }), void 0),
+                    (current_page === last_page) ?
+                        jsx_runtime_1.jsx("li", __assign({ className: "page-item active", "aria-current": "page" }, { children: jsx_runtime_1.jsx("span", __assign({ className: "page-link" }, { children: last_page }), void 0) }), void 0)
+                        :
+                            jsx_runtime_1.jsx("li", __assign({ className: "page-item", "aria-current": "page" }, { children: jsx_runtime_1.jsx("a", __assign({ className: "page-link", href: last_page_url, onClick: function (e) {
+                                        e.preventDefault();
+                                        _this.props.readShops(last_page_url);
+                                    } }, { children: last_page }), void 0) }), void 0),
+                    next_page_url ?
+                        jsx_runtime_1.jsx("li", __assign({ className: "page-item" }, { children: jsx_runtime_1.jsx("a", __assign({ className: "page-link", rel: "next", "aria-label": "\u6B21\u3078 \u00BB", href: next_page_url, onClick: function (e) {
+                                    e.preventDefault();
+                                    _this.props.readShops(next_page_url);
+                                } }, { children: "\u203A" }), void 0) }), void 0)
+                        :
+                            jsx_runtime_1.jsx("li", __assign({ className: "page-item disabled", "aria-disabled": "true", "aria-label": "\u6B21\u3078 \u00BB" }, { children: jsx_runtime_1.jsx("span", __assign({ className: "page-link", "aria-hidden": "true" }, { children: "\u203A" }), void 0) }), void 0)] }), void 0) }, void 0));
+    };
     StocksIndex.prototype.render = function () {
         return (jsx_runtime_1.jsx(React.Fragment, { children: jsx_runtime_1.jsxs("div", __assign({ className: "contentsArea" }, { children: [jsx_runtime_1.jsx("div", __assign({ id: "link01", className: "carousel slide mainBunner", "data-ride": "carousel" }, { children: jsx_runtime_1.jsxs("div", __assign({ className: "carousel-inner" }, { children: [jsx_runtime_1.jsx("div", __assign({ className: "carousel-item active" }, { children: jsx_runtime_1.jsx("img", { src: "/assets/front/image/bunner_01.jpg", alt: "" }, void 0) }), void 0),
                                 jsx_runtime_1.jsx("div", __assign({ className: "carousel-item" }, { children: jsx_runtime_1.jsx("img", { src: "/assets/front/image/bunner_02.jpg", alt: "" }, void 0) }), void 0),
@@ -88055,19 +88071,28 @@ var StocksIndex = /** @class */ (function (_super) {
                                 jsx_runtime_1.jsxs("a", __assign({ className: "carousel-control-next", href: "#link01", role: "button", "data-slide": "next" }, { children: [jsx_runtime_1.jsx("span", { className: "carousel-control-next-icon", "aria-hidden": "true" }, void 0),
                                         jsx_runtime_1.jsx("span", __assign({ className: "sr-only" }, { children: "Next" }), void 0)] }), void 0)] }), void 0) }), void 0),
                     jsx_runtime_1.jsxs("div", __assign({ className: "" }, { children: [jsx_runtime_1.jsx("div", __assign({ className: "block01" }, { children: this.renderStocks() }), void 0),
-                            jsx_runtime_1.jsx("div", { className: "mt40" }, void 0)] }), void 0)] }), void 0) }, void 0));
+                            jsx_runtime_1.jsx("div", __assign({ className: "mt40" }, { children: this.renderPaging() }), void 0)] }), void 0)] }), void 0) }, void 0));
     };
     return StocksIndex;
 }(React.Component));
 exports.StocksIndex = StocksIndex;
 var mapStateToProps = function (state, ownProps) {
-    var _a = state.stocks, total = _a.total, current_page = _a.current_page, stocks = __rest(_a, ["total", "current_page"]);
+    var _a = state.stocks, total = _a.total, current_page = _a.current_page, last_page = _a.last_page, first_page_url = _a.first_page_url, prev_page_url = _a.prev_page_url, next_page_url = _a.next_page_url, last_page_url = _a.last_page_url, stocks = __rest(_a, ["total", "current_page", "last_page", "first_page_url", "prev_page_url", "next_page_url", "last_page_url"]);
     var likes = state.likes;
     return {
         stocks: _.map(stocks.data, function (stock) {
             // 表示用にデータを加工
-            return __assign(__assign({}, stock), { price: stock.price + '円', isLike: likes.data.contain(stock.id) });
+            return __assign(__assign({}, stock), { price: stock.price + '円', isLike: likes.data.includes(stock.id + '') });
         }),
+        paging: {
+            total: total,
+            current_page: current_page,
+            last_page: last_page,
+            first_page_url: first_page_url,
+            prev_page_url: prev_page_url,
+            next_page_url: next_page_url,
+            last_page_url: last_page_url,
+        }
     };
 };
 var mapDispatchToProps = { readShops: actions_1.readShops, readLikes: actions_1.readLikes };
@@ -88085,8 +88110,6 @@ exports.default = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(Sto
 
 "use strict";
 
-// Reducerは、Stateの状態をデザインして、アクションをハンドリングします。
-// また、Reducerは、前の状態とアクションを取り、次の状態を返す純粋な関数です。
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthReducer = void 0;
 var index_1 = __webpack_require__(/*! ../actions/index */ "./resources/src/front/ts/actions/index.ts");
@@ -88131,8 +88154,6 @@ exports.default = AuthReducer;
 
 "use strict";
 
-// Reducerは、Stateの状態をデザインして、アクションをハンドリングします。
-// また、Reducerは、前の状態とアクションを取り、次の状態を返す純粋な関数です。
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
@@ -88206,8 +88227,6 @@ exports.default = redux_1.combineReducers({ auth: auth_1.default, consts: consts
 
 "use strict";
 
-// Reducerは、Stateの状態をデザインして、アクションをハンドリングします。
-// また、Reducerは、前の状態とアクションを取り、次の状態を返す純粋な関数です。
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LikesReducer = void 0;
 var index_1 = __webpack_require__(/*! ../actions/index */ "./resources/src/front/ts/actions/index.ts");
@@ -88239,8 +88258,6 @@ exports.default = LikesReducer;
 
 "use strict";
 
-// Reducerは、Stateの状態をデザインして、アクションをハンドリングします。
-// また、Reducerは、前の状態とアクションを取り、次の状態を返す純粋な関数です。
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StocksReducer = void 0;
 var index_1 = __webpack_require__(/*! ../actions/index */ "./resources/src/front/ts/actions/index.ts");
@@ -88376,12 +88393,10 @@ var request = function (method, url, values, config) { return __awaiter(void 0, 
                     if (error.response) {
                         throw new redux_form_1.SubmissionError({ _error: error.response.data.message });
                     }
-                })
-                // console.log('Response:%s', JSON.stringify(response));
-            ];
+                })];
             case 1:
                 response = _a.sent();
-                // console.log('Response:%s', JSON.stringify(response));
+                console.log('Response:%s', JSON.stringify(response));
                 return [2 /*return*/, response.data];
         }
     });
@@ -88458,7 +88473,7 @@ __exportStar(__webpack_require__(/*! ./api */ "./resources/src/front/ts/utilitie
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/iseyoshitaka/github/laravel-react-boilerplate/htdocs/resources/src/front/ts/app.tsx */"./resources/src/front/ts/app.tsx");
+module.exports = __webpack_require__(/*! /c/Users/USER/github/isystk/laravel-react-boilerplate/htdocs/resources/src/front/ts/app.tsx */"./resources/src/front/ts/app.tsx");
 
 
 /***/ })
