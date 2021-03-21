@@ -20,7 +20,6 @@ class CardTemplate extends React.Component<IProps> {
         }
     }
     render(){
-      console.log("CardTemplate");
         return (
             <Container>
                 <Row className="justify-content-center">

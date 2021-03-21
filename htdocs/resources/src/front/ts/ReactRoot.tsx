@@ -28,23 +28,22 @@ class ReactRoot extends React.Component<IProps>
   constructor(props)
   {
     super(props)
-    console.log("constructor");
     props.setSession(props.responseSession)
     if (window.laravelErrors['name'] === undefined
       && window.laravelErrors['email'] === undefined
       && window.laravelErrors['password'] === undefined) {
-        console.log("2");
       this.props.setName('')
       this.props.setEmail('')
       this.props.setRemember(false)
     }
     const token = document.head.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')
     if (token) {
-      console.log("3");
+      console.log('meta[name="csrf-token"]', token.content);
       this.props.setCSRF(token.content)
     }
 
   }
+
   render()
   {
     console.log("ReactRoot!!", this.props);

@@ -28,7 +28,6 @@ export function AuthReducer(
 
   switch (action.type) {
     case SET_SESSION: {
-      console.log("SET_SESSION")
       const session = (action.payload.id === undefined)
         ? ({ auth: false, name: null })
         : ({ auth: true, name: action.payload.name })

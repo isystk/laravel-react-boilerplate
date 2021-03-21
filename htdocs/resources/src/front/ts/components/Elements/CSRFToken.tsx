@@ -3,15 +3,20 @@ import { Form } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-const CSRFToken = (props) => (
-    <Form.Control type="hidden" name="_token" defaultValue={props.csrf} />
-)
-CSRFToken.propTypes = {
-    csrf: PropTypes.string,
+interface IProps {
+  csrf: string
 }
-const mapStateToProps = state => ({
-    csrf: state.csrf,
-})
+
+const CSRFToken = (props: IProps) =>  (
+  <Form.Control type="hidden" name="_token" defaultValue={props.csrf} />
+)
+
+const mapStateToProps = state => {
+  console.log("CSRFToken.mapStateToProps", state)
+  return ({
+    csrf: state.AuthReducer.csrf,
+  })
+}
 const mapDispatchToProps = dispatch => ({
 })
 export default connect(mapStateToProps, mapDispatchToProps)(CSRFToken)

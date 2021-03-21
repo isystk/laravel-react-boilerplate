@@ -106,9 +106,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
   Route::post('contact/destroy/{id}', 'Admin\ContactFormController@destroy')->name('admin.contact.destroy');
 });
 
-Route::get('/', function(){
-  return view('welcome');
-});
+Route::get('/', 'Front\ReactController@index')->name('front.react');
 
 Auth::routes(['verify' => true]);
 
