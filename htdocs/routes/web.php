@@ -106,9 +106,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
   Route::post('contact/destroy/{id}', 'Admin\ContactFormController@destroy')->name('admin.contact.destroy');
 });
 
-Auth::routes(['verify' => true]);
+Route::get('/', function(){
+  return view('welcome');
+});
 
-Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes(['verify' => true]);
 
 Route::get('/login', 'Front\ReactController@index')->name('login');
 Route::get('/register', 'Front\ReactController@index')->name('register');
@@ -117,5 +119,5 @@ Route::get('password/reset/{token}', 'Front\ReactController@index')->name('passw
 Route::get('email/verify', 'Front\ReactController@index')->name('verification.notice');
 Route::post('/session', 'Front\ReactController@session')->name('session');
 Route::get('/{router}', 'Front\ReactController@index')->name('home');
-Route::get('/', 'Front\ReactController@index')->name('home');
+
 

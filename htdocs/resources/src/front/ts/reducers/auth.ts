@@ -27,11 +27,12 @@ export function AuthReducer(
 {
 
   switch (action.type) {
-    case SET_SESSION:
-      let session = (action.payload.id === undefined)
+    case SET_SESSION: {
+      const session = (action.payload.id === undefined)
         ? ({ auth: false, name: null })
         : ({ auth: true, name: action.payload.name })
       return session
+    }
     case SET_NAME:
       return { ...state, name: action.payload.name };
     case SET_EMAIL:

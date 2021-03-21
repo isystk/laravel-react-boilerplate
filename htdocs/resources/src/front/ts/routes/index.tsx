@@ -1,13 +1,15 @@
 import React from 'react'
 import { Route, Switch, Redirect } from 'react-router'
-// import CardTemplate from '../components/CardTemplate'
+import CardTemplate from '../components/CardTemplate'
 
 const routes = (session)=> {
+  console.log("routes!!", session);
     return(
         <>
             <div className="py-3">
-                {/* {(()=>{
+                {(()=>{
                     if(session.id===undefined){
+                      console.log("session.id===undefined!!");
                         return (
                             <Switch>
                                 <Route exact path="/login" render={() => <CardTemplate title="Login" content="LoginForm" />} />
@@ -22,6 +24,7 @@ const routes = (session)=> {
                     {
                         if(session.email_verified_at===null)
                         {
+                          console.log("session.email_verified_at===null");
                             return (
                                 <Switch>
                                     <Route exact path="/email/verify" render={() => <CardTemplate title="Verify Your Email Address" content="Verify" />} />
@@ -31,6 +34,7 @@ const routes = (session)=> {
                         }
                         else
                         {
+                          console.log("session.email_verified_at!==null");
                             return (
                                 <Switch>
                                     <Route exact path="/" render={() => <CardTemplate title="Welcome" content="Welcome" />} />
@@ -40,7 +44,7 @@ const routes = (session)=> {
                             )
                         }
                     }
-                })()} */}
+                })()}
             </div>
         </>
     )

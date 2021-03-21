@@ -1,5 +1,4 @@
 import { combineReducers, createStore, ReducersMapObject } from "redux";
-
 import { AuthReducer } from "../reducers/auth";
 import { ConstsReducer } from "../reducers/consts";
 import { StocksReducer } from "../reducers/stocks";
@@ -14,6 +13,7 @@ const rootReducer = combineReducers({
   ConstsReducer,
   StocksReducer,
 });
+
 
 export default createStore(
   rootReducer,

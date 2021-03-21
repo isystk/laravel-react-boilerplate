@@ -29,18 +29,22 @@ class ReactRoot extends React.Component<IProps>
   {
     super(props)
     props.setSession(props.responseSession)
-    // if (laravelErrors['name'] === undefined
-    //   && laravelErrors['email'] === undefined
-    //   && laravelErrors['password'] === undefined) {
-    //   this.props.setName('')
-    //   this.props.setEmail('')
-    //   this.props.setRemember(false)
-    // }
-    let token = document.head.querySelector('meta[name="csrf-token"]') as HTMLInputElement
-    this.props.setCSRF(token.content)
+    if (window.laravelErrors['name'] === undefined
+      && window.laravelErrors['email'] === undefined
+      && window.laravelErrors['password'] === undefined) {
+      this.props.setName('')
+      this.props.setEmail('')
+      this.props.setRemember(false)
+    }
+    const token = document.head.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')
+    if (token) {
+      this.props.setCSRF(token.content)
+    }
+
   }
   render()
   {
+    console.log("ReactRoot!!", this.props);
     return (
       <ConnectedRouter history= { this.props.history } >
         { routes(this.props.responseSession) }

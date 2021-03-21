@@ -16,64 +16,52 @@ export const SET_PARAMS = 'SET_PARAMS'
 
 export const setSession = (session) => async (dispatch: Dispatch): Promise<void> =>
 {
-  const data = {
-    payload: {
-      id: session.id,
-      name: session.name
-    }
+  const payload = {
+    id: session.id,
+    name: session.name
   }
-  dispatch({ type: SET_SESSION, data })
+  dispatch({ type: SET_SESSION, payload })
 }
 
 export const setName = (name) => async (dispatch: Dispatch): Promise<void> =>
 {
-  const data = {
-    payload: {
-      name
-    }
+  const payload = {
+    name
   }
-  dispatch({ type: SET_NAME, data })
+  dispatch({ type: SET_NAME, payload })
 }
 
 export const setEmail = (email) => async (dispatch: Dispatch): Promise<void> =>
 {
-  const data = {
-    payload: {
-      email
-    }
+  const payload = {
+    email
   }
-  dispatch({ type: SET_EMAIL, data })
+  dispatch({ type: SET_EMAIL, payload })
 }
 
 
 export const setRemember = (remember) => async (dispatch: Dispatch): Promise<void> =>
 {
-  const data = {
-    payload: {
-      remember
-    }
+  const payload = {
+    remember
   }
-  dispatch({ type: SET_REMEMBER, data })
+  dispatch({ type: SET_REMEMBER, payload })
 }
 
 
 export const setCSRF = (csrf) => async (dispatch: Dispatch): Promise<void> =>
 {
-  const data = {
-    payload: {
-      csrf
-    }
+  const payload = {
+    csrf
   }
-  dispatch({ type: SET_CSRF, data })
+  dispatch({ type: SET_CSRF, payload })
 }
 
 
 export const setPrams = (request) => async (dispatch: Dispatch): Promise<void> =>
 {
-  const data = {
-    payload: {
-      request
-    }
+  const payload = {
+    request
   }
-  dispatch({ type: SET_PARAMS, data })
+  dispatch({ type: SET_PARAMS, payload })
 }
