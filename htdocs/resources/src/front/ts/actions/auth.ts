@@ -14,54 +14,45 @@ export const SET_REMEMBER = 'SET_REMEMBER'
 export const SET_CSRF = 'SET_CSRF'
 export const SET_PARAMS = 'SET_PARAMS'
 
-export const setSession = (session) => async (dispatch: Dispatch): Promise<void> =>
-{
-  const payload = {
+export const setSession = (session) => ({
+  type: SET_SESSION,
+  payload: {
     id: session.id,
     name: session.name
-  }
-  dispatch({ type: SET_SESSION, payload })
-}
+  },
+})
 
-export const setName = (name) => async (dispatch: Dispatch): Promise<void> =>
-{
-  const payload = {
+export const setName = (name) => ({
+  type: SET_NAME,
+  payload: {
     name
   }
-  dispatch({ type: SET_NAME, payload })
-}
+})
 
-export const setEmail = (email) => async (dispatch: Dispatch): Promise<void> =>
-{
-  const payload = {
+export const setEmail = (email) => ({
+  type: SET_EMAIL,
+  payload: {
     email
   }
-  dispatch({ type: SET_EMAIL, payload })
-}
+})
 
-
-export const setRemember = (remember) => async (dispatch: Dispatch): Promise<void> =>
-{
-  const payload = {
+export const setRemember = (remember) => ({
+  type: SET_REMEMBER,
+  payload: {
     remember
   }
-  dispatch({ type: SET_REMEMBER, payload })
-}
+})
 
-
-export const setCSRF = (csrf) => async (dispatch: Dispatch): Promise<void> =>
-{
-  const payload = {
+export const setCSRF = (csrf) => ({
+  type: SET_CSRF,
+  payload: {
     csrf
   }
-  dispatch({ type: SET_CSRF, payload })
-}
+})
 
-
-export const setPrams = (request) => async (dispatch: Dispatch): Promise<void> =>
-{
-  const payload = {
+export const setPrams = (request) => ({
+  type: SET_PARAMS,
+  payload: {
     request
   }
-  dispatch({ type: SET_PARAMS, payload })
-}
+})

@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as ReactDom from 'react-dom'
 import { createStore, applyMiddleware } from 'redux'
 import { persistStore, persistReducer, persistCombineReducers } from 'redux-persist'
+import configureStore, { history } from './store/configureStore'
 import storage from 'redux-persist/lib/storage';
 import { PersistGate } from 'redux-persist/integration/react'
 import { createBrowserHistory } from 'history'
@@ -24,12 +25,11 @@ const persistConfig = {
   version: 1,
   storage,
 };
-const history = createBrowserHistory()
-const rootReducer  = reducers(history)
-const persistedReducer = persistCombineReducers(persistConfig, {...rootReducer});
-// const persistedReducer = persistReducer(persistConfig, reducers(history))
+// const history = createBrowserHistory()
+// const rootReducer  = reducers(history)
+// const persistedReducer = persistCombineReducers(persistConfig, {...rootReducer});
 
-const store = createStore(persistedReducer, enhancer)
+const store = configureStore({})
 const pstore = persistStore(store)
 
 const render = (props) => {
