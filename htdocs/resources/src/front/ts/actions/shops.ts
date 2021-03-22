@@ -14,7 +14,7 @@ export interface ShopsAppAction extends Action
 
 export const READ_STOCKS = 'READ_STOCKS'
 
-export const readShops = (url = API_ENDPOINT.SHOPS) => async (dispatch: Dispatch): Promise<void> =>
+export const readShops = (url: string = API_ENDPOINT.SHOPS) => async (dispatch: Dispatch): Promise<void> =>
 {
   const response = await API.get(url)
   dispatch({ type: READ_STOCKS, response })

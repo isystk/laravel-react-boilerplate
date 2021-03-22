@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import * as _ from 'lodash'
-import { Link } from 'react-router-dom'
-import { Pagination } from 'react-bootstrap'
+import Pagination from 'react-js-pagination';
+import { API_ENDPOINT } from '../../common/constants/api'
 
 import { readShops, readLikes, addLike, removeLike } from '../../actions'
 import { Stocks, Likes, Page } from '../../store/StoreTypes'
@@ -18,6 +18,13 @@ interface IProps {
 }
 
 export class ShopTop extends React.Component<IProps> {
+
+  constructor(props) {
+    super(props);
+    this.handlePageChange=this.handlePageChange.bind(this);
+  }
+
+
   componentDidMount(): void {
     // 商品データを取得する
     this.props.readShops()
@@ -62,94 +69,21 @@ export class ShopTop extends React.Component<IProps> {
 
   renderPaging(): JSX.Element {
 
-    const { total, current_page, last_page, first_page_url, prev_page_url, next_page_url, last_page_url } = this.props.paging
+    const { total, current_page} = this.props.paging
 
-    return (
-      <nav>
-        <ul className="pagination">
-          {prev_page_url ?
-            <li className="page-item">
-              <a className="page-link" rel="prev" aria-label="« 前へ" href={prev_page_url} onClick={
-                e => {
-                  e.preventDefault()
-                  this.props.readShops(prev_page_url)
-                }
-              }>‹</a>
-            </li>
-            :
-            <li className="page-item disabled" aria-disabled="true" aria-label="« 前へ">
-              <span className="page-link" aria-hidden="true">‹</span>
-            </li>
-          }
-          {(current_page === 1) ?
-            <li className="page-item active" aria-current="page"><span className="page-link">1</span></li>
-            :
-            <li className="page-item" aria-current="page">
-              <a className="page-link" href={first_page_url} onClick={
-                e => {
-                  e.preventDefault()
-                  this.props.readShops(first_page_url)
-                }
-              }>1</a>
-            </li>
-          }
-          {(2 <= last_page) ?
-            (current_page === 1) ?
-              <li className="page-item" aria-current="page">
-                <a className="page-link" href={next_page_url} onClick={
-                  e => {
-                    e.preventDefault()
-                    this.props.readShops(next_page_url)
-                  }
-                }>{current_page+1}</a>
-              </li>
-              :
-              (current_page === last_page) ?
-                <li className="page-item" aria-current="page">
-                  <a className="page-link" href={prev_page_url} onClick={
-                  e => {
-                    e.preventDefault()
-                    this.props.readShops(prev_page_url)
-                  }
-                }>{current_page-1}</a>
-                </li>
-                :
-                <li className="page-item active" aria-current="page"><span className="page-link">{current_page}</span></li>
-            : ''
-          }
-          {(3 <= last_page) ?
-            (current_page === last_page) ?
-              <li className="page-item active" aria-current="page"><span className="page-link">{last_page}</span></li>
-              :
-              <li className="page-item" aria-current="page">
-                <a className="page-link"
-                href={last_page_url} onClick={
-                  e => {
-                    e.preventDefault()
-                    this.props.readShops(last_page_url)
-                  }
-                }>{last_page}</a>
-              </li>
-            : ''
-          }
-          {next_page_url ?
-            <li className="page-item">
-              <a className="page-link" rel="next" aria-label="次へ »" href={next_page_url} onClick={
-                e => {
-                  e.preventDefault()
-                  this.props.readShops(next_page_url)
-                }
-              }>
-              ›</a>
-            </li>
-            :
-            <li className="page-item disabled" aria-disabled="true" aria-label="次へ »">
-              <span className="page-link" aria-hidden="true">›</span>
-            </li>
-          }
-        </ul>
-      </nav>
-    )
+    return <Pagination
+      activePage={current_page}
+      itemsCountPerPage={6}
+      totalItemsCount={total}
+      pageRangeDisplayed={3}
+      onChange={this.handlePageChange}
+      itemClass='page-item'
+      linkClass='page-link'
+    />
+  }
+
+  handlePageChange(pageNo) {
+    this.props.readShops(`${API_ENDPOINT.SHOPS}?page=${pageNo}`)
   }
 
   render(): JSX.Element {
@@ -198,12 +132,7 @@ const mapStateToProps = (state, ownProps) => {
     }),
     paging: {
       total: total,
-      current_page: current_page,
-      last_page: last_page,
-      first_page_url: first_page_url,
-      prev_page_url: prev_page_url,
-      next_page_url: next_page_url,
-      last_page_url: last_page_url,
+      current_page: current_page
     }
   }
 }
