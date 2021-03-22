@@ -5,6 +5,7 @@ import { URL } from '../common/constants/url'
 import Layout from '../components/layout'
 import CardTemplate from '../components/CardTemplate'
 import ShopTop from '../components/Shops/ShopTop'
+import AuthCheck from '../components/Auths/AuthCheck'
 import { NotFound } from "../components/NotFound";
 
 const routes = (session)=> {
@@ -20,22 +21,10 @@ const routes = (session)=> {
                 <Route path="/password/reset/:id" render={(props) => <CardTemplate title="パスワードのリセット" content="ResetForm" params={props.match.params} />} />
                 <Route exact path="/email/verify" render={() => <CardTemplate title="メールアドレスを確認しました。" content="Verify" />} />
 
-                {
-                 (() => {
-                    // ログインしてなければログイン画面へとばす
-                    if (session.id===undefined) {
-                      return <Redirect to="/login" />
-                    }
-                    // 新規会員登録後、メール確認が未完了の場合
-                    if(session.email_verified_at===null)
-                    {
-                      return <Redirect to="/email/verify" />
-                    }
-                  })()
-                }
-
                 { /* ★ログインユーザー専用ここから */ }
-                <Route path="/home" render={() => <CardTemplate title="ダッシュボード" content="Home" />} />
+                <AuthCheck session={session} >
+                  <Route path="/home" render={() => <CardTemplate title="ダッシュボード" content="Home" />} />
+                </AuthCheck>
                 { /* ★ログインユーザー専用ここまで */ }
 
                 <Route component={NotFound} />
