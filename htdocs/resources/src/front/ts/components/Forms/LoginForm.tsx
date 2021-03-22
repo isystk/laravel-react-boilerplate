@@ -51,6 +51,8 @@ class LoginForm extends React.Component<IProps> {
                     checked={this.props.remember}
                     action={this.props.setRemember}
                     />
+                <p className="fz-s">email: test1@test.com<br/>
+                    password: password</p>
                 <LoginButton />
             </Form>
         </React.Fragment>

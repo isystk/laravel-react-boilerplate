@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import CommonHeader from './common/common_header'
-import CommonFooter from './common/common_footer'
+import CommonHeader from './Commons/Header'
+import CommonFooter from './Commons/Footer'
 
 interface IProps {
   children: any
