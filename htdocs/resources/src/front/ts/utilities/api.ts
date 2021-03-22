@@ -31,7 +31,7 @@ const request = async (method: string, url: string, values?: any, config?: any):
       throw new SubmissionError({ _error: error.response.data.message })
     }
   })
-  console.log('Response:%s', JSON.stringify(response));
+  // console.log('Response:%s', JSON.stringify(response));
   return response.data
 }
 

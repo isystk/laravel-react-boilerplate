@@ -7,6 +7,7 @@ export interface Auth
   remember?: string,
   csrf?: string,
   request?: string,
+  session?: string,
 }
 
 export interface Consts

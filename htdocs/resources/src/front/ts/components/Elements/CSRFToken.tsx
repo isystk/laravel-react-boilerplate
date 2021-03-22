@@ -12,9 +12,8 @@ const CSRFToken = (props: IProps) =>  (
 )
 
 const mapStateToProps = state => {
-  console.log("CSRFToken.mapStateToProps", state)
   return ({
-    csrf: state.AuthReducer.csrf,
+    csrf: state.auth.csrf,
   })
 }
 const mapDispatchToProps = dispatch => ({

@@ -2,18 +2,82 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { URL } from "../../common/constants/url";
+import { NavDropdown, Form } from 'react-bootstrap'
+import CSRFToken from '../Elements/CSRFToken'
 
-class CommonHeader extends React.Component {
+interface IProps {
+  auth
+}
+
+class CommonHeader extends React.Component<IProps> {
 
   constructor(props) {
     super(props);
+  }
+
+  renderLogin(): JSX.Element {
+    
+    const { auth, name } = this.props.auth
+
+    return (
+      <ul className="navbar-nav ml-auto">
+        {
+          (() => {
+            if (auth) {
+              // ログイン済みの場合
+              return (
+                <>
+                <NavDropdown id="logout-nav" title={name+' 様'}>
+                    <NavDropdown.Item href="/logout" onClick={this.preSubmit}>ログアウト</NavDropdown.Item>
+                    <Form id="logout-form" action="/logout" method="POST" style={{display:'none'}}>
+                        <CSRFToken />
+                    </Form>
+                </NavDropdown>
+
+                <a href="#" >
+                    <img src="/assets/front/image/cart.png" className="cartImg ml-3" />
+                </a>
+
+                </>
+              )
+            } else {
+              // 未ログインの場合
+              return (
+                <>
+                  <li className="nav-item">
+                      <a className="btn btn-danger mr-3" href="/login">ログイン</a>
+                  </li>
+                  <li className="nav-item">
+                      <a className="btn btn-link text-danger" href="/register">新規登録</a>
+                  </li>
+                </>
+              )
+            }
+          })()
+        }
+
+        <li className="nav-item">
+            <a className="btn btn-link text-danger" href="/contact">
+                お問い合わせ
+            </a>
+        </li>
+      </ul>
+    )
+  }
+
+  preSubmit(currentEvent){
+    currentEvent.preventDefault();
+    const element: HTMLFormElement = document.getElementById('logout-form') as HTMLFormElement
+    if(element) {
+      element.submit();
+    }
   }
 
   render(): JSX.Element {
 
     return (
       <React.Fragment>
-      <header className="header shadow-sm">
+        <header className="header shadow-sm">
           <nav className="navbar navbar-expand-md navbar-light bg-white headerNav">
               <a className="header_logo" href="/">
                   <img src="/assets/front/image/logo.png" alt="" className="" />
@@ -22,65 +86,12 @@ class CommonHeader extends React.Component {
               <div className="" id="navbarSupportedContent">
                   <ul className="navbar-nav mr-auto">
 
-                  </ul>
-
-                  <ul className="navbar-nav ml-auto">
-                      <li className="nav-item">
-                          <a className="btn btn-danger mr-3" href="/login">ログイン</a>
-                      </li>
-                      <li className="nav-item">
-                          <a className="btn btn-link text-danger" href="/register">新規登録</a>
-                      </li>
-                      <li className="nav-item">
-                          <a className="btn btn-link text-danger" href="#">
-                              お問い合わせ
-                          </a>
-                      </li>
-
-                      {/*
-                      <li className="nav-item dropdown">
-                          <a id="navbarDropdown" className="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                              {{ Auth::user()->name }} <span className="caret"></span>
-                          </a>
-
-                          <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                              <a className="dropdown-item" href="#" onclick="event.preventDefault();
-                                                      document.getElementById('logout-form').submit();">
-                                  {{ __('ログアウト') }}
-                              </a>
-
-                              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                  @csrf
-                              </form>
-
-                              <a className="dropdown-item" href="#" onclick="event.preventDefault();
-                                                      document.getElementById('shop-form').submit();">
-                                  カートを見る
-                              </a>
-
-                              <form id="shop-form" action="{{ route('shop.mycart') }}" method="POST" style="display: none;">
-                                  @csrf
-                              </form>
-
-                          </div>
-                      </li>
-
-                      <a href="#" onclick="event.preventDefault();
-                                                      document.getElementById('shop-form').submit();">
-                          <img src="{{ asset('/assets/front/image/cart.png') }}" className="cartImg ml-3">
-                      </a>
-                      <li className="nav-item">
-                          <a className="btn btn-link text-danger" href="{{ route('contact.index') }}">
-                              お問い合わせ
-                          </a>
-                      </li>
-
-                       */}
+                    {this.renderLogin()}
 
                   </ul>
               </div>
           </nav>
-      </header>
+        </header>
       </React.Fragment>
     );
   }

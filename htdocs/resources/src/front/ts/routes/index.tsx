@@ -8,7 +8,6 @@ import ShopTop from '../components/Shops/ShopTop'
 import { NotFound } from "../components/NotFound";
 
 const routes = (session)=> {
-    console.log("session!!", session);
     return(
         <>
           <Layout>
