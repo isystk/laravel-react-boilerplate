@@ -42,6 +42,6 @@ class OAuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('home');
+        return redirect('/home');
     }
 }
