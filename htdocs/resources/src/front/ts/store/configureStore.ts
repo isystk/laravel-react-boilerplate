@@ -19,7 +19,6 @@ const persistedReducer = persistReducer(persistConfig, createRootReducer(history
 
 export default function configureStore(preloadedState)
 {
-  console.log("configureStore", preloadedState);
 
   // 開発環境の場合は、redux-devtools-extension を利用できるようにする
   // const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

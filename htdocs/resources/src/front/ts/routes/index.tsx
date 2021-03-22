@@ -19,7 +19,25 @@ const routes = (session)=> {
                 <Route exact path="/password/reset" render={() => <CardTemplate title="パスワードのリセット" content="EMailForm" />} />
                 <Route path="/password/reset/:id" render={(props) => <CardTemplate title="パスワードのリセット" content="ResetForm" params={props.match.params} />} />
                 <Route exact path="/email/verify" render={() => <CardTemplate title="メールアドレスを確認しました。" content="Verify" />} />
+
+                {
+                 (() => {
+                    // ログインしてなければログイン画面へとばす
+                    if (session.id===undefined) {
+                      return <Redirect to="/login" />
+                    }
+                    // 新規会員登録後、メール確認が未完了の場合
+                    if(session.email_verified_at===null)
+                    {
+                      return <Redirect to="/email/verify" />
+                    }
+                  })()
+                }
+
+                { /* ★ログインユーザー専用ここから */ }
                 <Route path="/home" render={() => <CardTemplate title="ダッシュボード" content="Home" />} />
+                { /* ★ログインユーザー専用ここまで */ }
+
                 <Route component={NotFound} />
               </Switch>
             </main>
