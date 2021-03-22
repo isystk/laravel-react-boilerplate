@@ -16,7 +16,7 @@ class CommonHeader extends React.Component<IProps> {
   }
 
   renderLogin(): JSX.Element {
-    
+
     const { auth, name } = this.props.auth
 
     return (
@@ -28,13 +28,23 @@ class CommonHeader extends React.Component<IProps> {
               return (
                 <>
                 <NavDropdown id="logout-nav" title={name+' 様'}>
-                    <NavDropdown.Item href="/logout" onClick={this.preSubmit}>ログアウト</NavDropdown.Item>
+                    <NavDropdown.Item href="/logout" onClick={(e) => {
+                      e.preventDefault();
+                      const element: HTMLFormElement = document.getElementById('logout-form') as HTMLFormElement
+                      if(element) {
+                        element.submit();
+                      }
+                    }}>ログアウト</NavDropdown.Item>
                     <Form id="logout-form" action="/logout" method="POST" style={{display:'none'}}>
+                        <CSRFToken />
+                    </Form>
+                    <NavDropdown.Item href="/mycart" onClick={this.mycartSubmit}>カートを見る</NavDropdown.Item>
+                    <Form id="mycart-form" action="/mycart" method="POST" style={{display:'none'}}>
                         <CSRFToken />
                     </Form>
                 </NavDropdown>
 
-                <a href="#" >
+                <a href="#" onClick={this.mycartSubmit}>
                     <img src="/assets/front/image/cart.png" className="cartImg ml-3" />
                 </a>
 
@@ -65,9 +75,9 @@ class CommonHeader extends React.Component<IProps> {
     )
   }
 
-  preSubmit(currentEvent){
+  mycartSubmit(currentEvent){
     currentEvent.preventDefault();
-    const element: HTMLFormElement = document.getElementById('logout-form') as HTMLFormElement
+    const element: HTMLFormElement = document.getElementById('mycart-form') as HTMLFormElement
     if(element) {
       element.submit();
     }
