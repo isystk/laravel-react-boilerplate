@@ -19,7 +19,7 @@ const routes = (session)=> {
                 <Route exact path="/password/reset" render={() => <CardTemplate title="パスワードのリセット" content="EMailForm" />} />
                 <Route path="/password/reset/:id" render={(props) => <CardTemplate title="パスワードのリセット" content="ResetForm" params={props.match.params} />} />
                 <Route exact path="/email/verify" render={() => <CardTemplate title="メールアドレスを確認しました。" content="Verify" />} />
-                <Route path="/home" render={() => <CardTemplate title="Dashboard" content="Home" />} />
+                <Route path="/home" render={() => <CardTemplate title="ダッシュボード" content="Home" />} />
                 <Route component={NotFound} />
               </Switch>
             </main>

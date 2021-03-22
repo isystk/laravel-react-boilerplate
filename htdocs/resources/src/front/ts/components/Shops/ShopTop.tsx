@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import * as _ from 'lodash'
+import { Link } from 'react-router-dom'
+import { Pagination } from 'react-bootstrap'
 
 import { readShops, readLikes, addLike, removeLike } from '../../actions'
 import { Stocks, Likes, Page } from '../../store/StoreTypes'
@@ -132,13 +134,13 @@ export class ShopTop extends React.Component<IProps> {
           }
           {next_page_url ?
             <li className="page-item">
-              <a className="page-link" rel="next" aria-label="次へ »"
-              href={next_page_url} onClick={
+              <a className="page-link" rel="next" aria-label="次へ »" href={next_page_url} onClick={
                 e => {
                   e.preventDefault()
                   this.props.readShops(next_page_url)
                 }
-              }>›</a>
+              }>
+              ›</a>
             </li>
             :
             <li className="page-item disabled" aria-disabled="true" aria-label="次へ »">

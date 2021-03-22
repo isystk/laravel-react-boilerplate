@@ -4,7 +4,7 @@ import SessionAlert from '../Elements/SessionAlert'
 const Home = () => (
     <>
         <SessionAlert target="status" />
-        You are logged in!
+        ログインが成功しました！
     </>
 )
 export default Home
