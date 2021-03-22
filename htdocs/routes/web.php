@@ -14,52 +14,35 @@
 //     return view('welcome');
 // });
 
-/*
-|--------------------------------------------------------------------------
-| ソーシャルログイン
-|--------------------------------------------------------------------------
-*/
-Route::prefix('auth')->middleware('guest')->group(function () {
+// /*
+// |--------------------------------------------------------------------------
+// | フロント 認証不要
+// |--------------------------------------------------------------------------
+// */
+// Route::get('/', 'ShopController@index')->name('shop.list');
+// Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/contact', 'ContactFormController@index')->name('contact.index');
+// Route::post('/contact/store', 'ContactFormController@store')->name('contact.store');
+// Route::get('/contact/complete', 'ContactFormController@complete')->name('contact.complete');
 
-  Route::get('/{provider}', 'Auth\OAuthController@socialOAuth')
-    ->where('provider', 'google')
-    ->name('socialOAuth');
 
-  Route::get('/{provider}/callback', 'Auth\OAuthController@handleProviderCallback')
-    ->where('provider', 'google')
-    ->name('oauthCallback');
-});
-
-/*
-|--------------------------------------------------------------------------
-| 1) User 認証不要
-|--------------------------------------------------------------------------
-*/
-// React表示用トップページ
-Route::get('/top', 'ShopController@index')->name('shop.list');
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/contact', 'ContactFormController@index')->name('contact.index');
-Route::post('/contact/store', 'ContactFormController@store')->name('contact.store');
-Route::get('/contact/complete', 'ContactFormController@complete')->name('contact.complete');
+// /*
+// |--------------------------------------------------------------------------
+// | フロント ログイン後
+// |--------------------------------------------------------------------------
+// */
+// Route::group(['middleware' => 'auth:user'], function () {
+//   Route::post('/mycart', 'ShopController@mycart')->name('shop.mycart');
+//   Route::post('/addMycart', 'ShopController@addMycart')->name('shop.addcart');
+//   Route::post('/cartdelete', 'ShopController@deleteCart')->name('shop.delete');
+//   Route::post('/checkout', 'ShopController@checkout')->name('shop.check');
+//   Route::get('/complete', 'ShopController@complete')->name('shop.complete');
+// });
 
 
 /*
 |--------------------------------------------------------------------------
-| 2) User ログイン後
-|--------------------------------------------------------------------------
-*/
-Route::group(['middleware' => 'auth:user'], function () {
-  Route::post('/mycart', 'ShopController@mycart')->name('shop.mycart');
-  Route::post('/addMycart', 'ShopController@addMycart')->name('shop.addcart');
-  Route::post('/cartdelete', 'ShopController@deleteCart')->name('shop.delete');
-  Route::post('/checkout', 'ShopController@checkout')->name('shop.check');
-  Route::get('/complete', 'ShopController@complete')->name('shop.complete');
-});
-
-
-/*
-|--------------------------------------------------------------------------
-| 3) Admin 認証不要
+| Admin 認証不要
 |--------------------------------------------------------------------------
 */
 Route::group(['prefix' => 'admin'], function () {
@@ -72,7 +55,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 /*
 |--------------------------------------------------------------------------
-| 4) Admin ログイン後
+| Admin ログイン後
 |--------------------------------------------------------------------------
 */
 Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
@@ -106,10 +89,30 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
   Route::post('contact/destroy/{id}', 'Admin\ContactFormController@destroy')->name('admin.contact.destroy');
 });
 
-Route::get('/', 'Front\ReactController@index')->name('front.react');
+/*
+|--------------------------------------------------------------------------
+| ソーシャルログイン
+|--------------------------------------------------------------------------
+*/
+Route::prefix('auth')->middleware('guest')->group(function () {
+
+  Route::get('/{provider}', 'Auth\OAuthController@socialOAuth')
+    ->where('provider', 'google')
+    ->name('socialOAuth');
+
+  Route::get('/{provider}/callback', 'Auth\OAuthController@handleProviderCallback')
+    ->where('provider', 'google')
+    ->name('oauthCallback');
+});
 
 Auth::routes(['verify' => true]);
 
+/*
+|--------------------------------------------------------------------------
+| React
+|--------------------------------------------------------------------------
+*/
+Route::get('/', 'Front\ReactController@index')->name('front.react');
 Route::get('/login', 'Front\ReactController@index')->name('login');
 Route::get('/register', 'Front\ReactController@index')->name('register');
 Route::get('password/reset', 'Front\ReactController@index')->name('password.request');
@@ -117,5 +120,4 @@ Route::get('password/reset/{token}', 'Front\ReactController@index')->name('passw
 Route::get('email/verify', 'Front\ReactController@index')->name('verification.notice');
 Route::post('/session', 'Front\ReactController@session')->name('session');
 Route::get('/{router}', 'Front\ReactController@index')->name('home');
-
 

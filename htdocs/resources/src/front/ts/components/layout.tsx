@@ -1,27 +1,15 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { URL } from '../common/constants/url'
 import CommonHeader from './common/common_header'
 import CommonFooter from './common/common_footer'
-import { Auth } from '../store/StoreTypes'
 
 interface IProps {
-  auth: Auth
+  children: any
 }
 
 class Layout extends React.Component<IProps> {
   constructor(props) {
     super(props)
-  }
-
-  logoutLink(): JSX.Element {
-    const { auth } = this.props
-
-    // if (auth.isLogin) {
-    //   return <a onClick={this.logoutClick}>ログアウト</a>
-    // }
-    return <Link to={URL.LOGIN}>ログイン</Link>
   }
 
   render(): JSX.Element {

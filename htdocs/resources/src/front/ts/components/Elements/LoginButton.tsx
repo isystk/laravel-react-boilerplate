@@ -6,10 +6,10 @@ const LoginButton = () => (
     <Row className="form-group mb-0">
         <Col md="8" className="offset-md-4">
             <Button type="submit" variant="primary">
-                Login
+              ログイン
             </Button>
             <Link to="/password/reset" className="btn btn-link">
-                Forgot Your Password?
+              パスワードを忘れた方
             </Link>
         </Col>
     </Row>

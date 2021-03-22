@@ -15,7 +15,7 @@ class CommonHeader extends React.Component {
       <React.Fragment>
       <header className="header shadow-sm">
           <nav className="navbar navbar-expand-md navbar-light bg-white headerNav">
-              <a className="header_logo" href="#">
+              <a className="header_logo" href="/">
                   <img src="/assets/front/image/logo.png" alt="" className="" />
               </a>
 
@@ -26,10 +26,10 @@ class CommonHeader extends React.Component {
 
                   <ul className="navbar-nav ml-auto">
                       <li className="nav-item">
-                          <a className="btn btn-danger mr-3" href="#">ログイン</a>
+                          <a className="btn btn-danger mr-3" href="/login">ログイン</a>
                       </li>
                       <li className="nav-item">
-                          <a className="btn btn-link text-danger" href="#">新規登録</a>
+                          <a className="btn btn-link text-danger" href="/register">新規登録</a>
                       </li>
                       <li className="nav-item">
                           <a className="btn btn-link text-danger" href="#">

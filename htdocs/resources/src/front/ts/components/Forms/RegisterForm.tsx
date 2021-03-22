@@ -25,7 +25,7 @@ class LoginForm extends React.Component<IProps> {
                 <TextInput
                     identity="name"
                     controlType="text"
-                    label="Name"
+                    label="お名前"
                     defaultValue={this.props.name}
                     action={this.props.setName}
                     autoFocus={true}
@@ -33,7 +33,7 @@ class LoginForm extends React.Component<IProps> {
                 <TextInput
                     identity="email"
                     controlType="email"
-                    label="E-Mail Address"
+                    label="メールアドレス"
                     defaultValue={this.props.email}
                     action={this.props.setEmail}
                     autoFocus={false}
@@ -42,16 +42,16 @@ class LoginForm extends React.Component<IProps> {
                     identity="password"
                     controlType="password"
                     autoComplete="new-password"
-                    label="Password"
+                    label="パスワード"
                     />
                 <TextInput
                     identity="password-confirm"
                     controlType="password"
                     name="password_confirmation"
                     autoComplete="new-password"
-                    label="Confirm Password"
+                    label="パスワード（確認）"
                     />
-                <SubmitButton label="Register" />
+                <SubmitButton label="新規登録" />
             </Form>
         )
     }

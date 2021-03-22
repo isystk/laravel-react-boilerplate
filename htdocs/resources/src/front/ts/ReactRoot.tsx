@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
 import
@@ -38,7 +37,6 @@ class ReactRoot extends React.Component<IProps>
     }
     const token = document.head.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')
     if (token) {
-      console.log('meta[name="csrf-token"]', token.content);
       this.props.setCSRF(token.content)
     }
 
@@ -46,7 +44,6 @@ class ReactRoot extends React.Component<IProps>
 
   render()
   {
-    console.log("ReactRoot!!", this.props);
     return (
       <ConnectedRouter history= { this.props.history } >
         { routes(this.props.responseSession) }
