@@ -1,12 +1,13 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { URL } from "../../common/constants/url";
+import { push } from "connected-react-router"
 import { NavDropdown, Form } from 'react-bootstrap'
 import CSRFToken from '../Elements/CSRFToken'
+import { URL } from '../../common/constants/url'
 
 interface IProps {
   auth
+  push
 }
 
 class CommonHeader extends React.Component<IProps> {
@@ -55,10 +56,16 @@ class CommonHeader extends React.Component<IProps> {
               return (
                 <>
                   <li className="nav-item">
-                      <a className="btn btn-danger mr-3" href="/login">ログイン</a>
+                      <a className="btn btn-danger mr-3" href={URL.LOGIN} onClick={(e) => {
+                        e.preventDefault();
+                        this.props.push(URL.LOGIN);
+                      }}>ログイン</a>
                   </li>
                   <li className="nav-item">
-                      <a className="btn btn-link text-danger" href="/register">新規登録</a>
+                      <a className="btn btn-link text-danger" href={URL.REGISTER} onClick={(e) => {
+                        e.preventDefault();
+                        this.props.push(URL.REGISTER);
+                      }}>新規登録</a>
                   </li>
                 </>
               )
@@ -67,9 +74,10 @@ class CommonHeader extends React.Component<IProps> {
         }
 
         <li className="nav-item">
-            <a className="btn btn-link text-danger" href="/contact">
-                お問い合わせ
-            </a>
+            <a className="btn btn-link text-danger" href={URL.CONTACT} onClick={(e) => {
+              e.preventDefault();
+              this.props.push(URL.CONTACT);
+            }}>お問い合わせ</a>
         </li>
       </ul>
     )
@@ -89,7 +97,10 @@ class CommonHeader extends React.Component<IProps> {
       <React.Fragment>
         <header className="header shadow-sm">
           <nav className="navbar navbar-expand-md navbar-light bg-white headerNav">
-              <a className="header_logo" href="/">
+              <a className="header_logo" href="/" onClick={(e) => {
+                e.preventDefault();
+                this.props.push(URL.TOP);
+              }}>
                   <img src="/assets/front/image/logo.png" alt="" className="" />
               </a>
 
@@ -114,6 +125,6 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mapDispatchToProps = {  };
+const mapDispatchToProps = { push };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommonHeader);

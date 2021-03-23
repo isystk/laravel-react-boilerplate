@@ -14,31 +14,7 @@
 //     return view('welcome');
 // });
 
-// /*
-// |--------------------------------------------------------------------------
-// | フロント 認証不要
-// |--------------------------------------------------------------------------
-// */
-// Route::get('/', 'ShopController@index')->name('shop.list');
-// Route::get('/home', 'HomeController@index')->name('home');
-// Route::get('/contact', 'ContactFormController@index')->name('contact.index');
-// Route::post('/contact/store', 'ContactFormController@store')->name('contact.store');
-// Route::get('/contact/complete', 'ContactFormController@complete')->name('contact.complete');
-
-
-// /*
-// |--------------------------------------------------------------------------
-// | フロント ログイン後
-// |--------------------------------------------------------------------------
-// */
-// Route::group(['middleware' => 'auth:user'], function () {
-//   Route::post('/mycart', 'ShopController@mycart')->name('shop.mycart');
-//   Route::post('/addMycart', 'ShopController@addMycart')->name('shop.addcart');
-//   Route::post('/cartdelete', 'ShopController@deleteCart')->name('shop.delete');
-//   Route::post('/checkout', 'ShopController@checkout')->name('shop.check');
-//   Route::get('/complete', 'ShopController@complete')->name('shop.complete');
-// });
-
+Auth::routes(['verify' => true]);
 
 /*
 |--------------------------------------------------------------------------
@@ -105,7 +81,18 @@ Route::prefix('auth')->middleware('guest')->group(function () {
     ->name('oauthCallback');
 });
 
-Auth::routes(['verify' => true]);
+/*
+|--------------------------------------------------------------------------
+| フロント ログイン後
+|--------------------------------------------------------------------------
+*/
+Route::group(['middleware' => 'auth:user'], function () {
+  Route::post('/mycart', 'Front\ShopController@mycart')->name('shop.mycart');
+  Route::post('/addMycart', 'Front\ShopController@addMycart')->name('shop.addcart');
+  Route::post('/cartdelete', 'Front\ShopController@deleteCart')->name('shop.delete');
+  Route::post('/checkout', 'Front\ShopController@checkout')->name('shop.check');
+});
+
 
 /*
 |--------------------------------------------------------------------------

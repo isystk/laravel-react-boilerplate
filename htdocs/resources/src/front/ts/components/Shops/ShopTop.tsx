@@ -2,6 +2,7 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import * as _ from 'lodash'
 import Pagination from 'react-js-pagination';
+import { push } from "connected-react-router"
 import { API_ENDPOINT } from '../../common/constants/api'
 
 import { readShops, readLikes, addLike, removeLike } from '../../actions'
@@ -11,6 +12,8 @@ interface IProps {
   stocks: Stocks
   likes: Likes
   paging: Page
+  push
+  url
   readShops
   readLikes
   addLike
@@ -21,14 +24,15 @@ export class ShopTop extends React.Component<IProps> {
 
   constructor(props) {
     super(props);
+
+    // 商品データを取得する
+    this.props.readShops(this.props.url.search)
+
     this.handlePageChange=this.handlePageChange.bind(this);
   }
 
 
   componentDidMount(): void {
-    // 商品データを取得する
-    this.props.readShops()
-
     // お気に入りデータを取得する
     this.props.readLikes()
   }
@@ -83,7 +87,8 @@ export class ShopTop extends React.Component<IProps> {
   }
 
   handlePageChange(pageNo) {
-    this.props.readShops(`${API_ENDPOINT.SHOPS}?page=${pageNo}`)
+    // 商品データを取得する
+    this.props.readShops(`?page=${pageNo}`)
   }
 
   render(): JSX.Element {
@@ -119,7 +124,7 @@ export class ShopTop extends React.Component<IProps> {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { total, current_page, last_page, first_page_url, prev_page_url, next_page_url, last_page_url, ...stocks } = state.stocks
+  const { total, current_page, ...stocks } = state.stocks
   const likes = state.likes
   return {
     stocks: _.map(stocks.data, function(stock) {
@@ -133,10 +138,15 @@ const mapStateToProps = (state, ownProps) => {
     paging: {
       total: total,
       current_page: current_page
+    },
+    url: {
+      pathname: state.router.location.pathname,
+      search: state.router.location.search,
+      hash: state.router.location.hash,
     }
   }
 }
 
-const mapDispatchToProps = { readShops, readLikes, addLike, removeLike }
+const mapDispatchToProps = { readShops, readLikes, addLike, removeLike, push }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShopTop)
