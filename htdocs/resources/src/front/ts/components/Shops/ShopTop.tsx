@@ -3,9 +3,8 @@ import { connect } from 'react-redux'
 import * as _ from 'lodash'
 import Pagination from 'react-js-pagination';
 import { push } from "connected-react-router"
-import { API_ENDPOINT } from '../../common/constants/api'
 
-import { readShops, readLikes, addLike, removeLike } from '../../actions'
+import { readShops, readLikes, addLike, removeLike, addCart } from '../../actions'
 import { Stocks, Likes, Page } from '../../store/StoreTypes'
 
 interface IProps {
@@ -18,6 +17,7 @@ interface IProps {
   readLikes
   addLike
   removeLike
+  addCart
 }
 
 export class ShopTop extends React.Component<IProps> {
@@ -33,6 +33,7 @@ export class ShopTop extends React.Component<IProps> {
 
 
   componentDidMount(): void {
+    
     // お気に入りデータを取得する
     this.props.readLikes()
   }
@@ -64,7 +65,9 @@ export class ShopTop extends React.Component<IProps> {
           {stock.quantity === 0 ? (
             <input type="button" value="カートに入れる（残り0個）" className="btn-gray" />
           ) : (
-            <input type="submit" value={`カートに入れる（残り${stock.quantity}個）`} className="btn-01" />
+            <input type="button" value={`カートに入れる（残り${stock.quantity}個）`} className="btn-01" onClick={() => {
+              this.props.addCart(stock.id);
+            }}/>
           )}
         </form>
       </div>
@@ -94,36 +97,37 @@ export class ShopTop extends React.Component<IProps> {
   render(): JSX.Element {
     return (
       <React.Fragment>
-        <div className="contentsArea">
-          <div id="link01" className="carousel slide mainBunner" data-ride="carousel">
-            <div className="carousel-inner">
-              <div className="carousel-item active">
-                <img src="/assets/front/image/bunner_01.jpg" alt="" />
-              </div>
-              <div className="carousel-item">
-                <img src="/assets/front/image/bunner_02.jpg" alt="" />
-              </div>
-              <a className="carousel-control-prev" href="#link01" role="button" data-slide="prev">
-                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span className="sr-only">Previous</span>
-              </a>
-              <a className="carousel-control-next" href="#link01" role="button" data-slide="next">
-                <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                <span className="sr-only">Next</span>
-              </a>
+      <div className="contentsArea">
+        <div id="link01" className="carousel slide mainBunner" data-ride="carousel">
+          <div className="carousel-inner">
+            <div className="carousel-item active">
+              <img src="/assets/front/image/bunner_01.jpg" alt="" />
             </div>
-          </div>
-          <div className="">
-            <div className="block01">{this.renderStocks()}</div>
-            <div className="mt40">{this.renderPaging()}</div>
+            <div className="carousel-item">
+              <img src="/assets/front/image/bunner_02.jpg" alt="" />
+            </div>
+            <a className="carousel-control-prev" href="#link01" role="button" data-slide="prev">
+              <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span className="sr-only">Previous</span>
+            </a>
+            <a className="carousel-control-next" href="#link01" role="button" data-slide="next">
+              <span className="carousel-control-next-icon" aria-hidden="true"></span>
+              <span className="sr-only">Next</span>
+            </a>
           </div>
         </div>
+        <div className="">
+          <div className="block01">{this.renderStocks()}</div>
+          <div className="mt40">{this.renderPaging()}</div>
+        </div>
+      </div>
       </React.Fragment>
     )
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
+  console.log("mapStateToProps", state);
   const { total, current_page, ...stocks } = state.stocks
   const likes = state.likes
   return {
@@ -147,6 +151,6 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const mapDispatchToProps = { readShops, readLikes, addLike, removeLike, push }
+const mapDispatchToProps = { push, readShops, readLikes, addLike, removeLike, addCart }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShopTop)

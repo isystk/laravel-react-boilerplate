@@ -15,13 +15,11 @@ const mix = require('laravel-mix')
 mix
   .ts('resources/src/front/ts/app.tsx', 'public/assets/front/js')
   .sass('resources/src/front/sass/app.scss', 'public/assets/front/css')
-  .sourceMaps(true)
 
 // 管理画面
 mix
   .js('resources/src/admin/js/app.js', 'public/assets/admin/js')
   .sass('resources/src/admin/sass/app.scss', 'public/assets/admin/css')
-  .sourceMaps(true)
 
 if (mix.inProduction()) {
   // 本番環境
@@ -30,7 +28,9 @@ if (mix.inProduction()) {
   // 本番以外の環境
 
   var HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
-  mix.webpackConfig({
+  mix
+  .sourceMaps(true)
+  .webpackConfig({
     plugins: [
       // Webpackのコンパイル速度改善
       // See：https://qiita.com/Te2/items/4b9dce89950d00d344ea

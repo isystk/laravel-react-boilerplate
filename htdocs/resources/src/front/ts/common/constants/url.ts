@@ -14,4 +14,6 @@ export const URL = {
   HOME: '/home',
   /** お問い合わせ */
   CONTACT: '/contact',
+  /** マイカート */
+  MYCART: '/mycart',
 }

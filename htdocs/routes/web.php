@@ -83,19 +83,6 @@ Route::prefix('auth')->middleware('guest')->group(function () {
 
 /*
 |--------------------------------------------------------------------------
-| フロント ログイン後
-|--------------------------------------------------------------------------
-*/
-Route::group(['middleware' => 'auth:user'], function () {
-  Route::post('/mycart', 'Front\ShopController@mycart')->name('shop.mycart');
-  Route::post('/addMycart', 'Front\ShopController@addMycart')->name('shop.addcart');
-  Route::post('/cartdelete', 'Front\ShopController@deleteCart')->name('shop.delete');
-  Route::post('/checkout', 'Front\ShopController@checkout')->name('shop.check');
-});
-
-
-/*
-|--------------------------------------------------------------------------
 | React
 |--------------------------------------------------------------------------
 */
@@ -108,3 +95,15 @@ Route::get('email/verify', 'Front\ReactController@index')->name('verification.no
 Route::post('/session', 'Front\ReactController@session')->name('session');
 Route::get('/{router}', 'Front\ReactController@index')->name('home');
 
+
+/*
+|--------------------------------------------------------------------------
+| API  ログイン後
+|--------------------------------------------------------------------------
+*/
+Route::group(['middleware' => 'auth:user'], function () {
+  Route::post('/api/mycart', 'Api\ShopController@mycart')->name('shop.mycart');
+  Route::post('/api/addMycart', 'Api\ShopController@addMycart')->name('shop.addcart');
+  Route::post('/api/cartdelete', 'Api\ShopController@deleteCart')->name('shop.delete');
+  Route::post('/checkout', 'Front\ShopController@checkout')->name('shop.check');
+});

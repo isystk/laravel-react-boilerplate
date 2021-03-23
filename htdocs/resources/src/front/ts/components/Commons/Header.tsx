@@ -14,6 +14,8 @@ class CommonHeader extends React.Component<IProps> {
 
   constructor(props) {
     super(props);
+    
+    this.mycartSubmit=this.mycartSubmit.bind(this);
   }
 
   renderLogin(): JSX.Element {
@@ -45,7 +47,7 @@ class CommonHeader extends React.Component<IProps> {
                     </Form>
                 </NavDropdown>
 
-                <a href="#" onClick={this.mycartSubmit}>
+                <a href="/mycart" onClick={this.mycartSubmit}>
                     <img src="/assets/front/image/cart.png" className="cartImg ml-3" />
                 </a>
 
@@ -83,12 +85,14 @@ class CommonHeader extends React.Component<IProps> {
     )
   }
 
-  mycartSubmit(currentEvent){
-    currentEvent.preventDefault();
-    const element: HTMLFormElement = document.getElementById('mycart-form') as HTMLFormElement
-    if(element) {
-      element.submit();
-    }
+  mycartSubmit(e){
+    e.preventDefault();
+    // const element: HTMLFormElement = document.getElementById('mycart-form') as HTMLFormElement
+    // if(element) {
+    //   element.submit();
+    // }
+
+    this.props.push(URL.MYCART);
   }
 
   render(): JSX.Element {

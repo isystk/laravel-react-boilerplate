@@ -21,12 +21,19 @@ export const API_ENDPOINT = {
   /** 共通定数 */
   COMMON_CONST: getBffUrl('/common/const'),
 
-  /** 商品一覧データ取得 */
-  SHOPS: getBffUrl('/shops'),
   /** お気に入りデータ取得 */
   LIKES: getBffUrl('/likes'),
   /** お気に入り追加 */
   LIKES_STORE: getBffUrl('/likes/store'),
   /** お気に入り削除 */
   LIKES_DESTROY: getBffUrl('/likes/destroy'),
+
+  /** 商品一覧データ取得 */
+  SHOPS: getBffUrl('/shops'),
+  /** マイカートデータ取得 */
+  MYCARTS: getBffUrl('/mycart'),
+  /** カートに商品を追加する */
+  ADD_MYCART: getBffUrl('/addMycart'),
+  /** カートから商品を削除する */
+  REMOVE_MYCART: getBffUrl('/cartdelete'),
 }

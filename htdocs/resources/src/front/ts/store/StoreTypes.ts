@@ -55,3 +55,22 @@ export interface Likes
 {
   data: string[]
 }
+
+export interface Carts
+{
+  data: Cart[]
+  message: string
+  page: Page
+}
+
+export interface Cart
+{
+  id: number
+  name: string
+  detail: string
+  price: number
+  imgpath: string
+  quantity: number
+  created_at: Date
+  updated_at: Date
+}

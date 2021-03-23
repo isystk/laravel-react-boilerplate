@@ -5,6 +5,7 @@ import { URL } from '../common/constants/url'
 import Layout from '../components/layout'
 import CardTemplate from '../components/CardTemplate'
 import ShopTop from '../components/Shops/ShopTop'
+import MyCart from '../components/Shops/MyCart'
 import AuthCheck from '../components/Auths/AuthCheck'
 import { NotFound } from "../components/NotFound";
 
@@ -23,7 +24,9 @@ const routes = (session)=> {
 
                 { /* ★ログインユーザー専用ここから */ }
                 <AuthCheck session={session} >
-                  <Route path={URL.HOME} render={() => <CardTemplate title="ダッシュボード" content="Home" />} />
+                  <Route exact path={URL.HOME} render={() => <CardTemplate title="ダッシュボード" content="Home" />} />
+                  <Route exact path={URL.MYCART} component={MyCart} />
+
                 </AuthCheck>
                 { /* ★ログインユーザー専用ここまで */ }
 
