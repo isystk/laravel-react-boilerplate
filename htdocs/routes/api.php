@@ -24,5 +24,6 @@ Route::group(['middleware' => ['api']], function () {
     Route::post('/likes/destroy/{id}', 'Api\LikeController@destroy');
 
     Route::resource('shops', 'Api\ShopController');
-    
+
+    Route::resource('consts', 'Api\ConstController');
 });

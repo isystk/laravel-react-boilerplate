@@ -5,13 +5,15 @@ import { push } from "connected-react-router";
 import { API_ENDPOINT } from "../../common/constants/api";
 import { URL } from "../../common/constants/url";
 import CSRFToken from "../Elements/CSRFToken";
+import { Elements, StripeProvider } from 'react-stripe-elements';
 
 import { readCarts, removeCart } from "../../actions";
 import { NavDropdown, Form } from "react-bootstrap";
-import { Auth, Carts } from "../../store/StoreTypes";
+import { Auth, Consts, Carts } from "../../store/StoreTypes";
 
 interface IProps {
   auth: Auth;
+  consts: Consts;
   carts: Carts;
   push;
   readCarts;
@@ -36,22 +38,14 @@ export class MyCart extends React.Component<IProps> {
         />
         <p>{cart.name} </p>
         <p className="c-red mb20">{cart.price}円 </p>
-        <Form id="shop-check" action="/cartdelete" method="POST">
-          <CSRFToken />
-          <input
-            type="hidden"
-            name="stock_id"
-            value="{{ $my_cart->stock->id }}"
-          />
-          <input
-            type="submit"
-            value="カートから削除する"
-            className="btn-01"
-            onClick={() => {
-              this.props.removeCart(cart.id);
-            }}
-          />
-        </Form>
+        <input
+          type="button"
+          value="カートから削除する"
+          className="btn-01"
+          onClick={() => {
+            this.props.removeCart(cart.id);
+          }}
+        />
       </div>
     ));
   }
@@ -73,17 +67,19 @@ export class MyCart extends React.Component<IProps> {
                 <>
                   <div className="block01">{this.renderCarts()}</div>
                   <div className="block02">
-                    <p>合計個数：xx個</p>
+                    <p>合計個数：{this.props.carts.count}個</p>
                     <p style={{ fontSize: "1.2em", fontWeight: "bold" }}>
-                      合計金額:cccc円
+                      合計金額:{this.props.carts.sum}円
                     </p>
                   </div>
-                  <Form id="shop-check" action="/checkout" method="POST">
-                    <CSRFToken />
-                    {/* <script src="https://checkout.stripe.com/checkout.js" className="stripe-button" data-key="{{ env('STRIPE_KEY') }}" data-amount="{{ $sum }}" data-name="Lara EC" data-label="決済をする" data-description="お支払い完了後にメールにてご連絡いたします。" data-image="https://stripe.com/img/documentation/checkout/marketplace.png" data-locale="auto" data-currency="JPY">
-                            </script> */}
-                    決済をする
-                  </Form>
+                  <StripeProvider apiKey={this.props.consts.stripe_key.data}>
+                    <div className="container">
+                      <h3 className="my-4">決済をする</h3>
+                      <Form id="shop-check" action="/checkout" method="POST">
+                        <CSRFToken />
+                      </Form>
+                    </div>
+                  </StripeProvider>
                 </>
               );
             }
@@ -101,11 +97,11 @@ export class MyCart extends React.Component<IProps> {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const carts = state.carts;
-  console.log(carts);
+
   return {
     auth: state.auth,
-    carts: carts,
+    consts: state.consts,
+    carts: state.carts,
     url: {
       pathname: state.router.location.pathname,
       search: state.router.location.search,

@@ -6,8 +6,8 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended" // 記述位置が重要。一番最後に書く。
+    "plugin:@typescript-eslint/recommended"
+    // "plugin:prettier/recommended" // 記述位置が重要。一番最後に書く。
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -17,6 +17,6 @@
     "@typescript-eslint"
   ],
   "rules": {
-    "prettier/prettier": "error"
+    // "prettier/prettier": "error"
   }
 }

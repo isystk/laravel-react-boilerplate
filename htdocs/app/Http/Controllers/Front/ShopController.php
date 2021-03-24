@@ -57,14 +57,15 @@ class ShopController extends Controller
             // 購入完了画面を表示
             return redirect('/complete');
         } catch (\Exception $ex) {
-            $ex->getMessage();
+            // $ex->getMessage();
 
-            // 元の画面に戻る
-            $data = $cart->showCart();
+            // // 元の画面に戻る
+            // $data = $cart->showCart();
 
-            return view('mycart', $data)->with('message', "決算処理に失敗しました。" . $ex);
+            // return view('mycart', $data)->with('message', "決算処理に失敗しました。" . $ex);
+            return redirect('/mycart');
         }
-        
+
     }
 
 }

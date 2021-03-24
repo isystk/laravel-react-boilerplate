@@ -48,8 +48,8 @@ class ShopController extends ApiController
                 'result'      => true,
                 'carts'     => [
                   'data' => $datas,
-                  'message' => 'test',
-                  'total' => count($carts['data'])
+                  'count' => $carts['count'],
+                  'sum' => $carts['sum']
                 ]
             ];
         } catch (\Exception $e) {

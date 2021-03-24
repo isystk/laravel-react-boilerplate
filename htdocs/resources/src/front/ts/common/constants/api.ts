@@ -4,7 +4,8 @@ import Env from "../env/";
  * BFF（バックエンドフォーフロントエンド）用の URL を作成する
  * @param path
  */
-const getBffUrl = (path: string): string => {
+const getBffUrl = (path: string): string =>
+{
   const url = [Env.externalEndpointUrl, path].join("");
   return url;
 };
@@ -18,7 +19,7 @@ export const API_ENDPOINT = {
   /** ログアウト */
   LOGOUT: getBffUrl("/logout"),
   /** 共通定数 */
-  COMMON_CONST: getBffUrl("/common/const"),
+  CONSTS: getBffUrl("/consts"),
 
   /** お気に入りデータ取得 */
   LIKES: getBffUrl("/likes"),

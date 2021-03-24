@@ -12,14 +12,21 @@ export interface Auth
 
 export interface Consts
 {
-  name?: string
-  data?: Const[]
+  stripe_key?: Const
+  gender?: Const
+  age?: Const
 }
 
 export interface Const
 {
-  code: number
-  text: string
+  name: string
+  data: KeyValue[] | string
+}
+
+export interface KeyValue
+{
+  key: number
+  value: string
 }
 
 export interface Page
@@ -60,7 +67,8 @@ export interface Carts
 {
   data: Cart[]
   message: string
-  page: Page
+  count: number
+  sum: number
 }
 
 export interface Cart

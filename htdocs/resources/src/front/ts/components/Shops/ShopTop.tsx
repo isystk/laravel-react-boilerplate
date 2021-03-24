@@ -169,7 +169,6 @@ export class ShopTop extends React.Component<IProps> {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log("mapStateToProps", state);
   const { total, current_page, ...stocks } = state.stocks;
   const likes = state.likes;
   return {

@@ -1,7 +1,8 @@
 /**
  * Env インターフェイス
  */
-export interface IEnv {
+export interface IEnv
+{
   /** 環境名 */
   envName: string
   /** 内部向けエンドポイント URL */

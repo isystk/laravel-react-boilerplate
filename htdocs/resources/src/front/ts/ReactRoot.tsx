@@ -7,7 +7,8 @@ import {
   setEmail,
   setRemember,
   setCSRF,
-} from "./actions/auth";
+  readConsts,
+} from "./actions";
 import routes from "./routes";
 
 interface IProps {
@@ -19,12 +20,16 @@ interface IProps {
   setName;
   setEmail;
   setRemember;
+  readConsts;
 }
 
 class ReactRoot extends React.Component<IProps> {
   constructor(props) {
     super(props);
-    props.setSession(props.responseSession);
+    // セッションのセット
+    this.props.setSession(props.responseSession);
+    // 定数のセット
+    this.props.readConsts();
     // if (window.laravelErrors['name'] === undefined
     //   && window.laravelErrors['email'] === undefined
     //   && window.laravelErrors['password'] === undefined) {
@@ -32,6 +37,7 @@ class ReactRoot extends React.Component<IProps> {
     //   this.props.setEmail('')
     //   this.props.setRemember(false)
     // }
+    // CSRFのセット
     const token = document.head.querySelector<HTMLMetaElement>(
       'meta[name="csrf-token"]'
     );
@@ -59,6 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
   setName: (name) => dispatch(setName(name)),
   setEmail: (email) => dispatch(setEmail(email)),
   setRemember: (remember) => dispatch(setRemember(remember)),
+  readConsts: async () => dispatch(await readConsts()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReactRoot);

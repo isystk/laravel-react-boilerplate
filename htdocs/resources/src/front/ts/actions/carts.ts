@@ -6,7 +6,8 @@ import { API } from "../utilities";
 import { Carts } from "../store/StoreTypes";
 import { push } from "connected-react-router";
 
-export interface CartsAppAction extends Action {
+export interface CartsAppAction extends Action
+{
   response: {
     result: boolean;
     carts: Carts;
@@ -15,29 +16,40 @@ export interface CartsAppAction extends Action {
 
 export const READ_CARTS = "READ_CARTS";
 
-export const readCarts = () => async (dispatch: Dispatch): Promise<void> => {
+export const readCarts = () => async (dispatch: Dispatch): Promise<void> =>
+{
   const response = await API.post(API_ENDPOINT.MYCARTS);
   dispatch({ type: READ_CARTS, response });
 };
 
 export const addCart = (stockId: number) => async (
   dispatch: Dispatch
-): Promise<void> => {
-  const response = await API.post(API_ENDPOINT.ADD_MYCART, {
-    stock_id: stockId,
-  });
-  if (response.result) {
-    dispatch(push(URL.MYCART));
+): Promise<void> =>
+{
+  try {
+    const response = await API.post(API_ENDPOINT.ADD_MYCART, {
+      stock_id: stockId,
+    });
+    if (response.result) {
+      dispatch(push(URL.MYCART));
+    }
+  } catch (e) {
+    dispatch(push(URL.LOGIN));
   }
 };
 
 export const removeCart = (stockId: number) => async (
   dispatch: Dispatch
-): Promise<void> => {
-  const response = await API.post(API_ENDPOINT.REMOVE_MYCART, {
-    stock_id: stockId,
-  });
-  if (response.result) {
-    dispatch(push(URL.MYCART));
+): Promise<void> =>
+{
+  try {
+    const response = await API.post(API_ENDPOINT.REMOVE_MYCART, {
+      stock_id: stockId,
+    });
+    if (response.result) {
+      dispatch(push(URL.MYCART));
+    }
+  } catch (e) {
+    dispatch(push(URL.LOGIN));
   }
 };

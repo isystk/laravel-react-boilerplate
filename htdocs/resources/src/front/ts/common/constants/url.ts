@@ -16,4 +16,6 @@ export const URL = {
   CONTACT: "/contact",
   /** マイカート */
   MYCART: "/mycart",
+  /** 購入完了 */
+  COMPLETE: "/complete",
 };

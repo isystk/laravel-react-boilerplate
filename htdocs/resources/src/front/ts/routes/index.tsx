@@ -6,6 +6,7 @@ import Layout from "../components/layout";
 import CardTemplate from "../components/CardTemplate";
 import ShopTop from "../components/Shops/ShopTop";
 import MyCart from "../components/Shops/MyCart";
+import Complete from "../components/Shops/Complete";
 import AuthCheck from "../components/Auths/AuthCheck";
 import { NotFound } from "../components/NotFound";
 
@@ -71,6 +72,7 @@ const routes = (session) => {
                 )}
               />
               <Route exact path={URL.MYCART} component={MyCart} />
+              <Route exact path={URL.COMPLETE} component={Complete} />
             </AuthCheck>
             {/* ★ログインユーザー専用ここまで */}
 

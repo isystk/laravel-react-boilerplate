@@ -39,19 +39,19 @@ if (mix.inProduction()) {
     module: {
       rules: [
         {
-           test: /\.(ts|tsx)?$/,
-           loader: 'ts-loader',
-           exclude: /node_modules/,
-        },
-        {
           enforce: 'pre', // preを指定することで、付いてないローダーより先に実行できる。
           test: /\.(js|jsx|ts|tsx)?$/,
           loader: 'eslint-loader',
           exclude: /node_modules/,
-          options: {
-            fix: true // Lint実行時に自動整形を行うかどうか。（prettierのルールで自動整形してくれる）
-          }
+          // options: {
+          //   fix: true // Lint実行時に自動整形を行うかどうか。（prettierのルールで自動整形してくれる）
+          // }
         },
+        // {
+        //    test: /\.(ts|tsx)?$/,
+        //    loader: 'ts-loader',
+        //    exclude: /node_modules/,
+        // },
       ],
     },
   })

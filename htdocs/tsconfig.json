@@ -12,11 +12,11 @@
         /* 厳密な型チェックオプション */
         "strict": true,                           /* すべての厳密な型チェックオプションを有効にします。 */
         "noImplicitAny": false,                   /* 暗黙の 'any'型で式と宣言のエラーを発生させます。 */
-        // "strictNullChecks": true,                 /* 厳密なヌルチェックを有効にします。 */
-        // "strictFunctionTypes": true,              /* 関数型の厳密なチェックを有効にします。 */
-        // "strictPropertyInitialization": true,     /* クラスのプロパティ初期化の厳密なチェックを有効にします。 */
+        "strictNullChecks": false,                 /* 厳密なヌルチェックを有効にします。 */
+        "strictFunctionTypes": false,              /* 関数型の厳密なチェックを有効にします。 */
+        "strictPropertyInitialization": false,     /* クラスのプロパティ初期化の厳密なチェックを有効にします。 */
         "noImplicitThis": false,                   /* 暗黙の 'any'型で 'this'式のエラーを発生させます。 */
-        // "alwaysStrict": true,                     /* 厳密なモードで解析し,各ソースファイルに対して "use strict"を発行します。 */
+        "alwaysStrict": false,                      /* 厳密なモードで解析し,各ソースファイルに対して "use strict"を発行します。 */
 
         // /* 追加チェック */
         // "noUnusedLocals": true,                /* 未使用のローカルのエラーを報告します。 */

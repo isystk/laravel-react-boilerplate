@@ -8,10 +8,13 @@ const initialState: Consts = {};
 export function ConstsReducer(
   state = initialState,
   action: ConstsAppAction
-): Consts {
+): Consts
+{
   switch (action.type) {
     case READ_CONSTS:
-      return _.mapKeys(action.response, "name");
+      // APIで返却されるJSONとStoreに保存するオブジェクトのフォーマットが異なるので加工する
+      console.log("READ_CONSTS", _.mapKeys(action.response.consts.data, "name"))
+      return _.mapKeys(action.response.consts.data, "name");
     default:
       return state;
   }
