@@ -4,6 +4,7 @@ import { Redirect } from "react-router";
 
 interface IProps {
   session;
+  children;
 }
 
 export class AuthCheck extends React.Component<IProps> {
@@ -28,7 +29,7 @@ export class AuthCheck extends React.Component<IProps> {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = ({}, ownProps) => {
   return {
     session: ownProps.session,
   };

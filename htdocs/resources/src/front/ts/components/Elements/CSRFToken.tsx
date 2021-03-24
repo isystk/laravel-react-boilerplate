@@ -1,6 +1,5 @@
 import React from "react";
 import { Form } from "react-bootstrap";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 interface IProps {
@@ -16,5 +15,5 @@ const mapStateToProps = (state) => {
     csrf: state.auth.csrf,
   };
 };
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = () => ({});
 export default connect(mapStateToProps, mapDispatchToProps)(CSRFToken);

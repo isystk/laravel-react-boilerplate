@@ -2,13 +2,11 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import { URL } from "../../common/constants/url";
-import CSRFToken from "../Elements/CSRFToken";
 import { Elements, StripeProvider } from 'react-stripe-elements';
 import CheckoutForm from '../Forms/CheckoutForm';
 
 import { readCarts, removeCart } from "../../actions";
-import { NavDropdown, Form } from "react-bootstrap";
-import { Auth, Consts, Const, Carts, Cart } from "../../store/StoreTypes";
+import { Auth, Carts } from "../../store/StoreTypes";
 
 interface IProps {
   auth: Auth;
@@ -102,7 +100,7 @@ export class MyCart extends React.Component<IProps> {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
 
   const { stripe_key } = state.consts;
 

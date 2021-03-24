@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
-import { CardElement, injectStripe, CardNumberElement, CardExpiryElement, CardCVCElement, Elements } from 'react-stripe-elements';
+import { injectStripe, CardNumberElement, CardExpiryElement, CardCVCElement } from 'react-stripe-elements';
 import { Button, Form, FormGroup, Label, Input, FormFeedback } from 'reactstrap';
 import { Formik } from 'formik'
 import * as Yup from 'yup';
@@ -133,7 +133,7 @@ class CheckoutForm extends React.Component<IProps> {
     }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = () => ({
 });
 
 const mapDispatchToProps = {

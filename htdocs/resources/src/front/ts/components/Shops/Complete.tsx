@@ -26,7 +26,7 @@ export class Complete extends React.Component<IProps> {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
     auth: state.auth,
     url: {

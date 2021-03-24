@@ -11,7 +11,7 @@ import {
   removeLike,
   addCart,
 } from "../../actions";
-import { Stocks, Stock, Likes, Page } from "../../store/StoreTypes";
+import { Likes, Page } from "../../store/StoreTypes";
 
 interface IProps {
   stocks;
@@ -174,7 +174,7 @@ export class ShopTop extends React.Component<IProps> {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   const { total, current_page, ...stocks } = state.stocks;
   const likes = state.likes;
   return {

@@ -1,4 +1,4 @@
-import { Carts, Page } from "../store/StoreTypes";
+import { Carts } from "../store/StoreTypes";
 import { CartsAppAction, READ_CARTS } from "../actions/index";
 
 const initialState: Carts = {

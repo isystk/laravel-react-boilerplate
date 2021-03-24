@@ -12,5 +12,5 @@ RequestToken.propTypes = {
 const mapStateToProps = (state) => ({
   params: state.params,
 });
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = () => ({});
 export default connect(mapStateToProps, mapDispatchToProps)(RequestToken);

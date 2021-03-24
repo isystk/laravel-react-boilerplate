@@ -1,8 +1,6 @@
 import { Action } from "redux";
-import { Dispatch } from "redux";
 import { API_ENDPOINT } from "../common/constants/api";
 import { API } from "../utilities";
-import { Consts } from "../store/StoreTypes";
 
 export interface ConstsAppAction extends Action
 {

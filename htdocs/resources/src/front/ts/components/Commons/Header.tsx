@@ -156,7 +156,7 @@ class CommonHeader extends React.Component<IProps> {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
     parts: state.parts,
     auth: state.auth,

@@ -1,8 +1,8 @@
 import { Action } from "redux";
-import { Dispatch } from "redux";
 import { Auth } from "../store/StoreTypes";
 
-export interface AuthAppAction extends Action {
+export interface AuthAppAction extends Action
+{
   payload: Auth;
 }
 

@@ -1,5 +1,5 @@
 import { createBrowserHistory } from "history";
-import { applyMiddleware, compose, createStore } from "redux";
+import { applyMiddleware, createStore } from "redux";
 import { routerMiddleware } from "connected-react-router";
 import createRootReducer from "../reducers";
 import { persistReducer } from "redux-persist";
@@ -20,7 +20,8 @@ const persistedReducer = persistReducer(
   createRootReducer(history)
 );
 
-export default function configureStore(preloadedState) {
+export default function configureStore(preloadedState)
+{
   // 開発環境の場合は、redux-devtools-extension を利用できるようにする
   // const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
   const enhancer =

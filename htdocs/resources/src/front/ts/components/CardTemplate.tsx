@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import ContentSelector from "./ContentSelector";
@@ -36,7 +35,7 @@ class CardTemplate extends React.Component<IProps> {
   }
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = () => ({});
 const mapDispatchToProps = (dispatch) => ({
   setPrams: (request) => dispatch(setPrams(request)),
 });
