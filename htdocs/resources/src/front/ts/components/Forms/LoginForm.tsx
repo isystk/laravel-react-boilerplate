@@ -1,22 +1,22 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Form } from "react-bootstrap";
-import TextInput from "../Elements/TextInput";
-import CheckInput from "../Elements/CheckInput";
-import LoginButton from "../Elements/LoginButton";
-import CSRFToken from "../Elements/CSRFToken";
-import { setEmail, setRemember } from "../../actions/auth";
+import React from 'react'
+import { connect } from 'react-redux'
+import { Form } from 'react-bootstrap'
+import TextInput from '../Elements/TextInput'
+import CheckInput from '../Elements/CheckInput'
+import LoginButton from '../Elements/LoginButton'
+import CSRFToken from '../Elements/CSRFToken'
+import { setEmail, setRemember } from '../../actions/auth'
 
 interface IProps {
-  email: string;
-  remember: boolean;
-  setEmail;
-  setRemember;
+  email: string
+  remember: boolean
+  setEmail
+  setRemember
 }
 
 class LoginForm extends React.Component<IProps> {
   constructor(props) {
-    super(props);
+    super(props)
   }
   render() {
     return (
@@ -38,12 +38,7 @@ class LoginForm extends React.Component<IProps> {
             action={this.props.setEmail}
             autoFocus={true}
           />
-          <TextInput
-            identity="password"
-            controlType="password"
-            autoComplete="current-password"
-            label="パスワード"
-          />
+          <TextInput identity="password" controlType="password" autoComplete="current-password" label="パスワード" />
           <CheckInput
             identity="remember"
             label="Remember Me"
@@ -58,16 +53,16 @@ class LoginForm extends React.Component<IProps> {
           <LoginButton />
         </Form>
       </React.Fragment>
-    );
+    )
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   email: state.email,
   remember: state.remember,
-});
-const mapDispatchToProps = (dispatch) => ({
-  setEmail: (email) => dispatch(setEmail(email)),
-  setRemember: (remember) => dispatch(setRemember(remember)),
-});
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+})
+const mapDispatchToProps = dispatch => ({
+  setEmail: email => dispatch(setEmail(email)),
+  setRemember: remember => dispatch(setRemember(remember)),
+})
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)

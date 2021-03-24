@@ -1,20 +1,20 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Container, Row, Col, Card } from "react-bootstrap";
-import ContentSelector from "./ContentSelector";
-import { setPrams } from "../actions/auth";
+import React from 'react'
+import { connect } from 'react-redux'
+import { Container, Row, Col, Card } from 'react-bootstrap'
+import ContentSelector from './ContentSelector'
+import { setPrams } from '../actions/auth'
 
 interface IProps {
-  title: string;
-  content: string;
-  params?: any;
+  title: string
+  content: string
+  params?: any
 }
 
 class CardTemplate extends React.Component<IProps> {
   constructor(props) {
-    super(props);
+    super(props)
     if (props.params !== undefined) {
-      props.setPrams(props.params);
+      props.setPrams(props.params)
     }
   }
   render() {
@@ -31,12 +31,12 @@ class CardTemplate extends React.Component<IProps> {
           </Col>
         </Row>
       </Container>
-    );
+    )
   }
 }
 
-const mapStateToProps = () => ({});
-const mapDispatchToProps = (dispatch) => ({
-  setPrams: (request) => dispatch(setPrams(request)),
-});
-export default connect(mapStateToProps, mapDispatchToProps)(CardTemplate);
+const mapStateToProps = () => ({})
+const mapDispatchToProps = dispatch => ({
+  setPrams: request => dispatch(setPrams(request)),
+})
+export default connect(mapStateToProps, mapDispatchToProps)(CardTemplate)

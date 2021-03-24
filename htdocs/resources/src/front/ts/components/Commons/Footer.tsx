@@ -1,9 +1,9 @@
-import * as React from "react";
-import { connect } from "react-redux";
+import * as React from 'react'
+import { connect } from 'react-redux'
 
 class CommonFooter extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
   }
 
   render(): JSX.Element {
@@ -16,17 +16,16 @@ class CommonFooter extends React.Component {
             </p>
             <p className="mt10">
               <small className="fz-s">
-                ©️isystk
-                このページは架空のページです。実際の人物・団体とは関係ありません。
+                ©️isystk このページは架空のページです。実際の人物・団体とは関係ありません。
               </small>
             </p>
           </div>
         </footer>
       </React.Fragment>
-    );
+    )
   }
 }
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {}
 
-export default connect(null, mapDispatchToProps)(CommonFooter);
+export default connect(null, mapDispatchToProps)(CommonFooter)

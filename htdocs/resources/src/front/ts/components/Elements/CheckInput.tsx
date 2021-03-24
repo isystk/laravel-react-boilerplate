@@ -1,11 +1,11 @@
-import React from "react";
-import { Row, Col, Form } from "react-bootstrap";
+import React from 'react'
+import { Row, Col, Form } from 'react-bootstrap'
 
 interface IProps {
-  identity: string;
-  checked: boolean;
-  label: string;
-  action;
+  identity: string
+  checked: boolean
+  label: string
+  action
 }
 
 const CheckInput = (props: IProps) => (
@@ -19,7 +19,7 @@ const CheckInput = (props: IProps) => (
             className="form-check-input"
             name={props.identity}
             checked={props.checked}
-            onChange={(check) => props.action(check.target.checked)}
+            onChange={check => props.action(check.target.checked)}
           />
           <Form.Label className="form-check-label" htmlFor={props.identity}>
             {props.label}
@@ -28,5 +28,5 @@ const CheckInput = (props: IProps) => (
       </Col>
     </Row>
   </Form.Group>
-);
-export default CheckInput;
+)
+export default CheckInput

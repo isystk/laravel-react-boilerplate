@@ -1,8 +1,8 @@
-import React from "react";
-import { Row, Col, Button } from "react-bootstrap";
+import React from 'react'
+import { Row, Col, Button } from 'react-bootstrap'
 
 interface IProps {
-  label: string;
+  label: string
 }
 
 const SubmitButton = (props: IProps) => (
@@ -13,5 +13,5 @@ const SubmitButton = (props: IProps) => (
       </Button>
     </Col>
   </Row>
-);
-export default SubmitButton;
+)
+export default SubmitButton

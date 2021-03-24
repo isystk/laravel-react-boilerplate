@@ -1,6 +1,6 @@
-import React from "react";
-import { Row, Col, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import React from 'react'
+import { Row, Col, Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 const LoginButton = () => (
   <Row className="form-group mb-0">
@@ -13,5 +13,5 @@ const LoginButton = () => (
       </Link>
     </Col>
   </Row>
-);
-export default LoginButton;
+)
+export default LoginButton

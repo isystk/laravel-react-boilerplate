@@ -1,21 +1,21 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Form } from "react-bootstrap";
-import TextInput from "../Elements/TextInput";
-import SubmitButton from "../Elements/SubmitButton";
-import CSRFToken from "../Elements/CSRFToken";
-import { setName, setEmail } from "../../actions/auth";
+import React from 'react'
+import { connect } from 'react-redux'
+import { Form } from 'react-bootstrap'
+import TextInput from '../Elements/TextInput'
+import SubmitButton from '../Elements/SubmitButton'
+import CSRFToken from '../Elements/CSRFToken'
+import { setName, setEmail } from '../../actions/auth'
 
 interface IProps {
-  name: string;
-  email: string;
-  setName;
-  setEmail;
+  name: string
+  email: string
+  setName
+  setEmail
 }
 
 class LoginForm extends React.Component<IProps> {
   constructor(props) {
-    super(props);
+    super(props)
   }
   render() {
     return (
@@ -37,12 +37,7 @@ class LoginForm extends React.Component<IProps> {
           action={this.props.setEmail}
           autoFocus={false}
         />
-        <TextInput
-          identity="password"
-          controlType="password"
-          autoComplete="new-password"
-          label="パスワード"
-        />
+        <TextInput identity="password" controlType="password" autoComplete="new-password" label="パスワード" />
         <TextInput
           identity="password-confirm"
           controlType="password"
@@ -52,16 +47,16 @@ class LoginForm extends React.Component<IProps> {
         />
         <SubmitButton label="新規登録" />
       </Form>
-    );
+    )
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   name: state.name,
   email: state.email,
-});
-const mapDispatchToProps = (dispatch) => ({
-  setName: (name) => dispatch(setName(name)),
-  setEmail: (email) => dispatch(setEmail(email)),
-});
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+})
+const mapDispatchToProps = dispatch => ({
+  setName: name => dispatch(setName(name)),
+  setEmail: email => dispatch(setEmail(email)),
+})
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)
