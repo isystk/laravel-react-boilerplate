@@ -1,15 +1,15 @@
-import * as React from 'react'
-import { connect } from 'react-redux'
-import CommonHeader from './Commons/Header'
-import CommonFooter from './Commons/Footer'
+import * as React from "react";
+import { connect } from "react-redux";
+import CommonHeader from "./Commons/Header";
+import CommonFooter from "./Commons/Footer";
 
 interface IProps {
-  children: any
+  children: any;
 }
 
 class Layout extends React.Component<IProps> {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   render(): JSX.Element {
@@ -21,7 +21,7 @@ class Layout extends React.Component<IProps> {
 
         <CommonFooter />
       </React.Fragment>
-    )
+    );
   }
 }
 
@@ -29,9 +29,9 @@ const mapStateToProps = (state, ownProps) => {
   return {
     parts: state.parts,
     auth: state.auth,
-  }
-}
+  };
+};
 
-const mapDispatchToProps = {  }
+const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Layout)
+export default connect(mapStateToProps, mapDispatchToProps)(Layout);

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { Redirect } from 'react-router'
+import { Redirect } from "react-router";
 
 interface IProps {
   session;
@@ -12,9 +12,8 @@ export class AuthCheck extends React.Component<IProps> {
   }
 
   render() {
-
     // ログインしてなければログイン画面へとばす
-    if (this.props.session.id===undefined) {
+    if (this.props.session.id === undefined) {
       return <Redirect to="/login" />;
     }
 
@@ -25,9 +24,7 @@ export class AuthCheck extends React.Component<IProps> {
     // }
 
     // ログイン済みの場合
-    return (
-    <React.Fragment>{this.props.children}</React.Fragment>
-    );
+    return <React.Fragment>{this.props.children}</React.Fragment>;
   }
 }
 
@@ -37,6 +34,6 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mapDispatchToProps = {  };
+const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthCheck);

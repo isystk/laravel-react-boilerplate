@@ -1,19 +1,19 @@
 /** API のエンドポイント */
 export const URL = {
   /** TOP */
-  TOP: '/',
+  TOP: "/",
   /** ログイン */
-  LOGIN: '/login',
+  LOGIN: "/login",
   /** 会員登録 */
-  REGISTER: '/register',
+  REGISTER: "/register",
   /** パスワード忘れ */
-  PASSWORD_RESET: '/password/reset',
+  PASSWORD_RESET: "/password/reset",
   /** メールアドレス認証 */
-  EMAIL_VERIFY: '/email/verify',
+  EMAIL_VERIFY: "/email/verify",
   /** ユーザーHOME */
-  HOME: '/home',
+  HOME: "/home",
   /** お問い合わせ */
-  CONTACT: '/contact',
+  CONTACT: "/contact",
   /** マイカート */
-  MYCART: '/mycart',
-}
+  MYCART: "/mycart",
+};

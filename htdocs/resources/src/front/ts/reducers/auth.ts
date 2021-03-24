@@ -1,6 +1,5 @@
 import { Auth } from "../store/StoreTypes";
-import
-{
+import {
   AuthAppAction,
   SET_SESSION,
   SET_NAME,
@@ -14,24 +13,20 @@ const initialState: Auth = {
   auth: false,
   id: null,
   name: null,
-  email: '',
-  remember: '',
-  csrf: '',
-  request: ''
+  email: "",
+  remember: "",
+  csrf: "",
+  request: "",
 };
 
-export function AuthReducer(
-  state = initialState,
-  action: AuthAppAction
-): Auth
-{
-
+export function AuthReducer(state = initialState, action: AuthAppAction): Auth {
   switch (action.type) {
     case SET_SESSION: {
-      const session = (action.payload.id === undefined)
-        ? ({ auth: false, name: null })
-        : ({ auth: true, name: action.payload.name });
-      return session
+      const session =
+        action.payload.id === undefined
+          ? { auth: false, name: null }
+          : { auth: true, name: action.payload.name };
+      return session;
     }
     case SET_NAME:
       return { ...state, name: action.payload.name };
@@ -44,7 +39,7 @@ export function AuthReducer(
     case SET_PARAMS:
       return { ...state, request: action.payload.request };
     default:
-      return state
+      return state;
   }
 
   return state;

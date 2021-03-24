@@ -1,22 +1,16 @@
 import { Carts, Page } from "../store/StoreTypes";
-import
-{
-  CartsAppAction,
-  READ_CARTS,
-} from "../actions/index";
+import { CartsAppAction, READ_CARTS } from "../actions/index";
 
 const initialState: Carts = {
   data: [],
-  message: '',
+  message: "",
   page: {} as Page,
 };
 
 export function CartsReducer(
   state = initialState,
   action: CartsAppAction
-): Carts
-{
-
+): Carts {
   switch (action.type) {
     case READ_CARTS:
       return action.response.carts;
