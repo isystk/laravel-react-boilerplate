@@ -6,7 +6,8 @@ import { API } from "../utilities";
 import { Stocks } from "../store/StoreTypes";
 import { push } from "connected-react-router";
 
-export interface ShopsAppAction extends Action {
+export interface ShopsAppAction extends Action
+{
   response: {
     result: boolean;
     stocks: Stocks;
@@ -17,7 +18,8 @@ export const READ_STOCKS = "READ_STOCKS";
 
 export const readShops = (search = "?page=1") => async (
   dispatch: Dispatch
-): Promise<void> => {
+): Promise<void> =>
+{
   const response = await API.get(`${API_ENDPOINT.SHOPS}${search}`);
   dispatch({ type: READ_STOCKS, response });
   // URLを変更する

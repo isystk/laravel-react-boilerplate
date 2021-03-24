@@ -36,4 +36,8 @@ export const API_ENDPOINT = {
   ADD_MYCART: getBffUrl("/addMycart"),
   /** カートから商品を削除する */
   REMOVE_MYCART: getBffUrl("/cartdelete"),
+  /** Stripe用のペイメント作成 */
+  CREATE_PAYMENT: getBffUrl("/createPayment"),
+  /** 決算処理後の後処理 */
+  CHECKOUT: getBffUrl("/checkout"),
 };

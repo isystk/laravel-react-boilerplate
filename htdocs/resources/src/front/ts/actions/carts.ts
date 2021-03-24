@@ -53,3 +53,19 @@ export const removeCart = (stockId: number) => async (
     dispatch(push(URL.LOGIN));
   }
 };
+
+export const checkout = (stockId: number) => async (
+  dispatch: Dispatch
+): Promise<void> =>
+{
+  try {
+    const response = await API.post(API_ENDPOINT.REMOVE_MYCART, {
+      stock_id: stockId,
+    });
+    if (response.result) {
+      dispatch(push(URL.MYCART));
+    }
+  } catch (e) {
+    dispatch(push(URL.LOGIN));
+  }
+};

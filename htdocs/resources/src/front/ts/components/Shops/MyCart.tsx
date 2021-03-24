@@ -2,10 +2,10 @@ import * as React from "react";
 import { connect } from "react-redux";
 import * as _ from "lodash";
 import { push } from "connected-react-router";
-import { API_ENDPOINT } from "../../common/constants/api";
 import { URL } from "../../common/constants/url";
 import CSRFToken from "../Elements/CSRFToken";
 import { Elements, StripeProvider } from 'react-stripe-elements';
+import CheckoutForm from '../Forms/CheckoutForm';
 
 import { readCarts, removeCart } from "../../actions";
 import { NavDropdown, Form } from "react-bootstrap";
@@ -75,9 +75,9 @@ export class MyCart extends React.Component<IProps> {
                   <StripeProvider apiKey={this.props.consts.stripe_key.data}>
                     <div className="container">
                       <h3 className="my-4">決済をする</h3>
-                      <Form id="shop-check" action="/checkout" method="POST">
-                        <CSRFToken />
-                      </Form>
+                      <Elements>
+                        <CheckoutForm />
+                      </Elements>
                     </div>
                   </StripeProvider>
                 </>

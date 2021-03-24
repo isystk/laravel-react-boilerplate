@@ -1,29 +1,32 @@
 import React from 'react';
+import { connect } from "react-redux";
 import { CardElement, injectStripe, CardNumberElement, CardExpiryElement, CardCVCElement, Elements } from 'react-stripe-elements';
 import { Button, Form, FormGroup, Label, Input, FormFeedback } from 'reactstrap';
 import { Formik } from 'formik'
 import * as Yup from 'yup';
+import { API_ENDPOINT } from "../../common/constants/api";
+import { URL } from "../../common/constants/url";
+import CSRFToken from "../Elements/CSRFToken";
+import { API } from "../../utilities";
+import { push } from "connected-react-router";
 
-class CheckoutForm extends React.Component {
+interface IProps {
+  stripe;
+  elements;
+  push;
+}
+
+class CheckoutForm extends React.Component<IProps> {
 
     handlePayment = async (values) => {
 
         // alert(JSON.stringify(values));
 
-        const headers = new Headers();
-        headers.set('Content-type', 'application/json');
-        // headers.set('Access-Control-Allow-Origin', '*');
-
         //paymentIntentの作成を（ローカルサーバ経由で）リクエスト
-        const createRes = await fetch('http://localhost:9000/createPaymentIntent', {
-            method: 'POST',
-            headers: headers,
-            body: JSON.stringify({ amount: values.amount, username: values.username })
-        })
+        const response = await API.post(API_ENDPOINT.CREATE_PAYMENT, {amount: values.amount, username: values.username });
 
         //レスポンスからclient_secretを取得
-        const responseJson = await createRes.json();
-        const client_secret = responseJson.client_secret;
+        const client_secret = response.client_secret;
 
         //client_secretを利用して（確認情報をStripeに投げて）決済を完了させる
         const confirmRes = await this.props.stripe.confirmCardPayment(client_secret, {
@@ -37,9 +40,19 @@ class CheckoutForm extends React.Component {
         });
 
         if (confirmRes.paymentIntent.status === "succeeded") {
+          // 決算処理が完了したら、マイカートから商品を削除する。
+          const response = await API.post(API_ENDPOINT.CHECKOUT, {});
+
+          if (response.result) {
             alert("決済完了");
+
+            this.props.push(URL.TOP);
+          }
         }
     }
+
+    cardNumberRef: any;
+    submit: any;
 
     render() {
         console.log(this.props.stripe);
@@ -56,6 +69,7 @@ class CheckoutForm extends React.Component {
                     {
                         ({ handleChange, handleSubmit, handleBlur, values, errors, touched }) => (
                             <Form onSubmit={handleSubmit}>
+                              <CSRFToken />
                                 <FormGroup>
                                     <Label>金額</Label>
                                     <Input
@@ -119,4 +133,11 @@ class CheckoutForm extends React.Component {
     }
 }
 
-export default injectStripe(CheckoutForm);
+const mapStateToProps = (state) => ({
+});
+
+const mapDispatchToProps = {
+  push,
+};
+
+export default injectStripe(connect(mapStateToProps, mapDispatchToProps)(CheckoutForm));

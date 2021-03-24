@@ -105,5 +105,7 @@ Route::group(['middleware' => 'auth:user'], function () {
   Route::post('/api/mycart', 'Api\ShopController@mycart')->name('shop.mycart');
   Route::post('/api/addMycart', 'Api\ShopController@addMycart')->name('shop.addcart');
   Route::post('/api/cartdelete', 'Api\ShopController@deleteCart')->name('shop.delete');
-  Route::post('/checkout', 'Front\ShopController@checkout')->name('shop.check');
+  Route::post('/api/createPayment', 'Api\ShopController@createPayment')->name('shop.createPayment');
+  Route::post('/api/checkout', 'Api\ShopController@checkout')->name('shop.check');
 });
+

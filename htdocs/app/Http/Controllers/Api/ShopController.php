@@ -5,8 +5,12 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use App\Models\Stock;
-
+use App\Models\Order;
 use App\Models\Cart;
+
+use Stripe\Stripe;
+use Stripe\Customer;
+use Stripe\Charge;
 
 class ShopController extends ApiController
 {
@@ -114,6 +118,86 @@ class ShopController extends ApiController
           return $this->resConversionJson($result, $e->getCode());
       }
       return $this->resConversionJson($result);
+    }
+
+    public function createPayment(Request $request) {
+      try {
+        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+
+        $result = $stripe->paymentIntents->create([
+          'amount' => $request -> amount,
+          'currency' => 'jpy',
+          'description'=> 'LaraEC',
+          'metadata'=> [
+            'username'=> $request -> username
+          ]
+        ]);
+      } catch (\Exception $e) {
+          $result = [
+              'result' => false,
+              'error' => [
+                  'messages' => [$e->getMessage()]
+              ],
+          ];
+          return $this->resConversionJson($result, $e->getCode());
+      }
+      return $this->resConversionJson($result);
+    }
+
+    public function checkout(Request $request, Cart $cart)
+    {
+        try {
+
+          // Stripe::setApiKey(env('STRIPE_SECRET'));
+
+          // // 料金を支払う人
+          // $customer = Customer::create(array(
+          //     'email' => $request->stripeEmail,
+          //     'source' => $request->stripeToken
+          // ));
+
+          $data = $cart->showCart();
+
+          // // 料金の支払いを実行
+          // $charge = Charge::create(array(
+          //     'customer' => $customer->id,
+          //     'amount' => $data['sum'],
+          //     'currency' => 'jpy'
+          // ));
+
+          // 発注履歴に追加する。
+          foreach ($data['data'] as $my_cart) {
+              $stock = Stock::find($my_cart->stock_id);
+
+              $order = new Order;
+              $order->stock_id = $my_cart->stock_id;
+              $order->user_id = $my_cart->user_id;
+              $order->price =  $stock->price;
+              $order->quantity = 1;
+              $order->save();
+
+              // 在庫を減らす
+              $stock->quantity = $stock->quantity - $order->quantity;
+              $stock->save();
+          }
+
+          // カートからすべての商品を削除
+          $cart->deleteMyCart();
+
+          $result = [
+            'result' => true,
+          ];
+
+        } catch (\Exception $e) {
+            $result = [
+                'result' => false,
+                'error' => [
+                    'messages' => [$e->getMessage()]
+                ],
+            ];
+            return $this->resConversionJson($result, $e->getCode());
+        }
+        return $this->resConversionJson($result);
     }
 
 }

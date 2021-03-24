@@ -58,6 +58,19 @@ class Cart extends Model
         return $message;
     }
 
+    public function deleteMyCart()
+    {
+        $user_id = Auth::id();
+        $delete = $this->where('user_id', $user_id)->delete();
+
+        if ($delete > 0) {
+            $message = 'カートから選択した商品を削除しました';
+        } else {
+            $message = '削除に失敗しました';
+        }
+        return $message;
+    }
+
     public function checkoutCart()
     {
         // ユーザーのカートを取得する。
