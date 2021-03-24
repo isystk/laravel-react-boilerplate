@@ -11,10 +11,10 @@ import {
   removeLike,
   addCart,
 } from "../../actions";
-import { Stocks, Likes, Page } from "../../store/StoreTypes";
+import { Stocks, Stock, Likes, Page } from "../../store/StoreTypes";
 
 interface IProps {
-  stocks: Stocks;
+  stocks;
   likes: Likes;
   paging: Page;
   push;
@@ -42,57 +42,63 @@ export class ShopTop extends React.Component<IProps> {
   }
 
   renderStocks(): JSX.Element {
-    return _.map(this.props.stocks, (stock, index) => (
-      <div className="block01_item" key={index}>
-        <div className="text-right mb-2">
-          <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              if (stock.isLike) {
-                this.props.removeLike(stock.id);
-              } else {
-                this.props.addLike(stock.id);
-              }
-            }}
-            className={`btn btn-sm ${
-              stock.isLike ? "btn-success" : "btn-secondary"
-            }`}
-            data-id="{stock.id}"
-          >
-            気になる
-          </a>
-        </div>
-        <img
-          src={`/uploads/stock/${stock.imgpath}`}
-          alt=""
-          className="block01_img"
-        />
-        <p>{stock.name}</p>
-        <p className="c-red">{stock.price}</p>
-        <p className="mb20">{stock.detail} </p>
-        <form action="/shop/addcart" method="post">
-          <input type="hidden" name="stock_id" value={stock.id} />
+    return (
+    <>
+      {
+        this.props.stocks.map((stock, index) => (
+          <div className="block01_item" key={index}>
+            <div className="text-right mb-2">
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (stock.isLike) {
+                    this.props.removeLike(stock.id);
+                  } else {
+                    this.props.addLike(stock.id);
+                  }
+                }}
+                className={`btn btn-sm ${
+                  stock.isLike ? "btn-success" : "btn-secondary"
+                }`}
+                data-id="{stock.id}"
+              >
+                気になる
+              </a>
+            </div>
+            <img
+              src={`/uploads/stock/${stock.imgpath}`}
+              alt=""
+              className="block01_img"
+            />
+            <p>{stock.name}</p>
+            <p className="c-red">{stock.price}</p>
+            <p className="mb20">{stock.detail} </p>
+            <form action="/shop/addcart" method="post">
+              <input type="hidden" name="stock_id" value={stock.id} />
 
-          {stock.quantity === 0 ? (
-            <input
-              type="button"
-              value="カートに入れる（残り0個）"
-              className="btn-gray"
-            />
-          ) : (
-            <input
-              type="button"
-              value={`カートに入れる（残り${stock.quantity}個）`}
-              className="btn-01"
-              onClick={() => {
-                this.props.addCart(stock.id);
-              }}
-            />
-          )}
-        </form>
-      </div>
-    ));
+              {stock.quantity === 0 ? (
+                <input
+                  type="button"
+                  value="カートに入れる（残り0個）"
+                  className="btn-gray"
+                />
+              ) : (
+                <input
+                  type="button"
+                  value={`カートに入れる（残り${stock.quantity}個）`}
+                  className="btn-01"
+                  onClick={() => {
+                    this.props.addCart(stock.id);
+                  }}
+                />
+              )}
+            </form>
+          </div>
+      ))
+    }
+    </>
+    )
   }
 
   renderPaging(): JSX.Element {
