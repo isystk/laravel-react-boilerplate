@@ -11,6 +11,7 @@ use App\Models\Cart;
 use Stripe\Stripe;
 use Stripe\Customer;
 use Stripe\Charge;
+use Auth;
 
 class ShopController extends ApiController
 {
@@ -38,23 +39,10 @@ class ShopController extends ApiController
     {
 
         try {
-            $carts = $cart->showCart();
-            $datas = $carts['data'] ->map(function($cart, $key){
-              $data = [];
-              $data['id'] = $cart -> stock -> id;
-              $data['name'] = $cart -> stock -> name;
-              $data['price'] = $cart -> stock -> price;
-              $data['imgpath'] = $cart -> stock -> imgpath;
-              return $data;
-            });
-
+            $carts = $this->convertToMycart($cart);
             $result = [
                 'result'      => true,
-                'carts'     => [
-                  'data' => $datas,
-                  'count' => $carts['count'],
-                  'sum' => $carts['sum']
-                ]
+                'carts'     => $carts
             ];
         } catch (\Exception $e) {
             $result = [
@@ -68,6 +56,25 @@ class ShopController extends ApiController
         return $this->resConversionJson($result);
     }
 
+    private function convertToMycart(Cart $cart) {
+      $carts = $cart->showCart();
+      $datas = $carts['data'] ->map(function($cart, $key){
+        $data = [];
+        $data['id'] = $cart -> stock -> id;
+        $data['name'] = $cart -> stock -> name;
+        $data['price'] = $cart -> stock -> price;
+        $data['imgpath'] = $cart -> stock -> imgpath;
+        return $data;
+      });
+
+      return [
+        'data' => $datas,
+        'username' => Auth::user() -> email,
+        'count' => $carts['count'],
+        'sum' => $carts['sum']
+      ];
+    }
+
     public function addMycart(Request $request, Cart $cart)
     {
         try {
@@ -76,7 +83,7 @@ class ShopController extends ApiController
           $message = $cart->addCart($stock_id);
 
           //追加後の情報を取得
-          $carts = $cart->showCart();
+          $carts = $this->convertToMycart($cart);
           $result = [
               'result'      => true,
               'message'     => $message,
@@ -101,12 +108,12 @@ class ShopController extends ApiController
           $stock_id = $request->stock_id;
           $message = $cart->deleteCart($stock_id);
 
-          //追加後の情報を取得
-          $carts = $cart->showCart();
+          //削除後の情報を取得
+          $carts = $this->convertToMycart($cart);
           $result = [
               'result'      => true,
               'message'     => $message,
-              'carts'     => $carts
+              'carts'     =>  $carts
           ];
       } catch (\Exception $e) {
           $result = [
@@ -184,8 +191,11 @@ class ShopController extends ApiController
           // カートからすべての商品を削除
           $cart->deleteMyCart();
 
+          //削除後の情報を取得
+          $carts = $this->convertToMycart($cart);
           $result = [
             'result' => true,
+            'carts' => $carts
           ];
 
         } catch (\Exception $e) {

@@ -40,7 +40,7 @@ class CheckoutForm extends React.Component<IProps> {
     })
 
     if (confirmRes.paymentIntent.status === 'succeeded') {
-      // 決算処理が完了したら、マイカートから商品を削除する。
+      // 決算処理が完了したら、注文履歴に追加してマイカートから商品を削除する。
       const response = await API.post(API_ENDPOINT.CHECKOUT, {})
 
       if (response.result) {

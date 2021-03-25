@@ -1,9 +1,11 @@
 import { Carts } from '../store/StoreTypes'
 import { CartsAppAction, READ_CARTS } from '../actions/index'
+import * as _ from 'lodash'
 
 const initialState: Carts = {
   data: [],
   message: '',
+  username: '',
   count: 0,
   sum: 0,
 }

@@ -5,9 +5,9 @@ import { URL } from '../../common/constants/url'
 import { Elements, StripeProvider } from 'react-stripe-elements'
 import CheckoutForm from '../Forms/CheckoutForm'
 import Modal from '../Commons/Modal'
-import { Row, Col, Button } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 
-import { readCarts, removeCart, showOverlay } from '../../actions'
+import { readCarts, removeCart, showOverlay, hideOverlay } from '../../actions'
 import { Auth, Carts } from '../../store/StoreTypes'
 
 interface IProps {
@@ -18,6 +18,7 @@ interface IProps {
   readCarts
   removeCart
   showOverlay
+  hideOverlay
 }
 
 export class MyCart extends React.Component<IProps> {
@@ -26,6 +27,12 @@ export class MyCart extends React.Component<IProps> {
 
     // マイカートデータを取得する
     this.props.readCarts()
+  }
+
+  componentWillUnmount(): void {
+    console.log('MyCart componentDidUnmount!!')
+    // オーバーレイを閉じる
+    this.props.hideOverlay()
   }
 
   renderCarts(): JSX.Element {
@@ -70,7 +77,7 @@ export class MyCart extends React.Component<IProps> {
                     <p>合計個数：{this.props.carts.count}個</p>
                     <p style={{ fontSize: '1.2em', fontWeight: 'bold' }}>合計金額：{this.props.carts.sum}円</p>
                   </div>
-                  <div style={{margin: "40px 15px", textAlign: "center"}}>
+                  <div style={{ margin: '40px 15px', textAlign: 'center' }}>
                     <Button
                       type="submit"
                       variant="primary"
@@ -85,7 +92,7 @@ export class MyCart extends React.Component<IProps> {
                   <Modal>
                     <StripeProvider apiKey={this.props.stripe_key}>
                       <Elements>
-                        <CheckoutForm amount={this.props.carts.sum} username={this.props.auth.email} />
+                        <CheckoutForm amount={this.props.carts.sum} username={this.props.carts.username} />
                       </Elements>
                     </StripeProvider>
                   </Modal>
@@ -96,7 +103,7 @@ export class MyCart extends React.Component<IProps> {
 
           <p className="mt30 ta-center">
             <a href={URL.TOP} className="text-danger btn">
-              商品一覧へ
+              商品一覧へ戻る
             </a>
           </p>
         </div>
@@ -120,6 +127,6 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = { push, readCarts, removeCart, showOverlay }
+const mapDispatchToProps = { push, readCarts, removeCart, showOverlay, hideOverlay }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyCart)

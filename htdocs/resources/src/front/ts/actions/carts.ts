@@ -26,6 +26,7 @@ export const addCart = (stockId: number) => async (dispatch: Dispatch): Promise<
       stock_id: stockId,
     })
     if (response.result) {
+      dispatch({ type: READ_CARTS, response })
       dispatch(push(URL.MYCART))
     }
   } catch (e) {
@@ -39,6 +40,7 @@ export const removeCart = (stockId: number) => async (dispatch: Dispatch): Promi
       stock_id: stockId,
     })
     if (response.result) {
+      dispatch({ type: READ_CARTS, response })
       dispatch(push(URL.MYCART))
     }
   } catch (e) {
