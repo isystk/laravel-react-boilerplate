@@ -1,3 +1,9 @@
+
+export interface Parts
+{
+  isShowOverlay: boolean
+}
+
 export interface Auth
 {
   auth: boolean;

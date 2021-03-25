@@ -44,7 +44,7 @@ if (mix.inProduction()) {
           loader: 'eslint-loader',
           exclude: /node_modules/,
           options: {
-            fix: true, // Lint実行時に自動整形を行うかどうか。（prettierのルールで自動整形してくれる）,
+            fix: true, // Lint実行時に自動整形を行うかどうか。（prettierのルールで自動整形してくれる）
             cache: false
           }
         }

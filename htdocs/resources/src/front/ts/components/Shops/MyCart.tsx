@@ -4,8 +4,10 @@ import { push } from 'connected-react-router'
 import { URL } from '../../common/constants/url'
 import { Elements, StripeProvider } from 'react-stripe-elements'
 import CheckoutForm from '../Forms/CheckoutForm'
+import Modal from '../Commons/Modal'
+import { Row, Col, Button } from 'react-bootstrap'
 
-import { readCarts, removeCart } from '../../actions'
+import { readCarts, removeCart, showOverlay } from '../../actions'
 import { Auth, Carts } from '../../store/StoreTypes'
 
 interface IProps {
@@ -15,6 +17,7 @@ interface IProps {
   push
   readCarts
   removeCart
+  showOverlay
 }
 
 export class MyCart extends React.Component<IProps> {
@@ -67,14 +70,25 @@ export class MyCart extends React.Component<IProps> {
                     <p>合計個数：{this.props.carts.count}個</p>
                     <p style={{ fontSize: '1.2em', fontWeight: 'bold' }}>合計金額：{this.props.carts.sum}円</p>
                   </div>
-                  <StripeProvider apiKey={this.props.stripe_key}>
-                    <div className="container">
-                      <h3 className="my-4">決済をする</h3>
+                  <div style={{margin: "40px 15px", textAlign: "center"}}>
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      onClick={e => {
+                        e.preventDefault()
+                        this.props.showOverlay()
+                      }}
+                    >
+                      決済をする
+                    </Button>
+                  </div>
+                  <Modal>
+                    <StripeProvider apiKey={this.props.stripe_key}>
                       <Elements>
-                        <CheckoutForm />
+                        <CheckoutForm amount={this.props.carts.sum} username={this.props.auth.email} />
                       </Elements>
-                    </div>
-                  </StripeProvider>
+                    </StripeProvider>
+                  </Modal>
                 </>
               )
             }
@@ -106,6 +120,6 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = { push, readCarts, removeCart }
+const mapDispatchToProps = { push, readCarts, removeCart, showOverlay }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyCart)

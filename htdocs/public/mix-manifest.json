@@ -1,6 +1,6 @@
 {
-    "/assets/admin/js/app.js": "/assets/admin/js/app.js?id=70d3da2585d12436fdfc",
-    "/assets/front/css/app.css": "/assets/front/css/app.css?id=f08b12de6759d1b52e88",
-    "/assets/admin/css/app.css": "/assets/admin/css/app.css?id=a2bad12d6e7fb4832b28",
-    "/assets/front/js/app.js": "/assets/front/js/app.js?id=e9dade92fffa57920b41"
+    "/assets/admin/js/app.js": "/assets/admin/js/app.js",
+    "/assets/front/css/app.css": "/assets/front/css/app.css",
+    "/assets/admin/css/app.css": "/assets/admin/css/app.css",
+    "/assets/front/js/app.js": "/assets/front/js/app.js"
 }

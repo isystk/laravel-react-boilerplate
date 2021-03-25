@@ -14,6 +14,8 @@ interface IProps {
   stripe
   elements
   push
+  username: string
+  amount: number
 }
 
 class CheckoutForm extends React.Component<IProps> {
@@ -55,40 +57,55 @@ class CheckoutForm extends React.Component<IProps> {
   render() {
     console.log(this.props.stripe)
     return (
-      <div className="col-8">
-        <p>決済情報の入力</p>
+      <div style={{ padding: '20px' }}>
+        <h2 style={{ fontSize: '16px', textAlign: 'center', fontWeight: 'bold' }}>決済情報の入力</h2>
         <Formik
-          initialValues={{ amount: 100, username: 'TARO YAMADA' }}
+          initialValues={{ amount: this.props.amount, username: this.props.username }}
           onSubmit={values => this.handlePayment(values)}
           validationSchema={Yup.object().shape({
             amount: Yup.number()
               .min(1)
-              .max(1000),
+              .max(10000),
           })}
         >
-          {({ handleChange, handleSubmit, handleBlur, values, errors, touched }) => (
+          {({ handleSubmit, values, errors, touched }) => (
             <Form onSubmit={handleSubmit}>
               <CSRFToken />
               <FormGroup>
                 <Label>金額</Label>
-                <Input
+                {/* <Input
                   type="text"
                   name="amount"
                   value={values.amount}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   invalid={Boolean(touched.amount && errors.amount)}
+                /> */}
+                <p>{values.amount}円</p>
+                <Input
+                  type="hidden"
+                  name="amount"
+                  value={values.amount}
+                  invalid={Boolean(touched.amount && errors.amount)}
                 />
                 <FormFeedback>{errors.amount}</FormFeedback>
               </FormGroup>
               <FormGroup>
-                <Label>利用者名</Label>
+                {/* <Label>利用者名</Label>
                 <Input
                   type="text"
                   name="username"
                   value={values.username}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  invalid={Boolean(touched.username && errors.username)}
+                /> */}
+                <Label>メールアドレス</Label>
+                <p>{values.username}</p>
+                <Input
+                  type="hidden"
+                  name="username"
+                  value={values.username}
                   invalid={Boolean(touched.username && errors.username)}
                 />
                 <FormFeedback>{errors.username}</FormFeedback>
@@ -103,19 +120,31 @@ class CheckoutForm extends React.Component<IProps> {
               <CardExpiryElement className="p-2 bg-light" />
               <legend className="col-form-label">セキュリティーコード</legend>
               <CardCVCElement className="p-2 bg-light" />
-
-              <Button onClick={this.submit} className="my-3" color="primary">
-                購入
-              </Button>
+              <p className="text-center">
+                <Button onClick={this.submit} className="my-3" color="primary">
+                  購入
+                </Button>
+              </p>
             </Form>
           )}
         </Formik>
+        <p className="fz-s">
+          テスト用クレジットカード番号
+          <br />
+          5555555555554444
+        </p>
       </div>
     )
   }
 }
 
-const mapStateToProps = () => ({})
+const mapStateToProps = (state, ownProps) => {
+  console.log(state.auth)
+  return {
+    amount: ownProps.amount,
+    username: ownProps.username,
+  }
+}
 
 const mapDispatchToProps = {
   push,
