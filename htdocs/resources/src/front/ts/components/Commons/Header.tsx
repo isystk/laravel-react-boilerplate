@@ -51,7 +51,7 @@ class CommonHeader extends React.Component<IProps> {
                   </Form>
                 </NavDropdown>
 
-                <a href="#" onClick={this.mycartSubmit}>
+                <a href={URL.MYCART} onClick={this.mycartSubmit}>
                   <img src="/assets/front/image/cart.png" className="cartImg ml-3" />
                 </a>
               </>
@@ -111,8 +111,6 @@ class CommonHeader extends React.Component<IProps> {
     // if(element) {
     //   element.submit();
     // }
-
-    console.log('mycartSubmit Click!!')
 
     this.props.push(URL.MYCART)
   }

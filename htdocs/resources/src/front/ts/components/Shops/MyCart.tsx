@@ -102,7 +102,14 @@ export class MyCart extends React.Component<IProps> {
           })()}
 
           <p className="mt30 ta-center">
-            <a href={URL.TOP} className="text-danger btn">
+            <a
+              href={URL.TOP}
+              className="text-danger btn"
+              onClick={e => {
+                e.preventDefault()
+                this.props.push(URL.TOP)
+              }}
+            >
               商品一覧へ戻る
             </a>
           </p>

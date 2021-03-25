@@ -19,11 +19,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::group(['middleware' => ['api']], function () {
+  Route::resource('consts', 'Api\ConstController');
     Route::resource('likes', 'Api\LikeController');
     Route::post('/likes/store', 'Api\LikeController@store');
     Route::post('/likes/destroy/{id}', 'Api\LikeController@destroy');
-
     Route::resource('shops', 'Api\ShopController');
-
-    Route::resource('consts', 'Api\ConstController');
+    Route::post('/contact/store', 'Api\ContactFormController@store');
 });

@@ -1,25 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use App\Models\ContactForm;
 use App\Models\ContactFormImage;
-use Auth;
 use App\Http\Requests\StoreContactForm;
 
-class ContactFormController extends Controller
+
+class ContactFormController extends ApiController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
-    {
-        //
-        return view('contact.create');
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -29,6 +20,7 @@ class ContactFormController extends Controller
      */
     public function store(StoreContactForm $request)
     {
+      try {
         // 画像ファイルを公開ディレクトリへ配置する。
         if ($request->has('imageBase64')) {
             $file = $request->validated()['imageFile'];
@@ -58,16 +50,19 @@ class ContactFormController extends Controller
         $contact_form_images->contact_form_id = $id;
         $contact_form_images->save();
 
-        return redirect('/contact/complete');
+        $result = [
+            'result'      => true,
+        ];
+      } catch (\Exception $e) {
+          $result = [
+              'result' => false,
+              'error' => [
+                  'messages' => [$e->getMessage()]
+              ],
+          ];
+          return $this->resConversionJson($result, $e->getCode());
+      }
+      return $this->resConversionJson($result);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     */
-    public function complete()
-    {
-        //
-        return view('contact.complete');
-    }
 }

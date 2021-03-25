@@ -8,9 +8,6 @@ use App\Models\Stock;
 use App\Models\Order;
 use App\Models\Cart;
 
-use Stripe\Stripe;
-use Stripe\Customer;
-use Stripe\Charge;
 use Auth;
 
 class ShopController extends ApiController

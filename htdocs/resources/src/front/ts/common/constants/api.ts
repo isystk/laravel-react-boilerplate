@@ -27,6 +27,9 @@ export const API_ENDPOINT = {
   /** お気に入り削除 */
   LIKES_DESTROY: getBffUrl('/likes/destroy'),
 
+  /** お問い合わせ登録 */
+  CONTACT_STORE: getBffUrl('/contact/store'),
+
   /** 商品一覧データ取得 */
   SHOPS: getBffUrl('/shops'),
   /** マイカートデータ取得 */

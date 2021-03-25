@@ -7,6 +7,8 @@ import CardTemplate from '../components/CardTemplate'
 import ShopTop from '../components/Shops/ShopTop'
 import MyCart from '../components/Shops/MyCart'
 import Complete from '../components/Shops/Complete'
+import ContactCreate from '../components/Contacts/ContactCreate'
+import ContactComplete from '../components/Contacts/ContactComplete'
 import AuthCheck from '../components/Auths/AuthCheck'
 import { NotFound } from '../components/NotFound'
 
@@ -35,6 +37,8 @@ const routes = session => {
               path={URL.EMAIL_VERIFY}
               render={() => <CardTemplate title="メールアドレスを確認しました。" content="Verify" />}
             />
+            <Route exact path={URL.CONTACT} component={ContactCreate} />
+            <Route exact path={URL.CONTACT_COMPLETE} component={ContactComplete} />
 
             {/* ★ログインユーザー専用ここから */}
             <AuthCheck session={session}>
