@@ -22,7 +22,7 @@ class ContactFormController extends ApiController
     {
       try {
         // 画像ファイルを公開ディレクトリへ配置する。
-        if ($request->has('imageBase64')) {
+        if ($request->has('imageBase64') && $request->imageBase64 !== null) {
             $file = $request->validated()['imageFile'];
             $fileName = time() . $request->fileName;
             $target_path = public_path('uploads/');
@@ -45,10 +45,12 @@ class ContactFormController extends ApiController
         $id = $contact->id;
 
         // お問い合わせ画像テーブルを登録
-        $contact_form_images = new ContactFormImage;
-        $contact_form_images->file_name = $fileName;
-        $contact_form_images->contact_form_id = $id;
-        $contact_form_images->save();
+        if ($fileName !== "") {
+          $contact_form_images = new ContactFormImage;
+          $contact_form_images->file_name = $fileName;
+          $contact_form_images->contact_form_id = $id;
+          $contact_form_images->save();
+        }
 
         $result = [
             'result'      => true,

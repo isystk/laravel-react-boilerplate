@@ -23,7 +23,7 @@ class StoreContactForm extends FormRequest
         $all = parent::validationData();
 
         // imageBase64パラメータがあればUploadedFileオブジェクトに変換してimageFileパラメータに上書きする。
-        if ($this->has('imageBase64')) {
+        if ($this->has('imageBase64') && $this->imageBase64 !== null) {
             $all['imageFile'] = UploadImage::converBase64($this->imageBase64);
         }
 

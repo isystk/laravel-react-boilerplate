@@ -14,7 +14,7 @@ import { Auth } from '../../store/StoreTypes'
 import ReactImageBase64 from 'react-image-base64'
 
 interface IState {
-  imageBase64?: string
+  imageBase64?: string | null
   fileName?: string
   fileErrorMessage?: string
 }
@@ -27,8 +27,8 @@ export class ContactCreate extends React.Component<IProps, IState> {
   constructor(props) {
     super(props)
     this.state = {
+      imageBase64: null,
       fileName: '',
-      imageBase64: '',
     }
   }
 
@@ -59,12 +59,12 @@ export class ContactCreate extends React.Component<IProps, IState> {
                   initialValues={{
                     your_name: this.props.auth.name || '',
                     email: this.props.auth.email || '',
-                    gender: 1,
+                    gender: '',
                     age: '',
                     title: '',
                     contact: '',
                     url: '',
-                    caution: 0,
+                    caution: [],
                     imageBase64: '',
                     fileName: '',
                   }}
@@ -147,7 +147,7 @@ export class ContactCreate extends React.Component<IProps, IState> {
                                 type="radio"
                                 name="gender"
                                 value="0"
-                                checked={values.gender === 0 ? true : false}
+                                checked={values.gender === '0' ? true : false}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 invalid={Boolean(touched.gender && errors.gender)}
@@ -161,7 +161,7 @@ export class ContactCreate extends React.Component<IProps, IState> {
                                 type="radio"
                                 name="gender"
                                 value="1"
-                                checked={values.gender === 1 ? true : false}
+                                checked={values.gender === '1' ? true : false}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 invalid={Boolean(touched.gender && errors.gender)}

@@ -105,7 +105,7 @@ class ContactFormController extends Controller
     public function update(Request $request, $id)
     {
         // imageBase64パラメータがあればUploadedFileオブジェクトに変換してimageFileパラメータに上書きする。
-        if ($request->has('imageBase64')) {
+        if ($request->has('imageBase64') && $request->imageBase64 !== null) {
             $request['imageFile'] = UploadImage::converBase64($request->imageBase64);
         }
 
@@ -151,10 +151,12 @@ class ContactFormController extends Controller
         $contact_form_images = DB::table('contact_form_images')
             ->where('contact_form_id', $id);
         $contact_form_images->delete();
-        $contact_form_images = new ContactFormImage;
-        $contact_form_images->file_name = $fileName;
-        $contact_form_images->contact_form_id = $id;
-        $contact_form_images->save();
+        if ($fileName !== "") {
+          $contact_form_images = new ContactFormImage;
+          $contact_form_images->file_name = $fileName;
+          $contact_form_images->contact_form_id = $id;
+          $contact_form_images->save();
+        }
 
         return redirect('/admin/contact');
     }
