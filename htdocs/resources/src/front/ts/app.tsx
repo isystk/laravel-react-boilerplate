@@ -8,10 +8,6 @@ import axios from 'axios'
 
 import ReactRoot from './ReactRoot'
 
-import 'bootstrap'
-import heic2any from 'heic2any'
-window.heic2any = heic2any
-
 const store = configureStore({})
 const pstore = persistStore(store)
 

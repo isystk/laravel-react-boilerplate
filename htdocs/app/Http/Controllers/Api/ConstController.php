@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\ApiController;
-use Illuminate\Http\Request;
-use App\Models\Stock;
-
-use App\Models\Cart;
+use App\Services\CheckFormData;
 
 class ConstController extends ApiController
 {
     public function index()
     {
+        $gender = CheckFormData::checkGender($contact);
+        $age = CheckFormData::checkAge($contact);
+
         try {
             $consts = [
               [

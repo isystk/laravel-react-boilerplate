@@ -44,9 +44,8 @@ class CheckoutForm extends React.Component<IProps> {
       const response = await API.post(API_ENDPOINT.CHECKOUT, {})
 
       if (response.result) {
-        alert('決済完了')
-
-        this.props.push(URL.TOP)
+        // 完了画面を表示する
+        this.props.push(URL.SHOP_COMPLETE)
       }
     }
   }
@@ -64,30 +63,33 @@ class CheckoutForm extends React.Component<IProps> {
           onSubmit={values => this.handlePayment(values)}
           validationSchema={Yup.object().shape({
             amount: Yup.number()
-              .min(1)
-              .max(10000),
+              .min(0, '金額は0以上で入力してください')
+              .required('金額を入力してください'),
+            username: Yup.string()
+              .email('メールアドレスを正しく入力してしてください')
+              .required('メールアドレスを入力してください'),
           })}
         >
-          {({ handleSubmit, values, errors, touched }) => (
+          {({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
             <Form onSubmit={handleSubmit}>
               <CSRFToken />
               <FormGroup>
                 <Label>金額</Label>
-                {/* <Input
+                <Input
                   type="text"
                   name="amount"
                   value={values.amount}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   invalid={Boolean(touched.amount && errors.amount)}
-                /> */}
+                />
                 <p>{values.amount}円</p>
-                <Input
+                {/* <Input
                   type="hidden"
                   name="amount"
                   value={values.amount}
                   invalid={Boolean(touched.amount && errors.amount)}
-                />
+                /> */}
                 <FormFeedback>{errors.amount}</FormFeedback>
               </FormGroup>
               <FormGroup>

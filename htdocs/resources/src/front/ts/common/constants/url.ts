@@ -19,5 +19,5 @@ export const URL = {
   /** マイカート */
   MYCART: '/mycart',
   /** 購入完了 */
-  COMPLETE: '/complete',
+  SHOP_COMPLETE: '/complete',
 }

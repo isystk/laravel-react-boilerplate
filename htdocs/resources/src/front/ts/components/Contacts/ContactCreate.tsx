@@ -1,9 +1,8 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import * as _ from 'lodash'
 import { push } from 'connected-react-router'
 
-import { Form, FormGroup, Label, Input, FormFeedback } from 'reactstrap'
+import { Form, FormGroup, Label, Input } from 'reactstrap'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import CSRFToken from '../Elements/CSRFToken'
@@ -11,6 +10,7 @@ import { API } from '../../utilities'
 import { API_ENDPOINT } from '../../common/constants/api'
 import { URL } from '../../common/constants/url'
 
+import { Auth } from '../../store/StoreTypes'
 import ReactImageBase64 from 'react-image-base64'
 
 interface IState {
@@ -19,6 +19,7 @@ interface IState {
   fileErrorMessage?: string
 }
 interface IProps {
+  auth: Auth
   push
 }
 
@@ -38,10 +39,8 @@ export class ContactCreate extends React.Component<IProps, IState> {
     const response = await API.post(API_ENDPOINT.CONTACT_STORE, values)
 
     if (response.result) {
-      alert('送信完了')
-
-      // トップ画面に戻る
-      this.props.push(URL.TOP)
+      // 完了画面を表示する
+      this.props.push(URL.CONTACT_COMPLETE)
     }
   }
 
@@ -58,19 +57,42 @@ export class ContactCreate extends React.Component<IProps, IState> {
               <div className="card-body">
                 <Formik
                   initialValues={{
-                    your_name: '1',
-                    email: '2@gmail.com',
+                    your_name: this.props.auth.name || '',
+                    email: this.props.auth.email || '',
                     gender: 1,
-                    age: 4,
-                    title: 'a',
-                    contact: 'bb',
-                    url: 'http://localhost',
-                    caution: 1,
+                    age: '',
+                    title: '',
+                    contact: '',
+                    url: '',
+                    caution: 0,
                     imageBase64: '',
                     fileName: '',
                   }}
                   onSubmit={values => this.handleSubmit(values)}
-                  validationSchema={Yup.object().shape({})}
+                  validationSchema={Yup.object().shape({
+                    your_name: Yup.string()
+                      .max(20, 'お名前は20文字以下を入れてください')
+                      .required('お名前を入力してください'),
+                    email: Yup.string()
+                      .email('メールアドレスを正しく入力してしてください')
+                      .max(255, 'メールアドレスは255文字以下を入れてください')
+                      .required('メールアドレスを入力してください'),
+                    // gender: Yup.number().required('性別を選択してください'),
+                    age: Yup.number().required('年齢を選択してください'),
+                    title: Yup.string()
+                      .max(50, 'タイトルは50文字以下を入れてください')
+                      .required('タイトルを入力してください'),
+                    contact: Yup.string()
+                      .max(200, 'タイトルは200文字以下を入れてください')
+                      .required('本文を入力してください'),
+                    url: Yup.string()
+                      // .matches(
+                      //   /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+                      //   'URLを正しく入力してください',
+                      // ),
+                      .url('URLを正しく入力してください'),
+                    caution: Yup.array().min(1, '注意事項に同意してください'),
+                  })}
                 >
                   {({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
                     <Form onSubmit={handleSubmit}>
@@ -92,7 +114,7 @@ export class ContactCreate extends React.Component<IProps, IState> {
                             />
                             <div className="form-bottom"></div>
                           </div>
-                          <FormFeedback>{errors.your_name}</FormFeedback>
+                          <p className="error">{errors.your_name}</p>
                         </div>
                       </FormGroup>
                       <FormGroup className="form-section">
@@ -111,7 +133,7 @@ export class ContactCreate extends React.Component<IProps, IState> {
                             />
                             <div className="form-bottom"></div>
                           </div>
-                          <FormFeedback>{errors.email}</FormFeedback>
+                          <p className="error">{errors.email}</p>
                         </div>
                       </FormGroup>
                       <FormGroup className="form-section">
@@ -147,8 +169,8 @@ export class ContactCreate extends React.Component<IProps, IState> {
                               <span>男性</span>
                             </Label>
                           </div>
+                          <p className="error">{errors.gender}</p>
                         </div>
-                        <FormFeedback>{errors.gender}</FormFeedback>
                       </FormGroup>
                       <FormGroup className="form-section">
                         <div className="form-section-wrap">
@@ -173,8 +195,8 @@ export class ContactCreate extends React.Component<IProps, IState> {
                               <option value="6">60歳～</option>
                             </Input>
                           </div>
+                          <p className="error">{errors.age}</p>
                         </div>
-                        <FormFeedback>{errors.age}</FormFeedback>
                       </FormGroup>
                       <FormGroup className="form-section">
                         <div className="form-section-wrap">
@@ -192,7 +214,7 @@ export class ContactCreate extends React.Component<IProps, IState> {
                             />
                             <div className="form-bottom"></div>
                           </div>
-                          <FormFeedback>{errors.title}</FormFeedback>
+                          <p className="error">{errors.title}</p>
                         </div>
                       </FormGroup>
                       <FormGroup className="form-section">
@@ -211,7 +233,7 @@ export class ContactCreate extends React.Component<IProps, IState> {
                             />
                             <div className="form-bottom"></div>
                           </div>
-                          <FormFeedback>{errors.contact}</FormFeedback>
+                          <p className="error">{errors.contact}</p>
                         </div>
                       </FormGroup>
                       <FormGroup className="form-section">
@@ -230,7 +252,7 @@ export class ContactCreate extends React.Component<IProps, IState> {
                             />
                             <div className="form-bottom"></div>
                           </div>
-                          <FormFeedback>{errors.url}</FormFeedback>
+                          <p className="error">{errors.url}</p>
                         </div>
                       </FormGroup>
                       <FormGroup className="form-section">
@@ -264,7 +286,7 @@ export class ContactCreate extends React.Component<IProps, IState> {
                               <Input type="hidden" name="fileName" value={values.fileName} onChange={handleChange} />
                             </div>
                           </div>
-                          <FormFeedback>{this.state.fileErrorMessage}</FormFeedback>
+                          <p className="error">{this.state.fileErrorMessage}</p>
                         </div>
                       </FormGroup>
                       <FormGroup className="form-section">
@@ -282,7 +304,7 @@ export class ContactCreate extends React.Component<IProps, IState> {
                               <span>注意事項に同意する</span>
                             </label>
                           </div>
-                          <FormFeedback>{errors.caution}</FormFeedback>
+                          <p className="error">{errors.caution}</p>
                         </div>
                       </FormGroup>
                       <div className="submit-wrap">
@@ -305,8 +327,10 @@ export class ContactCreate extends React.Component<IProps, IState> {
   }
 }
 
-const mapStateToProps = () => {
-  return {}
+const mapStateToProps = state => {
+  return {
+    auth: state.auth,
+  }
 }
 
 const mapDispatchToProps = {

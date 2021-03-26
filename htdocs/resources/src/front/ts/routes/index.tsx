@@ -6,7 +6,7 @@ import Layout from '../components/layout'
 import CardTemplate from '../components/CardTemplate'
 import ShopTop from '../components/Shops/ShopTop'
 import MyCart from '../components/Shops/MyCart'
-import Complete from '../components/Shops/Complete'
+import ShopComplete from '../components/Shops/ShopComplete'
 import ContactCreate from '../components/Contacts/ContactCreate'
 import ContactComplete from '../components/Contacts/ContactComplete'
 import AuthCheck from '../components/Auths/AuthCheck'
@@ -44,7 +44,7 @@ const routes = session => {
             <AuthCheck session={session}>
               <Route exact path={URL.HOME} render={() => <CardTemplate title="ダッシュボード" content="Home" />} />
               <Route exact path={URL.MYCART} component={MyCart} />
-              <Route exact path={URL.COMPLETE} component={Complete} />
+              <Route exact path={URL.SHOP_COMPLETE} component={ShopComplete} />
             </AuthCheck>
             {/* ★ログインユーザー専用ここまで */}
 
