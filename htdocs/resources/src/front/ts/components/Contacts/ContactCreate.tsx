@@ -262,10 +262,13 @@ export class ContactCreate extends React.Component<IProps, IState> {
                           </Label>
                           <div className="textarea-wrap" id="drop-zone">
                             <ReactImageBase64
+                              maxFileSize={10485760}
+                              thumbnail_size={500}
+                              drop={true}
+                              dropText="ファイルをドラッグ＆ドロップもしくは"
                               handleChange={data => {
-                                console.log(data)
                                 this.setState({
-                                  imageBase64: data.imageBase64,
+                                  imageBase64: data.fileData,
                                   fileName: data.fileName,
                                 })
                               }}
