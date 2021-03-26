@@ -5,19 +5,19 @@ import Pagination from 'react-js-pagination'
 import { push } from 'connected-react-router'
 
 import { readShops, readLikes, addLike, removeLike, addCart } from '../../actions'
-import { Likes, Page } from '../../store/StoreTypes'
+import { Likes, Page, Stock } from '../../store/StoreTypes'
 
 interface IProps {
-  stocks
+  stocks: Stock[]
   likes: Likes
   paging: Page
-  push
-  url
-  readShops
-  readLikes
-  addLike
-  removeLike
-  addCart
+  push: any
+  url: any
+  readShops: (arg0: string) => void
+  readLikes: () => void
+  addLike: (arg0: any) => void
+  removeLike: (arg0: any) => void
+  addCart: (arg0: any) => void
 }
 
 export class ShopTop extends React.Component<IProps> {
@@ -99,7 +99,7 @@ export class ShopTop extends React.Component<IProps> {
     )
   }
 
-  handlePageChange(pageNo) {
+  handlePageChange(pageNo: any) {
     // 商品データを取得する
     this.props.readShops(`?page=${pageNo}`)
   }

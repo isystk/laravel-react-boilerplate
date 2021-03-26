@@ -12,7 +12,7 @@ export const SET_REMEMBER = 'SET_REMEMBER'
 export const SET_CSRF = 'SET_CSRF'
 export const SET_PARAMS = 'SET_PARAMS'
 
-export const setSession = session => ({
+export const setSession = (session: any) => ({
   type: SET_SESSION,
   payload: {
     id: session.id,
@@ -20,35 +20,35 @@ export const setSession = session => ({
   },
 })
 
-export const setName = name => ({
+export const setName = (name: string) => ({
   type: SET_NAME,
   payload: {
     name,
   },
 })
 
-export const setEmail = email => ({
+export const setEmail = (email: string) => ({
   type: SET_EMAIL,
   payload: {
     email,
   },
 })
 
-export const setRemember = remember => ({
+export const setRemember = (remember: string) => ({
   type: SET_REMEMBER,
   payload: {
     remember,
   },
 })
 
-export const setCSRF = csrf => ({
+export const setCSRF = (csrf: string) => ({
   type: SET_CSRF,
   payload: {
     csrf,
   },
 })
 
-export const setPrams = request => ({
+export const setPrams = (request: any) => ({
   type: SET_PARAMS,
   payload: {
     request,

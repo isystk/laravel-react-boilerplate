@@ -11,7 +11,7 @@ import ReactRoot from './ReactRoot'
 const store = configureStore({})
 const pstore = persistStore(store)
 
-const render = props => {
+const render = (props: string) => {
   ReactDom.render(
     <Provider store={store}>
       <PersistGate loading={<p>loading...</p>} persistor={pstore}>

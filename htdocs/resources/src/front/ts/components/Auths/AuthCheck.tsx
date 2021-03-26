@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { Redirect } from 'react-router'
 
 interface IProps {
-  session
-  children
+  session: { id: undefined }
+  children: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined
 }
 
 export class AuthCheck extends React.Component<IProps> {

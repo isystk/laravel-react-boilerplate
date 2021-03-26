@@ -77,7 +77,7 @@ export class ContactCreate extends React.Component<IProps, IState> {
                       .email('メールアドレスを正しく入力してしてください')
                       .max(255, 'メールアドレスは255文字以下を入れてください')
                       .required('メールアドレスを入力してください'),
-                    // gender: Yup.number().required('性別を選択してください'),
+                    gender: Yup.number().required('性別を選択してください'),
                     age: Yup.number().required('年齢を選択してください'),
                     title: Yup.string()
                       .max(50, 'タイトルは50文字以下を入れてください')

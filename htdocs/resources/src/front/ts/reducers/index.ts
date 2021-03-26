@@ -7,7 +7,7 @@ import stocks from './stocks'
 import carts from './carts'
 import likes from './likes'
 
-const rootReducer = history =>
+const rootReducer = (history: any) =>
   combineReducers({
     parts,
     auth,

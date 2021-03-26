@@ -5,19 +5,19 @@ import { setSession, setName, setEmail, setRemember, setCSRF, readConsts } from 
 import routes from './routes'
 
 interface IProps {
-  setCSRF
-  responseSession
-  history
-  csrf
-  setSession
-  setName
-  setEmail
-  setRemember
-  readConsts
+  setCSRF: (arg0: string) => void
+  responseSession: string
+  history: any
+  csrf: any
+  setSession: (arg0: any) => void
+  setName: (arg0: string) => void
+  setEmail: (arg0: string) => void
+  setRemember: (arg0: string) => void
+  readConsts: () => void
 }
 
 class ReactRoot extends React.Component<IProps> {
-  constructor(props) {
+  constructor(props: IProps | Readonly<IProps>) {
     super(props)
     // セッションのセット
     this.props.setSession(props.responseSession)
@@ -42,16 +42,27 @@ class ReactRoot extends React.Component<IProps> {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: { csrf: string }) => ({
   csrf: state.csrf,
 })
 
-const mapDispatchToProps = dispatch => ({
-  setCSRF: csrf => dispatch(setCSRF(csrf)),
-  setSession: session => dispatch(setSession(session)),
-  setName: name => dispatch(setName(name)),
-  setEmail: email => dispatch(setEmail(email)),
-  setRemember: remember => dispatch(setRemember(remember)),
+const mapDispatchToProps = (
+  dispatch: (arg0: {
+    type: string
+    payload?:
+      | { csrf: string }
+      | { id: number; name: string }
+      | { name: string }
+      | { email: string }
+      | { remember: string }
+    response?: any
+  }) => any,
+) => ({
+  setCSRF: (csrf: string) => dispatch(setCSRF(csrf)),
+  setSession: (session: any) => dispatch(setSession(session)),
+  setName: (name: string) => dispatch(setName(name)),
+  setEmail: (email: string) => dispatch(setEmail(email)),
+  setRemember: (remember: string) => dispatch(setRemember(remember)),
   readConsts: async () => dispatch(await readConsts()),
 })
 

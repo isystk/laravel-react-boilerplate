@@ -8,7 +8,7 @@ interface IProps {
 }
 
 class Layout extends React.Component<IProps> {
-  constructor(props) {
+  constructor(props: IProps | Readonly<IProps>) {
     super(props)
   }
 
@@ -25,7 +25,7 @@ class Layout extends React.Component<IProps> {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: { parts: any; auth: any }) => {
   return {
     parts: state.parts,
     auth: state.auth,

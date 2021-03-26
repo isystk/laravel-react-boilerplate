@@ -62,6 +62,7 @@ export interface Stock
   quantity: number
   created_at: Date
   updated_at: Date
+  isLike: boolean
 }
 
 export interface Likes

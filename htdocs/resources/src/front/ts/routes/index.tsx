@@ -12,7 +12,7 @@ import ContactComplete from '../components/Contacts/ContactComplete'
 import AuthCheck from '../components/Auths/AuthCheck'
 import { NotFound } from '../components/NotFound'
 
-const routes = session => {
+const routes = (session: string) => {
   return (
     <>
       <Layout>
@@ -28,7 +28,7 @@ const routes = session => {
             />
             <Route
               path={`${URL.PASSWORD_RESET}/:id`}
-              render={props => (
+              render={(props: { match: { params: any } }) => (
                 <CardTemplate title="パスワードのリセット" content="ResetForm" params={props.match.params} />
               )}
             />

@@ -19,20 +19,20 @@ const del = async (url: string, values?: any, config?: any): Promise<any> => {
 
 const request = async (method: string, url: string, values?: any, config?: any): Promise<any> => {
   // console.log('Request:%s', url);
-  const response = await axios[method](url, jsonToForm(values, new FormData()), config).catch(function(error) {
+  const response = await axios[method](url, jsonToForm(values, new FormData()), config).catch(function(error: any) {
     throw error
   })
   // console.log("Response:%s", JSON.stringify(response));
   return response.data
 }
 
-const jsonToForm = (params, formData, name = '') => {
+const jsonToForm = (params: any[], formData: FormData, name = '') => {
   if (_.isArray(params)) formatArray(params, formData, name)
   if (_.isPlainObject(params)) formatObject(params, formData, name)
   return formData
 }
 
-const formatObject = (params, formData, name) => {
+const formatObject = (params: any, formData: any, name: string) => {
   _.forEach(params, (v, k) => {
     if (_.isArray(v) || _.isPlainObject(v)) {
       jsonToForm(v, formData, !name ? k : `${name}.${k}`)
@@ -42,7 +42,7 @@ const formatObject = (params, formData, name) => {
   })
 }
 
-const formatArray = (params, formData, name) => {
+const formatArray = (params: any[], formData: any, name: string) => {
   _.map(params, (data, index) => {
     if (_.isArray(data) || _.isPlainObject(data)) {
       jsonToForm(data, formData, `${name}[${index}]`)
