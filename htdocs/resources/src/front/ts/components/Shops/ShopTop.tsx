@@ -7,7 +7,7 @@ import { push } from 'connected-react-router'
 import { readShops, readLikes, addLike, removeLike, addCart } from '../../actions'
 import { Likes, Page, Stock } from '../../store/StoreTypes'
 
-interface IProps {
+type Props = {
   stocks: Stock[]
   likes: Likes
   paging: Page
@@ -20,7 +20,7 @@ interface IProps {
   addCart: (arg0: any) => void
 }
 
-export class ShopTop extends React.Component<IProps> {
+export class ShopTop extends React.Component<Props> {
   constructor(props) {
     super(props)
 

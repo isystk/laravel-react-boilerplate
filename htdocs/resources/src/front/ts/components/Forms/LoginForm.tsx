@@ -7,14 +7,14 @@ import LoginButton from '../Elements/LoginButton'
 import CSRFToken from '../Elements/CSRFToken'
 import { setEmail, setRemember } from '../../actions/auth'
 
-interface IProps {
+type Props = {
   email: string
   remember: boolean
   setEmail
   setRemember
 }
 
-class LoginForm extends React.Component<IProps> {
+class LoginForm extends React.Component<Props> {
   constructor(props) {
     super(props)
   }

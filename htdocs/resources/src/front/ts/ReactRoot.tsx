@@ -4,7 +4,7 @@ import { ConnectedRouter } from 'connected-react-router'
 import { setSession, setName, setEmail, setRemember, setCSRF, readConsts } from './actions'
 import routes from './routes'
 
-interface IProps {
+type Props = {
   setCSRF: (arg0: string) => void
   responseSession: string
   history: any
@@ -16,8 +16,8 @@ interface IProps {
   readConsts: () => void
 }
 
-class ReactRoot extends React.Component<IProps> {
-  constructor(props: IProps | Readonly<IProps>) {
+class ReactRoot extends React.Component<Props> {
+  constructor(props: Props | Readonly<Props>) {
     super(props)
     // セッションのセット
     this.props.setSession(props.responseSession)

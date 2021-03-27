@@ -4,13 +4,13 @@ import { Container, Row, Col, Card } from 'react-bootstrap'
 import ContentSelector from './ContentSelector'
 import { setPrams } from '../actions/auth'
 
-interface IProps {
+type Props = {
   title: string
   content: string
   params?: any
 }
 
-class CardTemplate extends React.Component<IProps> {
+class CardTemplate extends React.Component<Props> {
   constructor(props) {
     super(props)
     if (props.params !== undefined) {

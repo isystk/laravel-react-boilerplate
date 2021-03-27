@@ -6,14 +6,14 @@ import SubmitButton from '../Elements/SubmitButton'
 import CSRFToken from '../Elements/CSRFToken'
 import { setName, setEmail } from '../../actions/auth'
 
-interface IProps {
+type Props = {
   name: string
   email: string
   setName
   setEmail
 }
 
-class LoginForm extends React.Component<IProps> {
+class LoginForm extends React.Component<Props> {
   constructor(props) {
     super(props)
   }

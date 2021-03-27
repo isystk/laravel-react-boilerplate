@@ -10,7 +10,7 @@ import CSRFToken from '../Elements/CSRFToken'
 import { API } from '../../utilities'
 import { push } from 'connected-react-router'
 
-interface IProps {
+type Props = {
   stripe
   elements
   push
@@ -18,7 +18,7 @@ interface IProps {
   amount: number
 }
 
-class CheckoutForm extends React.Component<IProps> {
+class CheckoutForm extends React.Component<Props> {
   handlePayment = async values => {
     // alert(JSON.stringify(values));
 
