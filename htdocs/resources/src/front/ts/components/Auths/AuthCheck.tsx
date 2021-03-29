@@ -2,12 +2,12 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router'
 
-interface IProps {
+type Props = {
   session: { id: undefined }
   children: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined
 }
 
-export class AuthCheck extends React.Component<IProps> {
+export class AuthCheck extends React.Component<Props> {
   constructor(props) {
     super(props)
   }

@@ -5,12 +5,12 @@ import { NavDropdown, Form } from 'react-bootstrap'
 import CSRFToken from '../Elements/CSRFToken'
 import { URL } from '../../common/constants/url'
 
-interface IProps {
+type Props = {
   auth
   push
 }
 
-class CommonHeader extends React.Component<IProps> {
+class CommonHeader extends React.Component<Props> {
   constructor(props) {
     super(props)
 

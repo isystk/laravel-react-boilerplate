@@ -5,13 +5,13 @@ import * as _ from 'lodash'
 import { showOverlay, hideOverlay } from '../../actions'
 import Portal from './Portal'
 
-interface IProps {
+type Props = {
   parts
   hideOverlay
   children
 }
 
-const Modal = (props: IProps) => {
+const Modal = (props: Props) => {
   const { parts } = props
 
   const onClose = e => {

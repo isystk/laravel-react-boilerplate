@@ -2,11 +2,11 @@ import React from 'react'
 import { Form } from 'react-bootstrap'
 import { connect } from 'react-redux'
 
-interface IProps {
+type Props = {
   csrf: string
 }
 
-const CSRFToken = (props: IProps) => <Form.Control type="hidden" name="_token" defaultValue={props.csrf} />
+const CSRFToken = (props: Props) => <Form.Control type="hidden" name="_token" defaultValue={props.csrf} />
 
 const mapStateToProps = state => {
   return {

@@ -1,14 +1,14 @@
 import React from 'react'
 import { Row, Col, Form } from 'react-bootstrap'
 
-interface IProps {
+type Props = {
   identity: string
   checked: boolean
   label: string
   action
 }
 
-const CheckInput = (props: IProps) => (
+const CheckInput = (props: Props) => (
   <Form.Group>
     <Row>
       <Col md="6" className="offset-md-4">

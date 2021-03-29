@@ -4,11 +4,11 @@ import * as _ from 'lodash'
 import { push } from 'connected-react-router'
 import { URL } from '../../common/constants/url'
 
-interface IProps {
+type Props = {
   push
 }
 
-export class ContactCreate extends React.Component<IProps> {
+export class ContactCreate extends React.Component<Props> {
   constructor(props) {
     super(props)
   }

@@ -2,7 +2,7 @@ import React from 'react'
 import { Row, Col, Form } from 'react-bootstrap'
 import FormError from './FormError'
 
-interface IProps {
+type Props = {
   identity: string
   controlType: string
   name?: string
@@ -14,12 +14,12 @@ interface IProps {
   required?: string
 }
 
-interface IState {
+type State = {
   isInvalid: string
   error: string
 }
 
-class TextInput extends React.Component<IProps, IState> {
+class TextInput extends React.Component<Props, State> {
   constructor(props) {
     super(props)
     const valid = {

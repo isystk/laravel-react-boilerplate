@@ -6,11 +6,11 @@ import ResetForm from './Forms/ResetForm'
 import Home from './Forms/Home'
 import Verify from './Forms/Verify'
 
-interface IProps {
+type Props = {
   content: string
 }
 
-const ContentSelector = (props: IProps) => {
+const ContentSelector = (props: Props) => {
   switch (props.content) {
     case 'LoginForm':
       return <LoginForm />

@@ -13,17 +13,17 @@ import { URL } from '../../common/constants/url'
 import { Auth } from '../../store/StoreTypes'
 import ReactImageBase64 from 'react-image-base64'
 
-interface IState {
+type State = {
   imageBase64?: string | null
   fileName?: string
   fileErrorMessage?: string
 }
-interface IProps {
+type Props = {
   auth: Auth
   push
 }
 
-export class ContactCreate extends React.Component<IProps, IState> {
+export class ContactCreate extends React.Component<Props, State> {
   constructor(props) {
     super(props)
     this.state = {

@@ -5,12 +5,12 @@ import { push } from 'connected-react-router'
 import { URL } from '../../common/constants/url'
 import { Auth } from '../../store/StoreTypes'
 
-interface IProps {
+type Props = {
   auth: Auth
   push
 }
 
-export class ShopComplete extends React.Component<IProps> {
+export class ShopComplete extends React.Component<Props> {
   render(): JSX.Element {
     return (
       <div className="contentsArea">

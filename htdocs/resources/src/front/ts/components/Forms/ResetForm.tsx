@@ -8,12 +8,12 @@ import RequestToken from '../Elements/RequestToken'
 import SessionAlert from '../Elements/SessionAlert'
 import { setEmail } from '../../actions/auth'
 
-interface IProps {
+type Props = {
   email
   setEmail
 }
 
-class ResetForm extends React.Component<IProps> {
+class ResetForm extends React.Component<Props> {
   constructor(props) {
     super(props)
   }

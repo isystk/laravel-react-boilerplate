@@ -1,10 +1,10 @@
 import React from 'react'
 
-interface IProps {
+type Props = {
   message: string
 }
 
-const FormError = (props: IProps) => (
+const FormError = (props: Props) => (
   <span className="invalid-feedback" role="alert">
     <strong>{props.message}</strong>
   </span>

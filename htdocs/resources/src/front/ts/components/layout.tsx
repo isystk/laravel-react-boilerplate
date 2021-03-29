@@ -3,12 +3,12 @@ import { connect } from 'react-redux'
 import CommonHeader from './Commons/Header'
 import CommonFooter from './Commons/Footer'
 
-interface IProps {
+type Props = {
   children: any
 }
 
-class Layout extends React.Component<IProps> {
-  constructor(props: IProps | Readonly<IProps>) {
+class Layout extends React.Component<Props> {
+  constructor(props: Props | Readonly<Props>) {
     super(props)
   }
 

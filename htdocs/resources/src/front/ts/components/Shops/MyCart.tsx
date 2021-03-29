@@ -10,7 +10,7 @@ import { Button } from 'react-bootstrap'
 import { readCarts, removeCart, showOverlay, hideOverlay } from '../../actions'
 import { Auth, Carts } from '../../store/StoreTypes'
 
-interface IProps {
+type Props = {
   auth: Auth
   stripe_key: string
   carts: Carts
@@ -21,7 +21,7 @@ interface IProps {
   hideOverlay
 }
 
-export class MyCart extends React.Component<IProps> {
+export class MyCart extends React.Component<Props> {
   constructor(props) {
     super(props)
 
