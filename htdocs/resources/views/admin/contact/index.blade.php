@@ -8,23 +8,14 @@ $subMenu = 'contact';
 
 @section('content')
 
-<!-- Content Header (Page header) -->
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>お問い合わせ一覧</h1>
-            </div><!-- /.col -->
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="{{ url('/admin') }}">Home</a></li>
-                    <li class="breadcrumb-item active">お問い合わせ一覧</li>
-                </ol>
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-</div>
-<!-- /.content-header -->
+@include('admin.common.breadcrumb', [
+  'title' => 'お問い合わせ一覧',
+  'breadcrumbs' => (object) [
+    (object) [
+      'label'   => 'お問い合わせ一覧'
+    ]
+  ]
+])
 
 <!-- Main content -->
 <div class="content">
@@ -81,7 +72,7 @@ $subMenu = 'contact';
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body table-responsive p-0">
-                                <table class="table table-hover text-nowrap">
+                                <table class="table table-hover" >
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -96,7 +87,7 @@ $subMenu = 'contact';
                                         <tr>
                                             <th>{{ $contact->id }}</th>
                                             <td>{{ $contact->your_name }}</td>
-                                            <td>{{ $contact->title }}</td>
+                                            <td>@php echo mb_strimwidth($contact->title, 0, 50, '...') @endphp</td>
                                             <td>{{ $contact->created_at }}</td>
                                             <td><a href="{{ route('admin.contact.show', ['id'=> $contact->id]) }}">詳細を見る</a></td>
                                         </tr>

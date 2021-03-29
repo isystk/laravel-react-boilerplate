@@ -2,29 +2,24 @@
 
 @section('title', 'お問い合わせ詳細')
 @php
-$menu = 'contact';
+$menu = 'user';
 $subMenu = 'contact';
 @endphp
 
 @section('content')
-<!-- Content Header (Page header) -->
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>お問い合わせ詳細</h1>
-            </div><!-- /.col -->
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="{{ url('/admin') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ url('/admin/contact') }}">お問い合わせ一覧</a></li>
-                    <li class="breadcrumb-item active">お問い合わせ詳細</li>
-                </ol>
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-</div>
-<!-- /.content-header -->
+
+@include('admin.common.breadcrumb', [
+  'title' => 'お問い合わせ詳細',
+  'breadcrumbs' => (object) [
+    (object) [
+      'link'   => url('/admin/contact'),
+      'label'   => 'お問い合わせ一覧'
+    ],
+    (object) [
+      'label'   => 'お問い合わせ詳細'
+    ]
+  ]
+])
 
 <!-- Main content -->
 <div class="content">

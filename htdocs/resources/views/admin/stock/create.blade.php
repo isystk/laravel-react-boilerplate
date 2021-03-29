@@ -7,24 +7,20 @@ $subMenu = 'stock';
 @endphp
 
 @section('content')
-<!-- Content Header (Page header) -->
-<div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>商品登録</h1>
-            </div><!-- /.col -->
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="{{ url('/admin') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ url('/admin/stock') }}">商品一覧</a></li>
-                    <li class="breadcrumb-item active">商品登録</li>
-                </ol>
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-</div>
-<!-- /.content-header -->
+
+@include('admin.common.breadcrumb', [
+  'title' => '商品登録',
+  'breadcrumbs' => (object) [
+    (object) [
+      'link'   => url('/admin/stock'),
+      'label'   => '商品一覧'
+    ],
+    (object) [
+      'label'   => '商品登録'
+    ]
+  ]
+])
+
 
 <!-- Main content -->
 <div class="content">

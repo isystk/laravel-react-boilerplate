@@ -75,7 +75,7 @@
                             <a href="#" class="nav-link @isset($menu){{ $menu === 'master' ? 'active' : '' }} - @endisset">
                                 <i class="nav-icon fas fa-table"></i>
                                 <p>
-                                    マスタ管理
+                                    商品管理
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
@@ -83,19 +83,13 @@
                                 <li class="nav-item">
                                     <a href="{{ url('/admin/stock') }}" class="nav-link @isset($subMenu){{ $subMenu === 'stock' ? 'active' : '' }} - @endisset">
                                         <i class="fas fa-box-open nav-icon"></i>
-                                        <p>商品管理</p>
+                                        <p>在庫管理</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ url('/admin/order') }}" class="nav-link @isset($subMenu){{ $subMenu === 'order' ? 'active' : '' }} - @endisset">
                                         <i class="fas fa-cart-arrow-down nav-icon"></i>
                                         <p>注文履歴</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link @isset($subMenu){{ $subMenu === 'image' ? 'active' : '' }} - @endisset">
-                                        <i class="fa fa-file-image nav-icon"></i>
-                                        <p>画像管理</p>
                                     </a>
                                 </li>
                             </ul>
@@ -132,6 +126,14 @@
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
+                            <ul class="nav nav-treeview" style="@isset($menu){{ $menu === 'system' ? 'display:block;' : '' }} - @endisset">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link @isset($subMenu){{ $subMenu === 'image' ? 'active' : '' }} - @endisset">
+                                        <i class="fa fa-file-image nav-icon"></i>
+                                        <p>画像管理</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </nav>
