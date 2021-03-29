@@ -20,20 +20,6 @@ export const readCarts = () => async (dispatch: Dispatch): Promise<void> => {
   dispatch({ type: READ_CARTS, response })
 }
 
-export const addCart = (stockId: number) => async (dispatch: Dispatch): Promise<void> => {
-  try {
-    const response = await API.post(API_ENDPOINT.ADD_MYCART, {
-      stock_id: stockId,
-    })
-    if (response.result) {
-      dispatch({ type: READ_CARTS, response })
-      dispatch(push(URL.MYCART))
-    }
-  } catch (e) {
-    dispatch(push(URL.LOGIN))
-  }
-}
-
 export const removeCart = (stockId: number) => async (dispatch: Dispatch): Promise<void> => {
   try {
     const response = await API.post(API_ENDPOINT.REMOVE_MYCART, {

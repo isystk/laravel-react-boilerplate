@@ -49,7 +49,7 @@ export interface Page
 export interface Stocks
 {
   data: Stock[]
-  page: Page
+  page?: Page
 }
 
 export interface Stock
