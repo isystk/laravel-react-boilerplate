@@ -10,7 +10,7 @@ type Props = {
   push
 }
 
-class CommonHeader extends React.Component<Props> {
+export class CommonHeader extends React.Component<Props> {
   constructor(props) {
     super(props)
 

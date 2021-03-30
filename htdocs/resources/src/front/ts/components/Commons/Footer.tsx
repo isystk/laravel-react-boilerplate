@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 
-class CommonFooter extends React.Component {
+export class CommonFooter extends React.Component {
   constructor(props) {
     super(props)
   }

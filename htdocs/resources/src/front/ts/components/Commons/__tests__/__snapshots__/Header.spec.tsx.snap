@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header Header-Logout 1`] = `
+<header
+  className="header shadow-sm"
+>
+  <nav
+    className="navbar navbar-expand-md navbar-light bg-white headerNav"
+  >
+    <a
+      className="header_logo"
+      href="/"
+      onClick={[Function]}
+    >
+      <img
+        alt=""
+        className=""
+        src="/assets/front/image/logo.png"
+      />
+    </a>
+    <div
+      className=""
+      id="navbarSupportedContent"
+    >
+      <ul
+        className="navbar-nav mr-auto"
+      >
+        <ul
+          className="navbar-nav ml-auto"
+        >
+          <li
+            className="nav-item"
+          >
+            <a
+              className="btn btn-danger mr-3"
+              href="/login"
+              onClick={[Function]}
+            >
+              ログイン
+            </a>
+          </li>
+          <li
+            className="nav-item"
+          >
+            <a
+              className="btn btn-link text-danger"
+              href="/register"
+              onClick={[Function]}
+            >
+              新規登録
+            </a>
+          </li>
+          <li
+            className="nav-item"
+          >
+            <a
+              className="btn btn-link text-danger"
+              href="/contact"
+              onClick={[Function]}
+            >
+              お問い合わせ
+            </a>
+          </li>
+        </ul>
+      </ul>
+    </div>
+  </nav>
+</header>
+`;
