@@ -14,7 +14,7 @@ const rootReducer = (history: any) =>
     consts,
     stocks,
     carts,
-    likes,
+    likes: likes.reducer,
     router: connectRouter(history),
   })
 
