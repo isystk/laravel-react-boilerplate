@@ -63,6 +63,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
   Route::get('contact/edit/{id}', 'Admin\ContactFormController@edit')->name('admin.contact.edit');
   Route::post('contact/update/{id}', 'Admin\ContactFormController@update')->name('admin.contact.update');
   Route::post('contact/destroy/{id}', 'Admin\ContactFormController@destroy')->name('admin.contact.destroy');
+
+  Route::get('photo', 'Admin\PhotoController@index')->name('admin.photo.index');
+  Route::post('photo/destroy/{id}', 'Admin\PhotoController@destroy')->name('admin.photo.destroy');
 });
 
 /*

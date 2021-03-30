@@ -128,7 +128,7 @@
                             </a>
                             <ul class="nav nav-treeview" style="@isset($menu){{ $menu === 'system' ? 'display:block;' : '' }} - @endisset">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link @isset($subMenu){{ $subMenu === 'image' ? 'active' : '' }} - @endisset">
+                                    <a href="{{ url('/admin/photo') }}" class="nav-link @isset($subMenu){{ $subMenu === 'photo' ? 'active' : '' }} - @endisset">
                                         <i class="fa fa-file-image nav-icon"></i>
                                         <p>画像管理</p>
                                     </a>

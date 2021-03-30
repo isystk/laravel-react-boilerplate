@@ -70,19 +70,11 @@ class CheckoutForm extends React.Component<Props> {
               .required('メールアドレスを入力してください'),
           })}
         >
-          {({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
+          {({ handleSubmit, values, errors, touched }) => (
             <Form onSubmit={handleSubmit}>
               <CSRFToken />
               <FormGroup>
                 <Label>金額</Label>
-                <Input
-                  type="text"
-                  name="amount"
-                  value={values.amount}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  invalid={Boolean(touched.amount && errors.amount)}
-                />
                 <p>{values.amount}円</p>
                 {/* <Input
                   type="hidden"
