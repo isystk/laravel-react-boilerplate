@@ -17,8 +17,7 @@ const LikesReducer = createSlice({
         result: boolean
         likes: Likes
       }>,
-    )
-    {
+    ) {
       state.data = action.payload.likes.data
     },
     addLike(
@@ -26,8 +25,7 @@ const LikesReducer = createSlice({
       action: PayloadAction<{
         id: number
       }>,
-    )
-    {
+    ) {
       const newData: string = action.payload.id + ''
       // state = { ...state, data: state.data }
       state.data = [newData, ...state.data]
@@ -37,8 +35,7 @@ const LikesReducer = createSlice({
       action: PayloadAction<{
         id: number
       }>,
-    )
-    {
+    ) {
       state.data = state.data.filter(n => n !== action.payload.id + '')
     },
   },
@@ -46,14 +43,12 @@ const LikesReducer = createSlice({
 
 export const { readLikes, addLike, removeLike } = LikesReducer.actions
 
-export const readLikesAsync = () => async dispatch =>
-{
+export const readLikesAsync = () => async dispatch => {
   const response = await API.get(API_ENDPOINT.LIKES)
   dispatch(readLikes(response))
 }
 
-export const addLikeAsync = (id: number) => async dispatch =>
-{
+export const addLikeAsync = (id: number) => async dispatch => {
   const response = await API.post(API_ENDPOINT.LIKES_STORE, { id: id })
   if (response.result) {
     window.alert('お気に入りに追加しました')
@@ -61,8 +56,7 @@ export const addLikeAsync = (id: number) => async dispatch =>
   }
 }
 
-export const removeLikeAsync = (id: number) => async dispatch =>
-{
+export const removeLikeAsync = (id: number) => async dispatch => {
   const response = await API.post(API_ENDPOINT.LIKES_DESTROY + '/' + id)
   if (response.result) {
     dispatch(removeLike({ id: id }))

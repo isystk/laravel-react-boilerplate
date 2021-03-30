@@ -1,6 +1,7 @@
 import { createBrowserHistory } from 'history'
 import createRootReducer from '../reducers'
 import { persistReducer } from 'redux-persist'
+import { routerMiddleware } from 'connected-react-router'
 import storage from 'redux-persist/lib/storage'
 import thunk from 'redux-thunk'
 import { configureStore } from '@reduxjs/toolkit'
@@ -25,7 +26,7 @@ export default function myConfigureStore() {
   const store = configureStore({
     reducer: persistedReducer,
     devTools: process.env.NODE_ENV !== 'production',
-    middleware: [thunk],
+    middleware: [thunk, routerMiddleware(history)],
   })
   return store
 }
