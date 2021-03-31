@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux' // ココ！
+import { useSelector, useDispatch } from 'react-redux'
 import * as _ from 'lodash'
 import { API } from '../../utilities'
 import { readLikesAsync, addLikeAsync, removeLikeAsync } from '../../reducers/likes'
@@ -7,28 +7,6 @@ import { API_ENDPOINT } from '../../common/constants/api'
 import Pagination from 'react-js-pagination'
 import { URL } from '../../common/constants/url'
 import { push } from 'connected-react-router'
-
-const stocks = state => {
-  return _.map(state.stocks.data, function(stock) {
-    // 表示用にデータを加工
-    return {
-      ...stock,
-      price: stock.price + '円',
-      isLike: state.likes.data.includes(stock.id + ''),
-    }
-  })
-}
-
-const paging = state => ({
-  total: state.stocks.total,
-  current_page: state.stocks.current_page,
-})
-
-const url = state => ({
-  pathname: state.router.location.pathname,
-  search: state.router.location.search,
-  hash: state.router.location.hash,
-})
 
 const ShopTop: FC = () => {
   const { search } = useSelector(url)
@@ -154,5 +132,27 @@ const ShopTop: FC = () => {
     </React.Fragment>
   )
 }
+
+const stocks = state => {
+  return _.map(state.stocks.data, function(stock) {
+    // 表示用にデータを加工
+    return {
+      ...stock,
+      price: stock.price + '円',
+      isLike: state.likes.data.includes(stock.id + ''),
+    }
+  })
+}
+
+const paging = state => ({
+  total: state.stocks.total,
+  current_page: state.stocks.current_page,
+})
+
+const url = state => ({
+  pathname: state.router.location.pathname,
+  search: state.router.location.search,
+  hash: state.router.location.hash,
+})
 
 export default ShopTop

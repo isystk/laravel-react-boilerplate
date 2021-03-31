@@ -1,153 +1,244 @@
-import * as React from 'react'
-import { connect } from 'react-redux'
+import React, { FC, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { push } from 'connected-react-router'
 import { NavDropdown, Form } from 'react-bootstrap'
 import CSRFToken from '../Elements/CSRFToken'
 import { URL } from '../../common/constants/url'
 
-type Props = {
-  auth
-  push
-}
+export const CommonHeader: FC = () => {
+  const dispatch = useDispatch()
+  const [isSideMenu, setSideMenu] = useState(false)
 
-export class CommonHeader extends React.Component<Props> {
-  constructor(props) {
-    super(props)
+  const { auth, name } = useSelector(auths)
 
-    this.mycartSubmit = this.mycartSubmit.bind(this)
-  }
-
-  renderLogin(): JSX.Element {
-    const { auth, name } = this.props.auth
-
+  const renderLoginPc = (): JSX.Element => {
     return (
-      <ul className="navbar-nav ml-auto">
-        {(() => {
-          if (auth) {
-            // ログイン済みの場合
-            return (
-              <>
-                <NavDropdown id="logout-nav" title={name + ' 様'}>
-                  <NavDropdown.Item
-                    href="/logout"
-                    onClick={e => {
-                      e.preventDefault()
-                      const element: HTMLFormElement = document.getElementById('logout-form') as HTMLFormElement
-                      if (element) {
-                        element.submit()
-                      }
-                    }}
-                  >
-                    ログアウト
-                  </NavDropdown.Item>
-                  <Form id="logout-form" action="/logout" method="POST" style={{ display: 'none' }}>
-                    <CSRFToken />
-                  </Form>
-                  <NavDropdown.Item href="/mycart" onClick={this.mycartSubmit}>
-                    カートを見る
-                  </NavDropdown.Item>
-                  <Form id="mycart-form" action="/mycart" method="POST" style={{ display: 'none' }}>
-                    <CSRFToken />
-                  </Form>
-                </NavDropdown>
+      <div className="" id="navbarSupportedContent">
+        <ul className="navbar-nav ml-auto">
+          {(() => {
+            if (auth) {
+              // ログイン済みの場合
+              return (
+                <>
+                  <NavDropdown id="logout-nav" title={name + ' 様'}>
+                    <NavDropdown.Item
+                      href="/logout"
+                      onClick={e => {
+                        e.preventDefault()
+                        const element: HTMLFormElement = document.getElementById('logout-form') as HTMLFormElement
+                        if (element) {
+                          element.submit()
+                        }
+                      }}
+                    >
+                      ログアウト
+                    </NavDropdown.Item>
+                    <Form id="logout-form" action="/logout" method="POST" style={{ display: 'none' }}>
+                      <CSRFToken />
+                    </Form>
+                    <NavDropdown.Item href="/mycart" onClick={mycartSubmit}>
+                      カートを見る
+                    </NavDropdown.Item>
+                    <Form id="mycart-form" action="/mycart" method="POST" style={{ display: 'none' }}>
+                      <CSRFToken />
+                    </Form>
+                  </NavDropdown>
 
-                <a href={URL.MYCART} onClick={this.mycartSubmit}>
-                  <img src="/assets/front/image/cart.png" className="cartImg ml-3" />
-                </a>
-              </>
-            )
-          } else {
-            // 未ログインの場合
-            return (
-              <>
-                <li className="nav-item">
-                  <a
-                    className="btn btn-danger mr-3"
-                    href={URL.LOGIN}
-                    onClick={e => {
-                      e.preventDefault()
-                      this.props.push(URL.LOGIN)
-                    }}
-                  >
-                    ログイン
+                  <a href={URL.MYCART} onClick={mycartSubmit}>
+                    <img src="/assets/front/image/cart.png" className="cartImg ml-3" />
                   </a>
-                </li>
-                <li className="nav-item">
-                  <a
-                    className="btn btn-link text-danger"
-                    href={URL.REGISTER}
-                    onClick={e => {
-                      e.preventDefault()
-                      this.props.push(URL.REGISTER)
-                    }}
-                  >
-                    新規登録
-                  </a>
-                </li>
-              </>
-            )
-          }
-        })()}
+                </>
+              )
+            } else {
+              // 未ログインの場合
+              return (
+                <>
+                  <li className="nav-item">
+                    <a
+                      className="btn btn-danger mr-3"
+                      href={URL.LOGIN}
+                      onClick={e => {
+                        e.preventDefault()
+                        dispatch(push(URL.LOGIN))
+                      }}
+                    >
+                      ログイン
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <a
+                      className="btn btn-link text-danger"
+                      href={URL.REGISTER}
+                      onClick={e => {
+                        e.preventDefault()
+                        dispatch(push(URL.REGISTER))
+                      }}
+                    >
+                      新規登録
+                    </a>
+                  </li>
+                </>
+              )
+            }
+          })()}
 
-        <li className="nav-item">
-          <a
-            className="btn btn-link text-danger"
-            href={URL.CONTACT}
-            onClick={e => {
-              e.preventDefault()
-              this.props.push(URL.CONTACT)
-            }}
-          >
-            お問い合わせ
-          </a>
-        </li>
-      </ul>
-    )
-  }
-
-  mycartSubmit(e) {
-    e.preventDefault()
-    // const element: HTMLFormElement = document.getElementById('mycart-form') as HTMLFormElement
-    // if(element) {
-    //   element.submit();
-    // }
-
-    this.props.push(URL.MYCART)
-  }
-
-  render(): JSX.Element {
-    return (
-      <React.Fragment>
-        <header className="header shadow-sm">
-          <nav className="navbar navbar-expand-md navbar-light bg-white headerNav">
+          <li className="nav-item">
             <a
-              className="header_logo"
-              href="/"
+              className="btn btn-link text-danger"
+              href={URL.CONTACT}
               onClick={e => {
                 e.preventDefault()
-                this.props.push(URL.TOP)
+                dispatch(push(URL.CONTACT))
               }}
             >
-              <img src="/assets/front/image/logo.png" alt="" className="" />
+              お問い合わせ
             </a>
-
-            <div className="" id="navbarSupportedContent">
-              <ul className="navbar-nav mr-auto">{this.renderLogin()}</ul>
-            </div>
-          </nav>
-        </header>
-      </React.Fragment>
+          </li>
+        </ul>
+      </div>
     )
   }
-}
 
-const mapStateToProps = state => {
-  return {
-    parts: state.parts,
-    auth: state.auth,
+  const renderLoginSp = (): JSX.Element => {
+    const isSideMenuOpen = isSideMenu
+    const sideMenuClass = isSideMenuOpen ? 'open' : ''
+    const menuBtnClass = isSideMenuOpen ? 'menu-btn on' : 'menu-btn'
+    const layerPanelClass = isSideMenuOpen ? 'on' : ''
+
+    return (
+      <>
+        <div
+          className={menuBtnClass}
+          onClick={e => {
+            e.preventDefault()
+            const isOpen = isSideMenu ? false : true
+            setSideMenu(isOpen)
+          }}
+        >
+          <figure></figure>
+          <figure></figure>
+          <figure></figure>
+        </div>
+        <div id="side-menu" className={sideMenuClass}>
+          <div className="side-menu-header">
+            <p style={{ margin: '20px', fontSize: '16px' }}>{auth && name + ' 様'}</p>
+          </div>
+          <nav>
+            <ul>
+              {(() => {
+                if (auth) {
+                  // ログイン済みの場合
+                  return (
+                    <>
+                      <li>
+                        <a
+                          href="/logout"
+                          onClick={e => {
+                            e.preventDefault()
+                            const element: HTMLFormElement = document.getElementById('logout-form') as HTMLFormElement
+                            if (element) {
+                              element.submit()
+                            }
+                          }}
+                        >
+                          ログアウト
+                        </a>
+                        <Form id="logout-form" action="/logout" method="POST" style={{ display: 'none' }}>
+                          <CSRFToken />
+                        </Form>
+                      </li>
+                      <li>
+                        <a href="/mycart" onClick={mycartSubmit}>
+                          カートを見る
+                        </a>
+                        <Form id="mycart-form" action="/mycart" method="POST" style={{ display: 'none' }}>
+                          <CSRFToken />
+                        </Form>
+                      </li>
+                    </>
+                  )
+                } else {
+                  // 未ログインの場合
+                  return (
+                    <>
+                      <li>
+                        <a
+                          href={URL.LOGIN}
+                          onClick={e => {
+                            e.preventDefault()
+                            setSideMenu(false)
+                            dispatch(push(URL.LOGIN))
+                          }}
+                        >
+                          ログイン
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href={URL.REGISTER}
+                          onClick={e => {
+                            e.preventDefault()
+                            setSideMenu(false)
+                            dispatch(push(URL.REGISTER))
+                          }}
+                        >
+                          新規登録
+                        </a>
+                      </li>
+                    </>
+                  )
+                }
+              })()}
+              <li>
+                <a
+                  href={URL.CONTACT}
+                  onClick={e => {
+                    e.preventDefault()
+                    setSideMenu(false)
+                    dispatch(push(URL.CONTACT))
+                  }}
+                >
+                  お問い合わせ
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div id="layer-panel" className={layerPanelClass}></div>
+      </>
+    )
   }
+
+  const mycartSubmit = e => {
+    e.preventDefault()
+    setSideMenu(false)
+    dispatch(push(URL.MYCART))
+  }
+
+  return (
+    <React.Fragment>
+      <header className="header shadow-sm">
+        <nav className="navbar navbar-expand-md navbar-light bg-white headerNav">
+          <a
+            className="header_logo"
+            href="/"
+            onClick={e => {
+              e.preventDefault()
+              dispatch(push(URL.TOP))
+            }}
+          >
+            <img src="/assets/front/image/logo.png" alt="" className="" />
+          </a>
+
+          {renderLoginPc()}
+
+          {renderLoginSp()}
+        </nav>
+      </header>
+    </React.Fragment>
+  )
 }
 
-const mapDispatchToProps = { push }
+const auths = state => state.auth
 
-export default connect(mapStateToProps, mapDispatchToProps)(CommonHeader)
+export default CommonHeader

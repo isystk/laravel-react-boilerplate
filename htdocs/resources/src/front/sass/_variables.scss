@@ -49,7 +49,7 @@ $gutter-m: 20px;
 $gutter-s: 15px;
 
 // 基本幅
-$width_base-l: 96%;
+$width_base-l: 100%;
 $width_base-m: calc(100% - #{$gutter-m} * 2);
 $width_base-s: calc(100% - #{$gutter-s} * 2);
 
