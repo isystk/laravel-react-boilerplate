@@ -291,6 +291,10 @@ $ ./dc.sh php login
 # テーブルとテストデータの作成
 > php artisan migrate:refresh --seed
 
+# アップロードした画像を参照できるようにシンボリックリンクを作成する
+> cd public
+> ln -s ../storage/app/public uploads
+
 # テスト用の画像をS3（Minio）にアップロードします。
 > php artisan s3upload
 
