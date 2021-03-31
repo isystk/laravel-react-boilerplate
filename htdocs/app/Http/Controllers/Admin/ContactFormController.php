@@ -126,8 +126,12 @@ class ContactFormController extends Controller
         // 画像ファイルを公開ディレクトリへ配置する。
         if ($file = $request->imageFile) {
             $fileName = time() . $request->fileName;
-            $target_path = public_path('uploads/');
-            $file->move($target_path, $fileName);
+
+            //s3に画像をアップロード
+            $file->storeAs('', $fileName);
+
+            // $target_path = public_path('uploads/');
+            // $file->move($target_path, $fileName);
         } else {
             $fileName = "";
         }

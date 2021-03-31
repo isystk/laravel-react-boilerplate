@@ -103,11 +103,11 @@ class StockController extends Controller
             $fileName = $request->fileName;
 
             //s3に画像をアップロード
-            $filename = $tmpFile->storeAs('myprefix', $fileName);
+            $tmpFile->storeAs('stock', $fileName);
 
-            //ストレージにも画像を保存
-            $target_path = public_path('uploads/stock/');
-            $tmpFile->move($target_path, $fileName);
+            // //ストレージにも画像を保存
+            // $target_path = storage_path('uploads/stock/');
+            // $tmpFile->move($target_path, $fileName);
         } else {
             $fileName = "";
         }
@@ -185,8 +185,13 @@ class StockController extends Controller
         // 画像ファイルを公開ディレクトリへ配置する。
         if ($file = $request->imageFile) {
             $fileName = $request->fileName;
-            $target_path = public_path('uploads/stock/');
-            $file->move($target_path, $fileName);
+
+            //s3に画像をアップロード
+            $file->storeAs('stock', $fileName);
+
+            // // //ストレージにも画像を保存
+            // $target_path = public_path('uploads/stock/');
+            // $file->move($target_path, $fileName);
         } else {
             $fileName = "";
         }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Services\CSV;
 
 class PhotoController extends Controller
 {
@@ -20,22 +21,20 @@ class PhotoController extends Controller
 
         $photos = [];
 
-        $path= storage_path('public/uploads');
-        $files = \File::files($path);
-        foreach ($files as $v) {
+        $files = Storage::files();
+        foreach ($files as $file) {
           $photo = (object) [
             'type' => 'default',
-            'fileName' => $v->getfileName()
+            'fileName' => basename($file)
           ];
           array_push($photos, $photo);
         }
 
-        $path= storage_path('public/uploads/stock');
-        $files = \File::files($path);
-        foreach ($files as $v) {
+        $files = Storage::files('stock');
+        foreach ($files as $file) {
           $photo = (object) [
             'type' => 'stock',
-            'fileName' => $v->getfileName()
+            'fileName' => basename($file)
           ];
           array_push($photos, $photo);
         }
@@ -57,11 +56,10 @@ class PhotoController extends Controller
       $fileName = $request->input('fileName');
 
       if ($type === 'stock') {
-        $delPath = storage_path('public/uploads/stock/' . $fileName);
+        $delPath = storage_path('stock/' . $fileName);
         Storage::delete($delPath);
       } else {
-        $delPath = storage_path('public/uploads/' . $fileName);
-        Storage::delete($delPath);
+        Storage::delete($fileName);
       }
 
       return redirect('/admin/photo');

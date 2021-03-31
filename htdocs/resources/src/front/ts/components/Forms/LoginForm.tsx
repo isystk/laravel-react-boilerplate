@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Form } from 'react-bootstrap'
 import TextInput from '../Elements/TextInput'
-import CheckInput from '../Elements/CheckInput'
 import LoginButton from '../Elements/LoginButton'
 import CSRFToken from '../Elements/CSRFToken'
 import { setEmail, setRemember } from '../../actions/auth'
@@ -39,12 +38,19 @@ class LoginForm extends React.Component<Props> {
             autoFocus={true}
           />
           <TextInput identity="password" controlType="password" autoComplete="current-password" label="パスワード" />
-          <CheckInput
-            identity="remember"
-            label="Remember Me"
-            checked={this.props.remember}
-            action={this.props.setRemember}
-          />
+          <div className="form-section">
+            <label className="checkbox-wrap">
+              <Form.Check
+                id="remember"
+                type="checkbox"
+                className="form-check-input"
+                name="remember"
+                checked={this.props.remember}
+                onChange={check => this.props.setRemember(check.target.checked)}
+              />
+              <span>Remember Me</span>
+            </label>
+          </div>
           <p className="fz-s">
             email: test1@test.com
             <br />

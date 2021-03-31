@@ -59,6 +59,9 @@ case ${1} in
 
     apache)
       case ${2} in
+          login)
+              $DOCKER_COMPOSE exec apache /bin/sh
+          ;;
           restart)
               $DOCKER_COMPOSE restart apache
           ;;

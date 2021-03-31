@@ -3,8 +3,8 @@ import { Row, Col, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 const LoginButton = () => (
-  <Row className="form-group mb-0">
-    <Col md="8" className="offset-md-4">
+  <Row className="form-group mt-3">
+    <Col md="8" className="text-center">
       <Button type="submit" variant="primary">
         ログイン
       </Button>

@@ -25,8 +25,12 @@ class ContactFormController extends ApiController
         if ($request->has('imageBase64') && $request->imageBase64 !== null) {
             $file = $request->validated()['imageFile'];
             $fileName = time() . $request->fileName;
-            $target_path = public_path('uploads/');
-            $file->move($target_path, $fileName);
+
+            //s3に画像をアップロード
+            $file->storeAs('', $fileName);
+
+            // $target_path = public_path('uploads/');
+            // $file->move($target_path, $fileName);
         } else {
             $fileName = "";
         }
