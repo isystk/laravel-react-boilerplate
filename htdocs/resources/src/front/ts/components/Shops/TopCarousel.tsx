@@ -45,9 +45,9 @@ const TopCarousel: FC = () => {
     setActiveIndex(newIndex)
   }
 
-  const slides = items.map(item => {
+  const slides = items.map((item, index) => {
     return (
-      <CarouselItem onExiting={() => setAnimating(true)} onExited={() => setAnimating(false)} key={item.src}>
+      <CarouselItem onExiting={() => setAnimating(true)} onExited={() => setAnimating(false)} key={index}>
         <img src={item.src} alt={item.altText} />
         <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
       </CarouselItem>

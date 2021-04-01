@@ -8,11 +8,35 @@ import Pagination from 'react-js-pagination'
 import { URL } from '../../common/constants/url'
 import { push } from 'connected-react-router'
 import TopCarousel from './TopCarousel'
+import { Stock } from '../../store/StoreTypes'
+
+type State = {
+  stocks: {
+    total: number
+    current_page: number
+    data: Stock[]
+  }
+  router
+  likes
+}
 
 const ShopTop: FC = () => {
-  const { search } = useSelector(url)
-  const stocks = useSelector(stock)
-  const { total, current_page } = useSelector(paging)
+  const { search } = useSelector((state: State) => ({
+    pathname: state.router.location.pathname,
+    search: state.router.location.search,
+    hash: state.router.location.hash,
+  }))
+  const stocks = useSelector((state: State) =>
+    _.map(state.stocks.data, stock => ({
+      ...stock,
+      price: stock.price + '円',
+      isLike: state.likes.data.includes(stock.id + ''),
+    })),
+  )
+  const { total, current_page } = useSelector((state: State) => ({
+    total: state.stocks.total,
+    current_page: state.stocks.current_page,
+  }))
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -117,27 +141,5 @@ const ShopTop: FC = () => {
     </React.Fragment>
   )
 }
-
-const stock = state => {
-  return _.map(state.stocks.data, function(stock) {
-    // 表示用にデータを加工
-    return {
-      ...stock,
-      price: stock.price + '円',
-      isLike: state.likes.data.includes(stock.id + ''),
-    }
-  })
-}
-
-const paging = state => ({
-  total: state.stocks.total,
-  current_page: state.stocks.current_page,
-})
-
-const url = state => ({
-  pathname: state.router.location.pathname,
-  search: state.router.location.search,
-  hash: state.router.location.hash,
-})
 
 export default ShopTop
