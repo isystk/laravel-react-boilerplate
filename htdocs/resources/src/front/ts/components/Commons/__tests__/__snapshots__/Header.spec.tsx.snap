@@ -1,0 +1,321 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header Header-Login 1`] = `
+<Fragment>
+  <header
+    className="header shadow-sm"
+  >
+    <nav
+      className="navbar navbar-expand-md navbar-light bg-white headerNav"
+    >
+      <a
+        className="header_logo"
+        href="/"
+        onClick={[Function]}
+      >
+        <img
+          alt=""
+          className=""
+          src="/assets/front/image/logo.png"
+        />
+      </a>
+      <div
+        className=""
+        id="navbarSupportedContent"
+      >
+        <ul
+          className="navbar-nav ml-auto"
+        >
+          <NavDropdown
+            id="logout-nav"
+            title="テスト 様"
+          >
+            <DropdownItem
+              as={
+                Object {
+                  "$$typeof": Symbol(react.forward_ref),
+                  "displayName": "SafeAnchor",
+                  "render": [Function],
+                }
+              }
+              disabled={false}
+              href="/logout"
+              onClick={[Function]}
+            >
+              ログアウト
+            </DropdownItem>
+            <Form
+              action="/logout"
+              id="logout-form"
+              inline={false}
+              method="POST"
+              style={
+                Object {
+                  "display": "none",
+                }
+              }
+            >
+              <Connect(CSRFToken) />
+            </Form>
+            <DropdownItem
+              as={
+                Object {
+                  "$$typeof": Symbol(react.forward_ref),
+                  "displayName": "SafeAnchor",
+                  "render": [Function],
+                }
+              }
+              disabled={false}
+              href="/mycart"
+              onClick={[Function]}
+            >
+              カートを見る
+            </DropdownItem>
+            <Form
+              action="/mycart"
+              id="mycart-form"
+              inline={false}
+              method="POST"
+              style={
+                Object {
+                  "display": "none",
+                }
+              }
+            >
+              <Connect(CSRFToken) />
+            </Form>
+          </NavDropdown>
+          <a
+            href="/mycart"
+            onClick={[Function]}
+          >
+            <img
+              className="cartImg ml-3"
+              src="/assets/front/image/cart.png"
+            />
+          </a>
+          <li
+            className="nav-item"
+          >
+            <a
+              className="btn btn-link text-danger"
+              href="/contact"
+              onClick={[Function]}
+            >
+              お問い合わせ
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div
+        className="menu-btn"
+        onClick={[Function]}
+      >
+        <figure />
+        <figure />
+        <figure />
+      </div>
+      <div
+        className=""
+        id="side-menu"
+      >
+        <div
+          className="side-menu-header"
+        >
+          <p
+            style={
+              Object {
+                "fontSize": "16px",
+                "margin": "20px",
+              }
+            }
+          >
+            テスト 様
+          </p>
+        </div>
+        <nav>
+          <ul>
+            <li>
+              <a
+                href="/logout"
+                onClick={[Function]}
+              >
+                ログアウト
+              </a>
+              <Form
+                action="/logout"
+                id="logout-form"
+                inline={false}
+                method="POST"
+                style={
+                  Object {
+                    "display": "none",
+                  }
+                }
+              >
+                <Connect(CSRFToken) />
+              </Form>
+            </li>
+            <li>
+              <a
+                href="/mycart"
+                onClick={[Function]}
+              >
+                カートを見る
+              </a>
+              <Form
+                action="/mycart"
+                id="mycart-form"
+                inline={false}
+                method="POST"
+                style={
+                  Object {
+                    "display": "none",
+                  }
+                }
+              >
+                <Connect(CSRFToken) />
+              </Form>
+            </li>
+            <li>
+              <a
+                href="/contact"
+                onClick={[Function]}
+              >
+                お問い合わせ
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div
+        className=""
+        id="layer-panel"
+      />
+    </nav>
+  </header>
+</Fragment>
+`;
+
+exports[`Header Header-Logout 1`] = `
+<Fragment>
+  <header
+    className="header shadow-sm"
+  >
+    <nav
+      className="navbar navbar-expand-md navbar-light bg-white headerNav"
+    >
+      <a
+        className="header_logo"
+        href="/"
+        onClick={[Function]}
+      >
+        <img
+          alt=""
+          className=""
+          src="/assets/front/image/logo.png"
+        />
+      </a>
+      <div
+        className=""
+        id="navbarSupportedContent"
+      >
+        <ul
+          className="navbar-nav ml-auto"
+        >
+          <li
+            className="nav-item"
+          >
+            <a
+              className="btn btn-danger mr-3"
+              href="/login"
+              onClick={[Function]}
+            >
+              ログイン
+            </a>
+          </li>
+          <li
+            className="nav-item"
+          >
+            <a
+              className="btn btn-link text-danger"
+              href="/register"
+              onClick={[Function]}
+            >
+              新規登録
+            </a>
+          </li>
+          <li
+            className="nav-item"
+          >
+            <a
+              className="btn btn-link text-danger"
+              href="/contact"
+              onClick={[Function]}
+            >
+              お問い合わせ
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div
+        className="menu-btn"
+        onClick={[Function]}
+      >
+        <figure />
+        <figure />
+        <figure />
+      </div>
+      <div
+        className=""
+        id="side-menu"
+      >
+        <div
+          className="side-menu-header"
+        >
+          <p
+            style={
+              Object {
+                "fontSize": "16px",
+                "margin": "20px",
+              }
+            }
+          />
+        </div>
+        <nav>
+          <ul>
+            <li>
+              <a
+                href="/login"
+                onClick={[Function]}
+              >
+                ログイン
+              </a>
+            </li>
+            <li>
+              <a
+                href="/register"
+                onClick={[Function]}
+              >
+                新規登録
+              </a>
+            </li>
+            <li>
+              <a
+                href="/contact"
+                onClick={[Function]}
+              >
+                お問い合わせ
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div
+        className=""
+        id="layer-panel"
+      />
+    </nav>
+  </header>
+</Fragment>
+`;

@@ -1,28 +1,23 @@
-import * as React from 'react'
-import { connect } from 'react-redux'
-import * as _ from 'lodash'
-
-import { showOverlay, hideOverlay } from '../../actions'
+import React, { FC } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Portal from './Portal'
+import { Parts } from '../../store/StoreTypes'
+import { hideOverlay } from '../../actions'
+import PropTypes from 'prop-types'
 
-type Props = {
-  parts
-  hideOverlay
-  children
-}
-
-const Modal = (props: Props) => {
-  const { parts } = props
+const Modal: FC = props => {
+  const dispatch = useDispatch()
+  const { isShowOverlay } = useSelector(parts)
 
   const onClose = e => {
     e.preventDefault()
-    props.hideOverlay()
+    dispatch(hideOverlay())
   }
 
   return (
     <Portal>
-      {parts.isShowOverlay && <div id="overlay-background"></div>}
-      <div className={`isystk-overlay ${parts.isShowOverlay ? 'open' : ''}`}>
+      {isShowOverlay && <div id="overlay-background"></div>}
+      <div className={`isystk-overlay ${isShowOverlay ? 'open' : ''}`}>
         <button type="button" className="close" aria-label="Close" onClick={onClose}>
           <span aria-hidden="true">&times;</span>
         </button>
@@ -32,12 +27,10 @@ const Modal = (props: Props) => {
   )
 }
 
-const mapStateToProps = state => {
-  return {
-    parts: state.parts,
-  }
+const parts = (state): Parts => state.parts
+
+Modal.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
 }
 
-const mapDispatchToProps = { showOverlay, hideOverlay }
-
-export default connect(mapStateToProps, mapDispatchToProps)(Modal)
+export default Modal

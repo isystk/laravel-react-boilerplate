@@ -2,21 +2,41 @@ import React from 'react';
 import { CommonHeader } from '../Header';
 import { shallow } from 'enzyme'
 import toJson from 'enzyme-to-json'
+import * as hooks from '../Header.hooks'
+import sinon from 'sinon'
 
 describe('Header', () => {
 
-  test('Header-Logout', () => {
-    const component = shallow(<CommonHeader/>);
-    const tree = toJson(component);
+  const stub = sinon.stub(hooks, 'useHeader');
+
+  it('Header-Logout', () => {
+
+    stub.returns({
+      auths: {
+        auth: false
+      },
+    });
+
+    const wrapper = shallow(<CommonHeader/>);
+    const tree = toJson(wrapper);
 
     expect(tree).toMatchSnapshot();
   });
 
-  // test('Header-Login', () => {
-  //   const component = renderer.create(<CommonHeader auth={{auth: true, name: 'テスト'}} push={()=>{}}/>);
-  //   const tree = component.toJSON();
 
-  //   expect(tree).toMatchSnapshot();
-  // });
+  it('Header-Login', () => {
+
+    stub.returns({
+      auths: {
+        auth: true,
+        name: 'テスト'
+      },
+    })
+
+    const wrapper = shallow(<CommonHeader/>);
+    const tree = toJson(wrapper);
+
+    expect(tree).toMatchSnapshot();
+  });
 
 })

@@ -1,15 +1,14 @@
 import React, { FC, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { push } from 'connected-react-router'
 import { NavDropdown, Form } from 'react-bootstrap'
 import CSRFToken from '../Elements/CSRFToken'
 import { URL } from '../../common/constants/url'
+import { useHeader } from './Header.hooks'
 
 export const CommonHeader: FC = () => {
-  const dispatch = useDispatch()
+  const { auths, push_top, push_login, push_register, push_mycart, push_contact } = useHeader()
   const [isSideMenu, setSideMenu] = useState(false)
 
-  const { auth, name } = useSelector(auths)
+  const { auth, name } = auths
 
   const renderLoginPc = (): JSX.Element => {
     return (
@@ -59,7 +58,7 @@ export const CommonHeader: FC = () => {
                       href={URL.LOGIN}
                       onClick={e => {
                         e.preventDefault()
-                        dispatch(push(URL.LOGIN))
+                        push_login()
                       }}
                     >
                       ログイン
@@ -71,7 +70,7 @@ export const CommonHeader: FC = () => {
                       href={URL.REGISTER}
                       onClick={e => {
                         e.preventDefault()
-                        dispatch(push(URL.REGISTER))
+                        push_register()
                       }}
                     >
                       新規登録
@@ -88,7 +87,7 @@ export const CommonHeader: FC = () => {
               href={URL.CONTACT}
               onClick={e => {
                 e.preventDefault()
-                dispatch(push(URL.CONTACT))
+                push_contact()
               }}
             >
               お問い合わせ
@@ -167,7 +166,7 @@ export const CommonHeader: FC = () => {
                           onClick={e => {
                             e.preventDefault()
                             setSideMenu(false)
-                            dispatch(push(URL.LOGIN))
+                            push_login()
                           }}
                         >
                           ログイン
@@ -179,7 +178,7 @@ export const CommonHeader: FC = () => {
                           onClick={e => {
                             e.preventDefault()
                             setSideMenu(false)
-                            dispatch(push(URL.REGISTER))
+                            push_register()
                           }}
                         >
                           新規登録
@@ -195,7 +194,7 @@ export const CommonHeader: FC = () => {
                   onClick={e => {
                     e.preventDefault()
                     setSideMenu(false)
-                    dispatch(push(URL.CONTACT))
+                    push_contact()
                   }}
                 >
                   お問い合わせ
@@ -212,7 +211,7 @@ export const CommonHeader: FC = () => {
   const mycartSubmit = e => {
     e.preventDefault()
     setSideMenu(false)
-    dispatch(push(URL.MYCART))
+    push_mycart()
   }
 
   return (
@@ -224,7 +223,7 @@ export const CommonHeader: FC = () => {
             href="/"
             onClick={e => {
               e.preventDefault()
-              dispatch(push(URL.TOP))
+              push_top()
             }}
           >
             <img src="/assets/front/image/logo.png" alt="" className="" />
@@ -238,7 +237,5 @@ export const CommonHeader: FC = () => {
     </React.Fragment>
   )
 }
-
-const auths = state => state.auth
 
 export default CommonHeader
