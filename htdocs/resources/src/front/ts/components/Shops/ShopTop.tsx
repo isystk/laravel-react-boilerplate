@@ -7,6 +7,7 @@ import { API_ENDPOINT } from '../../common/constants/api'
 import Pagination from 'react-js-pagination'
 import { URL } from '../../common/constants/url'
 import { push } from 'connected-react-router'
+import TopCarousel from './TopCarousel'
 
 const ShopTop: FC = () => {
   const { search } = useSelector(url)
@@ -107,24 +108,7 @@ const ShopTop: FC = () => {
   return (
     <React.Fragment>
       <div className="contentsArea">
-        <div id="link01" className="carousel slide mainBunner" data-ride="carousel">
-          <div className="carousel-inner">
-            <div className="carousel-item active">
-              <img src="/assets/front/image/bunner_01.jpg" alt="" />
-            </div>
-            <div className="carousel-item">
-              <img src="/assets/front/image/bunner_02.jpg" alt="" />
-            </div>
-            <a className="carousel-control-prev" href="#link01" role="button" data-slide="prev">
-              <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span className="sr-only">Previous</span>
-            </a>
-            <a className="carousel-control-next" href="#link01" role="button" data-slide="next">
-              <span className="carousel-control-next-icon" aria-hidden="true"></span>
-              <span className="sr-only">Next</span>
-            </a>
-          </div>
-        </div>
+        <TopCarousel />
         <div className="">
           <div className="block01">{renderStocks()}</div>
           <div className="mt40">{renderPaging()}</div>
