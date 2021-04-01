@@ -19,7 +19,7 @@ const del = async (url: string, values?: any, config?: any): Promise<any> => {
 
 const request = async (method: string, url: string, values?: any, config?: any): Promise<any> => {
   // console.log('Request:%s', url);
-  const response = await axios[method](url, jsonToForm(values, new FormData()), config).catch(function(error: any) {
+  const response = await axios[method](url, jsonToForm(values, new FormData()), config).catch((error: any) => {
     throw error
   })
   // console.log("Response:%s", JSON.stringify(response));
@@ -43,7 +43,7 @@ const formatObject = (params: any, formData: any, name: string) => {
 }
 
 const formatArray = (params: any[], formData: any, name: string) => {
-  _.map(params, (data, index) => {
+  params.map((data, index) => {
     if (_.isArray(data) || _.isPlainObject(data)) {
       jsonToForm(data, formData, `${name}[${index}]`)
       return

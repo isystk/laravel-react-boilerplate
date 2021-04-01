@@ -11,7 +11,7 @@ const initialState: Auth = {
   request: '',
 }
 
-export function AuthReducer(state = initialState, action: AuthAppAction): Auth {
+export const AuthReducer = (state = initialState, action: AuthAppAction): Auth => {
   switch (action.type) {
     case SET_SESSION: {
       const session =

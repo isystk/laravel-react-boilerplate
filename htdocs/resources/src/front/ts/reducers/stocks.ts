@@ -5,7 +5,7 @@ const initialState: Stocks = {
   page: {} as Page,
 }
 
-export function StocksReducer(state = initialState, action: any): Stocks {
+export const StocksReducer = (state = initialState, action: any): Stocks => {
   switch (action.type) {
     case 'READ_STOCKS':
       return action.response.stocks

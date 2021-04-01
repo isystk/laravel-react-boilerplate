@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import * as _ from 'lodash'
 import { push } from 'connected-react-router'
 import { URL } from '../../common/constants/url'
 

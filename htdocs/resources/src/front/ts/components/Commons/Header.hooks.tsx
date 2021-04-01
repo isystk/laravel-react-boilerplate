@@ -3,7 +3,7 @@ import { push } from 'connected-react-router'
 import { URL } from '../../common/constants/url'
 import { Auth } from '../../store/StoreTypes'
 
-export function useHeader() {
+export const useHeader = () => {
   const dispatch = useDispatch()
   return {
     auths: { ...useSelector(auths) },

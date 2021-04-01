@@ -22,7 +22,7 @@ const render = (props: string) => {
   )
 }
 
-function authSession() {
+const authSession = () => {
   const params = new URLSearchParams()
   const url = '/session'
   axios.post(url, params).then(response => {

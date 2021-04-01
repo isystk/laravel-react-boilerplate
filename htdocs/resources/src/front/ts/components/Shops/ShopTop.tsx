@@ -1,6 +1,5 @@
 import React, { FC, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import * as _ from 'lodash'
 import { API } from '../../utilities'
 import { readLikesAsync, addLikeAsync, removeLikeAsync } from '../../reducers/likes'
 import { API_ENDPOINT } from '../../common/constants/api'
@@ -27,7 +26,7 @@ const ShopTop: FC = () => {
     hash: state.router.location.hash,
   }))
   const stocks = useSelector((state: State) =>
-    _.map(state.stocks.data, stock => ({
+    state.stocks.data.map(stock => ({
       ...stock,
       price: stock.price + '円',
       isLike: state.likes.data.includes(stock.id + ''),

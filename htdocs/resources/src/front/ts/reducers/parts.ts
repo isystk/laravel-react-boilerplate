@@ -5,7 +5,7 @@ const initialState: Parts = {
   isShowOverlay: false,
 }
 
-export function PartsReducer(state = initialState, action: PartsAppAction): Parts {
+export const PartsReducer = (state = initialState, action: PartsAppAction): Parts => {
   switch (action.type) {
     case SHOW_OVERLAY:
       return { ...state, isShowOverlay: true }

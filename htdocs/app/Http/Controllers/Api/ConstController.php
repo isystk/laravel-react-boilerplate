@@ -9,13 +9,17 @@ class ConstController extends ApiController
 {
     public function index()
     {
-        // $gender = CheckFormData::checkGender($contact);
-        // $age = CheckFormData::checkAge($contact);
+        $gender = CheckFormData::checkGender($contact);
+        $age = CheckFormData::checkAge($contact);
 
         try {
             $consts = [
               [
                 'name' => 'stripe_key',
+                'data' => env('STRIPE_KEY')
+              ],
+              [
+                'name' => 'gender',
                 'data' => env('STRIPE_KEY')
               ]
             ];

@@ -331,8 +331,10 @@ export class ContactCreate extends React.Component<Props, State> {
 }
 
 const mapStateToProps = state => {
+  const {auth, consts} = state
   return {
-    auth: state.auth,
+    auth,
+    consts
   }
 }
 

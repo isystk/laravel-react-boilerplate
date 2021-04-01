@@ -16,7 +16,7 @@ export const history = createBrowserHistory()
 
 const persistedReducer = persistReducer(persistConfig, createRootReducer(history))
 
-export default function myConfigureStore() {
+const myConfigureStore = () => {
   // 開発環境の場合は、redux-devtools-extension を利用できるようにする
   // const enhancer =
   //   process.env.NODE_ENV === 'development'
@@ -30,3 +30,5 @@ export default function myConfigureStore() {
   })
   return store
 }
+
+export default myConfigureStore
