@@ -10,6 +10,8 @@ import { push } from 'connected-react-router'
 
 const ShopTop: FC = () => {
   const { search } = useSelector(url)
+  const stocks = useSelector(stock)
+  const { total, current_page } = useSelector(paging)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -25,7 +27,7 @@ const ShopTop: FC = () => {
 
   const renderStocks = (): JSX.Element => (
     <>
-      {useSelector(stocks).map((stock, index) => (
+      {stocks.map((stock, index) => (
         <div className="block01_item" key={index}>
           <div className="text-right mb-2">
             <a
@@ -82,7 +84,6 @@ const ShopTop: FC = () => {
   )
 
   const renderPaging = (): JSX.Element => {
-    const { total, current_page } = useSelector(paging)
     return (
       <Pagination
         activePage={current_page}
@@ -133,7 +134,7 @@ const ShopTop: FC = () => {
   )
 }
 
-const stocks = state => {
+const stock = state => {
   return _.map(state.stocks.data, function(stock) {
     // 表示用にデータを加工
     return {
