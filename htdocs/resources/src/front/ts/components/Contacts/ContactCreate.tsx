@@ -10,7 +10,7 @@ import { API } from '../../utilities'
 import { API_ENDPOINT } from '../../common/constants/api'
 import { URL } from '../../common/constants/url'
 
-import { Auth } from '../../store/StoreTypes'
+import { Auth, Consts, KeyValue } from '../../store/StoreTypes'
 import ReactImageBase64 from 'react-image-base64'
 
 type State = {
@@ -20,6 +20,7 @@ type State = {
 }
 type Props = {
   auth: Auth
+  consts: Consts
   push
 }
 
@@ -141,34 +142,23 @@ export class ContactCreate extends React.Component<Props, State> {
                           <Label className="item-name">
                             性別を教えて下さい<span className="required">必須</span>
                           </Label>
-                          <div className="radio-wrap">
-                            <Label>
-                              <Input
-                                type="radio"
-                                name="gender"
-                                value="0"
-                                checked={values.gender === '0' ? true : false}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                invalid={Boolean(touched.gender && errors.gender)}
-                              />{' '}
-                              <span>女性</span>
-                            </Label>
-                          </div>
-                          <div className="radio-wrap">
-                            <Label>
-                              <Input
-                                type="radio"
-                                name="gender"
-                                value="1"
-                                checked={values.gender === '1' ? true : false}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                invalid={Boolean(touched.gender && errors.gender)}
-                              />{' '}
-                              <span>男性</span>
-                            </Label>
-                          </div>
+                          {this.props.consts.gender &&
+                            (this.props.consts.gender.data as KeyValue[]).map((e, index) => (
+                              <div className="radio-wrap" key={index}>
+                                <Label>
+                                  <Input
+                                    type="radio"
+                                    name="gender"
+                                    value={e.key}
+                                    checked={values.gender === e.key + '' ? true : false}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    invalid={Boolean(touched.gender && errors.gender)}
+                                  />{' '}
+                                  <span>{e.value}</span>
+                                </Label>
+                              </div>
+                            ))}
                           <p className="error">{errors.gender}</p>
                         </div>
                       </FormGroup>
@@ -187,12 +177,12 @@ export class ContactCreate extends React.Component<Props, State> {
                               invalid={Boolean(touched.age && errors.age)}
                             >
                               <option value="">選択してください</option>
-                              <option value="1">～19歳</option>
-                              <option value="2">20歳～29歳</option>
-                              <option value="3">30歳～39歳</option>
-                              <option value="4">40歳～49歳</option>
-                              <option value="5">50歳～59歳</option>
-                              <option value="6">60歳～</option>
+                              {this.props.consts.age &&
+                                (this.props.consts.age.data as KeyValue[]).map((e, index) => (
+                                  <option value={e.key} key={index}>
+                                    {e.value}
+                                  </option>
+                                ))}
                             </Input>
                           </div>
                           <p className="error">{errors.age}</p>
@@ -331,10 +321,10 @@ export class ContactCreate extends React.Component<Props, State> {
 }
 
 const mapStateToProps = state => {
-  const {auth, consts} = state
+  const { auth, consts } = state
   return {
     auth,
-    consts
+    consts,
   }
 }
 
