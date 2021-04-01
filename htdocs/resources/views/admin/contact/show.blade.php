@@ -54,8 +54,7 @@ $subMenu = 'contact';
                             <div class="control-group">
                                 <label class="col-sm-6 control-label">性別</label>
                                 <div class="col-sm-12">
-                                    {{ "0" == $contact -> gender ? '女性' : '' }}
-                                    {{ "1" == $contact -> gender ? '男性' : '' }}
+                                    {{ App\Enums\Gender::getDescription($contact -> gender)}}
                                 </div>
                             </div>
                         </div>
@@ -64,12 +63,7 @@ $subMenu = 'contact';
                             <div class="control-group">
                                 <label class="col-sm-6 control-label">年齢</label>
                                 <div class="col-sm-12">
-                                    {{ "1" == $contact -> age ? '～19歳' : '' }}
-                                    {{ "2" == $contact -> age ? '20歳～29歳' : '' }}
-                                    {{ "3" == $contact -> age ? '30歳～39歳' : '' }}
-                                    {{ "4" == $contact -> age ? '40歳～49歳' : '' }}
-                                    {{ "5" == $contact -> age ? '50歳～59歳' : '' }}
-                                    {{ "6" == $contact -> age ? '60歳～' : '' }}
+                                    {{ App\Enums\Age::getDescription($contact -> age)}}
                                 </div>
                             </div>
                         </div>

@@ -73,14 +73,12 @@ $subMenu = 'contact';
                                 <div class="control-group" id="userName">
                                     <label class="col-sm-6 control-label">性別</label>
                                     <div class="col-sm-12">
-                                        <label>
-                                            <input type="radio" name="gender" value="0" {{ "0" == old("gender", $contact -> gender) ? 'checked="checked"' : '' }}>
-                                            <span>女性</span>
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="gender" value="1" {{ "1" == old("gender", $contact -> gender) ? 'checked="checked"' : '' }}>
-                                            <span>男性</span>
-                                        </label>
+                                        @foreach (App\Enums\Gender::toArray() as $gender)
+                                          <label>
+                                              <input type="radio" name="gender" value="{{$gender}}" {{ $gender == old("gender", $contact -> gender) ? 'checked="checked"' : '' }}>
+                                              <span>{{App\Enums\Gender::getDescription($gender)}}</span>
+                                          </label>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
@@ -91,12 +89,9 @@ $subMenu = 'contact';
                                     <div class="col-sm-12">
                                         <select name="age">
                                             <option value="">選択してください</option>
-                                            <option value="1" {{ "1" == old("age", $contact -> age) ? 'selected="selected"' : '' }}>～19歳</option>
-                                            <option value="2" {{ "2" == old("age", $contact -> age) ? 'selected="selected"' : '' }}>20歳～29歳</option>
-                                            <option value="3" {{ "3" == old("age", $contact -> age) ? 'selected="selected"' : '' }}>30歳～39歳</option>
-                                            <option value="4" {{ "4" == old("age", $contact -> age) ? 'selected="selected"' : '' }}>40歳～49歳</option>
-                                            <option value="5" {{ "5" == old("age", $contact -> age) ? 'selected="selected"' : '' }}>50歳～59歳</option>
-                                            <option value="6" {{ "6" == old("age", $contact -> age) ? 'selected="selected"' : '' }}>60歳～</option>
+                                            @foreach (App\Enums\Age::toArray() as $age)
+                                              <option value="{{$age}}" {{ $age == old("age", $contact -> age) ? 'selected="selected"' : '' }}>{{App\Enums\Age::getDescription($age)}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>

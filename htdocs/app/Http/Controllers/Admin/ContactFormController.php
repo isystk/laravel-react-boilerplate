@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\ContactForm;
 use App\Models\ContactFormImage;
 use Illuminate\Support\Facades\DB;
-use App\Services\CheckFormData;
 use App\Services\UploadImage;
 
 class ContactFormController extends Controller
@@ -75,10 +74,7 @@ class ContactFormController extends Controller
         // $contactFormImages = $contact->contactFormImages;
         // dd($contactFormImages);
 
-        $gender = CheckFormData::checkGender($contact);
-        $age = CheckFormData::checkAge($contact);
-
-        return view('admin.contact.show', compact('contact', 'gender', 'age'));
+        return view('admin.contact.show', compact('contact'));
     }
 
     /**
