@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Stock;
 use App\Models\Order;
 use App\Models\Cart;
+use App\Mail\MailNotification;
+use Illuminate\Support\Facades\Mail;
 
 use Auth;
 
@@ -169,6 +171,8 @@ class ShopController extends ApiController
           //     'currency' => 'jpy'
           // ));
 
+          $stocks = [];
+
           // 発注履歴に追加する。
           foreach ($data['data'] as $my_cart) {
               $stock = Stock::find($my_cart->stock_id);
@@ -183,7 +187,26 @@ class ShopController extends ApiController
               // 在庫を減らす
               $stock->quantity = $stock->quantity - $order->quantity;
               $stock->save();
+
+              array_push($stocks, (object) [
+                'name' => $stock -> name,
+                'quantity' => $order->quantity,
+                'price' => $order -> price,
+              ]);
+
           }
+
+          $user = Auth::user();
+
+          $mailData = (object) [
+            'name' => $user -> name,
+            'amount' => $data['sum'],
+            'stocks' => $stocks,
+          ];
+
+          // メール送信
+          Mail::to($user->email)
+            ->send(new MailNotification('stock_complete', '商品の購入が完了しました', $mailData));
 
           // カートからすべての商品を削除
           $cart->deleteMyCart();
