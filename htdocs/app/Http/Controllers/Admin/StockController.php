@@ -9,6 +9,7 @@ use App\Models\Stock;
 use App\Services\CSV;
 use App\Services\UploadImage;
 use App\Http\Requests\StoreStockForm;
+use PDF;
 
 class StockController extends Controller
 {
@@ -46,7 +47,7 @@ class StockController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function download(Request $request)
+    public function downloadCsv(Request $request)
     {
 
         $name = $request->input('name');
@@ -75,6 +76,44 @@ class StockController extends Controller
             $csvBody[] = $line;
         }
         return CSV::download($csvBody, $csvHeader, 'stocks.csv');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function downloadPdf(Request $request)
+    {
+
+        $name = $request->input('name');
+
+        // 検索フォーム
+        $query = DB::table('stocks');
+
+        // もしキーワードがあったら
+        if ($name !== null) {
+            $query->where('name', 'like', '%' . $name . '%');
+        }
+
+        $query->select('id', 'name', 'price');
+        $query->orderBy('id');
+        $stocks = $query->get();
+
+        // dd($stocks);
+
+        $csvHeader = ['ID', '商品名', '価格'];
+        $csvBody = [];
+        foreach ($stocks as $stock) {
+            $line = [];
+            $line[] = $stock->id;
+            $line[] = $stock->name;
+            $line[] = $stock->price;
+            $csvBody[] = $line;
+        }
+
+        $pdf = PDF::loadView('admin.stock.pdf', compact('csvHeader', 'csvBody'));
+        return $pdf->download('stocks.pdf');
     }
 
     /**

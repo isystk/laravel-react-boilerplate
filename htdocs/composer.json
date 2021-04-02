@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.2.5|^8.0",
         "barryvdh/laravel-debugbar": "^3.5",
+        "barryvdh/laravel-dompdf": "^0.9.0",
         "bensampo/laravel-enum": "^1.38",
         "doctrine/dbal": "2.*",
         "fideloper/proxy": "^4.4",

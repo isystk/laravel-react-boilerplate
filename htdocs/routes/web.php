@@ -46,7 +46,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
   Route::post('user/destroy/{id}', 'Admin\UserController@destroy')->name('admin.user.destroy');
 
   Route::get('stock', 'Admin\StockController@index')->name('admin.stock.index');
-  Route::get('stock/download', 'Admin\StockController@download')->name('admin.stock.download');
+  Route::get('stock/downloadCsv', 'Admin\StockController@downloadCsv')->name('admin.stock.downloadCsv');
+  Route::get('stock/downloadPdf', 'Admin\StockController@downloadPdf')->name('admin.stock.downloadPdf');
   Route::get('stock/create', 'Admin\StockController@create')->name('admin.stock.create');
   Route::post('stock/store', 'Admin\StockController@store')->name('admin.stock.store');
   Route::get('stock/show/{id}', 'Admin\StockController@show')->name('admin.stock.show');
@@ -55,7 +56,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
   Route::post('stock/destroy/{id}', 'Admin\StockController@destroy')->name('admin.stock.destroy');
 
   Route::get('order', 'Admin\OrderController@index')->name('admin.order.index');
-  Route::get('order/download', 'Admin\OrderController@download')->name('admin.order.download');
+  Route::get('order/downloadCsv', 'Admin\OrderController@downloadCsv')->name('admin.order.downloadCsv');
+  Route::get('order/downloadPdf', 'Admin\OrderController@downloadPdf')->name('admin.order.downloadPdf');
   Route::get('order/show/{id}', 'Admin\OrderController@show')->name('admin.order.show');
 
   Route::get('contact', 'Admin\ContactFormController@index')->name('admin.contact.index');
