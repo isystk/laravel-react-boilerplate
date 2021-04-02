@@ -9,6 +9,7 @@ const initialState = {
 
 const StocksReducer = createReducer(initialState, {
   [READ_STOCKS]: (state, action: PayloadAction<StocksAppAction>) => {
+    console.log(action)
     return {
       ...state,
       current_page: action.payload.stocks.current_page,
