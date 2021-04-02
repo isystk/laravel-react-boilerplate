@@ -2,6 +2,9 @@ import { Action } from 'redux'
 import { API_ENDPOINT } from '../common/constants/api'
 import { API } from '../utilities'
 
+/**
+ * APIで返却されるデータ型を定義
+ */
 export interface ConstsAppAction extends Action {
   response: {
     result: boolean

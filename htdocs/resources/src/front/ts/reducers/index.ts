@@ -5,7 +5,7 @@ import auth from './auth'
 import consts from './consts'
 import stocks from './stocks'
 import carts from './carts'
-import likes from './likes'
+import likes from '../modules/likes'
 
 const rootReducer = (history: any) =>
   combineReducers({

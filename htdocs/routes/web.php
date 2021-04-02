@@ -39,7 +39,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
   Route::get('home',      'Admin\HomeController@index')->name('admin.home');
 
   Route::get('user', 'Admin\UserController@index')->name('admin.user.index');
-  Route::get('user/download', 'Admin\UserController@download')->name('admin.user.download');
   Route::get('user/show/{id}', 'Admin\UserController@show')->name('admin.user.show');
   Route::get('user/edit/{id}', 'Admin\UserController@edit')->name('admin.user.edit');
   Route::post('user/update/{id}', 'Admin\UserController@update')->name('admin.user.update');

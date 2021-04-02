@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
-use App\Services\CSV;
 
 class UserController extends Controller
 {
@@ -40,47 +39,6 @@ class UserController extends Controller
         // dd($users);
 
         return view('admin.user.index', compact('users', 'name', 'email'));
-    }
-
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function download(Request $request)
-    {
-
-        $name = $request->input('name');
-        $email = $request->input('email');
-
-        // 検索フォーム
-        $query = DB::table('users');
-
-        // もしキーワードがあったら
-        if ($name !== null) {
-            $query->where('name', 'like', '%' . $name . '%');
-        }
-        if ($email !== null) {
-            $query->where('email', '=', $email);
-        }
-
-        $query->select('id', 'name', 'email');
-        $query->orderBy('id');
-        $users = $query->get();
-
-        // dd($users);
-
-        $csvHeader = ['ID', '名前', 'メールアドレス'];
-        $csvBody = [];
-        foreach ($users as $user) {
-            $line = [];
-            $line[] = $user->id;
-            $line[] = $user->name;
-            $line[] = $user->email;
-            $csvBody[] = $line;
-        }
-        return CSV::download($csvBody, $csvHeader, 'users.csv');
     }
 
 

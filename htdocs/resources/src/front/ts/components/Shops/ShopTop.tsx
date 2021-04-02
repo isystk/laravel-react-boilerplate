@@ -1,7 +1,8 @@
 import React, { FC, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { API } from '../../utilities'
-import { readLikesAsync, addLikeAsync, removeLikeAsync } from '../../reducers/likes'
+import { readLikesAsync, addLikeAsync, removeLikeAsync } from '../../modules/likes'
+import { readStocks } from '../../actions'
 import { API_ENDPOINT } from '../../common/constants/api'
 import Pagination from 'react-js-pagination'
 import { URL } from '../../common/constants/url'
@@ -40,10 +41,7 @@ const ShopTop: FC = () => {
 
   useEffect(() => {
     // 商品データを取得する
-    ;(async () => {
-      const response = await API.get(`${API_ENDPOINT.SHOPS}${search}`)
-      dispatch({ type: 'READ_STOCKS', response })
-    })()
+    dispatch(readStocks(search))
 
     // お気に入りデータを取得する
     dispatch(readLikesAsync())
@@ -123,8 +121,7 @@ const ShopTop: FC = () => {
 
   const handlePageChange = async (pageNo: any) => {
     // 商品データを取得する
-    const response = await API.get(`${API_ENDPOINT.SHOPS}?page=${pageNo}`)
-    dispatch({ type: 'READ_STOCKS', response })
+    dispatch(readStocks(`?page=${pageNo}`))
     dispatch(push(`${URL.TOP}?page=${pageNo}`))
   }
 

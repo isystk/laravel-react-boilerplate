@@ -1,0 +1,120 @@
+
+
+■ Ducks デザインパターン
+
+action(action creator), reducer, constants を１つのファイルにまとめて作成したものを module と呼びます。
+Redux TookitではmoduleのことをSliceというオブジェクト名で扱います。
+
+するディレクトリ構成のパターン
+
+```
+src
+├─── containers/
+└─── modules/
+```
+
+
+modules/Counter.js
+```
+// action type
+const INCREMENT = 'COUNTER_INCREMENT';
+const DECREMENT = 'COUNTER_DECREMENT';
+
+const initialState = {
+  state: 0,
+}
+
+// reducer
+export default function reducer(state=initialState, action) {
+  switch (action.type) {
+    case INCREMENT:
+      return {
+        ...state,
+        count: state.count + 1
+      }
+
+    case DECREMENT:
+      return {
+        ...state,
+        count: state.count - 1
+      }
+
+    default:
+      return state;
+  }
+}
+
+// action-creator
+export function increment() {
+  return { type: INCREMENT };
+}
+
+export function decrement() {
+  return { type: DECREMENT };
+}
+```
+
+
+createStore　・・・　ストアを生成するための処理
+```
+import { createStore as reduxCreateStore, applyMiddleware, combineReducers } from 'redux';
+import logger from 'redux-logger';
+import counterReducer from './modules/Counter';
+
+export default function createStore() {
+  const store = reduxCreateStore(
+    combineReducers({
+      counter: counterReducer,
+    }),
+    applyMiddleware(
+      logger,
+    )
+  );
+
+  return store;
+}
+```
+
+コンポーネント　・・・　コンポーネントを定義します。コンテナからマッピングされた dispatch と state を使う
+```
+import React from 'react';
+
+export default class Counter extends React.Component {
+  render() {
+    const { increment, decrement, counter } = this.props;
+    return(
+      <div>
+        <h2>カウンター</h2>
+        <button onClick={increment}>increment</button>
+        <button onClick={decrement}>decrement</button>
+        <div>
+          Count: {counter.count}
+        </div>
+      </div>
+    )
+  }
+}
+```
+
+Container　・・・　dispatch に必要な ActionCreator は module で定義されているのでそれを使います。
+```
+import { connect } from 'react-redux';
+import * as counterModule from '../modules/Counter';
+import Counter from '../components/Counter';
+
+
+const mapStateToProps = state => {
+  return {
+    counter: state.counter,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    increment: () => dispatch(counterModule.increment()),
+    decrement: () => dispatch(counterModule.decrement()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+```

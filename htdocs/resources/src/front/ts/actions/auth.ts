@@ -1,6 +1,9 @@
 import { Action } from 'redux'
 import { Auth } from '../store/StoreTypes'
 
+/**
+ * APIで返却されるデータ型を定義
+ */
 export interface AuthAppAction extends Action {
   payload: Auth
 }

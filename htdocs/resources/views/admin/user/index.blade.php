@@ -77,15 +77,6 @@ $subMenu = 'user';
                             <!-- .card-header -->
                             <div class="card-header">
                                 <h3 class="card-title">検索結果</h3>
-                                <div class="dropdown text-right">
-                                    <button class="btn btn-default dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        操作
-                                        <span class="caret"></span>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-                                        <a class="dropdown-item text-muted js-download" href="{{ route('admin.user.download') }}">CSVダウンロード</a>
-                                    </div>
-                                </div>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body table-responsive p-0">

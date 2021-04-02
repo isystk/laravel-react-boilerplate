@@ -6,6 +6,9 @@ import { API } from '../utilities'
 import { Carts } from '../store/StoreTypes'
 import { push } from 'connected-react-router'
 
+/**
+ * APIで返却されるデータ型を定義
+ */
 export interface CartsAppAction extends Action {
   response: {
     result: boolean

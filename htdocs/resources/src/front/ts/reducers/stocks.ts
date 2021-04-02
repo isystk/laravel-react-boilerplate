@@ -1,19 +1,20 @@
-import { Stocks, Page } from '../store/StoreTypes'
+import { createReducer, PayloadAction } from '@reduxjs/toolkit'
+import { StocksAppAction, READ_STOCKS } from '../actions'
+import { Stock } from '../store/StoreTypes'
 
-const initialState: Stocks = {
-  data: [],
-  page: {} as Page,
+const initialState = {
+  current_page: 1,
+  data: [] as Stock[],
 }
 
-export const StocksReducer = (state = initialState, action: any): Stocks => {
-  switch (action.type) {
-    case 'READ_STOCKS':
-      return action.response.stocks
-    default:
-      return state
-  }
-
-  return state
-}
+const StocksReducer = createReducer(initialState, {
+  [READ_STOCKS]: (state, action: PayloadAction<StocksAppAction>) => {
+    return {
+      ...state,
+      current_page: action.payload.stocks.current_page,
+      data: action.payload.stocks.data,
+    }
+  },
+})
 
 export default StocksReducer
