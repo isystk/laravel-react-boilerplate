@@ -1,8 +1,6 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { Container, Row, Col, Card } from 'react-bootstrap'
 import ContentSelector from './ContentSelector'
-import { setPrams } from '../actions/auth'
 
 type Props = {
   title: string
@@ -35,8 +33,4 @@ class CardTemplate extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = () => ({})
-const mapDispatchToProps = dispatch => ({
-  setPrams: request => dispatch(setPrams(request)),
-})
-export default connect(mapStateToProps, mapDispatchToProps)(CardTemplate)
+export default CardTemplate

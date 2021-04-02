@@ -1,10 +1,8 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { Form } from 'react-bootstrap'
 import TextInput from '../Elements/TextInput'
 import LoginButton from '../Elements/LoginButton'
-import CSRFToken from '../Elements/CSRFToken'
-import { setEmail, setRemember } from '../../actions/auth'
+import CSRFToken from '../../containers/Elements/CSRFToken'
 
 type Props = {
   email: string
@@ -63,12 +61,4 @@ class LoginForm extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = state => ({
-  email: state.email,
-  remember: state.remember,
-})
-const mapDispatchToProps = dispatch => ({
-  setEmail: email => dispatch(setEmail(email)),
-  setRemember: remember => dispatch(setRemember(remember)),
-})
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)
+export default LoginForm

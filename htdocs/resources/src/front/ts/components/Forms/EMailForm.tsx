@@ -1,11 +1,9 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { Form } from 'react-bootstrap'
 import TextInput from '../Elements/TextInput'
 import SubmitButton from '../Elements/SubmitButton'
-import CSRFToken from '../Elements/CSRFToken'
+import CSRFToken from '../../containers/Elements/CSRFToken'
 import SessionAlert from '../Elements/SessionAlert'
-import { setEmail } from '../../actions/auth'
 
 type Props = {
   email: string
@@ -37,10 +35,4 @@ class ResetForm extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = state => ({
-  email: state.email,
-})
-const mapDispatchToProps = dispatch => ({
-  setEmail: email => dispatch(setEmail(email)),
-})
-export default connect(mapStateToProps, mapDispatchToProps)(ResetForm)
+export default ResetForm

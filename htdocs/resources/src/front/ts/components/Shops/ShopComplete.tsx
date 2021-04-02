@@ -1,7 +1,4 @@
 import * as React from 'react'
-import { connect } from 'react-redux'
-import { push } from 'connected-react-router'
-
 import { URL } from '../../common/constants/url'
 import { Auth } from '../../store/StoreTypes'
 
@@ -39,17 +36,4 @@ export class ShopComplete extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    auth: state.auth,
-    url: {
-      pathname: state.router.location.pathname,
-      search: state.router.location.search,
-      hash: state.router.location.hash,
-    },
-  }
-}
-
-const mapDispatchToProps = { push }
-
-export default connect(mapStateToProps, mapDispatchToProps)(ShopComplete)
+export default ShopComplete

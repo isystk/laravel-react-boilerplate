@@ -1,11 +1,9 @@
 import * as React from 'react'
-import { connect } from 'react-redux'
-import { push } from 'connected-react-router'
 
 import { Form, FormGroup, Label, Input } from 'reactstrap'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
-import CSRFToken from '../Elements/CSRFToken'
+import CSRFToken from '../../containers/Elements/CSRFToken'
 import { API } from '../../utilities'
 import { API_ENDPOINT } from '../../common/constants/api'
 import { URL } from '../../common/constants/url'
@@ -320,16 +318,4 @@ export class ContactCreate extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = state => {
-  const { auth, consts } = state
-  return {
-    auth,
-    consts,
-  }
-}
-
-const mapDispatchToProps = {
-  push,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactCreate)
+export default ContactCreate

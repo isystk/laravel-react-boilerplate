@@ -1,7 +1,6 @@
 import * as React from 'react'
-import { connect } from 'react-redux'
 import CommonHeader from './Commons/Header'
-import CommonFooter from './Commons/Footer'
+import CommonFooter from '../containers/Commons/Footer'
 
 type Props = {
   children: any
@@ -25,13 +24,4 @@ class Layout extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: { parts: any; auth: any }) => {
-  return {
-    parts: state.parts,
-    auth: state.auth,
-  }
-}
-
-const mapDispatchToProps = {}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Layout)
+export default Layout

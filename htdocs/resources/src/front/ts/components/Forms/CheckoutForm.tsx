@@ -1,14 +1,12 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { injectStripe, CardNumberElement, CardExpiryElement, CardCVCElement } from 'react-stripe-elements'
+import { CardNumberElement, CardExpiryElement, CardCVCElement } from 'react-stripe-elements'
 import { Button, Form, FormGroup, Label, Input, FormFeedback } from 'reactstrap'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { API_ENDPOINT } from '../../common/constants/api'
 import { URL } from '../../common/constants/url'
-import CSRFToken from '../Elements/CSRFToken'
+import CSRFToken from '../../containers/Elements/CSRFToken'
 import { API } from '../../utilities'
-import { push } from 'connected-react-router'
 
 type Props = {
   stripe
@@ -132,16 +130,4 @@ class CheckoutForm extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  console.log(state.auth)
-  return {
-    amount: ownProps.amount,
-    username: ownProps.username,
-  }
-}
-
-const mapDispatchToProps = {
-  push,
-}
-
-export default injectStripe(connect(mapStateToProps, mapDispatchToProps)(CheckoutForm))
+export default CheckoutForm

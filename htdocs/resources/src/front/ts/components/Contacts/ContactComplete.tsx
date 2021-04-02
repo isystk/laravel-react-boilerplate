@@ -1,6 +1,4 @@
 import * as React from 'react'
-import { connect } from 'react-redux'
-import { push } from 'connected-react-router'
 import { URL } from '../../common/constants/url'
 
 type Props = {
@@ -37,12 +35,4 @@ export class ContactCreate extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = () => {
-  return {}
-}
-
-const mapDispatchToProps = {
-  push,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactCreate)
+export default ContactCreate

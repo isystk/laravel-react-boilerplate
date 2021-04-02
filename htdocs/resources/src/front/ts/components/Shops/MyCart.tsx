@@ -1,13 +1,9 @@
 import * as React from 'react'
-import { connect } from 'react-redux'
-import { push } from 'connected-react-router'
 import { URL } from '../../common/constants/url'
 import { Elements, StripeProvider } from 'react-stripe-elements'
-import CheckoutForm from '../Forms/CheckoutForm'
+import CheckoutForm from '../../containers/Forms/CheckoutForm'
 import Modal from '../Commons/Modal'
 import { Button } from 'react-bootstrap'
-
-import { readCarts, removeCart, showOverlay, hideOverlay } from '../../actions'
 import { Auth, Carts } from '../../store/StoreTypes'
 
 type Props = {
@@ -119,21 +115,4 @@ export class MyCart extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = state => {
-  const { stripe_key } = state.consts
-
-  return {
-    auth: state.auth,
-    stripe_key: stripe_key.data,
-    carts: state.carts,
-    url: {
-      pathname: state.router.location.pathname,
-      search: state.router.location.search,
-      hash: state.router.location.hash,
-    },
-  }
-}
-
-const mapDispatchToProps = { push, readCarts, removeCart, showOverlay, hideOverlay }
-
-export default connect(mapStateToProps, mapDispatchToProps)(MyCart)
+export default MyCart

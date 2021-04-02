@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { connect } from 'react-redux'
 
 export class CommonFooter extends React.Component {
   constructor(props) {
@@ -26,6 +25,4 @@ export class CommonFooter extends React.Component {
   }
 }
 
-const mapDispatchToProps = {}
-
-export default connect(null, mapDispatchToProps)(CommonFooter)
+export default CommonFooter

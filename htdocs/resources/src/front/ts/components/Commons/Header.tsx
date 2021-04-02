@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react'
 import { NavDropdown, Form } from 'react-bootstrap'
-import CSRFToken from '../Elements/CSRFToken'
+import CSRFToken from '../../containers/Elements/CSRFToken'
 import { URL } from '../../common/constants/url'
 import { useHeader } from './Header.hooks'
 
