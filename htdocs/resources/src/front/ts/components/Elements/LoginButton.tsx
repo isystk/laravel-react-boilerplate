@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 const LoginButton = () => (
   <Row className="form-group mt-3">
-    <Col md="8" className="text-center">
+    <Col className="text-center">
       <Button type="submit" variant="primary">
         ログイン
       </Button>

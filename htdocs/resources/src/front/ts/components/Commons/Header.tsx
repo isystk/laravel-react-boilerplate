@@ -215,7 +215,7 @@ export const CommonHeader: FC = () => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <header className="header shadow-sm">
         <nav className="navbar navbar-expand-md navbar-light bg-white headerNav">
           <a
@@ -234,7 +234,7 @@ export const CommonHeader: FC = () => {
           {renderLoginSp()}
         </nav>
       </header>
-    </React.Fragment>
+    </>
   )
 }
 

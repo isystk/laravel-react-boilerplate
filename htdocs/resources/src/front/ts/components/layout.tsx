@@ -1,27 +1,18 @@
-import * as React from 'react'
+import React, { FC } from 'react'
 import CommonHeader from './Commons/Header'
 import CommonFooter from '../containers/Commons/Footer'
+import PropTypes from 'prop-types'
 
-type Props = {
-  children: any
-}
+const Layout: FC = props => (
+  <>
+    <CommonHeader />
+    {props.children}
+    <CommonFooter />
+  </>
+)
 
-class Layout extends React.Component<Props> {
-  constructor(props: Props | Readonly<Props>) {
-    super(props)
-  }
-
-  render(): JSX.Element {
-    return (
-      <React.Fragment>
-        <CommonHeader />
-
-        {this.props.children}
-
-        <CommonFooter />
-      </React.Fragment>
-    )
-  }
+Layout.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
 }
 
 export default Layout

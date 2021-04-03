@@ -1,5 +1,6 @@
 import React from 'react'
-import { Form } from 'react-bootstrap'
+
+import { Form, Input, Col, Row } from 'reactstrap'
 import TextInput from '../Elements/TextInput'
 import LoginButton from '../Elements/LoginButton'
 import CSRFToken from '../../containers/Elements/CSRFToken'
@@ -17,7 +18,7 @@ class LoginForm extends React.Component<Props> {
   }
   render() {
     return (
-      <React.Fragment>
+      <>
         <div className="text-center mb-3  ">
           <form method="GET" action="/auth/google">
             <button type="submit" className="btn btn-danger">
@@ -36,27 +37,33 @@ class LoginForm extends React.Component<Props> {
             autoFocus={true}
           />
           <TextInput identity="password" controlType="password" autoComplete="current-password" label="パスワード" />
-          <div className="form-section">
-            <label className="checkbox-wrap">
-              <Form.Check
-                id="remember"
-                type="checkbox"
-                className="form-check-input"
-                name="remember"
-                checked={this.props.remember}
-                onChange={check => this.props.setRemember(check.target.checked)}
-              />
-              <span>Remember Me</span>
-            </label>
-          </div>
-          <p className="fz-s">
-            email: test1@test.com
-            <br />
-            password: password
-          </p>
+          <Row className="form-group mt-3">
+            <Col className="text-center">
+              <div className="form-section">
+                <div className="checkbox-wrap">
+                  <label>
+                    <Input
+                      type="checkbox"
+                      id="remember"
+                      name="remember"
+                      className="form-check-input"
+                      value="1"
+                      onChange={check => this.props.setRemember(check.target.checked)}
+                    />{' '}
+                    <span>Remember Me</span>
+                  </label>
+                </div>
+              </div>
+              <p className="fz-s">
+                email: test1@test.com
+                <br />
+                password: password
+              </p>
+            </Col>
+          </Row>
           <LoginButton />
         </Form>
-      </React.Fragment>
+      </>
     )
   }
 }

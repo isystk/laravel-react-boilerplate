@@ -24,7 +24,7 @@ export class AuthCheck extends React.Component<Props> {
     // }
 
     // ログイン済みの場合
-    return <React.Fragment>{this.props.children}</React.Fragment>
+    return <>{this.props.children}</>
   }
 }
 

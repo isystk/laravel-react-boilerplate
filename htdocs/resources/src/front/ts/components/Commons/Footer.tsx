@@ -7,7 +7,7 @@ export class CommonFooter extends React.Component {
 
   render(): JSX.Element {
     return (
-      <React.Fragment>
+      <>
         <footer className="footer">
           <div className="footer_inner">
             <p className="mt20">
@@ -20,7 +20,7 @@ export class CommonFooter extends React.Component {
             </p>
           </div>
         </footer>
-      </React.Fragment>
+      </>
     )
   }
 }

@@ -126,7 +126,7 @@ const ShopTop: FC = () => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <div className="contentsArea">
         <div style={{ marginBottom: '25px' }}>
           <TopCarousel />
@@ -136,7 +136,7 @@ const ShopTop: FC = () => {
           <div className="mt40">{renderPaging()}</div>
         </div>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 
