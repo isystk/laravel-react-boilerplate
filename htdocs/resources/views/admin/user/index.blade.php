@@ -122,6 +122,4 @@ $subMenu = 'user';
 </div>
 <!-- /.content -->
 
-<script src="{{ asset('/assets/admin/js/user/index.js') }}" defer></script>
-
 @endsection

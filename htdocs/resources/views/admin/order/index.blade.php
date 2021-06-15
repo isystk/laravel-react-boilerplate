@@ -126,4 +126,6 @@ $subMenu = 'order';
 </div>
 <!-- /.content -->
 
+<script src="{{ asset('/assets/admin/js/order/index.js') }}" defer></script>
+
 @endsection

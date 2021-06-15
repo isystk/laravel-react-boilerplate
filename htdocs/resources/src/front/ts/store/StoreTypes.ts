@@ -6,6 +6,7 @@
 export interface Parts
 {
   isShowOverlay: boolean
+  isShowLoading: boolean
 }
 
 export interface Auth

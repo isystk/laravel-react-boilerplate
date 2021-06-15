@@ -14,11 +14,16 @@ type Props = {
   push
   username: string
   amount: number
+  showLoading
+  hideLoading
 }
 
 class CheckoutForm extends React.Component<Props> {
   handlePayment = async values => {
     // alert(JSON.stringify(values));
+
+    // ローディングを表示する
+    this.props.showLoading()
 
     //paymentIntentの作成を（ローカルサーバ経由で）リクエスト
     const response = await API.post(API_ENDPOINT.CREATE_PAYMENT, { amount: values.amount, username: values.username })
@@ -46,6 +51,9 @@ class CheckoutForm extends React.Component<Props> {
         this.props.push(URL.SHOP_COMPLETE)
       }
     }
+
+    // ローディングを非表示にする
+    this.props.hideLoading()
   }
 
   cardNumberRef: any

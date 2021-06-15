@@ -242,27 +242,21 @@ http://localhost:8025/
 S3に準拠したダミーのオブジェクトストレージです。
 Dockerを起動後に以下のURLにアクセスすると利用可能です。
 
-http://localhost:9090
+http://s3:9000
 
 ```bash
-# プロファイルを作成する
-$ aws configure --profile laraec
----
-AWS Access Key ID [None]: access_key
-AWS Secret Access Key [None]: secret_key
-Default region name [None]: ap-northeast-1
-Default output format [None]: json
----
+# AWS-CLIにアクセスする。
+$ ./dc.sh aws local
 # バケットを作成する
-$ aws --endpoint-url http://localhost:9090 --profile laraec s3 mb s3://laraec.isystk.com
+> aws --endpoint-url http://s3:9000 s3 mb s3://laraec.isystk.com
 # バケットを公開する
-$ POLICY='{ "Version": "2012-10-17", "Statement": [{ "Sid": "MakeItPublic", "Effect": "Allow", "Principal": "*", "Action": "s3:GetObject", "Resource": "arn:aws:s3:::laraec.isystk.com/*" }] }'
-$ aws --endpoint-url http://localhost:9090 --profile laraec s3api put-bucket-policy --bucket laraec.isystk.com --policy $POLICY
+> POLICY='{ "Version": "2012-10-17", "Statement": [{ "Sid": "MakeItPublic", "Effect": "Allow", "Principal": "*", "Action": "s3:GetObject", "Resource": "arn:aws:s3:::laraec.isystk.com/*" }] }'
+> aws --endpoint-url http://s3:9000 s3api put-bucket-policy --bucket laraec.isystk.com --policy "${POLICY}"
 # バケットの一覧を確認する
-$ aws --endpoint-url http://localhost:9090 --profile laraec s3 ls
+> aws --endpoint-url http://s3:9000 s3 ls
 # テストファイルをアップロードする
-$ echo 'hello' > test.txt
-$ aws --endpoint-url http://localhost:9090 --profile laraec s3 cp ./test.txt s3://laraec.isystk.com
+> aws --endpoint-url http://s3:9000 s3 cp ./front.png s3://laraec.isystk.com
+$ open http://localhost:9090/laraec.isystk.com/front.png
 ```
 
 ## 💬 使い方
@@ -284,21 +278,22 @@ $ ./dc.sh php login
 
 # モジュールをダウンロード
 > composer update
+> php artisan cache:clear
+> php artisan config:clear
 > php artisan config:cache
 > php artisan route:cache
-> php artisan migrate
+# テーブルとテストデータの作成
+> php artisan migrate:fresh --seed
 > chmod 777 bootstrap/cache
 > chmod 777 storage
 > chmod 777 public/uploads
-# テーブルとテストデータの作成
-> php artisan migrate:refresh --seed
+
+# テスト用の画像をS3（Minio）にアップロードします。
+> php artisan s3upload
 
 # アップロードした画像を参照できるようにシンボリックリンクを作成する
 > cd public
 > ln -s ../storage/app/public uploads
-
-# テスト用の画像をS3（Minio）にアップロードします。
-> php artisan s3upload
 
 # フロントエンドをビルドする。
 $ cd htdocs

@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 class ReactController extends Controller
 {
-  public function index(Request $request)
+  public function index()
   {
     return view('front.react');
   }
