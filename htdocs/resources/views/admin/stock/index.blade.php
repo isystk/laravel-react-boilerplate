@@ -136,4 +136,6 @@ $subMenu = 'stock';
 </div>
 <!-- /.content -->
 
+<script src="{{ asset('/assets/admin/js/stock/index.js') }}" defer></script>
+
 @endsection

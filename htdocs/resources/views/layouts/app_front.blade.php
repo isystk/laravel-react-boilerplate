@@ -28,9 +28,15 @@
     var laravelErrors=@php print(htmlspecialchars_decode($errors))@endphp;
     </script>
 
-    <!-- Scripts -->
     <script src="{{ asset('/assets/front/js/app.js') }}" defer></script>
+
+    <!-- stripe -->
     <script src="https://js.stripe.com/v3/"></script>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-analytics.js"></script>
+
 </body>
 
 </html>

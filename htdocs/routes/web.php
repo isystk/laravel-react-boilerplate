@@ -112,4 +112,3 @@ Route::group(['middleware' => 'auth:user'], function () {
   Route::post('/api/createPayment', 'Api\ShopController@createPayment')->name('shop.createPayment');
   Route::post('/api/checkout', 'Api\ShopController@checkout')->name('shop.check');
 });
-

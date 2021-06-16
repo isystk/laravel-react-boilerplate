@@ -12,6 +12,7 @@ export interface StocksAppAction extends Action {
   result: boolean
   stocks: {
     current_page: number
+    total: number
     data: Stock[]
   }
 }

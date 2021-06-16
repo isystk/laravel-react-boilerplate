@@ -91,3 +91,18 @@ services:
     command: ["--compat", "server", "/data"]
     volumes:
       - ./s3/data:/data
+
+  awscli:
+    container_name: "laraec-awscli"
+    build:
+      context: "./awscli"
+      dockerfile: "Dockerfile"
+    tty: true
+    environment:
+      AWS_DEFAULT_REGION: ap-northeast-1
+      AWS_DEFAULT_OUTPUT: json
+      AWS_ACCESS_KEY_ID: access_key
+      AWS_SECRET_ACCESS_KEY: secret_key
+    volumes:
+      - ../:/aws
+    working_dir: /aws

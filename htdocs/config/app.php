@@ -228,6 +228,12 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
 
+        'UserService' => App\Facades\UserService::class,
+        'StockService' => App\Facades\StockService::class,
+        'MyCartService' => App\Facades\MyCartService::class,
+        'ContactFormService' => App\Facades\ContactFormService::class,
+        'OrderService' => App\Facades\OrderService::class,
+        'PhotoService' => App\Facades\PhotoService::class,
     ],
 
 ];

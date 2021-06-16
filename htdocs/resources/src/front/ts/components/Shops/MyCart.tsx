@@ -26,7 +26,6 @@ export class MyCart extends React.Component<Props> {
   }
 
   componentWillUnmount(): void {
-    console.log('MyCart componentDidUnmount!!')
     // オーバーレイを閉じる
     this.props.hideOverlay()
   }

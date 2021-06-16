@@ -2,7 +2,7 @@ import React, { FC, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { API } from '../../utilities'
 import { readLikesAsync, addLikeAsync, removeLikeAsync } from '../../modules/likes'
-import { readStocks } from '../../actions'
+import { readStocks, showLoading, hideLoading } from '../../actions'
 import { API_ENDPOINT } from '../../common/constants/api'
 import Pagination from 'react-js-pagination'
 import { URL } from '../../common/constants/url'
@@ -40,9 +40,16 @@ const ShopTop: FC = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    // 商品データを取得する
-    dispatch(readStocks(search))
+    ;(async () => {
+      // ローディングを表示する
+      dispatch(showLoading())
 
+      // 商品データを取得する
+      await dispatch(readStocks(search))
+
+      // ローディングを非表示にする
+      dispatch(hideLoading())
+    })()
     // お気に入りデータを取得する
     dispatch(readLikesAsync())
   }, [])
@@ -56,11 +63,17 @@ const ShopTop: FC = () => {
               href="#"
               onClick={e => {
                 e.preventDefault()
-                if (stock.isLike) {
-                  dispatch(removeLikeAsync(stock.id))
-                } else {
-                  dispatch(addLikeAsync(stock.id))
-                }
+                ;(async () => {
+                  // ローディングを表示する
+                  dispatch(showLoading())
+                  if (stock.isLike) {
+                    await dispatch(removeLikeAsync(stock.id))
+                  } else {
+                    await dispatch(addLikeAsync(stock.id))
+                  }
+                  // ローディングを非表示にする
+                  dispatch(hideLoading())
+                })()
               }}
               className={`btn btn-sm ${stock.isLike ? 'btn-success' : 'btn-secondary'}`}
               data-id="{stock.id}"
@@ -84,6 +97,8 @@ const ShopTop: FC = () => {
                 className="btn-01"
                 onClick={() => {
                   ;(async () => {
+                    // ローディングを表示する
+                    dispatch(showLoading())
                     try {
                       const response = await API.post(API_ENDPOINT.ADD_MYCART, {
                         stock_id: stock.id,
@@ -95,6 +110,8 @@ const ShopTop: FC = () => {
                     } catch (e) {
                       dispatch(push(URL.LOGIN))
                     }
+                    // ローディングを非表示にする
+                    dispatch(hideLoading())
                   })()
                 }}
               />
@@ -120,8 +137,12 @@ const ShopTop: FC = () => {
   }
 
   const handlePageChange = async (pageNo: any) => {
+    // ローディングを表示する
+    dispatch(showLoading())
     // 商品データを取得する
-    dispatch(readStocks(`?page=${pageNo}`))
+    await dispatch(readStocks(`?page=${pageNo}`))
+    // ローディングを非表示にする
+    dispatch(hideLoading())
     dispatch(push(`${URL.TOP}?page=${pageNo}`))
   }
 

@@ -46,7 +46,8 @@ case ${1} in
         rm -Rf ./docker/mysql/logs && mkdir ./docker/mysql/logs && chmod 777 ./docker/mysql/logs
         rm -Rf ./docker/apache/logs && mkdir ./docker/apache/logs && chmod 777 ./docker/apache/logs
         rm -Rf ./docker/php/logs && mkdir ./docker/php/logs && chmod 777 ./docker/php/logs
-        chmod 777 -R ./htdocs
+        rm -Rf ./docker/s3/data && mkdir ./docker/s3/data && chmod 777 ./docker/s3/data
+        chmod 777 ./htdocs
     ;;
 
     start)
@@ -112,6 +113,17 @@ case ${1} in
           ;;
           test)
               $DOCKER_COMPOSE exec php /bin/bash -c "./vendor/bin/phpunit --testdox"
+          ;;
+          *)
+              usage
+          ;;
+      esac
+    ;;
+    
+    aws)
+      case ${2} in
+          local)
+              $DOCKER_COMPOSE exec awscli /bin/bash
           ;;
           *)
               usage

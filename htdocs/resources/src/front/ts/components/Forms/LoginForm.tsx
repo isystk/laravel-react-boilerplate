@@ -4,6 +4,7 @@ import { Form, Input, Col, Row } from 'reactstrap'
 import TextInput from '../Elements/TextInput'
 import LoginButton from '../Elements/LoginButton'
 import CSRFToken from '../../containers/Elements/CSRFToken'
+import ReCAPTCHA from 'react-google-recaptcha'
 
 type Props = {
   email: string
@@ -12,10 +13,19 @@ type Props = {
   setRemember
 }
 
-class LoginForm extends React.Component<Props> {
+type States = {
+  recaptcha
+}
+
+class LoginForm extends React.Component<Props, States> {
   constructor(props) {
     super(props)
+
+    this.state = {
+      recaptcha: '',
+    }
   }
+
   render() {
     return (
       <>
@@ -37,9 +47,23 @@ class LoginForm extends React.Component<Props> {
             autoFocus={true}
           />
           <TextInput identity="password" controlType="password" autoComplete="current-password" label="パスワード" />
-          <Row className="form-group mt-3">
-            <Col className="text-center">
-              <div className="form-section">
+          <Row className="text-center form-group mt-3">
+            <Col>
+              <ReCAPTCHA
+                style={{ margin: 'auto', width: '304px' }}
+                sitekey="6LcDorgaAAAAAGagnT3BKpmwmguuZjW4osBhamI3"
+                onChange={value => {
+                  this.setState({
+                    recaptcha: value,
+                  })
+                }}
+              />
+              <input type="hidden" name="g-recaptcha-response" value={this.state.recaptcha} />
+            </Col>
+          </Row>
+          <Row className="text-center form-group mt-3">
+            <Col>
+              <div className="form-section" style={{ display: 'block' }}>
                 <div className="checkbox-wrap">
                   <label>
                     <Input

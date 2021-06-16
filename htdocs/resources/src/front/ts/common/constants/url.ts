@@ -2,6 +2,8 @@
 export const URL = {
   /** TOP */
   TOP: '/',
+  /** FCM */
+  FCM: '/fcm',
   /** ログイン */
   LOGIN: '/login',
   /** 会員登録 */
