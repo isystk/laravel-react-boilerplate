@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enums;
+namespace App\Constants;
 
 use BenSampo\Enum\Enum;
 use BenSampo\Enum\Contracts\LocalizedEnum;

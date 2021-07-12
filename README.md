@@ -286,8 +286,6 @@ $ ./dc.sh php login
 > composer update
 > php artisan cache:clear
 > php artisan config:clear
-> php artisan config:cache
-> php artisan route:cache
 # テーブルとテストデータの作成
 > php artisan migrate:fresh --seed
 > chmod 777 -R bootstrap/cache
