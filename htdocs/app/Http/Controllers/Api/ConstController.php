@@ -5,13 +5,24 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\ApiController;
 use App\Services\ConstService;
 
+
 class ConstController extends ApiController
 {
+  /**
+   * @var ConstService
+   */
+  protected $constService;
+
+  public function __construct(ConstService $constService)
+  {
+      $this->constService = $constService;
+  }
+
   public function index()
   {
 
     try {
-      $consts = ConstService::searchConst();
+      $consts = $this->constService->searchConst();
 
       $result = [
         'result'      => true,

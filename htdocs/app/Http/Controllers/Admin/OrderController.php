@@ -6,12 +6,22 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Services\CSVService;
+use App\Services\OrderService;
 
 use PDF;
-use OrderService;
 
 class OrderController extends Controller
 {
+  /**
+   * @var OrderService
+   */
+  protected $orderService;
+
+  public function __construct(OrderService $orderService)
+  {
+    $this->orderService = $orderService;
+  }
+
   /**
    * Display a listing of the resource.
    *
@@ -22,7 +32,7 @@ class OrderController extends Controller
 
     $name = $request->input('name');
 
-    $orders = OrderService::searchOrder($name, true);
+    $orders = $this->orderService->searchOrder($name, true);
 
     return view('admin.order.index', compact('orders', 'name'));
   }
@@ -38,7 +48,7 @@ class OrderController extends Controller
 
     $name = $request->input('name');
 
-    $orders = OrderService::searchOrder($name, false);
+    $orders = $this->orderService->searchOrder($name, false);
 
     $csvHeader = ['ID', '注文者', '商品名', '個数', '発注日時'];
     $csvBody = [];
@@ -64,7 +74,7 @@ class OrderController extends Controller
 
     $name = $request->input('name');
 
-    $orders = OrderService::searchOrder($name, false);
+    $orders = $this->orderService->searchOrder($name, false);
 
     $csvHeader = ['ID', '注文者', '商品名', '個数', '発注日時'];
     $csvBody = [];

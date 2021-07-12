@@ -9,6 +9,16 @@ use App\Services\CookieService;
 class LikeController extends ApiController
 {
   /**
+   * @var CookieService
+   */
+  protected $cookieService;
+
+  public function __construct(CookieService $cookieService)
+  {
+      $this->cookieService = $cookieService;
+  }
+
+  /**
    * Display a listing of the resource.
    *
    * @return \Illuminate\Http\Response
@@ -16,7 +26,7 @@ class LikeController extends ApiController
   public function index()
   {
     try {
-      $likes = CookieService::getLike();
+      $likes = $this->cookieService->getLike();
       $result = [
         'result'      => true,
         'likes'     => [
@@ -45,7 +55,7 @@ class LikeController extends ApiController
   {
     try {
       $stockId = $request->input('id');
-      CookieService::saveLike($stockId);
+      $this->cookieService->saveLike($stockId);
       $result = [
         'result' => true,
       ];
@@ -70,7 +80,7 @@ class LikeController extends ApiController
   public function destroy($id)
   {
     try {
-      CookieService::removeLike($id);
+      $this->cookieService->removeLike($id);
       $result = [
         'result' => true,
       ];

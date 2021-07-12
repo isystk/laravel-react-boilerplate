@@ -5,10 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use PhotoService;
+use App\Services\PhotoService;
 
 class PhotoController extends Controller
 {
+  /**
+   * @var PhotoService
+   */
+  protected $photoService;
+
+  public function __construct(PhotoService $photoService)
+  {
+      $this->photoService = $photoService;
+  }
+
   /**
    * Display a listing of the resource.
    *
@@ -19,7 +29,7 @@ class PhotoController extends Controller
 
     $name = $request->input('name');
 
-    $photos = PhotoService::searchPhoto($name);
+    $photos = $this->photoService->searchPhoto($name);
 
     return view('admin.photo.index', compact('photos', 'name'));
   }
@@ -36,7 +46,7 @@ class PhotoController extends Controller
     $type = $request->input('type');
     $fileName = $request->input('fileName');
 
-    PhotoService::deletePhoto($type, $fileName);
+    $this->photoService->deletePhoto($type, $fileName);
 
     return redirect('/admin/photo');
   }

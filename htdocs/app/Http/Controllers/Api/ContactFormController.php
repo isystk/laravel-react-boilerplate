@@ -5,10 +5,19 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\ApiController;
 use App\Http\Requests\StoreContactForm;
 
-use ContactFormService;
+use App\Services\ContactFormService;
 
 class ContactFormController extends ApiController
 {
+  /**
+   * @var ContactFormService
+   */
+  protected $contactFormService;
+
+  public function __construct(ContactFormService $contactFormService)
+  {
+      $this->contactFormService = $contactFormService;
+  }
 
   /**
    * Store a newly created resource in storage.
@@ -20,7 +29,7 @@ class ContactFormController extends ApiController
   {
     try {
 
-      ContactFormService::createContactForm($request);
+      $this->contactFormService->createContactForm($request);
 
       $result = [
         'result'      => true,

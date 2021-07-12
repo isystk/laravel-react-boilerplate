@@ -6,10 +6,20 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 
-use UserService;
+use App\Services\UserService;
 
 class UserController extends Controller
 {
+  /**
+   * @var UserService
+   */
+  protected $userService;
+
+  public function __construct(UserService $userService)
+  {
+      $this->userService = $userService;
+  }
+
   /**
    * Display a listing of the resource.
    *
@@ -21,7 +31,7 @@ class UserController extends Controller
     $name = $request->input('name');
     $email = $request->input('email');
 
-    $users = UserService::searchUser($name, $email, true);
+    $users = $this->userService->searchUser($name, $email, true);
 
     return view('admin.user.index', compact('users', 'name', 'email'));
   }
@@ -65,7 +75,7 @@ class UserController extends Controller
   public function update(Request $request, $id)
   {
 
-    UserService::updateUser($request, $id);
+    $this->userService->updateUser($request, $id);
 
     return redirect('admin/user');
   }
@@ -79,7 +89,7 @@ class UserController extends Controller
   public function destroy($id)
   {
 
-    UserService::deleteUser($id);
+    $this->userService->deleteUser($id);
 
     return redirect('/admin/user');
   }

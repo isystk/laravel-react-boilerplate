@@ -6,10 +6,20 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ContactForm;
 
-use ContactFormService;
+use App\Services\ContactFormService;
 
 class ContactFormController extends Controller
 {
+  /**
+   * @var ContactFormService
+   */
+  protected $contactFormService;
+
+  public function __construct(ContactFormService $contactFormService)
+  {
+      $this->contactFormService = $contactFormService;
+  }
+
   /**
    * Display a listing of the resource.
    *
@@ -20,7 +30,7 @@ class ContactFormController extends Controller
 
     $search = $request->input('search');
 
-    $contacts = ContactFormService::searchContactForm($search);
+    $contacts = $this->contactFormService->searchContactForm($search);
 
     return view('admin.contact.index', compact('contacts', 'search'));
   }
@@ -66,7 +76,7 @@ class ContactFormController extends Controller
   public function update(Request $request, $id)
   {
 
-    ContactFormService::updateContactForm($request, $id);
+    $this->contactFormService->updateContactForm($request, $id);
 
     return redirect('/admin/contact');
   }
@@ -79,7 +89,7 @@ class ContactFormController extends Controller
    */
   public function destroy($id)
   {
-    ContactFormService::deleteContactForm($id);
+    $this->contactFormService->deleteContactForm($id);
 
     return redirect('/admin/contact');
   }

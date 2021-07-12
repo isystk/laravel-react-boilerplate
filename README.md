@@ -276,6 +276,12 @@ $ ./dc.sh mysql login
 # PHPサーバーにログインしてみる（composer や artisan などのコマンドは基本的にここで行う）
 $ ./dc.sh php login
 
+# .envをコピーする
+> cp .env.example .env
+
+# encryption keyを生成する
+> php artisan key:generate
+
 # モジュールをダウンロード
 > composer update
 > php artisan cache:clear
@@ -284,9 +290,9 @@ $ ./dc.sh php login
 > php artisan route:cache
 # テーブルとテストデータの作成
 > php artisan migrate:fresh --seed
-> chmod 777 bootstrap/cache
-> chmod 777 storage
-> chmod 777 public/uploads
+> chmod 777 -R bootstrap/cache
+> chmod 777 -R storage
+> chmod 777 -R public/uploads
 
 # テスト用の画像をS3（Minio）にアップロードします。
 > php artisan s3upload

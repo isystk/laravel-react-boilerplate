@@ -7,12 +7,22 @@ use Illuminate\Http\Request;
 use App\Models\Stock;
 use App\Services\CSVService;
 use App\Http\Requests\StoreStockForm;
+use App\Services\StockService;
 
 use PDF;
-use StockService;
 
 class StockController extends Controller
 {
+  /**
+   * @var StockService
+   */
+  protected $stockService;
+
+  public function __construct(StockService $stockService)
+  {
+      $this->stockService = $stockService;
+  }
+
   /**
    * Display a listing of the resource.
    *
@@ -23,7 +33,7 @@ class StockController extends Controller
 
     $name = $request->input('name');
 
-    $stocks = StockService::searchStock($name, true);
+    $stocks = $this->stockService->searchStock($name, true);
 
     return view('admin.stock.index', compact('stocks', 'name'));
   }
@@ -39,7 +49,7 @@ class StockController extends Controller
 
     $name = $request->input('name');
 
-    $stocks = StockService::searchStock($name, false);
+    $stocks = $this->stockService->searchStock($name, false);
 
     $csvHeader = ['ID', '商品名', '価格'];
     $csvBody = [];
@@ -63,7 +73,7 @@ class StockController extends Controller
 
     $name = $request->input('name');
 
-    $stocks = StockService::searchStock($name, false);
+    $stocks = $this->stockService->searchStock($name, false);
 
     $csvHeader = ['ID', '商品名', '価格'];
     $csvBody = [];
@@ -99,7 +109,7 @@ class StockController extends Controller
   public function store(StoreStockForm $request)
   {
 
-    StockService::createStock($request);
+    $this->stockService->createStock($request);
 
     return redirect('admin/stock');
   }
@@ -143,7 +153,7 @@ class StockController extends Controller
   public function update(Request $request, $id)
   {
 
-    StockService::updateStock($request, $id);
+    $this->stockService->updateStock($request, $id);
 
     return redirect('admin/stock');
   }
@@ -157,7 +167,7 @@ class StockController extends Controller
   public function destroy($id)
   {
 
-    StockService::deleteStock($id);
+    $this->stockService->deleteStock($id);
 
     return redirect('/admin/stock');
   }

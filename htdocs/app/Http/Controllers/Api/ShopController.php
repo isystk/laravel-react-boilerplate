@@ -7,10 +7,20 @@ use Illuminate\Http\Request;
 use App\Models\Stock;
 use App\Models\Cart;
 
-use MyCartService;
+use App\Services\MyCartService;
 
 class ShopController extends ApiController
 {
+  /**
+   * @var MyCartService
+   */
+  protected $myCartService;
+
+  public function __construct(MyCartService $myCartService)
+  {
+      $this->myCartService = $myCartService;
+  }
+
   public function index()
   {
     try {
@@ -35,7 +45,7 @@ class ShopController extends ApiController
   {
 
     try {
-      $carts = MyCartService::searchMyCart($cart);
+      $carts = $this->myCartService->searchMyCart($cart);
       $result = [
         'result'      => true,
         'carts'     => $carts
@@ -56,10 +66,10 @@ class ShopController extends ApiController
   {
     try {
       //カートに追加の処理
-      $message = MyCartService::addMyCart($cart, $request->stock_id);
+      $message = $this->myCartService->addMyCart($cart, $request->stock_id);
 
       //追加後の情報を取得
-      $carts = MyCartService::searchMyCart($cart);
+      $carts = $this->myCartService->searchMyCart($cart);
 
       $result = [
         'result'      => true,
@@ -82,10 +92,10 @@ class ShopController extends ApiController
   {
     try {
       //カートから削除の処理
-      $message = MyCartService::deleteMyCart($cart, $request->stock_id);
+      $message = $this->myCartService->deleteMyCart($cart, $request->stock_id);
 
       //追加後の情報を取得
-      $carts = MyCartService::searchMyCart($cart);
+      $carts = $this->myCartService->searchMyCart($cart);
 
       $result = [
         'result'      => true,
@@ -108,7 +118,7 @@ class ShopController extends ApiController
   {
     try {
 
-      $result = MyCartService::createPayment($request);
+      $result = $this->myCartService->createPayment($request);
 
     } catch (\Exception $e) {
       $result = [
@@ -127,10 +137,10 @@ class ShopController extends ApiController
     try {
 
       // 支払い処理の実行
-      MyCartService::checkout($request, $cart);
+      $this->myCartService->checkout($request, $cart);
 
       // 削除後の情報を取得
-      $carts = MyCartService::searchMyCart($cart);
+      $carts = $this->myCartService->searchMyCart($cart);
 
       $result = [
         'result' => true,
