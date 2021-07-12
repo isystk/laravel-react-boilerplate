@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Enums\Gender;
-use App\Enums\Age;
+use App\Constants\Gender;
+use App\Constants\Age;
 
 class ConstService
 {

@@ -48,12 +48,15 @@ services:
       context: "./mysql"
       dockerfile: "Dockerfile"
     environment:
+      MYSQL_DATABASE: laraec
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: password
+      TZ: Asia/Tokyo
     ports:
      - "3306:3306"
     restart: always
     volumes:
-     - ./mysql/conf.d:/etc/mysql/conf.d
      - ./mysql/data:/var/lib/mysql
      - ./mysql/logs:/var/log/mysql
 

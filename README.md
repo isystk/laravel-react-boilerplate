@@ -25,7 +25,7 @@ Laravel ＆ React.js の学習用サンプルアプリケーションです。
 
 #### ■ インフラ
 - Apache 2.4.46　・・・　WebサーバーとしてApacheを採用しました。自己証明書を設定済みなので開発環境でSSLとして動作可能です。
-- MySQL 5.7　・・・　DBサーバーにはMySQLを採用しました。データファイルや設定ファイル、 ログなどはコンテナの外に出して 開発時に参照出来るようにしています。
+- MySQL 8　・・・　DBサーバーにはMySQLを採用しました。データファイルや設定ファイル、 ログなどはコンテナの外に出して 開発時に参照出来るようにしています。
 - phpMyAdmin　・・・　起動したMySQLのデータを参照・編集するためのツールです。
 - MailHog 　・・・　ダミーのSMTPサーバーです。送信したメールをブラウザで閲覧することが可能です。実際にはメールは送信されないので開発時の誤送信してしまう心配がありません。
 - Minio 　・・・　S3に完全互換性のあるオブジェクトストレージです。アップロードした画像の保存先として利用しています。
@@ -290,14 +290,9 @@ $ ./dc.sh php login
 > php artisan migrate:fresh --seed
 > chmod 777 -R bootstrap/cache
 > chmod 777 -R storage
-> chmod 777 -R public/uploads
 
 # テスト用の画像をS3（Minio）にアップロードします。
 > php artisan s3upload
-
-# アップロードした画像を参照できるようにシンボリックリンクを作成する
-> cd public
-> ln -s ../storage/app/public uploads
 
 # フロントエンドをビルドする。
 $ cd htdocs
