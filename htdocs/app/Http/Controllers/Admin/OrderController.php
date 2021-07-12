@@ -8,18 +8,21 @@ use App\Models\Order;
 use App\Services\CSVService;
 use App\Services\OrderService;
 
-use PDF;
+use Barryvdh\DomPDF\PDF;
 
 class OrderController extends Controller
 {
   /**
    * @var OrderService
+   * @var PDF
    */
   protected $orderService;
+  protected $pdfService;
 
-  public function __construct(OrderService $orderService)
+  public function __construct(OrderService $orderService, PDF $pdfService)
   {
     $this->orderService = $orderService;
+    $this->pdfService = $pdfService;
   }
 
   /**
@@ -88,7 +91,7 @@ class OrderController extends Controller
       $csvBody[] = $line;
     }
 
-    $pdf = PDF::loadView('admin.order.pdf', compact('csvHeader', 'csvBody'));
+    $pdf = $this->pdfService->loadView('admin.order.pdf', compact('csvHeader', 'csvBody'));
     return $pdf->download('orders.pdf');
   }
 

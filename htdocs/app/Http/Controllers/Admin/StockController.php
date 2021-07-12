@@ -9,18 +9,21 @@ use App\Services\CSVService;
 use App\Http\Requests\StoreStockForm;
 use App\Services\StockService;
 
-use PDF;
+use Barryvdh\DomPDF\PDF;
 
 class StockController extends Controller
 {
   /**
    * @var StockService
+   * @var PDF
    */
   protected $stockService;
+  protected $pdfService;
 
-  public function __construct(StockService $stockService)
+  public function __construct(StockService $stockService, PDF $pdfService)
   {
       $this->stockService = $stockService;
+      $this->pdfService = $pdfService;
   }
 
   /**
@@ -85,7 +88,7 @@ class StockController extends Controller
       $csvBody[] = $line;
     }
 
-    $pdf = PDF::loadView('admin.stock.pdf', compact('csvHeader', 'csvBody'));
+    $pdf = $this->pdfService->loadView('admin.stock.pdf', compact('csvHeader', 'csvBody'));
     return $pdf->download('stocks.pdf');
   }
 

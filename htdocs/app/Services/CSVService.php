@@ -2,8 +2,6 @@
 
 namespace App\Services;
 
-use Response;
-
 class CSVService
 {
   public function __construct()
@@ -47,6 +45,6 @@ class CSVService
       'Content-Type' => 'text/csv',
       'Content-Disposition' => "attachment; filename=$filename",
     );
-    return \Response::make($csv, 200, $headers);
+    return response()->make($csv, 200, $headers);
   }
 }

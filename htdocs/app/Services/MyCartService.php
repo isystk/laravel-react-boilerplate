@@ -8,8 +8,7 @@ use App\Models\Stock;
 use App\Models\Cart;
 use App\Mail\MailNotification;
 use Illuminate\Support\Facades\Mail;
-
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class MyCartService
 {
@@ -134,7 +133,7 @@ class MyCartService
       DB::commit();
     } catch (\Exception $e) {
       DB::rollback();
-      throw new Exception($e);
+      throw new \Exception($e);
     }
   }
 }
