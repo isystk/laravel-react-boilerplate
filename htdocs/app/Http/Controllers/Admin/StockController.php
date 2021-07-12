@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Stock;
+use App\Models\ExcelExport;
 use App\Services\CSVService;
 use App\Http\Requests\StoreStockForm;
 use App\Services\StockService;
+use Maatwebsite\Excel\Facades\Excel;
 
 use Barryvdh\DomPDF\PDF;
 
@@ -41,6 +43,16 @@ class StockController extends Controller
     return view('admin.stock.index', compact('stocks', 'name'));
   }
 
+  /**
+   * Display a listing of the resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function downloadExcel(Request $request)
+  {
+
+    return Excel::download((new ExcelExport)->setTemplate('template.xlsx'), 'stocks.xlsx');
+  }
 
   /**
    * Display a listing of the resource.

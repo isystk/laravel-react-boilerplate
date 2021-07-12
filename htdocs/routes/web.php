@@ -45,6 +45,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
   Route::post('user/destroy/{id}', 'Admin\UserController@destroy')->name('admin.user.destroy');
 
   Route::get('stock', 'Admin\StockController@index')->name('admin.stock.index');
+  Route::get('stock/downloadExcel', 'Admin\StockController@downloadExcel')->name('admin.stock.downloadExcel');
   Route::get('stock/downloadCsv', 'Admin\StockController@downloadCsv')->name('admin.stock.downloadCsv');
   Route::get('stock/downloadPdf', 'Admin\StockController@downloadPdf')->name('admin.stock.downloadPdf');
   Route::get('stock/create', 'Admin\StockController@create')->name('admin.stock.create');
