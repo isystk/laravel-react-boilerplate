@@ -2,110 +2,71 @@
 
 namespace App\Repositories;
 
-use App\Models\ContactFormImage;
+use App\Constants\ErrorType;
 use Illuminate\Support\Facades\DB;
-use App\Services\UploadImage;
 use App\Models\ContactForm;
 
 class ContactFormRepository
 {
 
-  public function count($dbShiftConditionId, $options = [])
+  public function count($createdAt, $options = [])
   {
-      $query = DBPairConstraint::where([
-          'd_b_shift_condition_id' => $dbShiftConditionId,
+      $query = ContactForm::whereDay([
+          'created_at' => $createdAt,
       ]);
-      if (!empty($options['only:enabled'])) {
-          $query->where('status', DBPairConstraint::ACTIVATED);
-      }
       return $query->count();
   }
 
-  public function all($dbShiftConditionId, $options = [])
+  public function all($createdAt, $options = [])
   {
-      return DBPairConstraint::sortable(['createdAt' => 'asc'])
-          ->with($this->__with($options))
-          ->where([
-              'd_b_shift_condition_id' => $dbShiftConditionId,
+      return ContactForm::with($this->__with($options))
+          ->whereDay([
+            'created_at' => $createdAt,
           ])
           ->get();
   }
 
-  public function find($branchId, $id, $options = [])
+  public function find($id, $options = [])
   {
-      return DBPairConstraint::with($this->__with($options))
-          ->branch($branchId)
+      return ContactForm::with($this->__with($options))
           ->find($id);
   }
 
   private function __with($options = [])
   {
       $with = [];
-      if (!empty($options['with:condition'])) {
-          $with[] = 'condition';
-      }
-      if (!empty($options['with:objects'])) {
-          $with[] = 'dateObject';
-          $with[] = 'masterStaffObject';
-          $with[] = 'masterShiftObject';
-          $with[] = 'servantStaffObject';
-          $with[] = 'servantShiftObject';
+      if (!empty($options['with:images'])) {
+          $with[] = 'contactFormImages';
       }
       return $with;
   }
 
   public function store(
-      $conditionId,
-      $variables,
-      $dateObject,
-      $masterStaffObject,
-      $masterShiftObject,
-      $servantStaffObject,
-      $servantShiftObject,
-      $savedBy
+      $id,
+      $yourName,
+      $title,
+      $email,
+      $url,
+      $gender,
+      $age,
+      $contact
   ) {
       DB::beginTransaction();
       try {
-          $constraint = new DBPairConstraint();
-          $constraint->d_b_shift_condition_id = $conditionId;
-          $constraint->name = '';
-          foreach ($variables as $key => $value) {
-              $constraint->{$key} = $value;
-          }
+          $contactForm = new ContactForm();
+          $contactForm->id = $id;
+          $contactForm->yourName = $yourName;
+          $contactForm->title = $title;
+          $contactForm->email = $email;
+          $contactForm->url = $url;
+          $contactForm->gender = $gender;
+          $contactForm->age = $age;
+          $contactForm->contact = $contact;
 
-          if (!empty($dateObject) && !empty($dateObject['id'])) {
-              $constraint->date_object_id = $dateObject['id'];
-              $constraint->date_object_type = $dateObject['type'];
-          }
-
-          if (!empty($masterShiftObject) && !empty($masterShiftObject['id'])) {
-              $constraint->master_shift_object_id = $masterShiftObject['id'];
-              $constraint->master_shift_object_type = $masterShiftObject['type'];
-              $constraint->master_shift_object_inverse = !empty($masterShiftObject['inverse']);
-          }
-          if (!empty($masterStaffObject) && !empty($masterStaffObject['id'])) {
-              $constraint->master_staff_object_id = $masterStaffObject['id'];
-              $constraint->master_staff_object_type = $masterStaffObject['type'];
-              $constraint->master_staff_operator = $masterStaffObject['operator'];
-          }
-
-          if (!empty($servantShiftObject) && !empty($servantShiftObject['id'])) {
-              $constraint->servant_shift_object_id = $servantShiftObject['id'];
-              $constraint->servant_shift_object_type = $servantShiftObject['type'];
-              $constraint->servant_shift_object_inverse = !empty($servantShiftObject['inverse']);
-          }
-          if (!empty($servantStaffObject) && !empty($servantStaffObject['id'])) {
-              $constraint->servant_staff_object_id = $servantStaffObject['id'];
-              $constraint->servant_staff_object_type = $servantStaffObject['type'];
-              $constraint->servant_staff_operator = $servantStaffObject['operator'];
-          }
-
-          $constraint->status = DBPairConstraint::ACTIVATED;
-          $constraint->created_by = $savedBy;
-          $constraint->save();
+          $contactForm->save();
 
           DB::commit();
-          return [$constraint, ErrorType::SUCCESS, null];
+          return [$contactForm, ErrorType::SUCCESS, null];
       } catch (\PDOException $e) {
           DB::rollBack();
           return [false, ErrorType::DATABASE, $e];
@@ -116,55 +77,29 @@ class ContactFormRepository
   }
 
   public function update(
-      $branchId,
-      $constraintId,
-      $variables,
-      $dateObject,
-      $masterStaffObject,
-      $masterShiftObject,
-      $servantStaffObject,
-      $servantShiftObject,
-      $savedBy
+    $id,
+    $yourName,
+    $title,
+    $email,
+    $url,
+    $gender,
+    $age,
+    $contact
   ) {
       DB::beginTransaction();
       try {
-          $constraint = $this->find($branchId, $constraintId);
-          foreach ($variables as $key => $value) {
-              $constraint->{$key} = $value;
-          }
-
-          if (!empty($dateObject) && !empty($dateObject['id'])) {
-              $constraint->date_object_id = $dateObject['id'];
-              $constraint->date_object_type = $dateObject['type'];
-          }
-
-          if (!empty($masterShiftObject) && !empty($masterShiftObject['id'])) {
-              $constraint->master_shift_object_id = $masterShiftObject['id'];
-              $constraint->master_shift_object_type = $masterShiftObject['type'];
-              $constraint->master_shift_object_inverse = !empty($masterShiftObject['inverse']);
-          }
-          if (!empty($masterStaffObject) && !empty($masterStaffObject['id'])) {
-              $constraint->master_staff_object_id = $masterStaffObject['id'];
-              $constraint->master_staff_object_type = $masterStaffObject['type'];
-              $constraint->master_staff_operator = $masterStaffObject['operator'];
-          }
-
-          if (!empty($servantShiftObject) && !empty($servantShiftObject['id'])) {
-              $constraint->servant_shift_object_id = $servantShiftObject['id'];
-              $constraint->servant_shift_object_type = $servantShiftObject['type'];
-              $constraint->servant_shift_object_inverse = !empty($servantShiftObject['inverse']);
-          }
-          if (!empty($servantStaffObject) && !empty($servantStaffObject['id'])) {
-              $constraint->servant_staff_object_id = $servantStaffObject['id'];
-              $constraint->servant_staff_object_type = $servantStaffObject['type'];
-              $constraint->servant_staff_operator = $servantStaffObject['operator'];
-          }
-
-          $constraint->updated_by = $savedBy;
-          $constraint->save();
+          $contactForm = $this->find($id);
+          $contactForm->yourName = $yourName;
+          $contactForm->title = $title;
+          $contactForm->email = $email;
+          $contactForm->url = $url;
+          $contactForm->gender = $gender;
+          $contactForm->age = $age;
+          $contactForm->contact = $contact;
+          $contactForm->save();
 
           DB::commit();
-          return [$constraint, ErrorType::SUCCESS, null];
+          return [$contactForm, ErrorType::SUCCESS, null];
       } catch (\PDOException $e) {
           DB::rollBack();
           return [false, ErrorType::DATABASE, $e];

@@ -5,11 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Stock;
-use App\Models\ExcelExport;
 use App\Services\CSVService;
 use App\Http\Requests\StoreStockForm;
 use App\Services\StockService;
-use Maatwebsite\Excel\Facades\Excel;
+use App\Services\Excel\ExcelStockService;
 
 use Barryvdh\DomPDF\PDF;
 
@@ -17,14 +16,17 @@ class StockController extends Controller
 {
   /**
    * @var StockService
+   * @var ExcelStockService
    * @var PDF
    */
   protected $stockService;
+  protected $excelStockService;
   protected $pdfService;
 
-  public function __construct(StockService $stockService, PDF $pdfService)
+  public function __construct(StockService $stockService, ExcelStockService $excelStockService, PDF $pdfService)
   {
       $this->stockService = $stockService;
+      $this->excelStockService = $excelStockService;
       $this->pdfService = $pdfService;
   }
 
@@ -51,7 +53,7 @@ class StockController extends Controller
   public function downloadExcel(Request $request)
   {
 
-    return Excel::download((new ExcelExport)->setTemplate('template.xlsx'), 'stocks.xlsx');
+    return $this->excelStockService->setTemplate(resource_path('excel/template.xlsx'))->download('stocks.xlsx');
   }
 
   /**
