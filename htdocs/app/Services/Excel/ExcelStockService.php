@@ -10,7 +10,6 @@ use Maatwebsite\Excel\Events\BeforeExport;
 use Maatwebsite\Excel\Events\BeforeWriting;
 use Maatwebsite\Excel\Excel;
 use Maatwebsite\Excel\Files\LocalTemporaryFile;
-use App\Models\Stock;
 use App\Services\StockService;
 use Illuminate\Support\Facades\Request;
 
@@ -48,7 +47,7 @@ class ExcelStockService implements FromCollection, WithEvents
    */
   public function collection()
   {
-      return Stock::all();
+      return collect([]);
   }
 
   /**
@@ -64,7 +63,8 @@ class ExcelStockService implements FromCollection, WithEvents
           return;
         }
         $event->writer->reopen(new LocalTemporaryFile($this->template_file), Excel::XLSX);
-        return;
+        $event->writer->getSheetByIndex(0);
+        return $event->getWriter()->getSheetByIndex(0);
       },
       // 書き込み直前イベントハンドラ
       BeforeWriting::class => function (BeforeWriting $event) {
@@ -72,8 +72,8 @@ class ExcelStockService implements FromCollection, WithEvents
         $event->writer->removeSheetByIndex(1);
 
         // セルを赤色で塗りつぶし
-        $event->writer->getSheetByIndex(0)->getDelegate()->getCell('B5')->getStyle('B5')->getFill()->setFillType('solid')->getStartColor()->setARGB('FFFFFF00');
-        $event->writer->getSheetByIndex(0)->getDelegate()->getCell('B6')->getStyle('B6')->getFill()->setFillType('solid')->getStartColor()->setARGB('FFFF0000');
+        // $event->writer->getSheetByIndex(0)->getDelegate()->getCell('B5')->getStyle('B5')->getFill()->setFillType('solid')->getStartColor()->setARGB('FFFFFF00');
+        // $event->writer->getSheetByIndex(0)->getDelegate()->getCell('B6')->getStyle('B6')->getFill()->setFillType('solid')->getStartColor()->setARGB('FFFF0000');
 
         // // セル結合
         // $event->writer->getSheetByIndex(0)->getDelegate()->mergeCells('B10:C11');
@@ -147,31 +147,34 @@ class ExcelStockService implements FromCollection, WithEvents
         // // 中央寄せ
         // $event->writer->getSheetByIndex(0)->getDelegate()->getCell('B13')->getStyle('B13')->getAlignment()->setHorizontal('center');
 
-        // ライブラリクラスでセルに値設定
-        $event->writer->getSheetByIndex(0)->getDelegate()->getCell('B6')->setValue('これはプログラムで設定した値です。');
+        // // ライブラリクラスでセルに値設定
+        // $event->writer->getSheetByIndex(0)->getDelegate()->getCell('B6')->setValue('これはプログラムで設定した値です。');
 
         // 独自ワークシートクラス
         $esh = new ExtendWorksheets($event->writer->getSheetByIndex(0)->getDelegate());
 
-        // 独自ワークシートクラスでセルに値設定
-        $esh->setValue('B9', 'これはプログラムで設定した値です。');
+        // // 独自ワークシートクラスでセルに値設定
+        // $esh->setValue('B9', 'これはプログラムで設定した値です。');
 
-        // 独自ワークシートクラスでセルに値設定
-        $esh->replaceValue('B12', [['target' => '{置換対象1}', 'value' => '!!プログラムで置換1!!'], ['target' => '{置換対象2}', 'value' => '!!プログラムで置換2!!']]);
-
-        // セルの値を取得して別セルに設定することでコピー
-        $cellValue = $esh->getValue('B15');
-        $esh->setValue('C15', $cellValue);
+        // // 独自ワークシートクラスでセルに値設定
+        // $esh->replaceValue('B12', [['target' => '{置換対象1}', 'value' => '!!プログラムで置換1!!'], ['target' => '{置換対象2}', 'value' => '!!プログラムで置換2!!']]);
 
         $name = Request::input('name');
         $stocks = $this->stockService->searchStock($name, false);
-        $data = [['名前', '生年月日'],];
-        array_push($data, [$stocks[0]->name, '']);
+        $datas = [];
+        foreach($stocks as $key => $stock){
+          $cellnum = ($key+2);
+          // 枠線
+          $event->writer->getSheetByIndex(0)->getDelegate()->getStyle('A'. $cellnum.':C'. $cellnum)->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+
+          array_push($datas, [$stock->id, $stock->name, $stock->price]);
+        }
 
         //csv用データを設範囲設定
-        $esh->fromArray($data, null, 'B18');
+        $esh->fromArray($datas, null, 'A2');
 
-
+        // A1を選択しておく
+        $event->writer->getSheetByIndex(0)->getDelegate()->getStyle('A1');
 
         return;
       },
