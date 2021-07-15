@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Constants\ErrorType;
 use App\Http\Controllers\ApiController;
-use App\Http\Requests\StoreContactForm;
+use App\Http\Requests\StoreContactFormRequest;
 
 use App\Services\ContactFormService;
 
@@ -25,24 +26,24 @@ class ContactFormController extends ApiController
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(StoreContactForm $request)
+  public function store(StoreContactFormRequest $request)
   {
-    try {
-
-      $this->contactFormService->createContactForm($request);
-
-      $result = [
+      [$contactForm, $type, $exception] = $this->contactFormService->save(null);
+      if (!$contactForm) {
+          if ($type === ErrorType::NOT_FOUND) {
+              abort(400);
+          }
+          $e = $exception ?? new \Exception(__('common.Unknown Error has occurred.'));
+          $result = [
+            'result' => false,
+            'error' => [
+              'messages' => [$e->getMessage()]
+            ],
+          ];
+          return $this->resConversionJson($result, $e->getCode());
+      }
+      return $this->resConversionJson([
         'result'      => true,
-      ];
-    } catch (\Exception $e) {
-      $result = [
-        'result' => false,
-        'error' => [
-          'messages' => [$e->getMessage()]
-        ],
-      ];
-      return $this->resConversionJson($result, $e->getCode());
-    }
-    return $this->resConversionJson($result);
+      ]);
   }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Constants\ErrorType;
 use Illuminate\Support\Facades\DB;
 use App\Models\ContactForm;
 
@@ -17,19 +16,36 @@ class ContactFormRepository
       return $query->count();
   }
 
-  public function all($createdAt, $options = [])
+  public function findAll($yourName, $options = [])
   {
-      return ContactForm::with($this->__with($options))
-          ->whereDay([
-            'created_at' => $createdAt,
-          ])
-          ->get();
+      $query = ContactForm::with($this->__with($options));
+
+      // もしキーワードがあったら
+      if ($yourName !== null) {
+        // 全角スペースを半角に
+        $search_split = mb_convert_kana($yourName, 's');
+
+        // 空白で区切る
+        $search_split2 = preg_split('/[\s]+/', $search_split);
+
+        // 単語をループで回す
+        foreach ($search_split2 as $value) {
+          $query->where('your_name', 'like', '%' . $value . '%');
+        }
+      }
+
+      return $query
+          ->orderBy('created_at', 'desc')
+          ->paginate(20);
   }
 
-  public function find($id, $options = [])
+  public function findById($id, $options = [])
   {
       return ContactForm::with($this->__with($options))
-          ->find($id);
+          ->where([
+              'id' => $id
+          ])
+          ->first();
   }
 
   private function __with($options = [])
@@ -51,29 +67,19 @@ class ContactFormRepository
       $age,
       $contact
   ) {
-      DB::beginTransaction();
-      try {
-          $contactForm = new ContactForm();
-          $contactForm->id = $id;
-          $contactForm->yourName = $yourName;
-          $contactForm->title = $title;
-          $contactForm->email = $email;
-          $contactForm->url = $url;
-          $contactForm->gender = $gender;
-          $contactForm->age = $age;
-          $contactForm->contact = $contact;
+      $contactForm = new ContactForm();
+      $contactForm->id = $id;
+      $contactForm->your_name = $yourName;
+      $contactForm->title = $title;
+      $contactForm->email = $email;
+      $contactForm->url = $url;
+      $contactForm->gender = $gender;
+      $contactForm->age = $age;
+      $contactForm->contact = $contact;
 
-          $contactForm->save();
+      $contactForm->save();
 
-          DB::commit();
-          return [$contactForm, ErrorType::SUCCESS, null];
-      } catch (\PDOException $e) {
-          DB::rollBack();
-          return [false, ErrorType::DATABASE, $e];
-      } catch (\Exception $e) {
-          DB::rollBack();
-          return [false, ErrorType::FATAL, $e];
-      }
+      return $contactForm;
   }
 
   public function update(
@@ -86,27 +92,26 @@ class ContactFormRepository
     $age,
     $contact
   ) {
-      DB::beginTransaction();
-      try {
-          $contactForm = $this->find($id);
-          $contactForm->yourName = $yourName;
-          $contactForm->title = $title;
-          $contactForm->email = $email;
-          $contactForm->url = $url;
-          $contactForm->gender = $gender;
-          $contactForm->age = $age;
-          $contactForm->contact = $contact;
-          $contactForm->save();
+      $contactForm = $this->findById($id);
+      $contactForm->your_name = $yourName;
+      $contactForm->title = $title;
+      $contactForm->email = $email;
+      $contactForm->url = $url;
+      $contactForm->gender = $gender;
+      $contactForm->age = $age;
+      $contactForm->contact = $contact;
+      $contactForm->save();
 
-          DB::commit();
-          return [$contactForm, ErrorType::SUCCESS, null];
-      } catch (\PDOException $e) {
-          DB::rollBack();
-          return [false, ErrorType::DATABASE, $e];
-      } catch (\Exception $e) {
-          DB::rollBack();
-          return [false, ErrorType::FATAL, $e];
-      }
+      return $contactForm;
+  }
+
+  public function delete(
+    $id
+  ) {
+      $contactForm = $this->findById($id);
+      $contactForm->delete();
+
+      return $contactForm;
   }
 
 }

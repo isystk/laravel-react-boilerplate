@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Constants\ErrorType;
 use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;

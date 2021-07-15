@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Constants\ErrorType;
 use App\Constants\Gender;
 use App\Constants\Age;
 

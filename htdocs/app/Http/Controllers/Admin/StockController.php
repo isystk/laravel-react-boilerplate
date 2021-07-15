@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Stock;
 use App\Services\CSVService;
-use App\Http\Requests\StoreStockForm;
+use App\Http\Requests\StoreStockFormRequest;
 use App\Services\StockService;
 use App\Services\Excel\ExcelStockService;
 
@@ -123,7 +123,7 @@ class StockController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(StoreStockForm $request)
+  public function store(StoreStockFormRequest $request)
   {
 
     $this->stockService->createStock($request);

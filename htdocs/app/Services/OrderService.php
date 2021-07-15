@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Constants\ErrorType;
 use Illuminate\Support\Facades\DB;
 
 class OrderService

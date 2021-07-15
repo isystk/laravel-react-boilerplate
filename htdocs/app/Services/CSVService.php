@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Constants\ErrorType;
 class CSVService
 {
   public function __construct()

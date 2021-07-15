@@ -73,10 +73,10 @@ $subMenu = 'contact';
                                 <div class="control-group" id="userName">
                                     <label class="col-sm-6 control-label">性別</label>
                                     <div class="col-sm-12">
-                                        @foreach (App\Enums\Gender::toArray() as $gender)
+                                        @foreach (App\Constants\Gender::toArray() as $gender)
                                           <label>
                                               <input type="radio" name="gender" value="{{$gender}}" {{ $gender == old("gender", $contact -> gender) ? 'checked="checked"' : '' }}>
-                                              <span>{{App\Enums\Gender::getDescription($gender)}}</span>
+                                              <span>{{App\Constants\Gender::getDescription($gender)}}</span>
                                           </label>
                                         @endforeach
                                     </div>
@@ -89,8 +89,8 @@ $subMenu = 'contact';
                                     <div class="col-sm-12">
                                         <select name="age">
                                             <option value="">選択してください</option>
-                                            @foreach (App\Enums\Age::toArray() as $age)
-                                              <option value="{{$age}}" {{ $age == old("age", $contact -> age) ? 'selected="selected"' : '' }}>{{App\Enums\Age::getDescription($age)}}</option>
+                                            @foreach (App\Constants\Age::toArray() as $age)
+                                              <option value="{{$age}}" {{ $age == old("age", $contact -> age) ? 'selected="selected"' : '' }}>{{App\Constants\Age::getDescription($age)}}</option>
                                             @endforeach
                                         </select>
                                     </div>

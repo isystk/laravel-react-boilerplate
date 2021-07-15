@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Constants\ErrorType;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreContactFormRequest;
 use App\Models\ContactForm;
 
 use App\Services\ContactFormService;
@@ -30,7 +32,7 @@ class ContactFormController extends Controller
 
     $search = $request->input('search');
 
-    $contacts = $this->contactFormService->searchContactForm($search);
+    $contacts = $this->contactFormService->search($search);
 
     return view('admin.contact.index', compact('contacts', 'search'));
   }
@@ -73,11 +75,16 @@ class ContactFormController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id)
+  public function update(StoreContactFormRequest $request, $id)
   {
 
-    $this->contactFormService->updateContactForm($request, $id);
-
+    [$contactForm, $type, $exception] = $this->contactFormService->save($id);
+    if (!$contactForm) {
+        if ($type === ErrorType::NOT_FOUND) {
+            abort(400);
+        }
+        throw $exception ?? new \Exception(__('common.Unknown Error has occurred.'));
+    }
     return redirect('/admin/contact');
   }
 
@@ -89,8 +96,13 @@ class ContactFormController extends Controller
    */
   public function destroy($id)
   {
-    $this->contactFormService->deleteContactForm($id);
-
+    [$contactForm, $type, $exception] = $this->contactFormService->delete($id);
+    if (!$contactForm) {
+        if ($type === ErrorType::NOT_FOUND) {
+            abort(400);
+        }
+        throw $exception ?? new \Exception(__('common.Unknown Error has occurred.'));
+    }
     return redirect('/admin/contact');
   }
 }
