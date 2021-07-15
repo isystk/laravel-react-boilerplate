@@ -40,7 +40,7 @@ class OrderController extends Controller
    */
   public function show($id)
   {
-    $orders = $this->orderService->find($id);
+    $order = $this->orderService->find($id);
 
     return view('admin.order.show', compact('order'));
   }

@@ -7,18 +7,23 @@ use App\Models\Order;
 class OrderRepository
 {
 
-  public function count($userId, $stock, $options = [])
+  public function count($userName, $options = [])
   {
-    dd("hoge");
-      return Order::where([
-        'user_id' => $userId,
-        'stock_id' => $stock,
-      ])->count();
+      return Order::with($this->__with($options))
+        ->where([
+        //  'user.name' => $userName,
+        ])->count();
   }
 
   public function findAll($userName, $options = [])
   {
-      $query = Order::with($this->__with($options));
+      $query = Order::with($this->__with($options))
+        ->orderBy('created_at', 'desc')
+        ->orderBy('id', 'asc');
+
+      //if (!empty($userName)) {
+      //  $query->where('user.name', 'like', '%' . $userName . '%');
+      //}
 
       if (!empty($options['paging'])) {
         return $query

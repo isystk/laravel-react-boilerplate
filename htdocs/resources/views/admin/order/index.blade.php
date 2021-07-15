@@ -86,8 +86,8 @@ $subMenu = 'order';
                                         @foreach($orders as $order)
                                         <tr>
                                             <th>{{ $order->id }}</th>
-                                            <td>{{ $order->user_name }}</td>
-                                            <td>{{ $order->stock_name }}</td>
+                                            <td>{{ $order->user->name }}</td>
+                                            <td>{{ $order->stock->name }}</td>
                                             <td>{{ $order->quantity }}</td>
                                             <td>{{ $order->created_at }}</td>
                                             <td><a href="{{ route('admin.order.show', ['id'=> $order->id]) }}">詳細</a></td>

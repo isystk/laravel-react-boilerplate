@@ -26,6 +26,7 @@ class OrderService extends Service
   {
     return $this->orderRepository->findAll($this->request()->name, [
       'with:user'=>true,
+      'with:stock'=>true,
       'paging'=>$limit
     ]);
   }
