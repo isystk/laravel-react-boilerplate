@@ -17,11 +17,18 @@ class ContactFormImageRepository
 
   public function findAll($contactFormId, $options = [])
   {
-      return ContactFormImage::with($this->__with($options))
-          ->where([
-              'contact_form_id' => $contactFormId
-          ])
+      $query = ContactFormImage::with($this->__with($options))
+        ->where([
+          'contact_form_id' => $contactFormId
+        ]);
+
+      if (!empty($options['paging'])) {
+        return $query
+            ->paginate($options['paging']);
+      } else {
+        return $query
           ->get();
+      }
   }
 
   public function findById($id, $options = [])

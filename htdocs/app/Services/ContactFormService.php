@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\ContactFormRepository;
 use App\Repositories\ContactFormImageRepository;
+use App\Services\Utils\UploadImage;
 
 class ContactFormService extends Service
 {
@@ -30,15 +31,20 @@ class ContactFormService extends Service
     $this->contactFormImageRepository = $contactFormImageRepository;
   }
 
-  public function search($search)
+  public function list($limit = 20)
   {
-
-    $contacts = $this->contactFormRepository->findAll($search, ['with:images' => true]);
-
-    return $contacts;
+    return $this->contactFormRepository->findAll($this->request()->search, [
+      'with:images' => true,
+      'paging' => $limit,
+    ]);
   }
 
-  public function save($contactFormId)
+  public function find($contactFormId)
+  {
+    return $this->contactFormRepository->findById($contactFormId, []);
+  }
+
+  public function save($contactFormId=null)
   {
       // 画像ファイルを公開ディレクトリへ配置する。
       if ($this->request()->has('imageBase64') && $this->request()->imageBase64 !== null) {

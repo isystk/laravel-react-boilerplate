@@ -13,10 +13,27 @@ class UserRepository
       ])->count();
   }
 
-  public function findAll($options = [])
+  public function findAll($name, $email, $options = [])
   {
-      return User::with($this->__with($options))
+      $query = User::with($this->__with($options));
+
+      if (!empty($name)) {
+        $query->where('name', 'like', '%' . $name . '%');
+      }
+      if (!empty($email)) {
+        $query
+        ->where([
+            'email' => $email
+        ]);
+      }
+
+      if (!empty($options['paging'])) {
+        return $query
+          ->paginate($options['paging']);
+      } else {
+        return $query
           ->get();
+      }
   }
 
   public function findById($id, $options = [])
@@ -37,16 +54,12 @@ class UserRepository
   public function store(
       $id,
       $name,
-      $email,
-      $emailVerifiedAt,
-      $password
+      $email
   ) {
       $user = new User();
       $user->id = $id;
       $user->name = $name;
       $user->email = $email;
-      $user->email_verified_at = $emailVerifiedAt;
-      $user->password = $password;
 
       $user->save();
 
@@ -56,15 +69,11 @@ class UserRepository
   public function update(
     $id,
     $name,
-    $email,
-    $emailVerifiedAt,
-    $password
+    $email
   ) {
       $user = $this->findById($id);
       $user->name = $name;
       $user->email = $email;
-      $user->email_verified_at = $emailVerifiedAt;
-      $user->password = $password;
       $user->save();
 
       return $user;

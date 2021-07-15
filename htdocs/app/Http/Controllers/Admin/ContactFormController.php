@@ -32,7 +32,7 @@ class ContactFormController extends Controller
 
     $search = $request->input('search');
 
-    $contacts = $this->contactFormService->search($search);
+    $contacts = $this->contactFormService->list();
 
     return view('admin.contact.index', compact('contacts', 'search'));
   }

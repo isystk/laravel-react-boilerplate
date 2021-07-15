@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Constants\ErrorType;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
 
 use App\Services\UserService;
 
@@ -31,7 +31,7 @@ class UserController extends Controller
     $name = $request->input('name');
     $email = $request->input('email');
 
-    $users = $this->userService->searchUser($name, $email, true);
+    $users = $this->userService->list();
 
     return view('admin.user.index', compact('users', 'name', 'email'));
   }
@@ -45,8 +45,7 @@ class UserController extends Controller
    */
   public function show($id)
   {
-    //
-    $user = User::find($id);
+    $user = $this->userService->find($id);
 
     return view('admin.user.show', compact('user'));
   }
@@ -59,8 +58,7 @@ class UserController extends Controller
    */
   public function edit($id)
   {
-    //
-    $user = User::find($id);
+    $user = $this->userService->find($id);
 
     return view('admin.user.edit', compact('user'));
   }
@@ -75,7 +73,13 @@ class UserController extends Controller
   public function update(Request $request, $id)
   {
 
-    $this->userService->updateUser($request, $id);
+    [$user, $type, $exception] = $this->userService->save($id);
+    if (!$user) {
+        if ($type === ErrorType::NOT_FOUND) {
+            abort(400);
+        }
+        throw $exception ?? new \Exception(__('common.Unknown Error has occurred.'));
+    }
 
     return redirect('admin/user');
   }
@@ -89,7 +93,13 @@ class UserController extends Controller
   public function destroy($id)
   {
 
-    $this->userService->deleteUser($id);
+    [$user, $type, $exception] = $this->userService->delete($id);
+    if (!$user) {
+        if ($type === ErrorType::NOT_FOUND) {
+            abort(400);
+        }
+        throw $exception ?? new \Exception(__('common.Unknown Error has occurred.'));
+    }
 
     return redirect('/admin/user');
   }

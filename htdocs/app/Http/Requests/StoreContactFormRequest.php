@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Services\UploadImage;
+use App\Services\Utils\UploadImage;
 
 class StoreContactFormRequest extends FormRequest
 {

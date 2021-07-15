@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\ApiController;
-use App\Services\ConstService;
+use App\Services\Utils\ConstService;
 
 
 class ConstController extends ApiController

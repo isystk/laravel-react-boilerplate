@@ -14,9 +14,10 @@ class PhotoService extends Service
     parent::__construct($request);
   }
 
-
-  public function searchPhoto($name)
+  public function list()
   {
+
+    $name = $this->request()->name;
 
     $photos = [];
 
@@ -48,11 +49,11 @@ class PhotoService extends Service
     return $photos;
   }
 
-  public function deletePhoto($type, $fileName)
+  public function delete($type, $fileName)
   {
 
     if ($type === 'stock') {
-      $delPath = storage_path('stock/' . $fileName);
+      $delPath = 'stock/' . $fileName;
       Storage::delete($delPath);
     } else {
       Storage::delete($fileName);

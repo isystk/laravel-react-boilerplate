@@ -5,39 +5,34 @@ namespace App\Services;
 use App\Constants\ErrorType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Repositories\OrderRepository;
 
 class OrderService extends Service
 {
+  /**
+   * @var OrderRepository
+   */
+  protected $orderRepository;
+
   public function __construct(
-    Request $request
+    Request $request,
+    OrderRepository $orderRepository
 ) {
     parent::__construct($request);
+    $this->orderRepository = $orderRepository;
   }
 
-
-  public function searchOrder($name, $hasPaging)
+  public function list($limit = 20)
   {
-
-    // 検索フォーム
-    $query = DB::table('orders')
-      ->join('users', 'users.id', '=', 'orders.user_id')
-      ->join('stocks', 'stocks.id', '=', 'orders.stock_id');
-
-    // もしキーワードがあったら
-    if ($name !== null) {
-      $query->where('users.name', 'like', '%' . $name . '%');
-    }
-
-    $query->select('orders.id', 'users.name as user_name', 'stocks.name as stock_name', 'orders.quantity', 'orders.created_at');
-    $query->orderBy('orders.created_at', 'desc');
-    $query->orderBy('orders.id', 'desc');
-    if ($hasPaging) {
-      $orders = $query->paginate(20);
-    } else {
-      $orders = $query->get();
-    }
-
-    // dd($orders);
-    return $orders;
+    return $this->orderRepository->findAll($this->request()->name, [
+      'with:user'=>true,
+      'paging'=>$limit
+    ]);
   }
+
+  public function find($orderId)
+  {
+    return $this->orderRepository->findById($orderId, []);
+  }
+
 }

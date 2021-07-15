@@ -1,20 +1,12 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Utils;
 
-use App\Constants\ErrorType;
-use Illuminate\Http\Request;
 use App\Constants\Gender;
 use App\Constants\Age;
 
-class ConstService extends Service
+class ConstService
 {
-
-  public function __construct(
-    Request $request
-) {
-    parent::__construct($request);
-  }
 
   public static function searchConst()
   {

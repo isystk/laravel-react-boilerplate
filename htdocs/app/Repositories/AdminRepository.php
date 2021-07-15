@@ -15,8 +15,15 @@ class AdminRepository
 
   public function findAll($options = [])
   {
-      return Admin::with($this->__with($options))
+      $query = Admin::with($this->__with($options));
+
+      if (!empty($options['paging'])) {
+        return $query
+            ->paginate($options['paging']);
+      } else {
+        return $query
           ->get();
+      }
   }
 
   public function findById($id, $options = [])

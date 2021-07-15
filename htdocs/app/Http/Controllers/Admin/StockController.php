@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Stock;
-use App\Services\CSVService;
+use App\Services\Utils\CSVService;
 use App\Http\Requests\StoreStockFormRequest;
 use App\Services\StockService;
 use App\Services\Excel\ExcelStockService;
@@ -40,7 +40,7 @@ class StockController extends Controller
 
     $name = $request->input('name');
 
-    $stocks = $this->stockService->searchStock($name, true);
+    $stocks = $this->stockService->list();
 
     return view('admin.stock.index', compact('stocks', 'name'));
   }
@@ -64,9 +64,7 @@ class StockController extends Controller
   public function downloadCsv(Request $request)
   {
 
-    $name = $request->input('name');
-
-    $stocks = $this->stockService->searchStock($name, false);
+    $stocks = $this->stockService->list(null);
 
     $csvHeader = ['ID', '商品名', '価格'];
     $csvBody = [];
@@ -88,9 +86,7 @@ class StockController extends Controller
   public function downloadPdf(Request $request)
   {
 
-    $name = $request->input('name');
-
-    $stocks = $this->stockService->searchStock($name, false);
+    $stocks = $this->stockService->list(null);
 
     $csvHeader = ['ID', '商品名', '価格'];
     $csvBody = [];
@@ -126,7 +122,7 @@ class StockController extends Controller
   public function store(StoreStockFormRequest $request)
   {
 
-    $this->stockService->createStock($request);
+    $this->stockService->save();
 
     return redirect('admin/stock');
   }
@@ -140,8 +136,7 @@ class StockController extends Controller
    */
   public function show($id)
   {
-    //
-    $stock = Stock::find($id);
+    $stock = $this->stockService->find($id);
 
     return view('admin.stock.show', compact('stock'));
   }
@@ -154,8 +149,7 @@ class StockController extends Controller
    */
   public function edit($id)
   {
-    //
-    $stock = Stock::find($id);
+    $stock = $this->stockService->find($id);
 
     return view('admin.stock.edit', compact('stock'));
   }
@@ -167,10 +161,10 @@ class StockController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id)
+  public function update(StoreStockFormRequest $request, $id)
   {
 
-    $this->stockService->updateStock($request, $id);
+    $this->stockService->save($id);
 
     return redirect('admin/stock');
   }
@@ -184,7 +178,7 @@ class StockController extends Controller
   public function destroy($id)
   {
 
-    $this->stockService->deleteStock($id);
+    $this->stockService->delete($id);
 
     return redirect('/admin/stock');
   }

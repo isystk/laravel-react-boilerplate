@@ -5,93 +5,95 @@ namespace App\Services;
 use App\Constants\ErrorType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\User;
+use App\Repositories\UserRepository;
 
 class UserService extends Service
 {
 
+  /**
+   * @var UserRepository
+   */
+  protected $userRepository;
+
   public function __construct(
-    Request $request
+    Request $request,
+    UserRepository $userRepository
 ) {
     parent::__construct($request);
+    $this->userRepository = $userRepository;
   }
 
-  public function searchUser($name, $email, $hasPaging)
+  public function list($limit = 20)
   {
-
-    // 検索フォーム
-    $query = DB::table('users');
-
-    // もしキーワードがあったら
-    if ($name !== null) {
-      $query->where('name', 'like', '%' . $name . '%');
-    }
-    if ($email !== null) {
-      $query->where('email', '=', $email);
-    }
-
-    $query->select('id', 'name', 'email', 'created_at');
-    $query->orderBy('id');
-    $query->orderBy('created_at', 'desc');
-    if ($hasPaging) {
-      $users = $query->paginate(20);
-    } else {
-      $users = $query->get();
-    }
-
-    // dd($users);
-
-    return $users;
-  }
-
-  // public function createUser($request)
-  // {
-
-  //   DB::beginTransaction();
-  //   try {    //
-  //     DB::commit();
-  //   } catch (\Exception $e) {
-  //     DB::rollback();
-  //   }
-  // }
-
-  public function updateUser($request, $id)
-  {
-
-    // 入力チェック
-    $validatedData = $request->validate([
-      'name' => 'required|string|max:20',
-      'email' => 'required|email|max:255',
+    return $this->userRepository->findAll(
+      $this->request()->name,
+      $this->request()->email,
+      [
+      'paging'=>$limit
     ]);
-
-    DB::beginTransaction();
-    try {    //
-      //
-      $user = User::find($id);
-
-      $user->name = $request->input('name');
-      $user->email = $request->input('email');
-
-      $user->save();
-
-      DB::commit();
-    } catch (\Exception $e) {
-      DB::rollback();
-    }
   }
 
-  public function deleteUser($id)
+  public function find($userId)
   {
-    DB::beginTransaction();
-    try {    //
+    return $this->userRepository->findById($userId, []);
+  }
 
-      // ユーザーテーブルを削除
-      $user = User::find($id);
-      $user->delete();
+  public function save($userId=null)
+  {
+
+    DB::beginTransaction();
+    try {
+
+      if ($userId) {
+        // 変更
+
+        $user = $this->userRepository->update(
+          $userId,
+          $this->request()->input('name'),
+          $this->request()->input('email')
+        );
+
+      } else {
+        // 新規登録
+
+        $user = $this->userRepository->store(
+          null,
+          $this->request()->input('name'),
+          $this->request()->input('email')
+        );
+
+        $id = $user->id;
+
+      }
 
       DB::commit();
+
+      return [$user, ErrorType::SUCCESS, null];
+    } catch (\PDOException $e) {
+        DB::rollBack();
+        return [false, ErrorType::DATABASE, $e];
     } catch (\Exception $e) {
-      DB::rollback();
+        DB::rollBack();
+        return [false, ErrorType::FATAL, $e];
+    }
+
+  }
+
+  public function delete($id)
+  {
+    DB::beginTransaction();
+    try {
+        // ユーザテーブルを削除
+        $user = $this->userRepository->delete($id);
+
+        DB::commit();
+        return [$user, ErrorType::SUCCESS, null];
+    } catch (\PDOException $e) {
+        DB::rollBack();
+        return [false, ErrorType::DATABASE, $e];
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return [false, ErrorType::FATAL, $e];
     }
   }
 }

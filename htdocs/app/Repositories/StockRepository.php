@@ -7,22 +7,25 @@ use App\Models\Stock;
 class StockRepository
 {
 
-  public function count($userId, $stock, $options = [])
+  public function count($name, $options = [])
   {
-      return Stock::where([
-        'user_id' => $userId,
-        'stock_id' => $stock,
-      ])->count();
+      return Stock::where('name', 'like', '%' . $name . '%')->count();
   }
 
-  public function findAll($userId, $stock, $options = [])
+  public function findAll($name, $options = [])
   {
-      return Stock::with($this->__with($options))
-          ->where([
-            'user_id' => $userId,
-            'stock_id' => $stock,
-          ])
+      $query = Stock::with($this->__with($options))
+        ->where('name', 'like', '%' . $name . '%')
+        ->orderBy('created_at', 'desc')
+        ->orderBy('id', 'asc');
+
+      if (!empty($options['paging'])) {
+        return $query
+            ->paginate($options['paging']);
+      } else {
+        return $query
           ->get();
+      }
   }
 
   public function findById($id, $options = [])
@@ -48,6 +51,7 @@ class StockRepository
       $name,
       $detail,
       $price,
+      $quantity,
       $imgpath
   ) {
       $stock = new Stock();
@@ -55,6 +59,7 @@ class StockRepository
       $stock->name = $name;
       $stock->detail = $detail;
       $stock->price = $price;
+      $stock->quantity = $quantity;
       $stock->imgpath = $imgpath;
 
       $stock->save();
@@ -67,13 +72,17 @@ class StockRepository
     $name,
     $detail,
     $price,
+    $quantity,
     $imgpath
   ) {
       $stock = $this->findById($id);
       $stock->name = $name;
       $stock->detail = $detail;
       $stock->price = $price;
-      $stock->imgpath = $imgpath;
+      $stock->quantity = $quantity;
+      if (!empty($imgpath)) {
+        $stock->imgpath = $imgpath;
+      }
       $stock->save();
 
       return $stock;

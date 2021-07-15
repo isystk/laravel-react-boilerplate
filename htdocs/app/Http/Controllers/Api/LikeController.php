@@ -4,19 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
-use App\Services\CookieService;
+use App\Services\Utils\CookieService;
 
 class LikeController extends ApiController
 {
-  /**
-   * @var CookieService
-   */
-  protected $cookieService;
-
-  public function __construct(CookieService $cookieService)
-  {
-      $this->cookieService = $cookieService;
-  }
 
   /**
    * Display a listing of the resource.
@@ -26,7 +17,7 @@ class LikeController extends ApiController
   public function index()
   {
     try {
-      $likes = $this->cookieService->getLike();
+      $likes = CookieService::getLike();
       $result = [
         'result'      => true,
         'likes'     => [
@@ -55,7 +46,7 @@ class LikeController extends ApiController
   {
     try {
       $stockId = $request->input('id');
-      $this->cookieService->saveLike($stockId);
+      CookieService::saveLike($stockId);
       $result = [
         'result' => true,
       ];
@@ -80,7 +71,7 @@ class LikeController extends ApiController
   public function destroy($id)
   {
     try {
-      $this->cookieService->removeLike($id);
+      CookieService::removeLike($id);
       $result = [
         'result' => true,
       ];

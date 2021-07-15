@@ -3,9 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-use App\Services\CSVService;
+use App\Services\Utils\CSVService;
+use App\Services\StockService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
@@ -30,9 +30,10 @@ class StockCSVBatch extends Command
    *
    * @return void
    */
-  public function __construct()
+  public function __construct(StockService $stockService)
   {
     parent::__construct();
+    $this->stockService = $stockService;
   }
 
   /**
@@ -44,7 +45,7 @@ class StockCSVBatch extends Command
   {
     Log::info('StockCSVBatch START');
     //
-    $stocks = DB::table('stocks')->orderBy('id')->get();
+    $stocks = $this->stockService->list(null);
 
     $csvHeader = ['ID', '商品名', '価格'];
     $csvBody = [];

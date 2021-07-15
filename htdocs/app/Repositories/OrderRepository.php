@@ -9,20 +9,24 @@ class OrderRepository
 
   public function count($userId, $stock, $options = [])
   {
+    dd("hoge");
       return Order::where([
         'user_id' => $userId,
         'stock_id' => $stock,
       ])->count();
   }
 
-  public function findAll($userId, $stock, $options = [])
+  public function findAll($userName, $options = [])
   {
-      return Order::with($this->__with($options))
-          ->where([
-            'user_id' => $userId,
-            'stock_id' => $stock,
-          ])
+      $query = Order::with($this->__with($options));
+
+      if (!empty($options['paging'])) {
+        return $query
+          ->paginate($options['paging']);
+      } else {
+        return $query
           ->get();
+      }
   }
 
   public function findById($id, $options = [])

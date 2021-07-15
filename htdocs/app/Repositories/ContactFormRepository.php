@@ -18,7 +18,9 @@ class ContactFormRepository
 
   public function findAll($yourName, $options = [])
   {
-      $query = ContactForm::with($this->__with($options));
+      $query = ContactForm::with($this->__with($options))
+        ->orderBy('created_at', 'desc')
+        ->orderBy('id', 'asc');
 
       // もしキーワードがあったら
       if ($yourName !== null) {
@@ -34,9 +36,13 @@ class ContactFormRepository
         }
       }
 
-      return $query
-          ->orderBy('created_at', 'desc')
-          ->paginate(20);
+      if (!empty($options['paging'])) {
+        return $query
+            ->paginate($options['paging']);
+      } else {
+        return $query
+          ->get();
+      }
   }
 
   public function findById($id, $options = [])

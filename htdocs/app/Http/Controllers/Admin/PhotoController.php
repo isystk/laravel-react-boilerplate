@@ -29,7 +29,7 @@ class PhotoController extends Controller
 
     $name = $request->input('name');
 
-    $photos = $this->photoService->searchPhoto($name);
+    $photos = $this->photoService->list();
 
     return view('admin.photo.index', compact('photos', 'name'));
   }
@@ -46,7 +46,7 @@ class PhotoController extends Controller
     $type = $request->input('type');
     $fileName = $request->input('fileName');
 
-    $this->photoService->deletePhoto($type, $fileName);
+    $this->photoService->delete($type, $fileName);
 
     return redirect('/admin/photo');
   }

@@ -5,49 +5,46 @@ namespace App\Services;
 use App\Constants\ErrorType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Stock;
+use App\Services\Utils\UploadImage;
+use App\Repositories\StockRepository;
 
 class StockService extends Service
 {
+  /**
+   * @var StockRepository
+   */
+  protected $stockRepository;
+
   public function __construct(
-    Request $request
+    Request $request,
+    StockRepository $stockRepository
 ) {
     parent::__construct($request);
+    $this->stockRepository = $stockRepository;
   }
 
-
-  public function searchStock($name, $hasPaging)
+  public function list($limit = 20)
   {
-
-    // 検索フォーム
-    $query = DB::table('stocks');
-    // もしキーワードがあったら
-    if ($name !== null) {
-      $query->where('name', 'like', '%' . $name . '%');
-    }
-
-    $query->select('id', 'name', 'detail', 'price', 'quantity', 'created_at');
-    $query->orderBy('id');
-    $query->orderBy('created_at', 'desc');
-    if ($hasPaging) {
-      $stocks = $query->paginate(20);
-    } else {
-      $stocks = $query->get();
-    }
-
-    // dd($stocks);
-
-    return $stocks;
+    return $this->stockRepository->findAll(
+      $this->request()->name,
+      [
+      'paging'=>$limit
+    ]);
   }
 
-  public function createStock($request)
+  public function find($stockId)
+  {
+    return $this->stockRepository->findById($stockId, []);
+  }
+
+  public function save($stockId=null)
   {
 
     // 画像ファイルを公開ディレクトリへ配置する。
-    if ($request->has('imageBase64')) {
-      $tmpFile = $request->validated()['imageFile'];
+    if ($this->request()->has('imageBase64') && $this->request()->imageBase64 !== null) {
 
-      $fileName = $request->fileName;
+      $tmpFile = UploadImage::converBase64($this->request()->imageBase64);
+      $fileName = $this->request()->fileName;
 
       //s3に画像をアップロード
       $tmpFile->storeAs('stock', $fileName);
@@ -60,88 +57,63 @@ class StockService extends Service
     }
 
     DB::beginTransaction();
-    try {    //
-      $stock = new Stock;
-      $stock->name = $request->input('name');
-      $stock->detail = $request->input('detail');
-      $stock->price = $request->input('price');
-      $stock->quantity = $request->input('quantity');
+    try {
 
-      if ($fileName !== "") {
-        $stock->imgpath = $fileName;
+      if ($stockId) {
+        // 変更
+
+        $stock = $this->stockRepository->update(
+          $stockId,
+          $this->request()->input('name'),
+          $this->request()->input('detail'),
+          $this->request()->input('price'),
+          $this->request()->input('quantity'),
+          $fileName
+        );
+
+      } else {
+        // 新規登録
+
+        $stock = $this->stockRepository->store(
+          null,
+          $this->request()->input('name'),
+          $this->request()->input('detail'),
+          $this->request()->input('price'),
+          $this->request()->input('quantity'),
+          $fileName
+        );
+
+        $id = $stock->id;
       }
 
-      $stock->save();
       DB::commit();
+
+      return [$stock, ErrorType::SUCCESS, null];
+    } catch (\PDOException $e) {
+        DB::rollBack();
+        return [false, ErrorType::DATABASE, $e];
     } catch (\Exception $e) {
-      DB::rollback();
+        DB::rollBack();
+        return [false, ErrorType::FATAL, $e];
     }
+
   }
 
-  public function updateStock($request, $id)
-  {
-
-    // imageBase64パラメータがあればUploadedFileオブジェクトに変換してimageFileパラメータに上書きする。
-    if ($request->has('imageBase64')) {
-      $request['imageFile'] = UploadImage::converBase64($request->imageBase64);
-    }
-
-    // 入力チェック
-    $validatedData = $request->validate([
-      'name' => 'required|string|max:20',
-      'price' => 'required|numeric',
-      'detail' => 'required|string|max:200',
-      'quantity' => 'required|numeric',
-      'imageFile' => 'nullable|image|mimes:jpeg,png|max:100000000|dimensions:max_width=1200,max_height=1200', // ファイルのバリデーションよしなに。
-      'imageBase64' => 'nullable|string', // 画像データをbase64で文字列としても受け入れる。バリデーションルールはimageFileが適用される。
-      'fileName' => 'nullable|string', // 画像ファイル名
-    ]);
-
-    // 画像ファイルを公開ディレクトリへ配置する。
-    if ($file = $request->imageFile) {
-      $fileName = $request->fileName;
-
-      //s3に画像をアップロード
-      $file->storeAs('stock', $fileName);
-
-      // // //ストレージにも画像を保存
-      // $target_path = public_path('uploads/stock/');
-      // $file->move($target_path, $fileName);
-    } else {
-      $fileName = "";
-    }
-
-    DB::beginTransaction();
-    try {    //
-      //
-      $stock = Stock::find($id);
-
-      $stock->name = $request->input('name');
-      $stock->detail = $request->input('detail');
-      $stock->price = $request->input('price');
-      $stock->quantity = $request->input('quantity');
-
-      if ($fileName !== "") {
-        $stock->imgpath = $fileName;
-      }
-
-      $stock->save();
-      DB::commit();
-    } catch (\Exception $e) {
-      DB::rollback();
-    }
-  }
-
-  public function deleteStock($id)
+  public function delete($id)
   {
     DB::beginTransaction();
-    try {    //
-      // ユーザーテーブルを削除
-      $stock = Stock::find($id);
-      $stock->delete();
-      DB::commit();
+    try {
+        // 商品テーブルを削除
+        $stock = $this->stockRepository->delete($id);
+
+        DB::commit();
+        return [$stock, ErrorType::SUCCESS, null];
+    } catch (\PDOException $e) {
+        DB::rollBack();
+        return [false, ErrorType::DATABASE, $e];
     } catch (\Exception $e) {
-      DB::rollback();
+        DB::rollBack();
+        return [false, ErrorType::FATAL, $e];
     }
   }
 }

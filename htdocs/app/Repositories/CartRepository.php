@@ -16,11 +16,18 @@ class CartRepository
 
   public function findAll($userId, $options = [])
   {
-      return Cart::with($this->__with($options))
-          ->where([
-            'user_id' => $userId,
-          ])
+      $query = Cart::with($this->__with($options))
+        ->where([
+          'user_id' => $userId,
+        ]);
+
+      if (!empty($options['paging'])) {
+        return $query
+            ->paginate($options['paging']);
+      } else {
+        return $query
           ->get();
+      }
   }
 
   public function findById($id, $options = [])

@@ -28,7 +28,7 @@ class ContactFormController extends ApiController
    */
   public function store(StoreContactFormRequest $request)
   {
-      [$contactForm, $type, $exception] = $this->contactFormService->save(null);
+      [$contactForm, $type, $exception] = $this->contactFormService->save();
       if (!$contactForm) {
           if ($type === ErrorType::NOT_FOUND) {
               abort(400);
