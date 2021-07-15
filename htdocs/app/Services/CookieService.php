@@ -3,13 +3,20 @@
 namespace App\Services;
 
 use App\Constants\ErrorType;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 
-class CookieService
+class CookieService extends Service
 {
 
   const COKKIE_KEYNAME_LIKE = 'like';
   const COKKIE_EXPIRES = 60 * 24; // 24時間
+
+  public function __construct(
+    Request $request
+) {
+    parent::__construct($request);
+  }
 
   public static function getLike()
   {

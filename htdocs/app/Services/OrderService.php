@@ -3,13 +3,17 @@
 namespace App\Services;
 
 use App\Constants\ErrorType;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class OrderService
+class OrderService extends Service
 {
-  public function __construct()
-  {
+  public function __construct(
+    Request $request
+) {
+    parent::__construct($request);
   }
+
 
   public function searchOrder($name, $hasPaging)
   {

@@ -3,11 +3,16 @@
 namespace App\Services;
 
 use App\Constants\ErrorType;
-class CSVService
+use Illuminate\Http\Request;
+
+class CSVService extends Service
 {
-  public function __construct()
-  {
+  public function __construct(
+    Request $request
+) {
+    parent::__construct($request);
   }
+
 
   /**
    * CSVファイルの生成

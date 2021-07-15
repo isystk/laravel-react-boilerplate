@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Constants\ErrorType;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Order;
 use App\Models\Stock;
@@ -11,11 +12,14 @@ use App\Mail\MailNotification;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 
-class MyCartService
+class MyCartService extends Service
 {
-  public function __construct()
-  {
+  public function __construct(
+    Request $request
+) {
+    parent::__construct($request);
   }
+
 
   public function searchMyCart(Cart $cart)
   {

@@ -3,13 +3,17 @@
 namespace App\Services;
 
 use App\Constants\ErrorType;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class PhotoService
+class PhotoService extends Service
 {
-  public function __construct()
-  {
+  public function __construct(
+    Request $request
+) {
+    parent::__construct($request);
   }
+
 
   public function searchPhoto($name)
   {

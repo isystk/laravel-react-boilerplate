@@ -3,14 +3,18 @@
 namespace App\Services;
 
 use App\Constants\ErrorType;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Stock;
 
-class StockService
+class StockService extends Service
 {
-  public function __construct()
-  {
+  public function __construct(
+    Request $request
+) {
+    parent::__construct($request);
   }
+
 
   public function searchStock($name, $hasPaging)
   {

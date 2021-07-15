@@ -3,12 +3,19 @@
 namespace App\Services;
 
 use App\Constants\ErrorType;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
 
-class UploadImage
+class UploadImage extends Service
 {
+
+  public function __construct(
+    Request $request
+) {
+    parent::__construct($request);
+  }
 
   public static function converBase64($base64)
   {
