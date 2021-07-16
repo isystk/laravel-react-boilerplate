@@ -1,5 +1,4 @@
 FROM php:7.4-fpm
-COPY php.ini /usr/local/etc/php/
 
 RUN apt-get update \
   && apt-get install -y wget git unzip libzip-dev zlib1g-dev mariadb-client libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
@@ -11,6 +10,10 @@ RUN apt-get update \
   && docker-php-ext-configure gd --with-freetype --with-jpeg \
   && docker-php-ext-install -j$(nproc) gd
   
+#xdebug
+RUN pecl install xdebug \
+  && docker-php-ext-enable xdebug
+
 #Composer install
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 

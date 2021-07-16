@@ -27,7 +27,10 @@ services:
     restart: always
     volumes:
      - ./php/logs:/var/log/php
+     - ./php/php.ini:/usr/local/etc/php/php.ini
      - ../htdocs:/var/www/html
+    extra_hosts:
+     - "host.docker.internal:${DOCKER_HOST_IP}"
 
   # node:
   #   image: laraec/node
@@ -57,8 +60,9 @@ services:
      - "3306:3306"
     restart: always
     volumes:
-     - ./mysql/data:/var/lib/mysql
-     - ./mysql/logs:/var/log/mysql
+      - db-store:/var/lib/mysql
+      - ./mysql/logs:/var/log/mysql
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
 
   phpmyadmin:
     image: laraec/phpmyadmin
@@ -109,3 +113,6 @@ services:
     volumes:
       - ../:/aws
     working_dir: /aws
+
+volumes:
+  db-store:

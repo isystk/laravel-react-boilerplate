@@ -42,7 +42,6 @@ case ${1} in
     init)
         # 停止＆削除（コンテナ・イメージ・ボリューム）
         $DOCKER_COMPOSE down --rmi all --volumes
-        rm -Rf ./docker/mysql/data && mkdir ./docker/mysql/data && chmod 777 ./docker/mysql/data
         rm -Rf ./docker/mysql/logs && mkdir ./docker/mysql/logs && chmod 777 ./docker/mysql/logs
         rm -Rf ./docker/apache/logs && mkdir ./docker/apache/logs && chmod 777 ./docker/apache/logs
         rm -Rf ./docker/php/logs && mkdir ./docker/php/logs && chmod 777 ./docker/php/logs
