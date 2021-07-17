@@ -5,11 +5,11 @@
 
 // Home
 Breadcrumbs::for('admin.home', function ($trail) {
-    $trail->push(
-        'HOME',
-        'admin.home',
-        []
-    );
+  $trail->push(
+      'HOME',
+      'admin.home',
+      []
+  );
 });
 
 // Home > 商品一覧
