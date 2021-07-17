@@ -5,7 +5,9 @@
 ###############################
 
 ### メンテナンスモード開始
+pushd htdocs
 php artisan down
+popd
 
 ### コード反映
 git pull
@@ -40,6 +42,9 @@ ln -snf ./laravel-react-boilerplate/htdocs/public public
 # アクセス許可を設定
 cp -rp ./laravel-react-boilerplate/htdocs/public/.htaccess.production .htaccess
 rm -Rf ./laravel-react-boilerplate/htdocs/public/.htaccess
+popd
 
 ### メンテナンスモード開始
+pushd htdocs
 php artisan up
+popd
