@@ -1,0 +1,428 @@
+﻿# A5:ER FORMAT:14
+# A5:ER ENCODING:UTF8
+# A5:ER Mk-1 Copyright (C)2007 m.matsubara
+# A5:SQL Mk-2 Copyright (C)1997 m.matsubara
+#  https://a5m2.mmatsubara.com
+
+[Manager]
+ProjectName=laraec
+Author=
+MaxEntityRowShow=1000
+ReadOnlyRecommend=0
+Page=Main
+PageInfo="Main",2,"A3Landscape",$FFFFFF
+LogicalView=1
+DecodeDomain=0
+ViewModePageIndividually=1
+ViewMode=2
+ViewFormat=0
+UseNondependenceDashLine=0
+FontName=Tahoma
+FontSize=6
+PaperSize=A4Landscape
+HeaderLeft=
+HeaderCenter=
+HeaderRight=
+FooterLeft=
+FooterCenter=
+FooterRight=
+ShowPageoutRelation=1
+RDBMSTypeName=Oracle Database
+DefaultPkName=%0:s_PKC
+DefaultPkIndexName=%0:s_PKI
+DefaultIndexName=%0:s_IX%1:d
+DefaultFkName=%0:s_FK%1:d
+SqlSeparator=0
+UpperCaseKeyword=0
+ShowTag=1
+ShowCommonAttributes=0
+
+[Entity]
+PName=admins
+LName=管理者
+Comment=
+TableOption=
+Page=MAIN
+Left=1150
+Top=1200
+Field="管理者ID","id","int unsigned auto_increment","NOT NULL",0,"","",$FFFFFFFF,""
+Field="管理者名","name","varchar(255)","NOT NULL",,"","",$FFFFFFFF,""
+Field="メールアドレス","email","varchar(255)","NOT NULL",,"","",$FFFFFFFF,""
+Field="パスワード","password","varchar(255)","NOT NULL",,"","",$FFFFFFFF,""
+Field="remember_token","remember_token","varchar(100)",,,"","",$FFFFFFFF,""
+Field="登録日時","created_at","timestamp",,,"null","",$FFFFFFFF,""
+Field="更新日時","updated_at","timestamp",,,"null","",$FFFFFFFF,""
+Index==2,email
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20210717182252
+Position="MAIN",1150,1200,343,246
+ZOrder=1
+
+[Entity]
+PName=carts
+LName=カート
+Comment=
+TableOption=
+Page=MAIN
+Left=500
+Top=800
+Field="カートID","id","bigint unsigned auto_increment","NOT NULL",0,"","",$FFFFFFFF,""
+Field="商品ID","stock_id","bigint unsigned","NOT NULL",,"","",$FFFFFFFF,""
+Field="ユーザID","user_id","bigint unsigned","NOT NULL",,"","",$FFFFFFFF,""
+Field="登録日時","created_at","timestamp",,,"null","",$FFFFFFFF,""
+Field="更新日時","updated_at","timestamp",,,"null","",$FFFFFFFF,""
+Index==0,stock_id
+Index==0,user_id
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20210717182231
+Position="MAIN",500,800,248,286
+ZOrder=2
+
+[Entity]
+PName=contact_form_images
+LName=お問い合わせ画像
+Comment=
+TableOption=
+Page=MAIN
+Left=650
+Top=1300
+Field="お問い合わせ画像ID","id","bigint unsigned auto_increment","NOT NULL",0,"","",$FFFFFFFF,""
+Field="お問い合わせID","contact_form_id","bigint unsigned","NOT NULL",,"","",$FFFFFFFF,""
+Field="ファイル名","file_name","varchar(100)","NOT NULL",,"","",$FFFFFFFF,""
+Field="登録日時","created_at","timestamp",,,"null","",$FFFFFFFF,""
+Field="更新日時","updated_at","timestamp",,,"null","",$FFFFFFFF,""
+Index==0,contact_form_id
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20210717182245
+Position="MAIN",650,1300,311,184
+ZOrder=3
+
+[Entity]
+PName=contact_forms
+LName=お問い合わせ
+Comment=
+TableOption=
+Page=MAIN
+Left=150
+Top=1300
+Field="id","id","bigint unsigned auto_increment","NOT NULL",0,"","",$FFFFFFFF,""
+Field="お名前","your_name","varchar(20)","NOT NULL",,"","",$FFFFFFFF,""
+Field="タイトル","title","varchar(50)","NOT NULL",,"","",$FFFFFFFF,""
+Field="メールアドレス","email","varchar(255)","NOT NULL",,"","",$FFFFFFFF,""
+Field="URL","url","longtext",,,"","",$FFFFFFFF,""
+Field="性別","gender","tinyint(1)","NOT NULL",,"","",$FFFFFFFF,""
+Field="年齢","age","tinyint","NOT NULL",,"","",$FFFFFFFF,""
+Field="お問い合わせ内容","contact","varchar(200)","NOT NULL",,"","",$FFFFFFFF,""
+Field="登録日時","created_at","timestamp",,,"null","",$FFFFFFFF,""
+Field="更新日時","updated_at","timestamp",,,"null","",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20210717182237
+Position="MAIN",150,1300,313,343
+ZOrder=4
+
+[Entity]
+PName=failed_jobs
+LName=失敗ジョブ
+Comment=
+TableOption=
+Page=MAIN
+Left=1750
+Top=1100
+Field="失敗ジョブID","id","bigint unsigned auto_increment","NOT NULL",0,"","",$FFFFFFFF,""
+Field="接続","connection","text","NOT NULL",,"","",$FFFFFFFF,""
+Field="キュー","queue","text","NOT NULL",,"","",$FFFFFFFF,""
+Field="ペイロード","payload","longtext","NOT NULL",,"","",$FFFFFFFF,""
+Field="例外","exception","longtext","NOT NULL",,"","",$FFFFFFFF,""
+Field="失敗日時","failed_at","timestamp","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+Position="MAIN",1750,1100,254,203
+ZOrder=5
+
+[Entity]
+PName=migrations
+LName=migrations
+Comment=
+TableOption=
+Page=MAIN
+Left=1750
+Top=1400
+Field="id","id","int unsigned auto_increment","NOT NULL",0,"","",$FFFFFFFF,""
+Field="migration","migration","varchar(255)","NOT NULL",,"","",$FFFFFFFF,""
+Field="batch","batch","int","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+Position="MAIN",1750,1400,294,197
+ZOrder=6
+
+[Entity]
+PName=orders
+LName=注文
+Comment=
+TableOption=
+Page=MAIN
+Left=150
+Top=800
+Field="注文ID","id","bigint unsigned auto_increment","NOT NULL",0,"","",$FFFFFFFF,""
+Field="商品ID","stock_id","bigint unsigned","NOT NULL",,"","",$FFFFFFFF,""
+Field="ユーザID","user_id","bigint unsigned","NOT NULL",,"","",$FFFFFFFF,""
+Field="価格","price","int",,,"","",$FFFFFFFF,""
+Field="個数","quantity","int",,,"","",$FFFFFFFF,""
+Field="登録日時","created_at","timestamp",,,"null","",$FFFFFFFF,""
+Field="更新日時","updated_at","timestamp",,,"null","",$FFFFFFFF,""
+Index==0,stock_id
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20210717182224
+Position="MAIN",150,800,222,248
+ZOrder=7
+
+[Entity]
+PName=password_resets
+LName=パスワードリセット
+Comment=
+TableOption=
+Page=MAIN
+Left=1550
+Top=250
+Field="メールアドレス","email","varchar(255)","NOT NULL",,"","",$FFFFFFFF,""
+Field="ワンタイムトークン","token","varchar(255)","NOT NULL",,"","",$FFFFFFFF,""
+Field="登録日時","created_at","timestamp",,,"null","",$FFFFFFFF,""
+Index==0,email
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+Position="MAIN",1550,250,239,157
+ZOrder=8
+
+[Entity]
+PName=stocks
+LName=商品
+Comment=
+TableOption=
+Page=MAIN
+Left=150
+Top=250
+Field="商品ID","id","bigint unsigned auto_increment","NOT NULL",0,"","",$FFFFFFFF,""
+Field="商品名","name","varchar(100)","NOT NULL",,"","",$FFFFFFFF,""
+Field="説明文","detail","varchar(500)","NOT NULL",,"","",$FFFFFFFF,""
+Field="価格","price","int","NOT NULL",,"","",$FFFFFFFF,""
+Field="画像ファイル名","imgpath","varchar(200)","NOT NULL",,"","",$FFFFFFFF,""
+Field="在庫数","quantity","int",,,"","",$FFFFFFFF,""
+Field="登録日時","created_at","timestamp",,,"null","",$FFFFFFFF,""
+Field="更新日時","updated_at","timestamp",,,"null","",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20210717182019
+Position="MAIN",150,250,248,290
+ZOrder=9
+
+[Entity]
+PName=users
+LName=ユーザ
+Comment=
+TableOption=
+Page=MAIN
+Left=1200
+Top=250
+Field="ユーザID","id","bigint unsigned auto_increment","NOT NULL",0,"","",$FFFFFFFF,""
+Field="プロバイダID","provider_id","varchar(255)",,,"","",$FFFFFFFF,""
+Field="プロバイダ名","provider_name","varchar(255)",,,"","",$FFFFFFFF,""
+Field="ユーザ名","name","varchar(255)","NOT NULL",,"","",$FFFFFFFF,""
+Field="メールアドレス","email","varchar(255)","NOT NULL",,"","",$FFFFFFFF,""
+Field="メール検証日時","email_verified_at","timestamp",,,"null","",$FFFFFFFF,""
+Field="パスワード","password","varchar(255)",,,"","",$FFFFFFFF,""
+Field="remember_token","remember_token","varchar(100)",,,"","",$FFFFFFFF,""
+Field="登録日時","created_at","timestamp",,,"null","",$FFFFFFFF,""
+Field="更新日時","updated_at","timestamp",,,"null","",$FFFFFFFF,""
+Index==2,email
+Index==2,provider_id,provider_name
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20210717182217
+Position="MAIN",1200,250,243,364
+ZOrder=10
+
+[Relation]
+Entity1=stocks
+Entity2=orders
+RelationType1=1
+RelationType2=3
+Fields1=id
+Fields2=stock_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,500,9500,1819,R,R,""
+Dependence=0
+Caption=
+PName=
+LineMode=0
+Bar1=50
+Bar2=950
+Bar3=182
+TermPos1=R
+TermPos2=R
+ZOrder=12
+
+[Relation]
+Entity1=contact_forms
+Entity2=contact_form_images
+RelationType1=1
+RelationType2=3
+Fields1=id
+Fields2=contact_form_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,500,9500,443,R,R,""
+Dependence=0
+Caption=
+PName=
+LineMode=0
+Bar1=50
+Bar2=950
+Bar3=44
+TermPos1=R
+TermPos2=R
+ZOrder=11
+
+[Relation]
+Entity1=stocks
+Entity2=carts
+RelationType1=2
+RelationType2=3
+Fields1=id
+Fields2=stock_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,1943,8057,1970,R,R,""
+Dependence=1
+Caption=
+PName=
+ModifiedDateTime=20210717180335
+LineMode=0
+Bar1=194
+Bar2=806
+Bar3=197
+TermPos1=R
+TermPos2=R
+ZOrder=13
+
+[Relation]
+Entity1=users
+Entity2=carts
+RelationType1=2
+RelationType2=3
+Fields1=id
+Fields2=user_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,1943,8057,2088,R,R,""
+Dependence=1
+Caption=
+PName=
+ModifiedDateTime=20210717180402
+LineMode=0
+Bar1=194
+Bar2=806
+Bar3=209
+TermPos1=R
+TermPos2=R
+ZOrder=14
+
+[Comment]
+Comment=商品\n
+FontName=Tahoma
+FontBold=0
+FontItalic=0
+FontUnderline=0
+FontSize=9
+FontColor=$000000
+LineColor=$000000
+BkColor=$FFFFFF
+Page=Main
+Left=106
+Top=159
+ZOrder=0
+Width=900
+Height=440
+
+[Comment]
+Comment=注文
+FontName=Tahoma
+FontBold=0
+FontItalic=0
+FontUnderline=0
+FontSize=9
+FontColor=$000000
+LineColor=$000000
+BkColor=$FFFFFF
+Page=Main
+Left=106
+Top=667
+ZOrder=-1
+Width=912
+Height=440
+
+[Comment]
+Comment=お問い合わせ
+FontName=Tahoma
+FontBold=0
+FontItalic=0
+FontUnderline=0
+FontSize=9
+FontColor=$000000
+LineColor=$000000
+BkColor=$FFFFFF
+Page=Main
+Left=104
+Top=1181
+ZOrder=-2
+Width=921
+Height=523
+
+[Comment]
+Comment=ユーザ
+FontName=Tahoma
+FontBold=0
+FontItalic=0
+FontUnderline=0
+FontSize=9
+FontColor=$000000
+LineColor=$000000
+BkColor=$FFFFFF
+Page=Main
+Left=1092
+Top=146
+ZOrder=-3
+Width=1139
+Height=588
+
+[Comment]
+Comment=システム管理
+FontName=Tahoma
+FontBold=0
+FontItalic=0
+FontUnderline=0
+FontSize=9
+FontColor=$000000
+LineColor=$000000
+BkColor=$FFFFFF
+Page=Main
+Left=1099
+Top=1010
+ZOrder=-4
+Width=1145
+Height=698

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class AddProviderToUsersTable extends Migration
 {
@@ -16,8 +17,8 @@ class AddProviderToUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             //
             // カラム追加
-            $table->string('provider_id')->nullable()->after('id');
-            $table->string('provider_name')->nullable()->after('provider_id');
+            $table->string('provider_id')->comment('プロバイダID')->nullable()->after('id');
+            $table->string('provider_name')->comment('プロバイダ名')->nullable()->after('provider_id');
             // null許容に変更
             $table->string('password')->nullable()->change();
 

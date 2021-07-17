@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class AddQuantityStocksTable extends Migration
 {
@@ -16,7 +17,7 @@ class AddQuantityStocksTable extends Migration
         Schema::table('stocks', function (Blueprint $table) {
             //
             // カラム追加
-            $table->integer('quantity')->nullable()->after('imgpath');
+            $table->integer('quantity')->comment('在庫数')->nullable()->after('imgpath');
         });
     }
 
