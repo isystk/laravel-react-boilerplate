@@ -8,18 +8,18 @@ $subMenu = 'contact';
 
 @section('content')
 
-@include('admin.common.breadcrumb', [
-  'title' => 'お問い合わせ詳細',
-  'breadcrumbs' => (object) [
-    (object) [
-      'link'   => url('/admin/contact'),
-      'label'   => 'お問い合わせ一覧'
-    ],
-    (object) [
-      'label'   => 'お問い合わせ詳細'
-    ]
-  ]
-])
+<div class="content-header">
+  <div class="container-fluid">
+      <div class="row mb-2">
+          <div class="col-sm-6">
+              <h1>お問い合わせID:{{$contact->id}}</h1>
+          </div>
+          <div class="col-sm-6">
+              {{ Breadcrumbs::render('admin.contact.show', $contact) }}
+          </div>
+      </div>
+  </div>
+</div>
 
 <!-- Main content -->
 <div class="content">

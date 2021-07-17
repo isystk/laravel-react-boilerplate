@@ -8,19 +8,18 @@ $subMenu = 'stock';
 
 @section('content')
 
-@include('admin.common.breadcrumb', [
-  'title' => '商品変更',
-  'breadcrumbs' => (object) [
-    (object) [
-      'link'   => url('/admin/stock'),
-      'label'   => '商品一覧'
-    ],
-    (object) [
-      'label'   => '商品変更'
-    ]
-  ]
-])
-
+<div class="content-header">
+  <div class="container-fluid">
+      <div class="row mb-2">
+          <div class="col-sm-6">
+              <h1>{{$stock->name}}</h1>
+          </div>
+          <div class="col-sm-6">
+              {{ Breadcrumbs::render('admin.stock.edit', $stock) }}
+          </div>
+      </div>
+  </div>
+</div>
 
 <!-- Main content -->
 <div class="content">

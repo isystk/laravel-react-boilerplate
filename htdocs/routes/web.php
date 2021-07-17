@@ -41,34 +41,34 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
   Route::post('logout',   'Admin\LoginController@logout')->name('admin.logout');
   Route::get('home',      'Admin\HomeController@index')->name('admin.home');
 
-  Route::get('user', 'Admin\UserController@index')->name('admin.user.index');
-  Route::get('user/show/{id}', 'Admin\UserController@show')->name('admin.user.show');
-  Route::get('user/edit/{id}', 'Admin\UserController@edit')->name('admin.user.edit');
-  Route::post('user/update/{id}', 'Admin\UserController@update')->name('admin.user.update');
-  Route::post('user/destroy/{id}', 'Admin\UserController@destroy')->name('admin.user.destroy');
+  Route::get('user', 'Admin\UserController@index')->name('admin.user');
+  Route::get('user/{id}', 'Admin\UserController@show')->name('admin.user.show');
+  Route::get('user/{id}/edit', 'Admin\UserController@edit')->name('admin.user.edit');
+  Route::post('user/{id}/update', 'Admin\UserController@update')->name('admin.user.update');
+  Route::post('user/{id}/destroy', 'Admin\UserController@destroy')->name('admin.user.destroy');
 
-  Route::get('stock', 'Admin\StockController@index')->name('admin.stock.index');
+  Route::get('stock', 'Admin\StockController@index')->name('admin.stock');
   Route::get('stock/downloadExcel', 'Admin\StockController@downloadExcel')->name('admin.stock.downloadExcel');
   Route::get('stock/downloadCsv', 'Admin\StockController@downloadCsv')->name('admin.stock.downloadCsv');
   Route::get('stock/downloadPdf', 'Admin\StockController@downloadPdf')->name('admin.stock.downloadPdf');
   Route::get('stock/create', 'Admin\StockController@create')->name('admin.stock.create');
   Route::post('stock/store', 'Admin\StockController@store')->name('admin.stock.store');
-  Route::get('stock/show/{id}', 'Admin\StockController@show')->name('admin.stock.show');
-  Route::get('stock/edit/{id}', 'Admin\StockController@edit')->name('admin.stock.edit');
-  Route::post('stock/update/{id}', 'Admin\StockController@update')->name('admin.stock.update');
-  Route::post('stock/destroy/{id}', 'Admin\StockController@destroy')->name('admin.stock.destroy');
+  Route::get('stock/{id}', 'Admin\StockController@show')->name('admin.stock.show');
+  Route::get('stock/{id}/edit', 'Admin\StockController@edit')->name('admin.stock.edit');
+  Route::post('stock/{id}/update', 'Admin\StockController@update')->name('admin.stock.update');
+  Route::post('stock/{id}/destroy', 'Admin\StockController@destroy')->name('admin.stock.destroy');
 
-  Route::get('order', 'Admin\OrderController@index')->name('admin.order.index');
-  Route::get('order/show/{id}', 'Admin\OrderController@show')->name('admin.order.show');
+  Route::get('order', 'Admin\OrderController@index')->name('admin.order');
+  Route::get('order/{id}', 'Admin\OrderController@show')->name('admin.order.show');
 
-  Route::get('contact', 'Admin\ContactFormController@index')->name('admin.contact.index');
-  Route::get('contact/show/{id}', 'Admin\ContactFormController@show')->name('admin.contact.show');
-  Route::get('contact/edit/{id}', 'Admin\ContactFormController@edit')->name('admin.contact.edit');
-  Route::post('contact/update/{id}', 'Admin\ContactFormController@update')->name('admin.contact.update');
-  Route::post('contact/destroy/{id}', 'Admin\ContactFormController@destroy')->name('admin.contact.destroy');
+  Route::get('contact', 'Admin\ContactFormController@index')->name('admin.contact');
+  Route::get('contact/{id}', 'Admin\ContactFormController@show')->name('admin.contact.show');
+  Route::get('contact/{id}/edit', 'Admin\ContactFormController@edit')->name('admin.contact.edit');
+  Route::post('contact/{id}/update', 'Admin\ContactFormController@update')->name('admin.contact.update');
+  Route::post('contact/{id}/destroy', 'Admin\ContactFormController@destroy')->name('admin.contact.destroy');
 
-  Route::get('photo', 'Admin\PhotoController@index')->name('admin.photo.index');
-  Route::post('photo/destroy/{id}', 'Admin\PhotoController@destroy')->name('admin.photo.destroy');
+  Route::get('photo', 'Admin\PhotoController@index')->name('admin.photo');
+  Route::post('photo/{id}/destroy', 'Admin\PhotoController@destroy')->name('admin.photo.destroy');
 });
 
 /*

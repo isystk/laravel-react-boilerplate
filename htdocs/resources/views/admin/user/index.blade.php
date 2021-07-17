@@ -8,14 +8,18 @@ $subMenu = 'user';
 
 @section('content')
 
-@include('admin.common.breadcrumb', [
-  'title' => '顧客一覧',
-  'breadcrumbs' => (object) [
-    (object) [
-      'label'   => '顧客一覧'
-    ]
-  ]
-])
+<div class="content-header">
+  <div class="container-fluid">
+      <div class="row mb-2">
+          <div class="col-sm-6">
+              <h1>顧客一覧</h1>
+          </div>
+          <div class="col-sm-6">
+              {{ Breadcrumbs::render('admin.user') }}
+          </div>
+      </div>
+  </div>
+</div>
 
 <!-- Main content -->
 <div class="content">
@@ -31,7 +35,7 @@ $subMenu = 'user';
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form action="{{ route('admin.user.index') }}" method="GET">
+                    <form action="{{ route('admin.user') }}" method="GET">
                         <div class="card-body">
                             @if (session('status'))
                             <div class="alert alert-success" role="alert">
@@ -65,7 +69,7 @@ $subMenu = 'user';
                     </form>
                 </div>
 
-                <form action="{{ route('admin.user.index') }}" method="GET" id="pagingForm">
+                <form action="{{ route('admin.user') }}" method="GET" id="pagingForm">
                     <input type="hidden" name="name" value="{{ $name }}">
                     <input type="hidden" name="email" value="{{ $email }}">
                 </form>

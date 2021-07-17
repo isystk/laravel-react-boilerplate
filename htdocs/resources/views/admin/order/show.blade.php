@@ -8,18 +8,18 @@ $subMenu = 'order';
 
 @section('content')
 
-@include('admin.common.breadcrumb', [
-  'title' => '注文履歴詳細',
-  'breadcrumbs' => (object) [
-    (object) [
-      'link'   => url('/admin/order'),
-      'label'   => '注文履歴一覧'
-    ],
-    (object) [
-      'label'   => '注文履歴詳細'
-    ]
-  ]
-])
+<div class="content-header">
+  <div class="container-fluid">
+      <div class="row mb-2">
+          <div class="col-sm-6">
+              <h1>注文ID:{{$order->id}}</h1>
+          </div>
+          <div class="col-sm-6">
+              {{ Breadcrumbs::render('admin.order.show', $order) }}
+          </div>
+      </div>
+  </div>
+</div>
 
 <!-- Main content -->
 <div class="content">

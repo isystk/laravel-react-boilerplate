@@ -8,14 +8,18 @@ $subMenu = 'photo';
 
 @section('content')
 
-@include('admin.common.breadcrumb', [
-  'title' => '画像一覧',
-  'breadcrumbs' => (object) [
-    (object) [
-      'label'   => '画像一覧'
-    ]
-  ]
-])
+<div class="content-header">
+  <div class="container-fluid">
+      <div class="row mb-2">
+          <div class="col-sm-6">
+              <h1>画像一覧</h1>
+          </div>
+          <div class="col-sm-6">
+              {{ Breadcrumbs::render('admin.photo') }}
+          </div>
+      </div>
+  </div>
+</div>
 
 <!-- Main content -->
 <div class="content">
@@ -31,7 +35,7 @@ $subMenu = 'photo';
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form action="{{ route('admin.photo.index') }}" method="GET">
+                    <form action="{{ route('admin.photo') }}" method="GET">
                         <div class="card-body">
                             @if (session('status'))
                             <div class="alert alert-success" role="alert">
@@ -58,7 +62,7 @@ $subMenu = 'photo';
                     </form>
                 </div>
 
-                <form action="{{ route('admin.photo.index') }}" method="GET" id="pagingForm">
+                <form action="{{ route('admin.photo') }}" method="GET" id="pagingForm">
                     <input type="hidden" name="name" value="{{ $name }}">
                 </form>
 

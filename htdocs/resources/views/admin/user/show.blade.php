@@ -8,19 +8,18 @@ $subMenu = 'user';
 
 @section('content')
 
-@include('admin.common.breadcrumb', [
-  'title' => '顧客詳細',
-  'breadcrumbs' => (object) [
-    (object) [
-      'link'   => url('/admin/user'),
-      'label'   => '顧客一覧'
-    ],
-    (object) [
-      'label'   => '顧客詳細'
-    ]
-  ]
-])
-
+<div class="content-header">
+  <div class="container-fluid">
+      <div class="row mb-2">
+          <div class="col-sm-6">
+              <h1>{{$user->name}}</h1>
+          </div>
+          <div class="col-sm-6">
+              {{ Breadcrumbs::render('admin.user.show', $user) }}
+          </div>
+      </div>
+  </div>
+</div>
 
 <!-- Main content -->
 <div class="content">

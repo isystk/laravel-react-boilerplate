@@ -8,14 +8,18 @@ $subMenu = 'contact';
 
 @section('content')
 
-@include('admin.common.breadcrumb', [
-  'title' => 'お問い合わせ一覧',
-  'breadcrumbs' => (object) [
-    (object) [
-      'label'   => 'お問い合わせ一覧'
-    ]
-  ]
-])
+<div class="content-header">
+  <div class="container-fluid">
+      <div class="row mb-2">
+          <div class="col-sm-6">
+              <h1>お問い合わせ一覧</h1>
+          </div>
+          <div class="col-sm-6">
+              {{ Breadcrumbs::render('admin.contact') }}
+          </div>
+      </div>
+  </div>
+</div>
 
 <!-- Main content -->
 <div class="content">
@@ -31,7 +35,7 @@ $subMenu = 'contact';
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form action="{{ route('admin.contact.index') }}" method="GET">
+                    <form action="{{ route('admin.contact') }}" method="GET">
                         <div class="card-body">
                             @if (session('status'))
                             <div class="alert alert-success" role="alert">
@@ -58,7 +62,7 @@ $subMenu = 'contact';
                     </form>
                 </div>
 
-                <form action="{{ route('admin.contact.index') }}" method="GET" id="pagingForm">
+                <form action="{{ route('admin.contact') }}" method="GET" id="pagingForm">
                     <input type="hidden" name="search" value="{{ $search }}">
                 </form>
 
