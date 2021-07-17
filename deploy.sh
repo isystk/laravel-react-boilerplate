@@ -13,8 +13,6 @@ popd
 git reset --hard
 git pull
 
-pushd htdocs
-
 ### 依存関係解決
 pushd htdocs
 # 本番用に、.env ファイルをコピー
