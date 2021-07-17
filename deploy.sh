@@ -10,6 +10,7 @@ php artisan down
 popd
 
 ### コード反映
+git reset --hard
 git pull
 
 pushd htdocs
@@ -23,15 +24,15 @@ composer update
 
 ### テーブル追加
 # 初期化する場合
-php artisan migrate:fresh --seed
+php artisan migrate:fresh --seed --force
 # 追加する場合
-#php artisan migrate
+#php artisan migrate --force
 # テストデータの追加
-#php artisan db:seed --class=Database\\Seeders\\Dev\\UsersTableSeeder
-#php artisan db:seed --class=Database\\Seeders\\Dev\\AdminsTableSeeder
-#php artisan db:seed --class=Database\\Seeders\\Dev\\StockTableSeeder
-#php artisan db:seed --class=Database\\Seeders\\Dev\\ContactFormSeeder
-#php artisan db:seed --class=Database\\Seeders\\Dev\\ContactFormImageSeeder
+#php artisan db:seed --class=Database\\Seeders\\Dev\\UsersTableSeeder --force
+#php artisan db:seed --class=Database\\Seeders\\Dev\\AdminsTableSeeder --force
+#php artisan db:seed --class=Database\\Seeders\\Dev\\StockTableSeeder --force
+#php artisan db:seed --class=Database\\Seeders\\Dev\\ContactFormSeeder --force
+#php artisan db:seed --class=Database\\Seeders\\Dev\\ContactFormImageSeeder --force
 popd
 
 ### レンタルサーバーにアクセス許可を設定
