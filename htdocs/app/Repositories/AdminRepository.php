@@ -17,13 +17,8 @@ class AdminRepository
   {
       $query = Admin::with($this->__with($options));
 
-      if (!empty($options['paging'])) {
-        return $query
-            ->paginate($options['paging']);
-      } else {
-        return $query
-          ->get();
-      }
+      $limit = !empty($options['limit']) ? (int)$options['limit'] : null;
+      return $limit > 0 ? $query->paginate($limit) : $query->get();
   }
 
   public function findById($id, $options = [])

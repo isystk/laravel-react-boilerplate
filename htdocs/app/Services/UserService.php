@@ -29,7 +29,7 @@ class UserService extends Service
       $this->request()->name,
       $this->request()->email,
       [
-      'paging'=>$limit
+      'limit'=>$limit
     ]);
   }
 

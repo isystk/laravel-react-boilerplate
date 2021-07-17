@@ -10,29 +10,22 @@ class OrderRepository
   public function count($userName, $options = [])
   {
       return Order::with($this->__with($options))
-        ->where([
-        //  'user.name' => $userName,
-        ])->count();
+        ->whereHas('user', function($query) use ($userName) {
+          $query->where('name', 'like', "%$userName%");
+        })->count();
   }
 
   public function findAll($userName, $options = [])
   {
-      $whereHas = function ($query) use ($userName) {
+      $query = Order::with($this->__with($options))
+        ->whereHas('user', function($query) use ($userName) {
           $query->where('name', 'like', "%$userName%");
-      };
-
-      $query = Order::with(['user' => $whereHas])
-        ->whereHas('user', $whereHas)
+        })
         ->orderBy('created_at', 'desc')
         ->orderBy('id', 'asc');
 
-      if (!empty($options['paging'])) {
-        return $query
-          ->paginate($options['paging']);
-      } else {
-        return $query
-          ->get();
-      }
+      $limit = !empty($options['limit']) ? (int)$options['limit'] : null;
+      return $limit > 0 ? $query->paginate($limit) : $query->get();
   }
 
   public function findById($id, $options = [])

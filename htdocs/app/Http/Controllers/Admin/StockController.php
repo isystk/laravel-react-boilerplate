@@ -52,7 +52,6 @@ class StockController extends Controller
    */
   public function downloadExcel(Request $request)
   {
-
     return $this->excelStockService->setTemplate(resource_path('excel/template.xlsx'))->download('stocks.xlsx');
   }
 
@@ -64,7 +63,7 @@ class StockController extends Controller
   public function downloadCsv(Request $request)
   {
 
-    $stocks = $this->stockService->list(null);
+    $stocks = $this->stockService->list(0);
 
     $csvHeader = ['ID', '商品名', '価格'];
     $csvBody = [];
@@ -86,7 +85,7 @@ class StockController extends Controller
   public function downloadPdf(Request $request)
   {
 
-    $stocks = $this->stockService->list(null);
+    $stocks = $this->stockService->list(0);
 
     $csvHeader = ['ID', '商品名', '価格'];
     $csvBody = [];

@@ -159,7 +159,7 @@ class ExcelStockService implements FromCollection, WithEvents
         // // 独自ワークシートクラスでセルに値設定
         // $esh->replaceValue('B12', [['target' => '{置換対象1}', 'value' => '!!プログラムで置換1!!'], ['target' => '{置換対象2}', 'value' => '!!プログラムで置換2!!']]);
 
-        $stocks = $this->stockService->list(null);
+        $stocks = $this->stockService->list(0);
         $datas = [];
         foreach($stocks as $key => $stock){
           $cellnum = ($key+2);

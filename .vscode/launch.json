@@ -15,7 +15,9 @@
             },
             "ignore": [
                 "**/vendor/**/*.php"
-            ]
+            ],
+            "log": true,
+            "console": "internalConsole"
         }
     ]
 }

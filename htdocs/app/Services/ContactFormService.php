@@ -35,7 +35,7 @@ class ContactFormService extends Service
   {
     return $this->contactFormRepository->findAll($this->request()->search, [
       'with:images' => true,
-      'paging' => $limit,
+      'limit' => $limit,
     ]);
   }
 

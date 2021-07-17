@@ -28,7 +28,7 @@ class StockService extends Service
     return $this->stockRepository->findAll(
       $this->request()->name,
       [
-      'paging'=>$limit
+      'limit'=>$limit
     ]);
   }
 
