@@ -2,6 +2,8 @@
 
 DOCKER_COMPOSE="docker-compose -f docker/docker-compose.yml"
 
+. .env
+
 function usage {
     cat <<EOF
 $(basename ${0}) is a tool for ...

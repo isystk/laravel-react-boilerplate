@@ -17,13 +17,14 @@ class OrderRepository
 
   public function findAll($userName, $options = [])
   {
-      $query = Order::with($this->__with($options))
+      $whereHas = function ($query) use ($userName) {
+          $query->where('name', 'like', "%$userName%");
+      };
+
+      $query = Order::with(['user' => $whereHas])
+        ->whereHas('user', $whereHas)
         ->orderBy('created_at', 'desc')
         ->orderBy('id', 'asc');
-
-      //if (!empty($userName)) {
-      //  $query->where('user.name', 'like', '%' . $userName . '%');
-      //}
 
       if (!empty($options['paging'])) {
         return $query
