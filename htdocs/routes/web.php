@@ -39,7 +39,7 @@ Route::group(['prefix' => 'admin'], function () {
 |--------------------------------------------------------------------------
 */
 Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
-    Route::post('logout', [App\Http\Controllers\Admin\HomeController::class, 'logout'])->name('admin.logout');
+    Route::post('logout', [App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('admin.logout');
     Route::get('home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
 
     Route::get('user', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('admin.user');
