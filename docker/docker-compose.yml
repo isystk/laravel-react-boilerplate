@@ -88,16 +88,16 @@ services:
       - 25:1025
 
   s3:
-    image: minio/minio:latest
+    image: minio/minio:RELEASE.2021-04-18T19-26-29Z
     container_name: laraec-s3
+    ports:
+      - "9090:9000"
     environment:
       MINIO_ACCESS_KEY: "access_key"
       MINIO_SECRET_KEY: "secret_key"
-    ports:
-      - 9090:9000 # VSCodeと競合するので9090番ポートを指定
-    command: ["--compat", "server", "/data"]
     volumes:
-      - ./s3/data:/data
+      - ./.docker/minio/data:/export
+    command: server /export
 
   awscli:
     container_name: "laraec-awscli"
