@@ -2,16 +2,16 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/php:7.4-node-browsers
+      - image: circleci/php:7.3-node-browsers
         environment:
           - APP_DEBUG: true
           - APP_ENV: circleci
           - DB_CONNECTION: mysql
           - DB_DATABASE: laraec
           - DB_USERNAME: root
+          - DB_USERNAME: password
  
-      - image: circleci/mysql:8.0
-        command: [--default-authentication-plugin=mysql_native_password]
+      - image: circleci/mysql:5.7.32-ram
         environment:
           - MYSQL_ALLOW_EMPTY_PASSWORD: true
           - MYSQL_DATABASE: laraec
