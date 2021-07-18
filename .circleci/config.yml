@@ -58,7 +58,7 @@ jobs:
       - run: 
           working_directory: htdocs
           command: |
-            cp env.circleci env.testing
+            cp .env.circleci .env.testing
             vendor/bin/phpunit --testdox
 
   deploy-prod:
