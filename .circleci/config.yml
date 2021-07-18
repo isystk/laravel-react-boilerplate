@@ -11,7 +11,7 @@ jobs:
           - DB_USERNAME: user
           - DB_PASSWORD: password
  
-      - image: circleci/mysql:5.7.32-ram
+      - image: circleci/mysql:8.0.25-ram
         environment:
           - MYSQL_DATABASE: laraec
           - MYSQL_USER: user
