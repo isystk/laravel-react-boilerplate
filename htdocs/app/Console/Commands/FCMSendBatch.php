@@ -55,7 +55,7 @@ class FCMSendBatch extends Command
   {
     // $firebaseToken = User::whereNotNull('device_token')->pluck('device_token')->all();
     $firebaseToken = [
-      'eku7wKsNTZjoVFzEiF7vjs:APA91bF8e7LDSHKShEFj1u7w3t9SxwlWiEU92AXGGUYx7i5xqalXRzqOIXGgoScSgx0XPCnnOBeTNPCs7dbxGjWGs2FAY-7eBH8DI2REKd66wBvKnQu-WE3QkbS_HqnPchhk0z8LqdDS'
+      'dlOB13gb4CO6mWn082m2lb:APA91bHs5zxt9RzMvZQi6H2ptZ33Dpq6ReHA1JEVy6WIim3BOD9izzLijRBiqVaFXfnR25BjgJzKjmGjw0i5PtE8VZmXWSkkuIv2t0T_OZ6XDYiEfvGXFgvDtGCr5v16aY0gLJan2cRO'
     ];
 
     $SERVER_API_KEY = 'AAAAe3tJF6U:APA91bGaxsW9EHtSAkPq4dYqQSRFBwcc_NjMag84oob-EK9zEk426lFk9Sa4BhyvPrgjB-Zp64uxlLdiM3mCOY3q2NLV9quy_hTFOWntGfYQAvxcaDLCZCduiyKFkbBGvLPgRBKMdR_P';
