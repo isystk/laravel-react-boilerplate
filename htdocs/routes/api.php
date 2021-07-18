@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,12 +18,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
 Route::group(['middleware' => ['api']], function () {
-  Route::resource('consts', 'Api\ConstController');
-    Route::resource('likes', 'Api\LikeController');
-    Route::post('/likes/store', 'Api\LikeController@store');
-    Route::post('/likes/destroy/{id}', 'Api\LikeController@destroy');
-    Route::resource('shops', 'Api\ShopController');
-    Route::post('/contact/store', 'Api\ContactFormController@store');
+    Route::resource('consts', App\Http\Controllers\Api\ConstController::class);
+    Route::resource('likes', App\Http\Controllers\Api\LikeController::class);
+    Route::post('/likes/store', [App\Http\Controllers\Api\LikeController::class, 'store']);
+    Route::post('/likes/destroy/{id}', [App\Http\Controllers\Api\LikeController::class, 'destroy']);
+    Route::resource('shops', App\Http\Controllers\Api\ShopController::class);
+    Route::post('/contact/store', [App\Http\Controllers\Api\ContactFormController::class, 'store']);
 });
