@@ -45,7 +45,7 @@ class StockCSVBatch extends Command
   {
     Log::info('StockCSVBatch START');
     //
-    $stocks = $this->stockService->list(null);
+    $stocks = $this->stockService->list(0);
 
     $csvHeader = ['ID', '商品名', '価格'];
     $csvBody = [];
