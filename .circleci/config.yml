@@ -2,18 +2,21 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/php:7.3-node-browsers
+      - image: circleci/php:7.4-node-browsers
         environment:
           - APP_DEBUG: true
           - APP_ENV: circleci
           - DB_CONNECTION: mysql
           - DB_DATABASE: laraec
-          - DB_USERNAME: root
+          - DB_USERNAME: user
+          - DB_PASSWORD: password
  
-      - image: circleci/mysql:5.7.32-ram
+      - image: circleci/mysql:8.0.25-ram
         environment:
-          - MYSQL_ALLOW_EMPTY_PASSWORD: true
           - MYSQL_DATABASE: laraec
+          - MYSQL_USER: user
+          - MYSQL_PASSWORD: password
+          - MYSQL_ROOT_PASSWORD: password
  
     steps:
       - checkout
@@ -54,7 +57,9 @@ jobs:
  
       - run: 
           working_directory: htdocs
-          command: vendor/bin/phpunit --testdox
+          command: |
+            cp .env.circleci .env.testing
+            vendor/bin/phpunit --testdox
 
   deploy-prod:
     machine:

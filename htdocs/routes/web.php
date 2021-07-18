@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Route::get('/welcome', function () {
+
+// Route::get('/', function () {
 //     return view('welcome');
 // });
 
@@ -25,11 +26,11 @@ Auth::routes(['verify' => true]);
 |--------------------------------------------------------------------------
 */
 Route::group(['prefix' => 'admin'], function () {
-  Route::get('/',         function () {
-    return redirect('/admin/home');
-  });
-  Route::get('login',     'Admin\LoginController@showLoginForm')->name('admin.login');
-  Route::post('login',    'Admin\LoginController@login');
+    Route::get('/',         function () {
+        return redirect('/admin/home');
+    });
+    Route::get('login', [App\Http\Controllers\Admin\LoginController::class, 'showLoginForm'])->name('admin.login');
+    Route::post('login', [App\Http\Controllers\Admin\LoginController::class, 'login']);
 });
 
 /*
@@ -38,37 +39,37 @@ Route::group(['prefix' => 'admin'], function () {
 |--------------------------------------------------------------------------
 */
 Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
-  Route::post('logout',   'Admin\LoginController@logout')->name('admin.logout');
-  Route::get('home',      'Admin\HomeController@index')->name('admin.home');
+    Route::post('logout', [App\Http\Controllers\Admin\HomeController::class, 'logout'])->name('admin.logout');
+    Route::get('home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
 
-  Route::get('user', 'Admin\UserController@index')->name('admin.user');
-  Route::get('user/{id}', 'Admin\UserController@show')->name('admin.user.show');
-  Route::get('user/{id}/edit', 'Admin\UserController@edit')->name('admin.user.edit');
-  Route::post('user/{id}/update', 'Admin\UserController@update')->name('admin.user.update');
-  Route::post('user/{id}/destroy', 'Admin\UserController@destroy')->name('admin.user.destroy');
+    Route::get('user', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('admin.user');
+    Route::get('user/{id}', [App\Http\Controllers\Admin\UserController::class, 'show'])->name('admin.user.show');
+    Route::get('user/{id}/edit', [App\Http\Controllers\Admin\UserController::class, 'edit'])->name('admin.user.edit');
+    Route::post('user/{id}/update', [App\Http\Controllers\Admin\UserController::class, 'update'])->name('admin.user.update');
+    Route::post('user/{id}/destroy', [App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('admin.user.destroy');
 
-  Route::get('stock', 'Admin\StockController@index')->name('admin.stock');
-  Route::get('stock/downloadExcel', 'Admin\StockController@downloadExcel')->name('admin.stock.downloadExcel');
-  Route::get('stock/downloadCsv', 'Admin\StockController@downloadCsv')->name('admin.stock.downloadCsv');
-  Route::get('stock/downloadPdf', 'Admin\StockController@downloadPdf')->name('admin.stock.downloadPdf');
-  Route::get('stock/create', 'Admin\StockController@create')->name('admin.stock.create');
-  Route::post('stock/store', 'Admin\StockController@store')->name('admin.stock.store');
-  Route::get('stock/{id}', 'Admin\StockController@show')->name('admin.stock.show');
-  Route::get('stock/{id}/edit', 'Admin\StockController@edit')->name('admin.stock.edit');
-  Route::post('stock/{id}/update', 'Admin\StockController@update')->name('admin.stock.update');
-  Route::post('stock/{id}/destroy', 'Admin\StockController@destroy')->name('admin.stock.destroy');
+    Route::get('stock', [App\Http\Controllers\Admin\StockController::class, 'index'])->name('admin.stock');
+    Route::get('stock/downloadExcel', [App\Http\Controllers\Admin\StockController::class, 'downloadExcel'])->name('admin.stock.downloadExcel');
+    Route::get('stock/downloadCsv', [App\Http\Controllers\Admin\StockController::class, 'downloadCsv'])->name('admin.stock.downloadCsv');
+    Route::get('stock/downloadPdf', [App\Http\Controllers\Admin\StockController::class, 'downloadPdf'])->name('admin.stock.downloadPdf');
+    Route::get('stock/create', [App\Http\Controllers\Admin\StockController::class, 'create'])->name('admin.stock.create');
+    Route::post('stock/store', [App\Http\Controllers\Admin\StockController::class, 'store'])->name('admin.stock.store');
+    Route::get('stock/{id}', [App\Http\Controllers\Admin\StockController::class, 'show'])->name('admin.stock.show');
+    Route::get('stock/{id}/edit', [App\Http\Controllers\Admin\StockController::class, 'edit'])->name('admin.stock.edit');
+    Route::post('stock/{id}/update', [App\Http\Controllers\Admin\StockController::class, 'update'])->name('admin.stock.update');
+    Route::post('stock/{id}/destroy', [App\Http\Controllers\Admin\StockController::class, 'destroy'])->name('admin.stock.destroy');
 
-  Route::get('order', 'Admin\OrderController@index')->name('admin.order');
-  Route::get('order/{id}', 'Admin\OrderController@show')->name('admin.order.show');
+    Route::get('order', [App\Http\Controllers\Admin\OrderController::class, 'index'])->name('admin.order');
+    Route::get('order/{id}', [App\Http\Controllers\Admin\OrderController::class, 'show'])->name('admin.order.show');
 
-  Route::get('contact', 'Admin\ContactFormController@index')->name('admin.contact');
-  Route::get('contact/{id}', 'Admin\ContactFormController@show')->name('admin.contact.show');
-  Route::get('contact/{id}/edit', 'Admin\ContactFormController@edit')->name('admin.contact.edit');
-  Route::post('contact/{id}/update', 'Admin\ContactFormController@update')->name('admin.contact.update');
-  Route::post('contact/{id}/destroy', 'Admin\ContactFormController@destroy')->name('admin.contact.destroy');
+    Route::get('contact', [App\Http\Controllers\Admin\ContactFormController::class, 'index'])->name('admin.contact');
+    Route::get('contact/{id}', [App\Http\Controllers\Admin\ContactFormController::class, 'show'])->name('admin.contact.show');
+    Route::get('contact/{id}/edit', [App\Http\Controllers\Admin\ContactFormController::class, 'edit'])->name('admin.contact.edit');
+    Route::post('contact/{id}/update', [App\Http\Controllers\Admin\ContactFormController::class, 'update'])->name('admin.contact.update');
+    Route::post('contact/{id}/destroy', [App\Http\Controllers\Admin\ContactFormController::class, 'destroy'])->name('admin.contact.destroy');
 
-  Route::get('photo', 'Admin\PhotoController@index')->name('admin.photo');
-  Route::post('photo/{id}/destroy', 'Admin\PhotoController@destroy')->name('admin.photo.destroy');
+    Route::get('photo', [App\Http\Controllers\Admin\PhotoController::class, 'index'])->name('admin.photo');
+    Route::post('photo/{id}/destroy', [App\Http\Controllers\Admin\PhotoController::class, 'destroy'])->name('admin.photo.destroy');
 });
 
 /*
@@ -78,11 +79,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
 */
 Route::prefix('auth')->middleware('guest')->group(function () {
 
-  Route::get('/{provider}', 'Auth\OAuthController@socialOAuth')
+Route::get('/{provider}', [App\Http\Controllers\Auth\OAuthController::class, 'socialOAuth'])
     ->where('provider', 'google')
     ->name('socialOAuth');
 
-  Route::get('/{provider}/callback', 'Auth\OAuthController@handleProviderCallback')
+Route::get('/{provider}/callback', [App\Http\Controllers\Auth\OAuthController::class, 'handleProviderCallback'])
     ->where('provider', 'google')
     ->name('oauthCallback');
 });
@@ -92,14 +93,14 @@ Route::prefix('auth')->middleware('guest')->group(function () {
 | React
 |--------------------------------------------------------------------------
 */
-Route::get('/', 'Front\ReactController@index')->name('front.react');
-Route::get('/login', 'Front\ReactController@index')->name('login');
-Route::get('/register', 'Front\ReactController@index')->name('register');
-Route::get('password/reset', 'Front\ReactController@index')->name('password.request');
-Route::get('password/reset/{token}', 'Front\ReactController@index')->name('password.reset');
-Route::get('email/verify', 'Front\ReactController@index')->name('verification.notice');
-Route::post('/session', 'Front\ReactController@session')->name('session');
-Route::get('/{router}', 'Front\ReactController@index')->name('home');
+Route::get('/', [App\Http\Controllers\Front\ReactController::class, 'index'])->name('front.react');
+Route::get('/login', [App\Http\Controllers\Front\ReactController::class, 'index'])->name('login');
+Route::get('/register', [App\Http\Controllers\Front\ReactController::class, 'index'])->name('register');
+Route::get('password/reset', [App\Http\Controllers\Front\ReactController::class, 'index'])->name('password.request');
+Route::get('password/reset/{token}', [App\Http\Controllers\Front\ReactController::class, 'index'])->name('password.reset');
+Route::get('email/verify', [App\Http\Controllers\Front\ReactController::class, 'index'])->name('verification.notice');
+Route::post('/session', [App\Http\Controllers\Front\ReactController::class, 'session'])->name('session');
+Route::get('/{router}', [App\Http\Controllers\Front\ReactController::class, 'index'])->name('home');
 
 
 /*
@@ -108,9 +109,9 @@ Route::get('/{router}', 'Front\ReactController@index')->name('home');
 |--------------------------------------------------------------------------
 */
 Route::group(['middleware' => 'auth:user'], function () {
-  Route::post('/api/mycart', 'Api\ShopController@mycart')->name('shop.mycart');
-  Route::post('/api/addMycart', 'Api\ShopController@addMycart')->name('shop.addcart');
-  Route::post('/api/cartdelete', 'Api\ShopController@deleteCart')->name('shop.delete');
-  Route::post('/api/createPayment', 'Api\ShopController@createPayment')->name('shop.createPayment');
-  Route::post('/api/checkout', 'Api\ShopController@checkout')->name('shop.check');
+    Route::post('/api/mycart', [App\Http\Controllers\Api\ShopController::class, 'mycart'])->name('shop.mycart');
+    Route::post('/api/addMycart', [App\Http\Controllers\Api\ShopController::class, 'addMycart'])->name('shop.addcart');
+    Route::post('/api/cartdelete', [App\Http\Controllers\Api\ShopController::class, 'deleteCart'])->name('shop.delete');
+    Route::post('/api/createPayment', [App\Http\Controllers\Api\ShopController::class, 'createPayment'])->name('shop.createPayment');
+    Route::post('/api/checkout', [App\Http\Controllers\Api\ShopController::class, 'checkout'])->name('shop.check');
 });
