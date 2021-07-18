@@ -46,16 +46,15 @@ class PhotoS3UploadBatch extends Command
     // $path= public_path('assets/front/image/stock');
     // $files = File::allFiles($path);
     // Symfony\Component\Finder\SplFileInfo
-
-    $files = Storage::disk('local')->files('app/public/stock');
-
+    $storagePath = storage_path('app/public/stock');
+    $files = \File::files($storagePath);
     foreach ($files as $file) {
       #ファイル名
-      $name = basename($file);
+      $name = $file->getfileName();
       #ファイルパス
-      $path = storage_path($file);
+      $path = $file->getpathName();
       // //s3に画像をアップロード
-      Storage::putFileAs('stock', new File($path), $name);
+      Storage::putFileAs('stock', $file, $name);
     }
 
     Log::info('PhotoS3UploadBatch END');

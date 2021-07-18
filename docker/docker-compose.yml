@@ -95,9 +95,9 @@ services:
     environment:
       MINIO_ACCESS_KEY: "access_key"
       MINIO_SECRET_KEY: "secret_key"
+    command: ["--compat", "server", "/data"]
     volumes:
-      - ./.docker/minio/data:/export
-    command: server /export
+      - ./s3/data:/data
 
   awscli:
     container_name: "laraec-awscli"
