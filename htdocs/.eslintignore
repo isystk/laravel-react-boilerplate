@@ -1,0 +1,19 @@
+# Common
+.github
+node_modules
+dist
+coverage
+
+# Internals
+.storybook
+.vscode
+internals
+stories
+tools
+
+# js vendor file with import/require
+vendor
+
+# laravel
+webpack.mix.js
+public/assets/**

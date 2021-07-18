@@ -1,0 +1,38 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es2021": true // Globalオブジェクト「window」「document」を許可
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12
+  },
+  "plugins": [
+    "react",
+    "@typescript-eslint"
+  ],
+  "rules": {
+    "prettier/prettier": [
+        "error",
+        {
+            "printWidth": 120,
+            "tabWidth": 2,
+            "trailingComma": "all",
+            "bracketSpacing": true,
+            "singleQuote": true,
+            "semi": false
+        }
+    ]
+}
+}
