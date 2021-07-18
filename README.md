@@ -294,6 +294,10 @@ $ ./dc.sh php login
 # テスト用の画像をS3（Minio）にアップロードします。
 > php artisan s3upload
 
+# アップロードした画像を参照できるようにシンボリックリンクを作成する
+> cd public
+> ln -s ../storage/app/public uploads
+
 # フロントエンドをビルドする。
 $ cd htdocs
 $ yarn && yarn run dev
