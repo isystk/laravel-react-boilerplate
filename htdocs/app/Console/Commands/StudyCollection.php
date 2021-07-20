@@ -70,7 +70,7 @@ class StudyCollection extends Command
 
     // 価格が10000円以上のものを1行ずつログで表示する
     $minPrice = 10000;
-    $more10000 = $stocks->filter(function($item, $key) use($minPrice) {
+    $more10000 = ($stocks ?? collect([]))->filter(function($item, $key) use($minPrice) {
         return ($item->price >= $minPrice);
     });
     // 1行ずつログで表示する
@@ -79,11 +79,11 @@ class StudyCollection extends Command
     });
 
     // 商品名だけを抜き出してカンマ区切りで表示する
-    $names = $stocks->pluck('name');
+    $names = ($stocks ?? collect([]))->pluck('name');
     print_r($names->join('、') . "\n");
 
     // 商品IDをキーにしたMapを作成する
-    $stockMap = $stocks->mapWithKeys(function($stock) {
+    $stockMap = ($stocks ?? collect([]))->mapWithKeys(function($stock) {
         return [$stock['id'] => $stock];
     });
     print_r($stockMap['1'] . "\n");
@@ -92,7 +92,7 @@ class StudyCollection extends Command
     $users = User::get()->map(function($item, $key){
         return explode(" ", $item->name)[0];
     });
-    $unique = $users->unique();
+    $unique = ($users ?? collect([]))->unique();
     print_r($unique->toArray());
 
     // JSONファイルを出力
