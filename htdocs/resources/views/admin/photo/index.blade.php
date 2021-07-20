@@ -95,7 +95,7 @@ $(function() {
         e.preventDefault();
         var id = $(this).data('id');
         if (confirm('本当に削除していいですか？')) {
-            $('#delete_' + id).submit();
+            $('#delete_' + id.replace(/[ !"#$%&'()*+,.\/:;<=>?@\[\\\]^`{|}~]/g, '\\$&')).submit();
         }
     });
 });

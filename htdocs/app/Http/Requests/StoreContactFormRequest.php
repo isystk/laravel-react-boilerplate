@@ -60,4 +60,24 @@ class StoreContactFormRequest extends FormRequest
 
     return $rules;
   }
+
+    /**
+     * 項目名
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'your_name' => __('contact.Name'),
+            'title' => __('contact.Title'),
+            'email' => __('contact.EMail'),
+            'gender' => __('contact.Gender'),
+            'age' => __('contact.Age'),
+            'contact' => __('contact.Contact'),
+            'url' => __('contact.URL'),
+            'imageFile' => __('contact.Image'),
+        ];
+    }
+
 }

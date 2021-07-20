@@ -48,4 +48,22 @@ class StoreStockFormRequest extends FormRequest
       'fileName' => 'nullable|string', // 画像ファイル名
     ];
   }
+
+
+    /**
+     * 項目名
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'name' => __('stock.Name'),
+            'price' => __('stock.Price'),
+            'detail' => __('stock.Detail'),
+            'quantity' => __('stock.Quantity'),
+            'imageFile' => __('stock.Image'),
+        ];
+    }
+
 }
