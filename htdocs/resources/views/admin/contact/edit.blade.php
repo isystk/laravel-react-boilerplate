@@ -1,6 +1,6 @@
 @extends('layouts.app_admin')
 
-@section('title', 'お問い合わせID:'.$contact->id.'の変更')
+@section('title',  __('order.Order ID:') . $contact->id. __('common.Of Change'))
 @php
 $menu = 'user';
 $subMenu = 'contact';
@@ -13,15 +13,12 @@ $subMenu = 'contact';
 @section('content')
 
 <div class="card card-purple">
-    <!-- card-body -->
     <div class="card-body">
-
         @if (session('status'))
         <div class="alert alert-success" role="alert">
             {{ session('status') }}
         </div>
         @endif
-
         @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -34,19 +31,17 @@ $subMenu = 'contact';
 
         <form method="POST" enctype="multipart/form-data" action="{{route('admin.contact.update', ['id' => $contact->id])}}">
             @csrf
-
             <div class="form-group">
                 <div class="control-group" id="userName">
-                    <label class="col-sm-6 control-label">氏名</label>
+                    <label class="col-sm-6 control-label">{{__('contact.Name')}}</label>
                     <div class="col-sm-12">
                         <input type="text" name="your_name" value="{{ old('your_name', $contact -> your_name) }}" placeholder="サンプル太郎" maxlength="100">
                     </div>
                 </div>
             </div>
-
             <div class="form-group">
                 <div class="control-group" id="userName">
-                    <label class="col-sm-6 control-label">メールアドレス</label>
+                    <label class="col-sm-6 control-label">{{__('contact.EMail')}}</label>
                     <div class="col-sm-12">
                         <input type="email" name="email" value="{{ old('email', $contact -> email) }}" placeholder="sample@sample.com" maxlength="100">
                     </div>
@@ -55,9 +50,9 @@ $subMenu = 'contact';
 
             <div class="form-group">
                 <div class="control-group" id="userName">
-                    <label class="col-sm-6 control-label">性別</label>
+                    <label class="col-sm-6 control-label">{{__('contact.Gender')}}</label>
                     <div class="col-sm-12">
-                        @foreach (App\Constants\Gender::toArray() as $gender)
+                        @foreach (App\Constants\Gender::asArray() as $gender)
                           <label>
                               <input type="radio" name="gender" value="{{$gender}}" {{ $gender == old("gender", $contact -> gender) ? 'checked="checked"' : '' }}>
                               <span>{{App\Constants\Gender::getDescription($gender)}}</span>
@@ -69,11 +64,11 @@ $subMenu = 'contact';
 
             <div class="form-group">
                 <div class="control-group" id="userName">
-                    <label class="col-sm-6 control-label">年齢</label>
+                    <label class="col-sm-6 control-label">{{__('contact.Age')}}</label>
                     <div class="col-sm-12">
                         <select name="age">
-                            <option value="">選択してください</option>
-                            @foreach (App\Constants\Age::toArray() as $age)
+                            <option value="">{{__('common.Please Select')}}</option>
+                            @foreach (App\Constants\Age::asArray() as $age)
                               <option value="{{$age}}" {{ $age == old("age", $contact -> age) ? 'selected="selected"' : '' }}>{{App\Constants\Age::getDescription($age)}}</option>
                             @endforeach
                         </select>
@@ -83,7 +78,7 @@ $subMenu = 'contact';
 
             <div class="form-group">
                 <div class="control-group" id="userName">
-                    <label class="col-sm-6 control-label">件名</label>
+                    <label class="col-sm-6 control-label">{{__('contact.Title')}}</label>
                     <div class="col-sm-12">
                         <input type="text" name="title" value="{{ old('title', $contact -> title) }}" placeholder="○○について" maxlength="100">
                     </div>
@@ -92,7 +87,7 @@ $subMenu = 'contact';
 
             <div class="form-group">
                 <div class="control-group" id="userName">
-                    <label class="col-sm-6 control-label">お問い合わせ内容</label>
+                    <label class="col-sm-6 control-label">{{__('contact.Contact')}}</label>
                     <div class="col-sm-12">
                         <textarea name="contact" rows="8" cols="80">{{ old('contact', $contact -> contact) }}</textarea>
                     </div>
@@ -101,7 +96,7 @@ $subMenu = 'contact';
 
             <div class="form-group">
                 <div class="control-group" id="userName">
-                    <label class="col-sm-6 control-label">ホームページURL</label>
+                    <label class="col-sm-6 control-label">{{__('contact.URL')}}</label>
                     <div class="col-sm-12">
                         <input type="url" name="url" value="{{ old('url', $contact -> url) }}" placeholder="https://sample.com" maxlength="100">
                     </div>
@@ -110,7 +105,7 @@ $subMenu = 'contact';
 
             <div class="form-group">
                 <div class="control-group" id="userName">
-                    <label class="col-sm-6 control-label">画像</label>
+                    <label class="col-sm-6 control-label">{{__('contact.Image')}}</label>
                     <div class="col-sm-12">
                         {{--
                     <p><input type="file" name="imageFile"></p>
@@ -134,13 +129,32 @@ $subMenu = 'contact';
                     </div>
                 </div>
             </div>
-
-            <div class="submit-wrap">
-                <input class="submit-btn btn btn-info" type="submit" value="登録する">
+            <div class="card-footer text-center clearfix ">
+                <input class="btn btn-info" type="submit" value="{{__('common.Execute')}}">
             </div>
         </form>
     </div>
+    @endsection
 
-    <script src="{{ asset('/assets/admin/js/contact/edit.js') }}" defer></script>
+    @section('scripts')
+    <script>
+    $(function () {
+        // 画像ファイルアップロード
+        $('#js-uploadImage').imageUploader({
+            dropAreaSelector: '#drop-zone',
+            successCallback: function (res) {
 
+                $('#result').empty();
+                $('#result').append('<img src="' + res.fileData + '" width="200px" />');
+                $('#result').append('<input type="hidden" name="imageBase64" value="' + res.fileData + '" />');
+                $('#result').append('<input type="hidden" name="fileName" value="' + res.fileName + '" />');
+
+                $('.error-message').empty();
+            },
+            errorCallback: function (res) {
+                $('.error-message').text(res[0]);
+            }
+        });
+    });
+    </script>
     @endsection

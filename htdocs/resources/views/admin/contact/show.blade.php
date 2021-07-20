@@ -1,6 +1,6 @@
 @extends('layouts.app_admin')
 
-@section('title', 'お問い合わせID:'.$contact->id)
+@section('title', __('contact.Contact ID:').$contact->id)
 @php
 $menu = 'user';
 $subMenu = 'contact';
@@ -13,75 +13,66 @@ $subMenu = 'contact';
 @section('content')
 
 <div class="card card-purple">
-    <!-- card-body -->
     <div class="card-body">
-
         <div class="form-group">
             <div class="control-group">
-                <label class="col-sm-6 control-label">お名前</label>
+                <label class="col-sm-6 control-label">{{__('contact.Name')}}</label>
                 <div class="col-sm-12">
                     {{ $contact -> your_name }}
                 </div>
             </div>
         </div>
-
         <div class="form-group">
             <div class="control-group">
-                <label class="col-sm-6 control-label">メールアドレス</label>
+                <label class="col-sm-6 control-label">{{__('contact.EMail')}}</label>
                 <div class="col-sm-12">
                     {{ $contact -> email }}
                 </div>
             </div>
         </div>
-
         <div class="form-group">
             <div class="control-group">
-                <label class="col-sm-6 control-label">性別</label>
+                <label class="col-sm-6 control-label">{{__('contact.Gender')}}</label>
                 <div class="col-sm-12">
                     {{ App\Constants\Gender::getDescription($contact -> gender)}}
                 </div>
             </div>
         </div>
-
         <div class="form-group">
             <div class="control-group">
-                <label class="col-sm-6 control-label">年齢</label>
+                <label class="col-sm-6 control-label">{{__('contact.Age')}}</label>
                 <div class="col-sm-12">
                     {{ App\Constants\Age::getDescription($contact -> age)}}
                 </div>
             </div>
         </div>
-
         <div class="form-group">
             <div class="control-group">
-                <label class="col-sm-6 control-label">件名</label>
+                <label class="col-sm-6 control-label">{{__('contact.Title')}}</label>
                 <div class="col-sm-12">
                     {{ $contact -> title }}
                 </div>
             </div>
         </div>
-
         <div class="form-group">
             <div class="control-group">
-                <label class="col-sm-6 control-label">お問い合わせ内容</label>
+                <label class="col-sm-6 control-label">{{__('contact.Contact')}}</label>
                 <div class="col-sm-12">
                     {{ $contact -> contact }}
                 </div>
             </div>
         </div>
-
         <div class="form-group">
             <div class="control-group">
-                <label class="col-sm-6 control-label">ホームページURL</label>
+                <label class="col-sm-6 control-label">{{__('contact.URL')}}</label>
                 <div class="col-sm-12">
                     {{ $contact -> url }}
                 </div>
             </div>
         </div>
-
         <div class="form-group">
             <div class="control-group">
-                <label class="col-sm-6 control-label">画像</label>
+                <label class="col-sm-6 control-label">{{__('contact.Image')}}</label>
                 <div class="col-sm-12">
                     @foreach($contact -> contactFormImages as $contactFormImage)
                     @if ($contactFormImage['file_name'])
@@ -91,38 +82,31 @@ $subMenu = 'contact';
                 </div>
             </div>
         </div>
-
     </div>
-    <!-- /.card-body -->
-
-    <div class="card-footer clearfix ">
+    <div class="card-footer text-center clearfix ">
         <form method="GET" action="{{route('admin.contact.edit', ['id' => $contact->id ])}}">
             @csrf
-
-            <div class="card-footer text-center">
-                <button type="submit" class="btn btn-info">変更する</button>
-            </div>
-
+            <button type="submit" class="btn btn-info">{{__('common.Change')}}</button>
         </form>
-
         <form method="POST" action="{{route('admin.contact.destroy', ['id' => $contact->id ])}}" id="delete_{{ $contact->id }}">
             @csrf
-            <div class="card-footer text-center">
-                <a href="#" class="btn btn-danger" data-id="{{ $contact->id }}" onclick="deletePost(this);">削除する</a>
-            </div>
+            <a href="#" class="btn btn-danger js-deleteBtn" data-id="{{ $contact->id }}" >{{__('common.Delete')}}</a>
         </form>
     </div>
 </div>
+@endsection
 
+@section('scripts')
 <script>
+$(function() {
     // 削除確認用のダイアログを表示
-    function deletePost(e) {
-        'use strict';
+    $('.js-deleteBtn').click(function(e) {
+        e.preventDefault();
+        var id = $(this).data('id');
         if (confirm('本当に削除していいですか？')) {
-            document.getElementById('delete_' + e.dataset.id).submit();
+            $('#delete_' + id).submit();
         }
-    }
+    });
+});
 </script>
-
-
 @endsection

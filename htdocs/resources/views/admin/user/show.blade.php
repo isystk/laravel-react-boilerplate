@@ -13,52 +13,49 @@ $subMenu = 'user';
 @section('content')
 
 <div class="card card-purple">
-    <!-- card-body -->
     <div class="card-body">
-
         <div class="form-group">
             <div class="control-group">
-                <label class="col-sm-2 control-label">名前</label>
+                <label class="col-sm-2 control-label">{{__('user.Name')}}</label>
                 <div class="col-sm-4">
                     {{ $user -> name }}
                 </div>
             </div>
         </div>
-
         <div class="form-group">
             <div class="control-group">
-                <label class="col-sm-2 control-label">メールアドレス</label>
+                <label class="col-sm-2 control-label">{{__('user.EMail')}}</label>
                 <div class="col-sm-4">
                     {{ $user -> email }}
                 </div>
             </div>
         </div>
-
     </div>
-    <!-- /.card-body -->
-
-    <div class="card-footer clearfix ">
+    <div class="card-footer text-center clearfix ">
         <form method="GET" action="{{route('admin.user.edit', ['id' => $user->id ])}}">
             @csrf
-
-            <input class="btn btn-info" type="submit" value="変更する">
+            <input class="btn btn-info" type="submit" value="{{__('common.Change')}}">
         </form>
-
         <form method="POST" action="{{route('admin.user.destroy', ['id' => $user->id ])}}" id="delete_{{ $user->id }}">
             @csrf
-            <a href="#" class="btn btn-danger" data-id="{{ $user->id }}" onclick="deletePost(this);">削除する</a>
+            <a href="#" class="btn btn-danger js-deleteBtn" data-id="{{ $user->id }}" >{{__('common.Delete')}}</a>
         </form>
     </div>
 </div>
 
-<script>
-    // 削除確認用のダイアログを表示
-    function deletePost(e) {
-        'use strict';
-        if (confirm('本当に削除していいですか？')) {
-            document.getElementById('delete_' + e.dataset.id).submit();
-        }
-    }
-</script>
+@endsection
 
+@section('scripts')
+<script>
+$(function() {
+    // 削除確認用のダイアログを表示
+    $('.js-deleteBtn').click(function(e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        if (confirm('本当に削除していいですか？')) {
+            $('#delete_' + id).submit();
+        }
+    });
+});
+</script>
 @endsection

@@ -1,6 +1,6 @@
 @extends('layouts.app_admin')
 
-@section('title', 'お問い合わせ一覧')
+@section('title', __('contact.Contact List'))
 @php
 $menu = 'user';
 $subMenu = 'contact';
@@ -13,12 +13,9 @@ $subMenu = 'contact';
 @section('content')
 
 <div class="card card-purple">
-    <!-- .card-header -->
     <div class="card-header">
-        <h3 class="card-title">検索条件</h3>
+        <h3 class="card-title">{{__('common.Search Condition')}}</h3>
     </div>
-    <!-- /.card-header -->
-    <!-- form start -->
     <form action="{{ route('admin.contact') }}" method="GET">
         <div class="card-body">
             @if (session('status'))
@@ -26,48 +23,38 @@ $subMenu = 'contact';
                 {{ session('status') }}
             </div>
             @endif
-
             <div class="form-group">
                 <div class="control-group" id="userName">
-                    <label class="col-sm-2 control-label">氏名</label>
+                    <label class="col-sm-2 control-label">{{__('contact.Name')}}</label>
                     <div class="col-sm-4">
                         <input type="text" name="search" class="form-control" size="10" maxlength="100" value="{{ $search }}">
                     </div>
                 </div>
             </div>
-
         </div>
-        <!-- /.card-body -->
-
         <div class="card-footer text-center">
-            <button type="submit" class="btn btn-secondary">検索</button>
+            <button type="submit" class="btn btn-secondary">{{__('common.Search')}}</button>
         </div>
-
     </form>
 </div>
-
 <form action="{{ route('admin.contact') }}" method="GET" id="pagingForm">
     <input type="hidden" name="search" value="{{ $search }}">
 </form>
-
 <div class="row">
     <div class="col-12">
-
         <div class="card card-purple">
-            <!-- .card-header -->
             <div class="card-header">
-                <h3 class="card-title">検索結果</h3>
+                <h3 class="card-title">{{__('common.Search Result')}}</h3>
             </div>
-            <!-- /.card-header -->
             <div class="card-body table-responsive p-0">
                 <table class="table table-hover" >
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>氏名</th>
-                            <th>件名</th>
-                            <th>登録日時</th>
-                            <th>詳細</th>
+                            <th>{{__('contact.ID')}}</th>
+                            <th>{{__('contact.Name')}}</th>
+                            <th>{{__('contact.Title')}}</th>
+                            <th>{{__('common.Registration Date')}}</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -77,23 +64,16 @@ $subMenu = 'contact';
                             <td>{{ $contact->your_name }}</td>
                             <td>@php echo mb_strimwidth($contact->title, 0, 50, '...') @endphp</td>
                             <td>{{ $contact->created_at }}</td>
-                            <td><a href="{{ route('admin.contact.show', ['id'=> $contact->id]) }}">詳細</a></td>
+                            <td><a href="{{ route('admin.contact.show', ['id'=> $contact->id]) }}">{{__('common.Detail')}}</a></td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
-            <!-- /.card-body -->
-
-            <!-- .card-footer -->
             <div class="card-footer clearfix ">
                 {{ $contacts->links() }}
             </div>
-            <!-- /.card-footer -->
-
         </div>
-        <!-- /.card -->
     </div>
 </div>
-
 @endsection

@@ -15,13 +15,13 @@ Breadcrumbs::for('admin.home', function ($trail) {
 // Home > 商品一覧
 Breadcrumbs::for('admin.stock', function ($breadcrumbs) {
   $breadcrumbs->parent('admin.home');
-  $breadcrumbs->push('商品一覧', 'admin.stock');
+  $breadcrumbs->push(__('stock.Stock List'), 'admin.stock');
 });
 
 // Home > 商品一覧 > 商品登録
 Breadcrumbs::for('admin.stock.create', function ($breadcrumbs) {
   $breadcrumbs->parent('admin.stock');
-  $breadcrumbs->push('商品登録', 'admin.stock.create');
+  $breadcrumbs->push(__('stock.Stock Regist'), 'admin.stock.create');
 });
 
 // Home > 商品一覧 > 商品詳細
@@ -41,7 +41,7 @@ Breadcrumbs::for('admin.stock.show', function ($breadcrumbs, $stock) {
 Breadcrumbs::for('admin.stock.edit', function ($breadcrumbs, $stock) {
   $breadcrumbs->parent('admin.stock.show', $stock);
   $breadcrumbs->push(
-    $stock->name . 'の変更',
+    $stock->name . __('common.Of Change'),
     'admin.stock.edit',
     [
       'params' => [
@@ -53,14 +53,14 @@ Breadcrumbs::for('admin.stock.edit', function ($breadcrumbs, $stock) {
 // Home > 注文履歴一覧
 Breadcrumbs::for('admin.order', function ($breadcrumbs) {
   $breadcrumbs->parent('admin.home');
-  $breadcrumbs->push('注文履歴一覧', 'admin.order');
+  $breadcrumbs->push(__('order.Order List'), 'admin.order');
 });
 
 // Home > 注文履歴一覧 > 注文履歴詳細
 Breadcrumbs::for('admin.order.show', function ($breadcrumbs, $order) {
   $breadcrumbs->parent('admin.order');
   $breadcrumbs->push(
-    '注文ID:' . $order->id,
+    __('order.Order ID:') . $order->id,
     'admin.order.show',
     [
       'params' => [
@@ -72,7 +72,7 @@ Breadcrumbs::for('admin.order.show', function ($breadcrumbs, $order) {
 // Home > 顧客一覧
 Breadcrumbs::for('admin.user', function ($breadcrumbs) {
   $breadcrumbs->parent('admin.home');
-  $breadcrumbs->push('顧客一覧', 'admin.user');
+  $breadcrumbs->push(__('user.User List'), 'admin.user');
 });
 
 // Home > 顧客一覧 > 顧客詳細
@@ -105,14 +105,14 @@ Breadcrumbs::for('admin.user.edit', function ($breadcrumbs, $user) {
 // Home > お問い合わせ一覧
 Breadcrumbs::for('admin.contact', function ($breadcrumbs) {
   $breadcrumbs->parent('admin.home');
-  $breadcrumbs->push('お問い合わせ一覧', 'admin.contact');
+  $breadcrumbs->push(__('contact.Contact List'), 'admin.contact');
 });
 
 // Home > お問い合わせ一覧 > お問い合わせ詳細
 Breadcrumbs::for('admin.contact.show', function ($breadcrumbs, $contact) {
   $breadcrumbs->parent('admin.contact');
   $breadcrumbs->push(
-    'お問い合わせID:' . $contact->id,
+    __('contact.Contact ID:') . $contact->id,
     'admin.contact.show',
     [
       'params' => [
@@ -125,7 +125,7 @@ Breadcrumbs::for('admin.contact.show', function ($breadcrumbs, $contact) {
 Breadcrumbs::for('admin.contact.edit', function ($breadcrumbs, $contact) {
   $breadcrumbs->parent('admin.contact.show', $contact);
   $breadcrumbs->push(
-    'お問い合わせID:' . $contact->id . 'の変更',
+    __('contact.Contact ID:') . $contact->id . __('common.Of Change'),
     'admin.contact.edit',
     [
       'params' => [
@@ -137,5 +137,5 @@ Breadcrumbs::for('admin.contact.edit', function ($breadcrumbs, $contact) {
 // Home > 画像一覧
 Breadcrumbs::for('admin.photo', function ($breadcrumbs) {
   $breadcrumbs->parent('admin.home');
-  $breadcrumbs->push('画像一覧', 'admin.photo');
+  $breadcrumbs->push(__('photo.Photo List'), 'admin.photo');
 });

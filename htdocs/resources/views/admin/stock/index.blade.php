@@ -1,6 +1,6 @@
 @extends('layouts.app_admin')
 
-@section('title', '商品一覧')
+@section('title', __('stock.Stock List'))
 @php
 $menu = 'master';
 $subMenu = 'stock';
@@ -16,19 +16,16 @@ $subMenu = 'stock';
     <div class="card-body text-center">
         <form method="GET" action="{{ route('admin.stock.create') }}">
             <button type="submit" class="btn btn-primary">
-                新規登録
+                {{__('common.Regist')}}
             </button>
         </form>
     </div>
 </div>
 
 <div class="card card-purple">
-    <!-- .card-header -->
     <div class="card-header">
-        <h3 class="card-title">検索条件</h3>
+        <h3 class="card-title">{{__('common.Search Condition')}}</h3>
     </div>
-    <!-- /.card-header -->
-    <!-- form start -->
     <form action="{{ route('admin.stock') }}" method="GET">
         <div class="card-body">
             @if (session('status'))
@@ -36,59 +33,50 @@ $subMenu = 'stock';
                 {{ session('status') }}
             </div>
             @endif
-
             <div class="form-group">
                 <div class="control-group" id="stockName">
-                    <label class="col-sm-2 control-label">名前</label>
+                    <label class="col-sm-2 control-label">{{__('stock.Name')}}</label>
                     <div class="col-sm-4">
                         <input type="text" name="name" class="form-control" size="10" maxlength="100" value="{{ $name }}">
                     </div>
                 </div>
             </div>
-
         </div>
-        <!-- /.card-body -->
-
         <div class="card-footer text-center">
-            <button type="submit" class="btn btn-secondary">検索</button>
+            <button type="submit" class="btn btn-secondary">{{__('common.Search')}}</button>
         </div>
-
     </form>
 </div>
-
 <form action="{{ route('admin.stock') }}" method="GET" id="pagingForm">
     <input type="hidden" name="name" value="{{ $name }}">
 </form>
-
 <div class="row">
     <div class="col-12">
-
         <div class="card card-purple">
-            <!-- .card-header -->
             <div class="card-header">
-                <h3 class="card-title">検索結果</h3>
+                <h3 class="card-title">{{__('common.Search Result')}}</h3>
                 <div class="dropdown text-right">
                     <button class="btn btn-default dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        操作
+                        {{__('common.Operation')}}
                         <span class="caret"></span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-                        <a class="dropdown-item text-muted js-download" href="{{ route('admin.stock.downloadCsv') }}">CSVダウンロード</a>
-                        <a class="dropdown-item text-muted js-download" href="{{ route('admin.stock.downloadExcel') }}">Excelダウンロード</a>
-                        <a class="dropdown-item text-muted js-download" href="{{ route('admin.stock.downloadPdf') }}">PDFダウンロード</a>
+                        <a class="dropdown-item text-muted js-download" href="{{ route('admin.stock.downloadCsv') }}">{{__('common.CSV Download')}}</a>
+                        <a class="dropdown-item text-muted js-download" href="{{ route('admin.stock.downloadExcel') }}">{{__('common.Excel Download')}}</a>
+                        <a class="dropdown-item text-muted js-download" href="{{ route('admin.stock.downloadPdf') }}">{{__('common.PDF Download')}}</a>
                     </div>
                 </div>
             </div>
-            <!-- /.card-header -->
             <div class="card-body table-responsive p-0">
                 <table class="table table-hover text-nowrap">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>商品名</th>
-                            <th>価格</th>
-                            <th>在庫</th>
-                            <th>登録日時</th>
+                            <th>{{__('stock.ID')}}</th>
+                            <th>{{__('stock.Name')}}</th>
+                            <th>{{__('stock.Price')}}</th>
+                            <th>{{__('stock.Quantity')}}</th>
+                            <th>{{__('common.Registration Date')}}</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -99,25 +87,30 @@ $subMenu = 'stock';
                             <td>{{ $stock->price }}</td>
                             <td>{{ $stock->quantity }}</td>
                             <td>{{ $stock->created_at }}</td>
-                            <td><a href="{{ route('admin.stock.show', ['id'=> $stock->id]) }}">詳細</a></td>
+                            <td><a href="{{ route('admin.stock.show', ['id'=> $stock->id]) }}">{{__('common.Detail')}}</a></td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
-            <!-- /.card-body -->
-
-            <!-- .card-footer -->
             <div class="card-footer clearfix ">
                 {{ $stocks->links() }}
             </div>
-            <!-- /.card-footer -->
-
         </div>
-        <!-- /.card -->
     </div>
 </div>
+@endsection
 
-<script src="{{ asset('/assets/admin/js/stock/index.js') }}" defer></script>
-
+@section('scripts')
+<script>
+$(function () {
+    // ダウンロード
+    $('.js-download').click(function(e) {
+        e.preventDefault();
+        var form = $('#pagingForm');
+        form.attr('action', $(this).attr('href'));
+        form.submit();
+    });
+});
+</script>
 @endsection

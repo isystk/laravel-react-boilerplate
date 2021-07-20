@@ -1,6 +1,6 @@
 @extends('layouts.app_admin')
 
-@section('title', 'HOME')
+@section('title', __('common.HOME'))
 
 @section('breadcrumbs')
     {{ Breadcrumbs::render('admin.home') }}
@@ -10,7 +10,7 @@
 
 <div class="card card-purple">
   <div class="card-body">
-    <p>{{ Auth::user()->name }} さん。こんにちわ。</p>
+    <p>{{ __('common.Welcom!') . Auth::user()->name }}</p>
   </div>
 </div>
 

@@ -1,5 +1,5 @@
 
-## with関数の使い方
+## Eloquentの withの使い方
 
 ```
 // 1つだけ指定（今回紹介したのがこちら）.
@@ -21,22 +21,24 @@ $users = App\User::with(['posts' => function ($query) {
 
 // ソートしたい場合.
 $users = App\User::with(['posts' => function ($query) {
-    $query->orderBy('created_at', 'desc');
+    $query->orderBy('created_at', 'asc');
 }])->get();
+
+// sortByを使う方法
+$posts = App\User::with('posts')->get();
+$posts = $posts->sortBy('posts.created_at')->values();
 ```
 
-# Laravel Execlインストール
-composer require maatwebsite/excel
 
-ァサードを登録
-config/app.php
-    'providers' => [
-+        Maatwebsite\Excel\ExcelServiceProvider::class,
-    ],
-    'aliases' => [
-+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-    ],
-設定ファイルの生成
-php artisan vendor:publish --provider="Maatwebsite\Excel\ExcelServiceProvider"
-
-
+## SQLのデバック
+```
+// 確認したいSQLの前にこれを仕込むとSQLの実行結果が確認できる。
+\Illuminate\Support\Facades\Log::debug('========== My Debug ===========');
+\Illuminate\Support\Facades\DB::enableQueryLog();
+$stocks = $this->stockRepository->findById($id, []);
+\Illuminate\Support\Facades\Log::debug(\Illuminate\Support\Facades\DB::getQueryLog());
+\Illuminate\Support\Facades\Log::debug($stocks->toArray());
+```
+```
+$ tail -f ./storage/logs/laravel.log
+```

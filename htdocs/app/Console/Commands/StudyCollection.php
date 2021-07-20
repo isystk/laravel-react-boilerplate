@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
+use Illuminate\Support\Facades\Log;
 use App\Models\Stock;
 use App\Models\User;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
 
 class StudyCollection extends Command
 {
@@ -56,8 +56,15 @@ class StudyCollection extends Command
    */
   public function exec()
   {
-    // DBからEloquentで値を取得するとオブジェクトで返却される。
+    // 確認したいSQLの前にこれを仕込むとSQLの実行結果が確認できる。
+    \Illuminate\Support\Facades\DB::enableQueryLog();
+    // DBからEloquentで値を取得する（返り値は、get → Collection、findとfirst → Modelのオブジェクト）
     $stocks = Stock::get();
+    print_r(\Illuminate\Support\Facades\DB::getQueryLog());
+
+    // Webの場合はログファイルに出力すると確認できる
+    \Illuminate\Support\Facades\Log::debug(\Illuminate\Support\Facades\DB::getQueryLog());
+
     // 配列に変換するとデバックで参照しやすくなる。
     print_r($stocks->toArray());
 
@@ -72,8 +79,14 @@ class StudyCollection extends Command
     });
 
     // 商品名だけを抜き出してカンマ区切りで表示する
-    $names = Stock::get()->pluck('name');
+    $names = $stocks->pluck('name');
     print_r($names->join('、') . "\n");
+
+    // 商品IDをキーにしたMapを作成する
+    $stockMap = $stocks->mapWithKeys(function($stock) {
+        return [$stock['id'] => $stock];
+    });
+    print_r($stockMap['1'] . "\n");
 
     // 氏名から名字だけを抜き出して、重複しない値だけを取得する
     $users = User::get()->map(function($item, $key){
@@ -82,5 +95,7 @@ class StudyCollection extends Command
     $unique = $users->unique();
     print_r($unique->toArray());
 
+    // JSONファイルを出力
+    file_put_contents("test.json" , json_encode($unique));
   }
 }

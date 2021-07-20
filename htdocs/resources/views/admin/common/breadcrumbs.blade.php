@@ -40,9 +40,8 @@
                     @endif
                 @endforeach
               </ol>
-          </div><!-- /.col -->
-      </div><!-- /.row -->
-  </div><!-- /.container-fluid -->
+          </div>
+      </div>
+  </div>
 </div>
-<!-- /.content-header -->
 @endif

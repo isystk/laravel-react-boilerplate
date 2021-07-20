@@ -49,7 +49,7 @@ page-break-inside: avoid;
 </style>
 </head>
 <body>
-    <p>商品一覧</p>
+    <p>__('stock.Stock List')</p>
     <table>
       <thead>
       <tr>
