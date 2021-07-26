@@ -19,7 +19,6 @@ class ExcelStockService implements FromCollection, WithEvents
 
   /**
    * @var StockService
-   * @var PDF
    */
   protected $stockService;
 

@@ -96,23 +96,16 @@ https://docs.docker.com/docker-for-windows/install/
 docker --version
 ```
 
-### WSLから、Docker for Windows を利用できるようにする（Windowsの場合）
+### WSL2から、Docker for Windows を利用できるようにする（Windowsの場合）
 参考
 https://qiita.com/endo_hizumi/items/0cc50bdfbd827579733e
 ```
 １．通知領域から、dockerのアイコンを右クリックして、Settingを選択
 ２．Generalのexpose deamon on~~のチェックを入れます。
-３．ResourcesのWSL INTEGRATION から、"Ubuntu" をスイッチをONにします。（WSL2の場合のみ）
-
-WSLの環境変数を変更（bashを利用している場合）→　WSL2の場合は不要です。（WSL1の場合のみ）
-$ echo "export DOCKER_HOST=tcp://localhost:2375" >> ~/.bashrc && source ~/.bashrc
-
-以下のように環境変数が通っていれば正常です。（WSL1の場合のみ）
-$ echo $DOCKER_HOST
-tcp://localhost:2375
+３．ResourcesのWSL INTEGRATION から、"Ubuntu" をスイッチをONにします。
 
 WSL 側のルートを Docker for Windows に合わせるように WSL のマウント設定を行います。
-$ sudo vi /etc/wsl.conf
+$ vi /etc/wsl.conf
 ---
 [automount]
 root = /
@@ -125,8 +118,8 @@ $ pwd
 /c/Users/USER/github/laravel-react-boilerplate
 
 # WSL 上にDockerとDocker Composeをインストールする。
-$ apt-get install docker
-$ apt-get install docker-compose
+$ apt install docker
+$ apt install docker-compose
 
 これでWSLからWindows側にインストールしたDockerが利用できるようになります。
 ```
@@ -137,7 +130,7 @@ $ apt-get install docker-compose
 # MySQLに接続する為のコマンドをインストールします。（バージョンは何でもOK）
 
 # Windowsの場合
-$ apt-get install mysql-client
+$ apt install mysql-client
 
 # Macの場合
 $ brew install mysql-client
@@ -148,9 +141,11 @@ $ brew install mysql-client
 ```
 # Windowsの場合
 $ curl -L git.io/nodebrew | perl - setup
-
 # Macの場合
 $ brew install nodebrew
+
+# nodebrew をシェルのパスに追加する
+$ echo "export PATH=$HOME/.nodebrew/current/bin:$PATH" > ~/.bashrc
 
 # Node.js をインストール 
 $ mkdir -p ~/.nodebrew/src

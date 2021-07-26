@@ -29,8 +29,8 @@ services:
      - ./php/logs:/var/log/php
      - ./php/php.ini:/usr/local/etc/php/php.ini
      - ../htdocs:/var/www/html
-    extra_hosts:
-     - "host.docker.internal:${DOCKER_HOST_IP}"
+    # extra_hosts:
+    #  - "host.docker.internal:${DOCKER_HOST_IP}"
 
   # node:
   #   image: laraec/node
