@@ -145,7 +145,7 @@ $ curl -L git.io/nodebrew | perl - setup
 $ brew install nodebrew
 
 # nodebrew をシェルのパスに追加する
-$ echo "export PATH=$HOME/.nodebrew/current/bin:$PATH" > ~/.bashrc
+$ echo 'export PATH=$HOME/.nodebrew/current/bin:$PATH' >> ~/.bashrc
 
 # Node.js をインストール 
 $ mkdir -p ~/.nodebrew/src
