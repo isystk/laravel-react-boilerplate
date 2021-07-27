@@ -5,6 +5,8 @@ namespace App\Console\Commands;
 use Illuminate\Support\Facades\Log;
 use App\Models\Stock;
 use App\Models\User;
+use App\Models\ContactForm;
+use App\Constants\Gender;
 
 use Illuminate\Console\Command;
 
@@ -95,7 +97,13 @@ class StudyCollection extends Command
     $unique = ($users ?? collect([]))->unique();
     print_r($unique->toArray());
 
-    // JSONファイルを出力
-    file_put_contents("test.json" , json_encode($unique));
+    // お問い合わせを男性と女性でグループ化して取得する
+    $contacts = ContactForm::get()->groupBy('gender');
+    ($contacts ?? collect([]))->each(function($contact, $key) {
+        print_r(Gender::getDescription($key) . '->' . $contact->count() . '人' . "\n");
+    });
+
+    // // JSONファイルを出力
+    // file_put_contents("test.json" , json_encode($unique));
   }
 }
