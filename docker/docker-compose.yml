@@ -62,7 +62,7 @@ services:
     volumes:
       - db-store:/var/lib/mysql
       - ./mysql/logs:/var/log/mysql
-      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./mysql/conf:/etc/mysql/conf.d
 
   phpmyadmin:
     image: laraec/phpmyadmin
