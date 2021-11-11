@@ -88,7 +88,7 @@ https://laraec.isystk.com/admin/
 参考
 https://docs.microsoft.com/ja-jp/windows/wsl/install
 
-# WSLでUbuntuを起動する
+WSLでUbuntuを起動する
 ```
 # 初回起動時に、ユーザ名とパスワードが聞かれます。
 # 何も入力せずにEnterを押すとroot ユーザーで利用できるようになるので、rootユーザーとして設定します。
