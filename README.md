@@ -86,7 +86,21 @@ https://laraec.isystk.com/admin/
 
 ### WSLのインストール（Windowsの場合）
 参考
-https://qiita.com/matarillo/items/61a9ead4bfe2868a0b86
+https://docs.microsoft.com/ja-jp/windows/wsl/install
+
+# WSLでUbuntuを起動する
+```
+# 初回起動時に、ユーザ名とパスワードが聞かれます。
+# 何も入力せずにEnterを押すとroot ユーザーで利用できるようになるので、rootユーザーとして設定します。
+
+# 初めにライブラリを最新化します。
+$ apt update
+
+# 日本語に対応しておきます。
+$ apt -y install language-pack-ja
+$ update-locale LANG=ja_JP.UTF8
+$ apt -y install manpages-ja manpages-ja-dev
+```
 
 ### Docker Desktop for Windows のインストール（Windowsの場合）
 
@@ -237,7 +251,9 @@ http://localhost:8025/
 S3に準拠したダミーのオブジェクトストレージです。
 Dockerを起動後に以下のURLにアクセスすると利用可能です。
 
-http://s3:9000
+http://localhost:9001
+Username / Password
+access_key / secret_key
 
 ```bash
 # AWS-CLIにアクセスする。

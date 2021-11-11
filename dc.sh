@@ -1,6 +1,7 @@
 #! /bin/bash
 
-DOCKER_COMPOSE="docker-compose -f docker/docker-compose.yml"
+DOCKER_HOME=./docker
+DOCKER_COMPOSE="docker-compose -f $DOCKER_HOME/docker-compose.yml"
 
 function usage {
     cat <<EOF
@@ -41,11 +42,14 @@ case ${1} in
 
     init)
         # 停止＆削除（コンテナ・イメージ・ボリューム）
-        $DOCKER_COMPOSE down --rmi all --volumes
-        rm -Rf ./docker/mysql/logs && mkdir ./docker/mysql/logs && chmod 777 ./docker/mysql/logs
-        rm -Rf ./docker/apache/logs && mkdir ./docker/apache/logs && chmod 777 ./docker/apache/logs
-        rm -Rf ./docker/php/logs && mkdir ./docker/php/logs && chmod 777 ./docker/php/logs
-        rm -Rf ./docker/s3/data && mkdir ./docker/s3/data && chmod 777 ./docker/s3/data
+        pushd $DOCKER_HOME
+        docker-compose down --rmi all --volumes
+        rm -Rf ./mysql/data && mkdir ./mysql/data && chmod 777 ./mysql/data
+        rm -Rf ./mysql/logs && mkdir ./mysql/logs && chmod 777 ./mysql/logs
+        rm -Rf ./apache/logs && mkdir ./apache/logs && chmod 777 ./apache/logs
+        rm -Rf ./php/logs && mkdir ./php/logs && chmod 777 ./php/logs
+        rm -Rf ./s3/data && mkdir ./s3/data && chmod 777 ./s3/data
+        popd
         chmod 777 ./htdocs
     ;;
 
@@ -54,7 +58,9 @@ case ${1} in
     ;;
     
     stop)
-        $DOCKER_COMPOSE down
+        pushd $DOCKER_HOME
+        docker-compose down
+        popd
     ;;
 
     apache)
