@@ -267,7 +267,7 @@ $ ./dc.sh aws local
 > aws --endpoint-url http://s3:9000 s3 ls
 # テストファイルをアップロードする
 > aws --endpoint-url http://s3:9000 s3 cp ./front.png s3://laraec.isystk.com
-$ open http://localhost:9090/laraec.isystk.com/front.png
+$ open http://localhost:9000/laraec.isystk.com/front.png
 ```
 
 ## 💬 使い方
