@@ -1,12 +1,12 @@
 /*!
-  * Bootstrap v4.6.0 (https://getbootstrap.com/)
+  * Bootstrap v4.6.1 (https://getbootstrap.com/)
   * Copyright 2011-2021 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
   */
 
 /*!
- * AdminLTE v3.1.0 (https://adminlte.io)
- * Copyright 2014-2021 Colorlib <https://colorlib.com>
+ * AdminLTE v3.2.0 (https://adminlte.io)
+ * Copyright 2014-2022 Colorlib <https://colorlib.com>
  * Licensed under MIT (https://github.com/ColorlibHQ/AdminLTE/blob/master/LICENSE)
  */
 

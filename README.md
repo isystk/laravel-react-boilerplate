@@ -300,7 +300,7 @@ $ ./dc.sh php login
 # テーブルとテストデータの作成
 > php artisan migrate:fresh --seed
 > chmod 777 -R bootstrap/cache
-> chmod 777 -R storage
+> hmod 777 -R storage
 
 # テスト用の画像をS3（Minio）にアップロードします。
 > php artisan s3upload
