@@ -33,12 +33,12 @@ Laravel ＆ React.js の学習用サンプルアプリケーションです。
 
 #### ■ アプリケーション
 
-- Laravel 6.20.17
-- React 16.2.0
-- React-Redux 7.2.2
-- typescript 4.2.3
-- Bootstrap 4.0.0
-- Admin-LTE 3.1.0
+- Laravel9
+- React18
+- ReduxToolKit
+- Typescript
+- Bootstrap
+- Adminlte3
 
 ## 🌐 Demo
 

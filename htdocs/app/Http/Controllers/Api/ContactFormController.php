@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Constants\ErrorType;
+use App\Enums\ErrorType;
 use App\Http\Controllers\ApiController;
 use App\Http\Requests\StoreContactFormRequest;
 

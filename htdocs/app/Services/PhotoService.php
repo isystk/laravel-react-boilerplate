@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Constants\ErrorType;
+use App\Enums\ErrorType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Constants\ErrorType;
+use App\Enums\ErrorType;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 

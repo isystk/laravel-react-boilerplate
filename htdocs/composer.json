@@ -5,31 +5,30 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "^7.3|^8.0",
-        "anhskohbo/no-captcha": "^3.3",
-        "barryvdh/laravel-dompdf": "^0.9.0",
-        "bensampo/laravel-enum": "^3.4",
+        "php": "^8.1",
+        "anhskohbo/no-captcha": "^3.4",
+        "barryvdh/laravel-cors": "^3.0",
+        "barryvdh/laravel-dompdf": "^1.0",
         "davejamesmiller/laravel-breadcrumbs": "^5.3",
-        "doctrine/dbal": "^3.1",
-        "fideloper/proxy": "^4.4",
-        "fruitcake/laravel-cors": "^2.0",
-        "guzzlehttp/guzzle": "^7.0.1",
-        "laravel/framework": "^8.40",
-        "laravel/socialite": "^5.2",
-        "laravel/tinker": "^2.5",
-        "league/flysystem-aws-s3-v3": "^1.0",
+        "doctrine/dbal": "^3.3",
+        "guzzlehttp/guzzle": "^7.2",
+        "laravel/framework": "^9.2",
+        "laravel/sanctum": "^2.14.1",
+        "laravel/tinker": "^2.7",
+        "laravel/ui": "^3.4",
+        "league/flysystem-aws-s3-v3": "^3.0",
         "maatwebsite/excel": "^3.1",
-        "nesbot/carbon": "^2.50",
-        "stripe/stripe-php": "^7.89"
+        "nesbot/carbon": "^2.57",
+        "psr/simple-cache": "^1.0",
+        "stripe/stripe-php": "^7.124"
     },
     "require-dev": {
-        "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
-        "laravel/ui": "^3.3",
         "laravel/sail": "^1.0.1",
-        "mockery/mockery": "^1.4.2",
-        "nunomaduro/collision": "^5.0",
-        "phpunit/phpunit": "^9.3.3"
+        "mockery/mockery": "^1.4.4",
+        "nunomaduro/collision": "^6.1",
+        "phpunit/phpunit": "^9.5.10",
+        "spatie/laravel-ignition": "^1.0"
     },
     "autoload": {
         "psr-4": {
@@ -48,6 +47,9 @@
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
         ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
@@ -57,8 +59,7 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": [
-            ]
+            "dont-discover": []
         }
     },
     "config": {

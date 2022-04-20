@@ -58,7 +58,7 @@ $subMenu = 'photo';
                     <tbody>
                         @foreach($photos as $photo)
                         <tr>
-                            <td>{{ ($photo->type === 'stock') ? App\Constants\PhotoType::Stock : App\Constants\PhotoType::Contact }}</td>
+                            <td>{{ ($photo->type === 'stock') ? App\Enums\PhotoType::Stock->value : App\Enums\PhotoType::Contact->value }}</td>
                             <td>{{ $photo->fileName }}</td>
                             <td>
                               @if ($photo->type === 'stock')

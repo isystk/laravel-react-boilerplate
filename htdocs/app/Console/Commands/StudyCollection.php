@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Stock;
 use App\Models\User;
 use App\Models\ContactForm;
-use App\Constants\Gender;
+use App\Enums\Gender;
 
 use Illuminate\Console\Command;
 
