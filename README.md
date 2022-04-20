@@ -272,6 +272,7 @@ $ open http://localhost:9000/laraec.isystk.com/front.png
 
 ## 💬 使い方
 
+各種デーモンを起動する
 ```
 # 下準備
 $ ./dc.sh init
@@ -283,32 +284,43 @@ $ ./dc.sh start
 
 # MySQLにログインしてみる
 $ ./dc.sh mysql login
+```
 
+バックエンド環境を構築する
+```
 # PHPサーバーにログインしてみる（composer や artisan などのコマンドは基本的にここで行う）
 $ ./dc.sh php login
 
 # .envをコピーする
 > cp .env.example .env
 
+# モジュールをダウンロード
+> composer update
+
 # encryption keyを生成する
 > php artisan key:generate
 
-# モジュールをダウンロード
-> composer update
+# キャッシュをクリアする
 > php artisan cache:clear
 > php artisan config:clear
+
 # テーブルとテストデータの作成
 > php artisan migrate:fresh --seed
-> chmod 777 -R bootstrap/cache
-> hmod 777 -R storage
 
-# テスト用の画像をS3（Minio）にアップロードします。
+# ディレクトリにアクセス権限を付与
+> chmod 777 -R bootstrap/cache
+> chmod 777 -R storage
+
+# テスト用の画像をS3（Minio）にアップロードします。※事前に minioをセットアップしておくこと
 > php artisan s3upload
 
 # アップロードした画像を参照できるようにシンボリックリンクを作成する
 > cd public
 > ln -s ../storage/app/public uploads
+```
 
+フロントエンド環境を構築する
+```
 # フロントエンドをビルドする。
 $ cd htdocs
 $ yarn && yarn run dev
