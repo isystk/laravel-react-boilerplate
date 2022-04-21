@@ -16,7 +16,7 @@ type Props = {
   readConsts: () => void
 }
 
-class ReactRoot extends React.Component<Props> {
+class ReactRoot extends React.Component<Props, any> {
   constructor(props: Props | Readonly<Props>) {
     super(props)
     // セッションのセット

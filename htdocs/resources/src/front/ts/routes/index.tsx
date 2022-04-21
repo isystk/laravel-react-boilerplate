@@ -4,7 +4,6 @@ import { URL } from '../common/constants/url'
 
 import Layout from '../components/Layout'
 import CardTemplate from '../components/CardTemplate'
-import Fcm from '../components/Firebase/Fcm'
 import ShopTop from '../components/Shops/ShopTop'
 import MyCart from '../containers/Shops/MyCart'
 import ShopComplete from '../containers/Shops/ShopComplete'
@@ -20,7 +19,6 @@ const routes = (session: string) => {
         <main className="main">
           <Switch>
             <Route exact path={URL.TOP} component={ShopTop} />
-            <Route exact path={URL.FCM} component={Fcm} />
             <Route exact path={URL.LOGIN} render={() => <CardTemplate title="ログイン" content="LoginForm" />} />
             <Route exact path={URL.REGISTER} render={() => <CardTemplate title="新規登録" content="RegisterForm" />} />
             <Route
