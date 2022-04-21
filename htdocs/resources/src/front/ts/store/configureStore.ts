@@ -1,10 +1,11 @@
-import { createBrowserHistory } from "history";
+import { createBrowserHistory, History } from "history";
 import createRootReducer from "../reducers";
 import { persistReducer } from "redux-persist";
 import { routerMiddleware } from "connected-react-router";
 import storage from "redux-persist/lib/storage";
 import thunk from "redux-thunk";
 import { configureStore } from "@reduxjs/toolkit";
+import LocationState = History.LocationState;
 
 const persistConfig = {
     key: "root",
@@ -12,7 +13,7 @@ const persistConfig = {
     blacklist: ["router"]
 };
 
-export const history = createBrowserHistory();
+export const history: History<LocationState> = createBrowserHistory();
 
 const persistedReducer = persistReducer(
     persistConfig,
