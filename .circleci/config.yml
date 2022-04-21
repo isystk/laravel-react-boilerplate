@@ -27,10 +27,7 @@ jobs:
           name: Install php-gd
           command: |
             sudo apt-get -y install libpng-dev  
-            sudo docker-php-ext-install  gd 
 
-      - run: sudo docker-php-ext-install pdo_mysql
- 
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "htdocs/composer.json" }}
