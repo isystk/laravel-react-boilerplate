@@ -152,6 +152,14 @@
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/laravel/serializable-closure" />
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/league/config" />
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/psr/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/laravel/sanctum" />
+      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/spatie/laravel-ignition" />
+      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/spatie/ignition" />
+      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/spatie/flare-client-php" />
+      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/spatie/backtrace" />
+      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/symfony/mailer" />
+      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/barryvdh/laravel-cors" />
+      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/fruitcake/php-cors" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -310,6 +310,7 @@ $ ./dc.sh php login
 # ディレクトリにアクセス権限を付与
 > chmod 777 -R bootstrap/cache
 > chmod 777 -R storage
+> chmod 777 -R resources/excel
 
 # テスト用の画像をS3（Minio）にアップロードします。※事前に minioをセットアップしておくこと
 > php artisan s3upload

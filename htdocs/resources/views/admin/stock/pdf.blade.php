@@ -49,7 +49,7 @@ page-break-inside: avoid;
 </style>
 </head>
 <body>
-    <p>__('stock.Stock List')</p>
+    <p>{{__('stock.Stock List')}}</p>
     <table>
       <thead>
       <tr>

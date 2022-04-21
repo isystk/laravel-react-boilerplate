@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/php:7.4-node-browsers
+      - image: cimg/php:8.1-browsers
         environment:
           - APP_DEBUG: true
           - APP_ENV: circleci
@@ -11,7 +11,7 @@ jobs:
           - DB_USERNAME: user
           - DB_PASSWORD: password
  
-      - image: circleci/mysql:8.0.25-ram
+      - image: cimg/mysql:8.0
         environment:
           - MYSQL_DATABASE: laraec
           - MYSQL_USER: user
@@ -83,4 +83,4 @@ workflows:
           - build
           filters:
             branches:
-              only: master
+              only: release/laravel8

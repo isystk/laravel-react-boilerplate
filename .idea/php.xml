@@ -145,9 +145,17 @@
       <path value="$PROJECT_DIR$/htdocs/vendor/laravel/serializable-closure" />
       <path value="$PROJECT_DIR$/htdocs/vendor/league/config" />
       <path value="$PROJECT_DIR$/htdocs/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/htdocs/vendor/laravel/sanctum" />
+      <path value="$PROJECT_DIR$/htdocs/vendor/spatie/laravel-ignition" />
+      <path value="$PROJECT_DIR$/htdocs/vendor/spatie/ignition" />
+      <path value="$PROJECT_DIR$/htdocs/vendor/spatie/flare-client-php" />
+      <path value="$PROJECT_DIR$/htdocs/vendor/spatie/backtrace" />
+      <path value="$PROJECT_DIR$/htdocs/vendor/symfony/mailer" />
+      <path value="$PROJECT_DIR$/htdocs/vendor/barryvdh/laravel-cors" />
+      <path value="$PROJECT_DIR$/htdocs/vendor/fruitcake/php-cors" />
     </include_path>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="7.3" />
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
   <component name="PhpUnit">
     <phpunit_settings>
       <PhpUnitSettings custom_loader_path="$PROJECT_DIR$/htdocs/vendor/autoload.php" />

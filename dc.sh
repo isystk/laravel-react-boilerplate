@@ -21,9 +21,10 @@ Options:
   mysql import <PAHT>      MySQLデータベースにdumpファイルをインポートします。
   mysql restart            MySQLデータベースを再起動します。
   php login                PHP-FPMのサーバーにログインします。
-  php cache                Laravelのキャッシュをクリアします。
+  php cache                Laravelのキャッシュをリフレッシュします。
   php migrate              Laravelのマイグレードを実行します。
   php seed                 Laravelのテストデータを登録します。
+  php test                 Laravelのテストケースを実行します。
   build                    フロントエンドをビルドします。
   build prod               本番用にフロントエンドをビルドします。
   --version, -v     バージョンを表示します。
@@ -106,7 +107,7 @@ case ${1} in
               $DOCKER_COMPOSE exec php /bin/bash -c "php artisan serve --host 0.0.0.0"
           ;;
           cache)
-              $DOCKER_COMPOSE exec php /bin/bash -c "php artisan config:cache && php artisan route:clear && rm bootstrap/cache/config.php && php artisan cache:clear"
+              $DOCKER_COMPOSE exec php /bin/bash -c "php artisan route:clear && rm htdocs/bootstrap/cache/config.php && php artisan cache:clear && php artisan route:cache && php artisan config:cache "
           ;;
           migrate)
               $DOCKER_COMPOSE exec php /bin/bash -c "php artisan migrate:fresh && php artisan migrate:refresh"
