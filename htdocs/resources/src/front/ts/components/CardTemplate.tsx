@@ -1,41 +1,40 @@
-import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { Container, Row, Col, Card } from 'react-bootstrap'
-import ContentSelector from './ContentSelector'
-import { setPrams } from '../actions/auth'
-import PropTypes from 'prop-types'
+import React, { useEffect, VFC } from "react";
+import { useDispatch } from "react-redux";
+import { Container, Row, Col, Card } from "react-bootstrap";
+import ContentSelector from "./ContentSelector";
+import { setPrams } from "@/actions/auth";
 
-const CardTemplate = props => {
-  const dispatch = useDispatch()
+type Props = {
+    title: string;
+    content: string;
+    params?: { match: { params: any } };
+};
 
-  useEffect(() => {
-    if (props.params !== undefined) {
-      dispatch(setPrams(props.params))
-    }
-  }, [])
+const CardTemplate: VFC<Props> = ({ title, content, params }) => {
+    const dispatch = useDispatch();
 
-  return (
-    <>
-      <Container>
-        <Row className="justify-content-center">
-          <Col md="8">
-            <Card>
-              <Card.Header>{props.title}</Card.Header>
-              <Card.Body>
-                <ContentSelector content={props.content} />
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-    </>
-  )
-}
+    useEffect(() => {
+        if (params) {
+            dispatch(setPrams(params));
+        }
+    }, []);
 
-CardTemplate.propTypes = {
-  title: PropTypes.string,
-  content: PropTypes.string,
-  params: PropTypes.object,
-}
+    return (
+        <>
+            <Container>
+                <Row className="justify-content-center">
+                    <Col md="8">
+                        <Card>
+                            <Card.Header>{title}</Card.Header>
+                            <Card.Body>
+                                <ContentSelector content={content} />
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
+            </Container>
+        </>
+    );
+};
 
-export default CardTemplate
+export default CardTemplate;

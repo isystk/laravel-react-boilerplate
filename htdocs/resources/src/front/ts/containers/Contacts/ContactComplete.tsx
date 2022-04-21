@@ -1,13 +1,13 @@
-import { connect } from 'react-redux'
-import { push } from 'connected-react-router'
-import ContactComplete from '../../components/Contacts/ContactComplete'
+import { connect } from "react-redux";
+import { push } from "connected-react-router";
+import ContactComplete from "../../components/Contacts/ContactComplete";
 
 const mapStateToProps = () => {
-  return {}
-}
+    return {};
+};
 
 const mapDispatchToProps = {
-  push,
-}
+    push
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContactComplete)
+export default connect(mapStateToProps, mapDispatchToProps)(ContactComplete);

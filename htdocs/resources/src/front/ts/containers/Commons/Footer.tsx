@@ -1,6 +1,6 @@
-import { connect } from 'react-redux'
-import CommonFooter from '../../components/Commons/Footer'
+import { connect } from "react-redux";
+import CommonFooter from "../../components/Commons/Footer";
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {};
 
-export default connect(null, mapDispatchToProps)(CommonFooter)
+export default connect(null, mapDispatchToProps)(CommonFooter);

@@ -1,8 +1,7 @@
 {
   "env": {
     "browser": true,
-    "commonjs": true,
-    "es2021": true // Globalオブジェクト「window」「document」を許可
+    "es2021": true
   },
   "extends": [
     "eslint:recommended",
@@ -13,6 +12,7 @@
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
+    "project": "./tsconfig.json",
     "ecmaFeatures": {
       "jsx": true
     },
@@ -23,16 +23,7 @@
     "@typescript-eslint"
   ],
   "rules": {
-    "prettier/prettier": [
-        "error",
-        {
-            "printWidth": 120,
-            "tabWidth": 2,
-            "trailingComma": "all",
-            "bracketSpacing": true,
-            "singleQuote": true,
-            "semi": false
-        }
-    ]
-}
+    "react/prop-types": "off", // https://cpoint-lab.co.jp/article/202107/20531/
+    "@typescript-eslint/ban-ts-comment": "off" // https://stackoverflow.com/questions/59729654/how-ignore-typescript-errors-with-ts-ignore
+  }
 }
