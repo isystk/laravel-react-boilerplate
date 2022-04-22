@@ -1,4 +1,4 @@
-import { Auth } from "../store/StoreTypes";
+import { Auth } from "@/stores/StoreTypes";
 import {
     AuthAppAction,
     SET_SESSION,

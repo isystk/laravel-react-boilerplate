@@ -1,5 +1,5 @@
-import { Carts } from "../store/StoreTypes";
-import { CartsAppAction, READ_CARTS } from "../actions/index";
+import { Carts } from "@/stores/StoreTypes";
+import { CartsAppAction, READ_CARTS } from "@/services/actions/index";
 
 const initialState: Carts = {
     data: [],

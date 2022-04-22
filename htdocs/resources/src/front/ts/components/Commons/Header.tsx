@@ -1,21 +1,25 @@
 import React, { FC, useState } from "react";
 import { NavDropdown, Form } from "react-bootstrap";
-import CSRFToken from "../../components/Elements/CSRFToken";
-import { URL } from "../../constants/url";
-import { useHeader } from "./Header.hooks";
+import CSRFToken from "@/components/Elements/CSRFToken";
+import { URL } from "@/constants/url";
 import Logo from "@/components/Commons/Logo";
+import {useDispatch, useSelector} from "react-redux";
+import {Auth} from "@/stores/StoreTypes";
+import {push} from "connected-react-router";
+
+type IRoot = {
+    auth: Auth
+}
 
 export const CommonHeader: FC = () => {
-    const {
-        auths,
-        push_login,
-        push_register,
-        push_mycart,
-        push_contact
-    } = useHeader();
-    const [isSideMenu, setSideMenu] = useState(false);
+    const dispatch = useDispatch();
+    const push_login = () => dispatch(push(URL.LOGIN));
+    const push_register = () => dispatch(push(URL.REGISTER));
+    const push_mycart = () => dispatch(push(URL.MYCART));
+    const push_contact = () => dispatch(push(URL.CONTACT));
 
-    const { auth, name } = auths;
+    const [isSideMenu, setSideMenu] = useState(false);
+    const { auth, name } = useSelector<IRoot, Auth>((state) => state.auth);
 
     const renderLoginPc = (): JSX.Element => {
         return (

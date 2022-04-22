@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDom from "react-dom";
 import { persistStore } from "redux-persist";
-import myConfigureStore, { history } from "@/store/configureStore";
+import myConfigureStore, { history } from "@/stores/configureStore";
 import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import axios from "axios";

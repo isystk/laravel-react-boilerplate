@@ -1,5 +1,5 @@
 import { Action } from "redux";
-import { Auth } from "../store/StoreTypes";
+import { Auth } from "@/stores/StoreTypes";
 
 /**
  * APIで返却されるデータ型を定義

@@ -1,7 +1,7 @@
 import * as _ from "lodash";
 
-import { Consts } from "../store/StoreTypes";
-import { ConstsAppAction, READ_CONSTS } from "../actions/index";
+import { Consts } from "@/stores/StoreTypes";
+import { ConstsAppAction, READ_CONSTS } from "@/services/actions/index";
 
 const initialState: Consts = {};
 

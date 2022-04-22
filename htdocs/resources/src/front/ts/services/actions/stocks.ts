@@ -1,9 +1,9 @@
 import { Action } from "redux";
 // import { createAsyncThunk } from '@reduxjs/toolkit'
 import { Dispatch } from "redux";
-import { API_ENDPOINT } from "../constants/api";
-import { API } from "../utilities";
-import { Stock } from "../store/StoreTypes";
+import { API_ENDPOINT } from "@/constants/api";
+import { API } from "@/utilities/api";
+import { Stock } from "@/stores/StoreTypes";
 
 /**
  * APIで返却されるデータ型を定義

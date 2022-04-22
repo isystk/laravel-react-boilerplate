@@ -18,9 +18,9 @@ import * as Yup from "yup";
 import { API_ENDPOINT } from "@/constants/api";
 import { URL } from "@/constants/url";
 import CSRFToken from "@/components/Elements/CSRFToken";
-import { API } from "@/utilities";
+import { API } from "@/utilities/api";
 import { connect } from "react-redux";
-import { hideLoading, showLoading } from "@/actions";
+import { hideLoading, showLoading } from "@/services/actions";
 import { push } from "connected-react-router";
 
 type Props = {

@@ -1,9 +1,9 @@
 import { Action } from "redux";
 import { Dispatch } from "redux";
-import { URL } from "../constants/url";
-import { API_ENDPOINT } from "../constants/api";
-import { API } from "../utilities";
-import { Carts } from "../store/StoreTypes";
+import { URL } from "@/constants/url";
+import { API_ENDPOINT } from "@/constants/api";
+import { API } from "@/utilities/api";
+import { Carts } from "@/stores/StoreTypes";
 import { push } from "connected-react-router";
 
 /**

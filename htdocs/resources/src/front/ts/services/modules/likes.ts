@@ -3,9 +3,9 @@
  */
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Likes } from "../store/StoreTypes";
-import { API_ENDPOINT } from "../constants/api";
-import { API } from "../utilities";
+import { Likes } from "@/stores/StoreTypes";
+import { API_ENDPOINT } from "@/constants/api";
+import { API } from "@/utilities/api";
 
 const initialState: Likes = {
     data: []

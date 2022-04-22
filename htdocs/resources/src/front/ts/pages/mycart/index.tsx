@@ -4,9 +4,14 @@ import { Elements, StripeProvider } from "react-stripe-elements";
 import CheckoutForm from "@/components/Shops/CheckoutForm";
 import Modal from "@/components/Commons/Modal";
 import { Button } from "react-bootstrap";
-import { Auth, Carts, Consts } from "@/store/StoreTypes";
+import { Auth, Carts, Consts } from "@/stores/StoreTypes";
 
-import { readCarts, removeCart, showOverlay, hideOverlay } from "../../actions";
+import {
+    readCarts,
+    removeCart,
+    showOverlay,
+    hideOverlay
+} from "@/services/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { push } from "connected-react-router";
 import Layout from "@/components/Layout";

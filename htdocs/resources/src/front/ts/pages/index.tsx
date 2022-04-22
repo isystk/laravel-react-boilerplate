@@ -1,14 +1,18 @@
 import React, { FC, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { API } from "@/utilities";
-import { readLikesAsync, addLikeAsync, removeLikeAsync } from "@/modules/likes";
-import { readStocks, showLoading, hideLoading } from "../actions";
+import { API } from "@/utilities/api";
+import {
+    readLikesAsync,
+    addLikeAsync,
+    removeLikeAsync
+} from "@/services/modules/likes";
+import { readStocks, showLoading, hideLoading } from "@/services/actions";
 import { API_ENDPOINT } from "@/constants/api";
 import Pagination from "react-js-pagination";
 import { URL } from "@/constants/url";
 import { push } from "connected-react-router";
 import TopCarousel from "../components/TopCarousel";
-import { Stock } from "@/store/StoreTypes";
+import { Stock } from "@/stores/StoreTypes";
 import Layout from "@/components/Layout";
 
 type State = {

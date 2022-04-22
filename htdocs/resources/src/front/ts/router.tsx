@@ -3,7 +3,7 @@ import { ConnectedRouter } from "connected-react-router";
 import { History } from "history";
 import LocationState = History.LocationState;
 import { useDispatch } from "react-redux";
-import { setSession, setCSRF, readConsts } from "./actions";
+import { setSession, setCSRF, readConsts } from "@/services/actions";
 import { Route, Switch } from "react-router";
 import { URL } from "@/constants/url";
 
@@ -36,13 +36,7 @@ const Router: FC<Props> = ({ responseSession, history }) => {
             // 定数のセット
             await dispatch(readConsts());
         })();
-        // // if (window.laravelErrors['name'] === undefined
-        //   && window.laravelErrors['email'] === undefined
-        //   && window.laravelErrors['password'] === undefined) {
-        //   dispatch(setName(''))
-        //   dispatch(setEmail(''))
-        //   dispatch(setRemember(false))
-        // }
+
         // CSRFのセット
         const token = document.head.querySelector<HTMLMetaElement>(
             'meta[name="csrf-token"]'

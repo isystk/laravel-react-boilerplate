@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { useSelector } from "react-redux";
 import Portal from "./Portal";
-import { Parts } from "../../store/StoreTypes";
+import { Parts } from "@/stores/StoreTypes";
 
 const Loading: FC = () => {
     const { isShowLoading } = useSelector(parts);

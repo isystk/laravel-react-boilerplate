@@ -5,7 +5,7 @@ import SubmitButton from "@/components/Elements/SubmitButton";
 import CSRFToken from "@/components/Elements/CSRFToken";
 import SessionAlert from "@/components/Elements/SessionAlert";
 import { connect } from "react-redux";
-import { setEmail } from "@/actions";
+import { setEmail } from "@/services/actions";
 import Box from "@/components/Box";
 import Layout from "@/components/Layout";
 

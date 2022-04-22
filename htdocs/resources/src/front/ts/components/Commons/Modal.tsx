@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Portal from "./Portal";
-import { Parts } from "../../store/StoreTypes";
-import { hideOverlay } from "../../actions";
+import { Parts } from "@/stores/StoreTypes";
+import { hideOverlay } from "@/services/actions";
 import PropTypes from "prop-types";
 
 const Modal: FC = props => {

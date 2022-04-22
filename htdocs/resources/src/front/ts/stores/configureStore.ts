@@ -1,5 +1,5 @@
 import { createBrowserHistory, History } from "history";
-import createRootReducer from "../reducers";
+import createRootReducer from "@/services/reducers";
 import { persistReducer } from "redux-persist";
 import { routerMiddleware } from "connected-react-router";
 import storage from "redux-persist/lib/storage";

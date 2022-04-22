@@ -1,11 +1,11 @@
-import { Parts } from "../store/StoreTypes";
+import { Parts } from "@/stores/StoreTypes";
 import {
     PartsAppAction,
     SHOW_OVERLAY,
     HIDE_OVERLAY,
     SHOW_LOADING,
     HIDE_LOADING
-} from "../actions/index";
+} from "@/services/actions/index";
 import produce from "immer";
 
 const initialState: Parts = {

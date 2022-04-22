@@ -1,6 +1,6 @@
 import { createReducer, PayloadAction } from "@reduxjs/toolkit";
-import { StocksAppAction, READ_STOCKS } from "../actions";
-import { Stock } from "../store/StoreTypes";
+import { StocksAppAction, READ_STOCKS } from "@/services/actions";
+import { Stock } from "@/stores/StoreTypes";
 
 const initialState = {
     current_page: 1,

@@ -1,6 +1,6 @@
 import { Action } from "redux";
-import { API_ENDPOINT } from "../constants/api";
-import { API } from "../utilities";
+import { API_ENDPOINT } from "@/constants/api";
+import { API } from "@/utilities/api";
 
 /**
  * APIで返却されるデータ型を定義

@@ -4,7 +4,7 @@ import TextInput from "@/components/Elements/TextInput";
 import SubmitButton from "@/components/Elements/SubmitButton";
 import CSRFToken from "@/components/Elements/CSRFToken";
 import { connect } from "react-redux";
-import { setEmail, setName } from "@/actions";
+import { setEmail, setName } from "@/services/actions";
 import Box from "@/components/Box";
 import Layout from "@/components/Layout";
 
