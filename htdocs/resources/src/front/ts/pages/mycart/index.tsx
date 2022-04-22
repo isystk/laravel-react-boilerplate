@@ -4,36 +4,41 @@ import { Elements, StripeProvider } from "react-stripe-elements";
 import CheckoutForm from "@/components/Shops/CheckoutForm";
 import Modal from "@/components/Commons/Modal";
 import { Button } from "react-bootstrap";
-import { Auth, Carts } from "@/store/StoreTypes";
+import { Auth, Carts, Consts } from "@/store/StoreTypes";
 
-type Props = {
+import { readCarts, removeCart, showOverlay, hideOverlay } from "../../actions";
+import { useDispatch, useSelector } from "react-redux";
+import { push } from "connected-react-router";
+import Layout from "@/components/Layout";
+import { FC, useEffect } from "react";
+
+type IRoot = {
     auth: Auth;
-    stripe_key: string;
+    consts: Consts;
     carts: Carts;
-    push;
-    readCarts;
-    removeCart;
-    showOverlay;
-    hideOverlay;
 };
 
-export class MyCart extends React.Component<Props> {
-    constructor(props) {
-        super(props);
+const MyCart: FC = () => {
+    const dispatch = useDispatch();
+    const auth = useSelector<IRoot, Auth>(state => state.auth);
+    const stripe_key = useSelector<IRoot, string>(
+        state => state.consts.stripe_key?.data + ""
+    );
+    const carts = useSelector<IRoot, Carts>(state => state.carts);
 
+    useEffect(() => {
         // マイカートデータを取得する
-        this.props.readCarts();
-    }
-
-    componentWillUnmount(): void {
+        dispatch(readCarts());
         // オーバーレイを閉じる
-        this.props.hideOverlay();
-    }
+        return () => {
+            dispatch(hideOverlay());
+        };
+    }, []);
 
-    renderCarts(): JSX.Element {
+    const renderCarts = (): JSX.Element => {
         return (
             <>
-                {this.props.carts.data.map((cart, index) => (
+                {carts.data.map((cart, index) => (
                     <div className="block01_item" key={index}>
                         <img
                             src={`/uploads/stock/${cart.imgpath}`}
@@ -47,146 +52,104 @@ export class MyCart extends React.Component<Props> {
                             value="カートから削除する"
                             className="btn-01"
                             onClick={() => {
-                                this.props.removeCart(cart.id);
+                                dispatch(removeCart(cart.id));
                             }}
                         />
                     </div>
                 ))}
             </>
         );
-    }
+    };
 
-    render(): JSX.Element {
-        return (
-            <Layout>
-                <main className="main">
-                    <div className="contentsArea">
-                        <h2 className="heading02">
-                            {this.props.auth.name}さんのカートの中身
-                        </h2>
+    return (
+        <Layout>
+            <main className="main">
+                <div className="contentsArea">
+                    <h2 className="heading02">{auth.name}さんのカートの中身</h2>
 
-                        <div>
-                            <p className="text-center mt20">
-                                {this.props.carts.message}
-                            </p>
-                            <br />
+                    <div>
+                        <p className="text-center mt20">{carts.message}</p>
+                        <br />
 
-                            {(() => {
-                                if (this.props.carts.data.length === 0) {
-                                    return (
-                                        <p className="text-center">
-                                            カートに商品がありません。
-                                        </p>
-                                    );
-                                } else {
-                                    return (
-                                        <>
-                                            <div className="block01">
-                                                {this.renderCarts()}
-                                            </div>
-                                            <div className="block02">
-                                                <p>
-                                                    合計個数：
-                                                    {this.props.carts.count}個
-                                                </p>
-                                                <p
-                                                    style={{
-                                                        fontSize: "1.2em",
-                                                        fontWeight: "bold"
-                                                    }}
-                                                >
-                                                    合計金額：
-                                                    {this.props.carts.sum}円
-                                                </p>
-                                            </div>
-                                            <div
+                        {(() => {
+                            if (carts.data.length === 0) {
+                                return (
+                                    <p className="text-center">
+                                        カートに商品がありません。
+                                    </p>
+                                );
+                            } else {
+                                return (
+                                    <>
+                                        <div className="block01">
+                                            {renderCarts()}
+                                        </div>
+                                        <div className="block02">
+                                            <p>
+                                                合計個数：
+                                                {carts.count}個
+                                            </p>
+                                            <p
                                                 style={{
-                                                    margin: "40px 15px",
-                                                    textAlign: "center"
+                                                    fontSize: "1.2em",
+                                                    fontWeight: "bold"
                                                 }}
                                             >
-                                                <Button
-                                                    type="submit"
-                                                    variant="primary"
-                                                    onClick={e => {
-                                                        e.preventDefault();
-                                                        this.props.showOverlay();
-                                                    }}
-                                                >
-                                                    決済をする
-                                                </Button>
-                                            </div>
-                                            <Modal>
-                                                <StripeProvider
-                                                    apiKey={
-                                                        this.props.stripe_key
-                                                    }
-                                                >
-                                                    <Elements>
-                                                        <CheckoutForm
-                                                            amount={
-                                                                this.props.carts
-                                                                    .sum
-                                                            }
-                                                            username={
-                                                                this.props.carts
-                                                                    .username
-                                                            }
-                                                        />
-                                                    </Elements>
-                                                </StripeProvider>
-                                            </Modal>
-                                        </>
-                                    );
-                                }
-                            })()}
+                                                合計金額：
+                                                {carts.sum}円
+                                            </p>
+                                        </div>
+                                        <div
+                                            style={{
+                                                margin: "40px 15px",
+                                                textAlign: "center"
+                                            }}
+                                        >
+                                            <Button
+                                                type="submit"
+                                                variant="primary"
+                                                onClick={e => {
+                                                    e.preventDefault();
+                                                    dispatch(showOverlay());
+                                                }}
+                                            >
+                                                決済をする
+                                            </Button>
+                                        </div>
+                                        <Modal>
+                                            <StripeProvider apiKey={stripe_key}>
+                                                <Elements>
+                                                    <CheckoutForm
+                                                        amount={carts.sum}
+                                                        username={
+                                                            carts.username
+                                                        }
+                                                    />
+                                                </Elements>
+                                            </StripeProvider>
+                                        </Modal>
+                                    </>
+                                );
+                            }
+                        })()}
 
-                            <p className="mt30 ta-center">
-                                <a
-                                    href={URL.TOP}
-                                    className="text-danger btn"
-                                    onClick={e => {
-                                        e.preventDefault();
-                                        this.props.push(URL.TOP);
-                                    }}
-                                >
-                                    商品一覧へ戻る
-                                </a>
-                            </p>
-                        </div>
+                        <p className="mt30 ta-center">
+                            <a
+                                href={URL.TOP}
+                                className="text-danger btn"
+                                onClick={e => {
+                                    e.preventDefault();
+                                    dispatch(push(URL.TOP));
+                                }}
+                            >
+                                商品一覧へ戻る
+                            </a>
+                        </p>
                     </div>
-                </main>
-            </Layout>
-        );
-    }
-}
-
-import { readCarts, removeCart, showOverlay, hideOverlay } from "../../actions";
-import { connect } from "react-redux";
-import { push } from "connected-react-router";
-import Layout from "@/components/Layout";
-
-const mapStateToProps = state => {
-    const { stripe_key } = state.consts;
-
-    return {
-        auth: state.auth,
-        stripe_key: stripe_key.data,
-        carts: state.carts,
-        url: {
-            pathname: state.router.location.pathname,
-            search: state.router.location.search,
-            hash: state.router.location.hash
-        }
-    };
+                </div>
+            </main>
+        </Layout>
+    );
 };
 
-const mapDispatchToProps = {
-    push,
-    readCarts,
-    removeCart,
-    showOverlay,
-    hideOverlay
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(MyCart);
+export default MyCart;
