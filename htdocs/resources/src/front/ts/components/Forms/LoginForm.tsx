@@ -3,8 +3,10 @@ import React from "react";
 import { Form, Input, Col, Row } from "reactstrap";
 import TextInput from "../Elements/TextInput";
 import LoginButton from "../Elements/LoginButton";
-import CSRFToken from "../../containers/Elements/CSRFToken";
+import CSRFToken from "../../components/Elements/CSRFToken";
 import ReCAPTCHA from "react-google-recaptcha";
+import { connect } from "react-redux";
+import { setEmail, setRemember } from "@/actions";
 
 type Props = {
     email: string;
@@ -108,4 +110,14 @@ class LoginForm extends React.Component<Props, States> {
     }
 }
 
-export default LoginForm;
+const mapStateToProps = state => ({
+    email: state.email,
+    remember: state.remember
+});
+
+const mapDispatchToProps = dispatch => ({
+    setEmail: email => dispatch(setEmail(email)),
+    setRemember: remember => dispatch(setRemember(remember))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

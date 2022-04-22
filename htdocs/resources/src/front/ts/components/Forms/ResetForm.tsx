@@ -2,9 +2,11 @@ import React from "react";
 import { Form } from "react-bootstrap";
 import TextInput from "../Elements/TextInput";
 import SubmitButton from "../Elements/SubmitButton";
-import CSRFToken from "../../containers/Elements/CSRFToken";
+import CSRFToken from "../../components/Elements/CSRFToken";
 import RequestToken from "../Elements/RequestToken";
 import SessionAlert from "../Elements/SessionAlert";
+import { connect } from "react-redux";
+import { setEmail } from "@/actions";
 
 type Props = {
     email;
@@ -50,4 +52,12 @@ class ResetForm extends React.Component<Props> {
     }
 }
 
-export default ResetForm;
+const mapStateToProps = state => ({
+    email: state.email
+});
+
+const mapDispatchToProps = dispatch => ({
+    setEmail: email => dispatch(setEmail(email))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ResetForm);

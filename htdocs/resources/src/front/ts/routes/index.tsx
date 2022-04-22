@@ -4,12 +4,12 @@ import { URL } from "@/common/constants/url";
 
 import Layout from "@/components/Layout";
 import CardTemplate from "@/components/CardTemplate";
-import ShopTop from "@/components/Shops/ShopTop";
-import MyCart from "@/containers/Shops/MyCart";
-import ShopComplete from "@/containers/Shops/ShopComplete";
-import ContactCreate from "@/containers/Contacts/ContactCreate";
-import ContactComplete from "@/containers/Contacts/ContactComplete";
-import AuthCheck from "@/containers/Auths/AuthCheck";
+import ShopTop from "@/pages";
+import MyCart from "@/pages/mycart";
+import ShopComplete from "@/components/Shops/ShopComplete";
+import ContactCreate from "@/components/Contacts/ContactCreate";
+import ContactComplete from "@/components/Contacts/ContactComplete";
+import AuthCheck from "@/components/Auths/AuthCheck";
 import NotFound from "@/components/NotFound";
 
 const routes = (session: string) => {

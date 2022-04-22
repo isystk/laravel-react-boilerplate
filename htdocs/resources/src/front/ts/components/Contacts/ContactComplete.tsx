@@ -1,11 +1,13 @@
 import * as React from "react";
 import { URL } from "../../common/constants/url";
+import { connect } from "react-redux";
+import { push } from "connected-react-router";
 
 type Props = {
     push;
 };
 
-export class ContactCreate extends React.Component<Props> {
+export class ContactComplete extends React.Component<Props> {
     constructor(props) {
         super(props);
     }
@@ -44,4 +46,12 @@ export class ContactCreate extends React.Component<Props> {
     }
 }
 
-export default ContactCreate;
+const mapStateToProps = () => {
+    return {};
+};
+
+const mapDispatchToProps = {
+    push
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactComplete);

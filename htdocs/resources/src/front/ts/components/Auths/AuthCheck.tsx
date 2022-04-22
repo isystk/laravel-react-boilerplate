@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Redirect } from "react-router";
+import { connect } from "react-redux";
 
 type Props = {
     session: { id: undefined };
@@ -34,4 +35,13 @@ export class AuthCheck extends React.Component<Props> {
     }
 }
 
-export default AuthCheck;
+const mapStateToProps = (state, ownProps) => {
+    console.log(state, ownProps);
+    return {
+        session: ownProps.session
+    };
+};
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthCheck);

@@ -2,7 +2,8 @@ import React from "react";
 import {
     CardNumberElement,
     CardExpiryElement,
-    CardCVCElement
+    CardCVCElement,
+    injectStripe
 } from "react-stripe-elements";
 import {
     Button,
@@ -14,10 +15,13 @@ import {
 } from "reactstrap";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { API_ENDPOINT } from "../../common/constants/api";
-import { URL } from "../../common/constants/url";
-import CSRFToken from "../../containers/Elements/CSRFToken";
-import { API } from "../../utilities";
+import { API_ENDPOINT } from "@/common/constants/api";
+import { URL } from "@/common/constants/url";
+import CSRFToken from "@/components/Elements/CSRFToken";
+import { API } from "@/utilities";
+import { connect } from "react-redux";
+import { hideLoading, showLoading } from "@/actions";
+import { push } from "connected-react-router";
 
 type Props = {
     stripe;
@@ -179,4 +183,20 @@ class CheckoutForm extends React.Component<Props> {
     }
 }
 
-export default CheckoutForm;
+const mapStateToProps = (state, ownProps) => {
+    console.log(state);
+    return {
+        amount: ownProps.amount,
+        username: ownProps.username
+    };
+};
+
+const mapDispatchToProps = {
+    push,
+    showLoading,
+    hideLoading
+};
+
+export default injectStripe(
+    connect(mapStateToProps, mapDispatchToProps)(CheckoutForm)
+);

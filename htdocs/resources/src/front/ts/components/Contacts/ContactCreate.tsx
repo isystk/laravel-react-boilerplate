@@ -3,13 +3,15 @@ import * as React from "react";
 import { Form, FormGroup, Label, Input } from "reactstrap";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import CSRFToken from "../../containers/Elements/CSRFToken";
+import CSRFToken from "../../components/Elements/CSRFToken";
 import { API } from "../../utilities";
 import { API_ENDPOINT } from "../../common/constants/api";
 import { URL } from "../../common/constants/url";
 
 import { Auth, Consts, KeyValue } from "../../store/StoreTypes";
 import ReactImageBase64 from "react-image-base64";
+import { connect } from "react-redux";
+import { push } from "connected-react-router";
 
 type State = {
     imageBase64?: string | null;
@@ -517,4 +519,16 @@ export class ContactCreate extends React.Component<Props, State> {
     }
 }
 
-export default ContactCreate;
+const mapStateToProps = state => {
+    const { auth, consts } = state;
+    return {
+        auth,
+        consts
+    };
+};
+
+const mapDispatchToProps = {
+    push
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactCreate);

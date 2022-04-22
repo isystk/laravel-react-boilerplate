@@ -1,18 +1,14 @@
 import React, { FC, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { API } from "../../utilities";
-import {
-    readLikesAsync,
-    addLikeAsync,
-    removeLikeAsync
-} from "../../modules/likes";
-import { readStocks, showLoading, hideLoading } from "../../actions";
-import { API_ENDPOINT } from "../../common/constants/api";
+import { API } from "@/utilities";
+import { readLikesAsync, addLikeAsync, removeLikeAsync } from "@/modules/likes";
+import { readStocks, showLoading, hideLoading } from "../actions";
+import { API_ENDPOINT } from "@/common/constants/api";
 import Pagination from "react-js-pagination";
-import { URL } from "../../common/constants/url";
+import { URL } from "@/common/constants/url";
 import { push } from "connected-react-router";
-import TopCarousel from "./TopCarousel";
-import { Stock } from "../../store/StoreTypes";
+import TopCarousel from "../components/Shops/TopCarousel";
+import { Stock } from "@/store/StoreTypes";
 
 type State = {
     stocks: {
@@ -24,7 +20,7 @@ type State = {
     likes;
 };
 
-const ShopTop: FC = () => {
+const Index: FC = () => {
     const { search } = useSelector((state: State) => ({
         pathname: state.router.location.pathname,
         search: state.router.location.search,
@@ -183,4 +179,4 @@ const ShopTop: FC = () => {
     );
 };
 
-export default ShopTop;
+export default Index;

@@ -2,7 +2,9 @@ import React from "react";
 import { Form } from "react-bootstrap";
 import TextInput from "../Elements/TextInput";
 import SubmitButton from "../Elements/SubmitButton";
-import CSRFToken from "../../containers/Elements/CSRFToken";
+import CSRFToken from "../../components/Elements/CSRFToken";
+import { connect } from "react-redux";
+import { setEmail, setName } from "@/actions";
 
 type Props = {
     name: string;
@@ -11,7 +13,7 @@ type Props = {
     setEmail;
 };
 
-class LoginForm extends React.Component<Props> {
+class RegisterForm extends React.Component<Props> {
     constructor(props) {
         super(props);
     }
@@ -54,4 +56,14 @@ class LoginForm extends React.Component<Props> {
     }
 }
 
-export default LoginForm;
+const mapStateToProps = state => ({
+    name: state.name,
+    email: state.email
+});
+
+const mapDispatchToProps = dispatch => ({
+    setName: name => dispatch(setName(name)),
+    setEmail: email => dispatch(setEmail(email))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);

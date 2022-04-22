@@ -1,8 +1,8 @@
 import React from "react";
-import LoginForm from "../containers/Forms/LoginForm";
-import RegisterForm from "../containers/Forms/RegisterForm";
-import EMailForm from "../containers/Forms/EMailForm";
-import ResetForm from "../containers/Forms/ResetForm";
+import LoginForm from "../components/Forms/LoginForm";
+import RegisterForm from "../components/Forms/RegisterForm";
+import EMailForm from "../components/Forms/EMailForm";
+import ResetForm from "../components/Forms/ResetForm";
 import Home from "./Forms/Home";
 import Verify from "./Forms/Verify";
 

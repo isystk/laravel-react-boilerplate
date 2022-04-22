@@ -2,7 +2,7 @@ import React, { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { hideLoading } from "@/actions";
 import CommonHeader from "@/components/Commons/Header";
-import CommonFooter from "@/containers/Commons/Footer";
+import CommonFooter from "@/components/Commons/Footer";
 import Loading from "@/components/Commons/Loading";
 
 const Layout: FC = ({ children }) => {

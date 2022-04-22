@@ -1,10 +1,10 @@
 import * as React from "react";
-import { URL } from "../../common/constants/url";
+import { URL } from "@/common/constants/url";
 import { Elements, StripeProvider } from "react-stripe-elements";
-import CheckoutForm from "../../containers/Forms/CheckoutForm";
-import Modal from "../Commons/Modal";
+import CheckoutForm from "@/components/Forms/CheckoutForm";
+import Modal from "@/components/Commons/Modal";
 import { Button } from "react-bootstrap";
-import { Auth, Carts } from "../../store/StoreTypes";
+import { Auth, Carts } from "@/store/StoreTypes";
 
 type Props = {
     auth: Auth;
@@ -152,4 +152,31 @@ export class MyCart extends React.Component<Props> {
     }
 }
 
-export default MyCart;
+import { readCarts, removeCart, showOverlay, hideOverlay } from "../../actions";
+import { connect } from "react-redux";
+import { push } from "connected-react-router";
+
+const mapStateToProps = state => {
+    const { stripe_key } = state.consts;
+
+    return {
+        auth: state.auth,
+        stripe_key: stripe_key.data,
+        carts: state.carts,
+        url: {
+            pathname: state.router.location.pathname,
+            search: state.router.location.search,
+            hash: state.router.location.hash
+        }
+    };
+};
+
+const mapDispatchToProps = {
+    push,
+    readCarts,
+    removeCart,
+    showOverlay,
+    hideOverlay
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyCart);
