@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { VFC } from "react";
 import { Form } from "react-bootstrap";
 import TextInput from "@/components/Elements/TextInput";
 import SubmitButton from "@/components/Elements/SubmitButton";
@@ -14,7 +14,7 @@ type Props = {
     email;
 };
 
-const ResetForm: FC<Props> = ({ email }) => {
+const ResetForm: VFC<Props> = ({ email }) => {
     const dispatch = useDispatch();
 
     const handleSetEmail = () => {

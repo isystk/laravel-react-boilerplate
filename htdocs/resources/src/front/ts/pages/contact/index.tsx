@@ -6,12 +6,12 @@ import * as Yup from "yup";
 import CSRFToken from "@/components/Elements/CSRFToken";
 import { API } from "@/utilities/api";
 import { API_ENDPOINT } from "@/constants/api";
-import { URL } from "@/constants/url";
+import { Url } from "@/constants/url";
 
 import { Auth, Carts, Consts, KeyValue } from "@/stores/StoreTypes";
 import ReactImageBase64 from "react-image-base64";
 import Layout from "@/components/Layout";
-import { FC, useState } from "react";
+import { VFC, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { push } from "connected-react-router";
 
@@ -21,7 +21,7 @@ type IRoot = {
     carts: Carts;
 };
 
-const ContactCreate: FC = () => {
+const ContactCreate: VFC = () => {
     const dispatch = useDispatch();
     const auth = useSelector<IRoot, Auth>(state => state.auth);
     const consts = useSelector<IRoot, Consts>(state => state.consts);
@@ -37,7 +37,7 @@ const ContactCreate: FC = () => {
 
         if (response.result) {
             // 完了画面を表示する
-            dispatch(push(URL.CONTACT_COMPLETE));
+            dispatch(push(Url.CONTACT_COMPLETE));
         }
     };
 

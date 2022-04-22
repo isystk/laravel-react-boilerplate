@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { useEffect, VFC } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { API } from "@/utilities/api";
 import {
@@ -9,7 +9,7 @@ import {
 import { readStocks, showLoading, hideLoading } from "@/services/actions";
 import { API_ENDPOINT } from "@/constants/api";
 import Pagination from "react-js-pagination";
-import { URL } from "@/constants/url";
+import { Url } from "@/constants/url";
 import { push } from "connected-react-router";
 import TopCarousel from "../components/TopCarousel";
 import { Stock } from "@/stores/StoreTypes";
@@ -25,7 +25,7 @@ type State = {
     likes;
 };
 
-const Index: FC = () => {
+const Index: VFC = () => {
     const { search } = useSelector((state: State) => ({
         pathname: state.router.location.pathname,
         search: state.router.location.search,
@@ -128,10 +128,10 @@ const Index: FC = () => {
                                                     type: "READ_CARTS",
                                                     response
                                                 });
-                                                dispatch(push(URL.MYCART));
+                                                dispatch(push(Url.MYCART));
                                             }
                                         } catch (e) {
-                                            dispatch(push(URL.LOGIN));
+                                            dispatch(push(Url.LOGIN));
                                         }
                                         // ローディングを非表示にする
                                         dispatch(hideLoading());
@@ -166,7 +166,7 @@ const Index: FC = () => {
         await dispatch(readStocks(`?page=${pageNo}`));
         // ローディングを非表示にする
         dispatch(hideLoading());
-        dispatch(push(`${URL.TOP}?page=${pageNo}`));
+        dispatch(push(`${Url.TOP}?page=${pageNo}`));
     };
 
     return (

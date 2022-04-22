@@ -1,12 +1,11 @@
-import React, { FC } from "react";
+import React, { VFC } from "react";
 import { useSelector } from "react-redux";
 import Portal from "./Portal";
 import { Parts } from "@/stores/StoreTypes";
 
-const Loading: FC = () => {
+const Loading: VFC = () => {
     const { isShowLoading } = useSelector(parts);
 
-    console.log("isShowLoading", isShowLoading);
     return (
         <Portal>
             {isShowLoading && (

@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { VFC, useState } from "react";
 
 import { Form, Input, Col, Row } from "reactstrap";
 import TextInput from "@/components/Elements/TextInput";
@@ -8,7 +8,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import Box from "@/components/Box";
 import Layout from "@/components/Layout";
 
-const LoginForm: FC = () => {
+const LoginForm: VFC = () => {
     const [recaptcha, setRecaptcha] = useState<string>("");
 
     return (

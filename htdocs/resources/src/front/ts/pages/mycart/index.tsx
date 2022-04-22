@@ -1,5 +1,5 @@
 import * as React from "react";
-import { URL } from "@/constants/url";
+import { Url } from "@/constants/url";
 import { Elements, StripeProvider } from "react-stripe-elements";
 import CheckoutForm from "@/components/Shops/CheckoutForm";
 import Modal from "@/components/Commons/Modal";
@@ -15,7 +15,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { push } from "connected-react-router";
 import Layout from "@/components/Layout";
-import { FC, useEffect } from "react";
+import { VFC, useEffect } from "react";
 
 type IRoot = {
     auth: Auth;
@@ -23,7 +23,7 @@ type IRoot = {
     carts: Carts;
 };
 
-const MyCart: FC = () => {
+const MyCart: VFC = () => {
     const dispatch = useDispatch();
     const auth = useSelector<IRoot, Auth>(state => state.auth);
     const stripe_key = useSelector<IRoot, string>(
@@ -140,11 +140,11 @@ const MyCart: FC = () => {
 
                         <p className="mt30 ta-center">
                             <a
-                                href={URL.TOP}
+                                href={Url.TOP}
                                 className="text-danger btn"
                                 onClick={e => {
                                     e.preventDefault();
-                                    dispatch(push(URL.TOP));
+                                    dispatch(push(Url.TOP));
                                 }}
                             >
                                 商品一覧へ戻る

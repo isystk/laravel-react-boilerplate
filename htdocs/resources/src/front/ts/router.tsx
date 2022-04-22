@@ -1,37 +1,37 @@
 import React, { FC, useEffect } from "react";
+import AuthCheck from "@/components/Auths/AuthCheck";
+import ContactComplete from "@/pages/contact/complete";
+import ContactCreate from "@/pages/contact";
+import EMailForm from "@/pages/password/reset";
+import Home from "@/pages/home";
+import LocationState = History.LocationState;
+import LoginForm from "@/pages/login";
+import MyCart from "@/pages/mycart";
+import NotFound from "@/components/NotFound";
+import RegisterForm from "@/pages/register";
+import ResetForm from "@/pages/password/reset/[id]";
+import ShopComplete from "@/pages/complete";
+import ShopTop from "@/pages";
+import Verify from "@/pages/email/verify";
 import { ConnectedRouter } from "connected-react-router";
 import { History } from "history";
-import LocationState = History.LocationState;
-import { useDispatch } from "react-redux";
-import { setSession, setCSRF, readConsts } from "@/services/actions";
 import { Route, Switch } from "react-router";
-import { URL } from "@/constants/url";
-
-import ShopTop from "@/pages";
-import MyCart from "@/pages/mycart";
-import ShopComplete from "@/pages/complete";
-import ContactCreate from "@/pages/contact";
-import ContactComplete from "@/pages/contact/complete";
-import AuthCheck from "@/components/Auths/AuthCheck";
-import NotFound from "@/components/NotFound";
-import LoginForm from "@/pages/login";
-import RegisterForm from "@/pages/register";
-import EMailForm from "@/pages/password/reset";
-import ResetForm from "@/pages/password/reset/[id]";
-import Verify from "@/pages/email/verify";
-import Home from "@/pages/home";
+import { Session } from "@/app";
+import { Url } from "@/constants/url";
+import { setSession, setCSRF, readConsts } from "@/services/actions";
+import { useDispatch } from "react-redux";
 
 type Props = {
-    responseSession: string;
+    session: Session;
     history: History<LocationState>;
 };
 
-const Router: FC<Props> = ({ responseSession, history }) => {
+const Router: FC<Props> = ({ session, history }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
         // セッションのセット
-        dispatch(setSession(responseSession));
+        dispatch(setSession(session));
         (async () => {
             // 定数のセット
             await dispatch(readConsts());
@@ -49,29 +49,29 @@ const Router: FC<Props> = ({ responseSession, history }) => {
     return (
         <ConnectedRouter history={history}>
             <Switch>
-                <Route exact path={URL.TOP} component={ShopTop} />
-                <Route exact path={URL.LOGIN} component={LoginForm} />
-                <Route exact path={URL.REGISTER} component={RegisterForm} />
-                <Route exact path={URL.PASSWORD_RESET} component={EMailForm} />
+                <Route exact path={Url.TOP} component={ShopTop} />
+                <Route exact path={Url.LOGIN} component={LoginForm} />
+                <Route exact path={Url.REGISTER} component={RegisterForm} />
+                <Route exact path={Url.PASSWORD_RESET} component={EMailForm} />
                 <Route
-                    path={`${URL.PASSWORD_RESET}/:id`}
+                    path={`${Url.PASSWORD_RESET}/:id`}
                     component={ResetForm}
                 />
-                <Route exact path={URL.EMAIL_VERIFY} component={Verify} />
-                <Route exact path={URL.CONTACT} component={ContactCreate} />
+                <Route exact path={Url.EMAIL_VERIFY} component={Verify} />
+                <Route exact path={Url.CONTACT} component={ContactCreate} />
                 <Route
                     exact
-                    path={URL.CONTACT_COMPLETE}
+                    path={Url.CONTACT_COMPLETE}
                     component={ContactComplete}
                 />
 
                 {/* ★ログインユーザー専用ここから */}
-                <AuthCheck session={responseSession}>
-                    <Route exact path={URL.HOME} component={Home} />
-                    <Route exact path={URL.MYCART} component={MyCart} />
+                <AuthCheck session={session}>
+                    <Route exact path={Url.HOME} component={Home} />
+                    <Route exact path={Url.MYCART} component={MyCart} />
                     <Route
                         exact
-                        path={URL.SHOP_COMPLETE}
+                        path={Url.SHOP_COMPLETE}
                         component={ShopComplete}
                     />
                 </AuthCheck>

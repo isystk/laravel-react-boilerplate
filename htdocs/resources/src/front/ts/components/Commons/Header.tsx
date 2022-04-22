@@ -1,25 +1,25 @@
 import React, { FC, useState } from "react";
 import { NavDropdown, Form } from "react-bootstrap";
 import CSRFToken from "@/components/Elements/CSRFToken";
-import { URL } from "@/constants/url";
+import { Url } from "@/constants/url";
 import Logo from "@/components/Commons/Logo";
-import {useDispatch, useSelector} from "react-redux";
-import {Auth} from "@/stores/StoreTypes";
-import {push} from "connected-react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { Auth } from "@/stores/StoreTypes";
+import { push } from "connected-react-router";
 
 type IRoot = {
-    auth: Auth
-}
+    auth: Auth;
+};
 
 export const CommonHeader: FC = () => {
     const dispatch = useDispatch();
-    const push_login = () => dispatch(push(URL.LOGIN));
-    const push_register = () => dispatch(push(URL.REGISTER));
-    const push_mycart = () => dispatch(push(URL.MYCART));
-    const push_contact = () => dispatch(push(URL.CONTACT));
+    const push_login = () => dispatch(push(Url.LOGIN));
+    const push_register = () => dispatch(push(Url.REGISTER));
+    const push_mycart = () => dispatch(push(Url.MYCART));
+    const push_contact = () => dispatch(push(Url.CONTACT));
 
     const [isSideMenu, setSideMenu] = useState(false);
-    const { auth, name } = useSelector<IRoot, Auth>((state) => state.auth);
+    const { auth, name } = useSelector<IRoot, Auth>(state => state.auth);
 
     const renderLoginPc = (): JSX.Element => {
         return (
@@ -72,7 +72,7 @@ export const CommonHeader: FC = () => {
                                         </Form>
                                     </NavDropdown>
 
-                                    <a href={URL.MYCART} onClick={mycartSubmit}>
+                                    <a href={Url.MYCART} onClick={mycartSubmit}>
                                         <img
                                             src="/assets/front/image/cart.png"
                                             className="cartImg ml-3"
@@ -87,7 +87,7 @@ export const CommonHeader: FC = () => {
                                     <li className="nav-item">
                                         <a
                                             className="btn btn-danger mr-3"
-                                            href={URL.LOGIN}
+                                            href={Url.LOGIN}
                                             onClick={e => {
                                                 e.preventDefault();
                                                 push_login();
@@ -99,7 +99,7 @@ export const CommonHeader: FC = () => {
                                     <li className="nav-item">
                                         <a
                                             className="btn btn-link text-danger"
-                                            href={URL.REGISTER}
+                                            href={Url.REGISTER}
                                             onClick={e => {
                                                 e.preventDefault();
                                                 push_register();
@@ -116,7 +116,7 @@ export const CommonHeader: FC = () => {
                     <li className="nav-item">
                         <a
                             className="btn btn-link text-danger"
-                            href={URL.CONTACT}
+                            href={Url.CONTACT}
                             onClick={e => {
                                 e.preventDefault();
                                 push_contact();
@@ -211,7 +211,7 @@ export const CommonHeader: FC = () => {
                                         <>
                                             <li>
                                                 <a
-                                                    href={URL.LOGIN}
+                                                    href={Url.LOGIN}
                                                     onClick={e => {
                                                         e.preventDefault();
                                                         setSideMenu(false);
@@ -223,7 +223,7 @@ export const CommonHeader: FC = () => {
                                             </li>
                                             <li>
                                                 <a
-                                                    href={URL.REGISTER}
+                                                    href={Url.REGISTER}
                                                     onClick={e => {
                                                         e.preventDefault();
                                                         setSideMenu(false);
@@ -239,7 +239,7 @@ export const CommonHeader: FC = () => {
                             })()}
                             <li>
                                 <a
-                                    href={URL.CONTACT}
+                                    href={Url.CONTACT}
                                     onClick={e => {
                                         e.preventDefault();
                                         setSideMenu(false);

@@ -1,11 +1,11 @@
 import * as React from "react";
-import { URL } from "@/constants/url";
+import { Url } from "@/constants/url";
 import Layout from "@/components/Layout";
-import { FC } from "react";
+import { VFC } from "react";
 import { useDispatch } from "react-redux";
 import { push } from "connected-react-router";
 
-const ContactComplete: FC = () => {
+const ContactComplete: VFC = () => {
     const dispatch = useDispatch();
 
     return (
@@ -28,11 +28,11 @@ const ContactComplete: FC = () => {
                             お問い合わせが完了しました。担当者から連絡があるまでお待ち下さい。
                         </p>
                         <a
-                            href={URL.TOP}
+                            href={Url.TOP}
                             className="btn text-danger mt40"
                             onClick={e => {
                                 e.preventDefault();
-                                dispatch(push(URL.TOP));
+                                dispatch(push(Url.TOP));
                             }}
                         >
                             商品一覧へ戻る

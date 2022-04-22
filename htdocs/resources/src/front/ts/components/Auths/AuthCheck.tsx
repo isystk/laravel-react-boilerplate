@@ -1,47 +1,26 @@
 import * as React from "react";
 import { Redirect } from "react-router";
-import { connect } from "react-redux";
+import { FC } from "react";
+import { Session } from "@/app";
 
 type Props = {
-    session: { id: undefined };
-    children:
-        | boolean
-        | React.ReactChild
-        | React.ReactFragment
-        | React.ReactPortal
-        | null
-        | undefined;
+    session: Session;
 };
 
-export class AuthCheck extends React.Component<Props> {
-    constructor(props) {
-        super(props);
+const AuthCheck: FC<Props> = ({ session, children }) => {
+    // ログインしてなければログイン画面へとばす
+    if (session.id === undefined) {
+        return <Redirect to="/login" />;
     }
 
-    render() {
-        // ログインしてなければログイン画面へとばす
-        if (this.props.session.id === undefined) {
-            return <Redirect to="/login" />;
-        }
+    // TODO 新規会員登録後、メール確認が未完了の場合
+    // if(session.email_verified_at===null)
+    // {
+    //   return <Redirect to="/email/verify" />;
+    // }
 
-        // TODO 新規会員登録後、メール確認が未完了の場合
-        // if(this.props.session.email_verified_at===null)
-        // {
-        //   return <Redirect to="/email/verify" />;
-        // }
-
-        // ログイン済みの場合
-        return <>{this.props.children}</>;
-    }
-}
-
-const mapStateToProps = (state, ownProps) => {
-    console.log(state, ownProps);
-    return {
-        session: ownProps.session
-    };
+    // ログイン済みの場合
+    return <>{children}</>;
 };
 
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AuthCheck);
+export default AuthCheck;

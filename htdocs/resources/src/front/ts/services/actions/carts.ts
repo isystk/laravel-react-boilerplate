@@ -1,6 +1,6 @@
 import { Action } from "redux";
 import { Dispatch } from "redux";
-import { URL } from "@/constants/url";
+import { Url } from "@/constants/url";
 import { API_ENDPOINT } from "@/constants/api";
 import { API } from "@/utilities/api";
 import { Carts } from "@/stores/StoreTypes";
@@ -32,10 +32,10 @@ export const removeCart = (stockId: number) => async (
         });
         if (response.result) {
             dispatch({ type: READ_CARTS, response });
-            dispatch(push(URL.MYCART));
+            dispatch(push(Url.MYCART));
         }
     } catch (e) {
-        dispatch(push(URL.LOGIN));
+        dispatch(push(Url.LOGIN));
     }
 };
 
@@ -47,9 +47,9 @@ export const checkout = (stockId: number) => async (
             stock_id: stockId
         });
         if (response.result) {
-            dispatch(push(URL.MYCART));
+            dispatch(push(Url.MYCART));
         }
     } catch (e) {
-        dispatch(push(URL.LOGIN));
+        dispatch(push(Url.LOGIN));
     }
 };

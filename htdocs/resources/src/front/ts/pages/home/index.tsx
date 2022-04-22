@@ -1,9 +1,9 @@
-import React from "react";
+import React, { VFC } from "react";
 import SessionAlert from "@/components/Elements/SessionAlert";
 import Box from "@/components/Box";
 import Layout from "@/components/Layout";
 
-const Home = () => (
+const Home: VFC = () => (
     <Layout>
         <main className="main">
             <Box title="ダッシュボード">

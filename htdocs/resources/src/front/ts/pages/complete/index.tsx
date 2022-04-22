@@ -1,8 +1,8 @@
 import * as React from "react";
-import { URL } from "@/constants/url";
+import { Url } from "@/constants/url";
 import { Auth, Carts, Consts } from "@/stores/StoreTypes";
 import Layout from "@/components/Layout";
-import { FC } from "react";
+import { VFC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { push } from "connected-react-router";
 
@@ -17,7 +17,7 @@ type IRoot = {
     carts: Carts;
 };
 
-const ShopComplete: FC<Props> = () => {
+const ShopComplete: VFC<Props> = () => {
     const dispatch = useDispatch();
     const auth = useSelector<IRoot, Auth>(state => state.auth);
 
@@ -43,11 +43,11 @@ const ShopComplete: FC<Props> = () => {
                             (メールは送信されません)
                         </p>
                         <a
-                            href={URL.TOP}
+                            href={Url.TOP}
                             className="btn text-danger mt40"
                             onClick={e => {
                                 e.preventDefault();
-                                dispatch(push(URL.TOP));
+                                dispatch(push(Url.TOP));
                             }}
                         >
                             商品一覧へ戻る

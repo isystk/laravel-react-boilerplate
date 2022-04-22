@@ -16,7 +16,7 @@ import {
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { API_ENDPOINT } from "@/constants/api";
-import { URL } from "@/constants/url";
+import { Url } from "@/constants/url";
 import CSRFToken from "@/components/Elements/CSRFToken";
 import { API } from "@/utilities/api";
 import { connect } from "react-redux";
@@ -69,7 +69,7 @@ class CheckoutForm extends React.Component<Props> {
 
             if (response.result) {
                 // 完了画面を表示する
-                this.props.push(URL.SHOP_COMPLETE);
+                this.props.push(Url.SHOP_COMPLETE);
             }
         }
 

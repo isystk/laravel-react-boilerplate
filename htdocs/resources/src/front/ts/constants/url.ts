@@ -1,5 +1,5 @@
 /** API のエンドポイント */
-export const URL = {
+export const Url = {
     /** TOP */
     TOP: "/",
     /** FCM */
