@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router";
-import { URL } from "@/common/constants/url";
+import { URL } from "@/constants/url";
 
 import Layout from "@/components/Layout";
 import CardTemplate from "@/components/CardTemplate";

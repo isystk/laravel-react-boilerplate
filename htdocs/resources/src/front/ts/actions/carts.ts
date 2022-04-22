@@ -1,7 +1,7 @@
 import { Action } from "redux";
 import { Dispatch } from "redux";
-import { URL } from "../common/constants/url";
-import { API_ENDPOINT } from "../common/constants/api";
+import { URL } from "../constants/url";
+import { API_ENDPOINT } from "../constants/api";
 import { API } from "../utilities";
 import { Carts } from "../store/StoreTypes";
 import { push } from "connected-react-router";

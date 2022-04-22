@@ -1,5 +1,5 @@
 import EnvLocal from "./env.local";
-import { IEnv } from "../../interfaces/app/IEnv";
+import { IEnv } from "@/@types/IEnv";
 
 console.log("process.env.NODE_ENV: ", process.env.NODE_ENV);
 

@@ -15,8 +15,8 @@ import {
 } from "reactstrap";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { API_ENDPOINT } from "@/common/constants/api";
-import { URL } from "@/common/constants/url";
+import { API_ENDPOINT } from "@/constants/api";
+import { URL } from "@/constants/url";
 import CSRFToken from "@/components/Elements/CSRFToken";
 import { API } from "@/utilities";
 import { connect } from "react-redux";

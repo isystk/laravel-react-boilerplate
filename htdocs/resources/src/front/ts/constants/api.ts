@@ -1,4 +1,4 @@
-import Env from "../env/";
+import Env from "@/constants/env";
 
 /**
  * BFF（バックエンドフォーフロントエンド）用の URL を作成する

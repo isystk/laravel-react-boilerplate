@@ -5,8 +5,8 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import CSRFToken from "../../components/Elements/CSRFToken";
 import { API } from "../../utilities";
-import { API_ENDPOINT } from "../../common/constants/api";
-import { URL } from "../../common/constants/url";
+import { API_ENDPOINT } from "../../constants/api";
+import { URL } from "../../constants/url";
 
 import { Auth, Consts, KeyValue } from "../../store/StoreTypes";
 import ReactImageBase64 from "react-image-base64";

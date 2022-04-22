@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { push } from "connected-react-router";
-import { URL } from "../../common/constants/url";
+import { URL } from "../../constants/url";
 import { Auth } from "../../store/StoreTypes";
 
 export const useHeader = () => {

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { URL } from "@/common/constants/url";
+import { URL } from "@/constants/url";
 import { Elements, StripeProvider } from "react-stripe-elements";
 import CheckoutForm from "@/components/Forms/CheckoutForm";
 import Modal from "@/components/Commons/Modal";

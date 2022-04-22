@@ -1,5 +1,5 @@
 import { Action } from "redux";
-import { API_ENDPOINT } from "../common/constants/api";
+import { API_ENDPOINT } from "../constants/api";
 import { API } from "../utilities";
 
 /**

@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import { NavDropdown, Form } from "react-bootstrap";
 import CSRFToken from "../../components/Elements/CSRFToken";
-import { URL } from "../../common/constants/url";
+import { URL } from "../../constants/url";
 import { useHeader } from "./Header.hooks";
 
 export const CommonHeader: FC = () => {

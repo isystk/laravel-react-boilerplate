@@ -1,5 +1,5 @@
 import * as React from "react";
-import { URL } from "../../common/constants/url";
+import { URL } from "@/constants/url";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
 

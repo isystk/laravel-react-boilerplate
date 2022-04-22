@@ -1,6 +1,6 @@
 import * as React from "react";
-import { URL } from "../../common/constants/url";
-import { Auth } from "../../store/StoreTypes";
+import { URL } from "@/constants/url";
+import { Auth } from "@/store/StoreTypes";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
 
