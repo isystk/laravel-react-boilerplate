@@ -7,7 +7,7 @@ import { API_ENDPOINT } from "@/constants/api";
 import Pagination from "react-js-pagination";
 import { URL } from "@/constants/url";
 import { push } from "connected-react-router";
-import TopCarousel from "../components/Shops/TopCarousel";
+import TopCarousel from "../components/TopCarousel";
 import { Stock } from "@/store/StoreTypes";
 import Layout from "@/components/Layout";
 

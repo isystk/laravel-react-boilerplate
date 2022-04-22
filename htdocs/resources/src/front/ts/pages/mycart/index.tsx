@@ -1,7 +1,7 @@
 import * as React from "react";
 import { URL } from "@/constants/url";
 import { Elements, StripeProvider } from "react-stripe-elements";
-import CheckoutForm from "@/components/Forms/CheckoutForm";
+import CheckoutForm from "@/components/Shops/CheckoutForm";
 import Modal from "@/components/Commons/Modal";
 import { Button } from "react-bootstrap";
 import { Auth, Carts } from "@/store/StoreTypes";

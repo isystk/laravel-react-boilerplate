@@ -4,17 +4,17 @@ import { URL } from "@/constants/url";
 
 import ShopTop from "@/pages";
 import MyCart from "@/pages/mycart";
-import ShopComplete from "@/components/Shops/ShopComplete";
-import ContactCreate from "@/components/Contacts/ContactCreate";
-import ContactComplete from "@/components/Contacts/ContactComplete";
+import ShopComplete from "@/pages/complete";
+import ContactCreate from "@/pages/contact";
+import ContactComplete from "@/pages/contact/complete";
 import AuthCheck from "@/components/Auths/AuthCheck";
 import NotFound from "@/components/NotFound";
-import LoginForm from "@/components/Forms/LoginForm";
-import RegisterForm from "@/components/Forms/RegisterForm";
-import EMailForm from "@/components/Forms/EMailForm";
-import ResetForm from "@/components/Forms/ResetForm";
-import Verify from "@/components/Forms/Verify";
-import Home from "@/components/Forms/Home";
+import LoginForm from "@/pages/login";
+import RegisterForm from "@/pages/register";
+import EMailForm from "@/pages/password/reset";
+import ResetForm from "@/pages/password/reset/[id]";
+import Verify from "@/pages/email/verify";
+import Home from "@/pages/home";
 
 const routes = (session: string) => {
     return (

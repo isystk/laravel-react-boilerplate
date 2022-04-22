@@ -1,18 +1,10 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Form } from "react-bootstrap";
-import { connect } from "react-redux";
+import { useParams } from "react-router";
 
-const RequestToken = props => (
-    <Form.Control type="hidden" name="token" defaultValue={props.params.id} />
-);
-RequestToken.propTypes = {
-    params: PropTypes.object
+const RequestToken = () => {
+    const { id } = useParams<{ id: string }>();
+    return <Form.Control type="hidden" name="token" defaultValue={id} />;
 };
 
-const mapStateToProps = state => ({
-    params: state.params
-});
-const mapDispatchToProps = () => ({});
-
-export default connect(mapStateToProps, mapDispatchToProps)(RequestToken);
+export default RequestToken;
