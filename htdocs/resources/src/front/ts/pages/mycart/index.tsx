@@ -58,96 +58,105 @@ export class MyCart extends React.Component<Props> {
 
     render(): JSX.Element {
         return (
-            <div className="contentsArea">
-                <h2 className="heading02">
-                    {this.props.auth.name}さんのカートの中身
-                </h2>
+            <Layout>
+                <main className="main">
+                    <div className="contentsArea">
+                        <h2 className="heading02">
+                            {this.props.auth.name}さんのカートの中身
+                        </h2>
 
-                <div>
-                    <p className="text-center mt20">
-                        {this.props.carts.message}
-                    </p>
-                    <br />
+                        <div>
+                            <p className="text-center mt20">
+                                {this.props.carts.message}
+                            </p>
+                            <br />
 
-                    {(() => {
-                        if (this.props.carts.data.length === 0) {
-                            return (
-                                <p className="text-center">
-                                    カートに商品がありません。
-                                </p>
-                            );
-                        } else {
-                            return (
-                                <>
-                                    <div className="block01">
-                                        {this.renderCarts()}
-                                    </div>
-                                    <div className="block02">
-                                        <p>
-                                            合計個数：{this.props.carts.count}個
+                            {(() => {
+                                if (this.props.carts.data.length === 0) {
+                                    return (
+                                        <p className="text-center">
+                                            カートに商品がありません。
                                         </p>
-                                        <p
-                                            style={{
-                                                fontSize: "1.2em",
-                                                fontWeight: "bold"
-                                            }}
-                                        >
-                                            合計金額：{this.props.carts.sum}円
-                                        </p>
-                                    </div>
-                                    <div
-                                        style={{
-                                            margin: "40px 15px",
-                                            textAlign: "center"
-                                        }}
-                                    >
-                                        <Button
-                                            type="submit"
-                                            variant="primary"
-                                            onClick={e => {
-                                                e.preventDefault();
-                                                this.props.showOverlay();
-                                            }}
-                                        >
-                                            決済をする
-                                        </Button>
-                                    </div>
-                                    <Modal>
-                                        <StripeProvider
-                                            apiKey={this.props.stripe_key}
-                                        >
-                                            <Elements>
-                                                <CheckoutForm
-                                                    amount={
-                                                        this.props.carts.sum
+                                    );
+                                } else {
+                                    return (
+                                        <>
+                                            <div className="block01">
+                                                {this.renderCarts()}
+                                            </div>
+                                            <div className="block02">
+                                                <p>
+                                                    合計個数：
+                                                    {this.props.carts.count}個
+                                                </p>
+                                                <p
+                                                    style={{
+                                                        fontSize: "1.2em",
+                                                        fontWeight: "bold"
+                                                    }}
+                                                >
+                                                    合計金額：
+                                                    {this.props.carts.sum}円
+                                                </p>
+                                            </div>
+                                            <div
+                                                style={{
+                                                    margin: "40px 15px",
+                                                    textAlign: "center"
+                                                }}
+                                            >
+                                                <Button
+                                                    type="submit"
+                                                    variant="primary"
+                                                    onClick={e => {
+                                                        e.preventDefault();
+                                                        this.props.showOverlay();
+                                                    }}
+                                                >
+                                                    決済をする
+                                                </Button>
+                                            </div>
+                                            <Modal>
+                                                <StripeProvider
+                                                    apiKey={
+                                                        this.props.stripe_key
                                                     }
-                                                    username={
-                                                        this.props.carts
-                                                            .username
-                                                    }
-                                                />
-                                            </Elements>
-                                        </StripeProvider>
-                                    </Modal>
-                                </>
-                            );
-                        }
-                    })()}
+                                                >
+                                                    <Elements>
+                                                        <CheckoutForm
+                                                            amount={
+                                                                this.props.carts
+                                                                    .sum
+                                                            }
+                                                            username={
+                                                                this.props.carts
+                                                                    .username
+                                                            }
+                                                        />
+                                                    </Elements>
+                                                </StripeProvider>
+                                            </Modal>
+                                        </>
+                                    );
+                                }
+                            })()}
 
-                    <p className="mt30 ta-center">
-                        <a
-                            href={URL.TOP}
-                            className="text-danger btn"
-                            onClick={e => {
-                                e.preventDefault();
-                                this.props.push(URL.TOP);
-                            }}
-                        >
-                            商品一覧へ戻る
-                        </a>
-                    </p>
-                </div>
-            </div>
+                            <p className="mt30 ta-center">
+                                <a
+                                    href={URL.TOP}
+                                    className="text-danger btn"
+                                    onClick={e => {
+                                        e.preventDefault();
+                                        this.props.push(URL.TOP);
+                                    }}
+                                >
+                                    商品一覧へ戻る
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </main>
+            </Layout>
         );
     }
 }
@@ -155,6 +164,7 @@ export class MyCart extends React.Component<Props> {
 import { readCarts, removeCart, showOverlay, hideOverlay } from "../../actions";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
+import Layout from "@/components/Layout";
 
 const mapStateToProps = state => {
     const { stripe_key } = state.consts;

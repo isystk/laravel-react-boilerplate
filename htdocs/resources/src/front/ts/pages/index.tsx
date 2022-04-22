@@ -9,6 +9,7 @@ import { URL } from "@/constants/url";
 import { push } from "connected-react-router";
 import TopCarousel from "../components/Shops/TopCarousel";
 import { Stock } from "@/store/StoreTypes";
+import Layout from "@/components/Layout";
 
 type State = {
     stocks: {
@@ -165,17 +166,19 @@ const Index: FC = () => {
     };
 
     return (
-        <>
-            <div className="contentsArea">
-                <div style={{ marginBottom: "25px" }}>
-                    <TopCarousel />
+        <Layout>
+            <main className="main">
+                <div className="contentsArea">
+                    <div style={{ marginBottom: "25px" }}>
+                        <TopCarousel />
+                    </div>
+                    <div className="">
+                        <div className="block01">{renderStocks()}</div>
+                        <div className="mt40">{renderPaging()}</div>
+                    </div>
                 </div>
-                <div className="">
-                    <div className="block01">{renderStocks()}</div>
-                    <div className="mt40">{renderPaging()}</div>
-                </div>
-            </div>
-        </>
+            </main>
+        </Layout>
     );
 };
 

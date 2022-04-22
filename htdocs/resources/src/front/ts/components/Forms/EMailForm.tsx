@@ -6,6 +6,8 @@ import CSRFToken from "../../components/Elements/CSRFToken";
 import SessionAlert from "../Elements/SessionAlert";
 import { connect } from "react-redux";
 import { setEmail } from "@/actions";
+import Box from "@/components/Box";
+import Layout from "@/components/Layout";
 
 type Props = {
     email: string;
@@ -18,21 +20,29 @@ class ResetForm extends React.Component<Props> {
     }
     render() {
         return (
-            <>
-                <SessionAlert target="status" />
-                <Form method="POST" action="/password/email" id="login-form">
-                    <CSRFToken />
-                    <TextInput
-                        identity="email"
-                        controlType="email"
-                        label="E-Mail Address"
-                        defaultValue={this.props.email}
-                        action={this.props.setEmail}
-                        autoFocus={true}
-                    />
-                    <SubmitButton label="Send Password Reset Link" />
-                </Form>
-            </>
+            <Layout>
+                <main className="main">
+                    <Box title="パスワードのリセット">
+                        <SessionAlert target="status" />
+                        <Form
+                            method="POST"
+                            action="/password/email"
+                            id="login-form"
+                        >
+                            <CSRFToken />
+                            <TextInput
+                                identity="email"
+                                controlType="email"
+                                label="E-Mail Address"
+                                defaultValue={this.props.email}
+                                action={this.props.setEmail}
+                                autoFocus={true}
+                            />
+                            <SubmitButton label="Send Password Reset Link" />
+                        </Form>
+                    </Box>
+                </main>
+            </Layout>
         );
     }
 }
