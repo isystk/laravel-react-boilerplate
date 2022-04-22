@@ -6,7 +6,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import axios from "axios";
 
-import ReactRoot from "@/ReactRoot";
+import Router from "@/router";
 
 const store = myConfigureStore();
 const pstore = persistStore(store);
@@ -15,7 +15,7 @@ const render = (props: string) => {
     ReactDom.render(
         <Provider store={store}>
             <PersistGate loading={<p>loading...</p>} persistor={pstore}>
-                <ReactRoot history={history} responseSession={props} />
+                <Router history={history} responseSession={props} />
             </PersistGate>
         </Provider>,
         document.getElementById("react-root")

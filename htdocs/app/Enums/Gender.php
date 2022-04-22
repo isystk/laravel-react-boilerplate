@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum Age: int
+enum Gender: int
 {
 
     /** @var int 男性 */
@@ -10,4 +10,7 @@ enum Age: int
     /** @var int 女性 */
     case Female = 1;
 
+    public static function getDescription($value) {
+        return __('enums.Gender'. $value);
+    }
 }

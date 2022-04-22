@@ -3,11 +3,11 @@ import { NavDropdown, Form } from "react-bootstrap";
 import CSRFToken from "../../components/Elements/CSRFToken";
 import { URL } from "../../constants/url";
 import { useHeader } from "./Header.hooks";
+import Logo from "@/components/Commons/Logo";
 
 export const CommonHeader: FC = () => {
     const {
         auths,
-        push_top,
         push_login,
         push_register,
         push_mycart,
@@ -263,20 +263,7 @@ export const CommonHeader: FC = () => {
         <>
             <header className="header shadow-sm">
                 <nav className="navbar navbar-expand-md navbar-light bg-white headerNav">
-                    <a
-                        className="header_logo"
-                        href="/"
-                        onClick={e => {
-                            e.preventDefault();
-                            push_top();
-                        }}
-                    >
-                        <img
-                            src="/assets/front/image/logo.png"
-                            alt=""
-                            className=""
-                        />
-                    </a>
+                    <Logo />
 
                     {renderLoginPc()}
 

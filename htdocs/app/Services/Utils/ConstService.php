@@ -12,18 +12,18 @@ class ConstService
   {
 
     $gender = [];
-    foreach (Gender::getValues() as $code) {
+    foreach (Gender::cases() as $case) {
       array_push($gender, (object) [
-        'key' => $code,
-        'value' => Gender::getDescription($code),
+        'key' => $case->value,
+        'value' => Gender::getDescription($case->value),
       ]);
     }
 
     $age = [];
-    foreach (Age::getValues() as $code) {
+    foreach (Age::cases() as $case) {
       array_push($age, (object) [
-        'key' => $code,
-        'value' => Age::getDescription($code),
+        'key' => $case->value,
+        'value' => Age::getDescription($case->value),
       ]);
     }
 
