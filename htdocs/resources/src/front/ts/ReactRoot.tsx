@@ -15,26 +15,26 @@ const ReactRoot: FC<Props> = props => {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        // セッションのセット
+        dispatch(setSession(props.responseSession));
         (async () => {
-            // セッションのセット
-            dispatch(setSession(props.responseSession));
             // 定数のセット
             await dispatch(readConsts());
-            // if (window.laravelErrors['name'] === undefined
-            //   && window.laravelErrors['email'] === undefined
-            //   && window.laravelErrors['password'] === undefined) {
-            //   dispatch(setName(''))
-            //   dispatch(setEmail(''))
-            //   dispatch(setRemember(false))
-            // }
-            // CSRFのセット
-            const token = document.head.querySelector<HTMLMetaElement>(
-                'meta[name="csrf-token"]'
-            );
-            if (token) {
-                dispatch(setCSRF(token.content));
-            }
         })();
+        // // if (window.laravelErrors['name'] === undefined
+        //   && window.laravelErrors['email'] === undefined
+        //   && window.laravelErrors['password'] === undefined) {
+        //   dispatch(setName(''))
+        //   dispatch(setEmail(''))
+        //   dispatch(setRemember(false))
+        // }
+        // CSRFのセット
+        const token = document.head.querySelector<HTMLMetaElement>(
+            'meta[name="csrf-token"]'
+        );
+        if (token) {
+            dispatch(setCSRF(token.content));
+        }
     }, []);
 
     return (

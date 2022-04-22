@@ -3,10 +3,9 @@ import { useDispatch } from "react-redux";
 import { hideLoading } from "@/actions";
 import CommonHeader from "@/components/Commons/Header";
 import CommonFooter from "@/containers/Commons/Footer";
-import PropTypes from "prop-types";
 import Loading from "@/components/Commons/Loading";
 
-const Layout: FC = props => {
+const Layout: FC = ({ children }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -19,16 +18,11 @@ const Layout: FC = props => {
     return (
         <>
             <CommonHeader />
-            {props.children}
+            {children}
             <CommonFooter />
             <Loading />
         </>
     );
-};
-
-Layout.propTypes = {
-    children: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
-        .isRequired
 };
 
 export default Layout;

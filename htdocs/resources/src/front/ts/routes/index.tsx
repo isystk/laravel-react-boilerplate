@@ -1,16 +1,16 @@
 import React from "react";
 import { Route, Switch } from "react-router";
-import { URL } from "../common/constants/url";
+import { URL } from "@/common/constants/url";
 
-import Layout from "../components/Layout";
-import CardTemplate from "../components/CardTemplate";
-import ShopTop from "../components/Shops/ShopTop";
-import MyCart from "../containers/Shops/MyCart";
-import ShopComplete from "../containers/Shops/ShopComplete";
-import ContactCreate from "../containers/Contacts/ContactCreate";
-import ContactComplete from "../containers/Contacts/ContactComplete";
-import AuthCheck from "../containers/Auths/AuthCheck";
-import { NotFound } from "../components/NotFound";
+import Layout from "@/components/Layout";
+import CardTemplate from "@/components/CardTemplate";
+import ShopTop from "@/components/Shops/ShopTop";
+import MyCart from "@/containers/Shops/MyCart";
+import ShopComplete from "@/containers/Shops/ShopComplete";
+import ContactCreate from "@/containers/Contacts/ContactCreate";
+import ContactComplete from "@/containers/Contacts/ContactComplete";
+import AuthCheck from "@/containers/Auths/AuthCheck";
+import NotFound from "@/components/NotFound";
 
 const routes = (session: string) => {
     return (

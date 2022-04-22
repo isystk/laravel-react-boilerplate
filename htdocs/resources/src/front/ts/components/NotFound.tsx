@@ -1,6 +1,7 @@
-import React from "react";
-export class NotFound extends React.Component<any, any> {
-    render(): JSX.Element {
-        return <h1>Not Found</h1>;
-    }
-}
+import React, { VFC } from "react";
+
+const NotFound: VFC = () => {
+    return <h1>Not Found</h1>;
+};
+
+export default NotFound;
