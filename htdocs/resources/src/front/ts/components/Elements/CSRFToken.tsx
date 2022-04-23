@@ -1,19 +1,15 @@
-import React from "react";
+import React, { VFC } from "react";
 import { Form } from "react-bootstrap";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
+import { Auth } from "@/stores/StoreTypes";
 
-type Props = {
-    csrf: string;
+type IRoot = {
+    auth: Auth;
 };
 
-const CSRFToken = (props: Props) => (
-    <Form.Control type="hidden" name="_token" defaultValue={props.csrf} />
-);
-
-const mapStateToProps = state => {
-    return {
-        csrf: state.auth.csrf
-    };
+const CSRFToken: VFC = () => {
+    const { csrf } = useSelector<IRoot, Auth>(state => state.auth);
+    return <Form.Control type="hidden" name="_token" defaultValue={csrf} />;
 };
-const mapDispatchToProps = () => ({});
-export default connect(mapStateToProps, mapDispatchToProps)(CSRFToken);
+
+export default CSRFToken;

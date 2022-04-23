@@ -1,14 +1,15 @@
-import React from "react";
+import React, { VFC } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { Url } from "@/constants/url";
 
-const LoginButton = () => (
+const LoginButton: VFC = () => (
     <Row className="form-group mt-3">
         <Col className="text-center">
             <Button type="submit" variant="primary">
                 ログイン
             </Button>
-            <Link to="/password/reset" className="btn btn-link">
+            <Link to={Url.PASSWORD_RESET} className="btn btn-link">
                 パスワードを忘れた方
             </Link>
         </Col>

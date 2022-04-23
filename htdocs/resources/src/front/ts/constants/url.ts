@@ -2,10 +2,10 @@
 export const Url = {
     /** TOP */
     TOP: "/",
-    /** FCM */
-    FCM: "/fcm",
     /** ログイン */
     LOGIN: "/login",
+    /** ログアウト */
+    LOGOUT: "/logout",
     /** 会員登録 */
     REGISTER: "/register",
     /** パスワード忘れ */

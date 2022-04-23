@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { VFC, useState } from "react";
 import { NavDropdown, Form } from "react-bootstrap";
 import CSRFToken from "@/components/Elements/CSRFToken";
 import { Url } from "@/constants/url";
@@ -11,7 +11,7 @@ type IRoot = {
     auth: Auth;
 };
 
-export const CommonHeader: FC = () => {
+export const CommonHeader: VFC = () => {
     const dispatch = useDispatch();
     const push_login = () => dispatch(push(Url.LOGIN));
     const push_register = () => dispatch(push(Url.REGISTER));
@@ -35,7 +35,7 @@ export const CommonHeader: FC = () => {
                                         title={name + " 様"}
                                     >
                                         <NavDropdown.Item
-                                            href="/logout"
+                                            href={Url.LOGOUT}
                                             onClick={e => {
                                                 e.preventDefault();
                                                 const element: HTMLFormElement = document.getElementById(
@@ -50,21 +50,21 @@ export const CommonHeader: FC = () => {
                                         </NavDropdown.Item>
                                         <Form
                                             id="logout-form"
-                                            action="/logout"
+                                            action={Url.LOGOUT}
                                             method="POST"
                                             style={{ display: "none" }}
                                         >
                                             <CSRFToken />
                                         </Form>
                                         <NavDropdown.Item
-                                            href="/mycart"
+                                            href={Url.MYCART}
                                             onClick={mycartSubmit}
                                         >
                                             カートを見る
                                         </NavDropdown.Item>
                                         <Form
                                             id="mycart-form"
-                                            action="/mycart"
+                                            action={Url.MYCART}
                                             method="POST"
                                             style={{ display: "none" }}
                                         >
@@ -165,7 +165,7 @@ export const CommonHeader: FC = () => {
                                         <>
                                             <li>
                                                 <a
-                                                    href="/logout"
+                                                    href={Url.LOGOUT}
                                                     onClick={e => {
                                                         e.preventDefault();
                                                         const element: HTMLFormElement = document.getElementById(
@@ -180,7 +180,7 @@ export const CommonHeader: FC = () => {
                                                 </a>
                                                 <Form
                                                     id="logout-form"
-                                                    action="/logout"
+                                                    action={Url.LOGOUT}
                                                     method="POST"
                                                     style={{ display: "none" }}
                                                 >
@@ -189,14 +189,14 @@ export const CommonHeader: FC = () => {
                                             </li>
                                             <li>
                                                 <a
-                                                    href="/mycart"
+                                                    href={Url.MYCART}
                                                     onClick={mycartSubmit}
                                                 >
                                                     カートを見る
                                                 </a>
                                                 <Form
                                                     id="mycart-form"
-                                                    action="/mycart"
+                                                    action={Url.MYCART}
                                                     method="POST"
                                                     style={{ display: "none" }}
                                                 >

@@ -3,11 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import Portal from "./Portal";
 import { Parts } from "@/stores/StoreTypes";
 import { hideOverlay } from "@/services/actions";
-import PropTypes from "prop-types";
 
-const Modal: FC = props => {
+type IRoot = {
+    parts: Parts;
+};
+
+const Modal: FC = ({ children }) => {
     const dispatch = useDispatch();
-    const { isShowOverlay } = useSelector(parts);
+    const { isShowOverlay } = useSelector<IRoot, Parts>(
+        (state): Parts => state.parts
+    );
 
     const onClose = e => {
         e.preventDefault();
@@ -26,17 +31,10 @@ const Modal: FC = props => {
                 >
                     <span aria-hidden="true">&times;</span>
                 </button>
-                {props.children}
+                {children}
             </div>
         </Portal>
     );
-};
-
-const parts = (state): Parts => state.parts;
-
-Modal.propTypes = {
-    children: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
-        .isRequired
 };
 
 export default Modal;
