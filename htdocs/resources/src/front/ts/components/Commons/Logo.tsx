@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Url } from "@/constants/url";
+import { Url } from "../../constants/url";
 
 export const Logo: FC = () => {
     return (

@@ -32,7 +32,6 @@
     "bootstrap": "^4.0.0",
     "connected-react-router": "^6.9.1",
     "cross-env": "^7.0",
-    "enzyme-adapter-react-16": "^1.15.6",
     "eslint": "^7.22.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-loader": "^4.0.2",
@@ -49,7 +48,6 @@
     "laravel-mix": "^5.0.1",
     "lodash": "^4.17.19",
     "popper.js": "^1.12",
-    "prop-types": "^15.7.2",
     "react": "^16.14.0",
     "react-bootstrap": "^1.5.2",
     "react-dom": "^16.14.0",
@@ -73,7 +71,7 @@
     "ts-loader": "^8.0.18",
     "typescript": "^4.2.3",
     "typescript-eslint-parser": "^22.0.0",
-    "vue-template-compiler": "^2.6.12",
+    "vue-template-compiler": "^2.6.14",
     "yup": "^0.32.9"
   },
   "dependencies": {
