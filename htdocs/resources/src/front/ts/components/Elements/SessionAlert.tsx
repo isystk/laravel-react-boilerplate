@@ -6,7 +6,7 @@ const SessionAlert = props => {
         return (
             <Alert variant="success" role="alert">
                 {props.target === "resent"
-                    ? "A fresh verification link has been sent to your email address."
+                    ? "あなたのメールアドレスに新しい認証リンクが送信されました。"
                     : window.laravelSession[props.target]}
             </Alert>
         );

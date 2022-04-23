@@ -6,11 +6,11 @@ import Layout from "@/components/Layout";
 const Verify: VFC = () => (
     <Layout>
         <main className="main">
-            <Box title="メールアドレスを確認しました">
+            <Box title="メールアドレスを確認してください">
                 <SessionAlert target="resent" />
-                Before proceeding, please check your email for a verification
-                link. If you did not receive the email,{" "}
-                <a href="/email/resend">click here to request another</a>.
+                確認用リンクが記載されたメールをご確認ください。メールが届いていない場合は{" "}
+                <a href="/email/resend">こちら</a>{" "}
+                から再度リクエストしてください。
             </Box>
         </main>
     </Layout>

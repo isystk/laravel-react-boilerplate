@@ -36,7 +36,7 @@ const ResetForm: VFC<Props> = ({ email }) => {
                         <TextInput
                             identity="email"
                             controlType="email"
-                            label="E-Mail Address"
+                            label="メールアドレス"
                             defaultValue={email}
                             action={handleSetEmail}
                             autoFocus={true}
@@ -45,16 +45,16 @@ const ResetForm: VFC<Props> = ({ email }) => {
                             identity="password"
                             controlType="password"
                             autoComplete="new-password"
-                            label="Password"
+                            label="新しいパスワード"
                         />
                         <TextInput
                             identity="password-confirm"
                             controlType="password"
                             name="password_confirmation"
                             autoComplete="new-password"
-                            label="Confirm Password"
+                            label="新しいパスワード(確認)"
                         />
-                        <SubmitButton label="Reset Password" />
+                        <SubmitButton label="パスワードを変更する" />
                     </Form>
                 </Box>
             </main>

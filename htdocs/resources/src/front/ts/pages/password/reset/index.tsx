@@ -22,10 +22,10 @@ const ResetForm: VFC = () => {
                         <TextInput
                             identity="email"
                             controlType="email"
-                            label="E-Mail Address"
+                            label="メールアドレス"
                             autoFocus={true}
                         />
-                        <SubmitButton label="Send Password Reset Link" />
+                        <SubmitButton label="メールを送信する" />
                     </Form>
                 </Box>
             </main>

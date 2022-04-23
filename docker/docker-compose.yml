@@ -32,18 +32,6 @@ services:
     # extra_hosts:
     #  - "host.docker.internal:${DOCKER_HOST_IP}"
 
-  # node:
-  #   image: laraec/node
-  #   container_name: laraec-node
-  #   build:
-  #     context: "./node"
-  #     dockerfile: "Dockerfile"
-  #   volumes:
-  #    - ../frontend:/usr/src/app
-  #   ports:
-  #    - "3000:3000"
-  #   command: sh -c "yarn run dev"
-
   mysql:
     image: laraec/mysql
     container_name: laraec-mysql

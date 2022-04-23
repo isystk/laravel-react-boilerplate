@@ -14,10 +14,9 @@ const AuthCheck: FC<Props> = ({ session, children }) => {
     }
 
     // TODO 新規会員登録後、メール確認が未完了の場合
-    // if(session.email_verified_at===null)
-    // {
-    //   return <Redirect to="/email/verify" />;
-    // }
+    if (session.email_verified_at === null) {
+        return <Redirect to="/email/verify" />;
+    }
 
     // ログイン済みの場合
     return <>{children}</>;
