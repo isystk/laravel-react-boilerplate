@@ -1,7 +1,7 @@
 import * as React from "react";
-import { VFC } from "react";
+import { FC } from "react";
 
-const CommonFooter: VFC = () => {
+const CommonFooter: FC = () => {
     return (
         <footer className="footer">
             <div className="footer_inner">

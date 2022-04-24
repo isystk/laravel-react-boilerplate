@@ -1,4 +1,4 @@
-import React, { VFC } from "react";
+import React, { FC } from "react";
 import {
     CardNumberElement,
     CardExpiryElement,
@@ -22,15 +22,17 @@ import { API } from "@/utilities/api";
 import { useDispatch } from "react-redux";
 import { hideLoading, showLoading } from "@/services/actions";
 import { push } from "connected-react-router";
+import MainService from "@/services/main";
 
 type Props = {
+    appRoot: MainService;
     stripe;
     elements;
     username: string;
     amount: number;
 };
 
-const CheckoutForm: VFC<Props> = props => {
+const CheckoutForm: FC<Props> = props => {
     const dispatch = useDispatch();
     const handlePayment = async values => {
         // alert(JSON.stringify(values));
@@ -103,7 +105,7 @@ const CheckoutForm: VFC<Props> = props => {
             >
                 {({ handleSubmit, values, errors, touched }) => (
                     <Form onSubmit={handleSubmit}>
-                        <CSRFToken />
+                        <CSRFToken appRoot={props.appRoot} />
                         <FormGroup>
                             <Label>金額</Label>
                             <p>{values.amount}円</p>

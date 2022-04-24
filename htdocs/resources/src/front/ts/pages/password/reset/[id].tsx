@@ -1,28 +1,27 @@
-import React, { VFC } from "react";
+import React, { useState, FC } from "react";
 import { Form } from "react-bootstrap";
 import TextInput from "@/components/Elements/TextInput";
 import SubmitButton from "@/components/Elements/SubmitButton";
 import CSRFToken from "@/components/Elements/CSRFToken";
 import RequestToken from "@/components/Elements/RequestToken";
 import SessionAlert from "@/components/Elements/SessionAlert";
-import { setEmail } from "@/services/actions";
 import Box from "@/components/Box";
 import Layout from "@/components/Layout";
-import { useDispatch } from "react-redux";
+import MainService from "@/services/main";
 
 type Props = {
-    email;
+    appRoot: MainService;
 };
 
-const ResetForm: VFC<Props> = ({ email }) => {
-    const dispatch = useDispatch();
+const ResetForm: FC<Props> = ({ appRoot }) => {
+    const [email, setEmail] = useState<string>("");
 
-    const handleSetEmail = () => {
-        dispatch(setEmail);
+    const handleSetEmail = (value: string) => {
+        setEmail(value);
     };
 
     return (
-        <Layout>
+        <Layout appRoot={appRoot}>
             <main className="main">
                 <Box title="パスワードのリセット">
                     <SessionAlert target="status" />
@@ -31,7 +30,7 @@ const ResetForm: VFC<Props> = ({ email }) => {
                         action="/password/reset"
                         id="login-form"
                     >
-                        <CSRFToken />
+                        <CSRFToken appRoot={appRoot} />
                         <RequestToken />
                         <TextInput
                             identity="email"

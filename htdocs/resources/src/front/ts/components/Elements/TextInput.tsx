@@ -1,4 +1,4 @@
-import React, { useEffect, useState, VFC } from "react";
+import React, { useEffect, useState, FC } from "react";
 import { Row, Col, Form } from "react-bootstrap";
 import FormError from "./FormError";
 import { FormControlProps } from "react-bootstrap/FormControl";
@@ -20,7 +20,7 @@ type Valid = {
     error: string;
 };
 
-const TextInput: VFC<Props> = props => {
+const TextInput: FC<Props> = props => {
     const [valid, setValid] = useState<Valid>({ error: "", isInvalid: "" });
     const formProps = { ...props } as FormControlProps;
 

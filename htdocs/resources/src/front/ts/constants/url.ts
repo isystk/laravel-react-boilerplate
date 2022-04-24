@@ -4,6 +4,8 @@ export const Url = {
     TOP: "/",
     /** ログイン */
     LOGIN: "/login",
+    /** Googleログイン */
+    AUTH_GOOGLE: "/auth/google",
     /** ログアウト */
     LOGOUT: "/logout",
     /** 会員登録 */

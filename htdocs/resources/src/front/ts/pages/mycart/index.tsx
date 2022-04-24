@@ -15,7 +15,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { push } from "connected-react-router";
 import Layout from "@/components/Layout";
-import { VFC, useEffect } from "react";
+import { FC, useEffect } from "react";
+import MainService from "@/services/main";
 
 type IRoot = {
     auth: Auth;
@@ -23,7 +24,11 @@ type IRoot = {
     carts: Carts;
 };
 
-const MyCart: VFC = () => {
+type Props = {
+    appRoot: MainService;
+};
+
+const MyCart: FC<Props> = ({ appRoot }) => {
     const dispatch = useDispatch();
     const auth = useSelector<IRoot, Auth>(state => state.auth);
     const stripe_key = useSelector<IRoot, string>(
@@ -33,6 +38,7 @@ const MyCart: VFC = () => {
 
     useEffect(() => {
         // マイカートデータを取得する
+        // @ts-ignore
         dispatch(readCarts());
         // オーバーレイを閉じる
         return () => {
@@ -57,6 +63,7 @@ const MyCart: VFC = () => {
                             value="カートから削除する"
                             className="btn-01"
                             onClick={() => {
+                                // @ts-ignore
                                 dispatch(removeCart(cart.id));
                             }}
                         />
@@ -67,7 +74,7 @@ const MyCart: VFC = () => {
     };
 
     return (
-        <Layout>
+        <Layout appRoot={appRoot}>
             <main className="main">
                 <div className="contentsArea">
                     <h2 className="heading02">{auth.name}さんのカートの中身</h2>

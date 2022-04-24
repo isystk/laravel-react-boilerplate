@@ -11,9 +11,10 @@ import { Url } from "@/constants/url";
 import { Auth, Carts, Consts, KeyValue } from "@/stores/StoreTypes";
 import ReactImageBase64 from "react-image-base64";
 import Layout from "@/components/Layout";
-import { VFC, useState } from "react";
+import { FC, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { push } from "connected-react-router";
+import MainService from "@/services/main";
 
 type IRoot = {
     auth: Auth;
@@ -21,7 +22,11 @@ type IRoot = {
     carts: Carts;
 };
 
-const ContactCreate: VFC = () => {
+type Props = {
+    appRoot: MainService;
+};
+
+const ContactCreate: FC<Props> = ({ appRoot }) => {
     const dispatch = useDispatch();
     const auth = useSelector<IRoot, Auth>(state => state.auth);
     const consts = useSelector<IRoot, Consts>(state => state.consts);
@@ -42,7 +47,7 @@ const ContactCreate: VFC = () => {
     };
 
     return (
-        <Layout>
+        <Layout appRoot={appRoot}>
             <main className="main">
                 <div className="container">
                     <div className="row justify-content-center">
@@ -134,7 +139,7 @@ const ContactCreate: VFC = () => {
                                             touched
                                         }) => (
                                             <Form onSubmit={handleSubmit}>
-                                                <CSRFToken />
+                                                <CSRFToken appRoot={appRoot} />
 
                                                 <FormGroup className="form-section">
                                                     <div className="form-section-wrap">

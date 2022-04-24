@@ -1,25 +1,24 @@
-import React, { VFC, useState } from "react";
+import React, { FC, useState } from "react";
 import { NavDropdown, Form } from "react-bootstrap";
 import CSRFToken from "@/components/Elements/CSRFToken";
 import { Url } from "@/constants/url";
 import Logo from "@/components/Commons/Logo";
-import { useDispatch, useSelector } from "react-redux";
-import { Auth } from "@/stores/StoreTypes";
-import { push } from "connected-react-router";
+import { useNavigate } from "react-router-dom";
+import MainService from "@/services/main";
 
-type IRoot = {
-    auth: Auth;
+type Props = {
+    appRoot: MainService;
 };
 
-export const CommonHeader: VFC = () => {
-    const dispatch = useDispatch();
-    const push_login = () => dispatch(push(Url.LOGIN));
-    const push_register = () => dispatch(push(Url.REGISTER));
-    const push_mycart = () => dispatch(push(Url.MYCART));
-    const push_contact = () => dispatch(push(Url.CONTACT));
+export const CommonHeader: FC<Props> = ({ appRoot }) => {
+    const navigate = useNavigate();
+    const push_login = () => navigate(Url.LOGIN);
+    const push_register = () => navigate(Url.REGISTER);
+    const push_mycart = () => navigate(Url.MYCART);
+    const push_contact = () => navigate(Url.CONTACT);
 
     const [isSideMenu, setSideMenu] = useState(false);
-    const { auth, name } = useSelector<IRoot, Auth>(state => state.auth);
+    const { auth, name } = appRoot.auth;
 
     const renderLoginPc = (): JSX.Element => {
         return (
@@ -54,7 +53,7 @@ export const CommonHeader: VFC = () => {
                                             method="POST"
                                             style={{ display: "none" }}
                                         >
-                                            <CSRFToken />
+                                            <CSRFToken appRoot={appRoot} />
                                         </Form>
                                         <NavDropdown.Item
                                             href={Url.MYCART}
@@ -68,7 +67,7 @@ export const CommonHeader: VFC = () => {
                                             method="POST"
                                             style={{ display: "none" }}
                                         >
-                                            <CSRFToken />
+                                            <CSRFToken appRoot={appRoot} />
                                         </Form>
                                     </NavDropdown>
 
@@ -184,7 +183,9 @@ export const CommonHeader: VFC = () => {
                                                     method="POST"
                                                     style={{ display: "none" }}
                                                 >
-                                                    <CSRFToken />
+                                                    <CSRFToken
+                                                        appRoot={appRoot}
+                                                    />
                                                 </Form>
                                             </li>
                                             <li>
@@ -200,7 +201,9 @@ export const CommonHeader: VFC = () => {
                                                     method="POST"
                                                     style={{ display: "none" }}
                                                 >
-                                                    <CSRFToken />
+                                                    <CSRFToken
+                                                        appRoot={appRoot}
+                                                    />
                                                 </Form>
                                             </li>
                                         </>

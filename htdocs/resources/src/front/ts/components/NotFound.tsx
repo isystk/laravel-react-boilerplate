@@ -1,9 +1,14 @@
-import React, { VFC } from "react";
+import React, { FC } from "react";
 import Layout from "@/components/Layout";
+import MainService from "@/services/main";
 
-const NotFound: VFC = () => {
+type Props = {
+    appRoot: MainService;
+};
+
+const NotFound: FC<Props> = ({ appRoot }) => {
     return (
-        <Layout>
+        <Layout appRoot={appRoot}>
             <main className="main">
                 <h1>Not Found</h1>;
             </main>

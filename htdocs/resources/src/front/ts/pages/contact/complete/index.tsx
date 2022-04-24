@@ -1,15 +1,19 @@
 import * as React from "react";
 import { Url } from "@/constants/url";
 import Layout from "@/components/Layout";
-import { VFC } from "react";
+import { FC } from "react";
 import { useDispatch } from "react-redux";
 import { push } from "connected-react-router";
+import MainService from "@/services/main";
 
-const ContactComplete: VFC = () => {
+type Props = {
+    appRoot: MainService;
+};
+
+const ContactComplete: FC<Props> = ({ appRoot }) => {
     const dispatch = useDispatch();
-
     return (
-        <Layout>
+        <Layout appRoot={appRoot}>
             <main className="main">
                 <div className="contentsArea">
                     <h2

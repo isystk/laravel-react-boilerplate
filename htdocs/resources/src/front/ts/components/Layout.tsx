@@ -1,26 +1,21 @@
-import React, { FC, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { hideLoading } from "@/services/actions";
+import React, { FC } from "react";
 import CommonHeader from "@/components/Commons/Header";
 import CommonFooter from "@/components/Commons/Footer";
 import Loading from "@/components/Commons/Loading";
+import MainService from "@/services/main";
 
-const Layout: FC = ({ children }) => {
-    const dispatch = useDispatch();
+type Props = {
+    appRoot: MainService;
+    children: React.ReactNode;
+};
 
-    useEffect(() => {
-        (async () => {
-            // ローディングを非表示にする
-            dispatch(hideLoading());
-        })();
-    }, []);
-
+const Layout: FC<Props> = ({ appRoot, children }) => {
     return (
         <>
-            <CommonHeader />
+            <CommonHeader appRoot={appRoot} />
             {children}
             <CommonFooter />
-            <Loading />
+            <Loading appRoot={appRoot} />
         </>
     );
 };

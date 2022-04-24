@@ -8,7 +8,11 @@ type IRoot = {
     parts: Parts;
 };
 
-const Modal: FC = ({ children }) => {
+type Props = {
+    children: React.ReactNode;
+};
+
+const Modal: FC<Props> = ({ children }) => {
     const dispatch = useDispatch();
     const { isShowOverlay } = useSelector<IRoot, Parts>(
         (state): Parts => state.parts

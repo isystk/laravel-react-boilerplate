@@ -3,6 +3,7 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 
 type Props = {
     title: string;
+    children: React.ReactNode;
 };
 
 const Box: FC<Props> = ({ title, children }) => {

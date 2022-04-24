@@ -1,14 +1,13 @@
-import React, { VFC } from "react";
+import React, { FC } from "react";
 import { Form } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import { Auth } from "@/stores/StoreTypes";
+import MainService from "@/services/main";
 
-type IRoot = {
-    auth: Auth;
+type Props = {
+    appRoot: MainService;
 };
 
-const CSRFToken: VFC = () => {
-    const { csrf } = useSelector<IRoot, Auth>(state => state.auth);
+const CSRFToken: FC<Props> = ({ appRoot }) => {
+    const { csrf } = appRoot.auth;
     return <Form.Control type="hidden" name="_token" defaultValue={csrf} />;
 };
 

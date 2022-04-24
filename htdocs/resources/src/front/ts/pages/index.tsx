@@ -1,63 +1,34 @@
-import React, { useEffect, VFC } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { API } from "@/utilities/api";
-import {
-    readLikesAsync,
-    addLikeAsync,
-    removeLikeAsync
-} from "@/services/modules/likes";
-import { readStocks, showLoading, hideLoading } from "@/services/actions";
-import { API_ENDPOINT } from "@/constants/api";
+import React, { useEffect, FC } from "react";
 import Pagination from "react-js-pagination";
 import { Url } from "@/constants/url";
-import { push } from "connected-react-router";
 import TopCarousel from "@/components/Shops/TopCarousel";
-import { Stock } from "@/stores/StoreTypes";
 import Layout from "@/components/Layout";
+import MainService from "@/services/main";
+import { useLocation, useNavigate } from "react-router-dom";
 
-type State = {
-    stocks: {
-        total: number;
-        current_page: number;
-        data: Stock[];
-    };
-    router;
-    likes;
+type Props = {
+    appRoot: MainService;
 };
 
-const Index: VFC = () => {
-    const { search } = useSelector((state: State) => ({
-        pathname: state.router.location.pathname,
-        search: state.router.location.search,
-        hash: state.router.location.hash
+const Index: FC<Props> = ({ appRoot }) => {
+    const navigate = useNavigate();
+    const { search } = useLocation();
+    const stocks = appRoot.shop.stocks.data.map(stock => ({
+        ...stock,
+        price: stock.price + "円",
+        isLike: appRoot.like.data.includes(stock.id + "")
     }));
-    const stocks = useSelector((state: State) =>
-        state.stocks.data.map(stock => ({
-            ...stock,
-            price: stock.price + "円",
-            isLike: state.likes.data.includes(stock.id + "")
-        }))
-    );
-    const { total, current_page } = useSelector((state: State) => ({
-        total: state.stocks.total,
-        current_page: state.stocks.current_page
-    }));
-    const dispatch = useDispatch();
+    const { total, current_page } = appRoot.shop.stocks;
 
     useEffect(() => {
         (async () => {
-            // ローディングを表示する
-            dispatch(showLoading());
-
             // 商品データを取得する
-            await dispatch(readStocks(search));
+            await appRoot.shop.readStocks(search);
 
-            // ローディングを非表示にする
-            dispatch(hideLoading());
+            // お気に入りデータを取得する
+            await appRoot.like.readLikesAsync();
         })();
-        // お気に入りデータを取得する
-        dispatch(readLikesAsync());
-    }, []);
+    }, [search]);
 
     const renderStocks = (): JSX.Element => (
         <>
@@ -66,21 +37,15 @@ const Index: VFC = () => {
                     <div className="text-right mb-2">
                         <a
                             href="#"
-                            onClick={e => {
+                            onClick={async e => {
                                 e.preventDefault();
-                                (async () => {
-                                    // ローディングを表示する
-                                    dispatch(showLoading());
-                                    if (stock.isLike) {
-                                        await dispatch(
-                                            removeLikeAsync(stock.id)
-                                        );
-                                    } else {
-                                        await dispatch(addLikeAsync(stock.id));
-                                    }
-                                    // ローディングを非表示にする
-                                    dispatch(hideLoading());
-                                })();
+                                if (stock.isLike) {
+                                    await appRoot.like.removeLikeAsync(
+                                        stock.id
+                                    );
+                                } else {
+                                    await appRoot.like.addLikeAsync(stock.id);
+                                }
                             }}
                             className={`btn btn-sm ${
                                 stock.isLike ? "btn-success" : "btn-secondary"
@@ -112,30 +77,18 @@ const Index: VFC = () => {
                                 type="button"
                                 value={`カートに入れる（残り${stock.quantity}個）`}
                                 className="btn-01"
-                                onClick={() => {
-                                    (async () => {
-                                        // ローディングを表示する
-                                        dispatch(showLoading());
-                                        try {
-                                            const response = await API.post(
-                                                API_ENDPOINT.ADD_MYCART,
-                                                {
-                                                    stock_id: stock.id
-                                                }
-                                            );
-                                            if (response.result) {
-                                                dispatch({
-                                                    type: "READ_CARTS",
-                                                    response
-                                                });
-                                                dispatch(push(Url.MYCART));
-                                            }
-                                        } catch (e) {
-                                            dispatch(push(Url.LOGIN));
-                                        }
-                                        // ローディングを非表示にする
-                                        dispatch(hideLoading());
-                                    })();
+                                onClick={async () => {
+                                    if (!appRoot.auth.session) {
+                                        // ログインしていない場合はログイン画面に遷移させる
+                                        navigate(Url.LOGIN);
+                                        return;
+                                    }
+                                    const result = await appRoot.cart.addStock(
+                                        stock.id
+                                    );
+                                    if (result) {
+                                        navigate(Url.MYCART);
+                                    }
                                 }}
                             />
                         )}
@@ -145,32 +98,26 @@ const Index: VFC = () => {
         </>
     );
 
-    const renderPaging = (): JSX.Element => {
-        return (
-            <Pagination
-                activePage={current_page}
-                itemsCountPerPage={6}
-                totalItemsCount={total}
-                pageRangeDisplayed={3}
-                onChange={handlePageChange}
-                itemClass="page-item"
-                linkClass="page-link"
-            />
-        );
+    const renderPaging = () => {
+        const props = {
+            activePage: current_page,
+            itemsCountPerPage: 6,
+            totalItemsCount: total,
+            pageRangeDisplayed: 3,
+            onChange: handlePageChange,
+            itemClass: "page-item",
+            linkClass: "page-link"
+        };
+        // @ts-ignore
+        return <Pagination {...props} />;
     };
 
     const handlePageChange = async (pageNo: any) => {
-        // ローディングを表示する
-        dispatch(showLoading());
-        // 商品データを取得する
-        await dispatch(readStocks(`?page=${pageNo}`));
-        // ローディングを非表示にする
-        dispatch(hideLoading());
-        dispatch(push(`${Url.TOP}?page=${pageNo}`));
+        navigate(`${Url.TOP}?page=${pageNo}`);
     };
 
     return (
-        <Layout>
+        <Layout appRoot={appRoot}>
             <main className="main">
                 <div className="contentsArea">
                     <div style={{ marginBottom: "25px" }}>

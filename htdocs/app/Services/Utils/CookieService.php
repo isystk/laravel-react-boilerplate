@@ -12,7 +12,7 @@ class CookieService
 
   public static function getLike()
   {
-    $value = Cookie::get(CookieService::COKKIE_KEYNAME_LIKE);
+    $value = Cookie::get(self::COKKIE_KEYNAME_LIKE);
 
     // カンマ区切りのデータを分割
     $likes = [];
@@ -25,7 +25,7 @@ class CookieService
 
   public static function saveLike($value)
   {
-    $likes = CookieService::getLike();
+    $likes = self::getLike();
 
     if (!in_array($value, $likes)) {
 
@@ -36,13 +36,13 @@ class CookieService
       $result = implode(',', $likes);
 
       // クッキーに保存
-      Cookie::queue(CookieService::COKKIE_KEYNAME_LIKE, $result, CookieService::COKKIE_EXPIRES);
+      Cookie::queue(self::COKKIE_KEYNAME_LIKE, $result, self::COKKIE_EXPIRES);
     }
   }
 
   public static function removeLike($value)
   {
-    $likes = CookieService::getLike();
+    $likes = self::getLike();
 
     if (in_array($value, $likes)) {
 
@@ -54,7 +54,7 @@ class CookieService
       $result = implode(',', $likes);
 
       // クッキーに保存
-      Cookie::queue(CookieService::COKKIE_KEYNAME_LIKE, $result, CookieService::COKKIE_EXPIRES);
+      Cookie::queue(self::COKKIE_KEYNAME_LIKE, $result, self::COKKIE_EXPIRES);
     }
   }
 }

@@ -1,20 +1,25 @@
-import React, { useState, VFC } from "react";
+import React, { useState, FC } from "react";
 import { Form } from "react-bootstrap";
 import TextInput from "@/components/Elements/TextInput";
 import SubmitButton from "@/components/Elements/SubmitButton";
 import CSRFToken from "@/components/Elements/CSRFToken";
 import Box from "@/components/Box";
 import Layout from "@/components/Layout";
+import MainService from "@/services/main";
 
-const RegisterForm: VFC = () => {
+type Props = {
+    appRoot: MainService;
+};
+
+const RegisterForm: FC<Props> = ({ appRoot }) => {
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     return (
-        <Layout>
+        <Layout appRoot={appRoot}>
             <main className="main">
                 <Box title="会員登録">
                     <Form method="POST" action="/register" id="login-form">
-                        <CSRFToken />
+                        <CSRFToken appRoot={appRoot} />
                         <TextInput
                             identity="name"
                             controlType="text"

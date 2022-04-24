@@ -1,11 +1,13 @@
-import React, { VFC } from "react";
-import { useSelector } from "react-redux";
+import React, { FC } from "react";
 import Portal from "./Portal";
-import { Parts } from "@/stores/StoreTypes";
+import MainService from "@/services/main";
 
-const Loading: VFC = () => {
-    const { isShowLoading } = useSelector(parts);
+type Props = {
+    appRoot: MainService;
+};
 
+const Loading: FC<Props> = ({ appRoot }) => {
+    const { isShowLoading } = appRoot;
     return (
         <Portal>
             {isShowLoading && (
@@ -16,7 +18,5 @@ const Loading: VFC = () => {
         </Portal>
     );
 };
-
-const parts = (state): Parts => state.parts;
 
 export default Loading;

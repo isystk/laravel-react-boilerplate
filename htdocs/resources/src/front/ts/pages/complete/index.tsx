@@ -2,14 +2,10 @@ import * as React from "react";
 import { Url } from "@/constants/url";
 import { Auth, Carts, Consts } from "@/stores/StoreTypes";
 import Layout from "@/components/Layout";
-import { VFC } from "react";
+import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { push } from "connected-react-router";
-
-type Props = {
-    auth: Auth;
-    push;
-};
+import MainService from "@/services/main";
 
 type IRoot = {
     auth: Auth;
@@ -17,12 +13,16 @@ type IRoot = {
     carts: Carts;
 };
 
-const ShopComplete: VFC<Props> = () => {
+type Props = {
+    appRoot: MainService;
+};
+
+const ShopComplete: FC<Props> = ({ appRoot }) => {
     const dispatch = useDispatch();
     const auth = useSelector<IRoot, Auth>(state => state.auth);
 
     return (
-        <Layout>
+        <Layout appRoot={appRoot}>
             <main className="main">
                 <div className="contentsArea">
                     <h2

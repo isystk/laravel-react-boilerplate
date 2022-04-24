@@ -1,11 +1,11 @@
-import React, { VFC } from "react";
+import React, { FC } from "react";
 import { Alert } from "react-bootstrap";
 
 type Props = {
     target: string;
 };
 
-const SessionAlert: VFC<Props> = props => {
+const SessionAlert: FC<Props> = props => {
     if (window.laravelSession[props.target] !== "") {
         return (
             <Alert variant="success" role="alert">

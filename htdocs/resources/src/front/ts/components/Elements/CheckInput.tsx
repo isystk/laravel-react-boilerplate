@@ -1,4 +1,4 @@
-import React, {VFC} from 'react'
+import React, {FC} from 'react'
 import { Row, Col, Form } from 'react-bootstrap'
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
   action
 }
 
-const CheckInput: VFC<Props> = (props) => (
+const CheckInput: FC<Props> = (props) => (
   <Form.Group>
     <Row>
       <Col md="6" className="offset-md-4">

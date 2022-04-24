@@ -1,10 +1,10 @@
-import React, { VFC } from "react";
+import React, { FC } from "react";
 
 type Props = {
     message: string;
 };
 
-const FormError: VFC<Props> = ({ message }) => (
+const FormError: FC<Props> = ({ message }) => (
     <span className="invalid-feedback" role="alert">
         <strong>{message}</strong>
     </span>

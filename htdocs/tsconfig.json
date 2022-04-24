@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
       /* 基本オプション */
-      "baseUrl": "./resources/src/front/ts",
+      "baseUrl": ".",
       "paths": {
-        "@/*": ["./*"],
+        "@/*": ["./resources/src/front/ts/*"],
       },
 
       "target": "es5",                          /* ECMAScriptのターゲットバージョンを指定します: 'ES3'（デフォルト）, 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018'または 'ESNEXT' */

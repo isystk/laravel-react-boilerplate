@@ -1,10 +1,15 @@
-import React, { VFC } from "react";
+import React, { FC } from "react";
 import SessionAlert from "@/components/Elements/SessionAlert";
 import Box from "@/components/Box";
 import Layout from "@/components/Layout";
+import MainService from "@/services/main";
 
-const Verify: VFC = () => (
-    <Layout>
+type Props = {
+    appRoot: MainService;
+};
+
+const Verify: FC<Props> = ({ appRoot }) => (
+    <Layout appRoot={appRoot}>
         <main className="main">
             <Box title="メールアドレスを確認してください">
                 <SessionAlert target="resent" />

@@ -1,9 +1,9 @@
-import React, { VFC } from "react";
+import React, { FC } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Url } from "@/constants/url";
 
-const LoginButton: VFC = () => (
+const LoginButton: FC = () => (
     <Row className="form-group mt-3">
         <Col className="text-center">
             <Button type="submit" variant="primary">

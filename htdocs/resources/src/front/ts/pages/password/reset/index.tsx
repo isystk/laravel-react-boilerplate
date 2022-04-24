@@ -1,4 +1,4 @@
-import React, { VFC } from "react";
+import React, { FC } from "react";
 import { Form } from "react-bootstrap";
 import TextInput from "@/components/Elements/TextInput";
 import SubmitButton from "@/components/Elements/SubmitButton";
@@ -6,10 +6,15 @@ import CSRFToken from "@/components/Elements/CSRFToken";
 import SessionAlert from "@/components/Elements/SessionAlert";
 import Box from "@/components/Box";
 import Layout from "@/components/Layout";
+import MainService from "@/services/main";
 
-const ResetForm: VFC = () => {
+type Props = {
+    appRoot: MainService;
+};
+
+const ResetForm: FC<Props> = ({ appRoot }) => {
     return (
-        <Layout>
+        <Layout appRoot={appRoot}>
             <main className="main">
                 <Box title="パスワードのリセット">
                     <SessionAlert target="status" />
@@ -18,7 +23,7 @@ const ResetForm: VFC = () => {
                         action="/password/email"
                         id="login-form"
                     >
-                        <CSRFToken />
+                        <CSRFToken appRoot={appRoot} />
                         <TextInput
                             identity="email"
                             controlType="email"
