@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
-import { Url } from "../../constants/url";
+import { Url } from "@/constants/url";
 
 export const Logo: FC = () => {
     return (

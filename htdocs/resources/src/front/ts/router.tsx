@@ -29,10 +29,11 @@ const Router: FC<Props> = ({ session }) => {
         if (!appRoot) return;
         // セッションのセット
         appRoot.auth.setSession(session);
-        // (async () => {
-        //     // 定数のセット
-        //     dispatch(await readConsts());
-        // })();
+
+        (async () => {
+            // 定数のセット
+            await appRoot.const.readConsts();
+        })();
 
         // CSRFのセット
         const token = document.head.querySelector<HTMLMetaElement>(
@@ -84,7 +85,7 @@ const Router: FC<Props> = ({ session }) => {
                         path={Url.HOME}
                         element={
                             <AuthCheck
-                                session={session}
+                                appRoot={appRoot}
                                 component={<Home appRoot={appRoot} />}
                             />
                         }
@@ -93,7 +94,7 @@ const Router: FC<Props> = ({ session }) => {
                         path={Url.MYCART}
                         element={
                             <AuthCheck
-                                session={session}
+                                appRoot={appRoot}
                                 component={<MyCart appRoot={appRoot} />}
                             />
                         }
@@ -102,7 +103,7 @@ const Router: FC<Props> = ({ session }) => {
                         path={Url.SHOP_COMPLETE}
                         element={
                             <AuthCheck
-                                session={session}
+                                appRoot={appRoot}
                                 component={<ShopComplete appRoot={appRoot} />}
                             />
                         }

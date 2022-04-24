@@ -3,7 +3,7 @@ import { NavDropdown, Form } from "react-bootstrap";
 import CSRFToken from "@/components/Elements/CSRFToken";
 import { Url } from "@/constants/url";
 import Logo from "@/components/Commons/Logo";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MainService from "@/services/main";
 
 type Props = {
@@ -12,20 +12,17 @@ type Props = {
 
 export const CommonHeader: FC<Props> = ({ appRoot }) => {
     const navigate = useNavigate();
-    const push_login = () => navigate(Url.LOGIN);
-    const push_register = () => navigate(Url.REGISTER);
     const push_mycart = () => navigate(Url.MYCART);
-    const push_contact = () => navigate(Url.CONTACT);
 
     const [isSideMenu, setSideMenu] = useState(false);
-    const { auth, name } = appRoot.auth;
+    const { isLogined, name } = appRoot.auth;
 
     const renderLoginPc = (): JSX.Element => {
         return (
             <div className="" id="navbarSupportedContent">
                 <ul className="navbar-nav ml-auto">
                     {(() => {
-                        if (auth) {
+                        if (isLogined) {
                             // ログイン済みの場合
                             return (
                                 <>
@@ -84,28 +81,20 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
                             return (
                                 <>
                                     <li className="nav-item">
-                                        <a
+                                        <Link
                                             className="btn btn-danger mr-3"
-                                            href={Url.LOGIN}
-                                            onClick={e => {
-                                                e.preventDefault();
-                                                push_login();
-                                            }}
+                                            to={Url.LOGIN}
                                         >
                                             ログイン
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <a
+                                        <Link
                                             className="btn btn-link text-danger"
-                                            href={Url.REGISTER}
-                                            onClick={e => {
-                                                e.preventDefault();
-                                                push_register();
-                                            }}
+                                            to={Url.REGISTER}
                                         >
                                             新規登録
-                                        </a>
+                                        </Link>
                                     </li>
                                 </>
                             );
@@ -113,16 +102,12 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
                     })()}
 
                     <li className="nav-item">
-                        <a
+                        <Link
                             className="btn btn-link text-danger"
-                            href={Url.CONTACT}
-                            onClick={e => {
-                                e.preventDefault();
-                                push_contact();
-                            }}
+                            to={Url.CONTACT}
                         >
                             お問い合わせ
-                        </a>
+                        </Link>
                     </li>
                 </ul>
             </div>
@@ -152,13 +137,13 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
                 <div id="side-menu" className={sideMenuClass}>
                     <div className="side-menu-header">
                         <p style={{ margin: "20px", fontSize: "16px" }}>
-                            {auth && name + " 様"}
+                            {isLogined && name + " 様"}
                         </p>
                     </div>
                     <nav>
                         <ul>
                             {(() => {
-                                if (auth) {
+                                if (isLogined) {
                                     // ログイン済みの場合
                                     return (
                                         <>
@@ -213,44 +198,41 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
                                     return (
                                         <>
                                             <li>
-                                                <a
-                                                    href={Url.LOGIN}
+                                                <Link
+                                                    to={Url.LOGIN}
                                                     onClick={e => {
                                                         e.preventDefault();
                                                         setSideMenu(false);
-                                                        push_login();
                                                     }}
                                                 >
                                                     ログイン
-                                                </a>
+                                                </Link>
                                             </li>
                                             <li>
-                                                <a
-                                                    href={Url.REGISTER}
+                                                <Link
+                                                    to={Url.REGISTER}
                                                     onClick={e => {
                                                         e.preventDefault();
                                                         setSideMenu(false);
-                                                        push_register();
                                                     }}
                                                 >
                                                     新規登録
-                                                </a>
+                                                </Link>
                                             </li>
                                         </>
                                     );
                                 }
                             })()}
                             <li>
-                                <a
-                                    href={Url.CONTACT}
+                                <Link
+                                    to={Url.CONTACT}
                                     onClick={e => {
                                         e.preventDefault();
                                         setSideMenu(false);
-                                        push_contact();
                                     }}
                                 >
                                     お問い合わせ
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </nav>
@@ -271,9 +253,7 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
             <header className="header shadow-sm">
                 <nav className="navbar navbar-expand-md navbar-light bg-white headerNav">
                     <Logo />
-
                     {renderLoginPc()}
-
                     {renderLoginSp()}
                 </nav>
             </header>

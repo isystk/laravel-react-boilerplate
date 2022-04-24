@@ -1,5 +1,6 @@
 import ShopService from "@/services/shop";
 import AuthService from "@/services/auth";
+import ConstService from "@/services/const";
 import LikeService from "@/services/like";
 import CartService from "@/services/cart";
 
@@ -7,6 +8,7 @@ export default class MainService {
     _setAppRoot: (appRoot: MainService) => void;
     isShowLoading: boolean;
     auth: AuthService;
+    const: ConstService;
     shop: ShopService;
     cart: CartService;
     like: LikeService;
@@ -15,6 +17,7 @@ export default class MainService {
         this._setAppRoot = setAppRoot;
         this.isShowLoading = false;
         this.auth = new AuthService(this);
+        this.const = new ConstService(this);
         this.shop = new ShopService(this);
         this.cart = new CartService(this);
         this.like = new LikeService(this);

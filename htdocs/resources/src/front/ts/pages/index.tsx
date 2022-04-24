@@ -78,7 +78,7 @@ const Index: FC<Props> = ({ appRoot }) => {
                                 value={`カートに入れる（残り${stock.quantity}個）`}
                                 className="btn-01"
                                 onClick={async () => {
-                                    if (!appRoot.auth.session) {
+                                    if (!appRoot.auth.isLogined) {
                                         // ログインしていない場合はログイン画面に遷移させる
                                         navigate(Url.LOGIN);
                                         return;

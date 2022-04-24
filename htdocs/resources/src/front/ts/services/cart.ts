@@ -20,6 +20,22 @@ export default class CartService {
         this.carts = initialState;
     }
 
+    async readCarts() {
+        // ローディングを表示する
+        this.main.showLoading();
+        try {
+            const response = await API.post(API_ENDPOINT.MYCARTS);
+            if (response.result) {
+                this.carts = response.carts;
+            }
+        } catch (e) {
+            alert("マイカートの取得に失敗しました");
+        }
+        // ローディングを非表示にする
+        this.main.hideLoading();
+        this.main.setAppRoot();
+    }
+
     async addStock(stockId: number): Promise<boolean> {
         let result = false;
         // ローディングを表示する
@@ -33,7 +49,28 @@ export default class CartService {
                 result = true;
             }
         } catch (e) {
-            alert("商品の追加に失敗しました");
+            alert("マイカートの追加に失敗しました");
+        }
+        // ローディングを非表示にする
+        this.main.hideLoading();
+        this.main.setAppRoot();
+        return result;
+    }
+
+    async removeCart(stockId: number): Promise<boolean> {
+        let result = false;
+        // ローディングを表示する
+        this.main.showLoading();
+        try {
+            const response = await API.post(API_ENDPOINT.REMOVE_MYCART, {
+                stock_id: stockId
+            });
+            if (response.result) {
+                this.carts = response.carts;
+                result = true;
+            }
+        } catch (e) {
+            alert("マイカートの削除に失敗しました");
         }
         // ローディングを非表示にする
         this.main.hideLoading();

@@ -13,31 +13,36 @@ export type Session = {
 
 export default class AuthService {
     main: MainService;
-    auth: boolean;
-    id?: number | null;
+    isLogined: boolean;
+    userId?: number | null;
     name: string | null;
     email?: string;
+    email_verified_at?: string | null;
     remember?: string;
     csrf?: string;
-    request?: string;
-    session?: Session;
 
     constructor(main: MainService) {
         this.main = main;
-        this.auth = false;
-        this.id = null;
+        this.isLogined = false;
+        this.userId = null;
         this.name = null;
         this.email = "";
+        this.email_verified_at = "";
         this.remember = "";
         this.csrf = "";
-        this.request = "";
     }
 
     setSession(session: Session) {
-        this.session = session;
+        this.userId = session.id;
+        this.name = session.name;
+        this.email = session.email;
+        this.email_verified_at = session.email_verified_at;
+        this.isLogined = !!this.userId;
+        this.main.setAppRoot();
     }
 
     setCSRF(csrf: string) {
         this.csrf = csrf;
+        this.main.setAppRoot();
     }
 }

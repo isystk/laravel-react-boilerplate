@@ -4,46 +4,26 @@ import { Elements, StripeProvider } from "react-stripe-elements";
 import CheckoutForm from "@/components/Shops/CheckoutForm";
 import Modal from "@/components/Commons/Modal";
 import { Button } from "react-bootstrap";
-import { Auth, Carts, Consts } from "@/stores/StoreTypes";
-
-import {
-    readCarts,
-    removeCart,
-    showOverlay,
-    hideOverlay
-} from "@/services/actions";
-import { useDispatch, useSelector } from "react-redux";
-import { push } from "connected-react-router";
 import Layout from "@/components/Layout";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import MainService from "@/services/main";
-
-type IRoot = {
-    auth: Auth;
-    consts: Consts;
-    carts: Carts;
-};
+import { Link } from "react-router-dom";
 
 type Props = {
     appRoot: MainService;
 };
 
 const MyCart: FC<Props> = ({ appRoot }) => {
-    const dispatch = useDispatch();
-    const auth = useSelector<IRoot, Auth>(state => state.auth);
-    const stripe_key = useSelector<IRoot, string>(
-        state => state.consts.stripe_key?.data + ""
-    );
-    const carts = useSelector<IRoot, Carts>(state => state.carts);
+    const auth = appRoot.auth;
+    const stripe_key = appRoot.const.data.stripe_key?.data + "";
+    const { carts } = appRoot.cart;
+    const [isOpen, setIsOpen] = useState<boolean>(false);
 
     useEffect(() => {
-        // マイカートデータを取得する
-        // @ts-ignore
-        dispatch(readCarts());
-        // オーバーレイを閉じる
-        return () => {
-            dispatch(hideOverlay());
-        };
+        (async () => {
+            // マイカートデータを取得する
+            await appRoot.cart.readCarts();
+        })();
     }, []);
 
     const renderCarts = (): JSX.Element => {
@@ -62,9 +42,13 @@ const MyCart: FC<Props> = ({ appRoot }) => {
                             type="button"
                             value="カートから削除する"
                             className="btn-01"
-                            onClick={() => {
-                                // @ts-ignore
-                                dispatch(removeCart(cart.id));
+                            onClick={async () => {
+                                const result = await appRoot.cart.removeCart(
+                                    cart.id
+                                );
+                                if (result) {
+                                    await appRoot.cart.readCarts();
+                                }
                             }}
                         />
                     </div>
@@ -120,15 +104,16 @@ const MyCart: FC<Props> = ({ appRoot }) => {
                                             <Button
                                                 type="submit"
                                                 variant="primary"
-                                                onClick={e => {
-                                                    e.preventDefault();
-                                                    dispatch(showOverlay());
-                                                }}
                                             >
                                                 決済をする
                                             </Button>
                                         </div>
-                                        <Modal>
+                                        <Modal
+                                            isOpen={isOpen}
+                                            handleClose={() => {
+                                                setIsOpen(false);
+                                            }}
+                                        >
                                             <StripeProvider apiKey={stripe_key}>
                                                 <Elements>
                                                     <CheckoutForm
@@ -146,16 +131,9 @@ const MyCart: FC<Props> = ({ appRoot }) => {
                         })()}
 
                         <p className="mt30 ta-center">
-                            <a
-                                href={Url.TOP}
-                                className="text-danger btn"
-                                onClick={e => {
-                                    e.preventDefault();
-                                    dispatch(push(Url.TOP));
-                                }}
-                            >
+                            <Link to={Url.TOP} className="text-danger btn">
                                 商品一覧へ戻る
-                            </a>
+                            </Link>
                         </p>
                     </div>
                 </div>
