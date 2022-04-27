@@ -13,7 +13,7 @@ const ShopComplete: FC<Props> = ({ appRoot }) => {
     const auth = appRoot.auth;
 
     return (
-        <Layout appRoot={appRoot}>
+        <Layout appRoot={appRoot} title="商品購入完了">
             <main className="main">
                 <div className="contentsArea">
                     <h2

@@ -1,5 +1,5 @@
 import React, { useState, FC } from "react";
-import { Form } from "react-bootstrap";
+import { Form } from "reactstrap";
 import TextInput from "@/components/Elements/TextInput";
 import SubmitButton from "@/components/Elements/SubmitButton";
 import CSRFToken from "@/components/Elements/CSRFToken";
@@ -15,7 +15,7 @@ const RegisterForm: FC<Props> = ({ appRoot }) => {
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     return (
-        <Layout appRoot={appRoot}>
+        <Layout appRoot={appRoot} title="会員登録">
             <main className="main">
                 <Box title="会員登録">
                     <Form method="POST" action="/register" id="login-form">

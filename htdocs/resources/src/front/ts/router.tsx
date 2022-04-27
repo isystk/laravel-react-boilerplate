@@ -7,7 +7,7 @@ import EMailForm from "@/pages/password/reset";
 import Home from "@/pages/home";
 import LoginForm from "@/pages/login";
 import MyCart from "@/pages/mycart";
-import NotFound from "@/components/NotFound";
+import NotFound from "@/pages/NotFound";
 import RegisterForm from "@/pages/register";
 import ResetForm from "@/pages/password/reset/[id]";
 import ShopComplete from "@/pages/complete";

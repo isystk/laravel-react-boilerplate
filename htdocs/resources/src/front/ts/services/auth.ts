@@ -1,5 +1,16 @@
 import MainService from "@/services/main";
 
+export interface Auth {
+    auth: boolean;
+    id?: number | null;
+    name: string | null;
+    email?: string;
+    remember?: string;
+    csrf?: string;
+    request?: string;
+    session?: string;
+}
+
 export type Session = {
     created_at: string;
     email: string;

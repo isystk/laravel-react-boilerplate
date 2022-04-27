@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
+import { Container, Row, Col, Card, CardTitle, CardText } from "reactstrap";
 
 type Props = {
     title: string;
@@ -13,8 +13,12 @@ const Box: FC<Props> = ({ title, children }) => {
                 <Row className="justify-content-center">
                     <Col md="8">
                         <Card>
-                            <Card.Header>{title}</Card.Header>
-                            <Card.Body>{children}</Card.Body>
+                            <CardTitle className="card-header">
+                                {title}
+                            </CardTitle>
+                            <CardText className="card-body">
+                                {children}
+                            </CardText>
                         </Card>
                     </Col>
                 </Row>

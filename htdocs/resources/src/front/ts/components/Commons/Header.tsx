@@ -1,5 +1,11 @@
 import React, { FC, useState } from "react";
-import { NavDropdown, Form } from "react-bootstrap";
+import {
+    Dropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
+    Form
+} from "reactstrap";
 import CSRFToken from "@/components/Elements/CSRFToken";
 import { Url } from "@/constants/url";
 import Logo from "@/components/Commons/Logo";
@@ -14,6 +20,7 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
     const navigate = useNavigate();
     const push_mycart = () => navigate(Url.MYCART);
 
+    const [isDropdownOpen, setDropdownOpen] = useState(false);
     const [isSideMenu, setSideMenu] = useState(false);
     const { isLogined, name } = appRoot.auth;
 
@@ -26,38 +33,49 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
                             // ログイン済みの場合
                             return (
                                 <>
-                                    <NavDropdown
-                                        id="logout-nav"
-                                        title={name + " 様"}
+                                    <Dropdown
+                                        isOpen={isDropdownOpen}
+                                        toggle={() => {
+                                            setDropdownOpen(!isDropdownOpen);
+                                        }}
                                     >
-                                        <NavDropdown.Item
-                                            href={Url.LOGOUT}
-                                            onClick={e => {
-                                                e.preventDefault();
-                                                const element: HTMLFormElement = document.getElementById(
-                                                    "logout-form"
-                                                ) as HTMLFormElement;
-                                                if (element) {
-                                                    element.submit();
-                                                }
-                                            }}
+                                        <DropdownToggle
+                                            caret
+                                            nav
+                                            id="logout-nav"
                                         >
-                                            ログアウト
-                                        </NavDropdown.Item>
-                                        <Form
-                                            id="logout-form"
-                                            action={Url.LOGOUT}
-                                            method="POST"
-                                            style={{ display: "none" }}
-                                        >
-                                            <CSRFToken appRoot={appRoot} />
-                                        </Form>
-                                        <NavDropdown.Item
-                                            href={Url.MYCART}
-                                            onClick={mycartSubmit}
-                                        >
-                                            カートを見る
-                                        </NavDropdown.Item>
+                                            {name + " 様"}
+                                        </DropdownToggle>
+                                        <DropdownMenu>
+                                            <DropdownItem
+                                                href={Url.LOGOUT}
+                                                onClick={e => {
+                                                    e.preventDefault();
+                                                    const element: HTMLFormElement = document.getElementById(
+                                                        "logout-form"
+                                                    ) as HTMLFormElement;
+                                                    if (element) {
+                                                        element.submit();
+                                                    }
+                                                }}
+                                            >
+                                                ログアウト
+                                            </DropdownItem>
+                                            <Form
+                                                id="logout-form"
+                                                action={Url.LOGOUT}
+                                                method="POST"
+                                                style={{ display: "none" }}
+                                            >
+                                                <CSRFToken appRoot={appRoot} />
+                                            </Form>
+                                            <DropdownItem
+                                                href={Url.MYCART}
+                                                onClick={mycartSubmit}
+                                            >
+                                                カートを見る
+                                            </DropdownItem>
+                                        </DropdownMenu>
                                         <Form
                                             id="mycart-form"
                                             action={Url.MYCART}
@@ -66,7 +84,7 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
                                         >
                                             <CSRFToken appRoot={appRoot} />
                                         </Form>
-                                    </NavDropdown>
+                                    </Dropdown>
 
                                     <a href={Url.MYCART} onClick={mycartSubmit}>
                                         <img

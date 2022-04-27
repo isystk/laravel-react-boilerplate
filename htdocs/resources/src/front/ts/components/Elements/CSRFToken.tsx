@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Form } from "react-bootstrap";
+import { Input } from "reactstrap";
 import MainService from "@/services/main";
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
 
 const CSRFToken: FC<Props> = ({ appRoot }) => {
     const { csrf } = appRoot.auth;
-    return <Form.Control type="hidden" name="_token" defaultValue={csrf} />;
+    return <Input type="hidden" name="_token" defaultValue={csrf} />;
 };
 
 export default CSRFToken;

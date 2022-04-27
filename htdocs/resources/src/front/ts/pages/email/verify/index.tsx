@@ -10,9 +10,9 @@ type Props = {
 };
 
 const Verify: FC<Props> = ({ appRoot }) => (
-    <Layout appRoot={appRoot}>
+    <Layout appRoot={appRoot} title="メールを確認してください">
         <main className="main">
-            <Box title="メールアドレスを確認してください">
+            <Box title="メールを確認してください">
                 <SessionAlert target="resent" />
                 確認用リンクが記載されたメールをご確認ください。メールが届いていない場合は{" "}
                 <a

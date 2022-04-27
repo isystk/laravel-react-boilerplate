@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Row, Col, Form } from "react-bootstrap";
+import { Row, Col, FormGroup, Input, Label } from "reactstrap";
 
 type Props = {
     identity: string;
@@ -9,11 +9,11 @@ type Props = {
 };
 
 const CheckInput: FC<Props> = props => (
-    <Form.Group>
+    <FormGroup>
         <Row>
             <Col md="6" className="offset-md-4">
                 <div className="form-check">
-                    <Form.Check
+                    <Input
                         id={props.identity}
                         type="checkbox"
                         className="form-check-input"
@@ -21,15 +21,15 @@ const CheckInput: FC<Props> = props => (
                         checked={props.checked}
                         onChange={check => props.action(check.target.checked)}
                     />
-                    <Form.Label
+                    <Label
                         className="form-check-label"
                         htmlFor={props.identity}
                     >
                         {props.label}
-                    </Form.Label>
+                    </Label>
                 </div>
             </Col>
         </Row>
-    </Form.Group>
+    </FormGroup>
 );
 export default CheckInput;

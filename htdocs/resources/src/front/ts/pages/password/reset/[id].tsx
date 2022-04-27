@@ -1,5 +1,5 @@
 import React, { useState, FC } from "react";
-import { Form } from "react-bootstrap";
+import { Form } from "reactstrap";
 import TextInput from "@/components/Elements/TextInput";
 import SubmitButton from "@/components/Elements/SubmitButton";
 import CSRFToken from "@/components/Elements/CSRFToken";
@@ -21,9 +21,9 @@ const ResetForm: FC<Props> = ({ appRoot }) => {
     };
 
     return (
-        <Layout appRoot={appRoot}>
+        <Layout appRoot={appRoot} title="パスワード変更">
             <main className="main">
-                <Box title="パスワードのリセット">
+                <Box title="パスワード変更">
                     <SessionAlert target="status" />
                     <Form
                         method="POST"

@@ -83,7 +83,7 @@ const Index: FC<Props> = ({ appRoot }) => {
                                         navigate(Url.LOGIN);
                                         return;
                                     }
-                                    const result = await appRoot.cart.addStock(
+                                    const result = await appRoot.cart.addCart(
                                         stock.id
                                     );
                                     if (result) {
@@ -117,7 +117,7 @@ const Index: FC<Props> = ({ appRoot }) => {
     };
 
     return (
-        <Layout appRoot={appRoot}>
+        <Layout appRoot={appRoot} title="TOP">
             <main className="main">
                 <div className="contentsArea">
                     <div style={{ marginBottom: "25px" }}>

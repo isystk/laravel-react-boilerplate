@@ -9,7 +9,7 @@ type Props = {
 };
 
 const Home: FC<Props> = ({ appRoot }) => (
-    <Layout appRoot={appRoot}>
+    <Layout appRoot={appRoot} title="ダッシュボード">
         <main className="main">
             <Box title="ダッシュボード">
                 <SessionAlert target="status" />

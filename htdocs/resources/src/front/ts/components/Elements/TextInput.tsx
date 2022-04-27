@@ -1,7 +1,6 @@
 import React, { useEffect, useState, FC } from "react";
-import { Row, Col, Form } from "react-bootstrap";
+import { Row, Col, Input, FormGroup, Label, InputProps } from "reactstrap";
 import FormError from "./FormError";
-import { FormControlProps } from "react-bootstrap/FormControl";
 
 type Props = {
     identity: string;
@@ -22,7 +21,7 @@ type Valid = {
 
 const TextInput: FC<Props> = props => {
     const [valid, setValid] = useState<Valid>({ error: "", isInvalid: "" });
-    const formProps = { ...props } as FormControlProps;
+    const formProps = { ...props } as InputProps;
 
     useEffect(() => {
         if (window.laravelErrors[props.identity]) {
@@ -35,16 +34,16 @@ const TextInput: FC<Props> = props => {
     }, []);
 
     return (
-        <Form.Group>
+        <FormGroup>
             <Row>
-                <Form.Label
+                <Label
                     htmlFor={props.identity}
                     className="col-md-4 col-form-label text-md-right"
                 >
                     {props.label}
-                </Form.Label>
+                </Label>
                 <Col md="6">
-                    <Form.Control
+                    <Input
                         {...formProps}
                         name={props.identity}
                         className={valid.isInvalid}
@@ -52,7 +51,7 @@ const TextInput: FC<Props> = props => {
                     <FormError message={valid.error} />
                 </Col>
             </Row>
-        </Form.Group>
+        </FormGroup>
     );
 };
 

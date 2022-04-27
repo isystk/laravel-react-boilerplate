@@ -1,10 +1,10 @@
 import React, { FC } from "react";
-import { Form } from "react-bootstrap";
+import { Input } from "reactstrap";
 import { useParams } from "react-router";
 
 const RequestToken: FC = () => {
     const { id } = useParams<{ id: string }>();
-    return <Form.Control type="hidden" name="token" defaultValue={id} />;
+    return <Input type="hidden" name="token" defaultValue={id} />;
 };
 
 export default RequestToken;

@@ -1,7 +1,28 @@
 import MainService from "@/services/main";
 import { API } from "@/utilities/api";
 import { API_ENDPOINT } from "@/constants/api";
-import { Stock } from "@/stores/StoreTypes";
+
+export interface Page {
+    total: number;
+    current_page: number;
+    last_page: number;
+    first_page_url: string;
+    prev_page_url: string;
+    next_page_url: string;
+    last_page_url: string;
+}
+
+export interface Stock {
+    id: number;
+    name: string;
+    detail: string;
+    price: number;
+    imgpath: string;
+    quantity: number;
+    created_at: Date;
+    updated_at: Date;
+    isLike: boolean;
+}
 
 type Stocks = {
     current_page: number;

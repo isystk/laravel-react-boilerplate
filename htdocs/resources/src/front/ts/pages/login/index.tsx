@@ -32,7 +32,7 @@ const LoginForm: FC<Props> = ({ appRoot }) => {
     };
 
     return (
-        <Layout appRoot={appRoot}>
+        <Layout appRoot={appRoot} title="ログイン">
             <main className="main">
                 <Box title="ログイン">
                     <div className="text-center mb-3  ">

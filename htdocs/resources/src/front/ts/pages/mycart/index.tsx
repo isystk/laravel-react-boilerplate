@@ -2,7 +2,7 @@ import * as React from "react";
 import { Url } from "@/constants/url";
 import CheckoutForm from "@/components/Shops/CheckoutForm";
 import Modal from "@/components/Commons/Modal";
-import { Button } from "react-bootstrap";
+import { Button } from "reactstrap";
 import Layout from "@/components/Layout";
 import { FC, useEffect, useState } from "react";
 import MainService from "@/services/main";
@@ -59,7 +59,7 @@ const MyCart: FC<Props> = ({ appRoot }) => {
     };
 
     return (
-        <Layout appRoot={appRoot}>
+        <Layout appRoot={appRoot} title="マイカート">
             <main className="main">
                 <div className="contentsArea">
                     <h2 className="heading02">{auth.name}さんのカートの中身</h2>
@@ -104,7 +104,7 @@ const MyCart: FC<Props> = ({ appRoot }) => {
                                         >
                                             <Button
                                                 type="submit"
-                                                variant="primary"
+                                                color="primary"
                                                 onClick={() => {
                                                     setIsOpen(true);
                                                 }}

@@ -1,53 +1,69 @@
 import * as React from "react";
-
-import { Form, FormGroup, Label, Input } from "reactstrap";
-import { Formik } from "formik";
 import * as Yup from "yup";
+import { FC } from "react";
+import { FormGroup, Label, Input } from "reactstrap";
+import { Formik, Form } from "formik";
 import CSRFToken from "@/components/Elements/CSRFToken";
-import { API } from "@/utilities/api";
-import { API_ENDPOINT } from "@/constants/api";
-import { Url } from "@/constants/url";
-
-import { Auth, Carts, Consts, KeyValue } from "@/stores/StoreTypes";
-import ReactImageBase64 from "react-image-base64";
 import Layout from "@/components/Layout";
-import { FC, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { push } from "connected-react-router";
 import MainService from "@/services/main";
-
-type IRoot = {
-    auth: Auth;
-    consts: Consts;
-    carts: Carts;
-};
+import { KeyValue } from "@/services/const";
+import ImageFileInput from "@/components/Elements/ImageFile";
 
 type Props = {
     appRoot: MainService;
 };
 
 const ContactCreate: FC<Props> = ({ appRoot }) => {
-    const dispatch = useDispatch();
-    const auth = useSelector<IRoot, Auth>(state => state.auth);
-    const consts = useSelector<IRoot, Consts>(state => state.consts);
-    const [imageBase64, setImageBase64] = useState<string>("");
-    const [fileName, setFileName] = useState<string>("");
-    const [fileErrorMessage] = useState<string>("");
+    const auth = appRoot.auth;
+    const consts = appRoot.const.data;
 
     const handleSubmit = async values => {
-        // alert(JSON.stringify(values))
+        console.log(values);
 
-        // 入力したお問い合わせ内容を送信する。
-        const response = await API.post(API_ENDPOINT.CONTACT_STORE, values);
-
-        if (response.result) {
-            // 完了画面を表示する
-            dispatch(push(Url.CONTACT_COMPLETE));
-        }
+        // // 入力したお問い合わせ内容を送信する。
+        // const response = await API.post(API_ENDPOINT.CONTACT_STORE, values);
+        //
+        // if (response.result) {
+        //     // 完了画面を表示する
+        //     navigate(Url.CONTACT_COMPLETE);
+        // }
     };
 
+    const initialValues = {
+        your_name: auth.name || "",
+        email: auth.email || "",
+        gender: "",
+        age: "",
+        title: "",
+        contact: "",
+        url: "",
+        imageBase64: "",
+        caution: 0
+    };
+
+    const validation = Yup.object().shape({
+        your_name: Yup.string()
+            .max(20, "お名前は20文字以下を入れてください")
+            .required("お名前を入力してください"),
+        email: Yup.string()
+            .email("メールアドレスを正しく入力してしてください")
+            .max(255, "メールアドレスは255文字以下を入れてください")
+            .required("メールアドレスを入力してください"),
+        gender: Yup.number().required("性別を選択してください"),
+        age: Yup.number().required("年齢を選択してください"),
+        title: Yup.string()
+            .max(50, "タイトルは50文字以下を入れてください")
+            .required("タイトルを入力してください"),
+        contact: Yup.string()
+            .max(200, "タイトルは200文字以下を入れてください")
+            .required("本文を入力してください"),
+        url: Yup.string().url("URLを正しく入力してください"),
+        imageBase64: Yup.string().required("画像を選択してください"),
+        caution: Yup.array().min(1, "注意事項に同意してください")
+    });
+
     return (
-        <Layout appRoot={appRoot}>
+        <Layout appRoot={appRoot} title="お問い合わせ">
             <main className="main">
                 <div className="container">
                     <div className="row justify-content-center">
@@ -56,91 +72,21 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
                                 <div className="card-header">
                                     お問い合わせ登録
                                 </div>
-
                                 <div className="card-body">
                                     <Formik
-                                        initialValues={{
-                                            your_name: auth.name || "",
-                                            email: auth.email || "",
-                                            gender: "",
-                                            age: "",
-                                            title: "",
-                                            contact: "",
-                                            url: "",
-                                            caution: [],
-                                            imageBase64: "",
-                                            fileName: ""
-                                        }}
-                                        onSubmit={values =>
-                                            handleSubmit(values)
-                                        }
-                                        validationSchema={Yup.object().shape({
-                                            your_name: Yup.string()
-                                                .max(
-                                                    20,
-                                                    "お名前は20文字以下を入れてください"
-                                                )
-                                                .required(
-                                                    "お名前を入力してください"
-                                                ),
-                                            email: Yup.string()
-                                                .email(
-                                                    "メールアドレスを正しく入力してしてください"
-                                                )
-                                                .max(
-                                                    255,
-                                                    "メールアドレスは255文字以下を入れてください"
-                                                )
-                                                .required(
-                                                    "メールアドレスを入力してください"
-                                                ),
-                                            gender: Yup.number().required(
-                                                "性別を選択してください"
-                                            ),
-                                            age: Yup.number().required(
-                                                "年齢を選択してください"
-                                            ),
-                                            title: Yup.string()
-                                                .max(
-                                                    50,
-                                                    "タイトルは50文字以下を入れてください"
-                                                )
-                                                .required(
-                                                    "タイトルを入力してください"
-                                                ),
-                                            contact: Yup.string()
-                                                .max(
-                                                    200,
-                                                    "タイトルは200文字以下を入れてください"
-                                                )
-                                                .required(
-                                                    "本文を入力してください"
-                                                ),
-                                            url: Yup.string()
-                                                // .matches(
-                                                //   /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-                                                //   'URLを正しく入力してください',
-                                                // ),
-                                                .url(
-                                                    "URLを正しく入力してください"
-                                                ),
-                                            caution: Yup.array().min(
-                                                1,
-                                                "注意事項に同意してください"
-                                            )
-                                        })}
+                                        initialValues={initialValues}
+                                        onSubmit={handleSubmit}
+                                        validationSchema={validation}
                                     >
                                         {({
-                                            handleSubmit,
                                             handleChange,
                                             handleBlur,
                                             values,
                                             errors,
                                             touched
                                         }) => (
-                                            <Form onSubmit={handleSubmit}>
+                                            <Form>
                                                 <CSRFToken appRoot={appRoot} />
-
                                                 <FormGroup className="form-section">
                                                     <div className="form-section-wrap">
                                                         <Label className="item-name">
@@ -424,69 +370,10 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
                                                             画像を選択してください
                                                             <span>任意</span>
                                                         </Label>
-                                                        <div
-                                                            className="textarea-wrap"
-                                                            id="drop-zone"
-                                                        >
-                                                            <ReactImageBase64
-                                                                maxFileSize={
-                                                                    10485760
-                                                                }
-                                                                thumbnail_size={
-                                                                    500
-                                                                }
-                                                                drop={true}
-                                                                dropText="ファイルをドラッグ＆ドロップもしくは"
-                                                                handleChange={data => {
-                                                                    setImageBase64(
-                                                                        data.fileData
-                                                                    );
-                                                                    setFileName(
-                                                                        data.fileName
-                                                                    );
-                                                                }}
-                                                            />
-                                                            <div id="result">
-                                                                {imageBase64 &&
-                                                                    (() => {
-                                                                        values.imageBase64 = imageBase64;
-                                                                        values.fileName =
-                                                                            fileName +
-                                                                            "";
-                                                                        return (
-                                                                            <img
-                                                                                src={
-                                                                                    imageBase64
-                                                                                }
-                                                                                width="200px"
-                                                                            />
-                                                                        );
-                                                                    })()}
-                                                                <Input
-                                                                    type="hidden"
-                                                                    name="imageBase64"
-                                                                    value={
-                                                                        values.imageBase64
-                                                                    }
-                                                                    onChange={
-                                                                        handleChange
-                                                                    }
-                                                                />
-                                                                <Input
-                                                                    type="hidden"
-                                                                    name="fileName"
-                                                                    value={
-                                                                        values.fileName
-                                                                    }
-                                                                    onChange={
-                                                                        handleChange
-                                                                    }
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                        <p className="error">
-                                                            {fileErrorMessage}
-                                                        </p>
+                                                        <ImageFileInput
+                                                            label="画像"
+                                                            name="imageBase64"
+                                                        />
                                                     </div>
                                                 </FormGroup>
                                                 <FormGroup className="form-section">

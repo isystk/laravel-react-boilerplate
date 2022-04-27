@@ -2,18 +2,16 @@ import * as React from "react";
 import { Url } from "@/constants/url";
 import Layout from "@/components/Layout";
 import { FC } from "react";
-import { useDispatch } from "react-redux";
-import { push } from "connected-react-router";
 import MainService from "@/services/main";
+import { Link } from "react-router-dom";
 
 type Props = {
     appRoot: MainService;
 };
 
 const ContactComplete: FC<Props> = ({ appRoot }) => {
-    const dispatch = useDispatch();
     return (
-        <Layout appRoot={appRoot}>
+        <Layout appRoot={appRoot} title="お問い合わせ完了">
             <main className="main">
                 <div className="contentsArea">
                     <h2
@@ -31,16 +29,9 @@ const ContactComplete: FC<Props> = ({ appRoot }) => {
                         <p>
                             お問い合わせが完了しました。担当者から連絡があるまでお待ち下さい。
                         </p>
-                        <a
-                            href={Url.TOP}
-                            className="btn text-danger mt40"
-                            onClick={e => {
-                                e.preventDefault();
-                                dispatch(push(Url.TOP));
-                            }}
-                        >
+                        <Link to={Url.TOP} className="btn text-danger mt40">
                             商品一覧へ戻る
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </main>

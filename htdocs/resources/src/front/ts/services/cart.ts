@@ -1,7 +1,30 @@
 import MainService from "@/services/main";
 import { API } from "@/utilities/api";
 import { API_ENDPOINT } from "@/constants/api";
-import { Carts } from "@/stores/StoreTypes";
+
+type Carts = {
+    data: Cart[];
+    message: string;
+    username: string;
+    count: number;
+    sum: number;
+};
+
+type Cart = {
+    id: number;
+    name: string;
+    detail: string;
+    price: number;
+    imgpath: string;
+    quantity: number;
+    created_at: Date;
+    updated_at: Date;
+};
+
+type Form = {
+    amount: number;
+    username: string;
+};
 
 const initialState: Carts = {
     data: [],
@@ -36,7 +59,7 @@ export default class CartService {
         this.main.setAppRoot();
     }
 
-    async addStock(stockId: number): Promise<boolean> {
+    async addCart(stockId: number): Promise<boolean> {
         let result = false;
         // ローディングを表示する
         this.main.showLoading();
@@ -71,6 +94,49 @@ export default class CartService {
             }
         } catch (e) {
             alert("マイカートの削除に失敗しました");
+        }
+        // ローディングを非表示にする
+        this.main.hideLoading();
+        this.main.setAppRoot();
+        return result;
+    }
+
+    async payment(stripe, elements, values: Form): Promise<boolean> {
+        let result = false;
+        // ローディングを表示する
+        this.main.showLoading();
+        try {
+            //paymentIntentの作成を（ローカルサーバ経由で）リクエスト
+            const response = await API.post(API_ENDPOINT.CREATE_PAYMENT, {
+                amount: values.amount,
+                username: values.username
+            });
+
+            //レスポンスからclient_secretを取得
+            const client_secret = response.client_secret;
+
+            //client_secretを利用して（確認情報をStripeに投げて）決済を完了させる
+            const confirmRes = await stripe.confirmCardPayment(client_secret, {
+                payment_method: {
+                    // @ts-ignore
+                    card: elements.getElement("cardNumber"),
+                    billing_details: {
+                        name: values.username
+                    }
+                }
+            });
+
+            if (
+                confirmRes.paymentIntent &&
+                confirmRes.paymentIntent.status === "succeeded"
+            ) {
+                // 決算処理が完了したら、注文履歴に追加してマイカートから商品を削除する。
+                const response = await API.post(API_ENDPOINT.CHECKOUT, {});
+
+                result = response.result;
+            }
+        } catch (e) {
+            alert("決算処理に失敗しました");
         }
         // ローディングを非表示にする
         this.main.hideLoading();

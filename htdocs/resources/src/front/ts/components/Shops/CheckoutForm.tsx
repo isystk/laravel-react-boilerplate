@@ -2,10 +2,8 @@ import React, { FC } from "react";
 import { Button, FormGroup, Label, FormFeedback } from "reactstrap";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import { API_ENDPOINT } from "@/constants/api";
 import { Url } from "@/constants/url";
 import CSRFToken from "@/components/Elements/CSRFToken";
-import { API } from "@/utilities/api";
 import MainService from "@/services/main";
 import { useNavigate } from "react-router-dom";
 import {
@@ -21,16 +19,11 @@ type Props = {
     amount: number;
 };
 
-type Form = {
-    amount: number;
-    username: string;
-};
-
 const CheckoutForm: FC<Props> = ({ appRoot, amount }) => {
     const navigate = useNavigate();
     const stripe = useStripe();
     const elements = useElements();
-    const handlePayment = async (values: Form) => {
+    const handlePayment = async values => {
         console.log(values);
 
         if (!stripe || !elements) {
@@ -39,44 +32,12 @@ const CheckoutForm: FC<Props> = ({ appRoot, amount }) => {
             return;
         }
 
-        // ローディングを表示する
-        appRoot.showLoading();
-
-        //paymentIntentの作成を（ローカルサーバ経由で）リクエスト
-        const response = await API.post(API_ENDPOINT.CREATE_PAYMENT, {
-            amount: values.amount,
-            username: values.username
-        });
-
-        //レスポンスからclient_secretを取得
-        const client_secret = response.client_secret;
-
-        //client_secretを利用して（確認情報をStripeに投げて）決済を完了させる
-        const confirmRes = await stripe.confirmCardPayment(client_secret, {
-            payment_method: {
-                // @ts-ignore
-                card: elements.getElement("cardNumber"),
-                billing_details: {
-                    name: values.username
-                }
-            }
-        });
-
-        if (
-            confirmRes.paymentIntent &&
-            confirmRes.paymentIntent.status === "succeeded"
-        ) {
-            // 決算処理が完了したら、注文履歴に追加してマイカートから商品を削除する。
-            const response = await API.post(API_ENDPOINT.CHECKOUT, {});
-
-            if (response.result) {
-                // 完了画面を表示する
-                navigate(Url.SHOP_COMPLETE);
-            }
+        // 決算処理を行う
+        const result = await appRoot.cart.payment(stripe, elements, values);
+        if (result) {
+            // 完了画面を表示する
+            navigate(Url.SHOP_COMPLETE);
         }
-
-        // ローディングを非表示にする
-        appRoot.hideLoading();
     };
 
     return (
@@ -132,7 +93,7 @@ const CheckoutForm: FC<Props> = ({ appRoot, amount }) => {
                                 className="my-3"
                                 color="primary"
                             >
-                                購入
+                                購入する
                             </Button>
                         </p>
                     </Form>
