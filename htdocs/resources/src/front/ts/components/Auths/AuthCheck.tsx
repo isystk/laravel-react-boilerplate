@@ -2,21 +2,21 @@ import * as React from "react";
 import { Navigate } from "react-router-dom";
 import { FC } from "react";
 import { Url } from "@/constants/url";
-import MainService from "@/services/main";
+import { Session } from "@/services/auth";
 
 type Props = {
-    appRoot: MainService;
+    session: Session;
     component: React.ReactNode;
 };
 
-const AuthCheck: FC<Props> = ({ appRoot, component }) => {
+const AuthCheck: FC<Props> = ({ session, component }) => {
     // ログインしてなければログイン画面へとばす
-    if (!appRoot.auth.isLogined) {
+    if (!session.id) {
         return <Navigate to={Url.LOGIN} />;
     }
 
     // 新規会員登録後、メール確認が未完了の場合
-    if (appRoot.auth.email_verified_at === null) {
+    if (!session.email_verified_at) {
         return <Navigate to={Url.EMAIL_VERIFY} />;
     }
 

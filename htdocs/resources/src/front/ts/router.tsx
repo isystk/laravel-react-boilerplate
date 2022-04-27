@@ -85,7 +85,7 @@ const Router: FC<Props> = ({ session }) => {
                         path={Url.HOME}
                         element={
                             <AuthCheck
-                                appRoot={appRoot}
+                                session={session}
                                 component={<Home appRoot={appRoot} />}
                             />
                         }
@@ -94,7 +94,7 @@ const Router: FC<Props> = ({ session }) => {
                         path={Url.MYCART}
                         element={
                             <AuthCheck
-                                appRoot={appRoot}
+                                session={session}
                                 component={<MyCart appRoot={appRoot} />}
                             />
                         }
@@ -103,7 +103,7 @@ const Router: FC<Props> = ({ session }) => {
                         path={Url.SHOP_COMPLETE}
                         element={
                             <AuthCheck
-                                appRoot={appRoot}
+                                session={session}
                                 component={<ShopComplete appRoot={appRoot} />}
                             />
                         }

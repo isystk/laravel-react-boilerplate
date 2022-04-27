@@ -47,9 +47,8 @@ const ResetForm: FC<Props> = ({ appRoot }) => {
                             label="新しいパスワード"
                         />
                         <TextInput
-                            identity="password-confirm"
+                            identity="password_confirmation"
                             controlType="password"
-                            name="password_confirmation"
                             autoComplete="new-password"
                             label="新しいパスワード(確認)"
                         />
