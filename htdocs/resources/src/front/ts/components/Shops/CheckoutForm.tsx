@@ -1,44 +1,46 @@
 import React, { FC } from "react";
-import {
-    CardNumberElement,
-    CardExpiryElement,
-    CardCVCElement,
-    injectStripe
-} from "react-stripe-elements";
-import {
-    Button,
-    Form,
-    FormGroup,
-    Label,
-    Input,
-    FormFeedback
-} from "reactstrap";
-import { Formik } from "formik";
+import { Button, FormGroup, Label, FormFeedback } from "reactstrap";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { API_ENDPOINT } from "@/constants/api";
 import { Url } from "@/constants/url";
 import CSRFToken from "@/components/Elements/CSRFToken";
 import { API } from "@/utilities/api";
-import { useDispatch } from "react-redux";
-import { hideLoading, showLoading } from "@/services/actions";
-import { push } from "connected-react-router";
 import MainService from "@/services/main";
+import { useNavigate } from "react-router-dom";
+import {
+    useStripe,
+    useElements,
+    CardNumberElement,
+    CardExpiryElement,
+    CardCvcElement
+} from "@stripe/react-stripe-js";
 
 type Props = {
     appRoot: MainService;
-    stripe;
-    elements;
-    username: string;
     amount: number;
 };
 
-const CheckoutForm: FC<Props> = props => {
-    const dispatch = useDispatch();
-    const handlePayment = async values => {
-        // alert(JSON.stringify(values));
+type Form = {
+    amount: number;
+    username: string;
+};
+
+const CheckoutForm: FC<Props> = ({ appRoot, amount }) => {
+    const navigate = useNavigate();
+    const stripe = useStripe();
+    const elements = useElements();
+    const handlePayment = async (values: Form) => {
+        console.log(values);
+
+        if (!stripe || !elements) {
+            // Stripe.js has not yet loaded.
+            // Make sure to disable form submission until Stripe.js has loaded.
+            return;
+        }
 
         // ローディングを表示する
-        dispatch(showLoading());
+        appRoot.showLoading();
 
         //paymentIntentの作成を（ローカルサーバ経由で）リクエスト
         const response = await API.post(API_ENDPOINT.CREATE_PAYMENT, {
@@ -50,31 +52,31 @@ const CheckoutForm: FC<Props> = props => {
         const client_secret = response.client_secret;
 
         //client_secretを利用して（確認情報をStripeに投げて）決済を完了させる
-        const confirmRes = await props.stripe.confirmCardPayment(
-            client_secret,
-            {
-                payment_method: {
-                    // card: this.props.elements.getElement('card'),
-                    card: props.elements.getElement("cardNumber"),
-                    billing_details: {
-                        name: values.username
-                    }
+        const confirmRes = await stripe.confirmCardPayment(client_secret, {
+            payment_method: {
+                // @ts-ignore
+                card: elements.getElement("cardNumber"),
+                billing_details: {
+                    name: values.username
                 }
             }
-        );
+        });
 
-        if (confirmRes.paymentIntent.status === "succeeded") {
+        if (
+            confirmRes.paymentIntent &&
+            confirmRes.paymentIntent.status === "succeeded"
+        ) {
             // 決算処理が完了したら、注文履歴に追加してマイカートから商品を削除する。
             const response = await API.post(API_ENDPOINT.CHECKOUT, {});
 
             if (response.result) {
                 // 完了画面を表示する
-                dispatch(push(Url.SHOP_COMPLETE));
+                navigate(Url.SHOP_COMPLETE);
             }
         }
 
         // ローディングを非表示にする
-        dispatch(hideLoading());
+        appRoot.hideLoading();
     };
 
     return (
@@ -90,10 +92,10 @@ const CheckoutForm: FC<Props> = props => {
             </h2>
             <Formik
                 initialValues={{
-                    amount: props.amount,
-                    username: props.username
+                    amount: amount,
+                    username: appRoot.auth.email || ""
                 }}
-                onSubmit={values => handlePayment(values)}
+                onSubmit={handlePayment}
                 validationSchema={Yup.object().shape({
                     amount: Yup.number()
                         .min(0, "金額は0以上で入力してください")
@@ -103,9 +105,9 @@ const CheckoutForm: FC<Props> = props => {
                         .required("メールアドレスを入力してください")
                 })}
             >
-                {({ handleSubmit, values, errors, touched }) => (
-                    <Form onSubmit={handleSubmit}>
-                        <CSRFToken appRoot={props.appRoot} />
+                {({ values, errors }) => (
+                    <Form>
+                        <CSRFToken appRoot={appRoot} />
                         <FormGroup>
                             <Label>金額</Label>
                             <p>{values.amount}円</p>
@@ -114,14 +116,6 @@ const CheckoutForm: FC<Props> = props => {
                         <FormGroup>
                             <Label>メールアドレス</Label>
                             <p>{values.username}</p>
-                            <Input
-                                type="hidden"
-                                name="username"
-                                value={values.username}
-                                invalid={Boolean(
-                                    touched.username && errors.username
-                                )}
-                            />
                             <FormFeedback>{errors.username}</FormFeedback>
                         </FormGroup>
                         <legend className="col-form-label">カード番号</legend>
@@ -131,7 +125,7 @@ const CheckoutForm: FC<Props> = props => {
                         <legend className="col-form-label">
                             セキュリティーコード
                         </legend>
-                        <CardCVCElement className="p-2 bg-light" />
+                        <CardCvcElement className="p-2 bg-light" />
                         <p className="text-center">
                             <Button
                                 type="submit"
@@ -153,4 +147,4 @@ const CheckoutForm: FC<Props> = props => {
     );
 };
 
-export default injectStripe(CheckoutForm);
+export default CheckoutForm;

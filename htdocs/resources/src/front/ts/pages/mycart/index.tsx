@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Url } from "@/constants/url";
-import { Elements, StripeProvider } from "react-stripe-elements";
 import CheckoutForm from "@/components/Shops/CheckoutForm";
 import Modal from "@/components/Commons/Modal";
 import { Button } from "react-bootstrap";
@@ -8,6 +7,8 @@ import Layout from "@/components/Layout";
 import { FC, useEffect, useState } from "react";
 import MainService from "@/services/main";
 import { Link } from "react-router-dom";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 type Props = {
     appRoot: MainService;
@@ -15,9 +16,9 @@ type Props = {
 
 const MyCart: FC<Props> = ({ appRoot }) => {
     const auth = appRoot.auth;
-    const stripe_key = appRoot.const.data.stripe_key?.data + "";
     const { carts } = appRoot.cart;
     const [isOpen, setIsOpen] = useState<boolean>(false);
+    const stripePromise = loadStripe(appRoot.const.data.stripe_key?.data + "");
 
     useEffect(() => {
         (async () => {
@@ -104,6 +105,9 @@ const MyCart: FC<Props> = ({ appRoot }) => {
                                             <Button
                                                 type="submit"
                                                 variant="primary"
+                                                onClick={() => {
+                                                    setIsOpen(true);
+                                                }}
                                             >
                                                 決済をする
                                             </Button>
@@ -114,16 +118,12 @@ const MyCart: FC<Props> = ({ appRoot }) => {
                                                 setIsOpen(false);
                                             }}
                                         >
-                                            <StripeProvider apiKey={stripe_key}>
-                                                <Elements>
-                                                    <CheckoutForm
-                                                        amount={carts.sum}
-                                                        username={
-                                                            carts.username
-                                                        }
-                                                    />
-                                                </Elements>
-                                            </StripeProvider>
+                                            <Elements stripe={stripePromise}>
+                                                <CheckoutForm
+                                                    appRoot={appRoot}
+                                                    amount={carts.sum}
+                                                />
+                                            </Elements>
                                         </Modal>
                                     </>
                                 );
