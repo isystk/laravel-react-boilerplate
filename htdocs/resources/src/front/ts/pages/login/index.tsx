@@ -34,7 +34,7 @@ const LoginForm: FC<Props> = ({ appRoot }) => {
     return (
         <Layout appRoot={appRoot} title="ログイン">
             <main className="main">
-                <Box title="ログイン">
+                <Box title="ログイン" small={true}>
                     <div className="text-center mb-3  ">
                         <form method="GET" action={Url.AUTH_GOOGLE}>
                             <button type="submit" className="btn btn-danger">

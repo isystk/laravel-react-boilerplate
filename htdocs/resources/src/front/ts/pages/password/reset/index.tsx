@@ -16,7 +16,7 @@ const ResetForm: FC<Props> = ({ appRoot }) => {
     return (
         <Layout appRoot={appRoot} title="パスワードリセット">
             <main className="main">
-                <Box title="パスワードリセット">
+                <Box title="パスワードリセット" small={true}>
                     <SessionAlert target="status" />
                     <Form
                         method="POST"

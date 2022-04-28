@@ -1,24 +1,24 @@
 import React, { FC } from "react";
-import { Container, Row, Col, Card, CardTitle, CardText } from "reactstrap";
+import { Container, Row, Col, Card, CardHeader, CardBody } from "reactstrap";
 
 type Props = {
     title: string;
     children: React.ReactNode;
+    small?: boolean;
 };
 
-const Box: FC<Props> = ({ title, children }) => {
+const Box: FC<Props> = ({ title, children, small }) => {
+    const grids = {
+        md: small ? 8 : 12
+    };
     return (
         <>
             <Container>
                 <Row className="justify-content-center">
-                    <Col md="8">
+                    <Col {...grids}>
                         <Card>
-                            <CardTitle className="card-header">
-                                {title}
-                            </CardTitle>
-                            <CardText className="card-body">
-                                {children}
-                            </CardText>
+                            <CardHeader>{title}</CardHeader>
+                            <CardBody>{children}</CardBody>
                         </Card>
                     </Col>
                 </Row>

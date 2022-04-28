@@ -17,7 +17,7 @@ const RegisterForm: FC<Props> = ({ appRoot }) => {
     return (
         <Layout appRoot={appRoot} title="会員登録">
             <main className="main">
-                <Box title="会員登録">
+                <Box title="会員登録" small={true}>
                     <Form method="POST" action="/register" id="login-form">
                         <CSRFToken appRoot={appRoot} />
                         <TextInput

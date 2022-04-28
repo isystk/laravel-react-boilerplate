@@ -197,29 +197,23 @@
 /* フォーム
 ------------------------------------- */
 
-.form-section {
+.form-group {
     display: flex;
     /*border: 1px solid #dadce0;*/
     border-radius: 8px;
     margin-bottom: 12px;
       background-color: #fff;
   }
-  .form-section .form-section-header {
+  .form-group .form-group-header {
     background-color: rgb(219, 178, 6);
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     height: 10px;
   }
-  /*
-  .form-section.error {
-    border: 1px solid #d93025;
+  .form-group {
+    margin-top: 22px;
   }
-  */
-  .form-section .form-section-wrap {
-    padding: 24px;
-    padding-top: 22px;
-  }
-  .form-section .form-section-wrap .item-name {
+  .form-group .item-name {
     font-size: 16px;
     letter-spacing: .1px;
     line-height: 24px;
@@ -229,49 +223,49 @@
     word-break: break-word;
       margin-bottom: 16px;
   }
-  .form-section .form-section-wrap .item-name span{
+  .form-group .item-name span{
     background-color: #9b9b9b;
     color: #fff;
     padding: 4px;
     margin-left: 5px;
     border-radius: 8px;
-    font-size: 0.9em;
+    font-size: 0.6em;
   }
-  .form-section .form-section-wrap .item-name span.required{
+  .form-group .item-name span.required{
     background-color: #d93025;
   }
-  .form-section .form-section-wrap .item-name.required:after {
+  .form-group .item-name.required:after {
     content: '*';
     color: #d93025;
   }
-  .form-section .form-section-wrap p.error {
+  .form-group p.error {
     font-size: 12px;
     font-weight: 400;
     letter-spacing: .3px;
     color: #d93025;
   }
 
-.form-section input[type="text"],
-.form-section input[type="email"],
-.form-section input[type="tel"],
-.form-section input[type="date"],
-.form-section input[type="url"],
-.form-section input[type="password"],
-.form-section input[type="search"],
-.form-section input[type="file"],
-.form-section textarea {
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group input[type="date"],
+.form-group input[type="url"],
+.form-group input[type="password"],
+.form-group input[type="search"],
+.form-group input[type="file"],
+.form-group textarea {
   border: none;
   outline: none;
   padding: 8px 0 8px 0;
   width: 100%;
 }
-.form-section .test-wrap {
+.form-group .test-wrap {
   padding-bottom: 8px;
 }
-.form-section .test-wrap .form-bottom{
+.form-group .test-wrap .form-bottom{
   border-bottom: solid #dadce0 1px;
 }
-.form-section .test-wrap.active .form-bottom{
+.form-group .test-wrap.active .form-bottom{
   border-bottom-color: #487cff;
   border-bottom-width: 2px;
   animation: centerToSide .3s ease 0s 1 forwards;
@@ -284,34 +278,34 @@
     transform: scaleY(1) scaleX(1);
   }
 }
-.form-section.error .test-wrap .form-bottom{
+.form-group.error .test-wrap .form-bottom{
   border-bottom-color: #d93025;
 }
-.form-section .test-wrap.small {
+.form-group .test-wrap.small {
   width: 100px;
 }
-.form-section .test-wrap.middle {
+.form-group .test-wrap.middle {
   width: 200px;
 }
-.form-section .test-wrap.large {
+.form-group .test-wrap.large {
   width: 300px;
 }
 
 /* ラジオボタン */
-.form-section .radio-wrap{
+.form-group .radio-wrap{
   margin-top: 30px;
 }
-.form-section .radio-wrap:first-child{
+.form-group .radio-wrap:first-child{
   margin-top: 0;
 }
-.form-section .radio-wrap input{
+.form-group .radio-wrap input{
   display: none;
 }
-.form-section .radio-wrap input + span{
+.form-group .radio-wrap input + span{
   padding-left: 40px;
   position:relative;
 }
-.form-section .radio-wrap input + span::before{
+.form-group .radio-wrap input + span::before{
   content: "";
   background-image: url(/assets/front/image/radio.png);
   background-size: contain;
@@ -323,11 +317,11 @@
   height: 18px;
   zoom: 150%;
 }
-.form-section .radio-wrap input:checked + span{
+.form-group .radio-wrap input:checked + span{
   color: #487cff;
   font-weight: bold;
 }
-.form-section .radio-wrap input:checked + span::after{
+.form-group .radio-wrap input:checked + span::after{
   content: "";
   background-image: url(/assets/front/image/radio-checked.png);
   background-size: contain;
@@ -341,20 +335,20 @@
 }
 
 /* チェックボックス */
-.form-section .checkbox-wrap label{
+.form-group .checkbox-wrap label{
   margin-right: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
   display: inline-block;
 }
-.form-section .checkbox-wrap input{
+.form-group .checkbox-wrap input{
   display: none;
 }
-.form-section .checkbox-wrap input + span{
+.form-group .checkbox-wrap input + span{
   padding-left: 40px;
   position:relative;
 }
-.form-section .checkbox-wrap input + span::before{
+.form-group .checkbox-wrap input + span::before{
   content: "";
   background-image: url(/assets/front/image/check.png);
   background-size: contain;
@@ -366,11 +360,11 @@
   height: 18px;
   zoom: 150%;
 }
-.form-section .checkbox-wrap input:checked + span{
+.form-group .checkbox-wrap input:checked + span{
   color: #487cff;
   font-weight: bold;
 }
-.form-section .checkbox-wrap input:checked + span::after{
+.form-group .checkbox-wrap input:checked + span::after{
   content: "";
   background-image: url(/assets/front/image/check-checked.png);
   background-size: contain;
@@ -384,12 +378,12 @@
 }
 
 /* セレクトボックス */
-.form-section .select-wrap {
+.form-group .select-wrap {
   position: relative;
   width: 100%;
   max-width: 250px;
 }
-.form-section .select-wrap:before {
+.form-group .select-wrap:before {
   position: absolute;
   right: 15px;
   top: 50%;
@@ -400,7 +394,7 @@
   background: url(/assets/front/image/select.png) no-repeat;
   background-size: contain;
 }
-.form-section .select-wrap select{
+.form-group .select-wrap select{
   width: 200px;
   max-width: 100%;
   outline:none;
@@ -413,22 +407,22 @@
   background-color: #fff;
   border-radius: 5px;
 }
-.form-section .select-wrap select::-ms-expand {
+.form-group .select-wrap select::-ms-expand {
   display: none;
 }
-.form-section .select-wrap.active select{
+.form-group .select-wrap.active select{
   border-color: #487cff;
   border-width: 2px;
 }
 
 
 /* テキストエリア */
-.form-section .textarea-wrap .counter {
+.form-group .textarea-wrap .counter {
   float: right;
   font-size: 12px;
   margin: 10px 0 10px 0;
 }
-.form-section .textarea-wrap {
+.form-group .textarea-wrap {
   width: 100%;
   border-radius: 5px;
   appearance: none;
@@ -437,10 +431,10 @@
   border: solid 1px #e6e6e6;
   padding: 1px;
 }
-.form-section .textarea-wrap textarea{
+.form-group .textarea-wrap textarea{
   height: 100%;
 }
-.form-section .textarea-wrap.active {
+.form-group .textarea-wrap.active {
   border-color: #487cff;
   border-width: 2px;
 }
@@ -661,10 +655,10 @@ list-style: none;
   position: absolute;
   top: 50%;
   left: 50%;
-  background-image: url(/assets/front/image/loading.gif);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  //background-image: url(/assets/front/image/loading.gif);
+  //background-position: center;
+  //background-repeat: no-repeat;
+  //background-size: cover;
 }
 
 
