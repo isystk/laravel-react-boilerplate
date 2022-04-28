@@ -12386,7 +12386,8 @@ button.stripe-button-el > span {
 /* ラジオボタン */
 
 .form-group .radio-wrap {
-  margin-top: 30px;
+  margin-top: 5px;
+  padding-bottom: 8px;
 }
 
 .form-group .radio-wrap:first-child {
@@ -12503,8 +12504,6 @@ button.stripe-button-el > span {
 }
 
 .form-group .select-wrap select {
-  width: 200px;
-  max-width: 100%;
   outline: none;
   appearance: none;
   -webkit-appearance: none;
@@ -12534,7 +12533,6 @@ button.stripe-button-el > span {
 }
 
 .form-group .textarea-wrap {
-  width: 100%;
   border-radius: 5px;
   appearance: none;
   -webkit-appearance: none;
@@ -12550,6 +12548,18 @@ button.stripe-button-el > span {
 .form-group .textarea-wrap.active {
   border-color: #487cff;
   border-width: 2px;
+}
+
+.form-group .textarea-wrap.small {
+  width: 100px;
+}
+
+.form-group .textarea-wrap.middle {
+  width: 200px;
+}
+
+.form-group .textarea-wrap.large {
+  width: 300px;
 }
 
 /* サブミットボタン */

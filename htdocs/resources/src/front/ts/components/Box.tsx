@@ -17,8 +17,8 @@ const Box: FC<Props> = ({ title, children, small }) => {
                 <Row className="justify-content-center">
                     <Col {...grids}>
                         <Card>
-                            <CardHeader>{title}</CardHeader>
-                            <CardBody>{children}</CardBody>
+                            <CardHeader className="pl-md-5">{title}</CardHeader>
+                            <CardBody className="pl-md-5">{children}</CardBody>
                         </Card>
                     </Col>
                 </Row>

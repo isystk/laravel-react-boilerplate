@@ -1,7 +1,7 @@
 import React, { useState, FC } from "react";
 import { Field } from "formik";
 import ReactImageBase64 from "react-image-base64";
-import { CardImg } from "reactstrap";
+import { CardImg, Col, Container, Row } from "reactstrap";
 
 type Props = {
     label: string;
@@ -12,10 +12,9 @@ export const ImageFileInput: FC<Props> = ({ label, name, ...rest }) => {
     const [photoErrors, setPhotoErrors] = useState<string[]>([]);
 
     return (
-        <div className="form-control">
-            <p>{label}</p>
-            <div>
-                <div>
+        <Container>
+            <Row>
+                <Col md="6">
                     <Field name={name} {...rest}>
                         {// @ts-ignore
                         ({ form }) => {
@@ -53,9 +52,9 @@ export const ImageFileInput: FC<Props> = ({ label, name, ...rest }) => {
                             );
                         }}
                     </Field>
-                </div>
-                <div>
-                    <div name={name} {...rest}>
+                </Col>
+                <Col md="6">
+                    <Field name={name} {...rest}>
                         {// @ts-ignore
                         ({ form }) => {
                             const { values } = form;
@@ -70,10 +69,10 @@ export const ImageFileInput: FC<Props> = ({ label, name, ...rest }) => {
                                 />
                             );
                         }}
-                    </div>
-                </div>
-            </div>
-        </div>
+                    </Field>
+                </Col>
+            </Row>
+        </Container>
     );
 };
 

@@ -48,7 +48,6 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
                                         </DropdownToggle>
                                         <DropdownMenu>
                                             <DropdownItem
-                                                href={Url.LOGOUT}
                                                 onClick={e => {
                                                     e.preventDefault();
                                                     const element: HTMLFormElement = document.getElementById(
@@ -70,7 +69,6 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
                                                 <CSRFToken appRoot={appRoot} />
                                             </Form>
                                             <DropdownItem
-                                                href={Url.MYCART}
                                                 onClick={mycartSubmit}
                                             >
                                                 カートを見る
@@ -86,7 +84,7 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
                                         </Form>
                                     </Dropdown>
 
-                                    <a href={Url.MYCART} onClick={mycartSubmit}>
+                                    <a href="#" onClick={mycartSubmit}>
                                         <img
                                             src="/assets/front/image/cart.png"
                                             className="cartImg ml-3"
@@ -167,7 +165,7 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
                                         <>
                                             <li>
                                                 <a
-                                                    href={Url.LOGOUT}
+                                                    href="#"
                                                     onClick={e => {
                                                         e.preventDefault();
                                                         const element: HTMLFormElement = document.getElementById(
@@ -193,7 +191,7 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
                                             </li>
                                             <li>
                                                 <a
-                                                    href={Url.MYCART}
+                                                    href="#"
                                                     onClick={mycartSubmit}
                                                 >
                                                     カートを見る
@@ -218,8 +216,7 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
                                             <li>
                                                 <Link
                                                     to={Url.LOGIN}
-                                                    onClick={e => {
-                                                        e.preventDefault();
+                                                    onClick={() => {
                                                         setSideMenu(false);
                                                     }}
                                                 >
@@ -229,8 +226,7 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
                                             <li>
                                                 <Link
                                                     to={Url.REGISTER}
-                                                    onClick={e => {
-                                                        e.preventDefault();
+                                                    onClick={() => {
                                                         setSideMenu(false);
                                                     }}
                                                 >
@@ -244,8 +240,7 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
                             <li>
                                 <Link
                                     to={Url.CONTACT}
-                                    onClick={e => {
-                                        e.preventDefault();
+                                    onClick={() => {
                                         setSideMenu(false);
                                     }}
                                 >
