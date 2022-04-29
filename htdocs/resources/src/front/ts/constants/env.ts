@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === "production") {
     Env = {
         envName: process.env.MIX_ENV_NAME,
         internalEndpointUrl: process.env.MIX_INTERNAL_ENDPOINT_URL,
-        externalEndpointUrl: process.env.MIX_EXTERNAL_ENDPOINT_URL
+        externalEndpointUrl: process.env.MIX_EXTERNAL_ENDPOINT_URL,
     } as IEnv;
 } else {
     /** docker でビルドされていない場合は、 .env.local から値を取ってくる */

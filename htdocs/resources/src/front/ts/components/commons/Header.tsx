@@ -4,7 +4,7 @@ import {
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
-    Form
+    Form,
 } from "reactstrap";
 import CSRFToken from "@/components/elements/CSRFToken";
 import { Url } from "@/constants/url";
@@ -48,11 +48,12 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
                                         </DropdownToggle>
                                         <DropdownMenu>
                                             <DropdownItem
-                                                onClick={e => {
+                                                onClick={(e) => {
                                                     e.preventDefault();
-                                                    const element: HTMLFormElement = document.getElementById(
-                                                        "logout-form"
-                                                    ) as HTMLFormElement;
+                                                    const element: HTMLFormElement =
+                                                        document.getElementById(
+                                                            "logout-form"
+                                                        ) as HTMLFormElement;
                                                     if (element) {
                                                         element.submit();
                                                     }
@@ -140,7 +141,7 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
             <>
                 <div
                     className={menuBtnClass}
-                    onClick={e => {
+                    onClick={(e) => {
                         e.preventDefault();
                         const isOpen = isSideMenu ? false : true;
                         setSideMenu(isOpen);
@@ -166,11 +167,12 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
                                             <li>
                                                 <a
                                                     href="#"
-                                                    onClick={e => {
+                                                    onClick={(e) => {
                                                         e.preventDefault();
-                                                        const element: HTMLFormElement = document.getElementById(
-                                                            "logout-form"
-                                                        ) as HTMLFormElement;
+                                                        const element: HTMLFormElement =
+                                                            document.getElementById(
+                                                                "logout-form"
+                                                            ) as HTMLFormElement;
                                                         if (element) {
                                                             element.submit();
                                                         }
@@ -255,7 +257,7 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
         );
     };
 
-    const mycartSubmit = e => {
+    const mycartSubmit = (e) => {
         e.preventDefault();
         setSideMenu(false);
         push_mycart();

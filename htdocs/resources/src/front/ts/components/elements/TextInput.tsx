@@ -19,7 +19,7 @@ type Valid = {
     error: string;
 };
 
-const TextInput: FC<Props> = props => {
+const TextInput: FC<Props> = (props) => {
     const [valid, setValid] = useState<Valid>({ error: "", isInvalid: "" });
     const formProps = { ...props } as InputProps;
 
@@ -27,7 +27,7 @@ const TextInput: FC<Props> = props => {
         if (window.laravelErrors[props.identity]) {
             setValid({
                 error: window.laravelErrors[props.identity][0],
-                isInvalid: " is-invalid"
+                isInvalid: " is-invalid",
             });
             delete window.laravelErrors[props.identity];
         }

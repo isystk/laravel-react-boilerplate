@@ -17,7 +17,7 @@ const Verify: FC<Props> = ({ appRoot }) => (
                 確認用リンクが記載されたメールをご確認ください。メールが届いていない場合は{" "}
                 <a
                     href="#"
-                    onClick={e => {
+                    onClick={(e) => {
                         e.preventDefault();
                         const form = document.getElementById(
                             "email-form"

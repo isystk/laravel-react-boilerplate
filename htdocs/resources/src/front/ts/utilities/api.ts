@@ -66,5 +66,5 @@ export const API = {
     get,
     post,
     put,
-    del
+    del,
 };

@@ -5,7 +5,7 @@ type Props = {
     target: string;
 };
 
-const SessionAlert: FC<Props> = props => {
+const SessionAlert: FC<Props> = (props) => {
     if (window.laravelSession[props.target] !== "") {
         return (
             <Alert color="success" role="alert">

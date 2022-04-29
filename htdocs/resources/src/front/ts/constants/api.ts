@@ -41,5 +41,5 @@ export const API_ENDPOINT = {
     /** Stripe用のペイメント作成 */
     CREATE_PAYMENT: getBffUrl("/createPayment"),
     /** 決算処理後の後処理 */
-    CHECKOUT: getBffUrl("/checkout")
+    CHECKOUT: getBffUrl("/checkout"),
 };

@@ -21,7 +21,7 @@ const ShopComplete: FC<Props> = ({ appRoot }) => {
                         style={{
                             color: "#555555",
                             fontSize: "1.2em",
-                            padding: "24px 0px"
+                            padding: "24px 0px",
                         }}
                     >
                         {auth.name}

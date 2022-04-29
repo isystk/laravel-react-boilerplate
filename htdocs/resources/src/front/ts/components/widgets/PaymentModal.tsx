@@ -12,7 +12,7 @@ import {
     useElements,
     CardNumberElement,
     CardExpiryElement,
-    CardCvcElement
+    CardCvcElement,
 } from "@stripe/react-stripe-js";
 
 type Props = {
@@ -26,7 +26,7 @@ const PaymentModal: FC<Props> = ({ isOpen, handleClose, appRoot, amount }) => {
     const navigate = useNavigate();
     const stripe = useStripe();
     const elements = useElements();
-    const handlePayment = async values => {
+    const handlePayment = async (values) => {
         console.log(values);
 
         if (!stripe || !elements) {
@@ -50,7 +50,7 @@ const PaymentModal: FC<Props> = ({ isOpen, handleClose, appRoot, amount }) => {
                     style={{
                         fontSize: "16px",
                         textAlign: "center",
-                        fontWeight: "bold"
+                        fontWeight: "bold",
                     }}
                 >
                     決済情報の入力
@@ -58,7 +58,7 @@ const PaymentModal: FC<Props> = ({ isOpen, handleClose, appRoot, amount }) => {
                 <Formik
                     initialValues={{
                         amount: amount,
-                        username: appRoot.auth.email || ""
+                        username: appRoot.auth.email || "",
                     }}
                     onSubmit={handlePayment}
                     validationSchema={Yup.object().shape({
@@ -67,7 +67,7 @@ const PaymentModal: FC<Props> = ({ isOpen, handleClose, appRoot, amount }) => {
                             .required("金額を入力してください"),
                         username: Yup.string()
                             .email("メールアドレスを正しく入力してしてください")
-                            .required("メールアドレスを入力してください")
+                            .required("メールアドレスを入力してください"),
                     })}
                 >
                     {({ values, errors }) => (

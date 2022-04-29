@@ -19,7 +19,7 @@ const ContactComplete: FC<Props> = ({ appRoot }) => {
                         style={{
                             color: "#555555",
                             fontSize: "1.2em",
-                            padding: "24px 0px"
+                            padding: "24px 0px",
                         }}
                     >
                         お問い合わせが完了しました。

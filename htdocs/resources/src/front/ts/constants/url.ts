@@ -23,5 +23,5 @@ export const Url = {
     /** マイカート */
     MYCART: "/mycart",
     /** 購入完了 */
-    SHOP_COMPLETE: "/complete"
+    SHOP_COMPLETE: "/complete",
 };

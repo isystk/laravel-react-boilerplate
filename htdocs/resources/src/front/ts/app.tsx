@@ -32,7 +32,7 @@ const render = (session: Session) => {
 const init = () => {
     const params = new URLSearchParams();
     const url = "/session";
-    axios.post(url, params).then(response => {
+    axios.post(url, params).then((response) => {
         render(response.data);
     });
 };

@@ -33,7 +33,7 @@ type Stocks = {
 const initialState = {
     current_page: 1,
     total: 0,
-    data: [] as Stock[]
+    data: [] as Stock[],
 };
 
 export default class ShopService {
@@ -53,7 +53,7 @@ export default class ShopService {
         this.stocks = {
             current_page: response.stocks.current_page,
             total: response.stocks.total,
-            data: response.stocks.data
+            data: response.stocks.data,
         };
         // ローディングを非表示にする
         this.main.hideLoading();

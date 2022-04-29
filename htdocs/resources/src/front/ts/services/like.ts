@@ -29,7 +29,7 @@ export default class LikeService {
         this.main.showLoading();
         try {
             const response = await API.post(API_ENDPOINT.LIKES_STORE, {
-                id: id
+                id: id,
             });
             if (response.result) {
                 window.alert("お気に入りに追加しました");
@@ -50,7 +50,7 @@ export default class LikeService {
                 API_ENDPOINT.LIKES_DESTROY + "/" + id
             );
             if (response.result) {
-                this.data = this.data.filter(n => n !== id + "");
+                this.data = this.data.filter((n) => n !== id + "");
             }
             this.main.setAppRoot();
         } catch (e) {

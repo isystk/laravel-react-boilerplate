@@ -88,7 +88,7 @@ const MyCart: FC<Props> = ({ appRoot }) => {
                                             <p
                                                 style={{
                                                     fontSize: "1.2em",
-                                                    fontWeight: "bold"
+                                                    fontWeight: "bold",
                                                 }}
                                             >
                                                 合計金額：
@@ -98,7 +98,7 @@ const MyCart: FC<Props> = ({ appRoot }) => {
                                         <div
                                             style={{
                                                 margin: "40px 15px",
-                                                textAlign: "center"
+                                                textAlign: "center",
                                             }}
                                         >
                                             <Button

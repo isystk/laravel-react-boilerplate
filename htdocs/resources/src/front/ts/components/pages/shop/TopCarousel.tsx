@@ -4,30 +4,30 @@ import {
     CarouselItem,
     CarouselControl,
     CarouselIndicators,
-    CarouselCaption
+    CarouselCaption,
 } from "reactstrap";
 
 const items = [
     {
         src: "/assets/front/image/bunner_01.jpg",
         altText: "Slide 1",
-        caption: "Slide 1"
+        caption: "Slide 1",
     },
     {
         src: "/assets/front/image/bunner_02.jpg",
         altText: "Slide 2",
-        caption: "Slide 2"
+        caption: "Slide 2",
     },
     {
         src: "/assets/front/image/bunner_01.jpg",
         altText: "Slide 3",
-        caption: "Slide 3"
+        caption: "Slide 3",
     },
     {
         src: "/assets/front/image/bunner_02.jpg",
         altText: "Slide 4",
-        caption: "Slide 4"
-    }
+        caption: "Slide 4",
+    },
 ];
 
 const TopCarousel: FC = () => {
@@ -48,7 +48,7 @@ const TopCarousel: FC = () => {
         setActiveIndex(nextIndex);
     };
 
-    const goToIndex = newIndex => {
+    const goToIndex = (newIndex) => {
         if (animating) return;
         setActiveIndex(newIndex);
     };

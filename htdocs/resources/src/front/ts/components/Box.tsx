@@ -7,7 +7,7 @@ import {
     CardHeader,
     CardBody,
     Breadcrumb,
-    BreadcrumbItem
+    BreadcrumbItem,
 } from "reactstrap";
 import { Url } from "@/constants/url";
 import { Link } from "react-router-dom";
@@ -20,7 +20,7 @@ type Props = {
 
 const Box: FC<Props> = ({ title, children, small }) => {
     const grids = {
-        md: small ? 8 : 12
+        md: small ? 8 : 12,
     };
     return (
         <>

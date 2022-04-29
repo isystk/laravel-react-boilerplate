@@ -17,27 +17,26 @@ const AppSlice = createSlice({
         },
         setState(state, action: PayloadAction<MainService>) {
             state.root = action.payload;
-        }
-    }
+        },
+    },
 });
 
 // Actions
 const { toggleState, setState } = AppSlice.actions;
 
 // 外部からはこの関数を呼んでもらう
-export const forceRender = () => async (
-    dispatch: Dispatch<PayloadAction<App>>
-) => {
-    // @ts-ignore
-    dispatch(toggleState());
-};
-export const setAppRoot = (appRoot: MainService) => async (
-    dispatch: Dispatch<PayloadAction<MainService>>
-) => {
-    // @ts-ignore
-    dispatch(setState(appRoot));
-};
+export const forceRender =
+    () => async (dispatch: Dispatch<PayloadAction<App>>) => {
+        // @ts-ignore
+        dispatch(toggleState());
+    };
+export const setAppRoot =
+    (appRoot: MainService) =>
+    async (dispatch: Dispatch<PayloadAction<MainService>>) => {
+        // @ts-ignore
+        dispatch(setState(appRoot));
+    };
 
 export default combineReducers({
-    app: AppSlice.reducer
+    app: AppSlice.reducer,
 });

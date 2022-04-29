@@ -21,7 +21,7 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
     const auth = appRoot.auth;
     const consts = appRoot.const.data;
 
-    const handleSubmit = async values => {
+    const handleSubmit = async (values) => {
         // 入力したお問い合わせ内容を送信する。
         const result = await appRoot.contact.registContact(values);
         if (result) {
@@ -39,7 +39,7 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
         contact: "",
         url: "",
         imageBase64: "",
-        caution: []
+        caution: [],
     };
 
     const validation = Yup.object().shape({
@@ -60,7 +60,7 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
             .required("本文を入力してください"),
         url: Yup.string().url("URLを正しく入力してください"),
         imageBase64: Yup.string().required("画像を選択してください"),
-        caution: Yup.array().min(1, "注意事項に同意してください")
+        caution: Yup.array().min(1, "注意事項に同意してください"),
     });
 
     return (
@@ -78,7 +78,7 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
                             handleBlur,
                             values,
                             errors,
-                            touched
+                            touched,
                         }) => (
                             <Form>
                                 <CSRFToken appRoot={appRoot} />
@@ -147,42 +147,37 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
                                             </span>
                                         </Label>
                                         {consts.gender &&
-                                            (consts.gender
-                                                .data as KeyValue[]).map(
-                                                (e, index) => (
-                                                    <div
-                                                        className="radio-wrap"
-                                                        key={index}
-                                                    >
-                                                        <Label>
-                                                            <Input
-                                                                type="radio"
-                                                                name="gender"
-                                                                value={e.key}
-                                                                checked={
-                                                                    values.gender ===
-                                                                    e.key + ""
-                                                                        ? true
-                                                                        : false
-                                                                }
-                                                                onChange={
-                                                                    handleChange
-                                                                }
-                                                                onBlur={
-                                                                    handleBlur
-                                                                }
-                                                                invalid={Boolean(
-                                                                    touched.gender &&
-                                                                        errors.gender
-                                                                )}
-                                                            />{" "}
-                                                            <span>
-                                                                {e.value}
-                                                            </span>
-                                                        </Label>
-                                                    </div>
-                                                )
-                                            )}
+                                            (
+                                                consts.gender.data as KeyValue[]
+                                            ).map((e, index) => (
+                                                <div
+                                                    className="radio-wrap"
+                                                    key={index}
+                                                >
+                                                    <Label>
+                                                        <Input
+                                                            type="radio"
+                                                            name="gender"
+                                                            value={e.key}
+                                                            checked={
+                                                                values.gender ===
+                                                                e.key + ""
+                                                                    ? true
+                                                                    : false
+                                                            }
+                                                            onChange={
+                                                                handleChange
+                                                            }
+                                                            onBlur={handleBlur}
+                                                            invalid={Boolean(
+                                                                touched.gender &&
+                                                                    errors.gender
+                                                            )}
+                                                        />{" "}
+                                                        <span>{e.value}</span>
+                                                    </Label>
+                                                </div>
+                                            ))}
                                         <p className="error">{errors.gender}</p>
                                     </div>
                                 </FormGroup>
@@ -209,17 +204,17 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
                                                     選択してください
                                                 </option>
                                                 {consts.age &&
-                                                    (consts.age
-                                                        .data as KeyValue[]).map(
-                                                        (e, index) => (
-                                                            <option
-                                                                value={e.key}
-                                                                key={index}
-                                                            >
-                                                                {e.value}
-                                                            </option>
-                                                        )
-                                                    )}
+                                                    (
+                                                        consts.age
+                                                            .data as KeyValue[]
+                                                    ).map((e, index) => (
+                                                        <option
+                                                            value={e.key}
+                                                            key={index}
+                                                        >
+                                                            {e.value}
+                                                        </option>
+                                                    ))}
                                             </Input>
                                         </div>
                                         <p className="error">{errors.age}</p>

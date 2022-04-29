@@ -13,10 +13,10 @@ type Props = {
 const Index: FC<Props> = ({ appRoot }) => {
     const navigate = useNavigate();
     const { search } = useLocation();
-    const stocks = appRoot.shop.stocks.data.map(stock => ({
+    const stocks = appRoot.shop.stocks.data.map((stock) => ({
         ...stock,
         price: stock.price + "円",
-        isLike: appRoot.like.data.includes(stock.id + "")
+        isLike: appRoot.like.data.includes(stock.id + ""),
     }));
     const { total, current_page } = appRoot.shop.stocks;
 
@@ -35,7 +35,7 @@ const Index: FC<Props> = ({ appRoot }) => {
                     <div className="text-right mb-2">
                         <a
                             href="#"
-                            onClick={async e => {
+                            onClick={async (e) => {
                                 e.preventDefault();
                                 if (stock.isLike) {
                                     await appRoot.like.removeLikeAsync(
@@ -104,7 +104,7 @@ const Index: FC<Props> = ({ appRoot }) => {
             pageRangeDisplayed: 3,
             onChange: handlePageChange,
             itemClass: "page-item",
-            linkClass: "page-link"
+            linkClass: "page-link",
         } as ReactJsPaginationProps;
         // @ts-ignore
         return <Pagination {...props} />;

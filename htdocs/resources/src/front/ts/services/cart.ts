@@ -31,7 +31,7 @@ const initialState: Carts = {
     message: "",
     username: "",
     count: 0,
-    sum: 0
+    sum: 0,
 };
 
 export default class CartService {
@@ -65,7 +65,7 @@ export default class CartService {
         this.main.showLoading();
         try {
             const response = await API.post(API_ENDPOINT.ADD_MYCART, {
-                stock_id: stockId
+                stock_id: stockId,
             });
             if (response.result) {
                 this.carts = response.carts;
@@ -86,7 +86,7 @@ export default class CartService {
         this.main.showLoading();
         try {
             const response = await API.post(API_ENDPOINT.REMOVE_MYCART, {
-                stock_id: stockId
+                stock_id: stockId,
             });
             if (response.result) {
                 this.carts = response.carts;
@@ -109,7 +109,7 @@ export default class CartService {
             //paymentIntentの作成を（ローカルサーバ経由で）リクエスト
             const response = await API.post(API_ENDPOINT.CREATE_PAYMENT, {
                 amount: values.amount,
-                username: values.username
+                username: values.username,
             });
 
             //レスポンスからclient_secretを取得
@@ -121,9 +121,9 @@ export default class CartService {
                     // @ts-ignore
                     card: elements.getElement("cardNumber"),
                     billing_details: {
-                        name: values.username
-                    }
-                }
+                        name: values.username,
+                    },
+                },
             });
 
             if (

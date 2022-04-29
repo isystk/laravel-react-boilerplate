@@ -21,11 +21,11 @@ const LoginForm: FC<Props> = ({ appRoot }) => {
         const props = {
             style: { margin: "auto", width: "304px" },
             sitekey: "6LcDorgaAAAAAGagnT3BKpmwmguuZjW4osBhamI3",
-            onChange: value => {
+            onChange: (value) => {
                 if (value) {
                     setRecaptcha(value);
                 }
-            }
+            },
         };
         // @ts-ignore
         return <ReCAPTCHA {...props} />;
