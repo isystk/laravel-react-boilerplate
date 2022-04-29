@@ -57,6 +57,44 @@ https://laraec.isystk.com/
 - お問い合わせ
 - ソーシャルログイン（Google）
 
+```mermaid
+graph LR
+
+  classDef default fill: #fff,stroke: #333,stroke-width: 1px;
+  style funcA fill: #fff,stroke: #333,stroke-width: 1px;
+  style funcB fill: #fff,stroke: #333,stroke-width: 1px;
+  style funcC fill: #fff,stroke: #333,stroke-width: 1px;
+  style funcD fill: #fff,stroke: #333,stroke-width: 1px;
+  style header fill: #fff,stroke: #333,stroke-width: 1px;
+
+  TOP-->ログイン--ID/パスワード認証-->マイカート
+  TOP-->お問い合わせ入力
+  ログイン-->会員仮登録
+  ログイン-->パスワードリセット
+
+  subgraph funcA [商品購入]
+    マイカート-->商品購入完了
+  end
+
+  subgraph funcB [会員登録]
+    会員仮登録-->会員仮登録完了--メール送信-->会員登録完了
+  end
+
+  subgraph funcC [パスワードリセット]
+    パスワードリセット--メール送信-->パスワード変更
+  end
+
+  subgraph funcD [お問い合わせ]
+    お問い合わせ入力-->お問い合わせ完了
+  end
+
+  subgraph header [ヘッダ]
+    マイカート
+    お問い合わせ入力
+    ログアウト
+  end
+```
+
 #### ■ 管理画面（Bootstrap）
 
 https://laraec.isystk.com/admin/
