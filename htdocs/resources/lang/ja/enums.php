@@ -1,20 +1,16 @@
 <?php
 
-use App\Constants\Gender;
-use App\Constants\Age;
+use App\Enums\Gender;
+use App\Enums\Age;
 
 return [
-    Gender::class => [
-        Gender::Male => '男性',
-        Gender::Female => '女性',
-    ],
-    Age::class => [
-        Age::Under19 => '～19歳',
-        Age::Over20 => '20歳～29歳',
-        Age::Over30 => '30歳～39歳',
-        Age::Over40 => '40歳～49歳',
-        Age::Over50 => '50歳～59歳',
-        Age::Over60 => '60歳～',
-    ],
+    'Gender' . Gender::Male->value => '男性',
+    'Gender' . Gender::Female->value => '女性',
+    'Age' . Age::Under19->value => '～19歳',
+    'Age' . Age::Over20->value => '20歳～29歳',
+    'Age' . Age::Over30->value => '30歳～39歳',
+    'Age' . Age::Over40->value => '40歳～49歳',
+    'Age' . Age::Over50->value => '50歳～59歳',
+    'Age' . Age::Over60->value => '60歳～',
 ];
 

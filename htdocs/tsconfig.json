@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
       /* 基本オプション */
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["./resources/src/front/ts/*"],
+      },
 
       "target": "es5",                          /* ECMAScriptのターゲットバージョンを指定します: 'ES3'（デフォルト）, 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018'または 'ESNEXT' */
       "module": "commonjs",                     /* モジュールコード生成: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015',または 'ESNext'を指定します。targetがes3かes5ならcommonjsとなる。 */
@@ -8,7 +12,6 @@
         "dom"
       ],
       "jsx": "react",
-
 
       /* 厳密な型チェックオプション */
       "strict": true,                           /* すべての厳密な型チェックオプションを有効にします。 */
@@ -33,11 +36,5 @@
       // "noEmit": true,                        /* コンパイル結果の.jsファイルなどを出力しなくなる。 */
       // "sourceMap": true,                     /* 対応する '.map'ファイルを生成します。 */
 
-  },
-  "include": [
-    "./resources/src/**/*"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  }
 }

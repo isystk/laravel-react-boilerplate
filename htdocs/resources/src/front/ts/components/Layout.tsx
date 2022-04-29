@@ -1,33 +1,32 @@
-import React, { FC, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { hideLoading } from '../actions'
-import CommonHeader from './Commons/Header'
-import CommonFooter from '../containers/Commons/Footer'
-import PropTypes from 'prop-types'
-import Loading from './Commons/Loading'
+import React, { FC } from "react";
+import CommonHeader from "@/components/commons/Header";
+import CommonFooter from "@/components/commons/Footer";
+import Loading from "@/components/commons/Loading";
+import MainService from "@/services/main";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
-const Layout: FC = props => {
-  const dispatch = useDispatch()
+type Props = {
+    appRoot: MainService;
+    children: React.ReactNode;
+    title: string;
+};
 
-  useEffect(() => {
-    ;(async () => {
-      // ローディングを非表示にする
-      dispatch(hideLoading())
-    })()
-  }, [])
+const Layout: FC<Props> = ({ appRoot, children, title }) => {
+    return (
+        <HelmetProvider>
+            <Helmet>
+                <title>{title + " | LaraEC"}</title>
+                <meta
+                    name="description"
+                    content="Laravel ＆ React.js の学習用サンプルアプリケーションです。"
+                />
+            </Helmet>
+            <CommonHeader appRoot={appRoot} />
+            {children}
+            <CommonFooter />
+            <Loading appRoot={appRoot} />
+        </HelmetProvider>
+    );
+};
 
-  return (
-    <>
-      <CommonHeader />
-      {props.children}
-      <CommonFooter />
-      <Loading />
-    </>
-  )
-}
-
-Layout.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
-}
-
-export default Layout
+export default Layout;

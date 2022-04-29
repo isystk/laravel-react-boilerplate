@@ -33,12 +33,11 @@ Laravel ＆ React.js の学習用サンプルアプリケーションです。
 
 #### ■ アプリケーション
 
-- Laravel9
-- React18
-- ReduxToolKit
+- Laravel 9
+- React 18
 - Typescript
-- Bootstrap
-- Adminlte3
+- Bootstrap 4
+- Adminlte 3
 
 ## 🌐 Demo
 
@@ -164,8 +163,8 @@ $ echo 'export PATH=$HOME/.nodebrew/current/bin:$PATH' >> ~/.bashrc
 # Node.js をインストール 
 $ mkdir -p ~/.nodebrew/src
 $ nodebrew ls-remote
-$ nodebrew install v12.21.0
-$ nodebrew use v12.21.0
+$ nodebrew install v16.13.1
+$ nodebrew use v16.13.1
 $ npm install -g yarn
 ```
 
@@ -239,7 +238,6 @@ Options:
 Dockerを起動後に以下のURLにアクセスすると利用可能です。
 
 http://localhost:8888/
-
 
 ### mailhog 
 ダミーのメールサーバーです。実際にはメールは送信されず、送信されたメールはブラウザで閲覧できます。
@@ -344,18 +342,14 @@ $ ./dc.sh stop
 
 | プロジェクト| 概要|
 | :---------------------------------------| :-------------------------------|
-| [Laravel6公式ドキュメント](https://readouble.com/laravel/6.x/ja/)| Laravel6公式ドキュメントです。|
-| [ヘルパ関数](https://readouble.com/laravel/6.x/ja/helpers.html)| Laravel の開発で便利なヘルパ関数の説明です。|
-| [クエリービルダ](https://readouble.com/laravel/6.x/ja/queries.html)| Laravel の開発でDBアクセス時に必要なクエリービルダの説明です。|
-| [AdminLTE Docs](https://adminlte.io/docs/2.4/installation)| AdminLTE Docs|
+| [Laravel9公式ドキュメント](https://readouble.com/laravel/9.x/ja/)| Laravel9公式ドキュメントです。|
+| [AdminLTE Docs](https://adminlte.io/docs/3.2/)| AdminLTE Docs|
 | [Bootstrap4 日本語リファレンス](https://getbootstrap.jp/docs/4.4/getting-started/introduction/)| Bootstrap4 日本語リファレンス|
-| [fontawesome](https://fontawesome.com/icons?d=gallery)| アイコン表示で利用しています。|
+| [Reactstrap](https://reactstrap.github.io/?path=/story/home-installation--page)| Reactstrap |
 | [Laravel5.4でマルチ認証（userとadmin）を実装する方法](https://takahashi-it.com/php/laravel54-multi-auth/)| Laravel でマルチ認証（userとadmin）を実装する方法で参考にしました。|
-| [LaravelでのStripeの環境を作成する](https://takkublog.net/stripe01/)| Laravel で決算処理を作成する方法で参考にしました。 |
+| [React Stripe.js リファレンス](https://stripe.com/docs/stripe-js/react)| React Stripe.js リファレンス |
 | [Laravel+Socialiteで簡単ソーシャルログイン実装!](https://qiita.com/KeisukeKudo/items/18dd8a342a4bdd43913c)| Laravel でソーシャルログインを作成する方法で参考にしました。 |
-| [WSL2 で dns の名前解決ができなくなって ネット接続できなくなった場合の対処方法](https://qiita.com/kkato233/items/1fc71bde5a6d94f1b982)| WSL2 で dns の名前解決ができなくなって ネット接続できなくなった際に参考にしました。 |
 | [Laravelの認証画面をReactで全とっかえ](https://qiita.com/shikigamix/items/99a4f2ab5911248f8b2f)| Laravelのフロントエンドの認証周りをReactで作成する方法で参考にしました。 |
-| [react-bootstrap](https://react-bootstrap.github.io/components/)| BootstrapのReact用コンポーネント |
 
 
 ## 🎫 Licence

@@ -36,6 +36,11 @@ if (mix.inProduction()) {
       // See：https://qiita.com/Te2/items/4b9dce89950d00d344ea
       new HardSourceWebpackPlugin()
     ],
+    resolve: {
+        alias: {
+            "@": path.resolve(__dirname, "resources/src/front/ts")
+        }
+    },
     module: {
       rules: [
         {

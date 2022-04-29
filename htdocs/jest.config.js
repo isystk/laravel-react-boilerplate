@@ -1,30 +1,25 @@
+/**
+ * Jest Configuration
+ */
+const { pathsToModuleNameMapper } = require("ts-jest/utils");
+const { readFileSync } = require("fs");
+const { parse } = require("jsonc-parser");
+// extendsを自動的に解決してマージできないため、compilerOptions.pathsを書いているファイルを指定する
+const { compilerOptions } = parse(readFileSync("./tsconfig.json").toString());
+const moduleNameMapper = pathsToModuleNameMapper(compilerOptions.paths, {
+    prefix: "<rootDir>/"
+});
+
 module.exports = {
-  preset: 'ts-jest',
-  testEnvironment: 'node',
-  roots: [
-    '<rootDir>/resources/src/front/ts'
-  ],
-  setupFilesAfterEnv: ['<rootDir>/resources/src/front/ts/test/setupTests.ts'],
-  testPathIgnorePatterns: ['<rootDir>/node_modules'],
-  snapshotSerializers: ['enzyme-to-json/serializer'],
-  transform: {
-    '^.+\\.(ts|tsx)$': 'ts-jest'
-  },
-  moduleFileExtensions: [
-    'ts',
-    'tsx',
-    'js',
-    'jsx',
-    'json',
-    'node'
-  ],
-  // https://github.com/zeit/next.js/issues/8663#issue-490553899
-  globals: {
-    // we must specify a custom tsconfig for tests because we need the typescript transform
-    // to transform jsx into js rather than leaving it jsx such as the next build requires. you
-    // can see this setting in tsconfig.jest.json -> "jsx": "react"
-    'ts-jest': {
-      'tsconfig': '<rootDir>/tsconfig.jest.json'
+    preset: "ts-jest",
+    testEnvironment: "jsdom",
+    moduleNameMapper,
+    // moduleNameMapper: {
+    //     "^@/(.+)": "<rootDir>/resources/src/front/ts/$1"
+    // },
+    globals: {
+        "ts-jest": {
+            tsconfig: "tsconfig.jest.json"
+        }
     }
-  }
 };

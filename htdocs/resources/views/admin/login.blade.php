@@ -11,7 +11,7 @@
             <div class="form-group row">
                 <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('common.EMail') }}</label>
                 <div class="col-md-6">
-                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="admin@co.jp">
+                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="メールアドレスを入力して下さい">
                     @error('email')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -22,7 +22,7 @@
             <div class="form-group row">
                 <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('common.Password') }}</label>
                 <div class="col-md-6">
-                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="adminadmin">
+                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="パスワードを入力して下さい">
                     @error('password')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -37,9 +37,14 @@
                         <label class="form-check-label" for="remember">
                             {{ __('Remember Me') }}
                         </label>
-                        <p class="fz-s">email: sample@sample.com<br>
-                            password: password</p>
                     </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-6 offset-md-4" style="border: solid 1px #000;">
+                   テスト用ユーザ<br/>
+                   メールアドレス: sample@sample.com<br>
+                   パスワード: password
                 </div>
             </div>
 

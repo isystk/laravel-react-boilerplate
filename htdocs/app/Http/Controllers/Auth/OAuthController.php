@@ -26,7 +26,7 @@ class OAuthController extends Controller
      */
     public function handleProviderCallback($provider)
     {
-        $socialUser = Socialite::driver($provider)->user();
+        $socialUser = Socialite::driver($provider)->stateless()->user();
         $user = User::firstOrNew(['email' => $socialUser->getEmail()]);
 
         // すでに会員になっている場合の処理を書く
