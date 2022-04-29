@@ -3,6 +3,7 @@ import AuthService from "@/services/auth";
 import ConstService from "@/services/const";
 import LikeService from "@/services/like";
 import CartService from "@/services/cart";
+import ContactService from "@/services/contact";
 
 export default class MainService {
     _setAppRoot: (appRoot: MainService) => void;
@@ -12,6 +13,7 @@ export default class MainService {
     shop: ShopService;
     cart: CartService;
     like: LikeService;
+    contact: ContactService;
 
     constructor(setAppRoot: (appRoot: MainService) => void) {
         this._setAppRoot = setAppRoot;
@@ -21,6 +23,7 @@ export default class MainService {
         this.shop = new ShopService(this);
         this.cart = new CartService(this);
         this.like = new LikeService(this);
+        this.contact = new ContactService(this);
     }
 
     setAppRoot() {

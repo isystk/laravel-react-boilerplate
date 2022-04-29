@@ -1,9 +1,9 @@
 import React, { FC } from "react";
-import SessionAlert from "@/components/Elements/SessionAlert";
+import SessionAlert from "@/components/elements/SessionAlert";
 import Box from "@/components/Box";
 import Layout from "@/components/Layout";
 import MainService from "@/services/main";
-import CSRFToken from "@/components/Elements/CSRFToken";
+import CSRFToken from "@/components/elements/CSRFToken";
 
 type Props = {
     appRoot: MainService;

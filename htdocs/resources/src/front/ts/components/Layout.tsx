@@ -1,7 +1,7 @@
 import React, { FC } from "react";
-import CommonHeader from "@/components/Commons/Header";
-import CommonFooter from "@/components/Commons/Footer";
-import Loading from "@/components/Commons/Loading";
+import CommonHeader from "@/components/commons/Header";
+import CommonFooter from "@/components/commons/Footer";
+import Loading from "@/components/commons/Loading";
 import MainService from "@/services/main";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 

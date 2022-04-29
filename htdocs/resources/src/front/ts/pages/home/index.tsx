@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import SessionAlert from "@/components/Elements/SessionAlert";
+import SessionAlert from "@/components/elements/SessionAlert";
 import Box from "@/components/Box";
 import Layout from "@/components/Layout";
 import MainService from "@/services/main";

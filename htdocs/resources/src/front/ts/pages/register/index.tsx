@@ -1,8 +1,8 @@
 import React, { useState, FC } from "react";
 import { Form } from "reactstrap";
-import TextInput from "@/components/Elements/TextInput";
-import SubmitButton from "@/components/Elements/SubmitButton";
-import CSRFToken from "@/components/Elements/CSRFToken";
+import TextInput from "@/components/elements/TextInput";
+import SubmitButton from "@/components/elements/SubmitButton";
+import CSRFToken from "@/components/elements/CSRFToken";
 import Box from "@/components/Box";
 import Layout from "@/components/Layout";
 import MainService from "@/services/main";

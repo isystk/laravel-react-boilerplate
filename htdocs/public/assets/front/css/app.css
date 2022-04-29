@@ -12262,14 +12262,6 @@ button.stripe-button-el > span {
 /* フォーム
 ------------------------------------- */
 
-.form-group {
-  display: flex;
-  /*border: 1px solid #dadce0;*/
-  border-radius: 8px;
-  margin-bottom: 12px;
-  background-color: #fff;
-}
-
 .form-group .form-group-header {
   background-color: #dbb206;
   border-top-left-radius: 8px;
@@ -12317,30 +12309,30 @@ button.stripe-button-el > span {
   color: #d93025;
 }
 
-.form-group input[type=text],
-.form-group input[type=email],
-.form-group input[type=tel],
-.form-group input[type=date],
-.form-group input[type=url],
-.form-group input[type=password],
-.form-group input[type=search],
-.form-group input[type=file],
-.form-group textarea {
+.form-group .text-wrap input[type=text],
+.form-group .text-wrap input[type=email],
+.form-group .text-wrap input[type=tel],
+.form-group .text-wrap input[type=date],
+.form-group .text-wrap input[type=url],
+.form-group .text-wrap input[type=password],
+.form-group .text-wrap input[type=search],
+.form-group .text-wrap input[type=file],
+.form-group .textarea-wrap textarea {
   border: none;
   outline: none;
   padding: 8px 0 8px 0;
   width: 100%;
 }
 
-.form-group .test-wrap {
+.form-group .text-wrap {
   padding-bottom: 8px;
 }
 
-.form-group .test-wrap .form-bottom {
+.form-group .text-wrap .form-bottom {
   border-bottom: solid #dadce0 1px;
 }
 
-.form-group .test-wrap.active .form-bottom {
+.form-group .text-wrap.active .form-bottom {
   border-bottom-color: #487cff;
   border-bottom-width: 2px;
   -webkit-animation: centerToSide 0.3s ease 0s 1 forwards;
@@ -12367,19 +12359,19 @@ button.stripe-button-el > span {
   }
 }
 
-.form-group.error .test-wrap .form-bottom {
+.form-group.error .text-wrap .form-bottom {
   border-bottom-color: #d93025;
 }
 
-.form-group .test-wrap.small {
+.form-group .text-wrap.small {
   width: 100px;
 }
 
-.form-group .test-wrap.middle {
+.form-group .text-wrap.middle {
   width: 200px;
 }
 
-.form-group .test-wrap.large {
+.form-group .text-wrap.large {
   width: 300px;
 }
 

@@ -1,9 +1,9 @@
 import React, { FC, useState } from "react";
 
-import { Form, Input, Col, Row } from "reactstrap";
-import TextInput from "@/components/Elements/TextInput";
-import LoginButton from "@/components/Elements/LoginButton";
-import CSRFToken from "@/components/Elements/CSRFToken";
+import { Form, Button, Input, Col, Row, FormGroup } from "reactstrap";
+import TextInput from "@/components/elements/TextInput";
+import LoginButton from "@/components/elements/LoginButton";
+import CSRFToken from "@/components/elements/CSRFToken";
 import ReCAPTCHA from "react-google-recaptcha";
 import Box from "@/components/Box";
 import Layout from "@/components/Layout";
@@ -35,13 +35,15 @@ const LoginForm: FC<Props> = ({ appRoot }) => {
         <Layout appRoot={appRoot} title="ログイン">
             <main className="main">
                 <Box title="ログイン" small={true}>
-                    <div className="text-center mb-3  ">
-                        <form method="GET" action={Url.AUTH_GOOGLE}>
-                            <button type="submit" className="btn btn-danger">
-                                Googleアカウントでログイン
-                            </button>
-                        </form>
-                    </div>
+                    <Row style={{ width: "235px", margin: "auto" }}>
+                        <Col>
+                            <Form method="GET" action={Url.AUTH_GOOGLE}>
+                                <Button type="submit" color="danger">
+                                    Googleアカウントでログイン
+                                </Button>
+                            </Form>
+                        </Col>
+                    </Row>
                     <Form method="POST" action={Url.LOGIN} id="login-form">
                         <CSRFToken appRoot={appRoot} />
                         <TextInput
@@ -56,39 +58,36 @@ const LoginForm: FC<Props> = ({ appRoot }) => {
                             autoComplete="current-password"
                             label="パスワード"
                         />
-                        <Row className="text-center form-group mt-3">
+                        <FormGroup>
+                            {rechapcha()}
+                            <input
+                                type="hidden"
+                                name="g-recaptcha-response"
+                                value={recaptcha}
+                            />
+                        </FormGroup>
+                        <FormGroup>
+                            <div className="checkbox-wrap text-center">
+                                <label>
+                                    <Input
+                                        type="checkbox"
+                                        id="remember"
+                                        name="remember"
+                                        className="form-check-input"
+                                        value="1"
+                                    />{" "}
+                                    <span>Remember Me</span>
+                                </label>
+                            </div>
+                        </FormGroup>
+                        <Row style={{ width: "350px", margin: "auto" }}>
                             <Col>
-                                {rechapcha()}
-                                <input
-                                    type="hidden"
-                                    name="g-recaptcha-response"
-                                    value={recaptcha}
-                                />
-                            </Col>
-                        </Row>
-                        <Row className="text-center form-group mt-3">
-                            <Col>
-                                <div
-                                    className="form-section"
-                                    style={{ display: "block" }}
-                                >
-                                    <div className="checkbox-wrap">
-                                        <label>
-                                            <Input
-                                                type="checkbox"
-                                                id="remember"
-                                                name="remember"
-                                                className="form-check-input"
-                                                value="1"
-                                            />{" "}
-                                            <span>Remember Me</span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <p className="fz-s">
-                                    email: test1@test.com
+                                <p className="border">
+                                    テスト用ユーザ
                                     <br />
-                                    password: password
+                                    メールアドレス: test1@test.com
+                                    <br />
+                                    パスワード: password
                                 </p>
                             </Col>
                         </Row>

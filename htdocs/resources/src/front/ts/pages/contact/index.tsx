@@ -3,14 +3,12 @@ import * as Yup from "yup";
 import { FC } from "react";
 import { FormGroup, Label, Input, Button } from "reactstrap";
 import { Formik, Form } from "formik";
-import CSRFToken from "@/components/Elements/CSRFToken";
+import CSRFToken from "@/components/elements/CSRFToken";
 import Layout from "@/components/Layout";
 import MainService from "@/services/main";
 import { KeyValue } from "@/services/const";
-import ImageFileInput from "@/components/Elements/ImageFile";
+import ImageFileInput from "@/components/elements/ImageFile";
 import Box from "@/components/Box";
-import { API } from "@/utilities/api";
-import { API_ENDPOINT } from "@/constants/api";
 import { useNavigate } from "react-router-dom";
 import { Url } from "@/constants/url";
 
@@ -25,9 +23,8 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
 
     const handleSubmit = async values => {
         // 入力したお問い合わせ内容を送信する。
-        const response = await API.post(API_ENDPOINT.CONTACT_STORE, values);
-
-        if (response.result) {
+        const result = await appRoot.contact.registContact(values);
+        if (result) {
             // 完了画面を表示する
             navigate(Url.CONTACT_COMPLETE);
         }
@@ -76,6 +73,7 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
                         validationSchema={validation}
                     >
                         {({
+                            isValid,
                             handleChange,
                             handleBlur,
                             values,
@@ -95,7 +93,7 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
                                                 必須
                                             </span>
                                         </Label>
-                                        <div className="test-wrap large">
+                                        <div className="text-wrap large">
                                             <Input
                                                 type="text"
                                                 id="your_name"
@@ -123,7 +121,7 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
                                                 必須
                                             </span>
                                         </Label>
-                                        <div className="test-wrap large">
+                                        <div className="text-wrap large">
                                             <Input
                                                 type="email"
                                                 name="email"
@@ -235,7 +233,7 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
                                                 必須
                                             </span>
                                         </Label>
-                                        <div className="test-wrap large">
+                                        <div className="text-wrap large">
                                             <Input
                                                 type="text"
                                                 name="title"
@@ -285,7 +283,7 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
                                             ホームページURLを入力してください
                                             <span>任意</span>
                                         </Label>
-                                        <div className="test-wrap large">
+                                        <div className="text-wrap large">
                                             <Input
                                                 type="url"
                                                 name="url"
@@ -338,8 +336,17 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
                                         </p>
                                     </div>
                                 </FormGroup>
-                                <div className="submit-wrap">
-                                    <Button type="submit" color="primary">
+                                <div
+                                    className="submit-wrap"
+                                    style={{ width: "300px", margin: "auto" }}
+                                >
+                                    <Button
+                                        type="submit"
+                                        color="primary"
+                                        block
+                                        disabled={!isValid}
+                                        fullWidth
+                                    >
                                         送信する
                                     </Button>
                                 </div>

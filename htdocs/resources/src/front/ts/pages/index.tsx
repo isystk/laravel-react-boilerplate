@@ -1,7 +1,7 @@
 import React, { useEffect, FC } from "react";
-import Pagination from "react-js-pagination";
+import Pagination, { ReactJsPaginationProps } from "react-js-pagination";
 import { Url } from "@/constants/url";
-import TopCarousel from "@/components/Shops/TopCarousel";
+import TopCarousel from "@/components/pages/shop/TopCarousel";
 import Layout from "@/components/Layout";
 import MainService from "@/services/main";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -21,13 +21,11 @@ const Index: FC<Props> = ({ appRoot }) => {
     const { total, current_page } = appRoot.shop.stocks;
 
     useEffect(() => {
-        (async () => {
-            // 商品データを取得する
-            await appRoot.shop.readStocks(search);
+        // 商品データを取得する
+        appRoot.shop.readStocks(search);
 
-            // お気に入りデータを取得する
-            await appRoot.like.readLikesAsync();
-        })();
+        // お気に入りデータを取得する
+        appRoot.like.readLikesAsync();
     }, [search]);
 
     const renderStocks = (): JSX.Element => (
@@ -107,7 +105,7 @@ const Index: FC<Props> = ({ appRoot }) => {
             onChange: handlePageChange,
             itemClass: "page-item",
             linkClass: "page-link"
-        };
+        } as ReactJsPaginationProps;
         // @ts-ignore
         return <Pagination {...props} />;
     };

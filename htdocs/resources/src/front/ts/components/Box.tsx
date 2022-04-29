@@ -1,5 +1,16 @@
 import React, { FC } from "react";
-import { Container, Row, Col, Card, CardHeader, CardBody } from "reactstrap";
+import {
+    Container,
+    Row,
+    Col,
+    Card,
+    CardHeader,
+    CardBody,
+    Breadcrumb,
+    BreadcrumbItem
+} from "reactstrap";
+import { Url } from "@/constants/url";
+import { Link } from "react-router-dom";
 
 type Props = {
     title: string;
@@ -16,6 +27,12 @@ const Box: FC<Props> = ({ title, children, small }) => {
             <Container>
                 <Row className="justify-content-center">
                     <Col {...grids}>
+                        <Breadcrumb>
+                            <BreadcrumbItem>
+                                <Link to={Url.TOP}>TOP</Link>
+                            </BreadcrumbItem>
+                            <BreadcrumbItem active>{title}</BreadcrumbItem>
+                        </Breadcrumb>
                         <Card>
                             <CardHeader className="pl-md-5">{title}</CardHeader>
                             <CardBody className="pl-md-5">{children}</CardBody>

@@ -12,30 +12,50 @@ export default class LikeService {
     }
 
     async readLikesAsync() {
-        const response = await API.get(API_ENDPOINT.LIKES);
-        this.data = response.likes.data;
-        this.main.setAppRoot();
+        // ローディングを表示する
+        this.main.showLoading();
+        try {
+            const response = await API.get(API_ENDPOINT.LIKES);
+            this.data = response.likes.data;
+            this.main.setAppRoot();
+        } catch (e) {
+            alert("お気に入りの取得に失敗しました");
+        }
+        // ローディングを非表示にする
+        this.main.hideLoading();
     }
 
     async addLikeAsync(id: number) {
         this.main.showLoading();
-        const response = await API.post(API_ENDPOINT.LIKES_STORE, { id: id });
-        if (response.result) {
-            window.alert("お気に入りに追加しました");
-            const newData: string = id + "";
-            this.data = [newData, ...this.data];
+        try {
+            const response = await API.post(API_ENDPOINT.LIKES_STORE, {
+                id: id
+            });
+            if (response.result) {
+                window.alert("お気に入りに追加しました");
+                const newData: string = id + "";
+                this.data = [newData, ...this.data];
+            }
+            this.main.setAppRoot();
+        } catch (e) {
+            alert("お気に入りの追加に失敗しました");
         }
         this.main.hideLoading();
-        this.main.setAppRoot();
     }
 
     async removeLikeAsync(id: number) {
         this.main.showLoading();
-        const response = await API.post(API_ENDPOINT.LIKES_DESTROY + "/" + id);
-        if (response.result) {
-            this.data = this.data.filter(n => n !== id + "");
+        try {
+            const response = await API.post(
+                API_ENDPOINT.LIKES_DESTROY + "/" + id
+            );
+            if (response.result) {
+                this.data = this.data.filter(n => n !== id + "");
+            }
+            this.main.setAppRoot();
+        } catch (e) {
+            alert("お気に入りの削除に失敗しました");
         }
         this.main.hideLoading();
-        this.main.setAppRoot();
     }
 }

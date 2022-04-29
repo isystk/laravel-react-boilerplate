@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Url } from "@/constants/url";
-import CheckoutForm from "@/components/Shops/CheckoutForm";
-import Modal from "@/components/Commons/Modal";
+import PaymentModal from "@/components/widgets/PaymentModal";
 import { Button } from "reactstrap";
 import Layout from "@/components/Layout";
 import { FC, useEffect, useState } from "react";
@@ -112,19 +111,16 @@ const MyCart: FC<Props> = ({ appRoot }) => {
                                                 決済をする
                                             </Button>
                                         </div>
-                                        <Modal
-                                            isOpen={isOpen}
-                                            handleClose={() => {
-                                                setIsOpen(false);
-                                            }}
-                                        >
-                                            <Elements stripe={stripePromise}>
-                                                <CheckoutForm
-                                                    appRoot={appRoot}
-                                                    amount={carts.sum}
-                                                />
-                                            </Elements>
-                                        </Modal>
+                                        <Elements stripe={stripePromise}>
+                                            <PaymentModal
+                                                isOpen={isOpen}
+                                                handleClose={() => {
+                                                    setIsOpen(false);
+                                                }}
+                                                appRoot={appRoot}
+                                                amount={carts.sum}
+                                            />
+                                        </Elements>
                                     </>
                                 );
                             }

@@ -1,10 +1,10 @@
 import React, { useState, FC } from "react";
 import { Form } from "reactstrap";
-import TextInput from "@/components/Elements/TextInput";
-import SubmitButton from "@/components/Elements/SubmitButton";
-import CSRFToken from "@/components/Elements/CSRFToken";
-import RequestToken from "@/components/Elements/RequestToken";
-import SessionAlert from "@/components/Elements/SessionAlert";
+import TextInput from "@/components/elements/TextInput";
+import SubmitButton from "@/components/elements/SubmitButton";
+import CSRFToken from "@/components/elements/CSRFToken";
+import RequestToken from "@/components/elements/RequestToken";
+import SessionAlert from "@/components/elements/SessionAlert";
 import Box from "@/components/Box";
 import Layout from "@/components/Layout";
 import MainService from "@/services/main";
