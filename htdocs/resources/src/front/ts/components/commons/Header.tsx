@@ -17,6 +17,7 @@ type Props = {
 };
 
 export const CommonHeader: FC<Props> = ({ appRoot }) => {
+    console.log("CommonHeader")
     const navigate = useNavigate();
     const push_mycart = () => navigate(Url.MYCART);
 
