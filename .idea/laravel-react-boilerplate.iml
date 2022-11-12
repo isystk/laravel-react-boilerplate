@@ -160,6 +160,9 @@
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/symfony/mailer" />
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/barryvdh/laravel-cors" />
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/fruitcake/php-cors" />
+      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/symfony/polyfill-uuid" />
+      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/nunomaduro/termwind" />
+      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/symfony/uid" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

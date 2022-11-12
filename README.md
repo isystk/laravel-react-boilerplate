@@ -331,7 +331,7 @@ $ ./dc.sh php login
 > cp .env.example .env
 
 # モジュールをダウンロード
-> composer update
+> composer install
 
 # encryption keyを生成する
 > php artisan key:generate
@@ -351,9 +351,6 @@ $ ./dc.sh php login
 # テスト用の画像をS3（Minio）にアップロードします。※事前に minioをセットアップしておくこと
 > php artisan s3upload
 
-# アップロードした画像を参照できるようにシンボリックリンクを作成する
-> cd public
-> ln -s ../storage/app/public uploads
 ```
 
 フロントエンド環境を構築する

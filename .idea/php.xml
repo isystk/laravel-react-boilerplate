@@ -153,6 +153,9 @@
       <path value="$PROJECT_DIR$/htdocs/vendor/symfony/mailer" />
       <path value="$PROJECT_DIR$/htdocs/vendor/barryvdh/laravel-cors" />
       <path value="$PROJECT_DIR$/htdocs/vendor/fruitcake/php-cors" />
+      <path value="$PROJECT_DIR$/htdocs/vendor/symfony/polyfill-uuid" />
+      <path value="$PROJECT_DIR$/htdocs/vendor/nunomaduro/termwind" />
+      <path value="$PROJECT_DIR$/htdocs/vendor/symfony/uid" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

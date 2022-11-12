@@ -9,6 +9,7 @@
 
     <script src="{{ asset('/assets/admin/js/app.js') }}" ></script>
     <script src="{{ asset('/assets/admin/js/jquery-plugins.js') }}" ></script>
+    <script src="https://kit.fontawesome.com/eea364082e.js" crossorigin="anonymous"></script>
 
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
