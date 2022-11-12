@@ -163,6 +163,8 @@
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/symfony/polyfill-uuid" />
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/nunomaduro/termwind" />
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/symfony/uid" />
+      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/laravel/dusk" />
+      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/php-webdriver/webdriver" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

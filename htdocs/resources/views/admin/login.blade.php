@@ -50,7 +50,7 @@
 
         </div>
         <div class="card-footer text-center clearfix ">
-            <button type="submit" class="btn btn-danger">
+            <button type="submit" class="btn btn-danger" id="Login">
                 {{ __('common.Login') }}
             </button>
         </div>
