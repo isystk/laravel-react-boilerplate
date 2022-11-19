@@ -29,8 +29,6 @@ services:
      - ./php/logs:/var/log/php
      - ./php/php.ini:/usr/local/etc/php/php.ini
      - ../htdocs:/var/www/html
-    # extra_hosts:
-    #  - "host.docker.internal:${DOCKER_HOST_IP}"
 
   mysql:
     image: laraec/mysql
@@ -104,21 +102,21 @@ services:
     working_dir: /aws
     
   # ↓ ここから、Seleniumでテストをしたい場合に必要
-  selenium-hub:
-    image: selenium/hub:3.141.59-vanadium
-    container_name: selenium-hub
-    ports: 
-      - 4444:4444
-  chrome:
-    image: selenium/node-chrome:3.141.59-vanadium
-    container_name: selenium-chrome
-    volumes:
-      - /dev/shm:/dev/shm
-    depends_on:
-      - selenium-hub
-    environment:
-      - HUB_HOST=selenium-hub
-      - HUB_PORT=4444
+#  selenium-hub:
+#    image: selenium/hub:3.141.59-vanadium
+#    container_name: selenium-hub
+#    ports: 
+#      - 4444:4444
+#  chrome:
+#    image: selenium/node-chrome:3.141.59-vanadium
+#    container_name: selenium-chrome
+#    volumes:
+#      - /dev/shm:/dev/shm
+#    depends_on:
+#      - selenium-hub
+#    environment:
+#      - HUB_HOST=selenium-hub
+#      - HUB_PORT=4444
   # ↑ ここまで、Seleniumでテストをしたい場合に必要
 
 volumes:
