@@ -25,6 +25,8 @@ services:
       context: "./php"
       dockerfile: "Dockerfile"
     restart: always
+    environment:
+     - TZ=Asia/Tokyo
     volumes:
      - ./php/logs:/var/log/php
      - ./php/php.ini:/usr/local/etc/php/php.ini
