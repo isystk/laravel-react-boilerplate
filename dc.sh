@@ -118,6 +118,7 @@ case ${1} in
           ;;
           test)
               $DOCKER_COMPOSE exec php /bin/bash -c "./vendor/bin/phpunit --testdox"
+              $DOCKER_COMPOSE exec php /bin/bash -c "./vendor/bin/phpstan analyse --memory-limit=1G"
           ;;
           *)
               usage

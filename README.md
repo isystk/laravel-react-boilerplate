@@ -350,7 +350,6 @@ $ ./dc.sh php login
 
 # テスト用の画像をS3（Minio）にアップロードします。※事前に minioをセットアップしておくこと
 > php artisan s3upload
-
 ```
 
 フロントエンド環境を構築する

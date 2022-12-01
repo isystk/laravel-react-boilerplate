@@ -165,6 +165,9 @@
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/symfony/uid" />
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/laravel/dusk" />
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/php-webdriver/webdriver" />
+      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/phpmyadmin/sql-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/phpstan/phpstan" />
+      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/nunomaduro/larastan" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

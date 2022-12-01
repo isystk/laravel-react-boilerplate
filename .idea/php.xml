@@ -158,6 +158,9 @@
       <path value="$PROJECT_DIR$/htdocs/vendor/symfony/uid" />
       <path value="$PROJECT_DIR$/htdocs/vendor/laravel/dusk" />
       <path value="$PROJECT_DIR$/htdocs/vendor/php-webdriver/webdriver" />
+      <path value="$PROJECT_DIR$/htdocs/vendor/phpmyadmin/sql-parser" />
+      <path value="$PROJECT_DIR$/htdocs/vendor/phpstan/phpstan" />
+      <path value="$PROJECT_DIR$/htdocs/vendor/nunomaduro/larastan" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
