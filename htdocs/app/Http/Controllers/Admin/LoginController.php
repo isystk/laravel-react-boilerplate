@@ -21,6 +21,8 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
+    protected $maxAttempts = 5; // 5回失敗したらロックする
+    protected $decayMinutes = 30; // ロックは30分間
 
     /**
      * Where to redirect users after login.
@@ -56,5 +58,16 @@ class LoginController extends Controller
         $request->session()->regenerate();
 
         return redirect('/admin/login');
+    }
+
+    /**
+     * ログイン試行回数のアカウントロックはIP単位にする
+     * @param Request $request
+     * @return mixed|string
+     */
+    protected function throttleKey(Request $request): string
+    {
+        // プロキシサーバを経由した場合は、X-Forwarded-Forヘッダから接続元のクライアントIPを取得
+        return $_SERVER["HTTP_X_FORWARDED_FOR"] ?? $request->ip();
     }
 }
