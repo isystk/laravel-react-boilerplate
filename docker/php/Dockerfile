@@ -11,7 +11,7 @@ RUN apt-get update \
   && docker-php-ext-install -j$(nproc) gd
   
 #xdebug
-RUN pecl install debug \
+RUN pecl install debug-3.1.6 \
   && docker-php-ext-enable xdebug
 
 #Composer install
