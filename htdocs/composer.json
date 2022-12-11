@@ -6,7 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
-        "anhskohbo/no-captcha": "^3.4",
+        "arcanedev/no-captcha": "^13.0",
         "barryvdh/laravel-cors": "^3.0",
         "barryvdh/laravel-dompdf": "^1.0",
         "davejamesmiller/laravel-breadcrumbs": "^5.3",

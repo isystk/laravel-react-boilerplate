@@ -3,11 +3,22 @@
 @section('title', __('common.Login'))
 
 @section('content')
-
 <form method="POST" action="{{ route('admin.login') }}">
     @csrf
+    {!! no_captcha()->input() !!}
     <div class="card card-purple">
         <div class="card-body">
+            <div class="form-group row">
+                <ul>
+                @foreach($errors->all() as $error)
+                    <li>
+                        <div class="text-danger">
+                            {{ $error }}
+                        </div>
+                    </li>
+                @endforeach
+                </ul>
+            </div>
             <div class="form-group row">
                 <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('common.EMail') }}</label>
                 <div class="col-md-6">
@@ -56,5 +67,16 @@
         </div>
     </div>
 </form>
+@endsection
 
+@section('scripts')
+{!! no_captcha()->script() !!}
+<script>
+    // Google reCaptcha のトークンを取得する
+    grecaptcha.ready(function() {
+        grecaptcha.execute('{{config('no-captcha.sitekey')}}', {action: 'login'}).then(function(token) {
+            $('#g-recaptcha-response').val(token);
+        });
+    });
+</script>
 @endsection

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Arcanedev\NoCaptcha\Rules\CaptchaRule;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -51,9 +53,33 @@ class LoginController extends Controller
         return Auth::guard('admin');
     }
 
+    /**
+     * Validate the user login request.
+     *
+     * @param Request $request
+     * @return void
+     *
+     */
+    protected function validateLogin(Request $request): void
+    {
+        $request->validate([
+            $this->username() => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        $requests = $request->all();
+        $rules = [
+            'g-recaptcha-response' => ['required',new CaptchaRule]
+        ];
+        $messages = [
+            'g-recaptcha-response.captcha' => 'reCaptchaによってうまく認証されませんでした'
+        ];
+        Validator::make($requests, $rules, $messages)->validate();
+    }
+
     public function logout(Request $request)
     {
-        // Auth::guard('admin')->logout();
+        Auth::guard('admin')->logout();
         $request->session()->flush();
         $request->session()->regenerate();
 
