@@ -7,8 +7,8 @@ return [
      | -----------------------------------------------------------------
      */
 
-    'secret'  => env('NOCAPTCHA_SECRET', 'no-captcha-secret'),
-    'sitekey' => env('NOCAPTCHA_SITEKEY', 'no-captcha-sitekey'),
+    'secret'  => env('MIX_NOCAPTCHA_SECRET', 'no-captcha-secret'),
+    'sitekey' => env('MIX_NOCAPTCHA_SITEKEY', 'no-captcha-sitekey'),
 
     /* -----------------------------------------------------------------
      |  Version

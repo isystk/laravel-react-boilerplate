@@ -69,7 +69,8 @@ class LoginController extends Controller
 
         $requests = $request->all();
         $rules = [
-            'g-recaptcha-response' => ['required',new CaptchaRule]
+            // reCaptchaによる認証チェックはコメントアウトしておく
+//            'g-recaptcha-response' => ['required',new CaptchaRule]
         ];
         $messages = [
             'g-recaptcha-response.captcha' => 'reCaptchaによってうまく認証されませんでした'

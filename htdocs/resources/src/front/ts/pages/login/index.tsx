@@ -1,36 +1,38 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 
 import { Form, Button, Input, Col, Row, FormGroup } from "reactstrap";
 import TextInput from "@/components/elements/TextInput";
 import LoginButton from "@/components/elements/LoginButton";
 import CSRFToken from "@/components/elements/CSRFToken";
-import ReCAPTCHA from "react-google-recaptcha";
 import Box from "@/components/Box";
 import Layout from "@/components/Layout";
 import MainService from "@/services/main";
 import { Url } from "@/constants/url";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
 type Props = {
     appRoot: MainService;
 };
 
+const ReChaptcha = () => {
+    const [token, setToken] = useState<string>("");
+    const { executeRecaptcha } = useGoogleReCaptcha();
+
+    useEffect(() => {
+        if (!executeRecaptcha) {
+            return;
+        }
+        (async () => {
+            const token = await executeRecaptcha("Contact");
+            setToken(token);
+        })();
+    }, [executeRecaptcha]);
+
+    return <input type="hidden" name="g-recaptcha-response" value={token} />;
+};
+
 const LoginForm: FC<Props> = ({ appRoot }) => {
-    const [recaptcha, setRecaptcha] = useState<string>("");
-
-    const rechapcha = () => {
-        const props = {
-            style: { margin: "auto", width: "304px" },
-            sitekey: "6LcDorgaAAAAAGagnT3BKpmwmguuZjW4osBhamI3",
-            onChange: (value) => {
-                if (value) {
-                    setRecaptcha(value);
-                }
-            },
-        };
-        // @ts-ignore
-        return <ReCAPTCHA {...props} />;
-    };
-
     return (
         <Layout appRoot={appRoot} title="ログイン">
             <main className="main">
@@ -58,14 +60,14 @@ const LoginForm: FC<Props> = ({ appRoot }) => {
                             autoComplete="current-password"
                             label="パスワード"
                         />
-                        <FormGroup>
-                            {rechapcha()}
-                            <input
-                                type="hidden"
-                                name="g-recaptcha-response"
-                                value={recaptcha}
-                            />
-                        </FormGroup>
+                        <GoogleReCaptchaProvider
+                            reCaptchaKey={
+                                process.env.MIX_NOCAPTCHA_SITEKEY + ""
+                            }
+                            language="ja"
+                        >
+                            <ReChaptcha />
+                        </GoogleReCaptchaProvider>
                         <FormGroup>
                             <div className="checkbox-wrap text-center">
                                 <label>
