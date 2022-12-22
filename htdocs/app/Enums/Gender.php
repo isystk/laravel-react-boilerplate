@@ -10,7 +10,8 @@ enum Gender: int
     /** @var int 女性 */
     case Female = 1;
 
-    public static function getDescription($value) {
-        return __('enums.Gender'. $value);
+    public static function getDescription($value)
+    {
+        return __('enums.Gender' . $value);
     }
 }

@@ -17,8 +17,9 @@ enum Age: int
     /** @var int 60歳～ */
     case Over60 = 6;
 
-    public static function getDescription($value) {
-        return __('enums.Age'. $value);
+    public static function getDescription($value)
+    {
+        return __('enums.Age' . $value);
     }
 
 }

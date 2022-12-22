@@ -21,9 +21,9 @@ class MailNotification extends Mailable
      */
     public function __construct($id, $title, $data)
     {
-      $this->id = $id;
-      $this->title = $title;
-      $this->data = $data;
+        $this->id = $id;
+        $this->title = $title;
+        $this->data = $data;
     }
 
     /**
@@ -34,12 +34,12 @@ class MailNotification extends Mailable
     public function build()
     {
         return $this
-                ->from('no-reply@laraec.com') // 送信元
-                ->view('mails.'.$this->id)
-                ->text('mails.'.$this->id.'_plain')
-                ->subject($this->title)
-                ->with([
-                    'data' => $this->data,
-                  ]);
+            ->from('no-reply@laraec.com') // 送信元
+            ->view('mails.' . $this->id)
+            ->text('mails.' . $this->id . '_plain')
+            ->subject($this->title)
+            ->with([
+                'data' => $this->data,
+            ]);
     }
 }

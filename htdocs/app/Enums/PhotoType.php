@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum PhotoType: String
+enum PhotoType: string
 {
     /** @var int 商品 */
     case Stock = '商品';

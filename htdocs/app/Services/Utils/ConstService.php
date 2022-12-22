@@ -8,38 +8,41 @@ use App\Enums\Age;
 class ConstService
 {
 
-  public static function searchConst()
-  {
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    public static function searchConst(): array
+    {
 
-    $gender = [];
-    foreach (Gender::cases() as $case) {
-      array_push($gender, (object) [
-        'key' => $case->value,
-        'value' => Gender::getDescription($case->value),
-      ]);
+        $gender = [];
+        foreach (Gender::cases() as $case) {
+            array_push($gender, (object)[
+                'key' => $case->value,
+                'value' => Gender::getDescription($case->value),
+            ]);
+        }
+
+        $age = [];
+        foreach (Age::cases() as $case) {
+            array_push($age, (object)[
+                'key' => $case->value,
+                'value' => Age::getDescription($case->value),
+            ]);
+        }
+
+        return [
+            [
+                'name' => 'stripe_key',
+                'data' => env('STRIPE_KEY')
+            ],
+            [
+                'name' => 'gender',
+                'data' => $gender
+            ],
+            [
+                'name' => 'age',
+                'data' => $age
+            ]
+        ];
     }
-
-    $age = [];
-    foreach (Age::cases() as $case) {
-      array_push($age, (object) [
-        'key' => $case->value,
-        'value' => Age::getDescription($case->value),
-      ]);
-    }
-
-    return [
-      [
-        'name' => 'stripe_key',
-        'data' => env('STRIPE_KEY')
-      ],
-      [
-        'name' => 'gender',
-        'data' => $gender
-      ],
-      [
-        'name' => 'age',
-        'data' => $age
-      ]
-    ];
-  }
 }

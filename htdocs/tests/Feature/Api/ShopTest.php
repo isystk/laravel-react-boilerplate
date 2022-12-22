@@ -14,7 +14,7 @@ class ShopTest extends TestCase
     /**
      * トップページが正しく表示されることの確認
      */
-    public function testShopList()
+    public function testShopList(): void
     {
         $response = $this->get('/api/shops');
         // レスポンスの検証
@@ -27,7 +27,7 @@ class ShopTest extends TestCase
     /**
      * ログイン後にマイカートに商品を追加できることの確認
      */
-    public function testAddCart()
+    public function testAddCart(): void
     {
         // ユーザー取得
         $user = User::find(1);
@@ -49,7 +49,7 @@ class ShopTest extends TestCase
     /**
      * ログイン後にマイカートが表示されることの確認
      */
-    public function testMyCart()
+    public function testMyCart(): void
     {
         // ユーザー取得
         $user = User::find(1);

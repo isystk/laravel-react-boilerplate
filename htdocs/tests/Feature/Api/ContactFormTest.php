@@ -10,7 +10,7 @@ class ContactFormTest extends TestCase
     /**
      * お問い合わせ登録画面から投稿が正常に出来ることを確認する
      */
-    public function testContactStore()
+    public function testContactStore(): void
     {
         $this->withoutMiddleware();
 
