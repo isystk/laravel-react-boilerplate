@@ -120,7 +120,7 @@ class ContactFormService extends Service
                     $this->request()->input('contact')
                 );
 
-                $id = $contactForm->id;
+                $id = $contactForm['id'];
 
                 // お問い合わせ画像テーブルを登録（Insert）
                 if ($fileName !== "") {

@@ -20,12 +20,12 @@ class UserRepository
     }
 
     /**
-     * @param string $name
-     * @param string $email
+     * @param string|null $name
+     * @param string|null $email
      * @param array<string, mixed> $options
      * @return Collection|LengthAwarePaginator|array<User>
      */
-    public function findAll(string $name, string $email, array $options = []): Collection|LengthAwarePaginator|array
+    public function findAll(?string $name, ?string $email, array $options = []): Collection|LengthAwarePaginator|array
     {
         $query = User::with($this->__with($options));
 
@@ -57,9 +57,10 @@ class UserRepository
             ->first();
     }
 
+
     /**
-     * @param array<string, mixed> $options
-     * @return array<string, mixed>
+     * @param array<string, mixed>|array<int, string> $options
+     * @return array<int, string>
      */
     private function __with(array $options = []): array
     {
@@ -79,9 +80,9 @@ class UserRepository
     ): User
     {
         $user = new User();
-        $user->id = $id;
-        $user->name = $name;
-        $user->email = $email;
+        $user['id'] = $id;
+        $user['name'] = $name;
+        $user['email'] = $email;
 
         $user->save();
 
@@ -101,8 +102,8 @@ class UserRepository
     ): ?object
     {
         $user = $this->findById($id);
-        $user->name = $name;
-        $user->email = $email;
+        $user['name'] = $name;
+        $user['email'] = $email;
         $user->save();
 
         return $user;

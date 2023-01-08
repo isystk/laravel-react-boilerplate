@@ -4,28 +4,28 @@ namespace App\Repositories;
 
 use App\Models\Stock;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class StockRepository
 {
 
     /**
-     * @param $name
+     * @param string $name
      * @param array<string, mixed> $options
      * @return mixed
      */
-    public function count($name, $options = [])
+    public function count(string $name, array $options = []): mixed
     {
         return Stock::where('name', 'like', '%' . $name . '%')->count();
     }
 
     /**
-     * @param $name
-     * @param array<string, mixed> $options
-     * @return LengthAwarePaginator|Builder[]|Collection
+     * @param string|null $name
+     * @param array<int, string>|array<string, mixed> $options
+     * @return Collection|LengthAwarePaginator
      */
-    public function findAll($name, array $options = []): Collection|LengthAwarePaginator|array
+    public function findAll(string|null $name, array $options = []): Collection|LengthAwarePaginator
     {
         $query = Stock::with($this->__with($options))
             ->where('name', 'like', '%' . $name . '%')
@@ -37,11 +37,11 @@ class StockRepository
     }
 
     /**
-     * @param $id
-     * @param array<string, mixed> $options
-     * @return Builder|null
+     * @param string $id
+     * @param array<int, string>|array<string, mixed> $options
+     * @return Model|null
      */
-    public function findById($id, array $options = []): Builder|null
+    public function findById(string $id, array $options = []): Model|null
     {
         return Stock::with($this->__with($options))
             ->where([
@@ -51,8 +51,8 @@ class StockRepository
     }
 
     /**
-     * @param array<string, mixed> $options
-     * @return array<string, mixed>
+     * @param array<int, string>|array<string, mixed> $options
+     * @return array<int, string>
      */
     private function __with(array $options = [])
     {
@@ -64,12 +64,12 @@ class StockRepository
     }
 
     /**
-     * @param $id
-     * @param $name
-     * @param $detail
-     * @param $price
-     * @param $quantity
-     * @param $imgpath
+     * @param ?string $id
+     * @param string $name
+     * @param string $detail
+     * @param integer $price
+     * @param integer $quantity
+     * @param string $imgpath
      * @return Stock
      */
     public function store(
@@ -82,12 +82,12 @@ class StockRepository
     ): Stock
     {
         $stock = new Stock();
-        $stock->id = $id;
-        $stock->name = $name;
-        $stock->detail = $detail;
-        $stock->price = $price;
-        $stock->quantity = $quantity;
-        $stock->imgpath = $imgpath;
+        $stock['id'] = $id;
+        $stock['name'] = $name;
+        $stock['detail'] = $detail;
+        $stock['price'] = $price;
+        $stock['quantity'] = $quantity;
+        $stock['imgpath'] = $imgpath;
 
         $stock->save();
 
@@ -95,13 +95,13 @@ class StockRepository
     }
 
     /**
-     * @param $id
-     * @param $name
-     * @param $detail
-     * @param $price
-     * @param $quantity
-     * @param $imgpath
-     * @return Illuminate\Database\Eloquent
+     * @param string $id
+     * @param string $name
+     * @param string $detail
+     * @param integer $price
+     * @param integer $quantity
+     * @param string $imgpath
+     * @return Model|null
      */
     public function update(
         $id,
@@ -110,7 +110,7 @@ class StockRepository
         $price,
         $quantity,
         $imgpath
-    ):  Illuminate\Database\Eloquent
+    )
     {
         $stock = $this->findById($id);
         $stock['name'] = $name;

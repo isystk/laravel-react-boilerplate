@@ -3,11 +3,18 @@
 namespace App\Repositories;
 
 use App\Models\Order;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 
 class OrderRepository
 {
 
-    public function count($userName, $options = [])
+    /**
+     * @param string $userName
+     * @param array<string, mixed>|array<int, string> $options
+     * @return int
+     */
+    public function count(string $userName, array $options = []): int
     {
         return Order::with($this->__with($options))
             ->whereHas('user', function ($query) use ($userName) {
@@ -15,7 +22,12 @@ class OrderRepository
             })->count();
     }
 
-    public function findAll($userName, $options = [])
+    /**
+     * @param string|null $userName
+     * @param array<string, mixed>|array<int, string> $options
+     * @return Collection|LengthAwarePaginator
+     */
+    public function findAll(?string $userName, array $options = []): Collection|LengthAwarePaginator
     {
         $query = Order::with($this->__with($options))
             ->whereHas('user', function ($query) use ($userName) {
@@ -28,7 +40,12 @@ class OrderRepository
         return $limit > 0 ? $query->paginate($limit) : $query->get();
     }
 
-    public function findById($id, $options = [])
+    /**
+     * @param string $id
+     * @param array<string, mixed>|array<int, string> $options
+     * @return Order|null
+     */
+    public function findById($id, array $options = []): Order|null
     {
         return Order::with($this->__with($options))
             ->where([
@@ -37,7 +54,11 @@ class OrderRepository
             ->first();
     }
 
-    private function __with($options = [])
+    /**
+     * @param array<string, mixed>|array<int, string> $options
+     * @return array<int, string>
+     */
+    private function __with(array $options = [])
     {
         $with = [];
         if (!empty($options['with:user'])) {
@@ -49,47 +70,67 @@ class OrderRepository
         return $with;
     }
 
+    /**
+     * @param string $id
+     * @param string $stockId
+     * @param string $userId
+     * @param int $price
+     * @param int $quantity
+     * @return Order
+     */
     public function store(
-        $id,
-        $stockId,
-        $userId,
-        $price,
-        $quantity
-    )
+        string $id,
+        string $stockId,
+        string $userId,
+        int $price,
+        int $quantity
+    ): Order
     {
         $order = new Order();
-        $order->id = $id;
-        $order->stock_id = $stockId;
-        $order->user_id = $userId;
-        $order->price = $price;
-        $order->quantity = $quantity;
+        $order['id'] = $id;
+        $order['stock_id'] = $stockId;
+        $order['user_id'] = $userId;
+        $order['price'] = $price;
+        $order['quantity'] = $quantity;
 
         $order->save();
 
         return $order;
     }
 
+    /**
+     * @param string $id
+     * @param string $stockId
+     * @param string $userId
+     * @param int $price
+     * @param int $quantity
+     * @return object|null
+     */
     public function update(
-        $id,
-        $stockId,
-        $userId,
-        $price,
-        $quantity
-    )
+        string $id,
+        string $stockId,
+        string $userId,
+        int    $price,
+        int $quantity
+    ): ?object
     {
         $order = $this->findById($id);
-        $order->stock_id = $stockId;
-        $order->user_id = $userId;
-        $order->price = $price;
-        $order->quantity = $quantity;
+        $order['stock_id'] = $stockId;
+        $order['user_id'] = $userId;
+        $order['price'] = $price;
+        $order['quantity'] = $quantity;
         $order->save();
 
         return $order;
     }
 
+    /**
+     * @param string $id
+     * @return object|null
+     */
     public function delete(
-        $id
-    )
+        string $id
+    ): ?object
     {
         $order = $this->findById($id);
         $order->delete();

@@ -52,10 +52,10 @@ $subMenu = 'contact';
                 <div class="control-group" id="userName">
                     <label class="col-sm-6 control-label">{{__('contact.Gender')}}</label>
                     <div class="col-sm-12">
-                        @foreach (App\Enums\Gender::asArray() as $gender)
+                        @foreach (App\Enums\Gender::cases() as $gender)
                           <label>
-                              <input type="radio" name="gender" value="{{$gender}}" {{ $gender == old("gender", $contact -> gender) ? 'checked="checked"' : '' }}>
-                              <span>{{App\Enums\Gender::getDescription($gender)}}</span>
+                              <input type="radio" name="gender" value="{{$gender->value}}" {{ $gender->value == old("gender", $contact -> gender) ? 'checked="checked"' : '' }}>
+                              <span>{{App\Enums\Gender::getDescription($gender->value)}}</span>
                           </label>
                         @endforeach
                     </div>
@@ -68,8 +68,8 @@ $subMenu = 'contact';
                     <div class="col-sm-12">
                         <select name="age">
                             <option value="">{{__('common.Please Select')}}</option>
-                            @foreach (App\Enums\Age::asArray() as $age)
-                              <option value="{{$age}}" {{ $age == old("age", $contact -> age) ? 'selected="selected"' : '' }}>{{App\Enums\Age::getDescription($age)}}</option>
+                            @foreach (App\Enums\Age::cases() as $age)
+                              <option value="{{$age->value}}" {{ $age->value == old("age", $contact -> age) ? 'selected="selected"' : '' }}>{{App\Enums\Age::getDescription($age->value)}}</option>
                             @endforeach
                         </select>
                     </div>

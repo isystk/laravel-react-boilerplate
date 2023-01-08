@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+use App\Models\Stock;
 
 class Order extends Model
 {
@@ -11,14 +13,14 @@ class Order extends Model
     ];
 
     // 親テーブル
-    public function user()
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo(User::class);
     }
 
     // 親テーブル
-    public function stock()
+    public function stock(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo('App\Models\Stock');
+        return $this->belongsTo(Stock::class);
     }
 }

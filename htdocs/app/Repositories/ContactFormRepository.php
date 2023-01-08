@@ -2,21 +2,32 @@
 
 namespace App\Repositories;
 
-use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use App\Models\ContactForm;
 
 class ContactFormRepository
 {
 
-    public function count($createdAt, $options = [])
+    /**
+     * @param string $createdAt
+     * @param array<string, mixed>|array<int, string> $options
+     * @return int
+     */
+    public function count(string $createdAt, array $options = []): int
     {
-        $query = ContactForm::whereDay([
-            'created_at' => $createdAt,
-        ]);
+        $query = ContactForm::whereDay(
+            'created_at', $createdAt
+        );
         return $query->count();
     }
 
-    public function findAll($yourName, $options = [])
+    /**
+     * @param string|null $yourName
+     * @param array<string, mixed>|array<int, string> $options
+     * @return Collection|LengthAwarePaginator
+     */
+    public function findAll(?string $yourName, array $options = []): Collection|LengthAwarePaginator
     {
         $query = ContactForm::with($this->__with($options))
             ->orderBy('created_at', 'desc')
@@ -40,7 +51,12 @@ class ContactFormRepository
         return $limit > 0 ? $query->paginate($limit) : $query->get();
     }
 
-    public function findById($id, $options = [])
+    /**
+     * @param string $id
+     * @param array<string, mixed>|array<int, string> $options
+     * @return ContactForm|null
+     */
+    public function findById(string $id, array $options = []): ContactForm|null
     {
         return ContactForm::with($this->__with($options))
             ->where([
@@ -49,6 +65,10 @@ class ContactFormRepository
             ->first();
     }
 
+    /**
+     * @param array<string, mixed>|array<int, string> $options
+     * @return array<int, string>
+     */
     private function __with($options = [])
     {
         $with = [];
@@ -58,58 +78,84 @@ class ContactFormRepository
         return $with;
     }
 
+    /**
+     * @param string|null $id
+     * @param string $yourName
+     * @param string $title
+     * @param string $email
+     * @param ?string $url
+     * @param string $gender
+     * @param string $age
+     * @param string $contact
+     * @return ContactForm
+     */
     public function store(
-        $id,
-        $yourName,
-        $title,
-        $email,
-        $url,
-        $gender,
-        $age,
-        $contact
-    )
+        ?string $id,
+        string $yourName,
+        string $title,
+        string $email,
+        ?string $url,
+        string $gender,
+        string $age,
+        string $contact
+    ): ContactForm
     {
         $contactForm = new ContactForm();
-        $contactForm->id = $id;
-        $contactForm->your_name = $yourName;
-        $contactForm->title = $title;
-        $contactForm->email = $email;
-        $contactForm->url = $url;
-        $contactForm->gender = $gender;
-        $contactForm->age = $age;
-        $contactForm->contact = $contact;
+        $contactForm['id'] = $id;
+        $contactForm['your_name'] = $yourName;
+        $contactForm['title'] = $title;
+        $contactForm['email'] = $email;
+        $contactForm['url'] = $url;
+        $contactForm['gender'] = $gender;
+        $contactForm['age'] = $age;
+        $contactForm['contact'] = $contact;
 
         $contactForm->save();
 
         return $contactForm;
     }
 
+    /**
+     * @param string $id
+     * @param string $yourName
+     * @param string $title
+     * @param string $email
+     * @param string $url
+     * @param int $gender
+     * @param int $age
+     * @param string $contact
+     * @return ContactForm|null
+     */
     public function update(
-        $id,
-        $yourName,
-        $title,
-        $email,
-        $url,
-        $gender,
-        $age,
-        $contact
-    )
+        string $id,
+        string $yourName,
+        string $title,
+        string $email,
+        string $url,
+        int    $gender,
+        int    $age,
+        string $contact
+    ): ?ContactForm
     {
         $contactForm = $this->findById($id);
-        $contactForm->your_name = $yourName;
-        $contactForm->title = $title;
-        $contactForm->email = $email;
-        $contactForm->url = $url;
-        $contactForm->gender = $gender;
-        $contactForm->age = $age;
-        $contactForm->contact = $contact;
+        $contactForm['your_name'] = $yourName;
+        $contactForm['title'] = $title;
+        $contactForm['email'] = $email;
+        $contactForm['url'] = $url;
+        $contactForm['gender'] = $gender;
+        $contactForm['age'] = $age;
+        $contactForm['contact'] = $contact;
         $contactForm->save();
 
         return $contactForm;
     }
 
+    /**
+     * @param string $id
+     * @return ContactForm|null
+     */
     public function delete(
-        $id
+        string $id
     )
     {
         $contactForm = $this->findById($id);

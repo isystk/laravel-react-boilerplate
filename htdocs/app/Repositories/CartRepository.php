@@ -3,18 +3,30 @@
 namespace App\Repositories;
 
 use App\Models\Cart;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 
 class CartRepository
 {
 
-    public function count($userId, $options = [])
+    /**
+     * @param string $userId
+     * @param array<string, mixed>|array<int, string> $options
+     * @return int
+     */
+    public function count(string $userId, array $options = []): int
     {
         return Cart::where([
             'user_id' => $userId,
         ])->count();
     }
 
-    public function findAll($userId, $options = [])
+    /**
+     * @param string $userId
+     * @param array<string, mixed>|array<int, string> $options
+     * @return Collection|LengthAwarePaginator
+     */
+    public function findAll(string $userId, array $options = []): Collection|LengthAwarePaginator
     {
         $query = Cart::with($this->__with($options))
             ->where([
@@ -25,7 +37,12 @@ class CartRepository
         return $limit > 0 ? $query->paginate($limit) : $query->get();
     }
 
-    public function findById($id, $options = [])
+    /**
+     * @param string $id
+     * @param array<string, mixed>|array<int, string> $options
+     * @return Cart|null
+     */
+    public function findById(string $id, array $options = []): Cart|null
     {
         return Cart::with($this->__with($options))
             ->where([
@@ -34,6 +51,10 @@ class CartRepository
             ->first();
     }
 
+    /**
+     * @param array<string, mixed>|array<int, string> $options
+     * @return array<int, string>
+     */
     private function __with($options = [])
     {
         $with = [];
@@ -43,38 +64,54 @@ class CartRepository
         return $with;
     }
 
+    /**
+     * @param ?string $id
+     * @param string $stockId
+     * @param string $userId
+     * @return Cart
+     */
     public function store(
-        $id,
-        $stockId,
-        $userId
-    )
+        ?string $id,
+        string  $stockId,
+        string $userId
+    ): Cart
     {
         $cart = new Cart();
-        $cart->id = $id;
-        $cart->stock_id = $stockId;
-        $cart->user_id = $userId;
+        $cart['id'] = $id;
+        $cart['stock_id'] = $stockId;
+        $cart['user_id'] = $userId;
 
         $cart->save();
 
         return $cart;
     }
 
+    /**
+     * @param string $id
+     * @param string $stockId
+     * @param string $userId
+     * @return Cart
+     */
     public function update(
-        $id,
-        $stockId,
-        $userId
-    )
+        string $id,
+        string $stockId,
+        string $userId
+    ): Cart
     {
         $cart = $this->findById($id);
-        $cart->stock_id = $stockId;
-        $cart->user_id = $userId;
+        $cart['stock_id'] = $stockId;
+        $cart['user_id'] = $userId;
         $cart->save();
 
         return $cart;
     }
 
+    /**
+     * @param string $id
+     * @return Cart|null
+     */
     public function delete(
-        $id
+        string $id
     )
     {
         $cart = $this->findById($id);
