@@ -86,7 +86,7 @@ class MyCartService extends Service
     {
         $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
 
-        $result = $stripe->paymentIntents->create([
+        return $stripe->paymentIntents->create([
             'amount' => $request->amount,
             'currency' => 'jpy',
             'description' => 'LaraEC',
@@ -94,8 +94,6 @@ class MyCartService extends Service
                 'username' => $request->username
             ]
         ]);
-
-        return $result;
     }
 
     /**
@@ -167,7 +165,7 @@ class MyCartService extends Service
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw new \Exception($e);
+            throw new \RuntimeException($e);
         }
     }
 }

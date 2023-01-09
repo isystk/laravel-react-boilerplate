@@ -27,21 +27,10 @@ class StudyCollection extends Command
     protected $description = 'Collectionの学習用です';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
-     * @return mixed
      */
-    public function handle()
+    public function handle(): void
     {
         Log::info('StudyCollection START');
         //
@@ -54,9 +43,8 @@ class StudyCollection extends Command
     /**
      * Write code on Method
      *
-     * @return response()
      */
-    public function exec()
+    public function exec(): void
     {
         // 確認したいSQLの前にこれを仕込むとSQLの実行結果が確認できる。
         \Illuminate\Support\Facades\DB::enableQueryLog();
@@ -72,7 +60,7 @@ class StudyCollection extends Command
 
         // 価格が10000円以上のものを1行ずつログで表示する
         $minPrice = 10000;
-        $more10000 = ($stocks ?? collect([]))->filter(function ($item, $key) use ($minPrice) {
+        $more10000 = $stocks->filter(function ($item, $key) use ($minPrice) {
             return ($item->price >= $minPrice);
         });
         // 1行ずつログで表示する
@@ -81,11 +69,11 @@ class StudyCollection extends Command
         });
 
         // 商品名だけを抜き出してカンマ区切りで表示する
-        $names = ($stocks ?? collect([]))->pluck('name');
+        $names = $stocks->pluck('name');
         print_r($names->join('、') . "\n");
 
         // 商品IDをキーにしたMapを作成する
-        $stockMap = ($stocks ?? collect([]))->mapWithKeys(function ($stock) {
+        $stockMap = $stocks->mapWithKeys(function ($stock) {
             return [$stock['id'] => $stock];
         });
         print_r($stockMap['1'] . "\n");
@@ -94,12 +82,12 @@ class StudyCollection extends Command
         $users = User::get()->map(function ($item, $key) {
             return explode(" ", $item->name)[0];
         });
-        $unique = ($users ?? collect([]))->unique();
+        $unique = $users->unique();
         print_r($unique->toArray());
 
         // お問い合わせを男性と女性でグループ化して取得する
         $contacts = ContactForm::get()->groupBy('gender');
-        ($contacts ?? collect([]))->each(function ($contact, $key) {
+        $contacts->each(function ($contact, $key) {
             print_r(Gender::getDescription($key) . '->' . $contact->count() . '人' . "\n");
         });
 

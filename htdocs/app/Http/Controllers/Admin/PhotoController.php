@@ -3,16 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 use App\Services\PhotoService;
+use Illuminate\View\View;
 
 class PhotoController extends Controller
 {
     /**
      * @var PhotoService
      */
-    protected $photoService;
+    protected PhotoService $photoService;
 
     public function __construct(PhotoService $photoService)
     {
@@ -22,9 +24,10 @@ class PhotoController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return View
      */
-    public function index(Request $request)
+    public function index(Request $request): View
     {
 
         $name = $request->input('name');
@@ -38,9 +41,10 @@ class PhotoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return RedirectResponse
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request): RedirectResponse
     {
 
         $type = $request->input('type');

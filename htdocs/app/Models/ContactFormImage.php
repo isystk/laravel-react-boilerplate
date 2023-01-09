@@ -3,12 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ContactFormImage extends Model
 {
     // 親テーブル
-    public function contactForm()
+    /**
+     * @return BelongsTo
+     */
+    public function contactForm(): BelongsTo
     {
-        return $this->belongsTo('App\Models\ContactForm');
+        return $this->belongsTo(ContactForm::class);
     }
 }

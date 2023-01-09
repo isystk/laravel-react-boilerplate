@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Stock;
 use App\Services\Utils\CSVService;
@@ -11,6 +13,8 @@ use App\Services\StockService;
 use App\Services\Excel\ExcelStockService;
 
 use Barryvdh\DomPDF\PDF;
+use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 class StockController extends Controller
 {
@@ -19,9 +23,9 @@ class StockController extends Controller
      * @var ExcelStockService
      * @var PDF
      */
-    protected $stockService;
-    protected $excelStockService;
-    protected $pdfService;
+    protected StockService $stockService;
+    protected ExcelStockService $excelStockService;
+    protected PDF $pdfService;
 
     public function __construct(StockService $stockService, ExcelStockService $excelStockService, PDF $pdfService)
     {
@@ -33,9 +37,10 @@ class StockController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return View
      */
-    public function index(Request $request)
+    public function index(Request $request): View
     {
 
         $name = $request->input('name');
@@ -48,9 +53,10 @@ class StockController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
-    public function downloadExcel(Request $request)
+    public function downloadExcel(Request $request): Response
     {
         return $this->excelStockService->setTemplate(resource_path('excel/template.xlsx'))->download('stocks.xlsx');
     }
@@ -58,9 +64,10 @@ class StockController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
+     * @throws BindingResolutionException
      */
-    public function downloadCsv(Request $request)
+    public function downloadCsv(Request $request): Response
     {
 
         $stocks = $this->stockService->list(0);
@@ -80,9 +87,10 @@ class StockController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
-    public function downloadPdf(Request $request)
+    public function downloadPdf(Request $request): Response
     {
 
         $stocks = $this->stockService->list(0);
@@ -104,21 +112,20 @@ class StockController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function create(Request $request)
+    public function create(Request $request): View
     {
-        //
         return view('admin.stock.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param StoreStockFormRequest $request
+     * @return RedirectResponse
      */
-    public function store(StoreStockFormRequest $request)
+    public function store(StoreStockFormRequest $request): RedirectResponse
     {
 
         $this->stockService->save();
@@ -130,10 +137,10 @@ class StockController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param string $id
+     * @return View
      */
-    public function show($id)
+    public function show(string $id): View
     {
         $stock = $this->stockService->find($id);
 
@@ -143,10 +150,10 @@ class StockController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param string $id
+     * @return View
      */
-    public function edit($id)
+    public function edit(string $id): View
     {
         $stock = $this->stockService->find($id);
 
@@ -156,11 +163,11 @@ class StockController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param StoreStockFormRequest $request
+     * @param string $id
+     * @return RedirectResponse
      */
-    public function update(StoreStockFormRequest $request, $id)
+    public function update(StoreStockFormRequest $request, string $id)
     {
 
         $this->stockService->save($id);
@@ -171,10 +178,10 @@ class StockController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param string $id
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(string $id): RedirectResponse
     {
 
         $this->stockService->delete($id);

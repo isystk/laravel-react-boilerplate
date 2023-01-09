@@ -8,6 +8,7 @@ use Arcanedev\NoCaptcha\Rules\CaptchaRule;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -24,15 +25,15 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    protected $maxAttempts = 5; // 5回失敗したらロックする
-    protected $decayMinutes = 30; // ロックは30分間
+    protected int $maxAttempts = 5; // 5回失敗したらロックする
+    protected int $decayMinutes = 30; // ロックは30分間
 
     /**
      * Where to redirect users after login.
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected string $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -44,7 +45,11 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    protected function validateLogin(Request $request)
+    /**
+     * @param Request $request
+     * @throws ValidationException
+     */
+    protected function validateLogin(Request $request): void
     {
         $this->validate($request, [
             $this->username() => 'required|string|min:10',
@@ -65,7 +70,7 @@ class LoginController extends Controller
     /**
      * ログイン試行回数のアカウントロックはIP単位にする
      * @param Request $request
-     * @return mixed|string
+     * @return string
      */
     protected function throttleKey(Request $request): string
     {

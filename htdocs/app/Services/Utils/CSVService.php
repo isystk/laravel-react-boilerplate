@@ -10,7 +10,7 @@ class CSVService
 
     /**
      * CSVファイルの生成
-     * @param array<string> $list
+     * @param array<int, array<int, mixed>> $list
      * @param array<string> $header
      * @return string
      */
@@ -32,7 +32,7 @@ class CSVService
 
     /**
      * CSVダウンロード
-     * @param array<string> $list
+     * @param array<int, array<int, mixed>> $list
      * @param array<string> $header
      * @param string $filename
      * @return Response

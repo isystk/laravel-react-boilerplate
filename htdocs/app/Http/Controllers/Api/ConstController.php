@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\ApiController;
 use App\Services\Utils\ConstService;
+use Illuminate\Http\JsonResponse;
 
 
 class ConstController extends ApiController
@@ -11,14 +12,17 @@ class ConstController extends ApiController
     /**
      * @var ConstService
      */
-    protected $constService;
+    protected ConstService $constService;
 
     public function __construct(ConstService $constService)
     {
         $this->constService = $constService;
     }
 
-    public function index()
+    /**
+     * @return JsonResponse
+     */
+    public function index(): JsonResponse
     {
 
         try {

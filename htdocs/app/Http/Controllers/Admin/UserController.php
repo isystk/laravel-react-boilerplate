@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\ErrorType;
 use App\Http\Controllers\Controller;
+use Exception;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 use App\Services\UserService;
@@ -13,7 +18,7 @@ class UserController extends Controller
     /**
      * @var UserService
      */
-    protected $userService;
+    protected UserService $userService;
 
     public function __construct(UserService $userService)
     {
@@ -23,9 +28,10 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Application|Factory|View
      */
-    public function index(Request $request)
+    public function index(Request $request): View|Factory|Application
     {
 
         $name = $request->input('name');
@@ -40,10 +46,10 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param string $id
+     * @return View
      */
-    public function show($id)
+    public function show(string $id): View
     {
         $user = $this->userService->find($id);
 
@@ -53,10 +59,10 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param string $id
+     * @return View
      */
-    public function edit($id)
+    public function edit(string $id): View
     {
         $user = $this->userService->find($id);
 
@@ -66,11 +72,12 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param string $id
+     * @return RedirectResponse
+     * @throws Exception
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id): RedirectResponse
     {
 
         [$user, $type, $exception] = $this->userService->save($id);
@@ -78,7 +85,7 @@ class UserController extends Controller
             if ($type === ErrorType::NOT_FOUND) {
                 abort(400);
             }
-            throw $exception ?? new \Exception(__('common.Unknown Error has occurred.'));
+            throw $exception ?? new Exception(__('common.Unknown Error has occurred.'));
         }
 
         return redirect('admin/user');
@@ -87,10 +94,11 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param string $id
+     * @return RedirectResponse
+     * @throws Exception
      */
-    public function destroy($id)
+    public function destroy(string $id): RedirectResponse
     {
 
         [$user, $type, $exception] = $this->userService->delete($id);
@@ -98,7 +106,7 @@ class UserController extends Controller
             if ($type === ErrorType::NOT_FOUND) {
                 abort(400);
             }
-            throw $exception ?? new \Exception(__('common.Unknown Error has occurred.'));
+            throw $exception ?? new Exception(__('common.Unknown Error has occurred.'));
         }
 
         return redirect('/admin/user');

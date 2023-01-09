@@ -57,7 +57,7 @@ class ContactFormService extends Service
 
     /**
      * @param string|null $contactFormId
-     * @return array<string>
+     * @return array<int, mixed>
      */
     public function save(string $contactFormId = null): array
     {
@@ -147,7 +147,7 @@ class ContactFormService extends Service
 
     /**
      * @param string $id
-     * @return array<string>
+     * @return array<int, mixed>
      */
     public function delete(string $id): array
     {

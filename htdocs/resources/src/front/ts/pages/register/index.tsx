@@ -43,9 +43,8 @@ const RegisterForm: FC<Props> = ({ appRoot }) => {
                             label="パスワード"
                         />
                         <TextInput
-                            identity="password-confirm"
+                            identity="password_confirmation"
                             controlType="password"
-                            name="password_confirmation"
                             autoComplete="new-password"
                             label="パスワード（確認）"
                         />

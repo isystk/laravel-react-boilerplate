@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
+use Illuminate\View\View;
 
 class OrderController extends Controller
 {
     /**
      * @var OrderService
      */
-    protected $orderService;
+    protected OrderService $orderService;
 
     public function __construct(OrderService $orderService)
     {
@@ -21,9 +22,10 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return View
      */
-    public function index(Request $request)
+    public function index(Request $request): View
     {
 
         $name = $request->name;
@@ -35,10 +37,10 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param string $id
+     * @return View
      */
-    public function show($id)
+    public function show(string $id): View
     {
         $order = $this->orderService->find($id);
 

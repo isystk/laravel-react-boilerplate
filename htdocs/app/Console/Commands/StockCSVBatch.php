@@ -26,6 +26,11 @@ class StockCSVBatch extends Command
     protected $description = '商品の一覧をCSVファイルに出力します。';
 
     /**
+     * @var StockService
+     */
+    private StockService $stockService;
+
+    /**
      * Create a new command instance.
      *
      * @return void

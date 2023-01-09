@@ -12,12 +12,14 @@ class StoreContactFormRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
-
+    /**
+     * @return array<string, mixed>
+     */
     public function validationData()
     {
         $all = parent::validationData();
@@ -33,9 +35,9 @@ class StoreContactFormRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array<string, string>
      */
-    public function rules()
+    public function rules(): array
     {
         $rules = [
             //
@@ -64,7 +66,7 @@ class StoreContactFormRequest extends FormRequest
     /**
      * 項目名
      *
-     * @return array
+     * @return array<string, string>
      */
     public function attributes()
     {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\ApiController;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\Stock;
 use App\Models\Cart;
@@ -14,14 +15,17 @@ class ShopController extends ApiController
     /**
      * @var MyCartService
      */
-    protected $myCartService;
+    protected MyCartService $myCartService;
 
     public function __construct(MyCartService $myCartService)
     {
         $this->myCartService = $myCartService;
     }
 
-    public function index()
+    /**
+     * @return JsonResponse
+     */
+    public function index(): JsonResponse
     {
         try {
             $stocks = Stock::Paginate(6); //Eloquantで検索
@@ -41,7 +45,11 @@ class ShopController extends ApiController
         return $this->resConversionJson($result);
     }
 
-    public function myCart(Cart $cart)
+    /**
+     * @param Cart $cart
+     * @return JsonResponse
+     */
+    public function myCart(Cart $cart): JsonResponse
     {
 
         try {
@@ -62,7 +70,12 @@ class ShopController extends ApiController
         return $this->resConversionJson($result);
     }
 
-    public function addMycart(Request $request, Cart $cart)
+    /**
+     * @param Request $request
+     * @param Cart $cart
+     * @return JsonResponse
+     */
+    public function addMycart(Request $request, Cart $cart): JsonResponse
     {
         try {
             //カートに追加の処理
@@ -88,7 +101,12 @@ class ShopController extends ApiController
         return $this->resConversionJson($result);
     }
 
-    public function deleteCart(Request $request, Cart $cart)
+    /**
+     * @param Request $request
+     * @param Cart $cart
+     * @return JsonResponse
+     */
+    public function deleteCart(Request $request, Cart $cart): JsonResponse
     {
         try {
             //カートから削除の処理
@@ -114,7 +132,11 @@ class ShopController extends ApiController
         return $this->resConversionJson($result);
     }
 
-    public function createPayment(Request $request)
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function createPayment(Request $request): JsonResponse
     {
         try {
 
@@ -132,7 +154,12 @@ class ShopController extends ApiController
         return $this->resConversionJson($result);
     }
 
-    public function checkout(Request $request, Cart $cart)
+    /**
+     * @param Request $request
+     * @param Cart $cart
+     * @return JsonResponse
+     */
+    public function checkout(Request $request, Cart $cart): JsonResponse
     {
         try {
 

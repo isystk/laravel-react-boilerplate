@@ -3,11 +3,13 @@
 namespace App\Services;
 
 use App\Enums\ErrorType;
+use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\UserRepository;
+use PDOException;
 
 class UserService extends Service
 {
@@ -51,7 +53,7 @@ class UserService extends Service
 
     /**
      * @param string|null $userId
-     * @return array<string>
+     * @return array<int, mixed>
      */
     public function save(string $userId = null): array
     {
@@ -84,10 +86,10 @@ class UserService extends Service
             DB::commit();
 
             return [$user, ErrorType::SUCCESS, null];
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             DB::rollBack();
             return [false, ErrorType::DATABASE, $e];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             return [false, ErrorType::FATAL, $e];
         }
@@ -96,7 +98,7 @@ class UserService extends Service
 
     /**
      * @param string $id
-     * @return array<string>
+     * @return array<int, mixed>
      */
     public function delete(string $id): array
     {
@@ -107,10 +109,10 @@ class UserService extends Service
 
             DB::commit();
             return [$user, ErrorType::SUCCESS, null];
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             DB::rollBack();
             return [false, ErrorType::DATABASE, $e];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             return [false, ErrorType::FATAL, $e];
         }

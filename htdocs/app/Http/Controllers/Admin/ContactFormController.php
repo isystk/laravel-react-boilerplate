@@ -4,18 +4,21 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\ErrorType;
 use App\Http\Controllers\Controller;
+use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreContactFormRequest;
 use App\Models\ContactForm;
 
 use App\Services\ContactFormService;
+use Illuminate\View\View;
 
 class ContactFormController extends Controller
 {
     /**
      * @var ContactFormService
      */
-    protected $contactFormService;
+    protected ContactFormService $contactFormService;
 
     public function __construct(ContactFormService $contactFormService)
     {
@@ -25,9 +28,9 @@ class ContactFormController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function index(Request $request)
+    public function index(Request $request): View
     {
 
         $search = $request->input('search');
@@ -40,10 +43,10 @@ class ContactFormController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param string $id
+     * @return View
      */
-    public function show($id)
+    public function show(string $id): View
     {
         //
         $contact = ContactForm::find($id);
@@ -57,10 +60,10 @@ class ContactFormController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param string $id
+     * @return View
      */
-    public function edit($id)
+    public function edit(string $id): View
     {
         //
         $contact = ContactForm::find($id);
@@ -71,11 +74,12 @@ class ContactFormController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param StoreContactFormRequest $request
+     * @param string $id
+     * @return RedirectResponse
+     * @throws Exception
      */
-    public function update(StoreContactFormRequest $request, $id)
+    public function update(StoreContactFormRequest $request, string $id): RedirectResponse
     {
 
         [$contactForm, $type, $exception] = $this->contactFormService->save($id);
@@ -83,7 +87,7 @@ class ContactFormController extends Controller
             if ($type === ErrorType::NOT_FOUND) {
                 abort(400);
             }
-            throw $exception ?? new \Exception(__('common.Unknown Error has occurred.'));
+            throw $exception ?? new Exception(__('common.Unknown Error has occurred.'));
         }
         return redirect('/admin/contact');
     }
@@ -91,17 +95,18 @@ class ContactFormController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param string $id
+     * @return RedirectResponse
+     * @throws Exception
      */
-    public function destroy($id)
+    public function destroy(string $id): RedirectResponse
     {
         [$contactForm, $type, $exception] = $this->contactFormService->delete($id);
         if (!$contactForm) {
             if ($type === ErrorType::NOT_FOUND) {
                 abort(400);
             }
-            throw $exception ?? new \Exception(__('common.Unknown Error has occurred.'));
+            throw $exception ?? new Exception(__('common.Unknown Error has occurred.'));
         }
         return redirect('/admin/contact');
     }

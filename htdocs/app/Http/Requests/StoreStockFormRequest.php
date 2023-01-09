@@ -12,13 +12,15 @@ class StoreStockFormRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
-
-    public function validationData()
+    /**
+     * @return array<string, mixed>
+     */
+    public function validationData(): array
     {
         $all = parent::validationData();
 
@@ -33,7 +35,7 @@ class StoreStockFormRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array<string, string>
      */
     public function rules()
     {
@@ -53,7 +55,7 @@ class StoreStockFormRequest extends FormRequest
     /**
      * 項目名
      *
-     * @return array
+     * @return array<string, string>
      */
     public function attributes()
     {

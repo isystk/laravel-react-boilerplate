@@ -3,14 +3,22 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Stock;
 
 class Cart extends Model
 {
+    /**
+     * @var string[]
+     */
     protected $fillable = [
         'stock_id', 'user_id',
     ];
 
+    /**
+     * @return array<string, mixed>
+     */
     public function showCart()
     {
         $user_id = Auth::id();
@@ -26,15 +34,22 @@ class Cart extends Model
         return $data;
     }
 
+    /**
+     * @return BelongsTo
+     */
     public function stock()
     {
-        return $this->belongsTo('\App\Models\Stock');
+        return $this->belongsTo(Stock::class);
     }
 
-    public function addCart($stock_id)
+    /**
+     * @param string $stock_id
+     * @return string
+     */
+    public function addCart(string $stock_id): string
     {
         $user_id = Auth::id();
-        $cart_add_info = Cart::firstOrCreate(['stock_id' => $stock_id, 'user_id' => $user_id]);
+        $cart_add_info = self::firstOrCreate(['stock_id' => $stock_id, 'user_id' => $user_id]);
 
         if ($cart_add_info->wasRecentlyCreated) {
             $message = 'カートに追加しました';
@@ -45,7 +60,11 @@ class Cart extends Model
         return $message;
     }
 
-    public function deleteCart($stock_id)
+    /**
+     * @param string $stock_id
+     * @return string
+     */
+    public function deleteCart($stock_id): string
     {
         $user_id = Auth::id();
         $delete = $this->where('user_id', $user_id)->where('stock_id', $stock_id)->delete();
@@ -58,7 +77,10 @@ class Cart extends Model
         return $message;
     }
 
-    public function deleteMyCart()
+    /**
+     * @return string
+     */
+    public function deleteMyCart(): string
     {
         $user_id = Auth::id();
         $delete = $this->where('user_id', $user_id)->delete();
@@ -71,7 +93,10 @@ class Cart extends Model
         return $message;
     }
 
-    public function checkoutCart()
+    /**
+     * @return mixed
+     */
+    public function checkoutCart(): mixed
     {
         // ユーザーのカートを取得する。
         $user_id = Auth::id();

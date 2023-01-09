@@ -120,7 +120,7 @@ class ContactFormRepository
      * @param string $yourName
      * @param string $title
      * @param string $email
-     * @param string $url
+     * @param string|null $url
      * @param int $gender
      * @param int $age
      * @param string $contact
@@ -131,7 +131,7 @@ class ContactFormRepository
         string $yourName,
         string $title,
         string $email,
-        string $url,
+        ?string $url,
         int    $gender,
         int    $age,
         string $contact
