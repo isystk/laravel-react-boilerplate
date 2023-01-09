@@ -10,20 +10,20 @@ class MailNotification extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $id;
-    protected $title;
-    protected $text;
+    protected string $id;
+    protected string $title;
+    protected mixed $data;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($id, $title, $data)
+    public function __construct(string $id, string $title, mixed $data)
     {
-      $this->id = $id;
-      $this->title = $title;
-      $this->data = $data;
+        $this->id = $id;
+        $this->title = $title;
+        $this->data = $data;
     }
 
     /**
@@ -34,12 +34,12 @@ class MailNotification extends Mailable
     public function build()
     {
         return $this
-                ->from('no-reply@laraec.com') // 送信元
-                ->view('mails.'.$this->id)
-                ->text('mails.'.$this->id.'_plain')
-                ->subject($this->title)
-                ->with([
-                    'data' => $this->data,
-                  ]);
+            ->from('no-reply@laraec.com') // 送信元
+            ->view('mails.' . $this->id)
+            ->text('mails.' . $this->id . '_plain')
+            ->subject($this->title)
+            ->with([
+                'data' => $this->data,
+            ]);
     }
 }

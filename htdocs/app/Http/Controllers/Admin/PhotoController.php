@@ -3,51 +3,55 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 use App\Services\PhotoService;
+use Illuminate\View\View;
 
 class PhotoController extends Controller
 {
-  /**
-   * @var PhotoService
-   */
-  protected $photoService;
+    /**
+     * @var PhotoService
+     */
+    protected PhotoService $photoService;
 
-  public function __construct(PhotoService $photoService)
-  {
-      $this->photoService = $photoService;
-  }
+    public function __construct(PhotoService $photoService)
+    {
+        $this->photoService = $photoService;
+    }
 
-  /**
-   * Display a listing of the resource.
-   *
-   * @return \Illuminate\Http\Response
-   */
-  public function index(Request $request)
-  {
+    /**
+     * Display a listing of the resource.
+     *
+     * @param Request $request
+     * @return View
+     */
+    public function index(Request $request): View
+    {
 
-    $name = $request->input('name');
+        $name = $request->input('name');
 
-    $photos = $this->photoService->list();
+        $photos = $this->photoService->list();
 
-    return view('admin.photo.index', compact('photos', 'name'));
-  }
+        return view('admin.photo.index', compact('photos', 'name'));
+    }
 
 
-  /**
-   * Remove the specified resource from storage.
-   *
-   * @return \Illuminate\Http\Response
-   */
-  public function destroy(Request $request)
-  {
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function destroy(Request $request): RedirectResponse
+    {
 
-    $type = $request->input('type');
-    $fileName = $request->input('fileName');
+        $type = $request->input('type');
+        $fileName = $request->input('fileName');
 
-    $this->photoService->delete($type, $fileName);
+        $this->photoService->delete($type, $fileName);
 
-    return redirect('/admin/photo');
-  }
+        return redirect('/admin/photo');
+    }
 }

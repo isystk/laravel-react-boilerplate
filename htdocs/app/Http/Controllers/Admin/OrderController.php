@@ -5,43 +5,45 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
+use Illuminate\View\View;
 
 class OrderController extends Controller
 {
-  /**
-   * @var OrderService
-   */
-  protected $orderService;
+    /**
+     * @var OrderService
+     */
+    protected OrderService $orderService;
 
-  public function __construct(OrderService $orderService)
-  {
-    $this->orderService = $orderService;
-  }
+    public function __construct(OrderService $orderService)
+    {
+        $this->orderService = $orderService;
+    }
 
-  /**
-   * Display a listing of the resource.
-   *
-   * @return \Illuminate\Http\Response
-   */
-  public function index(Request $request)
-  {
+    /**
+     * Display a listing of the resource.
+     *
+     * @param Request $request
+     * @return View
+     */
+    public function index(Request $request): View
+    {
 
-    $name = $request->name;
-    $orders = $this->orderService->list();
+        $name = $request->name;
+        $orders = $this->orderService->list();
 
-    return view('admin.order.index', compact('orders', 'name'));
-  }
+        return view('admin.order.index', compact('orders', 'name'));
+    }
 
-  /**
-   * Display the specified resource.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-  public function show($id)
-  {
-    $order = $this->orderService->find($id);
+    /**
+     * Display the specified resource.
+     *
+     * @param string $id
+     * @return View
+     */
+    public function show(string $id): View
+    {
+        $order = $this->orderService->find($id);
 
-    return view('admin.order.show', compact('order'));
-  }
+        return view('admin.order.show', compact('order'));
+    }
 }

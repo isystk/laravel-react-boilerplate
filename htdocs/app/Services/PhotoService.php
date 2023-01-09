@@ -2,61 +2,67 @@
 
 namespace App\Services;
 
-use App\Enums\ErrorType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class PhotoService extends Service
 {
-  public function __construct(
-    Request $request
-) {
-    parent::__construct($request);
-  }
-
-  public function list()
-  {
-
-    $name = $this->request()->name;
-
-    $photos = [];
-
-    $files = Storage::files();
-    foreach ($files as $file) {
-      $fileName = basename($file);
-      if (empty($name) || strpos($fileName, $name) !== false) {
-        $photo = (object) [
-          'type' => 'default',
-          'fileName' => $fileName
-        ];
-        array_push($photos, $photo);
-      }
+    public function __construct(
+        Request $request
+    )
+    {
+        parent::__construct($request);
     }
 
-    $files = Storage::files('stock');
-    foreach ($files as $file) {
-      $fileName = basename($file);
-      if (empty($name) || strpos($fileName, $name) !== false) {
-        $photo = (object) [
-          'type' => 'stock',
-          'fileName' => $fileName
-        ];
-        array_push($photos, $photo);
-      }
+    /**
+     * @return array<int, object>
+     */
+    public function list(): array
+    {
+
+        $name = $this->request()->name;
+
+        $photos = [];
+
+        $files = Storage::files();
+        foreach ($files as $file) {
+            $fileName = basename($file);
+            if (empty($name) || strpos($fileName, $name) !== false) {
+                $photo = (object)[
+                    'type' => 'default',
+                    'fileName' => $fileName
+                ];
+                array_push($photos, $photo);
+            }
+        }
+
+        $files = Storage::files('stock');
+        foreach ($files as $file) {
+            $fileName = basename($file);
+            if (empty($name) || strpos($fileName, $name) !== false) {
+                $photo = (object)[
+                    'type' => 'stock',
+                    'fileName' => $fileName
+                ];
+                array_push($photos, $photo);
+            }
+        }
+
+        return $photos;
     }
-    // dd($photos);
 
-    return $photos;
-  }
+    /**
+     * @param string $type
+     * @param string $fileName
+     */
+    public function delete(string $type, string $fileName): void
+    {
 
-  public function delete($type, $fileName)
-  {
-
-    if ($type === 'stock') {
-      $delPath = 'stock/' . $fileName;
-      Storage::delete($delPath);
-    } else {
-      Storage::delete($fileName);
+        if ($type === 'stock') {
+            $delPath = 'stock/' . $fileName;
+            Storage::delete($delPath);
+        } else {
+            Storage::delete($fileName);
+        }
     }
-  }
 }

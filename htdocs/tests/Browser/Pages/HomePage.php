@@ -30,9 +30,9 @@ class HomePage extends Page
     /**
      * Get the element shortcuts for the page.
      *
-     * @return array
+     * @return array<string, string>
      */
-    public function elements()
+    public function elements(): array
     {
         return [
             '@element' => '#selector',

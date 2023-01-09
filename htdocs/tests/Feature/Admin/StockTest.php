@@ -14,7 +14,7 @@ class StockTest extends TestCase
     /**
      * ログイン後に商品一覧が表示されることの確認
      */
-    public function testStockList()
+    public function testStockList(): void
     {
         // ユーザー取得
         $user = Admin::find(1);

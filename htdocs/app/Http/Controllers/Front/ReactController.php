@@ -2,18 +2,26 @@
 
 namespace App\Http\Controllers\Front;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class ReactController extends Controller
 {
-  public function index()
-  {
-    return view('front.react');
-  }
+    /**
+     * @return View
+     */
+    public function index(): View
+    {
+        return view('front.react');
+    }
 
-  public function session(Request $request)
-  {
-    return $request->user();
-  }
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function session(Request $request): mixed
+    {
+        return $request->user();
+    }
 }

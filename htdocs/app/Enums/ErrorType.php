@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum ErrorType: String
+enum ErrorType: string
 {
 
     case SUCCESS = 'Success';

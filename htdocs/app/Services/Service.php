@@ -2,17 +2,16 @@
 
 namespace App\Services;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 abstract class Service
 {
-    /**
-     * @var Request
-     */
-    protected $_request;
 
-    protected $_user;
+    protected Request $_request;
+
+    protected Authenticatable|null $_user;
 
     public function __construct(Request $request)
     {
@@ -22,12 +21,15 @@ abstract class Service
     /**
      * @return Request
      */
-    public function request()
+    public function request(): Request
     {
         return $this->_request;
     }
 
-    public function gate()
+    /**
+     * @return string
+     */
+    public function gate(): string
     {
         if (!isset($this->request()->route()->action['prefix'])) {
             return '';
@@ -35,12 +37,18 @@ abstract class Service
         return trim($this->request()->route()->action['prefix'], '/');
     }
 
-    public function isGuest()
+    /**
+     * @return bool
+     */
+    public function isGuest(): bool
     {
         return Auth::guest();
     }
 
-    public function user()
+    /**
+     * @return Authenticatable|null
+     */
+    public function user(): ?Authenticatable
     {
         if (!$this->_user) {
             $this->_user = Auth::user();

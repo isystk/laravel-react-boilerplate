@@ -3,78 +3,118 @@
 namespace App\Repositories;
 
 use App\Models\Admin;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 
 class AdminRepository
 {
 
-  public function count($options = [])
-  {
-      return Admin::where([
-      ])->count();
-  }
+    /**
+     * @param array<string, mixed>|array<int, string> $options
+     * @return int
+     */
+    public function count($options = []): int
+    {
+        return Admin::where([
+        ])->count();
+    }
 
-  public function findAll($options = [])
-  {
-      $query = Admin::with($this->__with($options));
+    /**
+     * @param array<string, mixed>|array<int, string> $options
+     * @return Collection|LengthAwarePaginator
+     */
+    public function findAll($options = []): Collection|LengthAwarePaginator
+    {
+        $query = Admin::with($this->__with($options));
 
-      $limit = !empty($options['limit']) ? (int)$options['limit'] : null;
-      return $limit > 0 ? $query->paginate($limit) : $query->get();
-  }
+        $limit = !empty($options['limit']) ? (int)$options['limit'] : null;
+        return $limit > 0 ? $query->paginate($limit) : $query->get();
+    }
 
-  public function findById($id, $options = [])
-  {
-      return Admin::with($this->__with($options))
-          ->where([
-              'id' => $id
-          ])
-          ->first();
-  }
+    /**
+     * @param string $id
+     * @param array<string, mixed>|array<int, string> $options
+     * @return Admin|null
+     */
+    public function findById(string $id, array $options = []): Admin|null
+    {
+        return Admin::with($this->__with($options))
+            ->where([
+                'id' => $id
+            ])
+            ->first();
+    }
 
-  private function __with($options = [])
-  {
-      $with = [];
-      return $with;
-  }
+    /**
+     * @param array<string, mixed>|array<int, string> $options
+     * @return array<int, string>
+     */
+    private function __with($options = [])
+    {
+        $with = [];
+        return $with;
+    }
 
-  public function store(
-      $id,
-      $name,
-      $email,
-      $password
-  ) {
-      $admin = new Admin();
-      $admin->id = $id;
-      $admin->name = $name;
-      $admin->email = $email;
-      $admin->password = $password;
+    /**
+     * @param ?string $id
+     * @param string $name
+     * @param string $email
+     * @param string $password
+     * @return Admin
+     */
+    public function store(
+        ?string $id,
+        string  $name,
+        string  $email,
+        string $password
+    ): Admin
+    {
+        $admin = new Admin();
+        $admin['id'] = $id;
+        $admin['name'] = $name;
+        $admin['email'] = $email;
+        $admin['password'] = $password;
 
-      $admin->save();
+        $admin->save();
 
-      return $admin;
-  }
+        return $admin;
+    }
 
-  public function update(
-    $id,
-    $name,
-    $email,
-    $password
-  ) {
-      $admin = $this->findById($id);
-      $admin->name = $name;
-      $admin->email = $email;
-      $admin->password = $password;
-      $admin->save();
+    /**
+     * @param string $id
+     * @param string $name
+     * @param string $email
+     * @param string $password
+     * @return Admin
+     */
+    public function update(
+        string $id,
+        string $name,
+        string $email,
+        string $password
+    ): Admin
+    {
+        $admin = $this->findById($id);
+        $admin['name'] = $name;
+        $admin['email'] = $email;
+        $admin['password'] = $password;
+        $admin->save();
 
-      return $admin;
-  }
+        return $admin;
+    }
 
-  public function delete(
-    $id
-  ) {
-      $admin = $this->findById($id);
-      $admin->delete();
+    /**
+     * @param string $id
+     * @return Admin|null
+     */
+    public function delete(
+        string $id
+    ): ?Admin
+    {
+        $admin = $this->findById($id);
+        $admin->delete();
 
-      return $admin;
-  }
+        return $admin;
+    }
 
 }

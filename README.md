@@ -350,6 +350,9 @@ $ ./dc.sh php login
 
 # テスト用の画像をS3（Minio）にアップロードします。※事前に minioをセットアップしておくこと
 > php artisan s3upload
+
+# Larastan を実行してコードをチェックする
+> ./vendor/bin/phpstan analyse --memory-limit=1G
 ```
 
 フロントエンド環境を構築する

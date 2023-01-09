@@ -4,10 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Arcanedev\NoCaptcha\Rules\CaptchaRule;
+use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\View\View;
 
 class LoginController extends Controller
 {
@@ -23,15 +27,16 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
-    protected $maxAttempts = 5; // 5回失敗したらロックする
-    protected $decayMinutes = 30; // ロックは30分間
+
+    protected int $maxAttempts = 5; // 5回失敗したらロックする
+    protected int $decayMinutes = 30; // ロックは30分間
 
     /**
      * Where to redirect users after login.
      *
      * @var string
      */
-    protected $redirectTo = '/admin/home';
+    protected string $redirectTo = '/admin/home';
 
     /**
      * Create a new controller instance.
@@ -43,12 +48,18 @@ class LoginController extends Controller
         $this->middleware('guest:admin')->except('logout');
     }
 
-    public function showLoginForm()
+    /**
+     * @return View
+     */
+    public function showLoginForm(): View
     {
         return view('admin.login');
     }
 
-    protected function guard()
+    /**
+     * @return StatefulGuard
+     */
+    protected function guard(): StatefulGuard
     {
         return Auth::guard('admin');
     }
@@ -78,7 +89,11 @@ class LoginController extends Controller
         Validator::make($requests, $rules, $messages)->validate();
     }
 
-    public function logout(Request $request)
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function logout(Request $request): RedirectResponse
     {
         Auth::guard('admin')->logout();
         $request->session()->flush();
@@ -90,7 +105,7 @@ class LoginController extends Controller
     /**
      * ログイン試行回数のアカウントロックはIP単位にする
      * @param Request $request
-     * @return mixed|string
+     * @return string
      */
     protected function throttleKey(Request $request): string
     {
