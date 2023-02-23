@@ -5,7 +5,7 @@
 @section('content')
 <form method="POST" action="{{ route('admin.login') }}">
     @csrf
-    {!! no_captcha()->input() !!}
+{{--    {!! no_captcha()->input() !!}--}}
     <div class="card card-purple">
         <div class="card-body">
             <div class="form-group row">
@@ -70,7 +70,7 @@
 @endsection
 
 @section('scripts')
-{!! no_captcha()->script() !!}
+{{--{!! no_captcha()->script() !!}--}}
 <script>
     // Google reCaptcha のトークンを取得する
     grecaptcha.ready(function() {
