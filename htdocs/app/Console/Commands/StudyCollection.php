@@ -88,7 +88,7 @@ class StudyCollection extends Command
         // お問い合わせを男性と女性でグループ化して取得する
         $contacts = ContactForm::get()->groupBy('gender');
         $contacts->each(function ($contact, $key) {
-            print_r(Gender::getDescription($key) . '->' . $contact->count() . '人' . "\n");
+            print_r(Gender::get($key)->label() . '->' . $contact->count() . '人' . "\n");
         });
 
         // // JSONファイルを出力

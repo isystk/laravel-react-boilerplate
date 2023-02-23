@@ -34,7 +34,7 @@ $subMenu = 'contact';
             <div class="control-group">
                 <label class="col-sm-6 control-label">{{__('contact.Gender')}}</label>
                 <div class="col-sm-12">
-                    {{ App\Enums\Gender::getDescription($contact -> gender)}}
+                    {{ App\Enums\Gender::get($contact -> gender)->label()}}
                 </div>
             </div>
         </div>
@@ -42,7 +42,7 @@ $subMenu = 'contact';
             <div class="control-group">
                 <label class="col-sm-6 control-label">{{__('contact.Age')}}</label>
                 <div class="col-sm-12">
-                    {{ App\Enums\Age::getDescription($contact -> age)}}
+                    {{ App\Enums\Age::get($contact -> age)->label()}}
                 </div>
             </div>
         </div>

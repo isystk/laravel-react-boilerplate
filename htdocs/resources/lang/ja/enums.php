@@ -2,6 +2,7 @@
 
 use App\Enums\Gender;
 use App\Enums\Age;
+use App\Enums\PhotoType;
 
 return [
     'Gender' . Gender::Male->value => '男性',
@@ -12,5 +13,7 @@ return [
     'Age' . Age::Over40->value => '40歳～49歳',
     'Age' . Age::Over50->value => '50歳～59歳',
     'Age' . Age::Over60->value => '60歳～',
+    'PhotoType'. PhotoType::Stock->value => '商品',
+    'PhotoType'. PhotoType::Contact->value => 'お問い合わせ',
 ];
 

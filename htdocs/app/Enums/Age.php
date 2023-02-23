@@ -18,12 +18,25 @@ enum Age: int
     case Over60 = 6;
 
     /**
-     * @param int $value
      * @return string
      */
-    public static function getDescription(int $value): string
+    public function label(): string
     {
-        return __('enums.Age' . $value);
+        return __('enums.Age' . $this->value);
+    }
+
+    /**
+     * @param int $code
+     * @return ?Age
+     */
+    public static function get(int $code): ?Age
+    {
+        foreach (self::cases() as $e) {
+            if ($e->value === $code) {
+                return $e;
+            }
+        }
+        return null;
     }
 
 }

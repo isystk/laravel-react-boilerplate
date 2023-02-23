@@ -11,11 +11,25 @@ enum Gender: int
     case Female = 1;
 
     /**
-     * @param int $value
      * @return string
      */
-    public static function getDescription(int $value): string
+    public function label(): string
     {
-        return __('enums.Gender' . $value);
+        return __('enums.Gender' . $this->value);
     }
+
+    /**
+     * @param int $code
+     * @return ?Gender
+     */
+    public static function get(int $code): ?Gender
+    {
+        foreach (self::cases() as $e) {
+            if ($e->value === $code) {
+                return $e;
+            }
+        }
+        return null;
+    }
+
 }
