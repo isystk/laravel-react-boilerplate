@@ -288,39 +288,34 @@ S3に準拠したダミーのオブジェクトストレージです。
 Dockerを起動後に以下のURLにアクセスすると利用可能です。
 
 http://localhost:9001
-Username / Password
-access_key / secret_key
 
-```bash
-# AWS-CLIにアクセスする。
-$ ./dc.sh aws local
-# バケットを作成する
-> aws --endpoint-url http://s3:9000 s3 mb s3://laraec.isystk.com
-# バケットを公開する
-> POLICY='{ "Version": "2012-10-17", "Statement": [{ "Sid": "MakeItPublic", "Effect": "Allow", "Principal": "*", "Action": "s3:GetObject", "Resource": "arn:aws:s3:::laraec.isystk.com/*" }] }'
-> aws --endpoint-url http://s3:9000 s3api put-bucket-policy --bucket laraec.isystk.com --policy "${POLICY}"
-# バケットの一覧を確認する
-> aws --endpoint-url http://s3:9000 s3 ls
-# テストファイルをアップロードする
-> aws --endpoint-url http://s3:9000 s3 cp ./front.png s3://laraec.isystk.com
-$ open http://localhost:9000/laraec.isystk.com/front.png
-```
 
 ## 💬 使い方
 
 各種デーモンを起動する
 ```
-# 下準備
+# 下準備（初回のみ）
 $ ./dc.sh init
 
-# サーバーを起動する
+# Dockerでローカル環境に各種デーモンを構築・起動する
 $ ./dc.sh start
 
 # データベースとPHPが立ち上がるまで少し待ちます。(初回は5分程度)
 
-# MySQLにログインしてみる
+# MySQLにログインしてみる（ログインが出来れば成功です）
 $ ./dc.sh mysql login
 ```
+
+minioにバケットを作成する
+
+[こちら](http://localhost:9001/)から以下のID/パスワードでログイン後、「laraec.isystk.com」という名前のバケットを作成します。
+作成後、Manage から Access Policy を「Public」に変更してバケット内ファイルを外部参照可能な状態に公開します。
+
+|Username | Password
+|----|----
+|access_key | secret_key
+
+![minio](./minio.png "minio")
 
 バックエンド環境を構築する
 ```
@@ -336,10 +331,6 @@ $ ./dc.sh php login
 # encryption keyを生成する
 > php artisan key:generate
 
-# キャッシュをクリアする
-> php artisan cache:clear
-> php artisan config:clear
-
 # テーブルとテストデータの作成
 > php artisan migrate:fresh --seed
 
@@ -348,7 +339,7 @@ $ ./dc.sh php login
 > chmod 777 -R storage
 > chmod 777 -R resources/excel
 
-# テスト用の画像をS3（Minio）にアップロードします。※事前に minioをセットアップしておくこと
+# テスト用の商品画像をS3（Minio）にアップロードします。※事前に minioをセットアップしておくこと
 > php artisan s3upload
 
 # Larastan を実行してコードをチェックする

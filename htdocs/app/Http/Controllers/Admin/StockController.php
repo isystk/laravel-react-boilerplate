@@ -15,6 +15,7 @@ use App\Services\Excel\ExcelStockService;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class StockController extends Controller
 {
@@ -54,9 +55,9 @@ class StockController extends Controller
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return Response
+     * @return BinaryFileResponse|Response
      */
-    public function downloadExcel(Request $request): Response
+    public function downloadExcel(Request $request): Response|BinaryFileResponse
     {
         return $this->excelStockService->setTemplate(resource_path('excel/template.xlsx'))->download('stocks.xlsx');
     }

@@ -46,10 +46,7 @@
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/stripe/stripe-php" />
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/psr/simple-cache" />
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/fruitcake/laravel-cors" />
-      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/phpdocumentor/type-resolver" />
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/psr/http-factory" />
-      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/phpdocumentor/reflection-common" />
-      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/phpdocumentor/reflection-docblock" />
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/psr/http-message" />
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/psr/event-dispatcher" />
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/psr/container" />
@@ -109,7 +106,6 @@
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/laminas/laminas-eventmanager" />
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/webmozart/assert" />
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/hamcrest/hamcrest-php" />
-      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/phpspec/prophecy" />
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/ralouphie/getallheaders" />
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/sebastian/type" />
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/psy/psysh" />
@@ -159,17 +155,17 @@
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/symfony/mailer" />
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/barryvdh/laravel-cors" />
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/fruitcake/php-cors" />
-      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/symfony/polyfill-uuid" />
-      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/nunomaduro/termwind" />
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/symfony/uid" />
+      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/nunomaduro/larastan" />
+      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/arcanedev/no-captcha" />
+      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/arcanedev/support" />
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/laravel/dusk" />
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/php-webdriver/webdriver" />
-      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/phpmyadmin/sql-parser" />
-      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/phpstan/phpstan" />
-      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/nunomaduro/larastan" />
-      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/arcanedev/support" />
       <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/arcanedev/php-html" />
-      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/arcanedev/no-captcha" />
+      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/symfony/polyfill-uuid" />
+      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/phpstan/phpstan" />
+      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/nunomaduro/termwind" />
+      <excludeFolder url="file://$MODULE_DIR$/htdocs/vendor/phpmyadmin/sql-parser" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
