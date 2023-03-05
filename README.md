@@ -33,11 +33,11 @@ Laravel ＆ React.js の学習用サンプルアプリケーションです。
 
 #### ■ アプリケーション
 
-- Laravel 9
+- Laravel 10
 - React 18
 - Typescript
-- Bootstrap 4
 - Adminlte 3
+- Bootstrap 4
 
 ## 🌐 Demo
 
@@ -368,16 +368,16 @@ $ ./dc.sh stop
 
 ## 🎨 参考
 
-| プロジェクト| 概要|
-| :---------------------------------------| :-------------------------------|
-| [Laravel9公式ドキュメント](https://readouble.com/laravel/9.x/ja/)| Laravel9公式ドキュメントです。|
-| [AdminLTE Docs](https://adminlte.io/docs/3.2/)| AdminLTE Docs|
-| [Bootstrap4 日本語リファレンス](https://getbootstrap.jp/docs/4.4/getting-started/introduction/)| Bootstrap4 日本語リファレンス|
-| [Reactstrap](https://reactstrap.github.io/?path=/story/home-installation--page)| Reactstrap |
-| [Laravel5.4でマルチ認証（userとadmin）を実装する方法](https://takahashi-it.com/php/laravel54-multi-auth/)| Laravel でマルチ認証（userとadmin）を実装する方法で参考にしました。|
-| [React Stripe.js リファレンス](https://stripe.com/docs/stripe-js/react)| React Stripe.js リファレンス |
-| [Laravel+Socialiteで簡単ソーシャルログイン実装!](https://qiita.com/KeisukeKudo/items/18dd8a342a4bdd43913c)| Laravel でソーシャルログインを作成する方法で参考にしました。 |
-| [Laravelの認証画面をReactで全とっかえ](https://qiita.com/shikigamix/items/99a4f2ab5911248f8b2f)| Laravelのフロントエンドの認証周りをReactで作成する方法で参考にしました。 |
+| プロジェクト                                                                                       | 概要                                         |
+|:---------------------------------------------------------------------------------------------|:-------------------------------------------|
+| [Laravel10公式ドキュメント](https://readouble.com/laravel/10.x/ja/releases.html)                     | Laravel10公式ドキュメントです。                       |
+| [AdminLTE Docs](https://adminlte.io/docs/3.2/)                                               | AdminLTE Docs                              |
+| [Bootstrap4 日本語リファレンス](https://getbootstrap.jp/docs/4.4/getting-started/introduction/)       | Bootstrap4 日本語リファレンス                       |
+| [Reactstrap](https://reactstrap.github.io/?path=/story/home-installation--page)              | Reactstrap                                 |
+| [Laravel5.4でマルチ認証（userとadmin）を実装する方法](https://takahashi-it.com/php/laravel54-multi-auth/)    | Laravel でマルチ認証（userとadmin）を実装する方法で参考にしました。 |
+| [React Stripe.js リファレンス](https://stripe.com/docs/stripe-js/react)                            | React Stripe.js リファレンス                     |
+| [Laravel+Socialiteで簡単ソーシャルログイン実装!](https://qiita.com/KeisukeKudo/items/18dd8a342a4bdd43913c) | Laravel でソーシャルログインを作成する方法で参考にしました。         |
+| [Laravelの認証画面をReactで全とっかえ](https://qiita.com/shikigamix/items/99a4f2ab5911248f8b2f)          | Laravelのフロントエンドの認証周りをReactで作成する方法で参考にしました。 |
 
 
 ## 🎫 Licence

@@ -22,8 +22,6 @@
     </script>
     <script src="{{ asset('/assets/front/js/app.js') }}" defer></script>
     <script src="https://js.stripe.com/v3/"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-analytics.js"></script>
 
 </body>
 </html>

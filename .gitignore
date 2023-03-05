@@ -2,6 +2,8 @@
 .history
 *.log
 !.gitkeep
+.idea
+.vscode
 
 # mysql
 docker/mysql/data

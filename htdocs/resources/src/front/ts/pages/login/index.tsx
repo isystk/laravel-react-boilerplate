@@ -62,7 +62,7 @@ const LoginForm: FC<Props> = ({ appRoot }) => {
                         />
                         <GoogleReCaptchaProvider
                             reCaptchaKey={
-                                process.env.MIX_NOCAPTCHA_SITEKEY + ""
+                                process.env.MIX_RECAPTCHAV3_SITEKEY + ""
                             }
                             language="ja"
                         >

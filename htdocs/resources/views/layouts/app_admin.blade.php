@@ -10,6 +10,7 @@
     <script src="{{ asset('/assets/admin/js/app.js') }}" ></script>
     <script src="{{ asset('/assets/admin/js/jquery-plugins.js') }}" ></script>
     <script src="https://kit.fontawesome.com/eea364082e.js" crossorigin="anonymous"></script>
+    @yield('scripts')
 
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -72,6 +73,5 @@
             <strong>Copyright &copy; 2019-2020 <a href="#">isystk.com</a>.</strong> All rights reserved.
         </footer>
     </div>
-    @yield('scripts')
 </body>
 </html>
