@@ -5,7 +5,7 @@
 @section('content')
 <form method="POST" action="{{ route('admin.login') }}">
     @csrf
-{{--    {!! no_captcha()->input() !!}--}}
+    {!! RecaptchaV3::field('login') !!}
     <div class="card card-purple">
         <div class="card-body">
             <div class="form-group row">
@@ -58,7 +58,6 @@
                    パスワード: password
                 </div>
             </div>
-
         </div>
         <div class="card-footer text-center clearfix ">
             <button type="submit" class="btn btn-danger" id="Login">
@@ -70,13 +69,5 @@
 @endsection
 
 @section('scripts')
-{{--{!! no_captcha()->script() !!}--}}
-<script>
-    // Google reCaptcha のトークンを取得する
-    grecaptcha.ready(function() {
-        grecaptcha.execute('{{config('no-captcha.sitekey')}}', {action: 'login'}).then(function(token) {
-            $('#g-recaptcha-response').val(token);
-        });
-    });
-</script>
+{!! RecaptchaV3::initJs() !!}
 @endsection

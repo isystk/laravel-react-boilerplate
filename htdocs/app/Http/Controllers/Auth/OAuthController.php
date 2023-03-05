@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Socialite;
+use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 
 class OAuthController extends Controller
@@ -26,6 +26,7 @@ class OAuthController extends Controller
      */
     public function handleProviderCallback($provider)
     {
+        // @phpstan-ignore-next-line
         $socialUser = Socialite::driver($provider)->stateless()->user();
         $user = User::firstOrNew(['email' => $socialUser->getEmail()]);
 
