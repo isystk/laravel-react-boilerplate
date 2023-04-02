@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +17,6 @@ use Illuminate\Support\Facades\Auth;
 //     return view('welcome');
 // });
 
-Auth::routes(['verify' => true]);
 
 /*
 |--------------------------------------------------------------------------
@@ -77,16 +75,16 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
 | ソーシャルログイン
 |--------------------------------------------------------------------------
 */
-Route::prefix('auth')->middleware('guest')->group(function () {
-
-Route::get('/{provider}', [App\Http\Controllers\Auth\OAuthController::class, 'socialOAuth'])
-    ->where('provider', 'google')
-    ->name('socialOAuth');
-
-Route::get('/{provider}/callback', [App\Http\Controllers\Auth\OAuthController::class, 'handleProviderCallback'])
-    ->where('provider', 'google')
-    ->name('oauthCallback');
-});
+//Route::prefix('auth')->middleware('guest')->group(function () {
+//
+//    Route::get('/{provider}', [App\Http\Controllers\Auth\OAuthController::class, 'socialOAuth'])
+//        ->where('provider', 'google')
+//        ->name('socialOAuth');
+//
+//    Route::get('/{provider}/callback', [App\Http\Controllers\Auth\OAuthController::class, 'handleProviderCallback'])
+//        ->where('provider', 'google')
+//        ->name('oauthCallback');
+//});
 
 /*
 |--------------------------------------------------------------------------
@@ -102,16 +100,12 @@ Route::get('email/verify', [App\Http\Controllers\Front\ReactController::class, '
 Route::post('/session', [App\Http\Controllers\Front\ReactController::class, 'session'])->name('session');
 Route::get('/{router}', [App\Http\Controllers\Front\ReactController::class, 'index'])->name('home');
 
-
-/*
-|--------------------------------------------------------------------------
-| API  ログイン後
-|--------------------------------------------------------------------------
-*/
-Route::group(['middleware' => 'auth:user'], function () {
-    Route::post('/api/mycart', [App\Http\Controllers\Api\ShopController::class, 'mycart'])->name('shop.mycart');
-    Route::post('/api/addMycart', [App\Http\Controllers\Api\ShopController::class, 'addMycart'])->name('shop.addcart');
-    Route::post('/api/cartdelete', [App\Http\Controllers\Api\ShopController::class, 'deleteCart'])->name('shop.delete');
-    Route::post('/api/createPayment', [App\Http\Controllers\Api\ShopController::class, 'createPayment'])->name('shop.createPayment');
-    Route::post('/api/checkout', [App\Http\Controllers\Api\ShopController::class, 'checkout'])->name('shop.check');
+Route::prefix('api')->group(function () {
+    Route::middleware('auth:users')->group(function(){
+        Route::post('/mycart', [App\Http\Controllers\Api\ShopController::class, 'mycart'])->name('shop.mycart');
+        Route::post('/addMycart', [App\Http\Controllers\Api\ShopController::class, 'addMycart'])->name('shop.addcart');
+        Route::post('/cartdelete', [App\Http\Controllers\Api\ShopController::class, 'deleteCart'])->name('shop.delete');
+        Route::post('/createPayment', [App\Http\Controllers\Api\ShopController::class, 'createPayment'])->name('shop.createPayment');
+        Route::post('/checkout', [App\Http\Controllers\Api\ShopController::class, 'checkout'])->name('shop.check');
+    });
 });

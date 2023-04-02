@@ -54,7 +54,9 @@
                       <h1>@yield('title')</h1>
                     </div>
                     <div class="col-sm-6">
-                      @yield('breadcrumbs')
+                      <div class="float-right">
+                        @yield('breadcrumbs')
+                      </div>
                     </div>
                 </div>
             </div>

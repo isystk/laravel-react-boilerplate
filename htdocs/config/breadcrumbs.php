@@ -23,7 +23,7 @@ return [
     |
     */
 
-    'view' => 'admin/common/breadcrumbs',
+    'view' => 'breadcrumbs::bootstrap4',
 
     /*
     |--------------------------------------------------------------------------

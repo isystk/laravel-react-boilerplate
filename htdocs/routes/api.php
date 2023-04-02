@@ -9,20 +9,18 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "api" middleware group. Make something great!
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 
-Route::group(['middleware' => ['api']], function () {
-    Route::resource('consts', App\Http\Controllers\Api\ConstController::class);
-    Route::resource('likes', App\Http\Controllers\Api\LikeController::class);
-    Route::post('/likes/store', [App\Http\Controllers\Api\LikeController::class, 'store']);
-    Route::post('/likes/destroy/{id}', [App\Http\Controllers\Api\LikeController::class, 'destroy']);
-    Route::resource('shops', App\Http\Controllers\Api\ShopController::class);
-    Route::post('/contact/store', [App\Http\Controllers\Api\ContactFormController::class, 'store']);
-});
+Route::resource('consts', App\Http\Controllers\Api\ConstController::class);
+Route::resource('likes', App\Http\Controllers\Api\LikeController::class);
+Route::post('/likes/store', [App\Http\Controllers\Api\LikeController::class, 'store']);
+Route::post('/likes/destroy/{id}', [App\Http\Controllers\Api\LikeController::class, 'destroy']);
+Route::resource('shops', App\Http\Controllers\Api\ShopController::class);
+Route::post('/contact/store', [App\Http\Controllers\Api\ContactFormController::class, 'store']);
