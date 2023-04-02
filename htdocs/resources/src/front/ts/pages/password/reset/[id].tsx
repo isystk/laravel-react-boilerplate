@@ -27,7 +27,7 @@ const ResetForm: FC<Props> = ({ appRoot }) => {
                     <SessionAlert target="status" />
                     <Form
                         method="POST"
-                        action="/password/reset"
+                        action="/reset-password"
                         id="login-form"
                     >
                         <CSRFToken appRoot={appRoot} />
