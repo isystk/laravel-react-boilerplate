@@ -29,12 +29,15 @@ const render = (session: Session) => {
     }
 };
 
-const init = () => {
+const init = async () => {
     const params = new URLSearchParams();
     const url = "/session";
-    axios.post(url, params).then((response) => {
+    try {
+        const response = await axios.post(url, params);
         render(response.data);
-    });
+    } catch (e) {
+        render({} as Session);
+    }
 };
 
 // start

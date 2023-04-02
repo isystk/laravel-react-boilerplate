@@ -1,33 +1,17 @@
 import { defineConfig } from 'vite';
-import laravel from 'laravel-vite-plugin';
-import react from '@vitejs/plugin-react';
-import path from 'path';
+import laravel, { refreshPaths } from 'laravel-vite-plugin';
 
 export default defineConfig({
-    server: {
-        hmr: {
-            host: 'localhost',
-        },
-    },
     plugins: [
-        react(),
         laravel({
             input: [
-                'resources/src/front/ts/app.tsx',
+                'resources/css/app.css',
+                'resources/js/app.js',
             ],
-            refresh: true,
+            refresh: [
+                ...refreshPaths,
+                'app/Http/Livewire/**',
+            ],
         }),
     ],
-    resolve: {
-        alias: {
-            '@': path.resolve(__dirname, "resources/src/front/ts"),
-        },
-    },
-    define: {
-        // By default, Vite doesn't include shims for NodeJS/
-        // necessary for segment analytics lib to work
-        global: {},
-        process: { env: { NODE_ENV: 'development' } },
-    },
-
 });

@@ -26,5 +26,4 @@ ENV PATH $PATH:/composer/vendor/bin
 
 WORKDIR /var/www/html
 
-RUN composer config -g repo.packagist composer https://packagist.org
 RUN composer global require "laravel/installer"

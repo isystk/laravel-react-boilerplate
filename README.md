@@ -326,7 +326,7 @@ $ ./dc.sh php login
 > cp .env.example .env
 
 # モジュールをダウンロード
-> composer install
+> composer update
 
 # encryption keyを生成する
 > php artisan key:generate
