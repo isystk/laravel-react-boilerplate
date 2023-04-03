@@ -1,34 +1,43 @@
 import { defineConfig } from 'vite'
 import laravel from 'laravel-vite-plugin'
-// import react from '@vitejs/plugin-react'
-// import vue from '@vitejs/plugin-vue'
+import path from 'path';
+import react from '@vitejs/plugin-react'
 
-const adminConfig = defineConfig({
-    base: '/assets/admin/dist',
+const config = defineConfig({
+    base: '/assets/front/dist',
+    resolve: {
+        alias: {
+            "@": path.resolve(__dirname, "resources/src/front/ts")
+        }
+    },
+    define: {
+        global: {},
+        process: {
+            env: {
+                NODE_ENV: 'development',
+            }
+        }
+    },
     plugins: [
         laravel([
-            'resources/src/admin/sass/style.scss',
-            'resources/src/admin/js/app.js',
+            'resources/src/front/sass/app.scss',
+            'resources/src/front/ts/app.tsx',
         ]),
-        // react(),
-        // vue({
-        //     template: {
-        //         transformAssetUrls: {
-        //             base: null,
-        //             includeAbsolute: false,
-        //         },
-        //     },
-        // }),
+        react(),
     ],
     build: {
-        outDir: 'public/assets/admin/dist',
+        outDir: 'public/assets/front/dist',
         assetsDir: '',
         rollupOptions: {
             output: {
                 entryFileNames: `[name].js`,
                 chunkFileNames: `[name].js`,
                 assetFileNames: `[name].[ext]`,
-            }
+            },
+            plugins: [
+                // CommonJSモジュールをESモジュールに変換するプラグイン
+                require('@rollup/plugin-commonjs')()
+            ]
         }
     }
 })
@@ -36,26 +45,17 @@ const adminConfig = defineConfig({
 export default ({ mode }) => {
   if (mode === 'production') {
     // 本番環境
-    // frontConfig.build = {
-    //   ...frontConfig.build,
-    //   minify: true,
-    //   manifest: true
-    // }
-    adminConfig.build = {
-      ...adminConfig.build,
+    config.build = {
+      ...config.build,
       minify: true,
       manifest: true
     }
   } else {
     // 本番以外の環境
-    // frontConfig.build = {
-    //   ...frontConfig.build,
-    //   sourcemap: true
-    // }
-    adminConfig.build = {
-      ...adminConfig.build,
-      // sourcemap: true
+    config.build = {
+      ...config.build,
+      sourcemap: false
     }
   }
-  return adminConfig;
+  return config;
 };
