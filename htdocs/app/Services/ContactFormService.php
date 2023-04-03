@@ -9,19 +9,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\ContactFormRepository;
 use App\Repositories\ContactFormImageRepository;
-use App\Services\Utils\UploadImage;
+use App\Utils\UploadImage;
 
-class ContactFormService extends Service
+class ContactFormService extends BaseService
 {
     /**
      * @var ContactFormRepository
      */
-    protected $contactFormRepository;
+    protected ContactFormRepository $contactFormRepository;
 
     /**
      * @var ContactFormImageRepository
      */
-    protected $contactFormImageRepository;
+    protected ContactFormImageRepository $contactFormImageRepository;
 
     public function __construct(
         Request                    $request,
@@ -52,7 +52,7 @@ class ContactFormService extends Service
      */
     public function find(string $contactFormId): object|null
     {
-        return $this->contactFormRepository->findById($contactFormId, []);
+        return $this->contactFormRepository->find($contactFormId);
     }
 
     /**
@@ -79,18 +79,22 @@ class ContactFormService extends Service
         DB::beginTransaction();
         try {
 
+            $model = [
+                'your_name' => $this->request()->input('your_name'),
+                'title' => $this->request()->input('title'),
+                'email' => $this->request()->input('email'),
+                'url' => $this->request()->input('url'),
+                'gender' => $this->request()->input('gender'),
+                'age' => $this->request()->input('age'),
+                'contact' => $this->request()->input('contact')
+            ];
+
             if ($contactFormId) {
                 // 変更
 
                 $contactForm = $this->contactFormRepository->update(
-                    $contactFormId,
-                    $this->request()->input('your_name'),
-                    $this->request()->input('title'),
-                    $this->request()->input('email'),
-                    $this->request()->input('url'),
-                    $this->request()->input('gender'),
-                    $this->request()->input('age'),
-                    $this->request()->input('contact')
+                    $model,
+                    $contactFormId
                 );
 
                 // お問い合わせ画像テーブルを登録（Delete→Insert）
@@ -99,35 +103,31 @@ class ContactFormService extends Service
                     foreach ($contactFormImages as $contactFormImage) {
                         $this->contactFormImageRepository->delete($contactFormImage->id);
                     }
-                    $this->contactFormImageRepository->store(
-                        null,
-                        $contactFormId,
-                        $fileName
+                    $this->contactFormImageRepository->create(
+                        [
+                            'contact_form_id' => $contactFormId,
+                            'file_name' => $fileName,
+                        ]
                     );
+
                 }
 
             } else {
                 // 新規登録
 
-                $contactForm = $this->contactFormRepository->store(
-                    null,
-                    $this->request()->input('your_name'),
-                    $this->request()->input('title'),
-                    $this->request()->input('email'),
-                    $this->request()->input('url'),
-                    $this->request()->input('gender'),
-                    $this->request()->input('age'),
-                    $this->request()->input('contact')
+                $contactForm = $this->contactFormRepository->create(
+                    $model
                 );
 
-                $id = $contactForm['id'];
+                $contactFormId = $contactForm['id'];
 
                 // お問い合わせ画像テーブルを登録（Insert）
                 if ($fileName !== "") {
-                    $this->contactFormImageRepository->store(
-                        null,
-                        $id,
-                        $fileName
+                    $this->contactFormImageRepository->create(
+                        [
+                            'contact_form_id' => $contactFormId,
+                            'file_name' => $fileName,
+                        ]
                     );
                 }
             }

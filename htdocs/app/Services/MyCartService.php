@@ -2,24 +2,46 @@
 
 namespace App\Services;
 
+use App\Models\Cart;
+use App\Repositories\CartRepository;
+use App\Repositories\OrderRepository;
+use App\Repositories\StockRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Order;
-use App\Models\Stock;
-use App\Models\Cart;
 use App\Mail\MailNotification;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Stripe\Exception\ApiErrorException;
 use Stripe\PaymentIntent;
 
-class MyCartService extends Service
+class MyCartService extends BaseService
 {
+    /**
+     * @var StockRepository
+     */
+    protected StockRepository $stockRepository;
+
+    /**
+     * @var OrderRepository
+     */
+    protected OrderRepository $orderRepository;
+
+    /**
+     * @var CartRepository
+     */
+    protected CartRepository $cartRepository;
+
     public function __construct(
-        Request $request
+        Request         $request,
+        StockRepository $stockRepository,
+        OrderRepository $orderRepository,
+        CartRepository $cartRepository,
     )
     {
         parent::__construct($request);
+        $this->stockRepository = $stockRepository;
+        $this->orderRepository = $orderRepository;
+        $this->cartRepository = $cartRepository;
     }
 
     /**
@@ -127,18 +149,23 @@ class MyCartService extends Service
 
             // 発注履歴に追加する。
             foreach ($data['data'] as $my_cart) {
-                $stock = Stock::find($my_cart->stock_id);
+                $stock = $this->stockRepository->find($my_cart->stock_id);
 
-                $order = new Order;
-                $order->stock_id = $my_cart->stock_id;
-                $order->user_id = $my_cart->user_id;
-                $order->price = $stock->price;
-                $order->quantity = 1;
-                $order->save();
+                $order = $this->orderRepository->create([
+                    'stock_id' => $my_cart->stock_id,
+                    'user_id' => $my_cart->user_id,
+                    'price' => $stock->price,
+                    'quantity' => 1,
+                ]);
 
                 // 在庫を減らす
-                $stock->quantity = $stock->quantity - $order->quantity;
-                $stock->save();
+                $quantity = $stock->quantity - $order->quantity;
+                $this->stockRepository->update(
+                    [
+                        'quantity' => $quantity
+                    ],
+                    $stock->id
+                );
 
                 array_push($stocks, (object)[
                     'name' => $stock->name,

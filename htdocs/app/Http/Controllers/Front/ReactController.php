@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Front;
 
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class ReactController extends Controller
@@ -16,12 +15,4 @@ class ReactController extends Controller
         return view('front.react');
     }
 
-    /**
-     * @param Request $request
-     * @return mixed
-     */
-    public function session(Request $request): mixed
-    {
-        return $request->user();
-    }
 }

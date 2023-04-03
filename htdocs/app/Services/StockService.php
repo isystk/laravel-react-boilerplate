@@ -3,20 +3,19 @@
 namespace App\Services;
 
 use App\Enums\ErrorType;
-use App\Models\Stock;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Services\Utils\UploadImage;
+use App\Utils\UploadImage;
 use App\Repositories\StockRepository;
 
-class StockService extends Service
+class StockService extends BaseService
 {
     /**
      * @var StockRepository
      */
-    protected $stockRepository;
+    protected StockRepository $stockRepository;
 
     public function __construct(
         Request         $request,
@@ -46,7 +45,7 @@ class StockService extends Service
      */
     public function find(string $stockId): object|null
     {
-        return $this->stockRepository->findById($stockId, []);
+        return $this->stockRepository->find($stockId);
     }
 
     /**
@@ -75,28 +74,29 @@ class StockService extends Service
         DB::beginTransaction();
         try {
 
+            $model = [
+                    'name' => $this->request()->input('name'),
+                    'detail' => $this->request()->input('detail'),
+                    'price' => $this->request()->input('price'),
+                    'quantity' => $this->request()->input('quantity'),
+                ];
+            if (!empty($fileName)) {
+                $model['imgpath'] = $fileName;
+            }
+
             if ($stockId) {
                 // 変更
 
                 $stock = $this->stockRepository->update(
-                    $stockId,
-                    $this->request()->input('name'),
-                    $this->request()->input('detail'),
-                    $this->request()->input('price'),
-                    $this->request()->input('quantity'),
-                    $fileName
+                    $model,
+                    $stockId
                 );
 
             } else {
                 // 新規登録
 
-                $stock = $this->stockRepository->store(
-                    null,
-                    $this->request()->input('name'),
-                    $this->request()->input('detail'),
-                    $this->request()->input('price'),
-                    $this->request()->input('quantity'),
-                    $fileName
+                $stock = $this->stockRepository->create(
+                    $model
                 );
 
                 $id = $stock->id;

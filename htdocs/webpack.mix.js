@@ -36,15 +36,11 @@ if (mix.inProduction()) {
   .version()
 } else {
   // 本番以外の環境
-  const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
   mix
   .sourceMaps(true)
   .webpackConfig({
     ...webpackConfig,
     plugins: [
-      // Webpackのコンパイル速度改善
-      // See：https://qiita.com/Te2/items/4b9dce89950d00d344ea
-      new HardSourceWebpackPlugin()
     ],
     module: {
       rules: [

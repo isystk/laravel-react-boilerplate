@@ -5,7 +5,7 @@ namespace App\Services;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class PhotoService extends Service
+class PhotoService extends BaseService
 {
     public function __construct(
         Request $request

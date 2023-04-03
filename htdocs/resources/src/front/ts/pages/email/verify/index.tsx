@@ -34,7 +34,7 @@ const Verify: FC<Props> = ({ appRoot }) => (
                 から再度リクエストしてください。
                 <form
                     id="email-form"
-                    action="/email/resend"
+                    action="/email/verification-notification"
                     method="POST"
                     style={{ display: "none" }}
                 >

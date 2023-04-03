@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Repositories\OrderRepository;
 
-class OrderService extends Service
+class OrderService extends BaseService
 {
     /**
      * @var OrderRepository
      */
-    protected $orderRepository;
+    protected OrderRepository $orderRepository;
 
     public function __construct(
         Request         $request,
@@ -42,7 +42,7 @@ class OrderService extends Service
      */
     public function find(string $orderId): object|null
     {
-        return $this->orderRepository->findById($orderId, []);
+        return $this->orderRepository->find($orderId);
     }
 
 }
