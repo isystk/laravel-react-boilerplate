@@ -11,13 +11,13 @@ use Illuminate\Support\Facades\DB;
 use App\Repositories\UserRepository;
 use PDOException;
 
-class UserService extends Service
+class UserService extends BaseService
 {
 
     /**
      * @var UserRepository
      */
-    protected $userRepository;
+    protected UserRepository $userRepository;
 
     public function __construct(
         Request        $request,
@@ -48,7 +48,7 @@ class UserService extends Service
      */
     public function find(string $userId): object|null
     {
-        return $this->userRepository->findById($userId, []);
+        return $this->userRepository->find($userId);
     }
 
     /**
@@ -65,18 +65,21 @@ class UserService extends Service
                 // 変更
 
                 $user = $this->userRepository->update(
-                    $userId,
-                    $this->request()->input('name'),
-                    $this->request()->input('email')
+                    [
+                        'name' => $this->request()->input('name'),
+                        'email' => $this->request()->input('email')
+                    ],
+                    $userId
                 );
 
             } else {
                 // 新規登録
 
-                $user = $this->userRepository->store(
-                    null,
-                    $this->request()->input('name'),
-                    $this->request()->input('email')
+                $user = $this->userRepository->create(
+                    [
+                        'name' => $this->request()->input('name'),
+                        'email' => $this->request()->input('email')
+                    ],
                 );
 
                 $id = $user->id;

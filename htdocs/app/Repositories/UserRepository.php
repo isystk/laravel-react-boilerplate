@@ -5,18 +5,20 @@ namespace App\Repositories;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
+use Prettus\Repository\Eloquent\BaseRepository;
 
-class UserRepository
+class UserRepository extends BaseRepository
 {
-
     /**
-     * @param array<string, mixed> $options
-     * @return mixed
+     * このリポジトリーで使うモデルのパスを返す
+     * BaseRepository内で$this->app->make($this->model())
+     * として渡される
+     *
+     * @return string
      */
-    public function count(array $options = []): mixed
+    function model()
     {
-        return User::where([
-        ])->count();
+        return User::class;
     }
 
     /**
@@ -27,7 +29,7 @@ class UserRepository
      */
     public function findAll(?string $name, ?string $email, array $options = []): Collection|LengthAwarePaginator|array
     {
-        $query = User::with($this->__with($options));
+        $query = $this->getModel()->with($this->__with($options));
 
         if (!empty($name)) {
             $query->where('name', 'like', '%' . $name . '%');
@@ -44,83 +46,12 @@ class UserRepository
     }
 
     /**
-     * @param string $id
-     * @param array<string> $options
-     * @return User|null
-     */
-    public function findById(string $id, array $options = []): User|null
-    {
-        return User::with($this->__with($options))
-            ->where([
-                'id' => $id
-            ])
-            ->first();
-    }
-
-
-    /**
      * @param array<string, mixed>|array<int, string> $options
      * @return array<int, string>
      */
     private function __with(array $options = []): array
     {
         return [];
-    }
-
-    /**
-     * @param int|null $id
-     * @param string $name
-     * @param string $email
-     * @return User
-     */
-    public function store(
-        ?int $id,
-        string $name,
-        string $email
-    ): User
-    {
-        $user = new User();
-        $user['id'] = $id;
-        $user['name'] = $name;
-        $user['email'] = $email;
-
-        $user->save();
-
-        return $user;
-    }
-
-    /**
-     * @param string $id
-     * @param string $name
-     * @param string $email
-     * @return User|null
-     */
-    public function update(
-        string $id,
-        string $name,
-        string $email
-    ): ?object
-    {
-        $user = $this->findById($id);
-        $user['name'] = $name;
-        $user['email'] = $email;
-        $user->save();
-
-        return $user;
-    }
-
-    /**
-     * @param string $id
-     * @return User|null
-     */
-    public function delete(
-        string $id
-    ): ?object
-    {
-        $user = $this->findById($id);
-        $user->delete();
-
-        return $user;
     }
 
 }

@@ -5,21 +5,17 @@ namespace App\Repositories;
 use App\Models\Order;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
+use Prettus\Repository\Eloquent\BaseRepository;
 
-class OrderRepository
+class OrderRepository extends BaseRepository
 {
 
     /**
-     * @param string $userName
-     * @param array<string, mixed>|array<int, string> $options
-     * @return int
+     * @return string
      */
-    public function count(string $userName, array $options = []): int
+    function model()
     {
-        return Order::with($this->__with($options))
-            ->whereHas('user', function ($query) use ($userName) {
-                $query->where('name', 'like', "%$userName%");
-            })->count();
+        return Order::class;
     }
 
     /**
@@ -29,7 +25,7 @@ class OrderRepository
      */
     public function findAll(?string $userName, array $options = []): Collection|LengthAwarePaginator
     {
-        $query = Order::with($this->__with($options))
+        $query = $this->getModel()->with($this->__with($options))
             ->whereHas('user', function ($query) use ($userName) {
                 $query->where('name', 'like', "%$userName%");
             })
@@ -38,20 +34,6 @@ class OrderRepository
 
         $limit = !empty($options['limit']) ? (int)$options['limit'] : null;
         return $limit > 0 ? $query->paginate($limit) : $query->get();
-    }
-
-    /**
-     * @param string $id
-     * @param array<string, mixed>|array<int, string> $options
-     * @return Order|null
-     */
-    public function findById($id, array $options = []): Order|null
-    {
-        return Order::with($this->__with($options))
-            ->where([
-                'id' => $id
-            ])
-            ->first();
     }
 
     /**
@@ -68,74 +50,6 @@ class OrderRepository
             $with[] = 'stock';
         }
         return $with;
-    }
-
-    /**
-     * @param string $id
-     * @param string $stockId
-     * @param string $userId
-     * @param int $price
-     * @param int $quantity
-     * @return Order
-     */
-    public function store(
-        string $id,
-        string $stockId,
-        string $userId,
-        int $price,
-        int $quantity
-    ): Order
-    {
-        $order = new Order();
-        $order['id'] = $id;
-        $order['stock_id'] = $stockId;
-        $order['user_id'] = $userId;
-        $order['price'] = $price;
-        $order['quantity'] = $quantity;
-
-        $order->save();
-
-        return $order;
-    }
-
-    /**
-     * @param string $id
-     * @param string $stockId
-     * @param string $userId
-     * @param int $price
-     * @param int $quantity
-     * @return object|null
-     */
-    public function update(
-        string $id,
-        string $stockId,
-        string $userId,
-        int    $price,
-        int $quantity
-    ): ?object
-    {
-        $order = $this->findById($id);
-        $order['stock_id'] = $stockId;
-        $order['user_id'] = $userId;
-        $order['price'] = $price;
-        $order['quantity'] = $quantity;
-        $order->save();
-
-        return $order;
-    }
-
-    /**
-     * @param string $id
-     * @return object|null
-     */
-    public function delete(
-        string $id
-    ): ?object
-    {
-        $order = $this->findById($id);
-        $order->delete();
-
-        return $order;
     }
 
 }

@@ -10,6 +10,9 @@ RUN apt-get update \
   && docker-php-ext-configure gd --with-freetype --with-jpeg \
   && docker-php-ext-install -j$(nproc) gd
   
+#yarn
+RUN npm install -g yarn
+
 #xdebug
 RUN pecl install xdebug \
   && docker-php-ext-enable xdebug

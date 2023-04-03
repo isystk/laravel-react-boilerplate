@@ -6,7 +6,7 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-abstract class Service
+abstract class BaseService
 {
 
     protected Request $_request;

@@ -3,20 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\ApiController;
-use App\Services\Utils\ConstService;
+use App\Utils\ConstUtil;
 use Illuminate\Http\JsonResponse;
 
 
 class ConstController extends ApiController
 {
-    /**
-     * @var ConstService
-     */
-    protected ConstService $constService;
 
-    public function __construct(ConstService $constService)
+    public function __construct()
     {
-        $this->constService = $constService;
     }
 
     /**
@@ -26,7 +21,7 @@ class ConstController extends ApiController
     {
 
         try {
-            $consts = $this->constService->searchConst();
+            $consts = ConstUtil::searchConst();
 
             $result = [
                 'result' => true,

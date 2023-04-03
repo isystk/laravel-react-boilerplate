@@ -5,19 +5,17 @@ namespace App\Repositories;
 use App\Models\Stock;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
+use Prettus\Repository\Eloquent\BaseRepository;
 
-class StockRepository
+class StockRepository extends BaseRepository
 {
 
     /**
-     * @param string $name
-     * @param array<string, mixed> $options
-     * @return mixed
+     * @return string
      */
-    public function count(string $name, array $options = []): mixed
+    function model()
     {
-        return Stock::where('name', 'like', '%' . $name . '%')->count();
+        return Stock::class;
     }
 
     /**
@@ -27,27 +25,13 @@ class StockRepository
      */
     public function findAll(string|null $name, array $options = []): Collection|LengthAwarePaginator
     {
-        $query = Stock::with($this->__with($options))
+        $query = $this->getModel()->with($this->__with($options))
             ->where('name', 'like', '%' . $name . '%')
             ->orderBy('created_at', 'desc')
             ->orderBy('id', 'asc');
 
         $limit = !empty($options['limit']) ? (int)$options['limit'] : null;
         return $limit > 0 ? $query->paginate($limit) : $query->get();
-    }
-
-    /**
-     * @param string $id
-     * @param array<int, string>|array<string, mixed> $options
-     * @return Model|null
-     */
-    public function findById(string $id, array $options = []): Model|null
-    {
-        return Stock::with($this->__with($options))
-            ->where([
-                'id' => $id
-            ])
-            ->first();
     }
 
     /**
@@ -61,80 +45,6 @@ class StockRepository
             $with[] = 'orders';
         }
         return $with;
-    }
-
-    /**
-     * @param ?string $id
-     * @param string $name
-     * @param string $detail
-     * @param integer $price
-     * @param integer $quantity
-     * @param string $imgpath
-     * @return Stock
-     */
-    public function store(
-        $id,
-        $name,
-        $detail,
-        $price,
-        $quantity,
-        $imgpath
-    ): Stock
-    {
-        $stock = new Stock();
-        $stock['id'] = $id;
-        $stock['name'] = $name;
-        $stock['detail'] = $detail;
-        $stock['price'] = $price;
-        $stock['quantity'] = $quantity;
-        $stock['imgpath'] = $imgpath;
-
-        $stock->save();
-
-        return $stock;
-    }
-
-    /**
-     * @param string $id
-     * @param string $name
-     * @param string $detail
-     * @param integer $price
-     * @param integer $quantity
-     * @param string $imgpath
-     * @return Model|null
-     */
-    public function update(
-        $id,
-        $name,
-        $detail,
-        $price,
-        $quantity,
-        $imgpath
-    )
-    {
-        $stock = $this->findById($id);
-        $stock['name'] = $name;
-        $stock['detail'] = $detail;
-        $stock['price'] = $price;
-        $stock['quantity'] = $quantity;
-        if (!empty($imgpath)) {
-            $stock['imgpath'] = $imgpath;
-        }
-        $stock->save();
-
-        return $stock;
-    }
-
-    /**
-     * @param string $id
-     * @return mixed
-     */
-    public function delete(
-        string $id
-    ): mixed
-    {
-        $stock = $this->findById($id);
-        return $stock->delete();
     }
 
 }

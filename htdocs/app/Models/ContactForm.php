@@ -10,6 +10,21 @@ class ContactForm extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'your_name',
+        'title',
+        'email',
+        'url',
+        'gender',
+        'age',
+        'contact',
+    ];
+
     // 子テーブル
 
     /**

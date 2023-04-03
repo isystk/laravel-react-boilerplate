@@ -74,13 +74,13 @@ Route::group(['prefix' => 'admin'], function () {
 */
 Route::prefix('auth')->middleware('guest')->group(function () {
 
-Route::get('/{provider}', [App\Http\Controllers\Auth\OAuthController::class, 'socialOAuth'])
-    ->where('provider', 'google')
-    ->name('socialOAuth');
+    Route::get('/{provider}', [App\Http\Controllers\Auth\OAuthController::class, 'socialOAuth'])
+        ->where('provider', 'google')
+        ->name('socialOAuth');
 
-Route::get('/{provider}/callback', [App\Http\Controllers\Auth\OAuthController::class, 'handleProviderCallback'])
-    ->where('provider', 'google')
-    ->name('oauthCallback');
+    Route::get('/{provider}/callback', [App\Http\Controllers\Auth\OAuthController::class, 'handleProviderCallback'])
+        ->where('provider', 'google')
+        ->name('oauthCallback');
 });
 
 /*
@@ -94,15 +94,4 @@ Route::get('/register', [App\Http\Controllers\Front\ReactController::class, 'ind
 Route::get('password/reset', [App\Http\Controllers\Front\ReactController::class, 'index'])->name('password.request');
 Route::get('password/reset/{token}', [App\Http\Controllers\Front\ReactController::class, 'index'])->name('password.reset');
 Route::get('email/verify', [App\Http\Controllers\Front\ReactController::class, 'index'])->name('verification.notice');
-Route::middleware(['auth:sanctum'])->group(function () {
-    // ログイン後
-    Route::post('/session', function (Request $request) {
-        return $request->user();
-    });
-    Route::post('/api/mycart', [App\Http\Controllers\Api\ShopController::class, 'mycart'])->name('shop.mycart');
-    Route::post('/api/addMycart', [App\Http\Controllers\Api\ShopController::class, 'addMycart'])->name('shop.addcart');
-    Route::post('/api/cartdelete', [App\Http\Controllers\Api\ShopController::class, 'deleteCart'])->name('shop.delete');
-    Route::post('/api/createPayment', [App\Http\Controllers\Api\ShopController::class, 'createPayment'])->name('shop.createPayment');
-    Route::post('/api/checkout', [App\Http\Controllers\Api\ShopController::class, 'checkout'])->name('shop.check');
-});
 Route::get('/{router}', [App\Http\Controllers\Front\ReactController::class, 'index'])->name('home');

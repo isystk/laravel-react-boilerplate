@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services\Utils;
+namespace App\Utils;
 
 use App\Enums\Gender;
 use App\Enums\Age;
 
-class ConstService
+class ConstUtil
 {
 
     /**

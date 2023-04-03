@@ -7,7 +7,7 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Stock;
-use App\Services\Utils\CSVService;
+use App\Utils\CSVUtil;
 use App\Http\Requests\StoreStockFormRequest;
 use App\Services\StockService;
 use App\Services\Excel\ExcelStockService;
@@ -82,7 +82,7 @@ class StockController extends Controller
             $line[] = $stock->price;
             $csvBody[] = $line;
         }
-        return CSVService::download($csvBody, $csvHeader, 'stocks.csv');
+        return CSVUtil::download($csvBody, $csvHeader, 'stocks.csv');
     }
 
     /**

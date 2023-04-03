@@ -22,9 +22,6 @@ Options:
   mysql restart            MySQLデータベースを再起動します。
   php login                PHP-FPMのサーバーにログインします。
   php cache                Laravelのキャッシュをリフレッシュします。
-  php migrate              Laravelのマイグレードを実行します。
-  php seed                 Laravelのテストデータを登録します。
-  php test                 Laravelのテストケースを実行します。
   build                    フロントエンドをビルドします。
   build prod               本番用にフロントエンドをビルドします。
   --version, -v     バージョンを表示します。
@@ -103,22 +100,8 @@ case ${1} in
           login)
               $DOCKER_COMPOSE exec php /bin/bash
           ;;
-          serve)
-              $DOCKER_COMPOSE exec php /bin/bash -c "php artisan serve --host 0.0.0.0"
-          ;;
           cache)
               $DOCKER_COMPOSE exec php /bin/bash -c "php artisan route:clear && rm htdocs/bootstrap/cache/config.php && php artisan cache:clear && php artisan route:cache && php artisan config:cache "
-          ;;
-          migrate)
-              $DOCKER_COMPOSE exec php /bin/bash -c "php artisan migrate:fresh && php artisan migrate:refresh"
-          ;;
-          seed)
-              $DOCKER_COMPOSE exec php /bin/bash -c "php artisan migrate:fresh"
-              $DOCKER_COMPOSE exec php /bin/bash -c "composer dump-autoload && php artisan db:seed"
-          ;;
-          test)
-              $DOCKER_COMPOSE exec php /bin/bash -c "./vendor/bin/phpunit --testdox"
-              $DOCKER_COMPOSE exec php /bin/bash -c "./vendor/bin/phpstan analyse --memory-limit=1G"
           ;;
           *)
               usage

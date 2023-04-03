@@ -18,6 +18,8 @@
         "league/flysystem-aws-s3-v3": "^3.12",
         "livewire/livewire": "^2.11",
         "maatwebsite/excel": "^3.1",
+        "nunomaduro/larastan": "^2.5",
+        "prettus/l5-repository": "^2.9",
         "stripe/stripe-php": "^10.6"
     },
     "require-dev": {

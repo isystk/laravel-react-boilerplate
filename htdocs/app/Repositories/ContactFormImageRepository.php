@@ -5,21 +5,17 @@ namespace App\Repositories;
 use App\Models\ContactFormImage;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
+use Prettus\Repository\Eloquent\BaseRepository;
 
-class ContactFormImageRepository
+class ContactFormImageRepository extends BaseRepository
 {
 
     /**
-     * @param string $createdAt
-     * @param array<string, mixed>|array<int, string> $options
-     * @return int
+     * @return string
      */
-    public function count(string $createdAt, array $options = []): int
+    function model()
     {
-        $query = ContactFormImage::whereDay(
-            'created_at', $createdAt
-        );
-        return $query->count();
+        return ContactFormImage::class;
     }
 
     /**
@@ -29,27 +25,13 @@ class ContactFormImageRepository
      */
     public function findAll(string $contactFormId, array $options = []): Collection|LengthAwarePaginator
     {
-        $query = ContactFormImage::with($this->__with($options))
+        $query = $this->getModel()->with($this->__with($options))
             ->where([
                 'contact_form_id' => $contactFormId
             ]);
 
         $limit = !empty($options['limit']) ? (int)$options['limit'] : null;
         return $limit > 0 ? $query->paginate($limit) : $query->get();
-    }
-
-    /**
-     * @param string $id
-     * @param array<string, mixed>|array<int, string> $options
-     * @return ContactFormImage|null
-     */
-    public function findById(string $id, array $options = []): ContactFormImage|null
-    {
-        return ContactFormImage::with($this->__with($options))
-            ->where([
-                'id' => $id
-            ])
-            ->first();
     }
 
     /**
@@ -60,62 +42,6 @@ class ContactFormImageRepository
     {
         $with = [];
         return $with;
-    }
-
-    /**
-     * @param string|null $id
-     * @param string $contactFormId
-     * @param string $fileName
-     * @return ContactFormImage
-     */
-    public function store(
-        ?string $id,
-        string $contactFormId,
-        string $fileName
-    ): ContactFormImage
-    {
-        $contactFormImage = new ContactFormImage();
-        $contactFormImage['id'] = $id;
-        $contactFormImage['contact_form_id'] = $contactFormId;
-        $contactFormImage['file_name'] = $fileName;
-
-        $contactFormImage->save();
-
-        return $contactFormImage;
-    }
-
-    /**
-     * @param string $id
-     * @param string $contactFormId
-     * @param string $fileName
-     * @return ContactFormImage
-     */
-    public function update(
-        string $id,
-        string $contactFormId,
-        string $fileName
-    ): ContactFormImage
-    {
-        $contactFormImage = $this->findById($id);
-        $contactFormImage['contact_form_id'] = $contactFormId;
-        $contactFormImage['file_name'] = $fileName;
-        $contactFormImage->save();
-
-        return $contactFormImage;
-    }
-
-    /**
-     * @param string $id
-     * @return ContactFormImage|null
-     */
-    public function delete(
-        string $id
-    ): ?ContactFormImage
-    {
-        $contactFormImage = $this->findById($id);
-        $contactFormImage->delete();
-
-        return $contactFormImage;
     }
 
 }

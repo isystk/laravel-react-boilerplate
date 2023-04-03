@@ -187,25 +187,6 @@ $ apt install mysql-client
 $ brew install mysql-client
 ```
 
-### Node.js のインストール
-
-```
-# Windowsの場合
-$ curl -L git.io/nodebrew | perl - setup
-# Macの場合
-$ brew install nodebrew
-
-# nodebrew をシェルのパスに追加する
-$ echo 'export PATH=$HOME/.nodebrew/current/bin:$PATH' >> ~/.bashrc
-
-# Node.js をインストール 
-$ mkdir -p ~/.nodebrew/src
-$ nodebrew ls-remote
-$ nodebrew install v16.13.1
-$ nodebrew use v16.13.1
-$ npm install -g yarn
-```
-
 ## 📦 ディレクトリ構造
 
 ```
@@ -265,8 +246,6 @@ Options:
   mysql restart            MySQLデータベースを再起動します。
   php login                PHP-FPMのサーバーにログインします。
   php cache                Laravelのキャッシュをクリアします。
-  php migrate              Laravelのマイグレードを実行します。
-  php seed                 Laravelのテストデータを登録します。
   --version, -v     バージョンを表示します。
   --help, -h        ヘルプを表示します。
 ```
@@ -348,10 +327,15 @@ $ ./dc.sh php login
 
 フロントエンド環境を構築する
 ```
-# フロントエンドをビルドする。
-$ cd htdocs
-$ yarn && yarn run dev
+# PHPサーバーにログインしてみる
+$ ./dc.sh php login
 
+# フロントエンドをビルドする。
+$ yarn && yarn run dev
+```
+
+その他（補足）
+```
 # ブラウザでアクセス（フロント）
 $ open https://localhost/
 

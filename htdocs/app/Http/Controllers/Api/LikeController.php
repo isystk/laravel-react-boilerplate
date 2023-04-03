@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\ApiController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Services\Utils\CookieService;
+use App\Utils\CookieUtil;
 
 class LikeController extends ApiController
 {
@@ -18,7 +18,7 @@ class LikeController extends ApiController
     public function index(): JsonResponse
     {
         try {
-            $likes = CookieService::getLike();
+            $likes = CookieUtil::getLike();
             $result = [
                 'result' => true,
                 'likes' => [
@@ -47,7 +47,7 @@ class LikeController extends ApiController
     {
         try {
             $stockId = $request->input('id');
-            CookieService::saveLike($stockId);
+            CookieUtil::saveLike($stockId);
             $result = [
                 'result' => true,
             ];
@@ -72,7 +72,7 @@ class LikeController extends ApiController
     public function destroy(string $id): JsonResponse
     {
         try {
-            CookieService::removeLike($id);
+            CookieUtil::removeLike($id);
             $result = [
                 'result' => true,
             ];

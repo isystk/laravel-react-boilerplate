@@ -26,17 +26,32 @@ enum Age: int
     }
 
     /**
-     * @param int $code
+     * @param ?int $code
      * @return ?Age
      */
-    public static function get(int $code): ?Age
+    public static function get(?int $code): ?Age
     {
+        if (null === $code) {
+            return null;
+        }
         foreach (self::cases() as $e) {
             if ($e->value === $code) {
                 return $e;
             }
         }
         return null;
+    }
+
+    /**
+     * @param ?int $code
+     * @return ?string
+     */
+    public static function getLabel(?int $code): ?string
+    {
+        if (null === $code || null === self::get($code)) {
+            return "";
+        }
+        return self::get($code)->label();
     }
 
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services\Utils;
+namespace App\Utils;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Response;
 
-class CSVService
+class CSVUtil
 {
 
     /**

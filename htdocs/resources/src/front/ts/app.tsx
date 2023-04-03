@@ -31,7 +31,7 @@ const render = (session: Session) => {
 
 const init = async () => {
     const params = new URLSearchParams();
-    const url = "/session";
+    const url = "/api/session";
     try {
         const response = await axios.post(url, params);
         render(response.data);

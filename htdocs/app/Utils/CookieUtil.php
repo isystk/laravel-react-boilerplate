@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\Utils;
+namespace App\Utils;
 
 use Illuminate\Support\Facades\Cookie;
 
-class CookieService
+class CookieUtil
 {
 
     const COKKIE_KEYNAME_LIKE = 'like';

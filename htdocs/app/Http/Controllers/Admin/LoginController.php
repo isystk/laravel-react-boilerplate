@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -72,6 +74,10 @@ class LoginController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return Application|\Illuminate\Foundation\Application|RedirectResponse|Redirector
+     */
     public function login(Request $request) {
 
         $this->validateLogin($request);
