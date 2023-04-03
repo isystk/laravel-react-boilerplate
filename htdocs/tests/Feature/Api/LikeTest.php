@@ -14,11 +14,9 @@ class LikeTest extends TestCase
   public function testApiLikes()
   {
     $cookie = ['like' => '1,3'];
-    $response = $this->call(
-      'get',
+    $response = $this->withCookies($cookie)->get(
       '/api/likes',
-      [],
-      $cookie
+      []
     );
     // $response->dump();
     // レスポンスの検証
@@ -57,11 +55,9 @@ class LikeTest extends TestCase
   public function testApiLikesDestroy()
   {
     $cookie = ['like' => '1,3'];
-    $response = $this->call(
-      'post',
+    $response = $this->withCookies($cookie)->post(
       '/api/likes/destroy/1',
       [],
-      $cookie
     );
     // $response->dump();
     // レスポンスの検証

@@ -84,9 +84,9 @@ class LoginController extends Controller
 
         $credentials = $request->only(['email', 'password']);
 
-        if($this->guard()->attempt($credentials)) {
+        if(\Auth::guard('admin')->attempt($credentials)) {
 
-            return redirect('/admin/home'); // ログインしたらリダイレクト
+            return redirect($this->redirectTo); // ログインしたらリダイレクト
 
         }
 
@@ -101,11 +101,11 @@ class LoginController extends Controller
      */
     public function logout(Request $request): RedirectResponse
     {
-        $this->guard()->logout();
+        Auth::guard('admin')->logout();
         $request->session()->flush();
         $request->session()->regenerate();
 
-        return redirect($this->redirectTo);
+        return redirect('/admin/login');
     }
 
 }

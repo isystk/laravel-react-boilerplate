@@ -18,7 +18,6 @@
         "league/flysystem-aws-s3-v3": "^3.12",
         "livewire/livewire": "^2.11",
         "maatwebsite/excel": "^3.1",
-        "nunomaduro/larastan": "^2.5",
         "prettus/l5-repository": "^2.9",
         "stripe/stripe-php": "^10.6"
     },
@@ -29,6 +28,7 @@
         "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^7.0",
+        "nunomaduro/larastan": "^2.5",
         "phpunit/phpunit": "^10.0",
         "spatie/laravel-ignition": "^2.0"
     },
