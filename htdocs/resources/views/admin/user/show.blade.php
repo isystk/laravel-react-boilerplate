@@ -32,11 +32,11 @@ $subMenu = 'user';
         </div>
     </div>
     <div class="card-footer text-center clearfix ">
-        <form method="GET" action="{{route('admin.user.edit', ['id' => $user->id ])}}">
+        <form method="GET" action="{{route('admin.user.edit', ['user' => $user ])}}">
             @csrf
             <input class="btn btn-info" type="submit" value="{{__('common.Change')}}">
         </form>
-        <form method="POST" action="{{route('admin.user.destroy', ['id' => $user->id ])}}" id="delete_{{ $user->id }}">
+        <form method="POST" action="{{route('admin.user.destroy', ['user' => $user ])}}" id="delete_{{ $user->id }}">
             @csrf
             <a href="#" class="btn btn-danger js-deleteBtn" data-id="{{ $user->id }}" >{{__('common.Delete')}}</a>
         </form>

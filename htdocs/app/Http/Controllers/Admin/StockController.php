@@ -138,26 +138,22 @@ class StockController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param string $id
+     * @param Stock $stock
      * @return View
      */
-    public function show(string $id): View
+    public function show(Stock $stock): View
     {
-        $stock = $this->stockService->find($id);
-
         return view('admin.stock.show', compact('stock'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param string $id
+     * @param Stock $stock
      * @return View
      */
-    public function edit(string $id): View
+    public function edit(Stock $stock): View
     {
-        $stock = $this->stockService->find($id);
-
         return view('admin.stock.edit', compact('stock'));
     }
 
@@ -165,13 +161,12 @@ class StockController extends Controller
      * Update the specified resource in storage.
      *
      * @param StoreStockFormRequest $request
-     * @param string $id
+     * @param Stock $stock
      * @return RedirectResponse
      */
-    public function update(StoreStockFormRequest $request, string $id)
+    public function update(StoreStockFormRequest $request, Stock $stock)
     {
-
-        $this->stockService->save($id);
+        $this->stockService->save($stock->id);
 
         return redirect('admin/stock');
     }
@@ -179,13 +174,13 @@ class StockController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param string $id
+     * @param Stock $stock
      * @return RedirectResponse
      */
-    public function destroy(string $id): RedirectResponse
+    public function destroy(Stock $stock): RedirectResponse
     {
 
-        $this->stockService->delete($id);
+        $this->stockService->delete($stock->id);
 
         return redirect('/admin/stock');
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
 use Illuminate\View\View;
@@ -37,13 +38,11 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param string $id
+     * @param Order $order
      * @return View
      */
-    public function show(string $id): View
+    public function show(Order $order): View
     {
-        $order = $this->orderService->find($id);
-
         return view('admin.order.show', compact('order'));
     }
 }

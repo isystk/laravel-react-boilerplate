@@ -56,10 +56,10 @@ class ContactFormService extends BaseService
     }
 
     /**
-     * @param string|null $contactFormId
+     * @param int|null $contactFormId
      * @return array<int, mixed>
      */
-    public function save(string $contactFormId = null): array
+    public function save(int $contactFormId = null): array
     {
         // 画像ファイルを公開ディレクトリへ配置する。
         if ($this->request()->has('imageBase64') && $this->request()->imageBase64 !== null) {
@@ -146,10 +146,10 @@ class ContactFormService extends BaseService
     }
 
     /**
-     * @param string $id
+     * @param int $id
      * @return array<int, mixed>
      */
-    public function delete(string $id): array
+    public function delete(int $id): array
     {
         DB::beginTransaction();
         try {

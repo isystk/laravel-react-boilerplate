@@ -54,8 +54,8 @@ class StoreContactFormRequest extends FormRequest
         ];
 
         // $id = $this->get('id');
-        $id = $this->route('id');
-        if (empty($id)) {
+        $contact = $this->route('contact');
+        if (empty($contact)) {
             // store
             $rules['caution'] = 'required';
         }

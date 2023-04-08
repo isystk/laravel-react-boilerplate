@@ -29,7 +29,7 @@ $subMenu = 'contact';
         </div>
         @endif
 
-        <form method="POST" enctype="multipart/form-data" action="{{route('admin.contact.update', ['id' => $contact->id])}}">
+        <form method="POST" enctype="multipart/form-data" action="{{route('admin.contact.update', ['contact' => $contact])}}">
             @csrf
             <div class="form-group">
                 <div class="control-group" id="userName">

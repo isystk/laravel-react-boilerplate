@@ -84,11 +84,11 @@ $subMenu = 'contact';
         </div>
     </div>
     <div class="card-footer text-center clearfix ">
-        <form method="GET" action="{{route('admin.contact.edit', ['id' => $contact->id ])}}">
+        <form method="GET" action="{{route('admin.contact.edit', ['contact' => $contact ])}}">
             @csrf
             <button type="submit" class="btn btn-info">{{__('common.Change')}}</button>
         </form>
-        <form method="POST" action="{{route('admin.contact.destroy', ['id' => $contact->id ])}}" id="delete_{{ $contact->id }}">
+        <form method="POST" action="{{route('admin.contact.destroy', ['contact' => $contact ])}}" id="delete_{{ $contact->id }}">
             @csrf
             <a href="#" class="btn btn-danger js-deleteBtn" data-id="{{ $contact->id }}" >{{__('common.Delete')}}</a>
         </form>

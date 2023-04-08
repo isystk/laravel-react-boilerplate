@@ -69,7 +69,7 @@ $subMenu = 'photo';
                             </td>
                             <td>
                               <a href="#" class="btn btn-danger js-deleteBtn" data-id="{{$photo->type}}_{{$photo->fileName}}" >削除する</a>
-                              <form id="delete_{{$photo->type}}_{{$photo->fileName}}" action="{{ route('admin.photo.destroy', ['id' => $photo->type.'_'.$photo->fileName]) }}" method="POST" style="display: none;">
+                              <form id="delete_{{$photo->type}}_{{$photo->fileName}}" action="{{ route('admin.photo.destroy') }}" method="POST" style="display: none;">
                                   @csrf
                                   <input type="hidden" name="type" value="{{$photo->type}}" />
                                   <input type="hidden" name="fileName" value="{{$photo->fileName}}" />

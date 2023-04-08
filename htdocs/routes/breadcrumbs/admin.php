@@ -32,7 +32,7 @@ Breadcrumbs::for('admin.stock.show', function ($breadcrumbs, $stock) {
     'admin.stock.show',
     [
       'params' => [
-          'id' => $stock->id,
+          'stock' => $stock,
       ],
     ]);
 });
@@ -45,7 +45,7 @@ Breadcrumbs::for('admin.stock.edit', function ($breadcrumbs, $stock) {
     'admin.stock.edit',
     [
       'params' => [
-          'id' => $stock->id,
+          'stock' => $stock,
       ],
     ]);
 });
@@ -64,7 +64,7 @@ Breadcrumbs::for('admin.order.show', function ($breadcrumbs, $order) {
     'admin.order.show',
     [
       'params' => [
-          'id' => $order->id,
+          'order' => $order,
       ],
     ]);
 });
@@ -83,7 +83,7 @@ Breadcrumbs::for('admin.user.show', function ($breadcrumbs, $user) {
     'admin.user.show',
     [
       'params' => [
-          'id' => $user->id,
+          'user' => $user,
       ],
     ]);
 });
@@ -96,7 +96,7 @@ Breadcrumbs::for('admin.user.edit', function ($breadcrumbs, $user) {
     'admin.user.edit',
     [
       'params' => [
-          'id' => $user->id,
+          'user' => $user,
       ],
     ]);
 });
@@ -116,7 +116,7 @@ Breadcrumbs::for('admin.contact.show', function ($breadcrumbs, $contact) {
     'admin.contact.show',
     [
       'params' => [
-          'id' => $contact->id,
+          'contact' => $contact,
       ],
     ]);
 });
@@ -129,7 +129,7 @@ Breadcrumbs::for('admin.contact.edit', function ($breadcrumbs, $contact) {
     'admin.contact.edit',
     [
       'params' => [
-          'id' => $contact->id,
+          'contact' => $contact,
       ],
     ]);
 });

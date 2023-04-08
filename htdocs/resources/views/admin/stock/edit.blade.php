@@ -27,7 +27,7 @@ $subMenu = 'stock';
 </div>
 @endif
 
-<form method="POST" enctype="multipart/form-data" action="{{route('admin.stock.update', ['id' => $stock->id])}}">
+<form method="POST" enctype="multipart/form-data" action="{{route('admin.stock.update', ['stock' => $stock])}}">
     @csrf
     <div class="card card-purple">
         <div class="card-body">

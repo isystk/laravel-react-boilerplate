@@ -43,14 +43,11 @@ class ContactFormController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param string $id
+     * @param ContactForm $contact
      * @return View
      */
-    public function show(string $id): View
+    public function show(ContactForm $contact): View
     {
-        //
-        $contact = ContactForm::find($id);
-
         // $contactFormImages = $contact->contactFormImages;
         // dd($contactFormImages);
 
@@ -60,14 +57,11 @@ class ContactFormController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param string $id
+     * @param ContactForm $contact
      * @return View
      */
-    public function edit(string $id): View
+    public function edit(ContactForm $contact): View
     {
-        //
-        $contact = ContactForm::find($id);
-
         return view('admin.contact.edit', compact('contact'));
     }
 
@@ -75,14 +69,14 @@ class ContactFormController extends Controller
      * Update the specified resource in storage.
      *
      * @param StoreContactFormRequest $request
-     * @param string $id
+     * @param ContactForm $contact
      * @return RedirectResponse
      * @throws Exception
      */
-    public function update(StoreContactFormRequest $request, string $id): RedirectResponse
+    public function update(StoreContactFormRequest $request, ContactForm $contact): RedirectResponse
     {
 
-        [$contactForm, $type, $exception] = $this->contactFormService->save($id);
+        [$contactForm, $type, $exception] = $this->contactFormService->save($contact->id);
         if (!$contactForm) {
             if ($type === ErrorType::NOT_FOUND) {
                 abort(400);
@@ -95,13 +89,13 @@ class ContactFormController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param string $id
+     * @param ContactForm $contact
      * @return RedirectResponse
      * @throws Exception
      */
-    public function destroy(string $id): RedirectResponse
+    public function destroy(ContactForm $contact): RedirectResponse
     {
-        [$contactForm, $type, $exception] = $this->contactFormService->delete($id);
+        [$contactForm, $type, $exception] = $this->contactFormService->delete($contact->id);
         if (!$contactForm) {
             if ($type === ErrorType::NOT_FOUND) {
                 abort(400);

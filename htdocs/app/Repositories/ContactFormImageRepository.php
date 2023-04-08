@@ -19,11 +19,11 @@ class ContactFormImageRepository extends BaseRepository
     }
 
     /**
-     * @param string $contactFormId
+     * @param int $contactFormId
      * @param array<string, mixed>|array<int, string> $options
      * @return Collection|LengthAwarePaginator
      */
-    public function findAll(string $contactFormId, array $options = []): Collection|LengthAwarePaginator
+    public function findAll(int $contactFormId, array $options = []): Collection|LengthAwarePaginator
     {
         $query = $this->getModel()->with($this->__with($options))
             ->where([

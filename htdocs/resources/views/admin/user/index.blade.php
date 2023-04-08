@@ -70,7 +70,7 @@ $subMenu = 'user';
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->created_at }}</td>
-                            <td><a href="{{ route('admin.user.show', ['id'=> $user->id]) }}">{{__('common.Detail')}}</a></td>
+                            <td><a href="{{ route('admin.user.show', ['user'=> $user]) }}">{{__('common.Detail')}}</a></td>
                         </tr>
                         @endforeach
                     </tbody>

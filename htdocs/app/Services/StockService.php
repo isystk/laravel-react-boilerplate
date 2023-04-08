@@ -49,10 +49,10 @@ class StockService extends BaseService
     }
 
     /**
-     * @param string|null $stockId
+     * @param int|null $stockId
      * @return array<string>
      */
-    public function save(string $stockId = null): array
+    public function save(int $stockId = null): array
     {
 
         // 画像ファイルを公開ディレクトリへ配置する。
@@ -116,10 +116,10 @@ class StockService extends BaseService
     }
 
     /**
-     * @param string $id
+     * @param int $id
      * @return array<mixed|\App\Enums\ErrorType>
      */
-    public function delete(string $id): array
+    public function delete(int $id): array
     {
         DB::beginTransaction();
         try {

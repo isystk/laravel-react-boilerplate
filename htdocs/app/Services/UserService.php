@@ -52,10 +52,10 @@ class UserService extends BaseService
     }
 
     /**
-     * @param string|null $userId
+     * @param int|null $userId
      * @return array<int, mixed>
      */
-    public function save(string $userId = null): array
+    public function save(int $userId = null): array
     {
 
         DB::beginTransaction();
@@ -100,10 +100,10 @@ class UserService extends BaseService
     }
 
     /**
-     * @param string $id
+     * @param int $id
      * @return array<int, mixed>
      */
-    public function delete(string $id): array
+    public function delete(int $id): array
     {
         DB::beginTransaction();
         try {

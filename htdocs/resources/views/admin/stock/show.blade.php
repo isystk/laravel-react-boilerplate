@@ -56,11 +56,11 @@ $subMenu = 'stock';
         </div>
     </div>
     <div class="card-footer text-center clearfix ">
-        <form method="GET" action="{{route('admin.stock.edit', ['id' => $stock->id ])}}">
+        <form method="GET" action="{{route('admin.stock.edit', ['stock' => $stock ])}}">
             @csrf
             <input class="btn btn-info" type="submit" value="{{__('common.Change')}}">
         </form>
-        <form method="POST" action="{{route('admin.stock.destroy', ['id' => $stock->id ])}}" id="delete_{{ $stock->id }}">
+        <form method="POST" action="{{route('admin.stock.destroy', ['stock' => $stock ])}}" id="delete_{{ $stock->id }}">
             @csrf
             <a href="#" class="btn btn-danger js-deleteBtn" data-id="{{ $stock->id }}" >{{__('common.Delete')}}</a>
         </form>

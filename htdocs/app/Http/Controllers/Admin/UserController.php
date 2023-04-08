@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\ErrorType;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -12,6 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 use App\Services\UserService;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UserController extends Controller
 {
@@ -46,26 +48,22 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param string $id
+     * @param User $user
      * @return View
      */
-    public function show(string $id): View
+    public function show(User $user): View
     {
-        $user = $this->userService->find($id);
-
         return view('admin.user.show', compact('user'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param string $id
+     * @param User $user
      * @return View
      */
-    public function edit(string $id): View
+    public function edit(User $user): View
     {
-        $user = $this->userService->find($id);
-
         return view('admin.user.edit', compact('user'));
     }
 
@@ -73,14 +71,13 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param string $id
+     * @param User $user
      * @return RedirectResponse
      * @throws Exception
      */
-    public function update(Request $request, string $id): RedirectResponse
+    public function update(Request $request, User $user): RedirectResponse
     {
-
-        [$user, $type, $exception] = $this->userService->save($id);
+        [$user, $type, $exception] = $this->userService->save($user->id);
         if (!$user) {
             if ($type === ErrorType::NOT_FOUND) {
                 abort(400);
@@ -94,14 +91,14 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param string $id
+     * @param User $user
      * @return RedirectResponse
      * @throws Exception
      */
-    public function destroy(string $id): RedirectResponse
+    public function destroy(User $user): RedirectResponse
     {
 
-        [$user, $type, $exception] = $this->userService->delete($id);
+        [$user, $type, $exception] = $this->userService->delete($user->id);
         if (!$user) {
             if ($type === ErrorType::NOT_FOUND) {
                 abort(400);

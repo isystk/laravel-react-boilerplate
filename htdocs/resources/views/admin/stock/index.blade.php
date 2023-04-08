@@ -87,7 +87,7 @@ $subMenu = 'stock';
                             <td>{{ $stock->price }}</td>
                             <td>{{ $stock->quantity }}</td>
                             <td>{{ $stock->created_at }}</td>
-                            <td><a href="{{ route('admin.stock.show', ['id'=> $stock->id]) }}">{{__('common.Detail')}}</a></td>
+                            <td><a href="{{ route('admin.stock.show', ['stock'=> $stock]) }}">{{__('common.Detail')}}</a></td>
                         </tr>
                         @endforeach
                     </tbody>

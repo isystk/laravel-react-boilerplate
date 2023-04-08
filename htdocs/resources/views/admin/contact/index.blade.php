@@ -64,7 +64,7 @@ $subMenu = 'contact';
                             <td>{{ $contact->your_name }}</td>
                             <td>@php echo mb_strimwidth($contact->title, 0, 50, '...') @endphp</td>
                             <td>{{ $contact->created_at }}</td>
-                            <td><a href="{{ route('admin.contact.show', ['id'=> $contact->id]) }}">{{__('common.Detail')}}</a></td>
+                            <td><a href="{{ route('admin.contact.show', ['contact'=> $contact]) }}">{{__('common.Detail')}}</a></td>
                         </tr>
                         @endforeach
                     </tbody>
