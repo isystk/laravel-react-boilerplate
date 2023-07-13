@@ -7,15 +7,15 @@
 
     <title>@yield('title')｜{{ config('app.name', 'Laravel') }}</title>
 
-    <script src="{{ asset('/assets/admin/js/app.js') }}" ></script>
-    <script src="{{ asset('/assets/admin/js/jquery-plugins.js') }}" ></script>
+    <script src="{{ asset('/assets/admin/dist/app.js') }}" ></script>
+    <script src="{{ asset('/assets/admin/lib/jquery-plugins.js') }}" ></script>
     <script src="https://kit.fontawesome.com/eea364082e.js" crossorigin="anonymous"></script>
     @yield('scripts')
 
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-    <link href="{{ asset('/assets/admin/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('/assets/admin/dist/style.css') }}" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini">
     <div id="app" class="wrapper">
