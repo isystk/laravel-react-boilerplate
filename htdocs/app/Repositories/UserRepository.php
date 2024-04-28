@@ -6,13 +6,9 @@ use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
-class UserRepository
+class UserRepository extends BaseRepository
 {
     /**
-     * このリポジトリーで使うモデルのパスを返す
-     * BaseRepository内で$this->app->make($this->model())
-     * として渡される
-     *
      * @return string
      */
     function model()
@@ -28,7 +24,7 @@ class UserRepository
      */
     public function findAll(?string $name, ?string $email, array $options = []): Collection|LengthAwarePaginator|array
     {
-        $query = $this->getModel()->with($this->__with($options));
+        $query = $this->model->with($this->__with($options));
 
         if (!empty($name)) {
             $query->where('name', 'like', '%' . $name . '%');

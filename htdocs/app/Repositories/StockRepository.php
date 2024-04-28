@@ -6,7 +6,7 @@ use App\Models\Stock;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
-class StockRepository
+class StockRepository extends BaseRepository
 {
 
     /**
@@ -24,7 +24,8 @@ class StockRepository
      */
     public function findAll(string|null $name, array $options = []): Collection|LengthAwarePaginator
     {
-        $query = $this->getModel()->with($this->__with($options))
+        $query = $this->model
+            ->with($this->__with($options))
             ->where('name', 'like', '%' . $name . '%')
             ->orderBy('created_at', 'desc')
             ->orderBy('id', 'asc');

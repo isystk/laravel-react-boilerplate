@@ -6,7 +6,7 @@ use App\Models\Admin;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
-class AdminRepository
+class AdminRepository extends BaseRepository
 {
 
     /**
@@ -23,7 +23,7 @@ class AdminRepository
      */
     public function findAll($options = []): Collection|LengthAwarePaginator
     {
-        $query = $this->getModel()->with($this->__with($options));
+        $query = $this->model->with($this->__with($options));
 
         $limit = !empty($options['limit']) ? (int)$options['limit'] : null;
         return $limit > 0 ? $query->paginate($limit) : $query->get();

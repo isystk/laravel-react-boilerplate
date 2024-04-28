@@ -161,10 +161,10 @@ class MyCartService extends BaseService
                 // 在庫を減らす
                 $quantity = $stock->quantity - $order->quantity;
                 $this->stockRepository->update(
+                    $stock->id,
                     [
                         'quantity' => $quantity
-                    ],
-                    $stock->id
+                    ]
                 );
 
                 array_push($stocks, (object)[

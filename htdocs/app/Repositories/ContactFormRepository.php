@@ -6,7 +6,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use App\Models\ContactForm;
 
-class ContactFormRepository
+class ContactFormRepository extends BaseRepository
 {
 
     /**
@@ -24,7 +24,7 @@ class ContactFormRepository
      */
     public function findAll(?string $yourName, array $options = []): Collection|LengthAwarePaginator
     {
-        $query = $this->getModel()->with($this->__with($options))
+        $query = $this->model->with($this->__with($options))
             ->orderBy('created_at', 'desc')
             ->orderBy('id', 'asc');
 

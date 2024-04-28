@@ -6,7 +6,7 @@ use App\Models\Order;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
-class OrderRepository
+class OrderRepository extends BaseRepository
 {
 
     /**
@@ -24,7 +24,7 @@ class OrderRepository
      */
     public function findAll(?string $userName, array $options = []): Collection|LengthAwarePaginator
     {
-        $query = $this->getModel()->with($this->__with($options))
+        $query = $this->model->with($this->__with($options))
             ->whereHas('user', function ($query) use ($userName) {
                 $query->where('name', 'like', "%$userName%");
             })

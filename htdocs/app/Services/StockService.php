@@ -88,8 +88,8 @@ class StockService extends BaseService
                 // 変更
 
                 $stock = $this->stockRepository->update(
-                    $model,
-                    $stockId
+                    $stockId,
+                    $model
                 );
 
             } else {

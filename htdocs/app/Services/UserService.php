@@ -65,11 +65,11 @@ class UserService extends BaseService
                 // 変更
 
                 $user = $this->userRepository->update(
+                    $userId,
                     [
                         'name' => $this->request()->input('name'),
                         'email' => $this->request()->input('email')
-                    ],
-                    $userId
+                    ]
                 );
 
             } else {

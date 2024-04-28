@@ -93,8 +93,8 @@ class ContactFormService extends BaseService
                 // 変更
 
                 $contactForm = $this->contactFormRepository->update(
-                    $model,
-                    $contactFormId
+                    $contactFormId,
+                    $model
                 );
 
                 // お問い合わせ画像テーブルを登録（Delete→Insert）
