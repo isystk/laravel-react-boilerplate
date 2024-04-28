@@ -45,7 +45,7 @@ class StockService extends BaseService
      */
     public function find(string $stockId): object|null
     {
-        return $this->stockRepository->find($stockId);
+        return $this->stockRepository->findById($stockId);
     }
 
     /**
