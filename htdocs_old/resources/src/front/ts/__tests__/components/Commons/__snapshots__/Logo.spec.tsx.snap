@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Logo 1`] = `
+<a
+  className="header_logo"
+  href="/"
+  onClick={[Function]}
+>
+  <img
+    alt=""
+    src="/assets/front/image/logo.png"
+  />
+</a>
+`;

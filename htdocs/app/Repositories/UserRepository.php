@@ -5,9 +5,8 @@ namespace App\Repositories;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
-use Prettus\Repository\Eloquent\BaseRepository;
 
-class UserRepository extends BaseRepository
+class UserRepository
 {
     /**
      * このリポジトリーで使うモデルのパスを返す

@@ -5,9 +5,8 @@ namespace App\Repositories;
 use App\Models\Stock;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
-use Prettus\Repository\Eloquent\BaseRepository;
 
-class StockRepository extends BaseRepository
+class StockRepository
 {
 
     /**

@@ -33,7 +33,7 @@ Laravel ＆ React.js の学習用サンプルアプリケーションです。
 
 #### ■ アプリケーション
 
-- Laravel 10
+- Laravel 11
 - React 18
 - Typescript
 - Adminlte 3

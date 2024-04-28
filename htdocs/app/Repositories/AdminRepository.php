@@ -5,9 +5,8 @@ namespace App\Repositories;
 use App\Models\Admin;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
-use Prettus\Repository\Eloquent\BaseRepository;
 
-class AdminRepository extends BaseRepository
+class AdminRepository
 {
 
     /**
