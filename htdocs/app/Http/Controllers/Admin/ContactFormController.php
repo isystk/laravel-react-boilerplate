@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Domain\Entities\ContactForm;
-use App\Enums\ErrorType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreContactFormRequest;
 use App\Services\ContactFormService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class ContactFormController extends Controller
@@ -27,6 +27,7 @@ class ContactFormController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return View
      */
     public function index(Request $request): View
@@ -73,12 +74,13 @@ class ContactFormController extends Controller
      */
     public function update(StoreContactFormRequest $request, ContactForm $contact): RedirectResponse
     {
-        [$contactForm, $type, $exception] = $this->contactFormService->save($contact->id);
-        if (!$contactForm) {
-            if ($type === ErrorType::NOT_FOUND) {
-                abort(400);
-            }
-            throw $exception ?? new Exception(__('common.Unknown Error has occurred.'));
+        DB::beginTransaction();
+        try {
+            $this->contactFormService->save($contact->id);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
         }
         return redirect('/admin/contact');
     }
@@ -92,12 +94,13 @@ class ContactFormController extends Controller
      */
     public function destroy(ContactForm $contact): RedirectResponse
     {
-        [$contactForm, $type, $exception] = $this->contactFormService->delete($contact->id);
-        if (!$contactForm) {
-            if ($type === ErrorType::NOT_FOUND) {
-                abort(400);
-            }
-            throw $exception ?? new Exception(__('common.Unknown Error has occurred.'));
+        DB::beginTransaction();
+        try {
+            $this->contactFormService->delete($contact->id);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
         }
         return redirect('/admin/contact');
     }

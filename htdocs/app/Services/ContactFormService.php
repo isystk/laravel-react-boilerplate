@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Domain\Entities\ContactForm;
 use App\Domain\Entities\ContactFormImage;
 use App\Domain\Repositories\ContactForm\ContactFormEloquentEloquentRepository;
 use App\Domain\Repositories\ContactForm\ContactFormImageRepository;
@@ -59,9 +60,9 @@ class ContactFormService extends BaseService
 
     /**
      * @param int|null $contactFormId
-     * @return array<int, mixed>
+     * @return ContactForm
      */
-    public function save(int $contactFormId = null): array
+    public function save(int $contactFormId = null): ContactForm
     {
         // 画像ファイルを公開ディレクトリへ配置する。
         if ($this->request()->has('imageBase64') && $this->request()->imageBase64 !== null) {
@@ -77,101 +78,77 @@ class ContactFormService extends BaseService
             $fileName = "";
         }
 
-        DB::beginTransaction();
-        try {
-            $model = [
-                'your_name' => $this->request()->input('your_name'),
-                'title' => $this->request()->input('title'),
-                'email' => $this->request()->input('email'),
-                'url' => $this->request()->input('url'),
-                'gender' => $this->request()->input('gender'),
-                'age' => $this->request()->input('age'),
-                'contact' => $this->request()->input('contact'),
-            ];
+        $model = [
+            'your_name' => $this->request()->input('your_name'),
+            'title' => $this->request()->input('title'),
+            'email' => $this->request()->input('email'),
+            'url' => $this->request()->input('url'),
+            'gender' => $this->request()->input('gender'),
+            'age' => $this->request()->input('age'),
+            'contact' => $this->request()->input('contact'),
+        ];
 
-            if ($contactFormId) {
-                // 変更
+        if ($contactFormId) {
+            // 変更
 
-                $contactForm = $this->contactFormRepository->update(
-                    $contactFormId,
-                    $model
-                );
+            $contactForm = $this->contactFormRepository->update(
+                $contactFormId,
+                $model
+            );
 
-                // お問い合わせ画像テーブルを登録（Delete→Insert）
-                if ($fileName !== "") {
-                    $contactFormImages = $this->contactFormImageRepository->findAll($contactFormId);
-                    foreach ($contactFormImages as $contactFormImage) {
-                        if (!$contactFormImage instanceof ContactFormImage) {
-                            throw new \RuntimeException('An unexpected error occurred.');
-                        }
-                        $this->contactFormImageRepository->delete($contactFormImage->id);
+            // お問い合わせ画像テーブルを登録（Delete→Insert）
+            if ($fileName !== "") {
+                $contactFormImages = $this->contactFormImageRepository->findAll($contactFormId);
+                foreach ($contactFormImages as $contactFormImage) {
+                    if (!$contactFormImage instanceof ContactFormImage) {
+                        throw new \RuntimeException('An unexpected error occurred.');
                     }
-                    $this->contactFormImageRepository->create(
-                        [
-                            'contact_form_id' => $contactFormId,
-                            'file_name' => $fileName,
-                        ]
-                    );
+                    $this->contactFormImageRepository->delete($contactFormImage->id);
                 }
-            } else {
-                // 新規登録
-
-                $contactForm = $this->contactFormRepository->create(
-                    $model
+                $this->contactFormImageRepository->create(
+                    [
+                        'contact_form_id' => $contactFormId,
+                        'file_name' => $fileName,
+                    ]
                 );
-
-                $contactFormId = $contactForm['id'];
-
-                // お問い合わせ画像テーブルを登録（Insert）
-                if ($fileName !== "") {
-                    $this->contactFormImageRepository->create(
-                        [
-                            'contact_form_id' => $contactFormId,
-                            'file_name' => $fileName,
-                        ]
-                    );
-                }
             }
+        } else {
+            // 新規登録
 
-            DB::commit();
+            $contactForm = $this->contactFormRepository->create(
+                $model
+            );
 
-            return [$contactForm, ErrorType::SUCCESS, null];
-        } catch (\PDOException $e) {
-            DB::rollBack();
-            return [false, ErrorType::DATABASE, $e];
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return [false, ErrorType::FATAL, $e];
+            $contactFormId = $contactForm['id'];
+
+            // お問い合わせ画像テーブルを登録（Insert）
+            if ($fileName !== "") {
+                $this->contactFormImageRepository->create(
+                    [
+                        'contact_form_id' => $contactFormId,
+                        'file_name' => $fileName,
+                    ]
+                );
+            }
         }
+
+        return $contactForm;
     }
 
     /**
      * @param int $id
-     * @return array<int, mixed>
      */
-    public function delete(int $id): array
+    public function delete(int $id): void
     {
-        DB::beginTransaction();
-        try {
-            // お問い合わせ画像テーブルを削除
-            $contactFormImages = $this->contactFormImageRepository->findAll($id);
-            foreach ($contactFormImages as $contactFormImage) {
-                if (!$contactFormImage instanceof ContactFormImage) {
-                    throw new \RuntimeException('An unexpected error occurred.');
-                }
-                $this->contactFormImageRepository->delete($contactFormImage->id);
+        // お問い合わせ画像テーブルを削除
+        $contactFormImages = $this->contactFormImageRepository->findAll($id);
+        foreach ($contactFormImages as $contactFormImage) {
+            if (!$contactFormImage instanceof ContactFormImage) {
+                throw new \RuntimeException('An unexpected error occurred.');
             }
-            // お問い合わせテーブルを削除
-            $this->contactFormRepository->delete($id);
-
-            DB::commit();
-            return [true, ErrorType::SUCCESS, null];
-        } catch (\PDOException $e) {
-            DB::rollBack();
-            return [false, ErrorType::DATABASE, $e];
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return [false, ErrorType::FATAL, $e];
+            $this->contactFormImageRepository->delete($contactFormImage->id);
         }
+        // お問い合わせテーブルを削除
+        $this->contactFormRepository->delete($id);
     }
 }

@@ -13,6 +13,7 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -127,11 +128,18 @@ class StockController extends Controller
      *
      * @param StoreStockFormRequest $request
      * @return RedirectResponse
+     * @throws \Exception
      */
     public function store(StoreStockFormRequest $request): RedirectResponse
     {
-        $this->stockService->save();
-
+        DB::beginTransaction();
+        try {
+            $this->stockService->save();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
         return redirect('admin/stock');
     }
 
@@ -164,11 +172,18 @@ class StockController extends Controller
      * @param StoreStockFormRequest $request
      * @param Stock $stock
      * @return RedirectResponse
+     * @throws \Exception
      */
-    public function update(StoreStockFormRequest $request, Stock $stock)
+    public function update(StoreStockFormRequest $request, Stock $stock): RedirectResponse
     {
-        $this->stockService->save($stock->id);
-
+        DB::beginTransaction();
+        try {
+            $this->stockService->save($stock->id);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
         return redirect('admin/stock');
     }
 
@@ -177,11 +192,18 @@ class StockController extends Controller
      *
      * @param Stock $stock
      * @return RedirectResponse
+     * @throws \Exception
      */
     public function destroy(Stock $stock): RedirectResponse
     {
-        $this->stockService->delete($stock->id);
-
+        DB::beginTransaction();
+        try {
+            $this->stockService->delete($stock->id);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
         return redirect('/admin/stock');
     }
 }

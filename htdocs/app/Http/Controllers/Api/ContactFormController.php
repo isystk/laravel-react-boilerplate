@@ -7,6 +7,7 @@ use App\Http\Controllers\ApiController;
 use App\Http\Requests\StoreContactFormRequest;
 use App\Services\ContactFormService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 
 class ContactFormController extends ApiController
 {
@@ -25,22 +26,17 @@ class ContactFormController extends ApiController
      *
      * @param StoreContactFormRequest $request
      * @return JsonResponse
+     * @throws \Exception
      */
     public function store(StoreContactFormRequest $request): JsonResponse
     {
-        [$contactForm, $type, $exception] = $this->contactFormService->save();
-        if (!$contactForm) {
-            if ($type === ErrorType::NOT_FOUND) {
-                abort(400);
-            }
-            $e = $exception ?? new \Exception(__('common.Unknown Error has occurred.'));
-            $result = [
-                'result' => false,
-                'error' => [
-                    'messages' => [$e->getMessage()],
-                ],
-            ];
-            return $this->resConversionJson($result, $e->getCode());
+        DB::beginTransaction();
+        try {
+            $this->contactFormService->save();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
         }
         return $this->resConversionJson([
             'result' => true,

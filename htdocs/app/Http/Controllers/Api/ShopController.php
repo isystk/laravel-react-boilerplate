@@ -16,6 +16,9 @@ class ShopController extends ApiController
      */
     protected MyCartService $myCartService;
 
+    /**
+     * @param MyCartService $myCartService
+     */
     public function __construct(MyCartService $myCartService)
     {
         $this->myCartService = $myCartService;

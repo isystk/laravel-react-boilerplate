@@ -22,7 +22,7 @@ class HomeController extends Controller
      *
      * @return Renderable
      */
-    public function index()
+    public function index(): Renderable
     {
         return view('admin.home');
     }

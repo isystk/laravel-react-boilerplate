@@ -12,6 +12,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -74,14 +75,14 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user): RedirectResponse
     {
-        [$user, $type, $exception] = $this->userService->save($user->id);
-        if (!$user) {
-            if ($type === ErrorType::NOT_FOUND) {
-                abort(400);
-            }
-            throw $exception ?? new Exception(__('common.Unknown Error has occurred.'));
+        DB::beginTransaction();
+        try {
+            $this->userService->save($user->id);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
         }
-
         return redirect('admin/user');
     }
 
@@ -94,14 +95,14 @@ class UserController extends Controller
      */
     public function destroy(User $user): RedirectResponse
     {
-        [$user, $type, $exception] = $this->userService->delete($user->id);
-        if (!$user) {
-            if ($type === ErrorType::NOT_FOUND) {
-                abort(400);
-            }
-            throw $exception ?? new Exception(__('common.Unknown Error has occurred.'));
+        DB::beginTransaction();
+        try {
+            $this->userService->delete($user->id);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
         }
-
         return redirect('/admin/user');
     }
 }

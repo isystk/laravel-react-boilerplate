@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Domain\Entities\User;
 use App\Domain\Repositories\User\UserRepository;
 use App\Enums\ErrorType;
 use Exception;
@@ -53,66 +54,42 @@ class UserService extends BaseService
 
     /**
      * @param int|null $userId
-     * @return array<int, mixed>
+     * @return User
      */
-    public function save(int $userId = null): array
+    public function save(int $userId = null): User
     {
-        DB::beginTransaction();
-        try {
-            if ($userId) {
-                // 変更
+        if ($userId) {
+            // 変更
 
-                $user = $this->userRepository->update(
-                    $userId,
-                    [
-                        'name' => $this->request()->input('name'),
-                        'email' => $this->request()->input('email'),
-                    ]
-                );
-            } else {
-                // 新規登録
+            $user = $this->userRepository->update(
+                $userId,
+                [
+                    'name' => $this->request()->input('name'),
+                    'email' => $this->request()->input('email'),
+                ]
+            );
+        } else {
+            // 新規登録
 
-                $user = $this->userRepository->create(
-                    [
-                        'name' => $this->request()->input('name'),
-                        'email' => $this->request()->input('email'),
-                    ],
-                );
+            $user = $this->userRepository->create(
+                [
+                    'name' => $this->request()->input('name'),
+                    'email' => $this->request()->input('email'),
+                ],
+            );
 
-                $id = $user->id;
-            }
-
-            DB::commit();
-
-            return [$user, ErrorType::SUCCESS, null];
-        } catch (PDOException $e) {
-            DB::rollBack();
-            return [false, ErrorType::DATABASE, $e];
-        } catch (Exception $e) {
-            DB::rollBack();
-            return [false, ErrorType::FATAL, $e];
+            $id = $user->id;
         }
+
+        return $user;
     }
 
     /**
      * @param int $id
-     * @return array<int, mixed>
      */
-    public function delete(int $id): array
+    public function delete(int $id): void
     {
-        DB::beginTransaction();
-        try {
-            // ユーザテーブルを削除
-            $this->userRepository->delete($id);
-
-            DB::commit();
-            return [true, ErrorType::SUCCESS, null];
-        } catch (PDOException $e) {
-            DB::rollBack();
-            return [false, ErrorType::DATABASE, $e];
-        } catch (Exception $e) {
-            DB::rollBack();
-            return [false, ErrorType::FATAL, $e];
-        }
+        // ユーザテーブルを削除
+        $this->userRepository->delete($id);
     }
 }

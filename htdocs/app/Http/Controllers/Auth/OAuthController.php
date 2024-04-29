@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Domain\Entities\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -12,9 +13,9 @@ class OAuthController extends Controller
     /**
      * 各SNSのOAuth認証画面にリダイレクトして認証
      * @param string $provider サービス名
-     * @return mixed
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function socialOAuth(string $provider)
+    public function socialOAuth(string $provider): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         return Socialite::driver($provider)->redirect();
     }
@@ -22,9 +23,9 @@ class OAuthController extends Controller
     /**
      * 各サイトからのコールバック
      * @param string $provider サービス名
-     * @return mixed
+     * @return RedirectResponse
      */
-    public function handleProviderCallback($provider)
+    public function handleProviderCallback(string $provider): RedirectResponse
     {
         // @phpstan-ignore-next-line
         $socialUser = Socialite::driver($provider)->stateless()->user();

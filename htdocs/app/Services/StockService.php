@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Domain\Entities\Stock;
 use App\Domain\Repositories\Stock\StockRepository;
 use App\Enums\ErrorType;
 use App\Utils\UploadImage;
@@ -50,9 +51,9 @@ class StockService extends BaseService
 
     /**
      * @param int|null $stockId
-     * @return array<string>
+     * @return Stock
      */
-    public function save(int $stockId = null): array
+    public function save(int $stockId = null): Stock
     {
         // 画像ファイルを公開ディレクトリへ配置する。
         if ($this->request()->has('imageBase64') && $this->request()->imageBase64 !== null) {
@@ -69,66 +70,41 @@ class StockService extends BaseService
             $fileName = "";
         }
 
-        DB::beginTransaction();
-        try {
-            $model = [
-                'name' => $this->request()->input('name'),
-                'detail' => $this->request()->input('detail'),
-                'price' => $this->request()->input('price'),
-                'quantity' => $this->request()->input('quantity'),
-            ];
-            if (!empty($fileName)) {
-                $model['imgpath'] = $fileName;
-            }
-
-            if ($stockId) {
-                // 変更
-
-                $stock = $this->stockRepository->update(
-                    $stockId,
-                    $model
-                );
-            } else {
-                // 新規登録
-
-                $stock = $this->stockRepository->create(
-                    $model
-                );
-
-                $id = $stock->id;
-            }
-
-            DB::commit();
-
-            return [$stock, ErrorType::SUCCESS, null];
-        } catch (\PDOException $e) {
-            DB::rollBack();
-            return [false, ErrorType::DATABASE, $e];
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return [false, ErrorType::FATAL, $e];
+        $model = [
+            'name' => $this->request()->input('name'),
+            'detail' => $this->request()->input('detail'),
+            'price' => $this->request()->input('price'),
+            'quantity' => $this->request()->input('quantity'),
+        ];
+        if (!empty($fileName)) {
+            $model['imgpath'] = $fileName;
         }
+
+        if ($stockId) {
+            // 変更
+
+            $stock = $this->stockRepository->update(
+                $stockId,
+                $model
+            );
+        } else {
+            // 新規登録
+
+            $stock = $this->stockRepository->create(
+                $model
+            );
+
+            $id = $stock->id;
+        }
+
+        return $stock;
     }
 
     /**
      * @param int $id
-     * @return array<mixed|\App\Enums\ErrorType>
      */
-    public function delete(int $id): array
+    public function delete(int $id): void
     {
-        DB::beginTransaction();
-        try {
-            // 商品テーブルを削除
-            $this->stockRepository->delete($id);
-
-            DB::commit();
-            return [true, ErrorType::SUCCESS, null];
-        } catch (\PDOException $e) {
-            DB::rollBack();
-            return [false, ErrorType::DATABASE, $e];
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return [false, ErrorType::FATAL, $e];
-        }
+        $this->stockRepository->delete($id);
     }
 }

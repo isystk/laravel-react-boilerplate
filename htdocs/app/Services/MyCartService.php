@@ -136,64 +136,55 @@ class MyCartService extends BaseService
 
         $data = $cart->showCart();
 
-        DB::beginTransaction();
-        try {    //
+        // // 料金の支払いを実行
+        // $charge = Charge::create(array(
+        //   'customer' => $customer->id,
+        //   'amount' => $data['sum'],
+        //   'currency' => 'jpy'
+        // ));
 
-            // // 料金の支払いを実行
-            // $charge = Charge::create(array(
-            //   'customer' => $customer->id,
-            //   'amount' => $data['sum'],
-            //   'currency' => 'jpy'
-            // ));
+        $stocks = [];
 
-            $stocks = [];
+        // 発注履歴に追加する。
+        foreach ($data['data'] as $my_cart) {
+            $stock = $this->stockRepository->findById($my_cart->stock_id);
 
-            // 発注履歴に追加する。
-            foreach ($data['data'] as $my_cart) {
-                $stock = $this->stockRepository->findById($my_cart->stock_id);
+            $order = $this->orderRepository->create([
+                'stock_id' => $my_cart->stock_id,
+                'user_id' => $my_cart->user_id,
+                'price' => $stock->price,
+                'quantity' => 1,
+            ]);
 
-                $order = $this->orderRepository->create([
-                    'stock_id' => $my_cart->stock_id,
-                    'user_id' => $my_cart->user_id,
-                    'price' => $stock->price,
-                    'quantity' => 1,
-                ]);
+            // 在庫を減らす
+            $quantity = $stock->quantity - $order->quantity;
+            $this->stockRepository->update(
+                $stock->id,
+                [
+                    'quantity' => $quantity,
+                ]
+            );
 
-                // 在庫を減らす
-                $quantity = $stock->quantity - $order->quantity;
-                $this->stockRepository->update(
-                    $stock->id,
-                    [
-                        'quantity' => $quantity,
-                    ]
-                );
-
-                array_push($stocks, (object)[
-                    'name' => $stock->name,
-                    'quantity' => $order->quantity,
-                    'price' => $order->price,
-                ]);
-            }
-
-            $user = Auth::user();
-
-            $mailData = (object)[
-                'name' => $user->name,
-                'amount' => $data['sum'],
-                'stocks' => $stocks,
-            ];
-
-            // メール送信
-            Mail::to($user->email)
-                ->send(new MailNotification('stock_complete', '商品の購入が完了しました', $mailData));
-
-            // カートからすべての商品を削除
-            $cart->deleteMyCart();
-
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollback();
-            throw new \RuntimeException($e);
+            array_push($stocks, (object)[
+                'name' => $stock->name,
+                'quantity' => $order->quantity,
+                'price' => $order->price,
+            ]);
         }
+
+        $user = Auth::user();
+
+        $mailData = (object)[
+            'name' => $user->name,
+            'amount' => $data['sum'],
+            'stocks' => $stocks,
+        ];
+
+        // メール送信
+        Mail::to($user->email)
+            ->send(new MailNotification('stock_complete', '商品の購入が完了しました', $mailData));
+
+        // カートからすべての商品を削除
+        $cart->deleteMyCart();
     }
 }

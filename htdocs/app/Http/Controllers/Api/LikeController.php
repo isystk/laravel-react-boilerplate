@@ -43,7 +43,7 @@ class LikeController extends ApiController
      * @param Request $request
      * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         try {
             $stockId = $request->input('id');
