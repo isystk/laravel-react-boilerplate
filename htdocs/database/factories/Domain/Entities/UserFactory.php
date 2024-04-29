@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Domain\Entities;
 
 use App\Domain\Entities\User;
 use App\Entities\Team;
