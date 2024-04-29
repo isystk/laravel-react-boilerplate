@@ -9,7 +9,7 @@
         "barryvdh/laravel-dompdf": "*",
         "davejamesmiller/laravel-breadcrumbs": "^5.3",
         "josiasmontag/laravel-recaptchav3": "^1.0",
-        "laravel/fortify": "^1.21.2",
+        "laravel/fortify": "^1.21",
         "laravel/framework": "^11.0",
         "laravel/jetstream": "^5.0.4",
         "laravel/sanctum": "^4.0",
