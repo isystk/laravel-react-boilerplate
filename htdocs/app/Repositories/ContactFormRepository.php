@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\ContactForm;
+use App\Entities\ContactForm;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 

@@ -24,14 +24,14 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 Route::prefix('admin')->group(function () {
-    Route::get('/',         function () {
+    Route::get('/',         static function () {
         return redirect('/admin/home');
     });
     Route::get('login', [App\Http\Controllers\Admin\LoginController::class, 'showLoginForm'])->name('admin.login');
     Route::post('login', [App\Http\Controllers\Admin\LoginController::class, 'login']);
 
     // ログイン後
-    Route::group(['middleware' => 'auth:admin'], function () {
+    Route::group(['middleware' => 'auth:admin'], static function () {
         Route::post('logout', [App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('admin.logout');
         Route::get('home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
 

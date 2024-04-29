@@ -2,7 +2,7 @@
 
 namespace App\Services\Excel;
 
-use App\Models\Stock;
+use App\Entities\Stock;
 use App\Services\StockService;
 use Closure;
 use Illuminate\Support\Collection;

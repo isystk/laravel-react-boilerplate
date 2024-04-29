@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\ErrorType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreContactFormRequest;
-use App\Models\ContactForm;
+use App\Entities\ContactForm;
 use App\Services\ContactFormService;
 use Exception;
 use Illuminate\Http\RedirectResponse;

@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Enums\ErrorType;
-use App\Models\ContactFormImage;
+use App\Entities\ContactFormImage;
 use App\Repositories\ContactFormImageRepository;
 use App\Repositories\ContactFormRepository;
 use App\Utils\UploadImage;

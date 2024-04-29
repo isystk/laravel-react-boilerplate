@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreStockFormRequest;
-use App\Models\Stock;
+use App\Entities\Stock;
 use App\Services\Excel\ExcelStockService;
 use App\Services\StockService;
 use App\Utils\CSVUtil;

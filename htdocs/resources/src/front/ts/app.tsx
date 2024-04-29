@@ -2,7 +2,7 @@ import React from "react";
 import Router from "@/router";
 import axios from "axios";
 import { Provider } from "react-redux";
-import * as ReactDOM from "react-dom/client";
+import { createRoot } from 'react-dom/client';
 import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
@@ -20,7 +20,7 @@ const render = (session: Session) => {
     console.log("session", session);
     const container = document.getElementById("react-root");
     if (container) {
-        const root = ReactDOM.createRoot(container);
+        const root = createRoot(container);
         root.render(
             <Provider store={store}>
                 <Router session={session} />

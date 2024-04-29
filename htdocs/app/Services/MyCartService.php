@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Mail\MailNotification;
-use App\Models\Cart;
+use App\Entities\Cart;
 use App\Repositories\CartRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\StockRepository;

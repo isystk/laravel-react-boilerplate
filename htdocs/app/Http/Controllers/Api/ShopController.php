@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\ApiController;
-use App\Models\Cart;
-use App\Models\Stock;
+use App\Entities\Cart;
+use App\Entities\Stock;
 use App\Services\MyCartService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

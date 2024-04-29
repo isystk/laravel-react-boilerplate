@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Stock;
+use App\Entities\Stock;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 

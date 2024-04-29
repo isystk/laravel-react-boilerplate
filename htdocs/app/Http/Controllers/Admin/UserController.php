@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\ErrorType;
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Entities\User;
 use App\Services\UserService;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
