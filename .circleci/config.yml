@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: cimg/php:8.1-browsers
+      - image: cimg/php:8.3-browsers
         environment:
           - APP_DEBUG: true
           - APP_ENV: circleci
@@ -11,7 +11,7 @@ jobs:
           - DB_USERNAME: user
           - DB_PASSWORD: password
  
-      - image: cimg/mysql:8.0
+      - image: cimg/mysql:8.3
         environment:
           - MYSQL_DATABASE: laraec
           - MYSQL_USER: user
