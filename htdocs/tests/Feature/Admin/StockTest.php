@@ -27,7 +27,7 @@ class StockTest extends TestCase
 
         $response = $this->get('/admin/stock');
         // レスポンスの検証
-        $response->assertSee('商品一覧');
+        $response->assertSee('マカロン');
         $response
             ->assertOk()  # ステータスコードが 200
         ;
