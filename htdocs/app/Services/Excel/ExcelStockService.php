@@ -2,7 +2,7 @@
 
 namespace App\Services\Excel;
 
-use App\Entities\Stock;
+use App\Domain\Entities\Stock;
 use App\Services\StockService;
 use Closure;
 use Illuminate\Support\Collection;
@@ -21,7 +21,7 @@ class ExcelStockService implements FromCollection, WithEvents
     /**
      * @var StockService
      */
-    protected $stockService;
+    protected StockService $stockService;
 
     public function __construct(StockService $stockService)
     {

@@ -2,10 +2,11 @@
 
 namespace App\Services;
 
+use App\Domain\Entities\ContactFormImage;
+use App\Domain\Repositories\ContactForm\ContactFormEloquentEloquentRepository;
+use App\Domain\Repositories\ContactForm\ContactFormImageRepository;
+use App\Domain\Repositories\ContactForm\ContactFormRepository;
 use App\Enums\ErrorType;
-use App\Entities\ContactFormImage;
-use App\Repositories\ContactFormImageRepository;
-use App\Repositories\ContactFormRepository;
 use App\Utils\UploadImage;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;

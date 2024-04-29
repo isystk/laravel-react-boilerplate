@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Domain\Repositories\Order;
 
-use App\Entities\Order;
+use App\Domain\Entities\Order;
+use App\Domain\Repositories\BaseEloquentRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
-class OrderRepository extends BaseRepository
+class OrderEloquentEloquentRepository extends BaseEloquentRepository implements OrderRepository
 {
 
     /**

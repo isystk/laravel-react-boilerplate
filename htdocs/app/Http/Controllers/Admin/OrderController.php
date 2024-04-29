@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Domain\Entities\Order;
 use App\Http\Controllers\Controller;
-use App\Entities\Order;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;

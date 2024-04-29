@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Domain\Repositories\Stock;
 
-use App\Entities\Stock;
+use App\Domain\Entities\Stock;
+use App\Domain\Repositories\BaseEloquentRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
-class StockRepository extends BaseRepository
+class StockEloquentEloquentRepository extends BaseEloquentRepository implements StockRepository
 {
 
     /**

@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Entities\Stock;
+use App\Domain\Entities\Stock;
 use App\Services\StockService;
 use App\Utils\CSVUtil;
 use Carbon\Carbon;

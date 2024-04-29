@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Domain\Repositories\ContactForm;
 
-use App\Entities\ContactForm;
+use App\Domain\Entities\ContactForm;
+use App\Domain\Repositories\BaseEloquentRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
-class ContactFormRepository extends BaseRepository
+class ContactFormEloquentEloquentRepository extends BaseEloquentRepository implements ContactFormRepository
 {
 
     /**

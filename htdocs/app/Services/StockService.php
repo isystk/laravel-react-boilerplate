@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
+use App\Domain\Repositories\Stock\StockRepository;
 use App\Enums\ErrorType;
-use App\Repositories\StockRepository;
 use App\Utils\UploadImage;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;

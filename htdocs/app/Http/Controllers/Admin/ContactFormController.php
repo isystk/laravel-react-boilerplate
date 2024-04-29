@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Domain\Entities\ContactForm;
 use App\Enums\ErrorType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreContactFormRequest;
-use App\Entities\ContactForm;
 use App\Services\ContactFormService;
 use Exception;
 use Illuminate\Http\RedirectResponse;

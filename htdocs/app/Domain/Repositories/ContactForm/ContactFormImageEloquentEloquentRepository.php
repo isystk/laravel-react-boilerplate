@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Domain\Repositories\ContactForm;
 
-use App\Entities\Admin;
+use App\Domain\Entities\ContactFormImage;
+use App\Domain\Repositories\BaseEloquentRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
-class AdminRepository extends BaseRepository
+class ContactFormImageEloquentEloquentRepository extends BaseEloquentRepository implements ContactFormImageRepository
 {
 
     /**
@@ -14,16 +15,20 @@ class AdminRepository extends BaseRepository
      */
     protected function model(): string
     {
-        return Admin::class;
+        return ContactFormImage::class;
     }
 
     /**
+     * @param int $contactFormId
      * @param array<string, mixed>|array<int, string> $options
      * @return Collection|LengthAwarePaginator
      */
-    public function findAll($options = []): Collection|LengthAwarePaginator
+    public function findAll(int $contactFormId, array $options = []): Collection|LengthAwarePaginator
     {
-        $query = $this->model->with($this->__with($options));
+        $query = $this->model->with($this->__with($options))
+            ->where([
+                'contact_form_id' => $contactFormId,
+            ]);
 
         $limit = !empty($options['limit']) ? (int)$options['limit'] : null;
         return $limit > 0 ? $query->paginate($limit) : $query->get();
@@ -33,7 +38,7 @@ class AdminRepository extends BaseRepository
      * @param array<string, mixed>|array<int, string> $options
      * @return array<int, string>
      */
-    private function __with($options = [])
+    private function __with(array $options = [])
     {
         $with = [];
         return $with;

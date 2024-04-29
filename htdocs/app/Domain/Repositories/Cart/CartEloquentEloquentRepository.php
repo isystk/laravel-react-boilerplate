@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Domain\Repositories\Cart;
 
-use App\Entities\Cart;
+use App\Domain\Entities\Cart;
+use App\Domain\Repositories\BaseEloquentRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
-class CartRepository extends BaseRepository
+class CartEloquentEloquentRepository extends BaseEloquentRepository implements CartRepository
 {
 
     /**

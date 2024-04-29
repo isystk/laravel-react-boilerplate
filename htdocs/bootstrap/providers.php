@@ -12,6 +12,7 @@ return [
     /*
      * 追加
      */
+    App\Providers\RepositoryServiceProvider::class,
     Barryvdh\DomPDF\ServiceProvider::class,
     Maatwebsite\Excel\ExcelServiceProvider::class,
 ];

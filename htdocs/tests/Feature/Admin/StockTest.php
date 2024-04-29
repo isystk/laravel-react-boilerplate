@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Admin;
 
-use App\Entities\Admin;
-use Tests\TestCase;
-use Illuminate\Support\Facades\Auth;
+use App\Domain\Entities\Admin;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Support\Facades\Auth;
+use Tests\TestCase;
 
 class StockTest extends TestCase
 {

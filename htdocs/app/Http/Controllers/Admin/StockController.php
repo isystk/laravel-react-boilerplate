@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Domain\Entities\Stock;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreStockFormRequest;
-use App\Entities\Stock;
 use App\Services\Excel\ExcelStockService;
 use App\Services\StockService;
 use App\Utils\CSVUtil;

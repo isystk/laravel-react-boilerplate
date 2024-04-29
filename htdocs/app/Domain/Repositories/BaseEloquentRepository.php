@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Domain\Repositories;
 
-abstract class BaseRepository
+abstract class BaseEloquentRepository
 {
 
     protected mixed $model;

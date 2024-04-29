@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Entities\ContactForm;
+use App\Domain\Entities\ContactForm;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ContactFormFactory extends Factory

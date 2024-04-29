@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Domain\Repositories\User;
 
-use App\Entities\User;
+use App\Domain\Entities\User;
+use App\Domain\Repositories\BaseEloquentRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
-class UserRepository extends BaseRepository
+class UserEloquentEloquentRepository extends BaseEloquentRepository implements UserRepository
 {
     /**
      * @return string

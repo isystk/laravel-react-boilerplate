@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
+use App\Domain\Repositories\User\UserRepository;
 use App\Enums\ErrorType;
-use App\Repositories\UserRepository;
 use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;

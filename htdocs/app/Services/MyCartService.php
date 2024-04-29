@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
+use App\Domain\Entities\Cart;
+use App\Domain\Repositories\Cart\CartRepository;
+use App\Domain\Repositories\Order\OrderRepository;
+use App\Domain\Repositories\Stock\StockRepository;
 use App\Mail\MailNotification;
-use App\Entities\Cart;
-use App\Repositories\CartRepository;
-use App\Repositories\OrderRepository;
-use App\Repositories\StockRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;

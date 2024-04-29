@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Domain\Entities\Cart;
+use App\Domain\Entities\Stock;
 use App\Http\Controllers\ApiController;
-use App\Entities\Cart;
-use App\Entities\Stock;
 use App\Services\MyCartService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

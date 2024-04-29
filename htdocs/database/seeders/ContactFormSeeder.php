@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Entities\ContactForm;
+use App\Domain\Entities\ContactForm;
 use Illuminate\Database\Seeder;
 
 class ContactFormSeeder extends Seeder
