@@ -49,7 +49,7 @@ class UserService extends BaseService
      */
     public function find(int $userId): object|null
     {
-        return $this->userRepository->findById($userId);
+        return $this->userRepository->getById($userId);
     }
 
     /**

@@ -45,7 +45,7 @@ Laravel ＆ React.js の学習用サンプルアプリケーションです。
 
 https://laraec.isystk.com/
 
-![フロント画面](./front.png "フロント画面")
+![フロント画面](./documents/front.png "フロント画面")
 
 - ログイン/ログアウト
 - 会員登録
@@ -99,7 +99,7 @@ graph LR
 
 https://laraec.isystk.com/admin/
 
-![管理画面](./admin.png "管理画面")
+![管理画面](./documents/admin.png "管理画面")
 
 - ログイン/ログアウト
 - 商品管理
@@ -210,12 +210,14 @@ $ brew install mysql-client
 ├── htdocs （Apache公開ディレクトリ）
 │   │
 │   ├── app
-│   │   ├── Console (バッチアプリケーション)
+│   │   ├── Console (バッチ)
+│   │   ├── Domain（ドメイン層）
+│   │   ├── Enums (定数)
 │   │   ├── Exceptions (例外処理)
-│   │   ├── Http （Webアプリケーション）
-│   │   ├── Models（モデル）
-│   │   ├── Prociders（サービスプロバイダー）
-│   │   └── Services（共通処理）
+│   │   ├── Http （プレゼンテーション層）
+│   │   ├── Providers（サービスプロバイダー）
+│   │   ├── Services（ビジネスロジック）
+│   │   └── Utils（共通ユーティル）
 │   ├── bootstrap
 │   ├── config
 │   ├── database
@@ -294,7 +296,7 @@ minioにバケットを作成する
 |----|----
 |access_key | secret_key
 
-![minio](./minio.png "minio")
+![minio](./documents/minio.png "minio")
 
 バックエンド環境を構築する
 ```

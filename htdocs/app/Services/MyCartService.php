@@ -147,7 +147,7 @@ class MyCartService extends BaseService
 
         // 発注履歴に追加する。
         foreach ($data['data'] as $my_cart) {
-            $stock = $this->stockRepository->findById($my_cart->stock_id);
+            $stock = $this->stockRepository->getById($my_cart->stock_id);
 
             $order = $this->orderRepository->create([
                 'stock_id' => $my_cart->stock_id,

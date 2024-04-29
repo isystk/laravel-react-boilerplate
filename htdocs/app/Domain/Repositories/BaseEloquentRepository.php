@@ -2,10 +2,12 @@
 
 namespace App\Domain\Repositories;
 
-abstract class BaseEloquentRepository
+use Illuminate\Database\Eloquent\Model;
+
+abstract class BaseEloquentRepository implements BaseRepository
 {
 
-    protected mixed $model;
+    protected Model $model;
 
     public function __construct()
     {
@@ -31,7 +33,7 @@ abstract class BaseEloquentRepository
     // @phpstan-ignore-next-line
     public function update(int $id, array $data): mixed
     {
-        $record = $this->findById($id);
+        $record = $this->getById($id);
 
         if (null === $record) {
             throw new \RuntimeException('An unexpected error occurred.');
@@ -46,7 +48,7 @@ abstract class BaseEloquentRepository
      */
     public function delete(int $id): void
     {
-        $record = $this->findById($id);
+        $record = $this->getById($id);
 
         if (null === $record) {
             throw new \RuntimeException('An unexpected error occurred.');
@@ -59,7 +61,7 @@ abstract class BaseEloquentRepository
      * @param int $id
      * @return mixed
      */
-    public function findById(int $id): mixed
+    public function getById(int $id): mixed
     {
         return $this->model->find($id);
     }

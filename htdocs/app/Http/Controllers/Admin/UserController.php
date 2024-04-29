@@ -34,12 +34,9 @@ class UserController extends Controller
      */
     public function index(Request $request): View|Factory|Application
     {
-        $name = $request->input('name');
-        $email = $request->input('email');
-
         $users = $this->userService->list();
 
-        return view('admin.user.index', compact('users', 'name', 'email'));
+        return view('admin.user.index', compact('users', 'request'));
     }
 
 

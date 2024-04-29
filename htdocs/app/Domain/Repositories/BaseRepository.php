@@ -28,6 +28,6 @@ interface BaseRepository
      * @param int $id
      * @return mixed
      */
-    public function findById(int $id): mixed;
+    public function getById(int $id): mixed;
 
 }

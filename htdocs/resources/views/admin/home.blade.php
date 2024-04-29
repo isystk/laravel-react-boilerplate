@@ -7,11 +7,10 @@
 @endsection
 
 @section('content')
-
-<div class="card card-purple">
-  <div class="card-body">
-    <p>{{ __('common.Welcom!') . Auth::user()->name }}</p>
-  </div>
-</div>
-
+    <div class="card card-purple">
+        <div class="card-body">
+            <p>{{ __('common.Welcom!') . Auth::user()->name }}</p>
+        </div>
+    </div>
 @endsection
+

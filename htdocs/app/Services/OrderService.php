@@ -42,7 +42,7 @@ class OrderService extends BaseService
      */
     public function find(int $orderId): object|null
     {
-        return $this->orderRepository->findById($orderId);
+        return $this->orderRepository->getById($orderId);
     }
 
 }

@@ -55,7 +55,7 @@ class ContactFormService extends BaseService
      */
     public function find(int $contactFormId): object|null
     {
-        return $this->contactFormRepository->findById($contactFormId);
+        return $this->contactFormRepository->getById($contactFormId);
     }
 
     /**
