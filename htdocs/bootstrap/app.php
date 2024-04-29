@@ -16,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware
            ->trustProxies(at: '*')
            ->validateCsrfTokens(except: [
+               'api/*'
            ])
            ->redirectGuestsTo(function(Request $request) {
                 if (request()->routeIs('admin.*')) {
