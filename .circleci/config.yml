@@ -11,7 +11,7 @@ jobs:
           - DB_USERNAME: user
           - DB_PASSWORD: password
  
-      - image: cimg/mysql:8.3
+      - image: cimg/mysql:8.0
         environment:
           - MYSQL_DATABASE: laraec
           - MYSQL_USER: user
