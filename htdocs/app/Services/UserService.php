@@ -43,12 +43,12 @@ class UserService extends BaseService
     }
 
     /**
-     * @param string $userId
+     * @param int $userId
      * @return object|null
      */
-    public function find(string $userId): object|null
+    public function find(int $userId): object|null
     {
-        return $this->userRepository->find($userId);
+        return $this->userRepository->findById($userId);
     }
 
     /**
@@ -103,10 +103,10 @@ class UserService extends BaseService
         DB::beginTransaction();
         try {
             // ユーザテーブルを削除
-            $user = $this->userRepository->delete($id);
+            $this->userRepository->delete($id);
 
             DB::commit();
-            return [$user, ErrorType::SUCCESS, null];
+            return [true, ErrorType::SUCCESS, null];
         } catch (PDOException $e) {
             DB::rollBack();
             return [false, ErrorType::DATABASE, $e];

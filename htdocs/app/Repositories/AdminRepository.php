@@ -12,7 +12,7 @@ class AdminRepository extends BaseRepository
     /**
      * @return string
      */
-    function model()
+    protected function model(): string
     {
         return Admin::class;
     }

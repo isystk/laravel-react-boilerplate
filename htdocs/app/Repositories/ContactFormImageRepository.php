@@ -12,7 +12,7 @@ class ContactFormImageRepository extends BaseRepository
     /**
      * @return string
      */
-    function model()
+    protected function model(): string
     {
         return ContactFormImage::class;
     }

@@ -73,6 +73,9 @@ class StockController extends Controller
         $csvHeader = ['ID', '商品名', '価格'];
         $csvBody = [];
         foreach ($stocks as $stock) {
+            if (!$stock instanceof Stock) {
+                throw new \RuntimeException('An unexpected error occurred.');
+            }
             $line = [];
             $line[] = $stock->id;
             $line[] = $stock->name;
@@ -95,6 +98,9 @@ class StockController extends Controller
         $csvHeader = ['ID', '商品名', '価格'];
         $csvBody = [];
         foreach ($stocks as $stock) {
+            if (!$stock instanceof Stock) {
+                throw new \RuntimeException('An unexpected error occurred.');
+            }
             $line = [];
             $line[] = $stock->id;
             $line[] = $stock->name;

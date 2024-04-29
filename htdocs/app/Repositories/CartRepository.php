@@ -12,7 +12,7 @@ class CartRepository extends BaseRepository
     /**
      * @return string
      */
-    function model()
+    protected function model(): string
     {
         return Cart::class;
     }

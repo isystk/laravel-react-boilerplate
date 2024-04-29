@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enums\ErrorType;
+use App\Models\ContactFormImage;
 use App\Repositories\ContactFormImageRepository;
 use App\Repositories\ContactFormRepository;
 use App\Utils\UploadImage;
@@ -47,12 +48,12 @@ class ContactFormService extends BaseService
     }
 
     /**
-     * @param string $contactFormId
+     * @param int $contactFormId
      * @return object|null
      */
-    public function find(string $contactFormId): object|null
+    public function find(int $contactFormId): object|null
     {
-        return $this->contactFormRepository->find($contactFormId);
+        return $this->contactFormRepository->findById($contactFormId);
     }
 
     /**
@@ -99,6 +100,9 @@ class ContactFormService extends BaseService
                 if ($fileName !== "") {
                     $contactFormImages = $this->contactFormImageRepository->findAll($contactFormId);
                     foreach ($contactFormImages as $contactFormImage) {
+                        if (!$contactFormImage instanceof ContactFormImage) {
+                            throw new \RuntimeException('An unexpected error occurred.');
+                        }
                         $this->contactFormImageRepository->delete($contactFormImage->id);
                     }
                     $this->contactFormImageRepository->create(
@@ -151,13 +155,16 @@ class ContactFormService extends BaseService
             // お問い合わせ画像テーブルを削除
             $contactFormImages = $this->contactFormImageRepository->findAll($id);
             foreach ($contactFormImages as $contactFormImage) {
+                if (!$contactFormImage instanceof ContactFormImage) {
+                    throw new \RuntimeException('An unexpected error occurred.');
+                }
                 $this->contactFormImageRepository->delete($contactFormImage->id);
             }
             // お問い合わせテーブルを削除
-            $contactForm = $this->contactFormRepository->delete($id);
+            $this->contactFormRepository->delete($id);
 
             DB::commit();
-            return [$contactForm, ErrorType::SUCCESS, null];
+            return [true, ErrorType::SUCCESS, null];
         } catch (\PDOException $e) {
             DB::rollBack();
             return [false, ErrorType::DATABASE, $e];

@@ -28,9 +28,9 @@ class StockService extends BaseService
 
     /**
      * @param int $limit
-     * @return Collection|LengthAwarePaginator|array<string>
+     * @return Collection|LengthAwarePaginator
      */
-    public function list(int $limit = 20): Collection|LengthAwarePaginator|array
+    public function list(int $limit = 20): Collection|LengthAwarePaginator
     {
         return $this->stockRepository->findAll(
             $this->request()->name,
@@ -40,10 +40,10 @@ class StockService extends BaseService
     }
 
     /**
-     * @param string $stockId
+     * @param int $stockId
      * @return object|null
      */
-    public function find(string $stockId): object|null
+    public function find(int $stockId): object|null
     {
         return $this->stockRepository->findById($stockId);
     }
@@ -119,10 +119,10 @@ class StockService extends BaseService
         DB::beginTransaction();
         try {
             // 商品テーブルを削除
-            $result = $this->stockRepository->delete($id);
+            $this->stockRepository->delete($id);
 
             DB::commit();
-            return [$result, ErrorType::SUCCESS, null];
+            return [true, ErrorType::SUCCESS, null];
         } catch (\PDOException $e) {
             DB::rollBack();
             return [false, ErrorType::DATABASE, $e];

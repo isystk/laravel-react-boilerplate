@@ -323,6 +323,9 @@ $ ./dc.sh php login
 
 # Larastan を実行してコードをチェックする
 > ./vendor/bin/phpstan analyse --memory-limit=1G
+
+# PHPUnit でテストコードを実行する
+> php artisan test
 ```
 
 フロントエンド環境を構築する

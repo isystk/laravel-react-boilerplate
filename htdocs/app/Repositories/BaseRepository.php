@@ -5,7 +5,7 @@ namespace App\Repositories;
 abstract class BaseRepository
 {
 
-    protected $model;
+    protected mixed $model;
 
     public function __construct()
     {
@@ -13,44 +13,60 @@ abstract class BaseRepository
     }
 
 
-    // Create a new record
-    public function create(array $data)
+    /**
+     * @param array $data
+     * @return mixed
+     */
+    // @phpstan-ignore-next-line
+    public function create(array $data): mixed
     {
         return $this->model->create($data);
     }
 
-    // Update a record by ID
-    public function update($id, array $data)
+    /**
+     * @param int $id
+     * @param array $data
+     * @return mixed
+     */
+    // @phpstan-ignore-next-line
+    public function update(int $id, array $data): mixed
     {
         $record = $this->findById($id);
 
-        if ($record) {
-            $record->update($data);
-            return $record;
+        if (null === $record) {
+            throw new \RuntimeException('An unexpected error occurred.');
         }
 
-        return null;
+        $record->update($data);
+        return $record;
     }
 
-    // Delete a record by ID
-    public function delete($id)
+    /**
+     * @param int $id
+     */
+    public function delete(int $id): void
     {
         $record = $this->findById($id);
 
-        if ($record) {
-            $record->delete();
-            return true;
+        if (null === $record) {
+            throw new \RuntimeException('An unexpected error occurred.');
         }
 
-        return false;
+        $record->delete();
     }
 
-    // Find a record by ID
-    public function findById($id)
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function findById(int $id): mixed
     {
         return $this->model->find($id);
     }
 
-    abstract public function model();
+    /**
+     * @return string
+     */
+    abstract protected function model(): string;
 
 }

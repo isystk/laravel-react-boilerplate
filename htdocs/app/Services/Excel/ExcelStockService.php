@@ -2,6 +2,7 @@
 
 namespace App\Services\Excel;
 
+use App\Models\Stock;
 use App\Services\StockService;
 use Closure;
 use Illuminate\Support\Collection;
@@ -163,6 +164,9 @@ class ExcelStockService implements FromCollection, WithEvents
                 $stocks = $this->stockService->list(0);
                 $datas = [];
                 foreach ($stocks as $key => $stock) {
+                    if (!$stock instanceof Stock) {
+                        throw new \RuntimeException('An unexpected error occurred.');
+                    }
                     $cellnum = ($key + 2);
                     // 枠線
                     $event->writer->getSheetByIndex(0)->getDelegate()->getStyle('A' . $cellnum . ':C' . $cellnum)->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);

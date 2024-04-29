@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class Cart extends Model
 {
-    /**
-     * @var string[]
-     */
     protected $fillable = [
         'stock_id',
         'user_id',

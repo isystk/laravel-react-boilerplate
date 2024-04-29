@@ -12,7 +12,7 @@ class StockRepository extends BaseRepository
     /**
      * @return string
      */
-    function model()
+    protected function model(): string
     {
         return Stock::class;
     }
