@@ -3,12 +3,12 @@
 namespace App\Services;
 
 use App\Enums\ErrorType;
+use App\Repositories\StockRepository;
+use App\Utils\UploadImage;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Utils\UploadImage;
-use App\Repositories\StockRepository;
 
 class StockService extends BaseService
 {
@@ -18,7 +18,7 @@ class StockService extends BaseService
     protected StockRepository $stockRepository;
 
     public function __construct(
-        Request         $request,
+        Request $request,
         StockRepository $stockRepository
     )
     {
@@ -35,7 +35,7 @@ class StockService extends BaseService
         return $this->stockRepository->findAll(
             $this->request()->name,
             [
-                'limit' => $limit
+                'limit' => $limit,
             ]);
     }
 
@@ -54,10 +54,8 @@ class StockService extends BaseService
      */
     public function save(int $stockId = null): array
     {
-
         // 画像ファイルを公開ディレクトリへ配置する。
         if ($this->request()->has('imageBase64') && $this->request()->imageBase64 !== null) {
-
             $tmpFile = UploadImage::convertBase64($this->request()->imageBase64);
             $fileName = $this->request()->fileName;
 
@@ -73,13 +71,12 @@ class StockService extends BaseService
 
         DB::beginTransaction();
         try {
-
             $model = [
-                    'name' => $this->request()->input('name'),
-                    'detail' => $this->request()->input('detail'),
-                    'price' => $this->request()->input('price'),
-                    'quantity' => $this->request()->input('quantity'),
-                ];
+                'name' => $this->request()->input('name'),
+                'detail' => $this->request()->input('detail'),
+                'price' => $this->request()->input('price'),
+                'quantity' => $this->request()->input('quantity'),
+            ];
             if (!empty($fileName)) {
                 $model['imgpath'] = $fileName;
             }
@@ -91,7 +88,6 @@ class StockService extends BaseService
                     $stockId,
                     $model
                 );
-
             } else {
                 // 新規登録
 
@@ -112,7 +108,6 @@ class StockService extends BaseService
             DB::rollBack();
             return [false, ErrorType::FATAL, $e];
         }
-
     }
 
     /**

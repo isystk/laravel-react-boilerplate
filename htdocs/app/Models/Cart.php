@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Stock;
 
 class Cart extends Model
 {
@@ -13,7 +12,8 @@ class Cart extends Model
      * @var string[]
      */
     protected $fillable = [
-        'stock_id', 'user_id',
+        'stock_id',
+        'user_id',
     ];
 
     /**

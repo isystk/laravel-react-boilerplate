@@ -19,7 +19,6 @@ class PhotoService extends BaseService
      */
     public function list(): array
     {
-
         $name = $this->request()->name;
 
         $photos = [];
@@ -30,7 +29,7 @@ class PhotoService extends BaseService
             if (empty($name) || strpos($fileName, $name) !== false) {
                 $photo = (object)[
                     'type' => 'default',
-                    'fileName' => $fileName
+                    'fileName' => $fileName,
                 ];
                 array_push($photos, $photo);
             }
@@ -42,7 +41,7 @@ class PhotoService extends BaseService
             if (empty($name) || strpos($fileName, $name) !== false) {
                 $photo = (object)[
                     'type' => 'stock',
-                    'fileName' => $fileName
+                    'fileName' => $fileName,
                 ];
                 array_push($photos, $photo);
             }
@@ -57,7 +56,6 @@ class PhotoService extends BaseService
      */
     public function delete(string $type, string $fileName): void
     {
-
         if ($type === 'stock') {
             $delPath = 'stock/' . $fileName;
             Storage::delete($delPath);

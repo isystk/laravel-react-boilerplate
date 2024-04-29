@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Enums\ErrorType;
 use App\Http\Controllers\ApiController;
 use App\Http\Requests\StoreContactFormRequest;
-
 use App\Services\ContactFormService;
 use Illuminate\Http\JsonResponse;
 
@@ -38,7 +37,7 @@ class ContactFormController extends ApiController
             $result = [
                 'result' => false,
                 'error' => [
-                    'messages' => [$e->getMessage()]
+                    'messages' => [$e->getMessage()],
                 ],
             ];
             return $this->resConversionJson($result, $e->getCode());

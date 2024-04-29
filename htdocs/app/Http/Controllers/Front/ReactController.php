@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Front;
 
-use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\View\View;
 
 class ReactController extends Controller
 {

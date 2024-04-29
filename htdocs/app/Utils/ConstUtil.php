@@ -2,8 +2,8 @@
 
 namespace App\Utils;
 
-use App\Enums\Gender;
 use App\Enums\Age;
+use App\Enums\Gender;
 
 class ConstUtil
 {
@@ -13,7 +13,6 @@ class ConstUtil
      */
     public static function searchConst(): array
     {
-
         $gender = [];
         foreach (Gender::cases() as $e) {
             $gender[] = (object)[
@@ -33,16 +32,16 @@ class ConstUtil
         return [
             [
                 'name' => 'stripe_key',
-                'data' => env('STRIPE_KEY')
+                'data' => env('STRIPE_KEY'),
             ],
             [
                 'name' => 'gender',
-                'data' => $gender
+                'data' => $gender,
             ],
             [
                 'name' => 'age',
-                'data' => $age
-            ]
+                'data' => $age,
+            ],
         ];
     }
 }

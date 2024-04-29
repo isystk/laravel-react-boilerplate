@@ -4,13 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\ErrorType;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreContactFormRequest;
+use App\Models\ContactForm;
+use App\Services\ContactFormService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreContactFormRequest;
-use App\Models\ContactForm;
-
-use App\Services\ContactFormService;
 use Illuminate\View\View;
 
 class ContactFormController extends Controller
@@ -32,7 +31,6 @@ class ContactFormController extends Controller
      */
     public function index(Request $request): View
     {
-
         $search = $request->input('search');
 
         $contacts = $this->contactFormService->list();
@@ -75,7 +73,6 @@ class ContactFormController extends Controller
      */
     public function update(StoreContactFormRequest $request, ContactForm $contact): RedirectResponse
     {
-
         [$contactForm, $type, $exception] = $this->contactFormService->save($contact->id);
         if (!$contactForm) {
             if ($type === ErrorType::NOT_FOUND) {

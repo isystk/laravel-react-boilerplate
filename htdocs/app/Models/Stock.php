@@ -11,7 +11,7 @@ class Stock extends Model
      * @var string[]
      */
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     // 子テーブル

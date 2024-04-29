@@ -2,9 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Models\ContactForm;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
-use App\Models\ContactForm;
 
 class ContactFormRepository extends BaseRepository
 {

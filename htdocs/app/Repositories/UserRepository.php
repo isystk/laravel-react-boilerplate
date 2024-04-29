@@ -32,7 +32,7 @@ class UserRepository extends BaseRepository
         if (!empty($email)) {
             $query
                 ->where([
-                    'email' => $email
+                    'email' => $email,
                 ]);
         }
 

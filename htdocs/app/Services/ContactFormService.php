@@ -3,13 +3,13 @@
 namespace App\Services;
 
 use App\Enums\ErrorType;
+use App\Repositories\ContactFormImageRepository;
+use App\Repositories\ContactFormRepository;
+use App\Utils\UploadImage;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Repositories\ContactFormRepository;
-use App\Repositories\ContactFormImageRepository;
-use App\Utils\UploadImage;
 
 class ContactFormService extends BaseService
 {
@@ -24,8 +24,8 @@ class ContactFormService extends BaseService
     protected ContactFormImageRepository $contactFormImageRepository;
 
     public function __construct(
-        Request                    $request,
-        ContactFormRepository      $contactFormRepository,
+        Request $request,
+        ContactFormRepository $contactFormRepository,
         ContactFormImageRepository $contactFormImageRepository
     )
     {
@@ -63,7 +63,6 @@ class ContactFormService extends BaseService
     {
         // 画像ファイルを公開ディレクトリへ配置する。
         if ($this->request()->has('imageBase64') && $this->request()->imageBase64 !== null) {
-
             $file = UploadImage::convertBase64($this->request()->imageBase64);
             $fileName = time() . $this->request()->fileName;
 
@@ -78,7 +77,6 @@ class ContactFormService extends BaseService
 
         DB::beginTransaction();
         try {
-
             $model = [
                 'your_name' => $this->request()->input('your_name'),
                 'title' => $this->request()->input('title'),
@@ -86,7 +84,7 @@ class ContactFormService extends BaseService
                 'url' => $this->request()->input('url'),
                 'gender' => $this->request()->input('gender'),
                 'age' => $this->request()->input('age'),
-                'contact' => $this->request()->input('contact')
+                'contact' => $this->request()->input('contact'),
             ];
 
             if ($contactFormId) {
@@ -109,9 +107,7 @@ class ContactFormService extends BaseService
                             'file_name' => $fileName,
                         ]
                     );
-
                 }
-
             } else {
                 // 新規登録
 
@@ -142,7 +138,6 @@ class ContactFormService extends BaseService
             DB::rollBack();
             return [false, ErrorType::FATAL, $e];
         }
-
     }
 
     /**

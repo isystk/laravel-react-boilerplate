@@ -26,7 +26,7 @@ class ContactFormImageRepository extends BaseRepository
     {
         $query = $this->model->with($this->__with($options))
             ->where([
-                'contact_form_id' => $contactFormId
+                'contact_form_id' => $contactFormId,
             ]);
 
         $limit = !empty($options['limit']) ? (int)$options['limit'] : null;

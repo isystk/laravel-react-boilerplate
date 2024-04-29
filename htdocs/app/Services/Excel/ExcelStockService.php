@@ -2,6 +2,7 @@
 
 namespace App\Services\Excel;
 
+use App\Services\StockService;
 use Closure;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\Exportable;
@@ -11,8 +12,6 @@ use Maatwebsite\Excel\Events\BeforeExport;
 use Maatwebsite\Excel\Events\BeforeWriting;
 use Maatwebsite\Excel\Excel;
 use Maatwebsite\Excel\Files\LocalTemporaryFile;
-use App\Services\StockService;
-use Illuminate\Support\Facades\Request;
 
 class ExcelStockService implements FromCollection, WithEvents
 {
@@ -57,7 +56,8 @@ class ExcelStockService implements FromCollection, WithEvents
     {
         return [
             // ファイル生成直前イベントハンドラ
-            BeforeExport::class => function (BeforeExport $event) {
+            BeforeExport::class => function (BeforeExport $event)
+            {
                 // テンプレート読み込み
                 if (is_null($this->template_file)) {
                     return;
@@ -67,7 +67,8 @@ class ExcelStockService implements FromCollection, WithEvents
                 return $event->getWriter()->getSheetByIndex(0);
             },
             // 書き込み直前イベントハンドラ
-            BeforeWriting::class => function (BeforeWriting $event) {
+            BeforeWriting::class => function (BeforeWriting $event)
+            {
                 // テンプレート読み込みでついてくる余計な空シートを削除する
                 $event->writer->removeSheetByIndex(1);
 

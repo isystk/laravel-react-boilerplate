@@ -5,15 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\ErrorType;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\UserService;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-
-use App\Services\UserService;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UserController extends Controller
 {
@@ -35,7 +33,6 @@ class UserController extends Controller
      */
     public function index(Request $request): View|Factory|Application
     {
-
         $name = $request->input('name');
         $email = $request->input('email');
 
@@ -97,7 +94,6 @@ class UserController extends Controller
      */
     public function destroy(User $user): RedirectResponse
     {
-
         [$user, $type, $exception] = $this->userService->delete($user->id);
         if (!$user) {
             if ($type === ErrorType::NOT_FOUND) {

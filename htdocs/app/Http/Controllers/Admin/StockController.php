@@ -3,16 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreStockFormRequest;
+use App\Models\Stock;
+use App\Services\Excel\ExcelStockService;
+use App\Services\StockService;
+use App\Utils\CSVUtil;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Models\Stock;
-use App\Utils\CSVUtil;
-use App\Http\Requests\StoreStockFormRequest;
-use App\Services\StockService;
-use App\Services\Excel\ExcelStockService;
-
-use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -43,7 +42,6 @@ class StockController extends Controller
      */
     public function index(Request $request): View
     {
-
         $name = $request->input('name');
 
         $stocks = $this->stockService->list();
@@ -70,7 +68,6 @@ class StockController extends Controller
      */
     public function downloadCsv(Request $request): Response
     {
-
         $stocks = $this->stockService->list(0);
 
         $csvHeader = ['ID', '商品名', '価格'];
@@ -93,7 +90,6 @@ class StockController extends Controller
      */
     public function downloadPdf(Request $request): Response
     {
-
         $stocks = $this->stockService->list(0);
 
         $csvHeader = ['ID', '商品名', '価格'];
@@ -128,7 +124,6 @@ class StockController extends Controller
      */
     public function store(StoreStockFormRequest $request): RedirectResponse
     {
-
         $this->stockService->save();
 
         return redirect('admin/stock');
@@ -179,7 +174,6 @@ class StockController extends Controller
      */
     public function destroy(Stock $stock): RedirectResponse
     {
-
         $this->stockService->delete($stock->id);
 
         return redirect('/admin/stock');

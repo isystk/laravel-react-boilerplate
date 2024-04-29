@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\ApiController;
+use App\Models\Cart;
+use App\Models\Stock;
+use App\Services\MyCartService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Models\Stock;
-use App\Models\Cart;
-
-use App\Services\MyCartService;
 
 class ShopController extends ApiController
 {
@@ -31,13 +30,13 @@ class ShopController extends ApiController
             $stocks = Stock::Paginate(6); //Eloquantで検索
             $result = [
                 'result' => true,
-                'stocks' => $stocks
+                'stocks' => $stocks,
             ];
         } catch (\Exception $e) {
             $result = [
                 'result' => false,
                 'error' => [
-                    'messages' => [$e->getMessage()]
+                    'messages' => [$e->getMessage()],
                 ],
             ];
             return $this->resConversionJson($result, $e->getCode());
@@ -51,18 +50,17 @@ class ShopController extends ApiController
      */
     public function myCart(Cart $cart): JsonResponse
     {
-
         try {
             $carts = $this->myCartService->searchMyCart($cart);
             $result = [
                 'result' => true,
-                'carts' => $carts
+                'carts' => $carts,
             ];
         } catch (\Exception $e) {
             $result = [
                 'result' => false,
                 'error' => [
-                    'messages' => [$e->getMessage()]
+                    'messages' => [$e->getMessage()],
                 ],
             ];
             return $this->resConversionJson($result, $e->getCode());
@@ -87,13 +85,13 @@ class ShopController extends ApiController
             $result = [
                 'result' => true,
                 'message' => $message,
-                'carts' => $carts
+                'carts' => $carts,
             ];
         } catch (\Exception $e) {
             $result = [
                 'result' => false,
                 'error' => [
-                    'messages' => [$e->getMessage()]
+                    'messages' => [$e->getMessage()],
                 ],
             ];
             return $this->resConversionJson($result, $e->getCode());
@@ -118,13 +116,13 @@ class ShopController extends ApiController
             $result = [
                 'result' => true,
                 'message' => $message,
-                'carts' => $carts
+                'carts' => $carts,
             ];
         } catch (\Exception $e) {
             $result = [
                 'result' => false,
                 'error' => [
-                    'messages' => [$e->getMessage()]
+                    'messages' => [$e->getMessage()],
                 ],
             ];
             return $this->resConversionJson($result, $e->getCode());
@@ -139,14 +137,12 @@ class ShopController extends ApiController
     public function createPayment(Request $request): JsonResponse
     {
         try {
-
             $result = $this->myCartService->createPayment($request);
-
         } catch (\Exception $e) {
             $result = [
                 'result' => false,
                 'error' => [
-                    'messages' => [$e->getMessage()]
+                    'messages' => [$e->getMessage()],
                 ],
             ];
             return $this->resConversionJson($result, $e->getCode());
@@ -162,7 +158,6 @@ class ShopController extends ApiController
     public function checkout(Request $request, Cart $cart): JsonResponse
     {
         try {
-
             // 支払い処理の実行
             $this->myCartService->checkout($request, $cart);
 
@@ -171,13 +166,13 @@ class ShopController extends ApiController
 
             $result = [
                 'result' => true,
-                'carts' => $carts
+                'carts' => $carts,
             ];
         } catch (\Exception $e) {
             $result = [
                 'result' => false,
                 'error' => [
-                    'messages' => [$e->getMessage()]
+                    'messages' => [$e->getMessage()],
                 ],
             ];
             return $this->resConversionJson($result, $e->getCode());

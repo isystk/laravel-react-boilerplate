@@ -15,11 +15,10 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        if (! $request->expectsJson()) {
-
+        if (!$request->expectsJson()) {
             $uri = $request->path();
 
-            if(Str::startsWith($uri, ['admin/'])) {
+            if (Str::startsWith($uri, ['admin/'])) {
                 // URIが以下adminから始まる場合
                 return '/admin/login';
             }

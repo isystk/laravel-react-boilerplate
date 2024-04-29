@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
+use App\Repositories\OrderRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-use App\Repositories\OrderRepository;
 
 class OrderService extends BaseService
 {
@@ -15,7 +15,7 @@ class OrderService extends BaseService
     protected OrderRepository $orderRepository;
 
     public function __construct(
-        Request         $request,
+        Request $request,
         OrderRepository $orderRepository
     )
     {
@@ -32,7 +32,7 @@ class OrderService extends BaseService
         return $this->orderRepository->findAll($this->request()->name, [
             'with:user' => true,
             'with:stock' => true,
-            'limit' => $limit
+            'limit' => $limit,
         ]);
     }
 

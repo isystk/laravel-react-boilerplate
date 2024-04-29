@@ -3,12 +3,12 @@
 namespace App\Services;
 
 use App\Enums\ErrorType;
+use App\Repositories\UserRepository;
 use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Repositories\UserRepository;
 use PDOException;
 
 class UserService extends BaseService
@@ -20,7 +20,7 @@ class UserService extends BaseService
     protected UserRepository $userRepository;
 
     public function __construct(
-        Request        $request,
+        Request $request,
         UserRepository $userRepository
     )
     {
@@ -38,7 +38,7 @@ class UserService extends BaseService
             $this->request()->name,
             $this->request()->email,
             [
-                'limit' => $limit
+                'limit' => $limit,
             ]);
     }
 
@@ -57,10 +57,8 @@ class UserService extends BaseService
      */
     public function save(int $userId = null): array
     {
-
         DB::beginTransaction();
         try {
-
             if ($userId) {
                 // 変更
 
@@ -68,22 +66,20 @@ class UserService extends BaseService
                     $userId,
                     [
                         'name' => $this->request()->input('name'),
-                        'email' => $this->request()->input('email')
+                        'email' => $this->request()->input('email'),
                     ]
                 );
-
             } else {
                 // 新規登録
 
                 $user = $this->userRepository->create(
                     [
                         'name' => $this->request()->input('name'),
-                        'email' => $this->request()->input('email')
+                        'email' => $this->request()->input('email'),
                     ],
                 );
 
                 $id = $user->id;
-
             }
 
             DB::commit();
@@ -96,7 +92,6 @@ class UserService extends BaseService
             DB::rollBack();
             return [false, ErrorType::FATAL, $e];
         }
-
     }
 
     /**

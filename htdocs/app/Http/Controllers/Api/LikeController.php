@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\ApiController;
+use App\Utils\CookieUtil;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Utils\CookieUtil;
 
 class LikeController extends ApiController
 {
@@ -22,14 +22,14 @@ class LikeController extends ApiController
             $result = [
                 'result' => true,
                 'likes' => [
-                    'data' => $likes
-                ]
+                    'data' => $likes,
+                ],
             ];
         } catch (\Exception $e) {
             $result = [
                 'result' => false,
                 'error' => [
-                    'messages' => [$e->getMessage()]
+                    'messages' => [$e->getMessage()],
                 ],
             ];
             return $this->resConversionJson($result, $e->getCode());
@@ -55,7 +55,7 @@ class LikeController extends ApiController
             $result = [
                 'result' => false,
                 'error' => [
-                    'messages' => [$e->getMessage()]
+                    'messages' => [$e->getMessage()],
                 ],
             ];
             return $this->resConversionJson($result, $e->getCode());
@@ -80,7 +80,7 @@ class LikeController extends ApiController
             $result = [
                 'result' => false,
                 'error' => [
-                    'messages' => [$e->getMessage()]
+                    'messages' => [$e->getMessage()],
                 ],
             ];
             return $this->resConversionJson($result, $e->getCode());

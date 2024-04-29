@@ -25,7 +25,8 @@ class OrderRepository extends BaseRepository
     public function findAll(?string $userName, array $options = []): Collection|LengthAwarePaginator
     {
         $query = $this->model->with($this->__with($options))
-            ->whereHas('user', function ($query) use ($userName) {
+            ->whereHas('user', function ($query) use ($userName)
+            {
                 $query->where('name', 'like', "%$userName%");
             })
             ->orderBy('created_at', 'desc')

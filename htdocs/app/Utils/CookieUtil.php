@@ -34,7 +34,6 @@ class CookieUtil
         $likes = self::getLike();
 
         if (!in_array($value, $likes)) {
-
             // 配列に含まれない場合に追加
             array_push($likes, $value);
 
@@ -54,7 +53,6 @@ class CookieUtil
         $likes = self::getLike();
 
         if (in_array($value, $likes)) {
-
             // 配列に含まる場合に削除
             $key = array_search($value, $likes);
             array_splice($likes, $key);

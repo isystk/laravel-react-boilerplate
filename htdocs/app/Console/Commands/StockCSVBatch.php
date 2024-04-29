@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Services\StockService;
+use App\Utils\CSVUtil;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use App\Utils\CSVUtil;
-use App\Services\StockService;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
 class StockCSVBatch extends Command

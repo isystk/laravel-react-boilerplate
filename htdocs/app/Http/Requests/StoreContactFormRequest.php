@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Utils\UploadImage;
+use Illuminate\Foundation\Http\FormRequest;
 
 class StoreContactFormRequest extends FormRequest
 {
@@ -48,9 +48,12 @@ class StoreContactFormRequest extends FormRequest
             'age' => 'required',
             'contact' => 'required|string|max:200',
             'url' => 'url|nullable',
-            'imageFile' => 'nullable|image|mimes:jpeg,png|max:100000000|dimensions:max_width=1200,max_height=1200', // ファイルのバリデーションよしなに。
-            'imageBase64' => 'nullable|string', // 画像データをbase64で文字列としても受け入れる。バリデーションルールはimageFileが適用される。
-            'fileName' => 'nullable|string', // 画像ファイル名
+            'imageFile' => 'nullable|image|mimes:jpeg,png|max:100000000|dimensions:max_width=1200,max_height=1200',
+            // ファイルのバリデーションよしなに。
+            'imageBase64' => 'nullable|string',
+            // 画像データをbase64で文字列としても受け入れる。バリデーションルールはimageFileが適用される。
+            'fileName' => 'nullable|string',
+            // 画像ファイル名
         ];
 
         // $id = $this->get('id');

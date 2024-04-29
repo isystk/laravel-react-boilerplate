@@ -2,15 +2,15 @@
 
 namespace App\Services;
 
+use App\Mail\MailNotification;
 use App\Models\Cart;
 use App\Repositories\CartRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\StockRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Mail\MailNotification;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Stripe\Exception\ApiErrorException;
 use Stripe\PaymentIntent;
 
@@ -32,7 +32,7 @@ class MyCartService extends BaseService
     protected CartRepository $cartRepository;
 
     public function __construct(
-        Request         $request,
+        Request $request,
         StockRepository $stockRepository,
         OrderRepository $orderRepository,
         CartRepository $cartRepository,
@@ -60,7 +60,8 @@ class MyCartService extends BaseService
     private function convertToMycart(Cart $cart): array
     {
         $carts = $cart->showCart();
-        $datas = $carts['data']->map(function ($cart, $key) {
+        $datas = $carts['data']->map(function ($cart, $key)
+        {
             $data = [];
             $data['id'] = $cart->stock->id;
             $data['name'] = $cart->stock->name;
@@ -73,7 +74,7 @@ class MyCartService extends BaseService
             'data' => $datas,
             'username' => Auth::user()->email,
             'count' => $carts['count'],
-            'sum' => $carts['sum']
+            'sum' => $carts['sum'],
         ];
     }
 
@@ -113,8 +114,8 @@ class MyCartService extends BaseService
             'currency' => 'jpy',
             'description' => 'LaraEC',
             'metadata' => [
-                'username' => $request->username
-            ]
+                'username' => $request->username,
+            ],
         ]);
     }
 
@@ -163,7 +164,7 @@ class MyCartService extends BaseService
                 $this->stockRepository->update(
                     $stock->id,
                     [
-                        'quantity' => $quantity
+                        'quantity' => $quantity,
                     ]
                 );
 
