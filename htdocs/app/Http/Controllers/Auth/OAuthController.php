@@ -8,7 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
-class OAuthBaseController extends BaseController
+class OAuthController extends BaseController
 {
     /**
      * Create a new controller instance.

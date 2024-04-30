@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\BaseController;
 use Illuminate\Contracts\Support\Renderable;
 
-class HomeBaseController extends BaseController
+class HomeController extends BaseController
 {
     /**
      * Create a new controller instance.

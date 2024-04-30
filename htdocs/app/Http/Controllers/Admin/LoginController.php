@@ -11,7 +11,7 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
-class LoginBaseController extends BaseController
+class LoginController extends BaseController
 {
     /**
      * Create a new controller instance.

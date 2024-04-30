@@ -8,7 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class PhotoBaseController extends BaseController
+class PhotoController extends BaseController
 {
     /**
      * Create a new controller instance.

@@ -8,7 +8,7 @@ use App\Services\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class OrderBaseController extends BaseController
+class OrderController extends BaseController
 {
     /**
      * Create a new controller instance.

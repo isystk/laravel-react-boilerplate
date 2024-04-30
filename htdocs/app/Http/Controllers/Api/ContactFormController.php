@@ -8,7 +8,7 @@ use App\Services\ContactFormService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
-class ContactFormControllerBase extends BaseApiController
+class ContactFormController extends BaseApiController
 {
     /**
      * Create a new controller instance.

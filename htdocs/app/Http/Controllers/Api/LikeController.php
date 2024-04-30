@@ -6,7 +6,7 @@ use App\Utils\CookieUtil;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class LikeControllerBase extends BaseApiController
+class LikeController extends BaseApiController
 {
     /**
      * Create a new controller instance.

@@ -6,7 +6,7 @@ use App\Utils\ConstUtil;
 use Illuminate\Http\JsonResponse;
 
 
-class ConstControllerBase extends BaseApiController
+class ConstController extends BaseApiController
 {
 
     /**

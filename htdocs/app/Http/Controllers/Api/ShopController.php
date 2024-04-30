@@ -8,7 +8,7 @@ use App\Services\MyCartService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class ShopControllerBase extends BaseApiController
+class ShopController extends BaseApiController
 {
     /**
      * Create a new controller instance.

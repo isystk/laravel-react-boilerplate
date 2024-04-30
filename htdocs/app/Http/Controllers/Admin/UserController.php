@@ -14,7 +14,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class UserBaseController extends BaseController
+class UserController extends BaseController
 {
     /**
      * Create a new controller instance.
