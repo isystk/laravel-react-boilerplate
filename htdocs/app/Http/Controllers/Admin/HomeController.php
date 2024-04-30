@@ -14,11 +14,10 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-//        $this->middleware('auth:admin');
     }
 
     /**
-     * Show the application dashboard.
+     * ホーム画面の初期表示
      *
      * @return Renderable
      */

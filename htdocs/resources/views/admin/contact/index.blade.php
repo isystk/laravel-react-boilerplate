@@ -32,7 +32,7 @@
                                 class="form-control"
                                 size="10"
                                 maxlength="100"
-                                value="{{ $search }}"
+                                value="{{ $request->search }}"
                             />
                         </div>
                     </div>
@@ -44,7 +44,7 @@
         </form>
     </div>
     <form action="{{ route('admin.contact') }}" method="GET" id="pagingForm">
-        <input type="hidden" name="search" value="{{ $search }}">
+        <input type="hidden" name="search" value="{{ $request->search }}">
     </form>
     <div class="row">
         <div class="col-12">

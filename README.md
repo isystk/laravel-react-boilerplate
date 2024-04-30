@@ -120,6 +120,7 @@ https://laraec.isystk.com/admin/
 
 ※ この環境を利用する為には、事前にdocker、docker-composeが動作する状態であることが前提条件です。
 (Windowsの場合は、以下を参考に「WSL」と「Docker Desktop for Windows」を用意してください)
+Github CodeSpace を利用する場合は、Dockerの起動から進めてください。
 
 ### WSLのインストール（Windowsの場合）
 参考
@@ -148,31 +149,17 @@ docker --version
 ```
 
 ### WSL2から、Docker for Windows を利用できるようにする（Windowsの場合）
-参考
-https://qiita.com/endo_hizumi/items/0cc50bdfbd827579733e
+
 ```
-１．通知領域から、dockerのアイコンを右クリックして、Settingを選択
-２．Generalのexpose deamon on~~のチェックを入れます。
+１．Docker Desktop を開いて、Settingを開く
+２．Resourcesの「Enable integration with my default WSL distro」にチェックをつけてWSLから Docker 統合を有効にする
 ３．ResourcesのWSL INTEGRATION から、"Ubuntu" をスイッチをONにします。
-
-WSL 側のルートを Docker for Windows に合わせるように WSL のマウント設定を行います。
-$ vi /etc/wsl.conf
----
-[automount]
-root = /
-options = "metadata"
----
-
-以下のように Cドライブのパスが"/mnt/c/"→"/c/" に変更されていれば正常です。
-$ cd /c/Users/USER/github/laravel-react-boilerplate
-$ pwd
-/c/Users/USER/github/laravel-react-boilerplate
 
 # WSL 上にDockerとDocker Composeをインストールする。
 $ apt install docker
 $ apt install docker-compose
 
-これでWSLからWindows側にインストールしたDockerが利用できるようになります。
+これでWSLで起動したDockerコンテナがホストマシン側で利用できるようになります。
 ```
 
 ### MySQL Client のインストール

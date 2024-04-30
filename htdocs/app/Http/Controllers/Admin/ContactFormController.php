@@ -15,46 +15,41 @@ use Illuminate\View\View;
 class ContactFormController extends Controller
 {
     /**
-     * @var ContactFormService
+     * Create a new controller instance.
+     *
+     * @return void
      */
-    protected ContactFormService $contactFormService;
-
-    public function __construct(ContactFormService $contactFormService)
+    public function __construct()
     {
-        $this->contactFormService = $contactFormService;
     }
 
     /**
-     * Display a listing of the resource.
+     * お問い合わせ一覧の初期表示
      *
      * @param Request $request
      * @return View
      */
     public function index(Request $request): View
     {
-        $search = $request->input('search');
+        $service = app(ContactFormService::class);
+        $contacts = $service->list();
 
-        $contacts = $this->contactFormService->list();
-
-        return view('admin.contact.index', compact('contacts', 'search'));
+        return view('admin.contact.index', compact('contacts', 'request'));
     }
 
     /**
-     * Display the specified resource.
+     * お問い合わせ詳細画面の初期表示
      *
      * @param ContactForm $contact
      * @return View
      */
     public function show(ContactForm $contact): View
     {
-        // $contactFormImages = $contact->contactFormImages;
-        // dd($contactFormImages);
-
-        return view('admin.contact.show', compact('contact'));
+         return view('admin.contact.show', compact('contact'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * お問い合わせ変更画面の初期表示
      *
      * @param ContactForm $contact
      * @return View
@@ -65,7 +60,7 @@ class ContactFormController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * お問い合わせ変更画面の登録処理
      *
      * @param StoreContactFormRequest $request
      * @param ContactForm $contact
