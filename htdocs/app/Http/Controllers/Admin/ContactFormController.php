@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Domain\Entities\ContactForm;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\StoreContactFormRequest;
+use App\Services\Admin\ContactForm\IndexService;
 use App\Services\ContactFormService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
@@ -31,8 +32,9 @@ class ContactFormController extends BaseController
      */
     public function index(Request $request): View
     {
-        $service = app(ContactFormService::class);
-        $contacts = $service->list();
+        /** @var IndexService $service */
+        $service = app(IndexService::class);
+        $contacts = $service->searchContactForm();
 
         return view('admin.contact.index', compact('contacts', 'request'));
     }
@@ -71,6 +73,7 @@ class ContactFormController extends BaseController
     {
         DB::beginTransaction();
         try {
+            /** @var ContactFormService $service */
             $service = app(ContactFormService::class);
             $service->save($contact->id);
             DB::commit();
@@ -93,6 +96,7 @@ class ContactFormController extends BaseController
     {
         DB::beginTransaction();
         try {
+            /** @var ContactFormService $service */
             $service = app(ContactFormService::class);
             $service->delete($contact->id);
             DB::commit();

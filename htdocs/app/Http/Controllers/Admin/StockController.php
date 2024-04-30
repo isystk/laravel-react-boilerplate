@@ -36,6 +36,7 @@ class StockController extends BaseController
      */
     public function index(Request $request): View
     {
+        /** @var StockService $service */
         $service = app(StockService::class);
         $stocks = $service->list();
 
@@ -50,6 +51,7 @@ class StockController extends BaseController
      */
     public function downloadExcel(Request $request): Response|BinaryFileResponse
     {
+        /** @var ExcelStockService $service */
         $service = app(ExcelStockService::class);
         return $service->setTemplate(resource_path('excel/template.xlsx'))
             ->download('stocks.xlsx');
@@ -64,6 +66,7 @@ class StockController extends BaseController
      */
     public function downloadCsv(Request $request): Response
     {
+        /** @var StockService $service */
         $service = app(StockService::class);
         $stocks = $service->list(0);
 
@@ -90,6 +93,7 @@ class StockController extends BaseController
      */
     public function downloadPdf(Request $request): Response
     {
+        /** @var StockService $service */
         $service = app(StockService::class);
         $stocks = $service->list(0);
 
@@ -106,8 +110,9 @@ class StockController extends BaseController
             $csvBody[] = $line;
         }
 
-        $service = app(PDF::class);
-        return $service->loadView('admin.stock.pdf', compact('csvHeader', 'csvBody'))
+        /** @var PDF $pdf */
+        $pdf = app(PDF::class);
+        return $pdf->loadView('admin.stock.pdf', compact('csvHeader', 'csvBody'))
             ->download('stocks.pdf');
     }
 
@@ -133,6 +138,7 @@ class StockController extends BaseController
     {
         DB::beginTransaction();
         try {
+            /** @var StockService $service */
             $service = app(StockService::class);
             $service->save();
             DB::commit();
@@ -178,6 +184,7 @@ class StockController extends BaseController
     {
         DB::beginTransaction();
         try {
+            /** @var StockService $service */
             $service = app(StockService::class);
             $service->save($stock->id);
             DB::commit();
@@ -199,6 +206,7 @@ class StockController extends BaseController
     {
         DB::beginTransaction();
         try {
+            /** @var StockService $service */
             $service = app(StockService::class);
             $service->delete($stock->id);
             DB::commit();

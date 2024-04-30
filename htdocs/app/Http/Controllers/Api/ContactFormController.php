@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Enums\ErrorType;
 use App\Http\Requests\StoreContactFormRequest;
 use App\Services\ContactFormService;
 use Illuminate\Http\JsonResponse;
@@ -30,6 +29,7 @@ class ContactFormController extends BaseApiController
     {
         DB::beginTransaction();
         try {
+            /** @var ContactFormService $service */
             $service = app(ContactFormService::class);
             $service->save();
             DB::commit();

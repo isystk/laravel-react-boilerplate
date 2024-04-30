@@ -2,6 +2,8 @@
 
 namespace App\Domain\Repositories;
 
+use Illuminate\Support\Collection;
+
 interface BaseRepository
 {
     /**
@@ -23,6 +25,11 @@ interface BaseRepository
      * @param int $id
      */
     public function delete(int $id): void;
+
+    /**
+     * @return Collection
+     */
+    public function getAll(): Collection;
 
     /**
      * @param int $id

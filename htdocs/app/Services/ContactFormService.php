@@ -4,15 +4,10 @@ namespace App\Services;
 
 use App\Domain\Entities\ContactForm;
 use App\Domain\Entities\ContactFormImage;
-use App\Domain\Repositories\ContactForm\ContactFormEloquentEloquentRepository;
 use App\Domain\Repositories\ContactForm\ContactFormImageRepository;
 use App\Domain\Repositories\ContactForm\ContactFormRepository;
-use App\Enums\ErrorType;
 use App\Utils\UploadImage;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ContactFormService extends BaseService
 {
@@ -35,18 +30,6 @@ class ContactFormService extends BaseService
         parent::__construct($request);
         $this->contactFormRepository = $contactFormRepository;
         $this->contactFormImageRepository = $contactFormImageRepository;
-    }
-
-    /**
-     * @param int $limit
-     * @return Collection|LengthAwarePaginator|array<string>
-     */
-    public function list(int $limit = 20): Collection|LengthAwarePaginator|array
-    {
-        return $this->contactFormRepository->findAll($this->request()->search, [
-            'with:images' => true,
-            'limit' => $limit,
-        ]);
     }
 
     /**

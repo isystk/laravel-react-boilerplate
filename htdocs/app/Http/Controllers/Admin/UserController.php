@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Domain\Entities\User;
-use App\Enums\ErrorType;
 use App\Http\Controllers\BaseController;
 use App\Services\UserService;
 use Exception;
@@ -33,6 +32,7 @@ class UserController extends BaseController
      */
     public function index(Request $request): View|Factory|Application
     {
+        /** @var UserService $service */
         $service = app(UserService::class);
         $users = $service->list();
 
@@ -74,6 +74,7 @@ class UserController extends BaseController
     {
         DB::beginTransaction();
         try {
+            /** @var UserService $service */
             $service = app(UserService::class);
             $service->save($user->id);
             DB::commit();
@@ -95,6 +96,7 @@ class UserController extends BaseController
     {
         DB::beginTransaction();
         try {
+            /** @var UserService $service */
             $service = app(UserService::class);
             $service->delete($user->id);
             DB::commit();

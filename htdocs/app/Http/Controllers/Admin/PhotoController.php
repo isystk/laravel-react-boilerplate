@@ -27,6 +27,7 @@ class PhotoController extends BaseController
      */
     public function index(Request $request): View
     {
+        /** @var PhotoService $service */
         $service = app(PhotoService::class);
         $photos = $service->list();
 
@@ -45,6 +46,7 @@ class PhotoController extends BaseController
         $type = $request->type;
         $fileName = $request->fileName;
 
+        /** @var PhotoService $service */
         $service = app(PhotoService::class);
         $service->delete($type, $fileName);
 

@@ -27,6 +27,7 @@ class OrderController extends BaseController
      */
     public function index(Request $request): View
     {
+        /** @var OrderService $service */
         $service = app(OrderService::class);
         $orders = $service->list();
 

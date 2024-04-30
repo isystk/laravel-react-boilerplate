@@ -9,10 +9,14 @@ use App\Domain\Repositories\BaseRepository;
 interface ContactFormRepository extends BaseRepository
 {
     /**
-     * @param string|null $yourName
-     * @param array<string, mixed>|array<int, string> $options
+     * 検索条件からデータを取得します。
+     * @param array{
+     *   your_name : ?string,
+     *   title : ?string,
+     *   limit : ?int,
+     * } $conditions
      * @return Collection|LengthAwarePaginator
      */
-    public function findAll(?string $yourName, array $options = []): Collection|LengthAwarePaginator;
+    public function getByConditions(array $conditions): Collection|LengthAwarePaginator;
 
 }

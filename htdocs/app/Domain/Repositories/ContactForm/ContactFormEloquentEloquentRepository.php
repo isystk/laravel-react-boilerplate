@@ -19,45 +19,31 @@ class ContactFormEloquentEloquentRepository extends BaseEloquentRepository imple
     }
 
     /**
-     * @param string|null $yourName
-     * @param array<string, mixed>|array<int, string> $options
+     * 検索条件からデータを取得します。
+     * @param array{
+     *   your_name : ?string,
+     *   title : ?string,
+     *   limit : ?int,
+     * } $conditions
      * @return Collection|LengthAwarePaginator
      */
-    public function findAll(?string $yourName, array $options = []): Collection|LengthAwarePaginator
+    public function getByConditions(array $conditions): Collection|LengthAwarePaginator
     {
-        $query = $this->model->with($this->__with($options))
-            ->orderBy('created_at', 'desc')
+        $query = $this->model
+            ->with([
+                'contactFormImages'
+            ])
+            ->orderBy('updated_at', 'desc')
             ->orderBy('id', 'asc');
 
-        // もしキーワードがあったら
-        if ($yourName !== null) {
-            // 全角スペースを半角に
-            $search_split = mb_convert_kana($yourName, 's');
-
-            // 空白で区切る
-            $search_split2 = preg_split('/[\s]+/', $search_split);
-
-            // 単語をループで回す
-            foreach ($search_split2 as $value) {
-                $query->where('your_name', 'like', '%' . $value . '%');
-            }
+        if (null !== $conditions['your_name']) {
+            $query->where('your_name', 'like', '%' . $conditions['your_name'] . '%');
+        }
+        if (null !== $conditions['title']) {
+            $query->where('title', 'like', '%' . $conditions['title'] . '%');
         }
 
-        $limit = !empty($options['limit']) ? (int)$options['limit'] : null;
-        return $limit > 0 ? $query->paginate($limit) : $query->get();
-    }
-
-    /**
-     * @param array<string, mixed>|array<int, string> $options
-     * @return array<int, string>
-     */
-    private function __with($options = [])
-    {
-        $with = [];
-        if (!empty($options['with:images'])) {
-            $with[] = 'contactFormImages';
-        }
-        return $with;
+        return null !== $conditions['limit'] ? $query->paginate($conditions['limit']) : $query->get();
     }
 
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Domain\Entities\Cart;
 use App\Domain\Entities\Stock;
 use App\Services\MyCartService;
+use App\Services\StockService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -27,6 +28,9 @@ class ShopController extends BaseApiController
     {
         try {
             $stocks = Stock::Paginate(6); // TODO Eloquantで検索
+//            /** @var StockService $service */
+//            $service = app(StockService::class);
+//            $stocks = $service->list($cart);
             $result = [
                 'result' => true,
                 'stocks' => $stocks,
@@ -51,6 +55,7 @@ class ShopController extends BaseApiController
     public function myCart(Cart $cart): JsonResponse
     {
         try {
+            /** @var MyCartService $service */
             $service = app(MyCartService::class);
             $carts = $service->searchMyCart($cart);
             $result = [
@@ -78,6 +83,7 @@ class ShopController extends BaseApiController
     public function addMycart(Request $request, Cart $cart): JsonResponse
     {
         try {
+            /** @var MyCartService $service */
             $service = app(MyCartService::class);
             //カートに追加の処理
             $message = $service->addMyCart($cart, $request->stock_id);
@@ -111,6 +117,7 @@ class ShopController extends BaseApiController
     public function deleteCart(Request $request, Cart $cart): JsonResponse
     {
         try {
+            /** @var MyCartService $service */
             $service = app(MyCartService::class);
             //カートから削除の処理
             $message =$service->deleteMyCart($cart, $request->stock_id);
@@ -143,6 +150,7 @@ class ShopController extends BaseApiController
     public function createPayment(Request $request): JsonResponse
     {
         try {
+            /** @var MyCartService $service */
             $service = app(MyCartService::class);
             $result = $service->createPayment($request);
         } catch (\Exception $e) {
@@ -166,6 +174,7 @@ class ShopController extends BaseApiController
     public function checkout(Request $request, Cart $cart): JsonResponse
     {
         try {
+            /** @var MyCartService $service */
             $service = app(MyCartService::class);
             // 支払い処理の実行
             $service->checkout($request, $cart);

@@ -28,11 +28,24 @@
                         <div class="col-sm-4">
                             <input
                                 type="text"
-                                name="search"
+                                name="userName"
                                 class="form-control"
                                 size="10"
                                 maxlength="100"
-                                value="{{ $request->search }}"
+                                value="{{ $request->userName }}"
+                            />
+                        </div>
+                    </div>
+                    <div class="control-group mt-3" id="userName">
+                        <label class="col-sm-2 control-label">{{ __('contact.Title') }}</label>
+                        <div class="col-sm-4">
+                            <input
+                                type="text"
+                                name="title"
+                                class="form-control"
+                                size="10"
+                                maxlength="100"
+                                value="{{ $request->title }}"
                             />
                         </div>
                     </div>
@@ -44,7 +57,8 @@
         </form>
     </div>
     <form action="{{ route('admin.contact') }}" method="GET" id="pagingForm">
-        <input type="hidden" name="search" value="{{ $request->search }}">
+        <input type="hidden" name="userName" value="{{ $request->userName }}">
+        <input type="hidden" name="title" value="{{ $request->title }}">
     </form>
     <div class="row">
         <div class="col-12">
@@ -68,7 +82,7 @@
                             <tr>
                                 <th>{{ $contact->id }}</th>
                                 <td>{{ $contact->your_name }}</td>
-                                <td>@php echo mb_strimwidth($contact->title, 0, 50, '...') @endphp</td>
+                                <td>{{ $contact->title }}</td>
                                 <td>{{ $contact->created_at }}</td>
                                 <td>
                                     <a

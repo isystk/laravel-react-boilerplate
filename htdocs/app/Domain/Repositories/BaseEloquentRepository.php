@@ -3,6 +3,7 @@
 namespace App\Domain\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 abstract class BaseEloquentRepository implements BaseRepository
 {
@@ -55,6 +56,14 @@ abstract class BaseEloquentRepository implements BaseRepository
         }
 
         $record->delete();
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getAll(): Collection
+    {
+        return $this->model->all();
     }
 
     /**
