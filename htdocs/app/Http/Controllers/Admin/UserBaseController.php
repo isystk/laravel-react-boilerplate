@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Domain\Entities\User;
 use App\Enums\ErrorType;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseController;
 use App\Services\UserService;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
@@ -14,34 +14,34 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class UserController extends Controller
+class UserBaseController extends BaseController
 {
     /**
-     * @var UserService
+     * Create a new controller instance.
+     *
+     * @return void
      */
-    protected UserService $userService;
-
-    public function __construct(UserService $userService)
+    public function __construct()
     {
-        $this->userService = $userService;
     }
 
     /**
-     * Display a listing of the resource.
+     * 顧客一覧画面の初期表示
      *
      * @param Request $request
      * @return Application|Factory|View
      */
     public function index(Request $request): View|Factory|Application
     {
-        $users = $this->userService->list();
+        $service = app(UserService::class);
+        $users = $service->list();
 
         return view('admin.user.index', compact('users', 'request'));
     }
 
 
     /**
-     * Display the specified resource.
+     * 顧客詳細画面の初期表示
      *
      * @param User $user
      * @return View
@@ -52,7 +52,7 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * 顧客変更画面の初期表示
      *
      * @param User $user
      * @return View
@@ -63,7 +63,7 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * 顧客変更画面の登録処理
      *
      * @param Request $request
      * @param User $user
@@ -74,17 +74,18 @@ class UserController extends Controller
     {
         DB::beginTransaction();
         try {
-            $this->userService->save($user->id);
+            $service = app(UserService::class);
+            $service->save($user->id);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
         }
-        return redirect('admin/user');
+        return redirect(route('admin.user'));
     }
 
     /**
-     * Remove the specified resource from storage.
+     * 顧客詳細画面の削除処理
      *
      * @param User $user
      * @return RedirectResponse
@@ -94,12 +95,13 @@ class UserController extends Controller
     {
         DB::beginTransaction();
         try {
-            $this->userService->delete($user->id);
+            $service = app(UserService::class);
+            $service->delete($user->id);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
         }
-        return redirect('/admin/user');
+        return redirect(route('admin.user'));
     }
 }

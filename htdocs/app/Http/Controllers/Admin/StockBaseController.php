@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Domain\Entities\Stock;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseController;
 use App\Http\Requests\StoreStockFormRequest;
 use App\Services\Excel\ExcelStockService;
 use App\Services\StockService;
@@ -17,59 +17,55 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class StockController extends Controller
+class StockBaseController extends BaseController
 {
     /**
-     * @var StockService
-     * @var ExcelStockService
-     * @var PDF
+     * Create a new controller instance.
+     *
+     * @return void
      */
-    protected StockService $stockService;
-    protected ExcelStockService $excelStockService;
-    protected PDF $pdfService;
-
-    public function __construct(StockService $stockService, ExcelStockService $excelStockService, PDF $pdfService)
+    public function __construct()
     {
-        $this->stockService = $stockService;
-        $this->excelStockService = $excelStockService;
-        $this->pdfService = $pdfService;
     }
 
     /**
-     * Display a listing of the resource.
+     * 商品一覧画面の初期表示
      *
      * @param Request $request
      * @return View
      */
     public function index(Request $request): View
     {
-        $name = $request->input('name');
+        $service = app(StockService::class);
+        $stocks = $service->list();
 
-        $stocks = $this->stockService->list();
-
-        return view('admin.stock.index', compact('stocks', 'name'));
+        return view('admin.stock.index', compact('stocks', 'request'));
     }
 
     /**
-     * Display a listing of the resource.
+     * 商品一覧画面のExcelダウンロード処理
      *
      * @param Request $request
      * @return BinaryFileResponse|Response
      */
     public function downloadExcel(Request $request): Response|BinaryFileResponse
     {
-        return $this->excelStockService->setTemplate(resource_path('excel/template.xlsx'))->download('stocks.xlsx');
+        $service = app(ExcelStockService::class);
+        return $service->setTemplate(resource_path('excel/template.xlsx'))
+            ->download('stocks.xlsx');
     }
 
     /**
-     * Display a listing of the resource.
+     * 商品一覧画面のCSVダウンロード処理
      *
+     * @param Request $request
      * @return Response
      * @throws BindingResolutionException
      */
     public function downloadCsv(Request $request): Response
     {
-        $stocks = $this->stockService->list(0);
+        $service = app(StockService::class);
+        $stocks = $service->list(0);
 
         $csvHeader = ['ID', '商品名', '価格'];
         $csvBody = [];
@@ -87,14 +83,15 @@ class StockController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * 商品一覧画面のPDFダウンロード処理
      *
      * @param Request $request
      * @return Response
      */
     public function downloadPdf(Request $request): Response
     {
-        $stocks = $this->stockService->list(0);
+        $service = app(StockService::class);
+        $stocks = $service->list(0);
 
         $csvHeader = ['ID', '商品名', '価格'];
         $csvBody = [];
@@ -109,13 +106,15 @@ class StockController extends Controller
             $csvBody[] = $line;
         }
 
-        $pdf = $this->pdfService->loadView('admin.stock.pdf', compact('csvHeader', 'csvBody'));
-        return $pdf->download('stocks.pdf');
+        $service = app(PDF::class);
+        return $service->loadView('admin.stock.pdf', compact('csvHeader', 'csvBody'))
+            ->download('stocks.pdf');
     }
 
     /**
-     * Display a listing of the resource.
+     * 商品登録画面の初期表示
      *
+     * @param Request $request
      * @return View
      */
     public function create(Request $request): View
@@ -124,7 +123,7 @@ class StockController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * 商品登録画面の登録処理
      *
      * @param StoreStockFormRequest $request
      * @return RedirectResponse
@@ -134,18 +133,19 @@ class StockController extends Controller
     {
         DB::beginTransaction();
         try {
-            $this->stockService->save();
+            $service = app(StockService::class);
+            $service->save();
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
         }
-        return redirect('admin/stock');
+        return redirect(route('admin.stock'));
     }
 
 
     /**
-     * Display the specified resource.
+     * 商品詳細画面の登録処理
      *
      * @param Stock $stock
      * @return View
@@ -156,7 +156,7 @@ class StockController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * 商品変更画面の初期表示
      *
      * @param Stock $stock
      * @return View
@@ -167,7 +167,7 @@ class StockController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * 商品変更画面の登録処理
      *
      * @param StoreStockFormRequest $request
      * @param Stock $stock
@@ -178,17 +178,18 @@ class StockController extends Controller
     {
         DB::beginTransaction();
         try {
-            $this->stockService->save($stock->id);
+            $service = app(StockService::class);
+            $service->save($stock->id);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
         }
-        return redirect('admin/stock');
+        return redirect(route('admin.stock'));
     }
 
     /**
-     * Remove the specified resource from storage.
+     * 商品詳細画面の削除処理
      *
      * @param Stock $stock
      * @return RedirectResponse
@@ -198,12 +199,13 @@ class StockController extends Controller
     {
         DB::beginTransaction();
         try {
-            $this->stockService->delete($stock->id);
+            $service = app(StockService::class);
+            $service->delete($stock->id);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
         }
-        return redirect('/admin/stock');
+        return redirect(route('admin.stock'));
     }
 }

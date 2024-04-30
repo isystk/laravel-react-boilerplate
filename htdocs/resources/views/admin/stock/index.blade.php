@@ -42,7 +42,7 @@
                                 class="form-control"
                                 size="10"
                                 maxlength="100"
-                                value="{{ $name }}"
+                                value="{{ $request->name }}"
                             >
                         </div>
                     </div>
@@ -54,7 +54,7 @@
         </form>
     </div>
     <form action="{{ route('admin.stock') }}" method="GET" id="pagingForm">
-        <input type="hidden" name="name" value="{{ $name }}">
+        <input type="hidden" name="name" value="{{ $request->name }}">
     </form>
     <div class="row">
         <div class="col-12">

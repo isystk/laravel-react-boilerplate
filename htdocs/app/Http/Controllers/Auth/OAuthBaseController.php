@@ -3,13 +3,22 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Domain\Entities\User;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseController;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
-class OAuthController extends Controller
+class OAuthBaseController extends BaseController
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+    }
+
     /**
      * 各SNSのOAuth認証画面にリダイレクトして認証
      * @param string $provider サービス名
@@ -29,7 +38,7 @@ class OAuthController extends Controller
     {
         // @phpstan-ignore-next-line
         $socialUser = Socialite::driver($provider)->stateless()->user();
-        $user = User::firstOrNew(['email' => $socialUser->getEmail()]);
+        $user = User::firstOrNew(['email' => $socialUser->getEmail()]); // TODO Eloquantで検索
 
         // すでに会員になっている場合の処理を書く
         // そのままログインさせてもいいかもしれない
@@ -44,6 +53,6 @@ class OAuthController extends Controller
 
         Auth::login($user);
 
-        return redirect('/home');
+        return redirect(route('home'));
     }
 }

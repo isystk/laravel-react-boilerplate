@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseController;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
@@ -11,26 +11,8 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
-class LoginController extends Controller
+class LoginBaseController extends BaseController
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected string $redirectTo = '/admin/home';
-
     /**
      * Create a new controller instance.
      *
@@ -38,10 +20,13 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest:admin')->except('logout');
+        // 未ログインのユーザーのみアクセスを許可する（logout関数を除く）
+        $this->middleware('guest:admin')
+            ->except('logout');
     }
 
     /**
+     * ログイン画面の初期表示
      * @return View
      */
     public function showLoginForm(): View
@@ -50,6 +35,7 @@ class LoginController extends Controller
     }
 
     /**
+     * ログイン画面の初期表示
      * @return StatefulGuard
      */
     protected function guard(): StatefulGuard
@@ -58,7 +44,7 @@ class LoginController extends Controller
     }
 
     /**
-     * Validate the user login request.
+     * ログイン画面のログインチェック
      *
      * @param Request $request
      * @return void
@@ -75,36 +61,42 @@ class LoginController extends Controller
     }
 
     /**
+     * ログイン画面のログイン処理
+     *
      * @param Request $request
      * @return Application|\Illuminate\Foundation\Application|RedirectResponse|Redirector
      */
-    public function login(Request $request)
+    public function login(Request $request): \Illuminate\Foundation\Application|Redirector|Application|RedirectResponse
     {
+        // ログインチェック
         $this->validateLogin($request);
 
         $credentials = $request->only(['email', 'password']);
 
-        if (\Auth::guard('admin')->attempt($credentials)) {
-            return redirect($this->redirectTo); // ログインしたらリダイレクト
-
+        if (Auth::guard('admin')->attempt($credentials)) {
+            // ログインが成功したら、ホーム画面にリダイレクトする
+            return redirect(route('admin.home'));
         }
 
+        // 認証に失敗した場合は、元画面にエラーを表示する。
         return back()->withErrors([
             'auth' => ['認証に失敗しました'],
         ]);
     }
 
     /**
+     * ログアウト処理
      * @param Request $request
      * @return RedirectResponse
      */
     public function logout(Request $request): RedirectResponse
     {
+        // ログアウト処理
         Auth::guard('admin')->logout();
         $request->session()->flush();
         $request->session()->regenerate();
 
-        return redirect('/admin/login');
+        // ログアウト後は、ログイン画面にリダイレクトする
+        return redirect(route('admin.login'));
     }
-
 }

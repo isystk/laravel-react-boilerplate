@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Domain\Entities\ContactForm;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseController;
 use App\Http\Requests\StoreContactFormRequest;
 use App\Services\ContactFormService;
 use Exception;
@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
-class ContactFormController extends Controller
+class ContactFormBaseController extends BaseController
 {
     /**
      * Create a new controller instance.
@@ -71,7 +71,8 @@ class ContactFormController extends Controller
     {
         DB::beginTransaction();
         try {
-            $this->contactFormService->save($contact->id);
+            $service = app(ContactFormService::class);
+            $service->save($contact->id);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
@@ -81,6 +82,7 @@ class ContactFormController extends Controller
     }
 
     /**
+     * お問い合わせ詳細画面の削除処理
      * Remove the specified resource from storage.
      *
      * @param ContactForm $contact
@@ -91,7 +93,8 @@ class ContactFormController extends Controller
     {
         DB::beginTransaction();
         try {
-            $this->contactFormService->delete($contact->id);
+            $service = app(ContactFormService::class);
+            $service->delete($contact->id);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();

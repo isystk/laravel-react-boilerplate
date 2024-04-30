@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseController;
 use Illuminate\Contracts\View\View;
 
-class ReactController extends Controller
+class ReactController extends BaseController
 {
     /**
+     * フロントの初期表示（表示後はReactのRouterに任せる）
+     *
      * @return View
      */
     public function index(): View

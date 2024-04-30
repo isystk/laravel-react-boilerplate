@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\ApiController;
 use App\Utils\CookieUtil;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class LikeController extends ApiController
+class LikeControllerBase extends BaseApiController
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+    }
 
     /**
-     * Display a listing of the resource.
+     * お気に入りデータをJSONで返却します。
      *
      * @return JsonResponse
      */
@@ -38,7 +45,7 @@ class LikeController extends ApiController
     }
 
     /**
-     * Store a newly created resource in storage.
+     * お気に入りに追加します。
      *
      * @param Request $request
      * @return JsonResponse
@@ -64,7 +71,7 @@ class LikeController extends ApiController
     }
 
     /**
-     * Remove the specified resource from storage.
+     * お気に入りから削除します。
      *
      * @param string $id
      * @return JsonResponse

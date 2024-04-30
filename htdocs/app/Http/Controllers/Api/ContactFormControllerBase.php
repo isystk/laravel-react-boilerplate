@@ -3,26 +3,24 @@
 namespace App\Http\Controllers\Api;
 
 use App\Enums\ErrorType;
-use App\Http\Controllers\ApiController;
 use App\Http\Requests\StoreContactFormRequest;
 use App\Services\ContactFormService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
-class ContactFormController extends ApiController
+class ContactFormControllerBase extends BaseApiController
 {
     /**
-     * @var ContactFormService
+     * Create a new controller instance.
+     *
+     * @return void
      */
-    protected ContactFormService $contactFormService;
-
-    public function __construct(ContactFormService $contactFormService)
+    public function __construct()
     {
-        $this->contactFormService = $contactFormService;
     }
 
     /**
-     * Store a newly created resource in storage.
+     * お問い合わせ内容を登録します。
      *
      * @param StoreContactFormRequest $request
      * @return JsonResponse
@@ -32,7 +30,8 @@ class ContactFormController extends ApiController
     {
         DB::beginTransaction();
         try {
-            $this->contactFormService->save();
+            $service = app(ContactFormService::class);
+            $service->save();
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();

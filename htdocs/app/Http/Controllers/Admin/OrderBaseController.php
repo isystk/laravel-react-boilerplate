@@ -3,39 +3,38 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Domain\Entities\Order;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseController;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class OrderController extends Controller
+class OrderBaseController extends BaseController
 {
     /**
-     * @var OrderService
+     * Create a new controller instance.
+     *
+     * @return void
      */
-    protected OrderService $orderService;
-
-    public function __construct(OrderService $orderService)
+    public function __construct()
     {
-        $this->orderService = $orderService;
     }
 
     /**
-     * Display a listing of the resource.
+     * 注文履歴一覧画面の初期表示
      *
      * @param Request $request
      * @return View
      */
     public function index(Request $request): View
     {
-        $name = $request->name;
-        $orders = $this->orderService->list();
+        $service = app(OrderService::class);
+        $orders = $service->list();
 
-        return view('admin.order.index', compact('orders', 'name'));
+        return view('admin.order.index', compact('orders', 'request'));
     }
 
     /**
-     * Display the specified resource.
+     * 注文履歴詳細画面の初期表示
      *
      * @param Order $order
      * @return View

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseController;
 use Illuminate\Contracts\Support\Renderable;
 
-class HomeController extends Controller
+class HomeBaseController extends BaseController
 {
     /**
      * Create a new controller instance.

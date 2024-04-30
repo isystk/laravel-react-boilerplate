@@ -79,14 +79,13 @@ services:
     image: minio/minio:RELEASE.2021-10-10T16-53-30Z
     container_name: laraec-s3
     ports:
-      - "9000:9000"
       - "9001:9001"
     environment:
       MINIO_ACCESS_KEY: "access_key"
       MINIO_SECRET_KEY: "secret_key"
     command: [ "--compat", "server", "/data", "--console-address", ":9001" ]
     volumes:
-      - ./s3/data:/data
+      - s3-store:/data
 
   # ↓ ここから、Seleniumでテストをしたい場合に必要
 #  selenium-hub:
@@ -108,3 +107,4 @@ services:
 
 volumes:
   db-store:
+  s3-store:
