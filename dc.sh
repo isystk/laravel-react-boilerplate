@@ -19,11 +19,7 @@ Options:
   mysql login              MySQLデータベースにログインします。
   mysql export <PAHT>      MySQLデータベースのdumpファイルをエクスポートします。
   mysql import <PAHT>      MySQLデータベースにdumpファイルをインポートします。
-  mysql restart            MySQLデータベースを再起動します。
   php login                PHP-FPMのサーバーにログインします。
-  php cache                Laravelのキャッシュをリフレッシュします。
-  build                    フロントエンドをビルドします。
-  build prod               本番用にフロントエンドをビルドします。
   --version, -v     バージョンを表示します。
   --help, -h        ヘルプを表示します。
 EOF
@@ -45,7 +41,6 @@ case ${1} in
         rm -Rf ./mysql/logs && mkdir ./mysql/logs && chmod 777 ./mysql/logs
         rm -Rf ./apache/logs && mkdir ./apache/logs && chmod 777 ./apache/logs
         rm -Rf ./php/logs && mkdir ./php/logs && chmod 777 ./php/logs
-        rm -Rf ./s3/data && mkdir ./s3/data && chmod 777 ./s3/data
         popd
         chmod 777 ./htdocs
     ;;
@@ -62,9 +57,6 @@ case ${1} in
 
     apache)
       case ${2} in
-          login)
-              $DOCKER_COMPOSE exec apache /bin/sh
-          ;;
           restart)
               $DOCKER_COMPOSE restart apache
           ;;
@@ -86,9 +78,6 @@ case ${1} in
               mysql -u root -h 127.0.0.1 --default-character-set=utf8mb4 < ${3}
               $DOCKER_COMPOSE restart mysql
           ;;
-          restart)
-              $DOCKER_COMPOSE restart mysql
-          ;;
           *)
               usage
           ;;
@@ -100,41 +89,8 @@ case ${1} in
           login)
               $DOCKER_COMPOSE exec php /bin/bash
           ;;
-          cache)
-              $DOCKER_COMPOSE exec php /bin/bash -c "php artisan route:clear && rm htdocs/bootstrap/cache/config.php && php artisan cache:clear && php artisan route:cache && php artisan config:cache "
-          ;;
           *)
               usage
-          ;;
-      esac
-    ;;
-    
-    aws)
-      case ${2} in
-          local)
-              $DOCKER_COMPOSE exec awscli /bin/bash
-          ;;
-          *)
-              usage
-          ;;
-      esac
-    ;;
-    
-    build)
-      case ${2} in
-          prod)
-              pushd htdocs
-              mv .env .env_bk
-              cp .env.production .env
-              yarn run prod
-              rm .env
-              mv .env_bk .env
-              popd
-          ;;
-          *)
-              pushd htdocs
-              yarn run dev
-              popd
           ;;
       esac
     ;;

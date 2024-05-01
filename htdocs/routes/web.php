@@ -37,14 +37,14 @@ Route::prefix('admin')->group(function () {
         Route::post('stock/{stock}/update', [App\Http\Controllers\Admin\StockController::class, 'update'])->name('admin.stock.update');
         Route::post('stock/{stock}/destroy', [App\Http\Controllers\Admin\StockController::class, 'destroy'])->name('admin.stock.destroy');
 
-        Route::get('order', [App\Http\Controllers\Admin\OrderController::class, 'index'])->name('admin.order');
-        Route::get('order/{order}', [App\Http\Controllers\Admin\OrderController::class, 'show'])->name('admin.order.show');
+        Route::get('order', [\App\Http\Controllers\Admin\Order\OrderController::class, 'index'])->name('admin.order');
+        Route::get('order/{order}', [\App\Http\Controllers\Admin\Order\OrderController::class, 'show'])->name('admin.order.show');
 
-        Route::get('contact', [App\Http\Controllers\Admin\ContactFormController::class, 'index'])->name('admin.contact');
-        Route::get('contact/{contact}', [App\Http\Controllers\Admin\ContactFormController::class, 'show'])->name('admin.contact.show');
-        Route::get('contact/{contact}/edit', [App\Http\Controllers\Admin\ContactFormController::class, 'edit'])->name('admin.contact.edit');
-        Route::post('contact/{contact}/update', [App\Http\Controllers\Admin\ContactFormController::class, 'update'])->name('admin.contact.update');
-        Route::post('contact/{contact}/destroy', [App\Http\Controllers\Admin\ContactFormController::class, 'destroy'])->name('admin.contact.destroy');
+        Route::get('contact', [\App\Http\Controllers\Admin\ContactForm\ListController::class, 'index'])->name('admin.contact');
+        Route::get('contact/{contact}', [\App\Http\Controllers\Admin\ContactForm\DetailController::class, 'show'])->name('admin.contact.show');
+        Route::post('contact/{contact}/destroy', [\App\Http\Controllers\Admin\ContactForm\DetailController::class, 'destroy'])->name('admin.contact.destroy');
+        Route::get('contact/{contact}/edit', [\App\Http\Controllers\Admin\ContactForm\EditController::class, 'edit'])->name('admin.contact.edit');
+        Route::post('contact/{contact}/update', [\App\Http\Controllers\Admin\ContactForm\EditController::class, 'update'])->name('admin.contact.update');
 
         Route::get('photo', [App\Http\Controllers\Admin\PhotoController::class, 'index'])->name('admin.photo');
         Route::post('photo/destroy', [App\Http\Controllers\Admin\PhotoController::class, 'destroy'])->name('admin.photo.destroy');

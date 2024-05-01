@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\StoreContactFormRequest;
-use App\Services\ContactFormService;
+use App\Services\Api\ContactForm\StoreService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
@@ -29,8 +29,8 @@ class ContactFormController extends BaseApiController
     {
         DB::beginTransaction();
         try {
-            /** @var ContactFormService $service */
-            $service = app(ContactFormService::class);
+            /** @var StoreService $service */
+            $service = app(StoreService::class);
             $service->save();
             DB::commit();
         } catch (\Exception $e) {

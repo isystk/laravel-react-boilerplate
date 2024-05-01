@@ -232,9 +232,7 @@ Options:
   mysql login              MySQLデータベースにログインします。
   mysql export <PAHT>      MySQLデータベースのdumpファイルをエクスポートします。
   mysql import <PAHT>      MySQLデータベースにdumpファイルをインポートします。
-  mysql restart            MySQLデータベースを再起動します。
   php login                PHP-FPMのサーバーにログインします。
-  php cache                Laravelのキャッシュをクリアします。
   --version, -v     バージョンを表示します。
   --help, -h        ヘルプを表示します。
 ```
