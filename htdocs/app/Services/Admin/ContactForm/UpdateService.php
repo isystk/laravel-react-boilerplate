@@ -6,6 +6,7 @@ use App\Domain\Entities\ContactForm;
 use App\Domain\Entities\ContactFormImage;
 use App\Domain\Repositories\ContactForm\ContactFormImageRepository;
 use App\Domain\Repositories\ContactForm\ContactFormRepository;
+use App\Enums\PhotoType;
 use App\Services\BaseService;
 use App\Utils\UploadImage;
 use Illuminate\Http\Request;
@@ -75,7 +76,7 @@ class UpdateService extends BaseService
             );
 
             //s3に画像をアップロード
-            $file->storeAs('contact/', $fileName);
+            $file->storeAs(PhotoType::Contact->dirName() . '/', $fileName);
         }
 
         return $contactForm;

@@ -1,20 +1,16 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Api\Shop;
 
 use App\Domain\Entities\Cart;
-use App\Domain\Repositories\Cart\CartRepository;
 use App\Domain\Repositories\Order\OrderRepository;
 use App\Domain\Repositories\Stock\StockRepository;
 use App\Mail\MailNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use Stripe\Exception\ApiErrorException;
-use Stripe\PaymentIntent;
 
-class MyCartService extends BaseService
+class CheckoutService extends BaseShopService
 {
     /**
      * @var StockRepository
@@ -26,97 +22,15 @@ class MyCartService extends BaseService
      */
     protected OrderRepository $orderRepository;
 
-    /**
-     * @var CartRepository
-     */
-    protected CartRepository $cartRepository;
-
     public function __construct(
         Request $request,
         StockRepository $stockRepository,
-        OrderRepository $orderRepository,
-        CartRepository $cartRepository,
+        OrderRepository $orderRepository
     )
     {
         parent::__construct($request);
         $this->stockRepository = $stockRepository;
         $this->orderRepository = $orderRepository;
-        $this->cartRepository = $cartRepository;
-    }
-
-    /**
-     * @param Cart $cart
-     * @return array<string>
-     */
-    public function searchMyCart(Cart $cart): array
-    {
-        return $this->convertToMycart($cart);
-    }
-
-    /**
-     * @param Cart $cart
-     * @return array<string, string>
-     */
-    private function convertToMycart(Cart $cart): array
-    {
-        $carts = $cart->showCart();
-        $datas = $carts['data']->map(function ($cart, $key)
-        {
-            $data = [];
-            $data['id'] = $cart->stock->id;
-            $data['name'] = $cart->stock->name;
-            $data['price'] = $cart->stock->price;
-            $data['imgpath'] = $cart->stock->imgpath;
-            return $data;
-        });
-
-        return [
-            'data' => $datas,
-            'username' => Auth::user()->email,
-            'count' => $carts['count'],
-            'sum' => $carts['sum'],
-        ];
-    }
-
-    /**
-     * @param Cart $cart
-     * @param string $stock_id
-     * @return string
-     */
-    public function addMyCart(Cart $cart, string $stock_id)
-    {
-        //カートに追加の処理
-        return $cart->addCart($stock_id);
-    }
-
-    /**
-     * @param Cart $cart
-     * @param string $stock_id
-     * @return string
-     */
-    public function deleteMyCart(Cart $cart, string $stock_id)
-    {
-        //カートから削除の処理
-        return $cart->deleteCart($stock_id);
-    }
-
-    /**
-     * @param Request $request
-     * @return PaymentIntent
-     * @throws ApiErrorException
-     */
-    public function createPayment(Request $request): PaymentIntent
-    {
-        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
-
-        return $stripe->paymentIntents->create([
-            'amount' => $request->amount,
-            'currency' => 'jpy',
-            'description' => 'LaraEC',
-            'metadata' => [
-                'username' => $request->username,
-            ],
-        ]);
     }
 
     /**

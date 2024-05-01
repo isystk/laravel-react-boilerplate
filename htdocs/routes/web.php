@@ -20,25 +20,25 @@ Route::prefix('admin')->group(function () {
         Route::post('logout', [App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('admin.logout');
         Route::get('home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
 
-        Route::get('user', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('admin.user');
-        Route::get('user/{user}', [App\Http\Controllers\Admin\UserController::class, 'show'])->name('admin.user.show');
-        Route::get('user/{user}/edit', [App\Http\Controllers\Admin\UserController::class, 'edit'])->name('admin.user.edit');
-        Route::post('user/{user}/update', [App\Http\Controllers\Admin\UserController::class, 'update'])->name('admin.user.update');
-        Route::post('user/{user}/destroy', [App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('admin.user.destroy');
+        Route::get('user', [\App\Http\Controllers\Admin\User\ListController::class, 'index'])->name('admin.user');
+        Route::get('user/{user}', [\App\Http\Controllers\Admin\User\DetailController::class, 'show'])->name('admin.user.show');
+        Route::post('user/{user}/destroy', [\App\Http\Controllers\Admin\User\DetailController::class, 'destroy'])->name('admin.user.destroy');
+        Route::get('user/{user}/edit', [\App\Http\Controllers\Admin\User\EditController::class, 'edit'])->name('admin.user.edit');
+        Route::post('user/{user}/update', [\App\Http\Controllers\Admin\User\EditController::class, 'update'])->name('admin.user.update');
 
-        Route::get('stock', [App\Http\Controllers\Admin\StockController::class, 'index'])->name('admin.stock');
-        Route::get('stock/downloadExcel', [App\Http\Controllers\Admin\StockController::class, 'downloadExcel'])->name('admin.stock.downloadExcel');
-        Route::get('stock/downloadCsv', [App\Http\Controllers\Admin\StockController::class, 'downloadCsv'])->name('admin.stock.downloadCsv');
-        Route::get('stock/downloadPdf', [App\Http\Controllers\Admin\StockController::class, 'downloadPdf'])->name('admin.stock.downloadPdf');
-        Route::get('stock/create', [App\Http\Controllers\Admin\StockController::class, 'create'])->name('admin.stock.create');
-        Route::post('stock/store', [App\Http\Controllers\Admin\StockController::class, 'store'])->name('admin.stock.store');
-        Route::get('stock/{stock}', [App\Http\Controllers\Admin\StockController::class, 'show'])->name('admin.stock.show');
-        Route::get('stock/{stock}/edit', [App\Http\Controllers\Admin\StockController::class, 'edit'])->name('admin.stock.edit');
-        Route::post('stock/{stock}/update', [App\Http\Controllers\Admin\StockController::class, 'update'])->name('admin.stock.update');
-        Route::post('stock/{stock}/destroy', [App\Http\Controllers\Admin\StockController::class, 'destroy'])->name('admin.stock.destroy');
+        Route::get('stock', [\App\Http\Controllers\Admin\Stock\ListController::class, 'index'])->name('admin.stock');
+        Route::get('stock/downloadExcel', [\App\Http\Controllers\Admin\Stock\ListController::class, 'downloadExcel'])->name('admin.stock.downloadExcel');
+        Route::get('stock/downloadCsv', [\App\Http\Controllers\Admin\Stock\ListController::class, 'downloadCsv'])->name('admin.stock.downloadCsv');
+        Route::get('stock/downloadPdf', [\App\Http\Controllers\Admin\Stock\ListController::class, 'downloadPdf'])->name('admin.stock.downloadPdf');
+        Route::get('stock/create', [\App\Http\Controllers\Admin\Stock\CreateController::class, 'create'])->name('admin.stock.create');
+        Route::post('stock/store', [\App\Http\Controllers\Admin\Stock\CreateController::class, 'store'])->name('admin.stock.store');
+        Route::get('stock/{stock}', [\App\Http\Controllers\Admin\Stock\DetailController::class, 'show'])->name('admin.stock.show');
+        Route::post('stock/{stock}/destroy', [\App\Http\Controllers\Admin\Stock\DetailController::class, 'destroy'])->name('admin.stock.destroy');
+        Route::get('stock/{stock}/edit', [\App\Http\Controllers\Admin\Stock\EditController::class, 'edit'])->name('admin.stock.edit');
+        Route::post('stock/{stock}/update', [\App\Http\Controllers\Admin\Stock\EditController::class, 'update'])->name('admin.stock.update');
 
-        Route::get('order', [\App\Http\Controllers\Admin\Order\OrderController::class, 'index'])->name('admin.order');
-        Route::get('order/{order}', [\App\Http\Controllers\Admin\Order\OrderController::class, 'show'])->name('admin.order.show');
+        Route::get('order', [\App\Http\Controllers\Admin\Order\ListController::class, 'index'])->name('admin.order');
+        Route::get('order/{order}', [\App\Http\Controllers\Admin\Order\DetailController::class, 'show'])->name('admin.order.show');
 
         Route::get('contact', [\App\Http\Controllers\Admin\ContactForm\ListController::class, 'index'])->name('admin.contact');
         Route::get('contact/{contact}', [\App\Http\Controllers\Admin\ContactForm\DetailController::class, 'show'])->name('admin.contact.show');
@@ -46,8 +46,8 @@ Route::prefix('admin')->group(function () {
         Route::get('contact/{contact}/edit', [\App\Http\Controllers\Admin\ContactForm\EditController::class, 'edit'])->name('admin.contact.edit');
         Route::post('contact/{contact}/update', [\App\Http\Controllers\Admin\ContactForm\EditController::class, 'update'])->name('admin.contact.update');
 
-        Route::get('photo', [App\Http\Controllers\Admin\PhotoController::class, 'index'])->name('admin.photo');
-        Route::post('photo/destroy', [App\Http\Controllers\Admin\PhotoController::class, 'destroy'])->name('admin.photo.destroy');
+        Route::get('photo', [\App\Http\Controllers\Admin\Photo\ListController::class, 'index'])->name('admin.photo');
+        Route::post('photo/destroy', [\App\Http\Controllers\Admin\Photo\ListController::class, 'destroy'])->name('admin.photo.destroy');
     });
 });
 

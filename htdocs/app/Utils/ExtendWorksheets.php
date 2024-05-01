@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Excel;
+namespace App\Utils;
 
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\RichText\RichText;

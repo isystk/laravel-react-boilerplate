@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Photo;
 
 use App\Http\Controllers\BaseController;
-use App\Services\PhotoService;
+use App\Services\Admin\Photo\DestroyService;
+use App\Services\Admin\Photo\IndexService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class PhotoController extends BaseController
+class ListController extends BaseController
 {
     /**
      * Create a new controller instance.
@@ -27,9 +28,9 @@ class PhotoController extends BaseController
      */
     public function index(Request $request): View
     {
-        /** @var PhotoService $service */
-        $service = app(PhotoService::class);
-        $photos = $service->list();
+        /** @var IndexService $service */
+        $service = app(IndexService::class);
+        $photos = $service->searchPhotoList();
 
         return view('admin.photo.index', compact('photos', 'request'));
     }
@@ -45,8 +46,8 @@ class PhotoController extends BaseController
     {
         $fileName = $request->fileName;
 
-        /** @var PhotoService $service */
-        $service = app(PhotoService::class);
+        /** @var DestroyService $service */
+        $service = app(DestroyService::class);
         $service->delete($fileName);
 
         return redirect(route('admin.photo'));

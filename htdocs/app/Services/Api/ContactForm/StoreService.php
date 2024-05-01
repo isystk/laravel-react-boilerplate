@@ -6,6 +6,7 @@ use App\Domain\Entities\ContactForm;
 use App\Domain\Entities\ContactFormImage;
 use App\Domain\Repositories\ContactForm\ContactFormImageRepository;
 use App\Domain\Repositories\ContactForm\ContactFormRepository;
+use App\Enums\PhotoType;
 use App\Services\BaseService;
 use App\Utils\UploadImage;
 use Illuminate\Http\Request;
@@ -47,72 +48,44 @@ class StoreService extends BaseService
      */
     public function save(): ContactForm
     {
-        // 画像ファイルを公開ディレクトリへ配置する。
-        if ($this->request()->has('imageBase64') && $this->request()->imageBase64 !== null) {
-            $file = UploadImage::convertBase64($this->request()->imageBase64);
-            $fileName = time() . $this->request()->fileName;
-
-            //s3に画像をアップロード
-            $file->storeAs('', $fileName);
-
-            // $target_path = public_path('uploads/');
-            // $file->move($target_path, $fileName);
-        } else {
-            $fileName = "";
-        }
-
+        $request = $this->request();
         $model = [
-            'your_name' => $this->request()->input('your_name'),
-            'title' => $this->request()->input('title'),
-            'email' => $this->request()->input('email'),
-            'url' => $this->request()->input('url'),
-            'gender' => $this->request()->input('gender'),
-            'age' => $this->request()->input('age'),
-            'contact' => $this->request()->input('contact'),
+            'your_name' => $request->your_name,
+            'title' => $request->title,
+            'email' => $request->email,
+            'url' => $request->url,
+            'gender' => $request->gender,
+            'age' => $request->age,
+            'contact' => $request->contact,
         ];
 
-        if ($contactFormId) {
-            // 変更
+        $contactForm = $this->contactFormRepository->create(
+            $model
+        );
 
-            $contactForm = $this->contactFormRepository->update(
-                $contactFormId,
-                $model
-            );
+        $contactFormId = $contactForm['id'];
 
-            // お問い合わせ画像テーブルを登録（Delete→Insert）
-            if ($fileName !== "") {
-                $contactFormImages = $this->contactFormImageRepository->findAll($contactFormId);
-                foreach ($contactFormImages as $contactFormImage) {
-                    if (!$contactFormImage instanceof ContactFormImage) {
-                        throw new \RuntimeException('An unexpected error occurred.');
-                    }
-                    $this->contactFormImageRepository->delete($contactFormImage->id);
+        // お問い合わせ画像テーブルを登録（Delete→Insert）
+        if (null !== $request->imageBase64) {
+            $file = UploadImage::convertBase64($request->imageBase64);
+            $fileName = time() . $request->fileName;
+
+            $contactFormImages = $this->contactFormImageRepository->findAll($contactFormId);
+            foreach ($contactFormImages as $contactFormImage) {
+                if (!$contactFormImage instanceof ContactFormImage) {
+                    throw new \RuntimeException('An unexpected error occurred.');
                 }
-                $this->contactFormImageRepository->create(
-                    [
-                        'contact_form_id' => $contactFormId,
-                        'file_name' => $fileName,
-                    ]
-                );
+                $this->contactFormImageRepository->delete($contactFormImage->id);
             }
-        } else {
-            // 新規登録
-
-            $contactForm = $this->contactFormRepository->create(
-                $model
+            $this->contactFormImageRepository->create(
+                [
+                    'contact_form_id' => $contactFormId,
+                    'file_name' => $fileName,
+                ]
             );
 
-            $contactFormId = $contactForm['id'];
-
-            // お問い合わせ画像テーブルを登録（Insert）
-            if ($fileName !== "") {
-                $this->contactFormImageRepository->create(
-                    [
-                        'contact_form_id' => $contactFormId,
-                        'file_name' => $fileName,
-                    ]
-                );
-            }
+            //s3に画像をアップロード
+            $file->storeAs(PhotoType::Contact->dirName() . '/', $fileName);
         }
 
         return $contactForm;

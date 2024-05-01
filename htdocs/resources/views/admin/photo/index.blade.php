@@ -28,12 +28,26 @@
                         <div class="col-sm-4">
                             <input
                                 type="text"
-                                name="name"
+                                name="fileNmae"
                                 class="form-control"
                                 size="10"
                                 maxlength="100"
-                                value="{{ $request->name }}"
+                                value="{{ $request->fileNmae }}"
                             />
+                        </div>
+                    </div>
+                    <div class="control-group mt-3" id="userName">
+                        <label class="col-sm-2 control-label">{{ __('photo.Type') }}</label>
+                        <div class="col-sm-4">
+                            <select name="fileType" class="form-control">
+                                <option value="">未選択</option>
+                                @foreach(App\Enums\PhotoType::cases() as $item)
+                                    <option
+                                        value="{{ $item->value }}"
+                                        {{ ($item->value === (int)$request->fileType) ? 'selected' : '' }}
+                                    >{{ $item->label() }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -44,7 +58,8 @@
         </form>
     </div>
     <form action="{{ route('admin.photo') }}" method="GET" id="pagingForm">
-        <input type="hidden" name="name" value="{{ $request->name }}">
+        <input type="hidden" name="fileNmae" value="{{ $request->fileNmae }}">
+        <input type="hidden" name="fileType" value="{{ $request->fileType }}">
     </form>
     <div class="row">
         <div class="col-12">
@@ -68,7 +83,7 @@
                                 <td>{{ $photo['fileName'] }}</td>
                                 <td>
                                     <img
-                                        src="{{ asset('/uploads/' . (!is_null($photo['type']) ? $photo['type']->label() . '/' : '') . $photo['fileName']) }}"
+                                        src="{{ asset('/uploads/' . $photo['fileName']) }}"
                                         alt=""
                                         width="100px"
                                     />

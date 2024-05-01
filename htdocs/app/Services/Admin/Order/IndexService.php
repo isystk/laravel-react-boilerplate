@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Admin\Order;
 
 use App\Domain\Repositories\Order\OrderRepository;
+use App\Services\BaseService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
-class OrderService extends BaseService
+class IndexService extends BaseService
 {
     /**
      * @var OrderRepository
@@ -27,7 +28,7 @@ class OrderService extends BaseService
      * @param int $limit
      * @return Collection|LengthAwarePaginator|array<string>
      */
-    public function list(int $limit = 20): Collection|LengthAwarePaginator|array
+    public function searchOrder(int $limit = 20): Collection|LengthAwarePaginator|array
     {
         return $this->orderRepository->findAll($this->request()->name, [
             'with:user' => true,

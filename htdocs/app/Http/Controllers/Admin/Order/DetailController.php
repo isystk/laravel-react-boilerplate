@@ -4,11 +4,9 @@ namespace App\Http\Controllers\Admin\Order;
 
 use App\Domain\Entities\Order;
 use App\Http\Controllers\BaseController;
-use App\Services\OrderService;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class OrderController extends BaseController
+class DetailController extends BaseController
 {
     /**
      * Create a new controller instance.
@@ -17,21 +15,6 @@ class OrderController extends BaseController
      */
     public function __construct()
     {
-    }
-
-    /**
-     * 注文履歴一覧画面の初期表示
-     *
-     * @param Request $request
-     * @return View
-     */
-    public function index(Request $request): View
-    {
-        /** @var OrderService $service */
-        $service = app(OrderService::class);
-        $orders = $service->list();
-
-        return view('admin.order.index', compact('orders', 'request'));
     }
 
     /**

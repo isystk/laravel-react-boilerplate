@@ -17,6 +17,14 @@ enum PhotoType: int
         return __('enums.PhotoType' . $this->value);
     }
 
+    public function dirName(): string
+    {
+        return match ($this) {
+            self::Stock => 'stock',
+            self::Contact => 'contact',
+        };
+    }
+
     /**
      * @param ?int $code
      * @return ?PhotoType

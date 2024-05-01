@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Domain\Entities\Cart;
 use App\Domain\Entities\Stock;
-use App\Services\MyCartService;
-use App\Services\StockService;
+use App\Services\Api\Shop\AddCartService;
+use App\Services\Api\Shop\CheckoutService;
+use App\Services\Api\Shop\CreatePaymentService;
+use App\Services\Api\Shop\DeleteCartService;
+use App\Services\Api\Shop\MyCartService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -83,8 +86,8 @@ class ShopController extends BaseApiController
     public function addMycart(Request $request, Cart $cart): JsonResponse
     {
         try {
-            /** @var MyCartService $service */
-            $service = app(MyCartService::class);
+            /** @var AddCartService $service */
+            $service = app(AddCartService::class);
             //カートに追加の処理
             $message = $service->addMyCart($cart, $request->stock_id);
 
@@ -117,8 +120,8 @@ class ShopController extends BaseApiController
     public function deleteCart(Request $request, Cart $cart): JsonResponse
     {
         try {
-            /** @var MyCartService $service */
-            $service = app(MyCartService::class);
+            /** @var DeleteCartService $service */
+            $service = app(DeleteCartService::class);
             //カートから削除の処理
             $message =$service->deleteMyCart($cart, $request->stock_id);
 
@@ -150,8 +153,8 @@ class ShopController extends BaseApiController
     public function createPayment(Request $request): JsonResponse
     {
         try {
-            /** @var MyCartService $service */
-            $service = app(MyCartService::class);
+            /** @var CreatePaymentService $service */
+            $service = app(CreatePaymentService::class);
             $result = $service->createPayment($request);
         } catch (\Exception $e) {
             $result = [
@@ -174,8 +177,8 @@ class ShopController extends BaseApiController
     public function checkout(Request $request, Cart $cart): JsonResponse
     {
         try {
-            /** @var MyCartService $service */
-            $service = app(MyCartService::class);
+            /** @var CheckoutService $service */
+            $service = app(CheckoutService::class);
             // 支払い処理の実行
             $service->checkout($request, $cart);
 

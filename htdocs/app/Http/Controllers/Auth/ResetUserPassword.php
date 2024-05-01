@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Fortify;
+namespace App\Http\Controllers\Auth;
 
 use App\Domain\Entities\User;
 use Illuminate\Support\Facades\Hash;

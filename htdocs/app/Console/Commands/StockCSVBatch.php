@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Domain\Entities\Stock;
-use App\Services\StockService;
+use App\Services\Admin\Stock\StockService;
 use App\Utils\CSVUtil;
 use Carbon\Carbon;
 use Illuminate\Console\Command;

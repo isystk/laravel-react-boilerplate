@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services\Excel;
+namespace App\Services\Admin\Stock;
 
 use App\Domain\Entities\Stock;
-use App\Services\StockService;
+use App\Utils\ExtendWorksheets;
 use Closure;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\Exportable;
@@ -14,7 +14,7 @@ use Maatwebsite\Excel\Events\BeforeWriting;
 use Maatwebsite\Excel\Excel;
 use Maatwebsite\Excel\Files\LocalTemporaryFile;
 
-class ExcelStockService implements FromCollection, WithEvents
+class DownloadExcelService implements FromCollection, WithEvents
 {
     use Exportable;
 
@@ -45,7 +45,7 @@ class ExcelStockService implements FromCollection, WithEvents
     /**
      * @return Collection
      */
-    public function collection()
+    public function collection(): Collection
     {
         return collect([]);
     }

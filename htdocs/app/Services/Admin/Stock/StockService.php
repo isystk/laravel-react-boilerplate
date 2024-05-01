@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Admin\Stock;
 
 use App\Domain\Entities\Stock;
 use App\Domain\Repositories\Stock\StockRepository;
-use App\Enums\ErrorType;
+use App\Services\BaseService;
 use App\Utils\UploadImage;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class StockService extends BaseService
 {

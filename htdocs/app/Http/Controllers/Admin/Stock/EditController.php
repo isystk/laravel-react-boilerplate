@@ -1,0 +1,57 @@
+<?php
+
+namespace App\Http\Controllers\Admin\Stock;
+
+use App\Domain\Entities\Stock;
+use App\Http\Controllers\BaseController;
+use App\Http\Requests\StoreStockFormRequest;
+use App\Services\Admin\Stock\StockService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
+
+class EditController extends BaseController
+{
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+    }
+
+    /**
+     * 商品変更画面の初期表示
+     *
+     * @param Stock $stock
+     * @return View
+     */
+    public function edit(Stock $stock): View
+    {
+        return view('admin.stock.edit', compact('stock'));
+    }
+
+    /**
+     * 商品変更画面の登録処理
+     *
+     * @param StoreStockFormRequest $request
+     * @param Stock $stock
+     * @return RedirectResponse
+     * @throws \Exception
+     */
+    public function update(StoreStockFormRequest $request, Stock $stock): RedirectResponse
+    {
+        DB::beginTransaction();
+        try {
+            /** @var StockService $service */
+            $service = app(StockService::class);
+            $service->save($stock->id);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+        return redirect(route('admin.stock'));
+    }
+}
