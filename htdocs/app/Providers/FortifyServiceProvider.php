@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
-use App\Actions\Fortify\CreateNewUser;
-use App\Actions\Fortify\ResetUserPassword;
-use App\Actions\Fortify\UpdateUserPassword;
-use App\Actions\Fortify\UpdateUserProfileInformation;
-use App\Http\Responses\LoginResponse;
+use App\Http\Controllers\Auth\CreateNewUser;
+use App\Http\Controllers\Auth\ResetUserPassword;
+use App\Http\Controllers\Auth\Responses\LoginResponse;
+use App\Http\Controllers\Auth\UpdateUserPassword;
+use App\Http\Controllers\Auth\UpdateUserProfileInformation;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;

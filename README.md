@@ -45,7 +45,7 @@ Laravel ＆ React.js の学習用サンプルアプリケーションです。
 
 https://laraec.isystk.com/
 
-![フロント画面](./front.png "フロント画面")
+![フロント画面](./documents/front.png "フロント画面")
 
 - ログイン/ログアウト
 - 会員登録
@@ -99,7 +99,7 @@ graph LR
 
 https://laraec.isystk.com/admin/
 
-![管理画面](./admin.png "管理画面")
+![管理画面](./documents/admin.png "管理画面")
 
 - ログイン/ログアウト
 - 商品管理
@@ -120,6 +120,7 @@ https://laraec.isystk.com/admin/
 
 ※ この環境を利用する為には、事前にdocker、docker-composeが動作する状態であることが前提条件です。
 (Windowsの場合は、以下を参考に「WSL」と「Docker Desktop for Windows」を用意してください)
+Github CodeSpace を利用する場合は、Dockerの起動から進めてください。
 
 ### WSLのインストール（Windowsの場合）
 参考
@@ -148,31 +149,17 @@ docker --version
 ```
 
 ### WSL2から、Docker for Windows を利用できるようにする（Windowsの場合）
-参考
-https://qiita.com/endo_hizumi/items/0cc50bdfbd827579733e
+
 ```
-１．通知領域から、dockerのアイコンを右クリックして、Settingを選択
-２．Generalのexpose deamon on~~のチェックを入れます。
+１．Docker Desktop を開いて、Settingを開く
+２．Resourcesの「Enable integration with my default WSL distro」にチェックをつけてWSLから Docker 統合を有効にする
 ３．ResourcesのWSL INTEGRATION から、"Ubuntu" をスイッチをONにします。
-
-WSL 側のルートを Docker for Windows に合わせるように WSL のマウント設定を行います。
-$ vi /etc/wsl.conf
----
-[automount]
-root = /
-options = "metadata"
----
-
-以下のように Cドライブのパスが"/mnt/c/"→"/c/" に変更されていれば正常です。
-$ cd /c/Users/USER/github/laravel-react-boilerplate
-$ pwd
-/c/Users/USER/github/laravel-react-boilerplate
 
 # WSL 上にDockerとDocker Composeをインストールする。
 $ apt install docker
 $ apt install docker-compose
 
-これでWSLからWindows側にインストールしたDockerが利用できるようになります。
+これでWSLで起動したDockerコンテナがホストマシン側で利用できるようになります。
 ```
 
 ### MySQL Client のインストール
@@ -210,12 +197,14 @@ $ brew install mysql-client
 ├── htdocs （Apache公開ディレクトリ）
 │   │
 │   ├── app
-│   │   ├── Console (バッチアプリケーション)
+│   │   ├── Console (バッチ)
+│   │   ├── Domain（ドメイン層）
+│   │   ├── Enums (定数)
 │   │   ├── Exceptions (例外処理)
-│   │   ├── Http （Webアプリケーション）
-│   │   ├── Models（モデル）
-│   │   ├── Prociders（サービスプロバイダー）
-│   │   └── Services（共通処理）
+│   │   ├── Http （プレゼンテーション層）
+│   │   ├── Providers（サービスプロバイダー）
+│   │   ├── Services（ビジネスロジック）
+│   │   └── Utils（共通ユーティル）
 │   ├── bootstrap
 │   ├── config
 │   ├── database
@@ -243,9 +232,7 @@ Options:
   mysql login              MySQLデータベースにログインします。
   mysql export <PAHT>      MySQLデータベースのdumpファイルをエクスポートします。
   mysql import <PAHT>      MySQLデータベースにdumpファイルをインポートします。
-  mysql restart            MySQLデータベースを再起動します。
   php login                PHP-FPMのサーバーにログインします。
-  php cache                Laravelのキャッシュをクリアします。
   --version, -v     バージョンを表示します。
   --help, -h        ヘルプを表示します。
 ```
@@ -294,7 +281,7 @@ minioにバケットを作成する
 |----|----
 |access_key | secret_key
 
-![minio](./minio.png "minio")
+![minio](./documents/minio.png "minio")
 
 バックエンド環境を構築する
 ```
@@ -355,16 +342,10 @@ $ ./dc.sh stop
 
 ## 🎨 参考
 
-| プロジェクト                                                                                       | 概要                                         |
-|:---------------------------------------------------------------------------------------------|:-------------------------------------------|
-| [Laravel10公式ドキュメント](https://readouble.com/laravel/10.x/ja/releases.html)                     | Laravel10公式ドキュメントです。                       |
-| [AdminLTE Docs](https://adminlte.io/docs/3.2/)                                               | AdminLTE Docs                              |
-| [Bootstrap4 日本語リファレンス](https://getbootstrap.jp/docs/4.4/getting-started/introduction/)       | Bootstrap4 日本語リファレンス                       |
-| [Reactstrap](https://reactstrap.github.io/?path=/story/home-installation--page)              | Reactstrap                                 |
-| [Laravel5.4でマルチ認証（userとadmin）を実装する方法](https://takahashi-it.com/php/laravel54-multi-auth/)    | Laravel でマルチ認証（userとadmin）を実装する方法で参考にしました。 |
-| [React Stripe.js リファレンス](https://stripe.com/docs/stripe-js/react)                            | React Stripe.js リファレンス                     |
-| [Laravel+Socialiteで簡単ソーシャルログイン実装!](https://qiita.com/KeisukeKudo/items/18dd8a342a4bdd43913c) | Laravel でソーシャルログインを作成する方法で参考にしました。         |
-| [Laravelの認証画面をReactで全とっかえ](https://qiita.com/shikigamix/items/99a4f2ab5911248f8b2f)          | Laravelのフロントエンドの認証周りをReactで作成する方法で参考にしました。 |
+| プロジェクト                                                                                                  | 概要                               |
+|:------------------------------------------------------------------------------------------------------------|:---------------------------------|
+| [Laravel11公式ドキュメント](https://readouble.com/laravel/11.x/ja/releases.html)                               | Laravel11公式ドキュメントです。             |
+| [Laravel11以降から使い始めた人に必要そうな質問と回答一覧](https://zenn.dev/pcs_engineer/articles/laravel11-faq)      | Laravel11以降から使い始めた人に必要そうな質問と回答一覧 |
 
 
 ## 🎫 Licence

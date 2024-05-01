@@ -2,19 +2,29 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Domain\Entities\User;
+use App\Http\Controllers\BaseController;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
-class OAuthController extends Controller
+class OAuthController extends BaseController
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+    }
+
     /**
      * 各SNSのOAuth認証画面にリダイレクトして認証
      * @param string $provider サービス名
-     * @return mixed
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function socialOAuth(string $provider)
+    public function socialOAuth(string $provider): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         return Socialite::driver($provider)->redirect();
     }
@@ -22,13 +32,13 @@ class OAuthController extends Controller
     /**
      * 各サイトからのコールバック
      * @param string $provider サービス名
-     * @return mixed
+     * @return RedirectResponse
      */
-    public function handleProviderCallback($provider)
+    public function handleProviderCallback(string $provider): RedirectResponse
     {
         // @phpstan-ignore-next-line
         $socialUser = Socialite::driver($provider)->stateless()->user();
-        $user = User::firstOrNew(['email' => $socialUser->getEmail()]);
+        $user = User::firstOrNew(['email' => $socialUser->getEmail()]); // TODO Eloquantで検索
 
         // すでに会員になっている場合の処理を書く
         // そのままログインさせてもいいかもしれない
@@ -43,6 +53,6 @@ class OAuthController extends Controller
 
         Auth::login($user);
 
-        return redirect('/home');
+        return redirect(route('home'));
     }
 }

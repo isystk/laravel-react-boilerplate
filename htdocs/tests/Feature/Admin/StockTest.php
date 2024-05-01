@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Admin;
 
-use App\Models\Admin;
-use Tests\TestCase;
-use Illuminate\Support\Facades\Auth;
+use App\Domain\Entities\Admin;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Support\Facades\Auth;
+use Tests\TestCase;
 
 class StockTest extends TestCase
 {
@@ -27,7 +27,7 @@ class StockTest extends TestCase
 
         $response = $this->get('/admin/stock');
         // レスポンスの検証
-        $response->assertSee('商品一覧');
+        $response->assertSee('マカロン');
         $response
             ->assertOk()  # ステータスコードが 200
         ;

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseController;
 use Illuminate\Contracts\Support\Renderable;
 
-class HomeController extends Controller
+class HomeController extends BaseController
 {
     /**
      * Create a new controller instance.
@@ -14,15 +14,14 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:admin');
     }
 
     /**
-     * Show the application dashboard.
+     * ホーム画面の初期表示
      *
      * @return Renderable
      */
-    public function index()
+    public function index(): Renderable
     {
         return view('admin.home');
     }

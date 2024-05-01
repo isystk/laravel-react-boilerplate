@@ -13,15 +13,15 @@
     <link href="{{ asset('/assets/front/css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="react-root"></div>
-    <script>
+<div id="react-root"></div>
+<script>
     var laravelSession = {};
-    laravelSession['status']=@if(session('status'))'{{session('status')}}'@else''@endif;
-    laravelSession['resent']=@if(session('resent'))'{{session('resent')}}'@else''@endif;
-    var laravelErrors=@php print(htmlspecialchars_decode($errors))@endphp;
-    </script>
-    <script src="{{ asset('/assets/front/js/app.js') }}" defer></script>
-    <script src="https://js.stripe.com/v3/"></script>
+    laravelSession['status'] = @if(session('status'))'{{session('status')}}'@else''@endif;
+    laravelSession['resent'] = @if(session('resent'))'{{session('resent')}}'@else''@endif;
+    var laravelErrors =@php print(htmlspecialchars_decode($errors))@endphp;
+</script>
+<script src="{{ asset('/assets/front/js/app.js') }}" defer></script>
+<script src="https://js.stripe.com/v3/"></script>
 
 </body>
 </html>

@@ -16,10 +16,10 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
-        //
         if ($this->app->environment('local')) {
+            // ローカル環境の場合にだけ、Seleniumを使用する為に必要な設定を追加する
             $this->app->register(DuskServiceProvider::class);
         }
     }
@@ -27,12 +27,18 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      *
+     * @param UrlGenerator $url
      * @return void
      */
-    public function boot(UrlGenerator $url)
+    public function boot(UrlGenerator $url): void
     {
+        // httpでアクセスされた際に強制的にhttpsに変換する
         $url->forceScheme('https');
+
+        // ページネーションでBootstrapを利用する
         Paginator::useBootstrap();
+
+        // ルートのURLを強制する
         URL::forceRootUrl(Config::get('app.url'));
     }
 }

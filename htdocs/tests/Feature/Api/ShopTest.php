@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Api;
 
-use App\Models\User;
-use Tests\TestCase;
-use Illuminate\Support\Facades\Auth;
+use App\Domain\Entities\User;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Support\Facades\Auth;
+use Tests\TestCase;
 
 class ShopTest extends TestCase
 {

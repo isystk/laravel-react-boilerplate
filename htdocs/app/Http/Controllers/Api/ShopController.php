@@ -2,32 +2,38 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\ApiController;
-use App\Models\Cart;
-use App\Models\Stock;
-use App\Services\MyCartService;
+use App\Domain\Entities\Cart;
+use App\Domain\Entities\Stock;
+use App\Services\Api\Shop\AddCartService;
+use App\Services\Api\Shop\CheckoutService;
+use App\Services\Api\Shop\CreatePaymentService;
+use App\Services\Api\Shop\DeleteCartService;
+use App\Services\Api\Shop\MyCartService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class ShopController extends ApiController
+class ShopController extends BaseApiController
 {
     /**
-     * @var MyCartService
+     * Create a new controller instance.
+     *
+     * @return void
      */
-    protected MyCartService $myCartService;
-
-    public function __construct(MyCartService $myCartService)
+    public function __construct()
     {
-        $this->myCartService = $myCartService;
     }
 
     /**
+     * 商品一覧のデータをJSONで返却します。
      * @return JsonResponse
      */
     public function index(): JsonResponse
     {
         try {
-            $stocks = Stock::Paginate(6); //Eloquantで検索
+            $stocks = Stock::Paginate(6); // TODO Eloquantで検索
+//            /** @var StockService $service */
+//            $service = app(StockService::class);
+//            $stocks = $service->list($cart);
             $result = [
                 'result' => true,
                 'stocks' => $stocks,
@@ -45,13 +51,16 @@ class ShopController extends ApiController
     }
 
     /**
+     * マイカートのデータをJSONで返却します。
      * @param Cart $cart
      * @return JsonResponse
      */
     public function myCart(Cart $cart): JsonResponse
     {
         try {
-            $carts = $this->myCartService->searchMyCart($cart);
+            /** @var MyCartService $service */
+            $service = app(MyCartService::class);
+            $carts = $service->searchMyCart($cart);
             $result = [
                 'result' => true,
                 'carts' => $carts,
@@ -69,6 +78,7 @@ class ShopController extends ApiController
     }
 
     /**
+     * マイカートに商品を追加します。
      * @param Request $request
      * @param Cart $cart
      * @return JsonResponse
@@ -76,11 +86,13 @@ class ShopController extends ApiController
     public function addMycart(Request $request, Cart $cart): JsonResponse
     {
         try {
+            /** @var AddCartService $service */
+            $service = app(AddCartService::class);
             //カートに追加の処理
-            $message = $this->myCartService->addMyCart($cart, $request->stock_id);
+            $message = $service->addMyCart($cart, $request->stock_id);
 
             //追加後の情報を取得
-            $carts = $this->myCartService->searchMyCart($cart);
+            $carts = $service->searchMyCart($cart);
 
             $result = [
                 'result' => true,
@@ -100,6 +112,7 @@ class ShopController extends ApiController
     }
 
     /**
+     * マイカートから商品を削除します。
      * @param Request $request
      * @param Cart $cart
      * @return JsonResponse
@@ -107,11 +120,13 @@ class ShopController extends ApiController
     public function deleteCart(Request $request, Cart $cart): JsonResponse
     {
         try {
+            /** @var DeleteCartService $service */
+            $service = app(DeleteCartService::class);
             //カートから削除の処理
-            $message = $this->myCartService->deleteMyCart($cart, $request->stock_id);
+            $message =$service->deleteMyCart($cart, $request->stock_id);
 
             //追加後の情報を取得
-            $carts = $this->myCartService->searchMyCart($cart);
+            $carts = $service->searchMyCart($cart);
 
             $result = [
                 'result' => true,
@@ -131,13 +146,16 @@ class ShopController extends ApiController
     }
 
     /**
+     * マイカートのデータを元にStripe決済用のPaymentを生成してJSONで返却します。
      * @param Request $request
      * @return JsonResponse
      */
     public function createPayment(Request $request): JsonResponse
     {
         try {
-            $result = $this->myCartService->createPayment($request);
+            /** @var CreatePaymentService $service */
+            $service = app(CreatePaymentService::class);
+            $result = $service->createPayment($request);
         } catch (\Exception $e) {
             $result = [
                 'result' => false,
@@ -151,6 +169,7 @@ class ShopController extends ApiController
     }
 
     /**
+     * マイカートのデータをStripeで決済処理します。
      * @param Request $request
      * @param Cart $cart
      * @return JsonResponse
@@ -158,11 +177,13 @@ class ShopController extends ApiController
     public function checkout(Request $request, Cart $cart): JsonResponse
     {
         try {
+            /** @var CheckoutService $service */
+            $service = app(CheckoutService::class);
             // 支払い処理の実行
-            $this->myCartService->checkout($request, $cart);
+            $service->checkout($request, $cart);
 
             // 削除後の情報を取得
-            $carts = $this->myCartService->searchMyCart($cart);
+            $carts = $service->searchMyCart($cart);
 
             $result = [
                 'result' => true,
