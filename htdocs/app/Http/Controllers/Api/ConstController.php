@@ -19,7 +19,6 @@ class ConstController extends ApiController
      */
     public function index(): JsonResponse
     {
-
         try {
             $consts = ConstUtil::searchConst();
 
@@ -27,13 +26,13 @@ class ConstController extends ApiController
                 'result' => true,
                 'consts' => [
                     'data' => $consts,
-                ]
+                ],
             ];
         } catch (\Exception $e) {
             $result = [
                 'result' => false,
                 'error' => [
-                    'messages' => [$e->getMessage()]
+                    'messages' => [$e->getMessage()],
                 ],
             ];
             return $this->resConversionJson($result, $e->getCode());

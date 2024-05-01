@@ -2,10 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Models\ContactForm;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
-use App\Models\ContactForm;
-use Prettus\Repository\Eloquent\BaseRepository;
 
 class ContactFormRepository extends BaseRepository
 {
@@ -13,7 +12,7 @@ class ContactFormRepository extends BaseRepository
     /**
      * @return string
      */
-    function model()
+    protected function model(): string
     {
         return ContactForm::class;
     }
@@ -25,7 +24,7 @@ class ContactFormRepository extends BaseRepository
      */
     public function findAll(?string $yourName, array $options = []): Collection|LengthAwarePaginator
     {
-        $query = $this->getModel()->with($this->__with($options))
+        $query = $this->model->with($this->__with($options))
             ->orderBy('created_at', 'desc')
             ->orderBy('id', 'asc');
 

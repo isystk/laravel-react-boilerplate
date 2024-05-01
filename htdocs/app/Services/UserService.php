@@ -3,12 +3,12 @@
 namespace App\Services;
 
 use App\Enums\ErrorType;
+use App\Repositories\UserRepository;
 use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Repositories\UserRepository;
 use PDOException;
 
 class UserService extends BaseService
@@ -20,7 +20,7 @@ class UserService extends BaseService
     protected UserRepository $userRepository;
 
     public function __construct(
-        Request        $request,
+        Request $request,
         UserRepository $userRepository
     )
     {
@@ -38,17 +38,17 @@ class UserService extends BaseService
             $this->request()->name,
             $this->request()->email,
             [
-                'limit' => $limit
+                'limit' => $limit,
             ]);
     }
 
     /**
-     * @param string $userId
+     * @param int $userId
      * @return object|null
      */
-    public function find(string $userId): object|null
+    public function find(int $userId): object|null
     {
-        return $this->userRepository->find($userId);
+        return $this->userRepository->findById($userId);
     }
 
     /**
@@ -57,33 +57,29 @@ class UserService extends BaseService
      */
     public function save(int $userId = null): array
     {
-
         DB::beginTransaction();
         try {
-
             if ($userId) {
                 // 変更
 
                 $user = $this->userRepository->update(
+                    $userId,
                     [
                         'name' => $this->request()->input('name'),
-                        'email' => $this->request()->input('email')
-                    ],
-                    $userId
+                        'email' => $this->request()->input('email'),
+                    ]
                 );
-
             } else {
                 // 新規登録
 
                 $user = $this->userRepository->create(
                     [
                         'name' => $this->request()->input('name'),
-                        'email' => $this->request()->input('email')
+                        'email' => $this->request()->input('email'),
                     ],
                 );
 
                 $id = $user->id;
-
             }
 
             DB::commit();
@@ -96,7 +92,6 @@ class UserService extends BaseService
             DB::rollBack();
             return [false, ErrorType::FATAL, $e];
         }
-
     }
 
     /**
@@ -108,10 +103,10 @@ class UserService extends BaseService
         DB::beginTransaction();
         try {
             // ユーザテーブルを削除
-            $user = $this->userRepository->delete($id);
+            $this->userRepository->delete($id);
 
             DB::commit();
-            return [$user, ErrorType::SUCCESS, null];
+            return [true, ErrorType::SUCCESS, null];
         } catch (PDOException $e) {
             DB::rollBack();
             return [false, ErrorType::DATABASE, $e];

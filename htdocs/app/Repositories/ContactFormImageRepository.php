@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\Models\ContactFormImage;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
-use Prettus\Repository\Eloquent\BaseRepository;
 
 class ContactFormImageRepository extends BaseRepository
 {
@@ -13,7 +12,7 @@ class ContactFormImageRepository extends BaseRepository
     /**
      * @return string
      */
-    function model()
+    protected function model(): string
     {
         return ContactFormImage::class;
     }
@@ -25,9 +24,9 @@ class ContactFormImageRepository extends BaseRepository
      */
     public function findAll(int $contactFormId, array $options = []): Collection|LengthAwarePaginator
     {
-        $query = $this->getModel()->with($this->__with($options))
+        $query = $this->model->with($this->__with($options))
             ->where([
-                'contact_form_id' => $contactFormId
+                'contact_form_id' => $contactFormId,
             ]);
 
         $limit = !empty($options['limit']) ? (int)$options['limit'] : null;

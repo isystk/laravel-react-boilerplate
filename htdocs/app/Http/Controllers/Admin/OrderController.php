@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
-use Illuminate\Http\Request;
 use App\Services\OrderService;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class OrderController extends Controller
@@ -28,7 +28,6 @@ class OrderController extends Controller
      */
     public function index(Request $request): View
     {
-
         $name = $request->name;
         $orders = $this->orderService->list();
 

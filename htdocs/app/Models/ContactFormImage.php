@@ -19,6 +19,7 @@ class ContactFormImage extends Model
     ];
 
     // 親テーブル
+
     /**
      * @return BelongsTo
      */

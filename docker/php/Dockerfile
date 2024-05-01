@@ -1,4 +1,4 @@
-FROM php:8.1-fpm
+FROM php:8.3-fpm
 
 RUN apt-get update \
   && apt-get install -y wget git unzip libzip-dev zlib1g-dev mariadb-client libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
@@ -14,7 +14,7 @@ RUN apt-get update \
 RUN npm install -g yarn
 
 #xdebug
-RUN pecl install xdebug \
+RUN pecl install xdebug-3.3.2 \
   && docker-php-ext-enable xdebug
 
 #Composer install

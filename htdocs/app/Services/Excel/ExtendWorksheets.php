@@ -3,8 +3,8 @@
 namespace App\Services\Excel;
 
 use PhpOffice\PhpSpreadsheet\Exception;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\RichText\RichText;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class ExtendWorksheets
 {
@@ -125,7 +125,12 @@ class ExtendWorksheets
      * @param bool $strictNullComparison
      * @return $this
      */
-    public function fromArray(array $source, mixed $nullValue = null, string $startCell = 'A1', bool $strictNullComparison = false): static
+    public function fromArray(
+        array $source,
+        mixed $nullValue = null,
+        string $startCell = 'A1',
+        bool $strictNullComparison = false
+    ): static
     {
         $this->worksheets->fromArray($source, $nullValue, $startCell, $strictNullComparison);
         return $this;

@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\Models\Stock;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
-use Prettus\Repository\Eloquent\BaseRepository;
 
 class StockRepository extends BaseRepository
 {
@@ -13,7 +12,7 @@ class StockRepository extends BaseRepository
     /**
      * @return string
      */
-    function model()
+    protected function model(): string
     {
         return Stock::class;
     }
@@ -25,7 +24,8 @@ class StockRepository extends BaseRepository
      */
     public function findAll(string|null $name, array $options = []): Collection|LengthAwarePaginator
     {
-        $query = $this->getModel()->with($this->__with($options))
+        $query = $this->model
+            ->with($this->__with($options))
             ->where('name', 'like', '%' . $name . '%')
             ->orderBy('created_at', 'desc')
             ->orderBy('id', 'asc');

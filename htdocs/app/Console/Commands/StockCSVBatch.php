@@ -2,11 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Stock;
+use App\Services\StockService;
+use App\Utils\CSVUtil;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use App\Utils\CSVUtil;
-use App\Services\StockService;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
 class StockCSVBatch extends Command
@@ -55,6 +56,9 @@ class StockCSVBatch extends Command
         $csvHeader = ['ID', '商品名', '価格'];
         $csvBody = [];
         foreach ($stocks as $stock) {
+            if (!$stock instanceof Stock) {
+                throw new \RuntimeException('An unexpected error occurred.');
+            }
             $line = [];
             $line[] = $stock->id;
             $line[] = $stock->name;

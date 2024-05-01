@@ -3,12 +3,12 @@
 namespace App\Services;
 
 use App\Enums\ErrorType;
+use App\Repositories\StockRepository;
+use App\Utils\UploadImage;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Utils\UploadImage;
-use App\Repositories\StockRepository;
 
 class StockService extends BaseService
 {
@@ -18,7 +18,7 @@ class StockService extends BaseService
     protected StockRepository $stockRepository;
 
     public function __construct(
-        Request         $request,
+        Request $request,
         StockRepository $stockRepository
     )
     {
@@ -28,24 +28,24 @@ class StockService extends BaseService
 
     /**
      * @param int $limit
-     * @return Collection|LengthAwarePaginator|array<string>
+     * @return Collection|LengthAwarePaginator
      */
-    public function list(int $limit = 20): Collection|LengthAwarePaginator|array
+    public function list(int $limit = 20): Collection|LengthAwarePaginator
     {
         return $this->stockRepository->findAll(
             $this->request()->name,
             [
-                'limit' => $limit
+                'limit' => $limit,
             ]);
     }
 
     /**
-     * @param string $stockId
+     * @param int $stockId
      * @return object|null
      */
-    public function find(string $stockId): object|null
+    public function find(int $stockId): object|null
     {
-        return $this->stockRepository->find($stockId);
+        return $this->stockRepository->findById($stockId);
     }
 
     /**
@@ -54,10 +54,8 @@ class StockService extends BaseService
      */
     public function save(int $stockId = null): array
     {
-
         // 画像ファイルを公開ディレクトリへ配置する。
         if ($this->request()->has('imageBase64') && $this->request()->imageBase64 !== null) {
-
             $tmpFile = UploadImage::convertBase64($this->request()->imageBase64);
             $fileName = $this->request()->fileName;
 
@@ -73,13 +71,12 @@ class StockService extends BaseService
 
         DB::beginTransaction();
         try {
-
             $model = [
-                    'name' => $this->request()->input('name'),
-                    'detail' => $this->request()->input('detail'),
-                    'price' => $this->request()->input('price'),
-                    'quantity' => $this->request()->input('quantity'),
-                ];
+                'name' => $this->request()->input('name'),
+                'detail' => $this->request()->input('detail'),
+                'price' => $this->request()->input('price'),
+                'quantity' => $this->request()->input('quantity'),
+            ];
             if (!empty($fileName)) {
                 $model['imgpath'] = $fileName;
             }
@@ -88,10 +85,9 @@ class StockService extends BaseService
                 // 変更
 
                 $stock = $this->stockRepository->update(
-                    $model,
-                    $stockId
+                    $stockId,
+                    $model
                 );
-
             } else {
                 // 新規登録
 
@@ -112,7 +108,6 @@ class StockService extends BaseService
             DB::rollBack();
             return [false, ErrorType::FATAL, $e];
         }
-
     }
 
     /**
@@ -124,10 +119,10 @@ class StockService extends BaseService
         DB::beginTransaction();
         try {
             // 商品テーブルを削除
-            $result = $this->stockRepository->delete($id);
+            $this->stockRepository->delete($id);
 
             DB::commit();
-            return [$result, ErrorType::SUCCESS, null];
+            return [true, ErrorType::SUCCESS, null];
         } catch (\PDOException $e) {
             DB::rollBack();
             return [false, ErrorType::DATABASE, $e];

@@ -33,7 +33,7 @@ Laravel ＆ React.js の学習用サンプルアプリケーションです。
 
 #### ■ アプリケーション
 
-- Laravel 10
+- Laravel 11
 - React 18
 - Typescript
 - Adminlte 3
@@ -323,6 +323,9 @@ $ ./dc.sh php login
 
 # Larastan を実行してコードをチェックする
 > ./vendor/bin/phpstan analyse --memory-limit=1G
+
+# PHPUnit でテストコードを実行する
+> php artisan test
 ```
 
 フロントエンド環境を構築する

@@ -2,8 +2,8 @@
 
 namespace App\Utils;
 
-use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\File\File;
 
 class UploadImage
@@ -16,7 +16,6 @@ class UploadImage
      */
     public static function convertBase64(string $base64): UploadedFile
     {
-
         // base64をデコード。プレフィックスに「data:image/jpeg;base64,」のような文字列がついている場合は除去して処理する。
         $data = explode(',', $base64);
         if (isset($data[1])) {

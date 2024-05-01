@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\Models\Order;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
-use Prettus\Repository\Eloquent\BaseRepository;
 
 class OrderRepository extends BaseRepository
 {
@@ -13,7 +12,7 @@ class OrderRepository extends BaseRepository
     /**
      * @return string
      */
-    function model()
+    protected function model(): string
     {
         return Order::class;
     }
@@ -25,8 +24,9 @@ class OrderRepository extends BaseRepository
      */
     public function findAll(?string $userName, array $options = []): Collection|LengthAwarePaginator
     {
-        $query = $this->getModel()->with($this->__with($options))
-            ->whereHas('user', function ($query) use ($userName) {
+        $query = $this->model->with($this->__with($options))
+            ->whereHas('user', function ($query) use ($userName)
+            {
                 $query->where('name', 'like', "%$userName%");
             })
             ->orderBy('created_at', 'desc')

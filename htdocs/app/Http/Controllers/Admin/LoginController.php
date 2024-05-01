@@ -78,20 +78,19 @@ class LoginController extends Controller
      * @param Request $request
      * @return Application|\Illuminate\Foundation\Application|RedirectResponse|Redirector
      */
-    public function login(Request $request) {
-
+    public function login(Request $request)
+    {
         $this->validateLogin($request);
 
         $credentials = $request->only(['email', 'password']);
 
-        if(\Auth::guard('admin')->attempt($credentials)) {
-
+        if (\Auth::guard('admin')->attempt($credentials)) {
             return redirect($this->redirectTo); // ログインしたらリダイレクト
 
         }
 
         return back()->withErrors([
-            'auth' => ['認証に失敗しました']
+            'auth' => ['認証に失敗しました'],
         ]);
     }
 

@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\Models\Cart;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
-use Prettus\Repository\Eloquent\BaseRepository;
 
 class CartRepository extends BaseRepository
 {
@@ -13,7 +12,7 @@ class CartRepository extends BaseRepository
     /**
      * @return string
      */
-    function model()
+    protected function model(): string
     {
         return Cart::class;
     }
@@ -25,7 +24,7 @@ class CartRepository extends BaseRepository
      */
     public function findAll(string $userId, array $options = []): Collection|LengthAwarePaginator
     {
-        $query = $this->getModel()->with($this->__with($options))
+        $query = $this->model->with($this->__with($options))
             ->where([
                 'user_id' => $userId,
             ]);

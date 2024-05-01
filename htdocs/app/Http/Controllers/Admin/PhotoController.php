@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\PhotoService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-
-use App\Services\PhotoService;
 use Illuminate\View\View;
 
 class PhotoController extends Controller
@@ -29,7 +28,6 @@ class PhotoController extends Controller
      */
     public function index(Request $request): View
     {
-
         $name = $request->input('name');
 
         $photos = $this->photoService->list();
@@ -46,7 +44,6 @@ class PhotoController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-
         $type = $request->input('type');
         $fileName = $request->input('fileName');
 

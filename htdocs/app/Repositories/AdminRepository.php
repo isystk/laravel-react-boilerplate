@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\Models\Admin;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
-use Prettus\Repository\Eloquent\BaseRepository;
 
 class AdminRepository extends BaseRepository
 {
@@ -13,7 +12,7 @@ class AdminRepository extends BaseRepository
     /**
      * @return string
      */
-    function model()
+    protected function model(): string
     {
         return Admin::class;
     }
@@ -24,7 +23,7 @@ class AdminRepository extends BaseRepository
      */
     public function findAll($options = []): Collection|LengthAwarePaginator
     {
-        $query = $this->getModel()->with($this->__with($options));
+        $query = $this->model->with($this->__with($options));
 
         $limit = !empty($options['limit']) ? (int)$options['limit'] : null;
         return $limit > 0 ? $query->paginate($limit) : $query->get();

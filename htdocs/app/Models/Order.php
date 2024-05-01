@@ -3,13 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
-use App\Models\Stock;
 
 class Order extends Model
 {
     protected $guarded = [
-        'id'
+        'id',
     ];
 
     // 親テーブル
