@@ -2,10 +2,19 @@
 
 namespace App\Domain\Entities;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
 
+
+/**
+ * @property int $id
+ * @property int $stock_id
+ * @property int $user_id
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ */
 class Cart extends Model
 {
     protected $fillable = [
@@ -14,6 +23,25 @@ class Cart extends Model
     ];
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
+    /**
+     * @return BelongsTo
+     */
+    public function stock(): BelongsTo
+    {
+        return $this->belongsTo(Stock::class);
+    }
+
+    /**
+     * TODO Repositoryに移行する
      * @return array<string, mixed>
      */
     public function showCart()
@@ -30,16 +58,8 @@ class Cart extends Model
         }
         return $data;
     }
-
     /**
-     * @return BelongsTo
-     */
-    public function stock()
-    {
-        return $this->belongsTo(Stock::class);
-    }
-
-    /**
+     * TODO Repositoryに移行する
      * @param string $stock_id
      * @return string
      */
@@ -58,6 +78,7 @@ class Cart extends Model
     }
 
     /**
+     * TODO Repositoryに移行する
      * @param string $stock_id
      * @return string
      */
@@ -75,6 +96,7 @@ class Cart extends Model
     }
 
     /**
+     * TODO Repositoryに移行する
      * @return string
      */
     public function deleteMyCart(): string
@@ -91,6 +113,7 @@ class Cart extends Model
     }
 
     /**
+     * TODO Repositoryに移行する
      * @return mixed
      */
     public function checkoutCart(): mixed

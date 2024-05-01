@@ -2,9 +2,17 @@
 
 namespace App\Domain\Entities;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property int $contact_form_id
+ * @property string|null $file_name
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ */
 class ContactFormImage extends Model
 {
 
@@ -16,6 +24,16 @@ class ContactFormImage extends Model
     protected $fillable = [
         'contact_form_id',
         'file_name',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     // 親テーブル
