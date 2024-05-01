@@ -63,16 +63,16 @@
 <table>
     <thead>
     <tr>
-        @foreach ($csvHeader as $header)
+        @foreach ($headers as $header)
             <th>{{ $header }}</th>
         @endforeach
     </tr>
     </thead>
     <tbody>
-    @foreach ($csvBody as $tr)
+    @foreach ($rows as $row)
         <tr>
-            @foreach ($tr as $td)
-                <td>{{ $td }}</td>
+            @foreach ($row as $item)
+                <td>{{ $item }}</td>
             @endforeach
         </tr>
     @endforeach

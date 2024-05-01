@@ -3,8 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Domain\Entities\Stock;
-use App\Services\Admin\Stock\StockService;
-use App\Utils\CSVUtil;
+use App\Services\Batch\StockService;
+use App\Utils\CsvUtil;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
@@ -45,13 +45,12 @@ class StockCSVBatch extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
      */
-    public function handle()
+    public function handle(): void
     {
         Log::info('StockCSVBatch START');
         //
-        $stocks = $this->stockService->list(0);
+        $stocks = $this->stockService->searchStock(0);
 
         $csvHeader = ['ID', '商品名', '価格'];
         $csvBody = [];
@@ -66,7 +65,7 @@ class StockCSVBatch extends Command
             $csvBody[] = $line;
         }
 
-        $csv = CSVUtil::make($csvBody, $csvHeader);
+        $csv = CsvUtil::make($csvBody, $csvHeader);
 
         $time = new Carbon(Carbon::now());
         $time->setToStringFormat('Ymd');

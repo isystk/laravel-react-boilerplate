@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Stock;
 
 use App\Domain\Entities\Stock;
 use App\Http\Controllers\BaseController;
-use App\Services\Admin\Stock\StockService;
+use App\Services\Admin\Stock\DestroyService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -42,8 +42,8 @@ class DetailController extends BaseController
     {
         DB::beginTransaction();
         try {
-            /** @var StockService $service */
-            $service = app(StockService::class);
+            /** @var DestroyService $service */
+            $service = app(DestroyService::class);
             $service->delete($stock->id);
             DB::commit();
         } catch (\Exception $e) {

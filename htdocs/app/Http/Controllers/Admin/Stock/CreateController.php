@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Admin\Stock;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\StoreStockFormRequest;
-use App\Services\Admin\Stock\StockService;
+use App\Services\Admin\Stock\CreateService;
+use App\Services\Batch\StockService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -43,8 +44,8 @@ class CreateController extends BaseController
     {
         DB::beginTransaction();
         try {
-            /** @var StockService $service */
-            $service = app(StockService::class);
+            /** @var CreateService $service */
+            $service = app(CreateService::class);
             $service->save();
             DB::commit();
         } catch (\Exception $e) {

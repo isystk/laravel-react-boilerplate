@@ -37,13 +37,4 @@ class IndexService extends BaseService
         ]);
     }
 
-    /**
-     * @param int $orderId
-     * @return object|null
-     */
-    public function find(int $orderId): object|null
-    {
-        return $this->orderRepository->getById($orderId);
-    }
-
 }

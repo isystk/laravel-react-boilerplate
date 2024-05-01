@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Stock;
 use App\Domain\Entities\Stock;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\StoreStockFormRequest;
-use App\Services\Admin\Stock\StockService;
+use App\Services\Admin\Stock\UpdateService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -44,9 +44,9 @@ class EditController extends BaseController
     {
         DB::beginTransaction();
         try {
-            /** @var StockService $service */
-            $service = app(StockService::class);
-            $service->save($stock->id);
+            /** @var UpdateService $service */
+            $service = app(UpdateService::class);
+            $service->update($stock->id);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();

@@ -5,28 +5,31 @@ namespace App\Utils;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Response;
 
-class CSVUtil
+class CsvUtil
 {
 
     /**
      * CSVファイルの生成
-     * @param array<int, array<int, mixed>> $list
-     * @param array<string> $header
+     * @param array<array<string|int>> $rows
+     * @param array<string> $headers
      * @return string
      */
-    public static function make(array $list, array $header): string
+    public static function make(array $rows, array $headers): string
     {
-        if (count($header) > 0) {
-            array_unshift($list, $header);
+        if (0 < count($headers)) {
+            array_unshift($rows, $headers);
         }
         $stream = fopen('php://temp', 'r+b');
-        foreach ($list as $row) {
+        foreach ($rows as $row) {
             fputcsv($stream, $row);
         }
         rewind($stream);
         $csv = str_replace(PHP_EOL, "\r\n", stream_get_contents($stream));
+        $csv = "\xEF\xBB\xBF" . $csv; // BOM 追加
         $csv = mb_convert_encoding($csv, 'SJIS-win', 'UTF-8');
-
+        if (!is_string($csv)) {
+            throw new \RuntimeException('An unexpected error occurred.');
+        }
         return $csv;
     }
 

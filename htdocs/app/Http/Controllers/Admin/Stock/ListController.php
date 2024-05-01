@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin\Stock;
 
 use App\Domain\Entities\Stock;
 use App\Http\Controllers\BaseController;
+use App\Services\Admin\Stock\DownloadCsvService;
 use App\Services\Admin\Stock\DownloadExcelService;
-use App\Services\Admin\Stock\StockService;
-use App\Utils\CSVUtil;
+use App\Services\Admin\Stock\DownloadPdfService;
+use App\Services\Admin\Stock\IndexService;
+use App\Utils\CsvUtil;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Request;
@@ -33,11 +35,30 @@ class ListController extends BaseController
      */
     public function index(Request $request): View
     {
-        /** @var StockService $service */
-        $service = app(StockService::class);
-        $stocks = $service->list();
+        /** @var IndexService $service */
+        $service = app(IndexService::class);
+        $stocks = $service->searchStock();
 
         return view('admin.stock.index', compact('stocks', 'request'));
+    }
+
+    /**
+     * 商品一覧画面のCSVダウンロード処理
+     *
+     * @param Request $request
+     * @return Response
+     * @throws BindingResolutionException
+     */
+    public function downloadCsv(Request $request): Response
+    {
+        /** @var DownloadCsvService $service */
+        $service = app(DownloadCsvService::class);
+        $csvData = $service->getCsvData();
+
+        return response()->make($csvData, 200, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=stocks.csv",
+        ]);
     }
 
     /**
@@ -55,34 +76,6 @@ class ListController extends BaseController
     }
 
     /**
-     * 商品一覧画面のCSVダウンロード処理
-     *
-     * @param Request $request
-     * @return Response
-     * @throws BindingResolutionException
-     */
-    public function downloadCsv(Request $request): Response
-    {
-        /** @var StockService $service */
-        $service = app(StockService::class);
-        $stocks = $service->list(0);
-
-        $csvHeader = ['ID', '商品名', '価格'];
-        $csvBody = [];
-        foreach ($stocks as $stock) {
-            if (!$stock instanceof Stock) {
-                throw new \RuntimeException('An unexpected error occurred.');
-            }
-            $line = [];
-            $line[] = $stock->id;
-            $line[] = $stock->name;
-            $line[] = $stock->price;
-            $csvBody[] = $line;
-        }
-        return CSVUtil::download($csvBody, $csvHeader, 'stocks.csv');
-    }
-
-    /**
      * 商品一覧画面のPDFダウンロード処理
      *
      * @param Request $request
@@ -90,26 +83,13 @@ class ListController extends BaseController
      */
     public function downloadPdf(Request $request): Response
     {
-        /** @var StockService $service */
-        $service = app(StockService::class);
-        $stocks = $service->list(0);
-
-        $csvHeader = ['ID', '商品名', '価格'];
-        $csvBody = [];
-        foreach ($stocks as $stock) {
-            if (!$stock instanceof Stock) {
-                throw new \RuntimeException('An unexpected error occurred.');
-            }
-            $line = [];
-            $line[] = $stock->id;
-            $line[] = $stock->name;
-            $line[] = $stock->price;
-            $csvBody[] = $line;
-        }
+        /** @var DownloadPdfService $service */
+        $service = app(DownloadPdfService::class);
+        [$headers, $rows] = $service->getPdfData();
 
         /** @var PDF $pdf */
         $pdf = app(PDF::class);
-        return $pdf->loadView('admin.stock.pdf', compact('csvHeader', 'csvBody'))
+        return $pdf->loadView('admin.stock.pdf', compact('headers', 'rows'))
             ->download('stocks.pdf');
     }
 }
