@@ -160,7 +160,7 @@
                                     @foreach($contact -> contactFormImages as $contactFormImage)
                                         @if ($contactFormImage['file_name'])
                                             <img
-                                                src="{{ asset('uploads/' . $contactFormImage['file_name']) }}"
+                                                src="{{ asset('uploads/contact/' . $contactFormImage['file_name']) }}"
                                                 width="200px"
                                                 id="contactFormImage"
                                             />

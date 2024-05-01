@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\PhotoType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,44 +24,27 @@ class PhotoService extends BaseService
 
         $photos = [];
 
-        $files = Storage::files();
+        $files = Storage::allFiles();
         foreach ($files as $file) {
-            $fileName = basename($file);
-            if (empty($name) || strpos($fileName, $name) !== false) {
-                $photo = (object)[
-                    'type' => 'default',
-                    'fileName' => $fileName,
-                ];
-                array_push($photos, $photo);
+            if (null !== $name && !str_contains($file, $name)) {
+                continue;
             }
-        }
-
-        $files = Storage::files('stock');
-        foreach ($files as $file) {
-            $fileName = basename($file);
-            if (empty($name) || strpos($fileName, $name) !== false) {
-                $photo = (object)[
-                    'type' => 'stock',
-                    'fileName' => $fileName,
-                ];
-                array_push($photos, $photo);
-            }
+            $dirName = substr($file, 0, strpos($file, '/'));
+            $photo = [
+                'type' => PhotoType::getIdByDirName($dirName),
+                'fileName' => $file,
+            ];
+           $photos[] = $photo;
         }
 
         return $photos;
     }
 
     /**
-     * @param string $type
      * @param string $fileName
      */
-    public function delete(string $type, string $fileName): void
+    public function delete(string $fileName): void
     {
-        if ($type === 'stock') {
-            $delPath = 'stock/' . $fileName;
-            Storage::delete($delPath);
-        } else {
-            Storage::delete($fileName);
-        }
+        Storage::delete($fileName);
     }
 }

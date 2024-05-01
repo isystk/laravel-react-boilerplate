@@ -43,12 +43,11 @@ class PhotoController extends BaseController
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $type = $request->type;
         $fileName = $request->fileName;
 
         /** @var PhotoService $service */
         $service = app(PhotoService::class);
-        $service->delete($type, $fileName);
+        $service->delete($fileName);
 
         return redirect(route('admin.photo'));
     }

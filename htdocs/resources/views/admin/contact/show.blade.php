@@ -75,7 +75,7 @@
                     <div class="col-sm-12">
                         @foreach($contact -> contactFormImages as $contactFormImage)
                             @if ($contactFormImage['file_name'])
-                                <img src="{{ asset('uploads/' . $contactFormImage['file_name']) }}" width="200px" />
+                                <img src="{{ asset('uploads/contact/' . $contactFormImage['file_name']) }}" width="200px" />
                             @endif
                         @endforeach
                     </div>

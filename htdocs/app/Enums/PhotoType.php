@@ -46,4 +46,13 @@ enum PhotoType: int
         return self::get($code)->label();
     }
 
+    public static function getIdByDirName(string $dirName): ?PhotoType
+    {
+        return match ($dirName) {
+            'stock' => self::Stock,
+            'contact' => self::Contact,
+            default => null
+        };
+    }
+
 }

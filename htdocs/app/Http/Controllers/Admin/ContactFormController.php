@@ -6,6 +6,7 @@ use App\Domain\Entities\ContactForm;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\StoreContactFormRequest;
 use App\Services\Admin\ContactForm\IndexService;
+use App\Services\Admin\ContactForm\UpdateService;
 use App\Services\ContactFormService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
@@ -73,9 +74,9 @@ class ContactFormController extends BaseController
     {
         DB::beginTransaction();
         try {
-            /** @var ContactFormService $service */
-            $service = app(ContactFormService::class);
-            $service->save($contact->id);
+            /** @var UpdateService $service */
+            $service = app(UpdateService::class);
+            $service->update($contact->id);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
