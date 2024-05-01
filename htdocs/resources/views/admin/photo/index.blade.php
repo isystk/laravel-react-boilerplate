@@ -64,30 +64,29 @@
                         <tbody>
                         @foreach($photos as $photo)
                             <tr>
-                                <td>{{ ($photo->type === 'stock') ? App\Enums\PhotoType::Stock->value : App\Enums\PhotoType::Contact->value }}</td>
-                                <td>{{ $photo->fileName }}</td>
+                                <td>{{ $photo['type']?->label() ?? '' }}</td>
+                                <td>{{ $photo['fileName'] }}</td>
                                 <td>
-                                    @if ($photo->type === 'stock')
-                                        <img src="{{ asset('/uploads/stock/'.$photo->fileName) }}" alt="" width="100px" />
-                                    @else
-                                        <img src="{{ asset('/uploads/'.$photo->fileName) }}" alt="" width="100px" />
-                                    @endif
+                                    <img
+                                        src="{{ asset('/uploads/' . (!is_null($photo['type']) ? $photo['type']->label() . '/' : '') . $photo['fileName']) }}"
+                                        alt=""
+                                        width="100px"
+                                    />
                                 </td>
                                 <td>
                                     <a
                                         href="#"
                                         class="btn btn-danger js-deleteBtn"
-                                        data-id="{{ $photo->type }}_{{ $photo->fileName }}"
+                                        data-id="{{ $photo['fileName'] }}"
                                     >削除する</a>
                                     <form
-                                        id="delete_{{ $photo->type }}_{{ $photo->fileName }}"
+                                        id="delete_{{ $photo['fileName'] }}"
                                         action="{{ route('admin.photo.destroy') }}"
                                         method="POST"
                                         style="display: none;"
                                     >
                                         @csrf
-                                        <input type="hidden" name="type" value="{{ $photo->type }}"/>
-                                        <input type="hidden" name="fileName" value="{{ $photo->fileName }}"/>
+                                        <input type="hidden" name="fileName" value="{{ $photo['fileName'] }}"/>
                                     </form>
                                 </td>
                             </tr>
