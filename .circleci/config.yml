@@ -13,7 +13,7 @@ jobs:
  
       - image: cimg/mysql:8.0
         environment:
-          - MYSQL_DATABASE: laravel
+          - MYSQL_DATABASE: laraec
           - MYSQL_USER: user
           - MYSQL_PASSWORD: password
           - MYSQL_ROOT_PASSWORD: password
