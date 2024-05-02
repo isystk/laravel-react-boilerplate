@@ -7,13 +7,13 @@ jobs:
           - APP_DEBUG: true
           - APP_ENV: circleci
           - DB_CONNECTION: mysql
-          - DB_DATABASE: laraec
+          - DB_DATABASE: testing_database
           - DB_USERNAME: user
           - DB_PASSWORD: password
  
       - image: cimg/mysql:8.0
         environment:
-          - MYSQL_DATABASE: laraec
+          - MYSQL_DATABASE: testing_database
           - MYSQL_USER: user
           - MYSQL_PASSWORD: password
           - MYSQL_ROOT_PASSWORD: password
@@ -47,7 +47,7 @@ jobs:
           command: echo "APP_KEY=" >> .env.testing
       - run: 
           working_directory: htdocs
-          command: php artisan key:generate
+          command: php artisan key:generate --env=.env.testing
       - run: 
           working_directory: htdocs
           command: echo "DB_HOST=127.0.0.1" >> .env.testing
