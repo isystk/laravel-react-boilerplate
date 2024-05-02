@@ -55,7 +55,7 @@ jobs:
       - run: 
           working_directory: htdocs
           command: |
-            vendor/bin/phpunit --testdox
+            vendor/bin/phpunit --testdox --env=.env.testing
 
   deploy-prod:
     machine:
