@@ -52,7 +52,7 @@ jobs:
       - run: 
           working_directory: htdocs
           command: |
-            php artisan test
+            php artisan test --env=testing
 
   deploy-prod:
     machine:
