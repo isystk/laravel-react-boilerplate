@@ -2,10 +2,12 @@
 
 namespace Tests\Feature\Api;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ContactFormTest extends TestCase
 {
+    use RefreshDatabase;
 
     /**
      * お問い合わせ登録画面から投稿が正常に出来ることを確認する

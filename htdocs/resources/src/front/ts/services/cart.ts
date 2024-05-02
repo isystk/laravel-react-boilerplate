@@ -80,13 +80,13 @@ export default class CartService {
         return result;
     }
 
-    async removeCart(stockId: number): Promise<boolean> {
+    async removeCart(cartId: number): Promise<boolean> {
         let result = false;
         // ローディングを表示する
         this.main.showLoading();
         try {
             const response = await API.post(API_ENDPOINT.REMOVE_MYCART, {
-                stock_id: stockId,
+                cart_id: cartId,
             });
             if (response.result) {
                 this.carts = response.carts;

@@ -25,14 +25,13 @@ class IndexService extends BaseService
     }
 
     /**
-     * @param int $limit
      * @return Collection|LengthAwarePaginator|array<string>
      */
-    public function searchOrder(int $limit = 20): Collection|LengthAwarePaginator|array
+    public function searchOrder(): Collection|LengthAwarePaginator|array
     {
-        return $this->orderRepository->findAll($this->request()->name, [
-            'with:user' => true,
-            'with:stock' => true,
+        $limit = 20;
+        return $this->orderRepository->getConditionsWithUserStock([
+            'user_name' => $this->request()->name,
             'limit' => $limit,
         ]);
     }

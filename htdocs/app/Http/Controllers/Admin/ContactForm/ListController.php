@@ -28,8 +28,8 @@ class ListController extends BaseController
     {
         /** @var IndexService $service */
         $service = app(IndexService::class);
-        $contacts = $service->searchContactForm();
+        $contactForms = $service->searchContactForm();
 
-        return view('admin.contact.index', compact('contacts', 'request'));
+        return view('admin.contact.index', compact('contactForms', 'request'));
     }
 }

@@ -9,9 +9,10 @@ use App\Domain\Repositories\BaseRepository;
 interface ContactFormImageRepository extends BaseRepository
 {
     /**
+     * contactFormId からデータを取得します。
      * @param int $contactFormId
-     * @param array<string, mixed>|array<int, string> $options
-     * @return Collection|LengthAwarePaginator
+     * @return Collection
      */
-    public function findAll(int $contactFormId, array $options = []): Collection|LengthAwarePaginator;
+    public function getByContactFormId(int $contactFormId): Collection;
+
 }

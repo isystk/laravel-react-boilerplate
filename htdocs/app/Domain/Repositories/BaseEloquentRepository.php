@@ -15,7 +15,6 @@ abstract class BaseEloquentRepository implements BaseRepository
         $this->model = app($this->model());
     }
 
-
     /**
      * @param array $data
      * @return mixed

@@ -111,27 +111,27 @@ Breadcrumbs::for('admin.contact', static function ($breadcrumbs) {
 });
 
 // Home > お問い合わせ一覧 > お問い合わせ詳細
-Breadcrumbs::for('admin.contact.show', static function ($breadcrumbs, $contact) {
+Breadcrumbs::for('admin.contact.show', static function ($breadcrumbs, $contactForm) {
   $breadcrumbs->parent('admin.contact');
   $breadcrumbs->push(
-    __('contact.Contact ID:') . $contact->id,
+    __('contact.Contact ID:') . $contactForm->id,
     'admin.contact.show',
     [
       'params' => [
-          'contact' => $contact,
+          'contactForm' => $contactForm,
       ],
     ]);
 });
 
 // Home > お問い合わせ一覧 > お問い合わせ詳細 > お問い合わせ編集
-Breadcrumbs::for('admin.contact.edit', static function ($breadcrumbs, $contact) {
-  $breadcrumbs->parent('admin.contact.show', $contact);
+Breadcrumbs::for('admin.contact.edit', static function ($breadcrumbs, $contactForm) {
+  $breadcrumbs->parent('admin.contact.show', $contactForm);
   $breadcrumbs->push(
-    __('contact.Contact ID:') . $contact->id . __('common.Of Change'),
+    __('contact.Contact ID:') . $contactForm->id . __('common.Of Change'),
     'admin.contact.edit',
     [
       'params' => [
-          'contact' => $contact,
+          'contactForm' => $contactForm,
       ],
     ]);
 });

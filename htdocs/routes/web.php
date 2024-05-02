@@ -41,10 +41,10 @@ Route::prefix('admin')->group(function () {
         Route::get('order/{order}', [\App\Http\Controllers\Admin\Order\DetailController::class, 'show'])->name('admin.order.show');
 
         Route::get('contact', [\App\Http\Controllers\Admin\ContactForm\ListController::class, 'index'])->name('admin.contact');
-        Route::get('contact/{contact}', [\App\Http\Controllers\Admin\ContactForm\DetailController::class, 'show'])->name('admin.contact.show');
-        Route::post('contact/{contact}/destroy', [\App\Http\Controllers\Admin\ContactForm\DetailController::class, 'destroy'])->name('admin.contact.destroy');
-        Route::get('contact/{contact}/edit', [\App\Http\Controllers\Admin\ContactForm\EditController::class, 'edit'])->name('admin.contact.edit');
-        Route::post('contact/{contact}/update', [\App\Http\Controllers\Admin\ContactForm\EditController::class, 'update'])->name('admin.contact.update');
+        Route::get('contact/{contactForm}', [\App\Http\Controllers\Admin\ContactForm\DetailController::class, 'show'])->name('admin.contact.show');
+        Route::post('contact/{contactForm}/destroy', [\App\Http\Controllers\Admin\ContactForm\DetailController::class, 'destroy'])->name('admin.contact.destroy');
+        Route::get('contact/{contactForm}/edit', [\App\Http\Controllers\Admin\ContactForm\EditController::class, 'edit'])->name('admin.contact.edit');
+        Route::post('contact/{contactForm}/update', [\App\Http\Controllers\Admin\ContactForm\EditController::class, 'update'])->name('admin.contact.update');
 
         Route::get('photo', [\App\Http\Controllers\Admin\Photo\ListController::class, 'index'])->name('admin.photo');
         Route::post('photo/destroy', [\App\Http\Controllers\Admin\Photo\ListController::class, 'destroy'])->name('admin.photo.destroy');
@@ -85,11 +85,11 @@ Route::prefix('api')->middleware('api')->group(function () {
         Route::post('/session', function (Request $request) {
             return $request->user();
         });
-        Route::post('/mycart', [App\Http\Controllers\Api\ShopController::class, 'mycart'])->name('shop.mycart');
-        Route::post('/addMycart', [App\Http\Controllers\Api\ShopController::class, 'addMycart'])->name('shop.addcart');
-        Route::post('/cartdelete', [App\Http\Controllers\Api\ShopController::class, 'deleteCart'])->name('shop.delete');
-        Route::post('/createPayment', [App\Http\Controllers\Api\ShopController::class, 'createPayment'])->name('shop.createPayment');
-        Route::post('/checkout', [App\Http\Controllers\Api\ShopController::class, 'checkout'])->name('shop.check');
+        Route::post('/mycart', [App\Http\Controllers\Api\CartController::class, 'mycart'])->name('shop.mycart');
+        Route::post('/addMycart', [App\Http\Controllers\Api\CartController::class, 'addMycart'])->name('shop.addcart');
+        Route::post('/cartdelete', [App\Http\Controllers\Api\CartController::class, 'deleteCart'])->name('shop.delete');
+        Route::post('/createPayment', [App\Http\Controllers\Api\CartController::class, 'createPayment'])->name('shop.createPayment');
+        Route::post('/checkout', [App\Http\Controllers\Api\CartController::class, 'checkout'])->name('shop.check');
     });
 });
 

@@ -40,13 +40,4 @@ class Stock extends Model
         'updated_at' => 'datetime',
     ];
 
-    // 子テーブル
-
-    /**
-     * @return HasMany
-     */
-    public function orders(): HasMany
-    {
-        return $this->hasMany(Order::class);
-    }
 }

@@ -27,30 +27,16 @@ class StockCSVBatch extends Command
     protected $description = '商品の一覧をCSVファイルに出力します。';
 
     /**
-     * @var StockService
-     */
-    private StockService $stockService;
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct(StockService $stockService)
-    {
-        parent::__construct();
-        $this->stockService = $stockService;
-    }
-
-    /**
      * Execute the console command.
      *
      */
     public function handle(): void
     {
         Log::info('StockCSVBatch START');
-        //
-        $stocks = $this->stockService->searchStock(0);
+
+        /** @var StockService $service */
+        $service = app(StockService::class);
+        $stocks = $service->searchStock();
 
         $csvHeader = ['ID', '商品名', '価格'];
         $csvBody = [];

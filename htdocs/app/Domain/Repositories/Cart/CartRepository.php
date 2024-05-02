@@ -2,16 +2,22 @@
 
 namespace App\Domain\Repositories\Cart;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
 use App\Domain\Repositories\BaseRepository;
+use Illuminate\Support\Collection;
 
 interface CartRepository extends BaseRepository
 {
     /**
+     * ユーザーIDからデータを取得します。
      * @param string $userId
-     * @param array<string, mixed>|array<int, string> $options
-     * @return Collection|LengthAwarePaginator
+     * @return Collection
      */
-    public function findAll(string $userId, array $options = []): Collection|LengthAwarePaginator;
+    public function getByUserId(string $userId): Collection;
+
+    /**
+     * ユーザーIDからデータを削除します。
+     * @param int $userId
+     * @return void
+     */
+    public function deleteByUserId(int $userId): void;
 }

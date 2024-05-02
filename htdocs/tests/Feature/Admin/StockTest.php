@@ -3,12 +3,14 @@
 namespace Tests\Feature\Admin;
 
 use App\Domain\Entities\Admin;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
 class StockTest extends TestCase
 {
+    use RefreshDatabase;
     use WithoutMiddleware; // use this trait
 
     /**

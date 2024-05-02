@@ -3,12 +3,14 @@
 namespace Tests\Feature\Api;
 
 use App\Domain\Entities\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
 class ShopTest extends TestCase
 {
+    use RefreshDatabase;
     use WithoutMiddleware; // use this trait
 
     /**

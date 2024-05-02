@@ -4,19 +4,19 @@ namespace App\Providers;
 
 use App\Domain\Entities\Cart;
 use App\Domain\Entities\ContactForm;
-use App\Domain\Repositories\Admin\AdminEloquentEloquentRepository;
+use App\Domain\Repositories\Admin\AdminEloquentRepository;
 use App\Domain\Repositories\Admin\AdminRepository;
-use App\Domain\Repositories\Cart\CartEloquentEloquentRepository;
+use App\Domain\Repositories\Cart\CartEloquentRepository;
 use App\Domain\Repositories\Cart\CartRepository;
-use App\Domain\Repositories\ContactForm\ContactFormEloquentEloquentRepository;
-use App\Domain\Repositories\ContactForm\ContactFormImageEloquentEloquentRepository;
+use App\Domain\Repositories\ContactForm\ContactFormEloquentRepository;
+use App\Domain\Repositories\ContactForm\ContactFormImageEloquentRepository;
 use App\Domain\Repositories\ContactForm\ContactFormImageRepository;
 use App\Domain\Repositories\ContactForm\ContactFormRepository;
-use App\Domain\Repositories\Order\OrderEloquentEloquentRepository;
+use App\Domain\Repositories\Order\OrderEloquentRepository;
 use App\Domain\Repositories\Order\OrderRepository;
-use App\Domain\Repositories\Stock\StockEloquentEloquentRepository;
+use App\Domain\Repositories\Stock\StockEloquentRepository;
 use App\Domain\Repositories\Stock\StockRepository;
-use App\Domain\Repositories\User\UserEloquentEloquentRepository;
+use App\Domain\Repositories\User\UserEloquentRepository;
 use App\Domain\Repositories\User\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,13 +28,13 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(AdminRepository::class, AdminEloquentEloquentRepository::class);
-        $this->app->bind(CartRepository::class, CartEloquentEloquentRepository::class);
-        $this->app->bind(ContactFormRepository::class, ContactFormEloquentEloquentRepository::class);
-        $this->app->bind(ContactFormImageRepository::class, ContactFormImageEloquentEloquentRepository::class);
-        $this->app->bind(OrderRepository::class, OrderEloquentEloquentRepository::class);
-        $this->app->bind(StockRepository::class, StockEloquentEloquentRepository::class);
-        $this->app->bind(UserRepository::class, UserEloquentEloquentRepository::class);
+        $this->app->bind(AdminRepository::class, AdminEloquentRepository::class);
+        $this->app->bind(CartRepository::class, CartEloquentRepository::class);
+        $this->app->bind(ContactFormRepository::class, ContactFormEloquentRepository::class);
+        $this->app->bind(ContactFormImageRepository::class, ContactFormImageEloquentRepository::class);
+        $this->app->bind(OrderRepository::class, OrderEloquentRepository::class);
+        $this->app->bind(StockRepository::class, StockEloquentRepository::class);
+        $this->app->bind(UserRepository::class, UserEloquentRepository::class);
     }
 
 }

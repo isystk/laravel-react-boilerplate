@@ -1,13 +1,13 @@
 @extends('layouts.app_admin')
 
-@section('title',  __('order.Order ID:') . $contact->id. __('common.Of Change'))
+@section('title',  __('order.Order ID:') . $contactForm->id. __('common.Of Change'))
 @php
     $menu = 'user';
     $subMenu = 'contact';
 @endphp
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('admin.contact.edit', $contact) }}
+    {{ Breadcrumbs::render('admin.contact.edit', $contactForm) }}
 @endsection
 
 @section('content')
@@ -30,7 +30,7 @@
 
             <form
                 method="POST" enctype="multipart/form-data"
-                action="{{ route('admin.contact.update', ['contact' => $contact]) }}"
+                action="{{ route('admin.contact.update', ['contactForm' => $contactForm]) }}"
             >
                 @csrf
                 <div class="form-group">
@@ -40,7 +40,7 @@
                             <input
                                 type="text"
                                 name="your_name"
-                                value="{{ old('your_name', $contact -> your_name) }}"
+                                value="{{ old('your_name', $contactForm->your_name) }}"
                                 placeholder="サンプル太郎"
                                 maxlength="100"
                             />
@@ -54,7 +54,7 @@
                             <input
                                 type="email"
                                 name="email"
-                                value="{{ old('email', $contact -> email) }}"
+                                value="{{ old('email', $contactForm->email) }}"
                                 placeholder="sample@sample.com"
                                 maxlength="100"
                             />
@@ -72,7 +72,7 @@
                                         type="radio"
                                         name="gender"
                                         value="{{$e->value}}"
-                                        {{ $e->value == old("gender", $contact -> gender) ? 'checked="checked"' : '' }}
+                                        {{ $e->value == old("gender", $contactForm->gender) ? 'checked="checked"' : '' }}
                                     />
                                     <span>{{ $e->label() }}</span>
                                 </label>
@@ -90,7 +90,7 @@
                                 @foreach (App\Enums\Age::cases() as $e)
                                     <option
                                         value="{{$e->value}}"
-                                        {{ $e->value == old("age", $contact -> age) ? 'selected="selected"' : '' }}
+                                        {{ $e->value == old("age", $contactForm->age) ? 'selected="selected"' : '' }}
                                     >{{$e->label()}}</option>
                                 @endforeach
                             </select>
@@ -105,7 +105,7 @@
                             <input
                                 type="text"
                                 name="title"
-                                value="{{ old('title', $contact -> title) }}"
+                                value="{{ old('title', $contactForm->title) }}"
                                 placeholder="○○について"
                                 maxlength="100"
                             />
@@ -121,7 +121,7 @@
                                 name="contact"
                                 rows="8"
                                 cols="80"
-                            >{{ old('contact', $contact -> contact) }}</textarea>
+                            >{{ old('contact', $contactForm->contact) }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -133,7 +133,7 @@
                             <input
                                 type="url"
                                 name="url"
-                                value="{{ old('url', $contact -> url) }}"
+                                value="{{ old('url', $contactForm->url) }}"
                                 placeholder="https://sample.com"
                                 maxlength="100"
                             />
@@ -156,8 +156,8 @@
                                     <img src="{{ old('imageBase64') }}" width="200px" />
                                     <input type="hidden" name="imageBase64" value="{{ old('imageBase64') }}" />
                                     <input type="hidden" name="fileName" value="{{ old('fileName') }}" />
-                                @elseif ($contact -> contactFormImages)
-                                    @foreach($contact -> contactFormImages as $contactFormImage)
+                                @elseif ($contactFormImages)
+                                    @foreach($contactFormImages as $contactFormImage)
                                         @if ($contactFormImage['file_name'])
                                             <img
                                                 src="{{ asset('uploads/contact/' . $contactFormImage['file_name']) }}"

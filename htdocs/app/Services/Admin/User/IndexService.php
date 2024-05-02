@@ -26,17 +26,16 @@ class IndexService extends BaseService
     }
 
     /**
-     * @param int $limit
-     * @return Collection|LengthAwarePaginator|array<string>
+     * @return LengthAwarePaginator
      */
-    public function searchUser(int $limit = 20): Collection|LengthAwarePaginator|array
+    public function searchUser(): LengthAwarePaginator
     {
-        return $this->userRepository->findAll(
-            $this->request()->name,
-            $this->request()->email,
-            [
-                'limit' => $limit,
-            ]);
+        $limit = 20;
+        return $this->userRepository->getByConditions([
+            'name' => $this->request()->name,
+            'email' => $this->request()->email,
+            'limit' => $limit,
+        ]);
     }
 
 }

@@ -9,10 +9,19 @@ use App\Domain\Repositories\BaseRepository;
 interface StockRepository extends BaseRepository
 {
     /**
-     * @param string|null $name
-     * @param array<int, string>|array<string, mixed> $options
+     * @param int $limit
+     * @return LengthAwarePaginator
+     */
+    public function getByLimit(int $limit = 0): LengthAwarePaginator;
+
+    /**
+     * 検索条件からデータを取得します。
+     * @param array{
+     *   name : ?string,
+     *   limit : ?int,
+     * } $conditions
      * @return Collection|LengthAwarePaginator
      */
-    public function findAll(string|null $name, array $options = []): Collection|LengthAwarePaginator;
+    public function getByConditions(array $conditions): Collection|LengthAwarePaginator;
 
 }

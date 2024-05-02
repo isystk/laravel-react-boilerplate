@@ -10,10 +10,14 @@ use App\Domain\Repositories\BaseRepository;
 interface UserRepository extends BaseRepository
 {
     /**
-     * @param string|null $name
-     * @param string|null $email
-     * @param array<string, mixed> $options
-     * @return Collection|LengthAwarePaginator|array<User>
+     * 検索条件からデータを取得します。
+     * @param array{
+     *   name : ?string,
+     *   email : ?string,
+     *   limit : ?int,
+     * } $conditions
+     * @return Collection|LengthAwarePaginator
      */
-    public function findAll(?string $name, ?string $email, array $options = []): Collection|LengthAwarePaginator|array;
+    public function getByConditions(array $conditions): Collection|LengthAwarePaginator;
+
 }

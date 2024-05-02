@@ -47,13 +47,4 @@ class ContactForm extends Model
         'updated_at' => 'datetime',
     ];
 
-    // 子テーブル
-
-    /**
-     * @return HasMany
-     */
-    public function contactFormImages(): HasMany
-    {
-        return $this->hasMany(ContactFormImage::class);
-    }
 }

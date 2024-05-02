@@ -30,9 +30,9 @@ class BaseStockService extends BaseService
      */
     public function searchStock(int $limit = 20): Collection|LengthAwarePaginator
     {
-        return $this->stockRepository->findAll(
-            $this->request()->name,
+        return $this->stockRepository->getByConditions(
             [
+                'name' => $this->request()->name,
                 'limit' => $limit,
             ]);
     }

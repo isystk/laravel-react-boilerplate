@@ -35,15 +35,6 @@ class StoreService extends BaseService
     }
 
     /**
-     * @param int $contactFormId
-     * @return object|null
-     */
-    public function find(int $contactFormId): object|null
-    {
-        return $this->contactFormRepository->getById($contactFormId);
-    }
-
-    /**
      * @return ContactForm
      */
     public function save(): ContactForm
@@ -70,7 +61,7 @@ class StoreService extends BaseService
             $file = UploadImage::convertBase64($request->imageBase64);
             $fileName = time() . $request->fileName;
 
-            $contactFormImages = $this->contactFormImageRepository->findAll($contactFormId);
+            $contactFormImages = $this->contactFormImageRepository->getByContactFormId($contactFormId);
             foreach ($contactFormImages as $contactFormImage) {
                 if (!$contactFormImage instanceof ContactFormImage) {
                     throw new \RuntimeException('An unexpected error occurred.');
@@ -91,20 +82,4 @@ class StoreService extends BaseService
         return $contactForm;
     }
 
-    /**
-     * @param int $id
-     */
-    public function delete(int $id): void
-    {
-        // お問い合わせ画像テーブルを削除
-        $contactFormImages = $this->contactFormImageRepository->findAll($id);
-        foreach ($contactFormImages as $contactFormImage) {
-            if (!$contactFormImage instanceof ContactFormImage) {
-                throw new \RuntimeException('An unexpected error occurred.');
-            }
-            $this->contactFormImageRepository->delete($contactFormImage->id);
-        }
-        // お問い合わせテーブルを削除
-        $this->contactFormRepository->delete($id);
-    }
 }

@@ -1,13 +1,13 @@
 @extends('layouts.app_admin')
 
-@section('title', __('contact.Contact ID:').$contact->id)
+@section('title', __('contact.Contact ID:') . $contactForm->id)
 @php
     $menu = 'user';
     $subMenu = 'contact';
 @endphp
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('admin.contact.show', $contact) }}
+    {{ Breadcrumbs::render('admin.contact.show', $contactForm) }}
 @endsection
 
 @section('content')
@@ -17,7 +17,7 @@
                 <div class="control-group">
                     <label class="col-sm-6 control-label">{{ __('contact.Name') }}</label>
                     <div class="col-sm-12">
-                        {{ $contact -> your_name }}
+                        {{ $contactForm->your_name }}
                     </div>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                 <div class="control-group">
                     <label class="col-sm-6 control-label">{{ __('contact.EMail') }}</label>
                     <div class="col-sm-12">
-                        {{ $contact -> email }}
+                        {{ $contactForm->email }}
                     </div>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                 <div class="control-group">
                     <label class="col-sm-6 control-label">{{ __('contact.Gender') }}</label>
                     <div class="col-sm-12">
-                        {{ App\Enums\Gender::get($contact -> gender)->label() }}
+                        {{ App\Enums\Gender::get($contactForm->gender)->label() }}
                     </div>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                 <div class="control-group">
                     <label class="col-sm-6 control-label">{{ __('contact.Age') }}</label>
                     <div class="col-sm-12">
-                        {{ App\Enums\Age::get($contact -> age)->label() }}
+                        {{ App\Enums\Age::get($contactForm->age)->label() }}
                     </div>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                 <div class="control-group">
                     <label class="col-sm-6 control-label">{{ __('contact.Title') }}</label>
                     <div class="col-sm-12">
-                        {{ $contact -> title }}
+                        {{ $contactForm->title }}
                     </div>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                 <div class="control-group">
                     <label class="col-sm-6 control-label">{{ __('contact.Contact') }}</label>
                     <div class="col-sm-12">
-                        {{ $contact -> contact }}
+                        {{ $contactForm->contact }}
                     </div>
                 </div>
             </div>
@@ -65,7 +65,7 @@
                 <div class="control-group">
                     <label class="col-sm-6 control-label">{{ __('contact.URL') }}</label>
                     <div class="col-sm-12">
-                        {{ $contact -> url }}
+                        {{ $contactForm->url }}
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                 <div class="control-group">
                     <label class="col-sm-6 control-label">{{ __('contact.Image') }}</label>
                     <div class="col-sm-12">
-                        @foreach($contact -> contactFormImages as $contactFormImage)
+                        @foreach($contactFormImages as $contactFormImage)
                             @if ($contactFormImage['file_name'])
                                 <img src="{{ asset('uploads/contact/' . $contactFormImage['file_name']) }}" width="200px" />
                             @endif
@@ -83,20 +83,20 @@
             </div>
         </div>
         <div class="card-footer text-center clearfix ">
-            <form method="GET" action="{{ route('admin.contact.edit', ['contact' => $contact ]) }}">
+            <form method="GET" action="{{ route('admin.contact.edit', ['contactForm' => $contactForm ]) }}">
                 @csrf
                 <button type="submit" class="btn btn-info">{{ __('common.Change') }}</button>
             </form>
             <form
                 method="POST"
-                action="{{route('admin.contact.destroy', ['contact' => $contact ])}}"
-                id="delete_{{ $contact->id }}"
+                action="{{route('admin.contact.destroy', ['contactForm' => $contactForm ])}}"
+                id="delete_{{ $contactForm->id }}"
             >
                 @csrf
                 <a
                     href="#"
                     class="btn btn-danger js-deleteBtn"
-                    data-id="{{ $contact->id }}"
+                    data-id="{{ $contactForm->id }}"
                 >{{ __('common.Delete') }}</a>
             </form>
         </div>

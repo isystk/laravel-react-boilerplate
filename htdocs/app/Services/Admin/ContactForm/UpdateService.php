@@ -61,7 +61,7 @@ class UpdateService extends BaseService
             $file = UploadImage::convertBase64($request->imageBase64);
             $fileName = time() . $request->fileName;
 
-            $contactFormImages = $this->contactFormImageRepository->findAll($contactFormId);
+            $contactFormImages = $this->contactFormImageRepository->getByContactFormId($contactFormId);
             foreach ($contactFormImages as $contactFormImage) {
                 if (!$contactFormImage instanceof ContactFormImage) {
                     throw new \RuntimeException('An unexpected error occurred.');

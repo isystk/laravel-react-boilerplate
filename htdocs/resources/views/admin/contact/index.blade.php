@@ -78,15 +78,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach($contacts as $contact)
+                        @foreach($contactForms as $contactForm)
                             <tr>
-                                <th>{{ $contact->id }}</th>
-                                <td>{{ $contact->your_name }}</td>
-                                <td>{{ $contact->title }}</td>
-                                <td>{{ $contact->created_at }}</td>
+                                <th>{{ $contactForm->id }}</th>
+                                <td>{{ $contactForm->your_name }}</td>
+                                <td>{{ $contactForm->title }}</td>
+                                <td>{{ $contactForm->created_at }}</td>
                                 <td>
                                     <a
-                                        href="{{ route('admin.contact.show', ['contact'=> $contact]) }}"
+                                        href="{{ route('admin.contact.show', ['contactForm'=> $contactForm]) }}"
                                     >{{ __('common.Detail') }}</a>
                                 </td>
                             </tr>
@@ -95,7 +95,7 @@
                     </table>
                 </div>
                 <div class="card-footer clearfix ">
-                    {{ $contacts->links() }}
+                    {{ $contactForms->links() }}
                 </div>
             </div>
         </div>
