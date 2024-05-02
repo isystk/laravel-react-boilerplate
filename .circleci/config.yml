@@ -44,6 +44,12 @@ jobs:
  
       - run: 
           working_directory: htdocs
+          command: echo "APP_KEY=" >> .env.testing
+      - run: 
+          working_directory: htdocs
+          command: php artisan key:generate
+      - run: 
+          working_directory: htdocs
           command: echo "DB_HOST=127.0.0.1" >> .env.testing
  
       - run: 
