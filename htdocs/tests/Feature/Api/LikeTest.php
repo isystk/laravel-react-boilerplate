@@ -2,13 +2,10 @@
 
 namespace Tests\Feature\Api;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class LikeTest extends TestCase
 {
-  use RefreshDatabase;
-
   /**
    * お気に入り情報を取得した場合に、正しく返却されることを確認する。
    *
