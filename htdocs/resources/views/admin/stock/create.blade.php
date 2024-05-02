@@ -50,7 +50,7 @@
                     <div class="control-group">
                         <label class="col-sm-2 control-label">{{ __('stock.Price') }}</label>
                         <div class="col-sm-4">
-                            <input type="text" name="price" value="{{ old('price') }}"/>
+                            <input type="number" name="price" value="{{ old('price') }}" class="js-input-number" />
                         </div>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                     <div class="control-group">
                         <label class="col-sm-2 control-label">{{ __('stock.Quantity') }}</label>
                         <div class="col-sm-4">
-                            <input type="text" name="quantity" value="{{ old('quantity') }}"/>
+                            <input type="number" name="quantity" value="{{ old('quantity') }}" class="js-input-number" />
                         </div>
                     </div>
                 </div>

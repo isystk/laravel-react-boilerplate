@@ -8,3 +8,16 @@ import "admin-lte/dist/js/adminlte.min.js";
 
 import heic2any from "heic2any";
 window.heic2any = heic2any;
+
+require('./plugins/loading');
+require('./plugins/inputNumber');
+
+$(function() {
+
+    // ローディング
+    $.loading();
+
+    // 数値入力補助
+    $('.js-input-number').inputNumber();
+
+})
