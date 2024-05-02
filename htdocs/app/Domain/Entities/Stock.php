@@ -3,8 +3,8 @@
 namespace App\Domain\Entities;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
@@ -17,6 +17,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Stock extends Model
 {
+    use HasFactory;
+
     /**
      * The attributes that are mass assignable.
      *

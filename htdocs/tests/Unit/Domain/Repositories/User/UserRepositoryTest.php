@@ -4,6 +4,7 @@ namespace Tests\Unit\Domain\Repositories\User;
 
 use App\Domain\Repositories\User\UserRepository;
 use App\Domain\Entities\User;
+use FontLib\TrueType\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -39,26 +40,33 @@ class UserRepositoryTest extends TestCase
      */
     public function testGetByConditions(): void
     {
-        $expectUser1 = User::factory(['name' => 'user1', 'email' => 'user1@test.com'])->create();
-        $expectUser2 = User::factory(['name' => 'user2', 'email' => 'user2@test.com'])->create();
-
         $defaultConditions = [
             'name' => null,
             'email' => null,
             'limit' => null,
         ];
 
-        $users = $this->repository->getByConditions([
+        $users = $this->repository->getByConditions($defaultConditions);
+        $this->assertSame(0, $users->count(), 'データがない状態で正常に動作することを始めにテスト');
+
+        /** @var User $expectUser1 */
+        $expectUser1 = User::factory(['name' => 'user1', 'email' => 'user1@test.com'])->create();
+        /** @var User $expectUser2 */
+        $expectUser2 = User::factory(['name' => 'user2', 'email' => 'user2@test.com'])->create();
+
+        /** @var User $user */
+        $user = $this->repository->getByConditions([
             ...$defaultConditions,
             'name' => 'user1'
-        ]);
-        $this->assertSame($expectUser1->id, $users->first()->id, 'nameで検索が出来ることをテスト');
+        ])->first();
+        $this->assertSame($expectUser1->id, $user->id, 'nameで検索が出来ることをテスト');
 
-        $users = $this->repository->getByConditions([
+        /** @var User $user */
+        $user = $this->repository->getByConditions([
             ...$defaultConditions,
             'email' => 'user2@test.com'
-        ]);
-        $this->assertSame($expectUser2->id, $users->first()->id, 'emailで検索が出来ることをテスト');
+        ])->first();
+        $this->assertSame($expectUser2->id, $user->id, 'emailで検索が出来ることをテスト');
 
         $users = $this->repository->getByConditions([
             ...$defaultConditions,

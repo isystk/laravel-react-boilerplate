@@ -4,9 +4,8 @@ namespace App\Services\Batch;
 
 use App\Domain\Repositories\Stock\StockRepository;
 use App\Services\BaseService;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class StockService extends BaseService
 {
@@ -25,11 +24,11 @@ class StockService extends BaseService
     }
 
     /**
-     * @return Collection|LengthAwarePaginator
+     * @return Collection
      */
-    public function searchStock(): Collection|LengthAwarePaginator
+    public function searchStock(): Collection
     {
-        return $this->stockRepository->getByLimit();
+        return $this->stockRepository->getAll();
     }
 
 }
