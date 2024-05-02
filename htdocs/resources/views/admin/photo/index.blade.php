@@ -28,11 +28,11 @@
                         <div class="col-sm-4">
                             <input
                                 type="text"
-                                name="fileNmae"
+                                name="fileName"
                                 class="form-control"
                                 size="10"
                                 maxlength="100"
-                                value="{{ $request->fileNmae }}"
+                                value="{{ $request->fileName }}"
                             />
                         </div>
                     </div>
@@ -58,7 +58,7 @@
         </form>
     </div>
     <form action="{{ route('admin.photo') }}" method="GET" id="pagingForm">
-        <input type="hidden" name="fileNmae" value="{{ $request->fileNmae }}">
+        <input type="hidden" name="fileName" value="{{ $request->fileName }}">
         <input type="hidden" name="fileType" value="{{ $request->fileType }}">
     </form>
     <div class="row">
