@@ -29,17 +29,19 @@
                             <input
                                 type="text"
                                 name="fileName"
-                                class="form-control"
-                                size="10"
-                                maxlength="100"
                                 value="{{ $request->fileName }}"
+                                class="form-control"
+                                maxlength="100"
                             />
                         </div>
                     </div>
                     <div class="control-group mt-3" id="userName">
                         <label class="col-sm-2 control-label">{{ __('photo.Type') }}</label>
                         <div class="col-sm-4">
-                            <select name="fileType" class="form-control">
+                            <select
+                                name="fileType"
+                                class="form-control"
+                            >
                                 <option value="">未選択</option>
                                 @foreach(App\Enums\PhotoType::cases() as $item)
                                     <option

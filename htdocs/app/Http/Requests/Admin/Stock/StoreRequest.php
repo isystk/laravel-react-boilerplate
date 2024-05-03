@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin\Stock;
 
 use App\Utils\UploadImage;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreContactFormRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -20,12 +20,12 @@ class StoreContactFormRequest extends FormRequest
     /**
      * @return array<string, mixed>
      */
-    public function validationData()
+    public function validationData(): array
     {
         $all = parent::validationData();
 
         // imageBase64パラメータがあればUploadedFileオブジェクトに変換してimageFileパラメータに上書きする。
-        if ($this->has('imageBase64') && $this->imageBase64 !== null) {
+        if ($this->has('imageBase64')) {
             $all['imageFile'] = UploadImage::convertBase64($this->imageBase64);
         }
 
@@ -39,46 +39,33 @@ class StoreContactFormRequest extends FormRequest
      */
     public function rules(): array
     {
-        $maxlength = config('const.maxlength.contact_forms');
-        $rules = [
-            'your_name' => [
+        $maxlength = config('const.maxlength.stocks');
+        return [
+            'name' => [
                 'required',
                 'string',
-                'max:' . $maxlength['your_name'],
+                'max:' . $maxlength['name'],
             ],
-            'title' => [
+            'price' => [
+                'required',
+                'numeric',
+            ],
+            'detail' => [
                 'required',
                 'string',
-                'max:' . $maxlength['title'],
+                'max:' . $maxlength['detail'],
             ],
-            'email' => [
+            'quantity' => [
                 'required',
-                'email',
-                'max:' . $maxlength['email'],
-            ],
-            'gender' => [
-                'required',
-            ],
-            'age' => [
-                'required'
-            ],
-            'contact' => [
-                'required',
-                'string',
-                'max:' . $maxlength['contact'],
-            ],
-            'url' => [
-                'url',
-                'nullable',
+                'numeric',
             ],
             'imageFile' => [
-                'nullable',
+                'required',
                 'image',
                 'mimes:jpeg,png',
                 'max:100000000',
-                'dimensions:max_width=1200,max_height=1200'
+                'dimensions:max_width=1200,max_height=1200',
             ],
-            // ファイルのバリデーションよしなに。
             'imageBase64' => [
                 'nullable',
                 'string',
@@ -89,16 +76,8 @@ class StoreContactFormRequest extends FormRequest
                 'string',
             ]
         ];
-
-        // $id = $this->get('id');
-        $contact = $this->route('contact');
-        if (empty($contact)) {
-            // store
-            $rules['caution'] = 'required';
-        }
-
-        return $rules;
     }
+
 
     /**
      * 項目名
@@ -108,14 +87,11 @@ class StoreContactFormRequest extends FormRequest
     public function attributes()
     {
         return [
-            'your_name' => __('contact.Name'),
-            'title' => __('contact.Title'),
-            'email' => __('contact.EMail'),
-            'gender' => __('contact.Gender'),
-            'age' => __('contact.Age'),
-            'contact' => __('contact.Contact'),
-            'url' => __('contact.URL'),
-            'imageFile' => __('contact.Image'),
+            'name' => __('stock.Name'),
+            'price' => __('stock.Price'),
+            'detail' => __('stock.Detail'),
+            'quantity' => __('stock.Quantity'),
+            'imageFile' => __('stock.Image'),
         ];
     }
 

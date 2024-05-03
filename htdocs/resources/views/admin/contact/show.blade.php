@@ -37,7 +37,7 @@
                 <div class="control-group">
                     <label class="col-sm-6 control-label">{{ __('contact.Gender') }}</label>
                     <div class="col-sm-12">
-                        {{ App\Enums\Gender::get($contactForm->gender)->label() }}
+                        {{ $contactForm->getGender()?->label() }}
                     </div>
                 </div>
             </div>
@@ -45,7 +45,7 @@
                 <div class="control-group">
                     <label class="col-sm-6 control-label">{{ __('contact.Age') }}</label>
                     <div class="col-sm-12">
-                        {{ App\Enums\Age::get($contactForm->age)->label() }}
+                        {{ $contactForm->getAge()?->label() }}
                     </div>
                 </div>
             </div>

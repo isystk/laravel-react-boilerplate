@@ -38,7 +38,13 @@
                     <div class="control-group">
                         <label class="col-sm-2 control-label">{{ __('stock.Name') }}</label>
                         <div class="col-sm-8">
-                            <input type="text" name="name" value="{{ old('name', $stock->name) }}"/>
+                            <input
+                                type="text"
+                                name="name"
+                                value="{{ old('name', $stock->name) }}"
+                                class="form-control"
+                                maxlength="{{ config('const.maxlength.stocks.name') }}"
+                            />
                         </div>
                     </div>
                 </div>
@@ -46,7 +52,12 @@
                     <div class="control-group">
                         <label class="col-sm-2 control-label">{{ __('stock.Detail') }}</label>
                         <div class="col-sm-8">
-                            <textarea name="detail" rows="8" cols="80">{{ old('detail', $stock->detail) }}</textarea>
+                            <textarea
+                                name="detail"
+                                rows="10"
+                                cols="50"
+                                class="form-control"
+                            >{{ old('detail', $stock->detail) }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -54,7 +65,13 @@
                     <div class="control-group">
                         <label class="col-sm-2 control-label">{{ __('stock.Price') }}</label>
                         <div class="col-sm-4">
-                            <input type="number" name="price" value="{{ old('price', $stock->price) }}" class="js-input-number" />
+                            <input
+                                type="number"
+                                name="price"
+                                value="{{ old('price', $stock->price) }}"
+                                class="form-control js-input-number"
+                                maxlength="{{ config('const.maxlength.stocks.price') }}"
+                            />
                         </div>
                     </div>
                 </div>
@@ -62,7 +79,13 @@
                     <div class="control-group">
                         <label class="col-sm-2 control-label">{{ __('stock.Quantity') }}</label>
                         <div class="col-sm-4">
-                            <input type="number" name="quantity" value="{{ old('quantity', $stock->quantity) }}" class="js-input-number" />
+                            <input
+                                type="number"
+                                name="quantity"
+                                value="{{ old('quantity', $stock->quantity) }}"
+                                class="form-control js-input-number"
+                                maxlength="{{ config('const.maxlength.stocks.quantity') }}"
+                            />
                         </div>
                     </div>
                 </div>

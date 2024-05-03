@@ -39,10 +39,9 @@
                             <input
                                 type="text"
                                 name="name"
-                                class="form-control"
-                                size="10"
-                                maxlength="100"
                                 value="{{ $request->name }}"
+                                class="form-control"
+                                maxlength="{{ config('const.maxlength.stocks.name') }}"
                             >
                         </div>
                     </div>

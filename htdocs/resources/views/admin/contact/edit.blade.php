@@ -45,8 +45,8 @@
                                 type="text"
                                 name="your_name"
                                 value="{{ old('your_name', $contactForm->your_name) }}"
-                                placeholder="サンプル太郎"
-                                maxlength="100"
+                                class="form-control"
+                                maxlength="{{ config('const.maxlength.contact_forms.your_name') }}"
                             />
                         </div>
                     </div>
@@ -59,8 +59,8 @@
                                 type="email"
                                 name="email"
                                 value="{{ old('email', $contactForm->email) }}"
-                                placeholder="sample@sample.com"
-                                maxlength="100"
+                                class="form-control"
+                                maxlength="{{ config('const.maxlength.contact_forms.email') }}"
                             />
                         </div>
                     </div>
@@ -76,6 +76,7 @@
                                         type="radio"
                                         name="gender"
                                         value="{{$e->value}}"
+                                        class="form-control"
                                         {{ $e->value == old("gender", $contactForm->gender) ? 'checked="checked"' : '' }}
                                     />
                                     <span>{{ $e->label() }}</span>
@@ -89,7 +90,10 @@
                     <div class="control-group" id="userName">
                         <label class="col-sm-6 control-label">{{ __('contact.Age') }}</label>
                         <div class="col-sm-12">
-                            <select name="age">
+                            <select
+                                name="age"
+                                class="form-control"
+                            >
                                 <option value="">{{ __('common.Please Select') }}</option>
                                 @foreach (App\Enums\Age::cases() as $e)
                                     <option
@@ -110,8 +114,8 @@
                                 type="text"
                                 name="title"
                                 value="{{ old('title', $contactForm->title) }}"
-                                placeholder="○○について"
-                                maxlength="100"
+                                class="form-control"
+                                maxlength="{{ config('const.maxlength.contact_forms.title') }}"
                             />
                         </div>
                     </div>
@@ -123,8 +127,9 @@
                         <div class="col-sm-12">
                             <textarea
                                 name="contact"
-                                rows="8"
-                                cols="80"
+                                rows="10"
+                                cols="50"
+                                class="form-control"
                             >{{ old('contact', $contactForm->contact) }}</textarea>
                         </div>
                     </div>
@@ -138,8 +143,8 @@
                                 type="url"
                                 name="url"
                                 value="{{ old('url', $contactForm->url) }}"
-                                placeholder="https://sample.com"
-                                maxlength="100"
+                                class="form-control"
+                                maxlength="{{ config('const.maxlength.contact_forms.url') }}"
                             />
                         </div>
                     </div>

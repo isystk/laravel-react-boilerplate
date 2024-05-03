@@ -29,10 +29,9 @@
                             <input
                                 type="text"
                                 name="userName"
-                                class="form-control"
-                                size="10"
-                                maxlength="100"
                                 value="{{ $request->userName }}"
+                                class="form-control"
+                                maxlength="{{ config('const.maxlength.contact_forms.your_name') }}"
                             />
                         </div>
                     </div>
@@ -42,10 +41,9 @@
                             <input
                                 type="text"
                                 name="title"
-                                class="form-control"
-                                size="10"
-                                maxlength="100"
                                 value="{{ $request->title }}"
+                                class="form-control"
+                                maxlength="{{ config('const.maxlength.contact_forms.title') }}"
                             />
                         </div>
                     </div>

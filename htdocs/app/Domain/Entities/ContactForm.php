@@ -2,6 +2,8 @@
 
 namespace App\Domain\Entities;
 
+use App\Enums\Age;
+use App\Enums\Gender;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -46,5 +48,22 @@ class ContactForm extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    /**
+     * @return ?Gender
+     */
+    public function getGender(): ?Gender
+    {
+        return Gender::get((int)$this->gender);
+    }
+
+    /**
+     * @return ?Age
+     */
+    public function getAge(): ?Age
+    {
+        return Age::get($this->age);
+    }
+
 
 }

@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin\Stock;
 
 use App\Domain\Entities\Stock;
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\StoreStockFormRequest;
+use App\Http\Requests\Admin\Stock\StoreRequest;
+use App\Http\Requests\Admin\Stock\UpdateRequest;
 use App\Services\Admin\Stock\UpdateService;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -35,12 +37,12 @@ class EditController extends BaseController
     /**
      * 商品変更画面の登録処理
      *
-     * @param StoreStockFormRequest $request
+     * @param UpdateRequest $request
      * @param Stock $stock
      * @return RedirectResponse
-     * @throws \Exception
+     * @throws Exception
      */
-    public function update(StoreStockFormRequest $request, Stock $stock): RedirectResponse
+    public function update(UpdateRequest $request, Stock $stock): RedirectResponse
     {
         DB::beginTransaction();
         try {
@@ -48,7 +50,7 @@ class EditController extends BaseController
             $service = app(UpdateService::class);
             $service->update($stock->id);
             DB::commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             throw $e;
         }

@@ -30,10 +30,9 @@
                             <input
                                 type="text"
                                 name="name"
-                                class="form-control"
-                                size="10"
-                                maxlength="100"
                                 value="{{ $request->name }}"
+                                class="form-control"
+                                maxlength="{{ config('const.maxlength.users.name') }}"
                             >
                         </div>
                     </div>
@@ -44,9 +43,9 @@
                         <input
                             type="email"
                             name="email"
-                            class="form-control"
-                            maxlength="100"
                             value="{{ $request->email }}"
+                            class="form-control"
+                            maxlength="{{ config('const.maxlength.users.email') }}"
                         >
                     </div>
                 </div>
