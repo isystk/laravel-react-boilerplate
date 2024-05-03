@@ -29,7 +29,7 @@ class Stock extends Model
         'detail',
         'price',
         'imgpath',
-        'quantiry',
+        'quantity',
     ];
 
     /**

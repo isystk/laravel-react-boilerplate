@@ -31,18 +31,20 @@ class DateUtilTest extends TestCase
 
     /**
      * 有効な日付文字列が提供された場合、toCarbonImmutableがCarbonImmutableオブジェクトを返すことをテスト
+     * @param string $date
      * @testWith ["2024-03-24 12:30:45"]
      */
-    public function testToCarbonImmutableReturnsCarbonImmutableIfValidDateStringIsProvided($date): void
+    public function testToCarbonImmutableReturnsCarbonImmutableIfValidDateStringIsProvided(string $date): void
     {
         $this->assertInstanceOf(CarbonImmutable::class, DateUtil::toCarbonImmutable($date));
     }
 
     /**
      * 年月のみが提供された場合、toCarbonImmutableが月初のCarbonImmutableオブジェクトを返すことをテスト
+     * @param string $date
      * @testWith ["2024-03"]
      */
-    public function testToCarbonImmutableReturnsCarbonImmutableWithDefaultDayIfOnlyYearAndMonthAreProvided($date): void
+    public function testToCarbonImmutableReturnsCarbonImmutableWithDefaultDayIfOnlyYearAndMonthAreProvided(string $date): void
     {
         $carbon = DateUtil::toCarbonImmutable($date);
         $this->assertEquals('2024-03-01 00:00:00', $carbon->format('Y-m-d H:i:s'));
@@ -50,9 +52,10 @@ class DateUtilTest extends TestCase
 
     /**
      * 時間が含まれない場合、toCarbonImmutableが00:00:00を持つCarbonImmutableオブジェクトを返すことをテスト
+     * @param string $date
      * @testWith ["2024-03-24"]
      */
-    public function testToCarbonImmutableReturnsCarbonImmutableWithDefaultTimeIfNoTimeIsProvided($date): void
+    public function testToCarbonImmutableReturnsCarbonImmutableWithDefaultTimeIfNoTimeIsProvided(string $date): void
     {
         $carbon = DateUtil::toCarbonImmutable($date);
         $this->assertEquals('2024-03-24 00:00:00', $carbon->format('Y-m-d H:i:s'));
@@ -68,6 +71,8 @@ class DateUtilTest extends TestCase
 
     /**
      * ハイフンが含まれる日付文字列が提供された場合、toCarbonImmutableがスラッシュでの日付変換を行うことをテスト
+     * @param string $dateHyphen
+     * @param string $dateSlash
      * @testWith ["2024-03-24 12:30:45", "2024/03/24 12:30:45"]
      */
     public function testToCarbonImmutableConvertsHyphenToSlashInDateString(string $dateHyphen, string $dateSlash): void

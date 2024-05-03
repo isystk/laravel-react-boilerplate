@@ -59,7 +59,7 @@ enum PhotoType: int
         return match ($dirName) {
             'stock' => self::Stock,
             'contact' => self::Contact,
-            default => null
+            default => throw new \RuntimeException('An unexpected error occurred.')
         };
     }
 

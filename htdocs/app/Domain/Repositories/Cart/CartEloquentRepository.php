@@ -19,10 +19,10 @@ class CartEloquentRepository extends BaseEloquentRepository implements CartRepos
 
     /**
      * ユーザーIDからデータを取得します。
-     * @param string $userId
+     * @param int $userId
      * @return Collection
      */
-    public function getByUserId(string $userId): Collection
+    public function getByUserId(int $userId): Collection
     {
         $query = $this->model
             ->with([
