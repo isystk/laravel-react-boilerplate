@@ -59,24 +59,19 @@
     <div class="content-wrapper">
         <div class="content-header">
             <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
+                <div class="mb-2">
+                    <div class="d-inline-block">
                         <h1>@yield('title')</h1>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="d-inline-block" style="float: right">
                         @yield('breadcrumbs')
                     </div>
+                    <div class="clearfix"></div>
                 </div>
             </div>
         </div>
         <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
-                        @yield('content')
-                    </div>
-                </div>
-            </div>
+            @yield('content')
         </div>
     </div>
     <footer class="main-footer">
