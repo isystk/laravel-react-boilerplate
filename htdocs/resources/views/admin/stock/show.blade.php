@@ -11,6 +11,10 @@
 @endsection
 
 @section('content')
+    <div class="text-left mb-3">
+        <a class="btn btn-secondary" href="{{ route('admin.stock') }}">{{ __('common.Back') }}</a>
+    </div>
+
     <div class="card card-purple">
         <div class="card-body">
             <div class="form-group">

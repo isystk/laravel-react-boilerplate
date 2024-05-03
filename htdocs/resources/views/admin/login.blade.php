@@ -85,7 +85,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card-footer text-center clearfix ">
+            <div class="card-footer text-center  ">
                 <button type="submit" class="btn btn-danger" id="Login">
                     {{ __('common.Login') }}
                 </button>

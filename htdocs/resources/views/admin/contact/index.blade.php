@@ -100,7 +100,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="card-footer clearfix ">
+                <div class="card-footer  ">
                     {{ $contactForms->links() }}
                 </div>
             </div>

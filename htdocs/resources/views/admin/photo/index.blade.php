@@ -109,7 +109,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="card-footer clearfix ">
+                <div class="card-footer  ">
                 </div>
             </div>
         </div>

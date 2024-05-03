@@ -11,6 +11,10 @@
 @endsection
 
 @section('content')
+    <div class="text-left mb-3">
+        <a class="btn btn-secondary" href="{{ route('admin.contact.show', ['contactForm' => $contactForm]) }}">{{ __('common.Back') }}</a>
+    </div>
+
     <div class="card card-purple">
         <div class="card-body">
             @if (session('status'))
@@ -171,7 +175,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-footer text-center clearfix ">
+                <div class="card-footer text-center">
                     <input class="btn btn-info" type="submit" value="{{ __('common.Execute') }}">
                 </div>
             </form>

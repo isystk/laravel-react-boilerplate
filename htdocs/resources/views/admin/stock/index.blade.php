@@ -120,7 +120,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="card-footer clearfix ">
+                <div class="card-footer  ">
                     {{ $stocks->links() }}
                 </div>
             </div>

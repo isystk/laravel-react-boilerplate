@@ -11,6 +11,10 @@
 @endsection
 
 @section('content')
+    <div class="text-left mb-3">
+        <a class="btn btn-secondary" href="{{ route('admin.stock.show', ['stock' => $stock]) }}">{{ __('common.Back') }}</a>
+    </div>
+
     @if (session('status'))
         <div class="alert alert-success" role="alert">
             {{ session('status') }}
@@ -88,7 +92,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card-footer text-center clearfix ">
+            <div class="card-footer text-center  ">
                 <input class="btn btn-info" type="submit" value="{{ __('common.Execute') }}">
             </div>
         </div>
