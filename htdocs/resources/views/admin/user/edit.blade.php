@@ -31,11 +31,32 @@
         @csrf
         <div class="card card-purple">
             <div class="card-body">
-                {{ __('user.Name') }}
-                <input type="text" name="name" value="{{ old('name', $user -> name) }}" />
-                <br>
-                {{__('user.EMail')}}
-                <input type="email" name="email" value="{{ old('email', $user -> email) }}" />
+                <div class="form-group">
+                    <div class="control-group" id="userName">
+                        <label class="col-sm-6 control-label">{{ __('user.Name') }}</label>
+                        <div class="col-sm-12">
+                            <input
+                                type="text"
+                                name="name"
+                                value="{{ old('name', $user->name) }}"
+                                maxlength="100"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="control-group" id="userName">
+                        <label class="col-sm-6 control-label">{{ __('user.EMail') }}</label>
+                        <div class="col-sm-12">
+                            <input
+                                type="text"
+                                name="email"
+                                value="{{ old('email', $user->email) }}"
+                                maxlength="100"
+                            />
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="card-footer text-center clearfix ">
                 <input class="btn btn-info" type="submit" value="{{__('common.Execute')}}" />

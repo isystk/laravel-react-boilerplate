@@ -30,19 +30,28 @@
                 </div>
             </div>
         </div>
-        <div class="card-footer text-center clearfix ">
-            <form method="GET" action="{{ route('admin.user.edit', ['user' => $user ]) }}">
-                @csrf
-                <input class="btn btn-info" type="submit" value="{{ __('common.Change') }}">
-            </form>
-            <form
-                method="POST"
-                action="{{route('admin.user.destroy', ['user' => $user ])}}"
-                id="delete_{{ $user->id }}"
-            >
-                @csrf
-                <a href="#" class="btn btn-danger js-deleteBtn" data-id="{{ $user->id }}">{{ __('common.Delete') }}</a>
-            </form>
+        <div class="card-footer text-center position-relative">
+            <div class="d-inline-block">
+                <form
+                    method="GET"
+                    action="{{ route('admin.user.edit', ['user' => $user ]) }}"
+                >
+                    @csrf
+                    <div class="mx-auto">
+                        <input class="btn btn-info" type="submit" value="{{ __('common.Change') }}">
+                    </div>
+                </form>
+            </div>
+            <div class="d-inline-block position-absolute" style="right: 30px;">
+                <form
+                    method="POST"
+                    action="{{ route('admin.user.destroy', ['user' => $user ]) }}"
+                    id="delete_{{ $user->id }}"
+                >
+                    @csrf
+                    <a href="#" class="btn btn-danger js-deleteBtn" data-id="{{ $user->id }}">{{ __('common.Delete') }}</a>
+                </form>
+            </div>
         </div>
     </div>
 

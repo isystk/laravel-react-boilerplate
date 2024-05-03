@@ -91,7 +91,7 @@
                                 <td>
                                     <a
                                         href="#"
-                                        class="btn btn-danger js-deleteBtn"
+                                        class="btn btn-danger btn-sm js-deleteBtn"
                                         data-id="{{ $photo['fileName'] }}"
                                     >削除する</a>
                                     <form

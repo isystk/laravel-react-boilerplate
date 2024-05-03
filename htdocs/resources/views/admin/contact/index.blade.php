@@ -82,10 +82,16 @@
                             <tr>
                                 <th>{{ $contactForm->id }}</th>
                                 <td>{{ $contactForm->your_name }}</td>
-                                <td>{{ $contactForm->title }}</td>
+                                <td
+                                    class="text-truncate"
+                                    style="max-width: 350px;"
+                                >
+                                    {{ $contactForm->title }}
+                                </td>
                                 <td>{{ $contactForm->created_at }}</td>
                                 <td>
                                     <a
+                                        class="btn btn-info btn-sm"
                                         href="{{ route('admin.contact.show', ['contactForm'=> $contactForm]) }}"
                                     >{{ __('common.Detail') }}</a>
                                 </td>

@@ -72,7 +72,10 @@
                                 <td>{{ $order->quantity }}</td>
                                 <td>{{ $order->created_at }}</td>
                                 <td>
-                                    <a href="{{ route('admin.order.show', ['order'=> $order]) }}">{{ __('common.Detail') }}</a>
+                                    <a
+                                        class="btn btn-info btn-sm"
+                                        href="{{ route('admin.order.show', ['order'=> $order]) }}"
+                                    >{{ __('common.Detail') }}</a>
                                 </td>
                             </tr>
                         @endforeach

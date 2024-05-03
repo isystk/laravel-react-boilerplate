@@ -82,23 +82,28 @@
                 </div>
             </div>
         </div>
-        <div class="card-footer text-center clearfix ">
-            <form method="GET" action="{{ route('admin.contact.edit', ['contactForm' => $contactForm ]) }}">
-                @csrf
-                <button type="submit" class="btn btn-info">{{ __('common.Change') }}</button>
-            </form>
-            <form
-                method="POST"
-                action="{{route('admin.contact.destroy', ['contactForm' => $contactForm ])}}"
-                id="delete_{{ $contactForm->id }}"
-            >
-                @csrf
-                <a
-                    href="#"
-                    class="btn btn-danger js-deleteBtn"
-                    data-id="{{ $contactForm->id }}"
-                >{{ __('common.Delete') }}</a>
-            </form>
+        <div class="card-footer text-center position-relative">
+            <div class="d-inline-block">
+                <form
+                    method="GET"
+                    action="{{ route('admin.contact.edit', ['contactForm' => $contactForm ]) }}"
+                >
+                    @csrf
+                    <div class="mx-auto">
+                        <input class="btn btn-info" type="submit" value="{{ __('common.Change') }}">
+                    </div>
+                </form>
+            </div>
+            <div class="d-inline-block position-absolute" style="right: 30px;">
+                <form
+                    method="POST"
+                    action="{{ route('admin.contact.destroy', ['contactForm' => $contactForm ]) }}"
+                    id="delete_{{ $contactForm->id }}"
+                >
+                    @csrf
+                    <a href="#" class="btn btn-danger js-deleteBtn" data-id="{{ $contactForm->id }}">{{ __('common.Delete') }}</a>
+                </form>
+            </div>
         </div>
     </div>
 @endsection
