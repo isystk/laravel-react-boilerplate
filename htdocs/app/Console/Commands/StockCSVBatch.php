@@ -38,24 +38,22 @@ class StockCSVBatch extends Command
         $service = app(StockService::class);
         $stocks = $service->searchStock();
 
-        $csvHeader = ['ID', '商品名', '価格'];
-        $csvBody = [];
+        $headers = ['ID', '商品名', '価格'];
+        $rows = [];
         foreach ($stocks as $stock) {
             if (!$stock instanceof Stock) {
                 throw new \RuntimeException('An unexpected error occurred.');
             }
-            $line = [];
-            $line[] = $stock->id;
-            $line[] = $stock->name;
-            $line[] = $stock->price;
-            $csvBody[] = $line;
+            $row = [];
+            $row[] = $stock->id;
+            $row[] = $stock->name;
+            $row[] = $stock->price;
+            $rows[] = $row;
         }
-
-        $csv = CsvUtil::make($csvBody, $csvHeader);
+        $csv = CsvUtil::make($rows, $headers);
 
         $time = new Carbon(Carbon::now());
-        $time->setToStringFormat('Ymd');
-        File::put('./stocks_' . $time . '.csv', $csv);
+        File::put('/tmp/stocks_' . $time->format('Ymd') . '.csv', $csv);
         Log::info('StockCSVBatch END');
     }
 }

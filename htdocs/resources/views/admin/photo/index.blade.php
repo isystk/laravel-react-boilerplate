@@ -28,11 +28,11 @@
                         <div class="col-sm-4">
                             <input
                                 type="text"
-                                name="fileNmae"
+                                name="fileName"
                                 class="form-control"
                                 size="10"
                                 maxlength="100"
-                                value="{{ $request->fileNmae }}"
+                                value="{{ $request->fileName }}"
                             />
                         </div>
                     </div>
@@ -58,7 +58,7 @@
         </form>
     </div>
     <form action="{{ route('admin.photo') }}" method="GET" id="pagingForm">
-        <input type="hidden" name="fileNmae" value="{{ $request->fileNmae }}">
+        <input type="hidden" name="fileName" value="{{ $request->fileName }}">
         <input type="hidden" name="fileType" value="{{ $request->fileType }}">
     </form>
     <div class="row">
@@ -91,7 +91,7 @@
                                 <td>
                                     <a
                                         href="#"
-                                        class="btn btn-danger js-deleteBtn"
+                                        class="btn btn-danger btn-sm js-deleteBtn"
                                         data-id="{{ $photo['fileName'] }}"
                                     >削除する</a>
                                     <form
@@ -109,7 +109,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="card-footer clearfix ">
+                <div class="card-footer  ">
                 </div>
             </div>
         </div>

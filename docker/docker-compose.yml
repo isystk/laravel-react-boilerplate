@@ -51,6 +51,7 @@ services:
       - db-store:/var/lib/mysql
       - ./mysql/logs:/var/log/mysql
       - ./mysql/conf:/etc/mysql/conf.d
+      - ./mysql/initdb.d:/docker-entrypoint-initdb.d
 
   phpmyadmin:
     image: laraec/phpmyadmin

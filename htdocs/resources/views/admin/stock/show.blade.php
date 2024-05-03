@@ -11,6 +11,10 @@
 @endsection
 
 @section('content')
+    <div class="text-left mb-3">
+        <a class="btn btn-secondary" href="{{ route('admin.stock') }}">{{ __('common.Back') }}</a>
+    </div>
+
     <div class="card card-purple">
         <div class="card-body">
             <div class="form-group">
@@ -54,19 +58,28 @@
                 </div>
             </div>
         </div>
-        <div class="card-footer text-center clearfix ">
-            <form method="GET" action="{{ route('admin.stock.edit', ['stock' => $stock ]) }}">
-                @csrf
-                <input class="btn btn-info" type="submit" value="{{ __('common.Change') }}">
-            </form>
-            <form
-                method="POST"
-                action="{{route('admin.stock.destroy', ['stock' => $stock ])}}"
-                id="delete_{{ $stock->id }}"
-            >
-                @csrf
-                <a href="#" class="btn btn-danger js-deleteBtn" data-id="{{ $stock->id }}">{{ __('common.Delete') }}</a>
-            </form>
+        <div class="card-footer text-center position-relative">
+            <div class="d-inline-block">
+                <form
+                    method="GET"
+                    action="{{ route('admin.stock.edit', ['stock' => $stock ]) }}"
+                >
+                    @csrf
+                    <div class="mx-auto">
+                        <input class="btn btn-info" type="submit" value="{{ __('common.Change') }}">
+                    </div>
+                </form>
+            </div>
+            <div class="d-inline-block position-absolute" style="right: 30px;">
+                <form
+                    method="POST"
+                    action="{{ route('admin.stock.destroy', ['stock' => $stock ]) }}"
+                    id="delete_{{ $stock->id }}"
+                >
+                    @csrf
+                    <a href="#" class="btn btn-danger js-deleteBtn" data-id="{{ $stock->id }}">{{ __('common.Delete') }}</a>
+                </form>
+            </div>
         </div>
     </div>
 @endsection

@@ -84,14 +84,17 @@
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->created_at }}</td>
                                 <td>
-                                    <a href="{{ route('admin.user.show', ['user'=> $user]) }}">{{ __('common.Detail') }}</a>
+                                    <a
+                                        class="btn btn-info btn-sm"
+                                        href="{{ route('admin.user.show', ['user'=> $user]) }}"
+                                    >{{ __('common.Detail') }}</a>
                                 </td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
                 </div>
-                <div class="card-footer clearfix ">
+                <div class="card-footer  ">
                     {{ $users->links() }}
                 </div>
             </div>

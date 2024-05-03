@@ -1,12 +1,10 @@
 <?php
 
-namespace Tests\Feature\Front;
+namespace Tests\Feature\Http\Controllers\Auth;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class OAuthTest extends TestCase
+class OAuthControllerTest extends TestCase
 {
 
     public function setUp(): void
@@ -17,9 +15,8 @@ class OAuthTest extends TestCase
 
     /**
      * Googleの認証画面を表示できる
-     * @test
      */
-    public function showGoogleOAuth(): void
+    public function testShowGoogleOAuth(): void
     {
         // 認証キーを設定しないと動かないので一旦コメントアウト
         $this->assertTrue(true);
@@ -30,9 +27,8 @@ class OAuthTest extends TestCase
 
     /**
      * Googleアカウントでユーザー登録できる
-     * @test
      */
-    public function registGoogleOAuth(): void
+    public function testRegistGoogleOAuth(): void
     {
         // 認証キーを設定しないと動かないので一旦コメントアウト
         $this->assertTrue(true);

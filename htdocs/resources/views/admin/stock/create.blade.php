@@ -11,6 +11,9 @@
 @endsection
 
 @section('content')
+    <div class="text-left mb-3">
+        <a class="btn btn-secondary" href="{{ route('admin.stock') }}">{{ __('common.Back') }}</a>
+    </div>
 
     @if (session('status'))
         <div class="alert alert-success" role="alert">
@@ -50,7 +53,7 @@
                     <div class="control-group">
                         <label class="col-sm-2 control-label">{{ __('stock.Price') }}</label>
                         <div class="col-sm-4">
-                            <input type="text" name="price" value="{{ old('price') }}"/>
+                            <input type="number" name="price" value="{{ old('price') }}" class="js-input-number" />
                         </div>
                     </div>
                 </div>
@@ -58,7 +61,7 @@
                     <div class="control-group">
                         <label class="col-sm-2 control-label">{{ __('stock.Quantity') }}</label>
                         <div class="col-sm-4">
-                            <input type="text" name="quantity" value="{{ old('quantity') }}"/>
+                            <input type="number" name="quantity" value="{{ old('quantity') }}" class="js-input-number" />
                         </div>
                     </div>
                 </div>
@@ -83,7 +86,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card-footer text-center clearfix ">
+            <div class="card-footer text-center  ">
                 <input class="btn btn-info" type="submit" value="{{ __('common.Execute') }}">
             </div>
         </div>

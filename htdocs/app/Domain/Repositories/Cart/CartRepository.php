@@ -9,10 +9,10 @@ interface CartRepository extends BaseRepository
 {
     /**
      * ユーザーIDからデータを取得します。
-     * @param string $userId
+     * @param int $userId
      * @return Collection
      */
-    public function getByUserId(string $userId): Collection;
+    public function getByUserId(int $userId): Collection;
 
     /**
      * ユーザーIDからデータを削除します。

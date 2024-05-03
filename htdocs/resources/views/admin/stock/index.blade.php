@@ -111,6 +111,7 @@
                                 <td>{{ $stock->created_at }}</td>
                                 <td>
                                     <a
+                                        class="btn btn-info btn-sm"
                                         href="{{ route('admin.stock.show', ['stock'=> $stock]) }}"
                                     >{{ __('common.Detail') }}</a>
                                 </td>
@@ -119,7 +120,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="card-footer clearfix ">
+                <div class="card-footer  ">
                     {{ $stocks->links() }}
                 </div>
             </div>

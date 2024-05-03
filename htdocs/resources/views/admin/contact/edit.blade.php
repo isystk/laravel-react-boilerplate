@@ -11,6 +11,10 @@
 @endsection
 
 @section('content')
+    <div class="text-left mb-3">
+        <a class="btn btn-secondary" href="{{ route('admin.contact.show', ['contactForm' => $contactForm]) }}">{{ __('common.Back') }}</a>
+    </div>
+
     <div class="card card-purple">
         <div class="card-body">
             @if (session('status'))
@@ -171,32 +175,33 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-footer text-center clearfix ">
+                <div class="card-footer text-center">
                     <input class="btn btn-info" type="submit" value="{{ __('common.Execute') }}">
                 </div>
             </form>
         </div>
-        @endsection
+    </div>
+@endsection
 
-        @section('scripts')
-            <script>
-                $(function () {
-                    // 画像ファイルアップロード
-                    $('#js-uploadImage').imageUploader({
-                        dropAreaSelector: '#drop-zone',
-                        successCallback: function (res) {
+@section('scripts')
+    <script>
+        $(function () {
+            // 画像ファイルアップロード
+            $('#js-uploadImage').imageUploader({
+                dropAreaSelector: '#drop-zone',
+                successCallback: function (res) {
 
-                            $('#result').empty();
-                            $('#result').append('<img src="' + res.fileData + '" width="200px" />');
-                            $('#result').append('<input type="hidden" name="imageBase64" value="' + res.fileData + '" />');
-                            $('#result').append('<input type="hidden" name="fileName" value="' + res.fileName + '" />');
+                    $('#result').empty();
+                    $('#result').append('<img src="' + res.fileData + '" width="200px" />');
+                    $('#result').append('<input type="hidden" name="imageBase64" value="' + res.fileData + '" />');
+                    $('#result').append('<input type="hidden" name="fileName" value="' + res.fileName + '" />');
 
-                            $('.error-message').empty();
-                        },
-                        errorCallback: function (res) {
-                            $('.error-message').text(res[0]);
-                        }
-                    });
-                });
-            </script>
+                    $('.error-message').empty();
+                },
+                errorCallback: function (res) {
+                    $('.error-message').text(res[0]);
+                }
+            });
+        });
+    </script>
 @endsection

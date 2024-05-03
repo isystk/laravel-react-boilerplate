@@ -7,13 +7,13 @@ jobs:
           - APP_DEBUG: true
           - APP_ENV: circleci
           - DB_CONNECTION: mysql
-          - DB_DATABASE: laraec
+          - DB_DATABASE: testing_database
           - DB_USERNAME: user
           - DB_PASSWORD: password
  
       - image: cimg/mysql:8.0
         environment:
-          - MYSQL_DATABASE: laraec
+          - MYSQL_DATABASE: testing_database
           - MYSQL_USER: user
           - MYSQL_PASSWORD: password
           - MYSQL_ROOT_PASSWORD: password
@@ -44,40 +44,20 @@ jobs:
  
       - run: 
           working_directory: htdocs
-          command: echo "APP_KEY=" > .env.circleci
-      - run: 
+          command: echo "DB_HOST=127.0.0.1" >> .env.testing
+      - run:
           working_directory: htdocs
-          command: php artisan key:generate
-      - run: 
-          working_directory: htdocs
-          command: php artisan migrate:refresh --seed --env=circleci
+          command: php artisan key:generate --env=testing
  
       - run: 
           working_directory: htdocs
           command: |
-            cp .env.circleci .env.testing
-            vendor/bin/phpunit --testdox
-
-  deploy-prod:
-    machine:
-      image: circleci/classic:edge
-    steps:
-      - checkout
-      - run:
-          name: onamae.com deploy
-          command: |
-            curl -X POST -H "Content-Type: application/x-www-form-urlencoded" \
-            --data-urlencode 'payload={"ref": "refs/heads/master"}'  \
-            https://laraec.isystk.com/laravel-react-boilerplate/git-hook.php?key=Yfd3o8Jy5s
+            php artisan test --env=testing
 
 workflows:
   version: 2
-  build_and_deploy:
+  build:
     jobs:
       - build
-      - deploy-prod:
-          requires:
-          - build
-          filters:
-            branches:
-              only: release/laravel8
+      
+

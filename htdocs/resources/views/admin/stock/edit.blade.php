@@ -11,6 +11,10 @@
 @endsection
 
 @section('content')
+    <div class="text-left mb-3">
+        <a class="btn btn-secondary" href="{{ route('admin.stock.show', ['stock' => $stock]) }}">{{ __('common.Back') }}</a>
+    </div>
+
     @if (session('status'))
         <div class="alert alert-success" role="alert">
             {{ session('status') }}
@@ -34,7 +38,7 @@
                     <div class="control-group">
                         <label class="col-sm-2 control-label">{{ __('stock.Name') }}</label>
                         <div class="col-sm-8">
-                            <input type="text" name="name" value="{{ old('name', $stock -> name) }}"/>
+                            <input type="text" name="name" value="{{ old('name', $stock->name) }}"/>
                         </div>
                     </div>
                 </div>
@@ -42,7 +46,7 @@
                     <div class="control-group">
                         <label class="col-sm-2 control-label">{{ __('stock.Detail') }}</label>
                         <div class="col-sm-8">
-                            <textarea name="detail" rows="8" cols="80">{{ old('detail', $stock -> detail) }}</textarea>
+                            <textarea name="detail" rows="8" cols="80">{{ old('detail', $stock->detail) }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -50,7 +54,7 @@
                     <div class="control-group">
                         <label class="col-sm-2 control-label">{{ __('stock.Price') }}</label>
                         <div class="col-sm-4">
-                            <input type="text" name="price" value="{{ old('price', $stock -> price) }}"/>
+                            <input type="number" name="price" value="{{ old('price', $stock->price) }}" class="js-input-number" />
                         </div>
                     </div>
                 </div>
@@ -58,7 +62,7 @@
                     <div class="control-group">
                         <label class="col-sm-2 control-label">{{ __('stock.Quantity') }}</label>
                         <div class="col-sm-4">
-                            <input type="text" name="quantity" value="{{ old('quantity', $stock -> quantity) }}"/>
+                            <input type="number" name="quantity" value="{{ old('quantity', $stock->quantity) }}" class="js-input-number" />
                         </div>
                     </div>
                 </div>
@@ -76,7 +80,7 @@
                                     <img src="{{ old('imageBase64') }}" width="200px" />
                                     <input type="hidden" name="imageBase64" value="{{ old('imageBase64') }}"/>
                                     <input type="hidden" name="fileName" value="{{ old('fileName') }}"/>
-                                @elseif ($stock -> imgpath)
+                                @elseif ($stock->imgpath)
                                     <img
                                         src="{{ asset('uploads/stock/' . $stock->imgpath) }}" width="200px"
                                         id="stockImage"
@@ -88,7 +92,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card-footer text-center clearfix ">
+            <div class="card-footer text-center  ">
                 <input class="btn btn-info" type="submit" value="{{ __('common.Execute') }}">
             </div>
         </div>
