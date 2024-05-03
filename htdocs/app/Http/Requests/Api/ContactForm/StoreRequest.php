@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Api\ContactForm;
 
 use App\Utils\UploadImage;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreContactFormRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -20,7 +20,7 @@ class StoreContactFormRequest extends FormRequest
     /**
      * @return array<string, mixed>
      */
-    public function validationData()
+    public function validationData(): array
     {
         $all = parent::validationData();
 
@@ -35,7 +35,7 @@ class StoreContactFormRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, string>
+     * @return array<string, array<string>>
      */
     public function rules(): array
     {

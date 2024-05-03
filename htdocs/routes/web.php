@@ -59,14 +59,15 @@ Route::prefix('admin')->group(function () {
 */
 Route::prefix('auth')->middleware('guest')->group(function () {
 
-    Route::get('/{provider}', [App\Http\Controllers\Auth\OAuthController::class, 'socialOAuth'])
+    Route::get('/{provider}', [\App\Http\Controllers\Front\Auth\OAuthController::class, 'socialOAuth'])
         ->where('provider', 'google')
         ->name('socialOAuth');
 
-    Route::get('/{provider}/callback', [App\Http\Controllers\Auth\OAuthController::class, 'handleProviderCallback'])
+    Route::get('/{provider}/callback', [\App\Http\Controllers\Front\Auth\OAuthController::class, 'handleProviderCallback'])
         ->where('provider', 'google')
         ->name('oauthCallback');
 });
+
 /*
 |--------------------------------------------------------------------------
 | API

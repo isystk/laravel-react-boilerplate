@@ -35,7 +35,7 @@ class StoreRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, string>
+     * @return array<string, array<string>>
      */
     public function rules(): array
     {
@@ -84,7 +84,7 @@ class StoreRequest extends FormRequest
      *
      * @return array<string, string>
      */
-    public function attributes()
+    public function attributes(): array
     {
         return [
             'name' => __('stock.Name'),

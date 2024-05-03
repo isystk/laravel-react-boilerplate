@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin\Stock;
 
 use App\Domain\Entities\Stock;
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\Admin\Stock\StoreRequest;
 use App\Http\Requests\Admin\Stock\UpdateRequest;
 use App\Services\Admin\Stock\UpdateService;
 use Exception;
