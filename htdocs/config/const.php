@@ -3,6 +3,9 @@
 return [
 
     'maxlength' => [
+        'commons' => [
+            'date' => 10
+        ],
         'users' => [
             'name' => 50,
             'email' => 255,

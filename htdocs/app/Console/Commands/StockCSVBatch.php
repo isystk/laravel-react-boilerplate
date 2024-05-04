@@ -52,7 +52,7 @@ class StockCSVBatch extends Command
         }
         $csv = CsvUtil::make($rows, $headers);
 
-        $time = new Carbon(Carbon::now());
+        $time = Carbon::now();
         File::put('/tmp/stocks_' . $time->format('Ymd') . '.csv', $csv);
         Log::info('StockCSVBatch END');
     }

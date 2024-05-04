@@ -9,6 +9,7 @@
 
     <script src="{{ asset('/assets/admin/js/app.js') }}"></script>
     <script src="{{ asset('/assets/admin/js/jquery-plugins.js') }}"></script>
+    <script src="{{ asset('/assets/admin/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="https://kit.fontawesome.com/eea364082e.js" crossorigin="anonymous"></script>
     @yield('scripts')
 
@@ -16,6 +17,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <link href="{{ asset('/assets/admin/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('/assets/admin/vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini">
 <div id="app" class="wrapper">

@@ -36,6 +36,34 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group">
+                    <div class="control-group" id="orderName">
+                        <label class="col-sm-2 control-label">{{ __('order.Order Date') }}</label>
+                        <div class="col">
+                            <div class="row">
+                                <div class="col">
+                                    <input
+                                        type="text"
+                                        name="order_date_from"
+                                        value="{{ $request->order_date_from }}"
+                                        class="form-control date-picker"
+                                        maxlength="{{ config('const.maxlength.commons.date') }}"
+                                    />
+                                </div>
+                                <span class="pt-2">～</span>
+                                <div class="col">
+                                    <input
+                                        type="text"
+                                        name="order_date_to"
+                                        value="{{ $request->order_date_to }}"
+                                        class="form-control date-picker"
+                                        maxlength="{{ config('const.maxlength.commons.date') }}"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="card-footer text-center">
                 <button type="submit" class="btn btn-secondary">{{ __('common.Search') }}</button>

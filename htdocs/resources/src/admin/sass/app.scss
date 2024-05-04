@@ -1,2 +1,21 @@
 @import '~admin-lte/plugins/fontawesome-free/css/all.min.css';
 @import '~admin-lte/dist/css/adminlte.min.css';
+
+
+// Date Picker のスタイル調整
+.datepicker-days th.dow:first-child,
+.datepicker-days td:first-child {
+  color: #f00;
+}
+.datepicker-days th.dow:last-child,
+.datepicker-days td:last-child {
+  color: #00f;
+}
+.datepicker-days thead>tr:nth-child(3) {
+  border: solid 1px #eee;
+}
+.datepicker td,th{
+  text-align: center;
+  padding: 2px 8px;
+  font-size: 14px;
+}
