@@ -3,10 +3,8 @@
 namespace Http\Controllers\Front\Auth;
 
 use App\Domain\Entities\User;
-use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Configuration\Middleware;
-use Illuminate\Http\Request;
 use Tests\TestCase;
 
 class CreateNewUserTest extends TestCase
@@ -19,7 +17,8 @@ class CreateNewUserTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        ValidateCsrfToken::except(['api/*']);
+
+        $this->withoutMiddleware(VerifyCsrfToken::class);
     }
 
     /**
@@ -28,7 +27,6 @@ class CreateNewUserTest extends TestCase
     public function testCreate(): void
     {
         $items = [
-            '_token' => csrf_token(),
             'name' => 'user1',
             'email' => 'user1@test.com',
             'password' => 'password',
