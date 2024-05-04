@@ -35,6 +35,8 @@ class IndexService extends BaseService
             'user_name' => $this->request()->name,
             'order_date_from' => DateUtil::toCarbonImmutable($this->request()->order_date_from)?->startOfDay(),
             'order_date_to' => DateUtil::toCarbonImmutable($this->request()->order_date_to)?->endOfDay(),
+            'sort_name' => $this->request()->sort_name ?? 'created_at',
+            'sort_direction' => $this->request()->sort_direction ?? 'desc',
             'limit' => $limit,
         ]);
     }

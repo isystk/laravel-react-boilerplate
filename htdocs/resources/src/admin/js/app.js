@@ -16,6 +16,11 @@ $(function() {
     // ローディング
     $.loading();
 
+    // 一覧のソート処理
+    $('.sortable_th').on('click', function () {
+        window.location.href = $(this).attr('url')
+    });
+
     // 数値入力補助
     $('.js-input-number').inputNumber();
 

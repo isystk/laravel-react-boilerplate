@@ -69,10 +69,10 @@
                     <table class="table table-hover text-nowrap">
                         <thead>
                         <tr>
-                            <th>{{ __('user.ID') }}</th>
-                            <th>{{ __('user.Name') }}</th>
-                            <th>{{ __('user.EMail') }}</th>
-                            <th>{{ __('common.Registration Date') }}</th>
+                            @include('admin.common.sortablelink_th', ['params' => ['id', __('user.ID')]])
+                            @include('admin.common.sortablelink_th', ['params' => ['name', __('user.Name')]])
+                            @include('admin.common.sortablelink_th', ['params' => ['email', __('user.EMail')]])
+                            @include('admin.common.sortablelink_th', ['params' => ['created_at', __('common.Registration Date')]])
                         </tr>
                         </thead>
                         <tbody>
@@ -94,7 +94,7 @@
                     </table>
                 </div>
                 <div class="card-footer  ">
-                    {{ $users->links() }}
+                    {!! $users->links('admin.common.pagination') !!}
                 </div>
             </div>
         </div>

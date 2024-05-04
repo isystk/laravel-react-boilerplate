@@ -68,10 +68,10 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>{{ __('contact.ID') }}</th>
-                                <th>{{ __('contact.Name') }}</th>
-                                <th>{{ __('contact.Title') }}</th>
-                                <th>{{ __('common.Registration Date') }}</th>
+                                @include('admin.common.sortablelink_th', ['params' => ['id', __('contact.ID')]])
+                                @include('admin.common.sortablelink_th', ['params' => ['your_name', __('contact.Name')]])
+                                @include('admin.common.sortablelink_th', ['params' => ['title', __('contact.Title')]])
+                                @include('admin.common.sortablelink_th', ['params' => ['created_at', __('common.Registration Date')]])
                                 <th></th>
                             </tr>
                         </thead>
@@ -99,7 +99,7 @@
                     </table>
                 </div>
                 <div class="card-footer  ">
-                    {{ $contactForms->links() }}
+                    {!! $contactForms->links('admin.common.pagination') !!}
                 </div>
             </div>
         </div>

@@ -13,6 +13,8 @@ interface ContactFormRepository extends BaseRepository
      * @param array{
      *   your_name : ?string,
      *   title : ?string,
+     *   sort_name : ?string,
+     *   sort_direction : 'asc' | 'desc' | null,
      *   limit : ?int,
      * } $conditions
      * @return Collection|LengthAwarePaginator

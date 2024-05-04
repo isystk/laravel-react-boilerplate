@@ -32,3 +32,26 @@
   padding: 2px 8px;
   font-size: 14px;
 }
+
+.table .sortable_th {
+  position: relative;
+  cursor: pointer;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.table .sortable_arrow_asc {
+  position: absolute;
+  right: 8px;
+  font-weight: bold;
+}
+.table .sortable_arrow_desc {
+  position: absolute;
+  right: 1px;
+  font-weight: bold;
+}
+.table .enabled_arrow {
+  color: rgb(0, 0, 0);
+}
+.table .disabled_arrow {
+  color: rgba(0, 0, 0, 0.5);
+}

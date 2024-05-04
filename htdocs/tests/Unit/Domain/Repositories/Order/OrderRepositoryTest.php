@@ -47,6 +47,8 @@ class OrderRepositoryTest extends TestCase
             'user_name' => null,
             'order_date_from' => null,
             'order_date_to' => null,
+            'sort_name' => null,
+            'sort_direction' => null,
             'limit' => null,
         ];
 
@@ -74,7 +76,7 @@ class OrderRepositoryTest extends TestCase
             'user_name' => $user1->name
         ]);
         $orderIds = $orders->pluck('id')->all();
-        $this->assertSame([$order2->id, $order1->id], $orderIds, 'user_nameで検索が出来ることをテスト');
+        $this->assertSame([$order1->id, $order2->id], $orderIds, 'user_nameで検索が出来ることをテスト');
 
         $orders = $this->repository->getConditionsWithUserStock([
             ...$defaultConditions,

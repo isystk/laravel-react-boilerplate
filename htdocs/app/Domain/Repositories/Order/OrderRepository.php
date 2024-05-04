@@ -15,6 +15,8 @@ interface OrderRepository extends BaseRepository
      *   user_name : ?string,
      *   order_date_from : ?CarbonImmutable,
      *   order_date_to : ?CarbonImmutable,
+     *   sort_name : ?string,
+     *   sort_direction : 'asc' | 'desc' | null,
      *   limit : ?int,
      * } $conditions
      * @return Collection|LengthAwarePaginator

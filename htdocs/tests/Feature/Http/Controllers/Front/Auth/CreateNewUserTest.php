@@ -29,7 +29,8 @@ class CreateNewUserTest extends TestCase
             'password' => 'password',
             'password_confirmation' => 'password'
         ];
-        $this->post('/register', $items)
+        $this->withHeaders(['X-CSRF-TOKEN' => csrf_token()])
+            ->post('/register', $items)
             ->assertStatus(302);
 
         $user = User::where(['email' => $items['email']])->first();

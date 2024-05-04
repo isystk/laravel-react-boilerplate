@@ -34,6 +34,8 @@ class IndexService extends BaseService
         return $this->userRepository->getByConditions([
             'name' => $this->request()->name,
             'email' => $this->request()->email,
+            'sort_name' => $this->request()->sort_name ?? 'updated_at',
+            'sort_direction' => $this->request()->sort_direction ?? 'desc',
             'limit' => $limit,
         ]);
     }

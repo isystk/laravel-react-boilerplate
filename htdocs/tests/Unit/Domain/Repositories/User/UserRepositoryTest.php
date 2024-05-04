@@ -43,6 +43,8 @@ class UserRepositoryTest extends TestCase
         $defaultConditions = [
             'name' => null,
             'email' => null,
+            'sort_name' => null,
+            'sort_direction' => null,
             'limit' => null,
         ];
 
