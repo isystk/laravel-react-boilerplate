@@ -194,26 +194,24 @@ $ brew install mysql-client
 │   ├── phpmyadmin （DB管理ツール）
 │   └── s3 （オブジェクトストレージ）
 │
-├── htdocs （Apache公開ディレクトリ）
-│   │
-│   ├── app
-│   │   ├── Console (バッチ)
-│   │   ├── Domain（ドメイン層）
-│   │   ├── Enums (定数)
-│   │   ├── Exceptions (例外処理)
-│   │   ├── Http （プレゼンテーション層）
-│   │   ├── Providers（サービスプロバイダー）
-│   │   ├── Services（ビジネスロジック）
-│   │   └── Utils（共通ユーティル）
-│   ├── bootstrap
-│   ├── config
-│   ├── database
-│   ├── public
-│   ├── resources
-│   ├── routes
-│   ├── storage
-│   ├── tests
-│   └── composer.json
+├── app
+│   ├── Console (バッチ)
+│   ├── Domain（ドメイン層）
+│   ├── Enums (定数)
+│   ├── Exceptions (例外処理)
+│   ├── Http （プレゼンテーション層）
+│   ├── Providers（サービスプロバイダー）
+│   ├── Services（ビジネスロジック）
+│   └── Utils（共通ユーティル）
+├── bootstrap
+├── config
+├── database
+├── public
+├── resources
+├── routes
+├── storage
+├── tests
+├── composer.json
 └── dc.sh （Dockerの起動用スクリプト）
 ```
 

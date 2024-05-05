@@ -1,0 +1,79 @@
+// Body
+$body-bg: #f8fafc;
+
+// Typography
+$font-family-sans-serif: 'Nunito', sans-serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+// Colors
+$blue: #3490dc;
+$indigo: #6574cd;
+$purple: #9561e2;
+$pink: #f66d9b;
+$red: #e3342f;
+$orange: #f6993f;
+$yellow: #ffed4a;
+$green: #38c172;
+$teal: #4dc0b5;
+$cyan: #6cb2eb;
+
+
+// ===========================================================================
+//  カラー
+// ===========================================================================
+// 共通カラー
+$color_main: #ff5757;
+$color_base: #00008b;
+
+// フォントカラー
+$color_font: #333;
+$color_font-red: #f66;
+
+// リンクカラー
+$color_link: #2952bc;
+$color_link-hover: #2c76ff;
+
+// ボーダーカラー
+$color_border-gray: #e3e3e3;
+
+// 背景カラー
+$color_bg-gray: #f2f2f2;
+
+// ===========================================================================
+//  画面サイズ
+// ============================================================================
+// 左右のガターサイズ
+$gutter-l: 20px;
+$gutter-m: 20px;
+$gutter-s: 15px;
+
+// 基本幅
+$width_base-l: 100%;
+$width_base-m: calc(100% - #{$gutter-m} * 2);
+$width_base-s: calc(100% - #{$gutter-s} * 2);
+
+// 最大幅
+$width_max: 1000px;
+$width_max-l: 1240px;	// 大きいサイズ（ヘッダー・フッターなど）
+$width_max-s: 900px;	// 小さいサイズ（1カラムのテキストページなど）
+
+// ===========================================================================
+//  フォント
+// ===========================================================================
+// フォントファミリー
+$font_family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, sans-serif;
+
+// フォントサイズ
+$font_size: 1.4rem;
+
+// ===========================================================================
+//  ブレークポイント
+// ===========================================================================
+$breakpoint: (
+	s: 'only screen and (max-width: 767px)',
+	m: 'only screen and (max-width: 1024px)',
+	l: 'only screen and (max-width: 1280px)',
+	m-min: 'only screen and (min-width: 768px)',
+	p: 'print'
+);

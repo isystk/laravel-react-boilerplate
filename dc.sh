@@ -42,13 +42,12 @@ case ${1} in
         rm -Rf ./apache/logs && mkdir ./apache/logs && chmod 777 ./apache/logs
         rm -Rf ./php/logs && mkdir ./php/logs && chmod 777 ./php/logs
         popd
-        chmod 777 ./htdocs
     ;;
 
     start)
         $DOCKER_COMPOSE up -d
     ;;
-    
+
     stop)
         pushd $DOCKER_HOME
         docker-compose down
@@ -83,7 +82,7 @@ case ${1} in
           ;;
       esac
     ;;
-    
+
     php)
       case ${2} in
           login)
@@ -94,7 +93,7 @@ case ${1} in
           ;;
       esac
     ;;
-    
+
     help|--help|-h)
         usage
     ;;
@@ -102,7 +101,7 @@ case ${1} in
     version|--version|-v)
         version
     ;;
-    
+
     *)
         echo "[ERROR] Invalid subcommand '${1}'"
         usage

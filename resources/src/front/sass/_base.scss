@@ -1,0 +1,120 @@
+/* ===========================================================================
+  base
+============================================================================= */
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video, a {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, main {
+	display: block;
+}
+
+nav ul,
+nav ol {
+	list-style: none;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+	th, td {
+		vertical-align: middle;
+		word-break: break-all;
+	}
+}
+
+input,
+select {
+	vertical-align: middle;
+	appearance: none;
+}
+
+*,*::before,*::after {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%!important;
+	line-height: 1.68;
+}
+
+body {
+	font-size: $font_size!important;
+	font-family: $font_family;
+	color: $color_font;
+	word-wrap: break-word;
+	overflow-wrap : break-word;
+	background: #EAEDED;
+}
+
+img {
+	max-width: 100%;
+	width: auto;
+	height: auto;
+	vertical-align: bottom;
+}
+
+// win7 IE11対応
+img[src$=".svg"] {
+	width: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+select {
+	outline: none;
+}
+
+select::-ms-expand {	// IEのプルダウン矢印を非表示
+	display: none;
+}
+
+input,
+textarea {
+	font-family: $font_family;
+	border-radius: 0;
+	border: 0;
+	outline: none;
+}
+
+[type="submit"],
+[type="reset"],
+[type="button"],
+button {
+	border: 0;
+	cursor: pointer;
+}
+
+// フッターを最下部に固定
+html,
+body {
+	display: flex;
+	flex-direction: column;
+}
+body {
+	min-height: 100vh;
+}
+footer {
+	margin-top: auto;
+}

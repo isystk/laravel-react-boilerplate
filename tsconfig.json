@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+      /* 基本オプション */
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["./resources/src/front/ts/*"],
+      },
+
+      "target": "es5",                          /* ECMAScriptのターゲットバージョンを指定します: 'ES3'（デフォルト）, 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018'または 'ESNEXT' */
+      "module": "commonjs",                     /* モジュールコード生成: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015',または 'ESNext'を指定します。targetがes3かes5ならcommonjsとなる。 */
+      "lib": [
+        "dom"
+      ],
+      "jsx": "react",
+
+      /* 厳密な型チェックオプション */
+      "strict": true,                           /* すべての厳密な型チェックオプションを有効にします。 */
+      "noImplicitAny": false,                   /* 暗黙の 'any'型で式と宣言のエラーを発生させます。 */
+      "noImplicitThis": true,                   /* 暗黙の 'any'型で 'this'式のエラーを発生させます。 */
+      "alwaysStrict": true,                     /* 厳密なモードで解析し,各ソースファイルに対して "use strict"を発行します。 */
+      "noUnusedLocals": true,                   /* 未使用のローカルのエラーを報告します。 */
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true,                  /* コンパイル時にヘルパーメソッドが生成されるようになり、モジュールシステムの相互運用性が高まる。これにより、defaultをエクスポートしていない CommonJS 形式のモジュールを、ES Modules でデフォルトインポートする、といったことが可能になる。 */
+      "forceConsistentCasingInFileNames": true, /* 大文字小文字を区別して参照を解決するようにします。 */
+
+      /* 追加チェック */
+      "skipLibCheck": true,                     /* *.d.ts ファイルに対する型チェックをスキップします。 */
+      "strictNullChecks": true,                 /* 厳密なヌルチェックを有効にします。 */
+      "strictFunctionTypes": true,              /* 関数型の厳密なチェックを有効にします。 */
+      "strictPropertyInitialization": true,     /* クラスのプロパティ初期化の厳密なチェックを有効にします。 */
+      "noUnusedParameters": true,               /* 未使用のパラメータのエラーを報告します。 */
+      "noImplicitReturns": true,                /* 関数内のすべてのコードパスが値を返さない場合,エラーを報告します。 */
+      "noFallthroughCasesInSwitch": true,       /* switchステートメントのfallthrough caseのエラーを報告します。 */
+
+      "removeComments": true,                   /* コメントを出力しません。 */
+      // "noEmit": true,                        /* コンパイル結果の.jsファイルなどを出力しなくなる。 */
+      // "sourceMap": true,                     /* 対応する '.map'ファイルを生成します。 */
+
+  }
+}

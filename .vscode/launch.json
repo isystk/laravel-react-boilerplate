@@ -8,7 +8,7 @@
             "hostname": "0.0.0.0",
             "port": 9012,
             "pathMappings": {
-                "/var/www/html": "${workspaceRoot}/htdocs"
+                "/var/www/html": "${workspaceRoot}"
             },
             "ignore": [
                 "**/vendor/**/*.php"

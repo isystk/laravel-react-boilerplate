@@ -16,7 +16,7 @@ services:
      - ./apache/conf.d:/etc/apache2/conf.d
      - ./apache/ssl:/etc/apache2/ssl
      - ./apache/logs:/var/log/apache2
-     - ../htdocs:/var/www/html
+     - ..:/var/www/html
 
   php:
     image: laraec/php
@@ -30,7 +30,7 @@ services:
     volumes:
      - ./php/logs:/var/log/php
      - ./php/php.ini:/usr/local/etc/php/php.ini
-     - ../htdocs:/var/www/html
+     - ..:/var/www/html
 
   mysql:
     image: laraec/mysql
@@ -92,7 +92,7 @@ services:
 #  selenium-hub:
 #    image: selenium/hub:3.141.59-vanadium
 #    container_name: selenium-hub
-#    ports: 
+#    ports:
 #      - 4444:4444
 #  chrome:
 #    image: selenium/node-chrome:3.141.59-vanadium
