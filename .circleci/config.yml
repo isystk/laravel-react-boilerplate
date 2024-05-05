@@ -10,47 +10,43 @@ jobs:
           - DB_DATABASE: testing_database
           - DB_USERNAME: user
           - DB_PASSWORD: password
- 
+
       - image: cimg/mysql:8.0
         environment:
           - MYSQL_DATABASE: testing_database
           - MYSQL_USER: user
           - MYSQL_PASSWORD: password
           - MYSQL_ROOT_PASSWORD: password
- 
+
     steps:
       - checkout
- 
+
       - run: sudo apt update
 
-      - run:   
+      - run:
           name: Install php-gd
           command: |
-            sudo apt-get -y install libpng-dev  
+            sudo apt-get -y install libpng-dev
 
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "htdocs/composer.json" }}
+            - v1-dependencies-{{ checksum "composer.json" }}
             - v1-dependencies-
- 
-      - run: 
-          working_directory: htdocs
+
+      - run:
           command: composer install -n --prefer-dist
- 
+
       - save_cache:
-          key: v1-dependencies-{{ checksum "htdocs/composer.json" }}
+          key: v1-dependencies-{{ checksum "composer.json" }}
           paths:
-            - ./htdocs/vendor
- 
-      - run: 
-          working_directory: htdocs
+            - ./vendor
+
+      - run:
           command: echo "DB_HOST=127.0.0.1" >> .env.testing
       - run:
-          working_directory: htdocs
           command: php artisan key:generate --env=testing
- 
-      - run: 
-          working_directory: htdocs
+
+      - run:
           command: |
             php artisan test --env=testing
 
@@ -59,5 +55,5 @@ workflows:
   build:
     jobs:
       - build
-      
+
 

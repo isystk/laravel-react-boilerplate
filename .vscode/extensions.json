@@ -1,0 +1,12 @@
+{
+    "recommendations": [
+        "shufo.vscode-blade-formatter",
+        "onecentlin.laravel-blade",
+        "esbenp.prettier-vscode",
+        "bmewburn.vscode-intelephense-client",
+        "editorconfig.editorconfig",
+        "xdebug.php-debug",
+        "tyriar.sort-lines",
+        "streetsidesoftware.code-spell-checker"
+    ]
+}

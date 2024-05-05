@@ -1,0 +1,718 @@
+// ===========================================================================
+//  main
+// ============================================================================
+.main {
+    padding: 60px 0 100px;
+    @include mq(s) {
+      padding: 30px 0 50px;
+    }
+  }
+
+  // ===========================================================================
+  //  contentsArea
+  // ============================================================================
+  .contentsArea {
+    width: $width_base-l;
+    max-width: $width_max;
+    margin: 0 auto;
+  }
+
+  // ===========================================================================
+  //  heading02
+  // ============================================================================
+  .heading02 {
+    font-size: 1.8rem;
+    color: #333;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  // ===========================================================================
+  //  block01
+  // ============================================================================
+  .block01 {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .block01-02 {
+    @extend .block01;
+    justify-content: center;
+  }
+  .block01_item {
+    width: calc((100% - 50px) / 3);
+    margin-right: 25px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    &:nth-of-type(3n) {
+      margin-right: 0;
+      @include mq(m) {
+        margin-right: 25px;
+      }
+    }
+    &:nth-of-type(n+4) {
+      margin-top: 25px;
+    }
+    @include mq(m) {
+      width: calc((100% - 25px) / 2);
+      &:nth-of-type(n+3) {
+        margin-top: 25px;
+      }
+      &:nth-of-type(2n) {
+        margin-right: 0;
+      }
+    }
+    @include mq(s) {
+      width: 100%;
+      margin: 0;
+      &:nth-of-type(n+2) {
+        margin-top: 20px;
+      }
+      &:nth-of-type(3n) {
+        margin-right: 0;
+      }
+    }
+  }
+  .block01_img {
+    height: 200px;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+
+  // ===========================================================================
+  //  block02
+  // ============================================================================
+  .block02 {
+    padding: 20px;
+    background-color: #fff;
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  // ===========================================================================
+  //  pagenation
+  // ============================================================================
+  .pagination {
+    justify-content: center;
+  }
+
+  // ===========================================================================
+  //  btn
+  // ============================================================================
+  .btn {
+    font-size: $font_size;
+  }
+  .btn-01 {
+    background-color: #bf0000;
+    color: #fff;
+    border-radius: 10px;
+    padding: 3px 12px;
+    margin: auto auto 0 auto;
+    display: block;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+  .btn-02 {
+    @extend .btn-01;
+    width: 200px;
+    padding: 10px 20px;
+    margin-top: 40px;
+    @include mq(s) {
+      width: 100%;
+    }
+  }
+  .btn-gray {
+    @extend .btn-01;
+    background-color: #6c757d;
+  }
+  button.stripe-button-el {
+    @extend .btn-02;
+  }
+  button.stripe-button-el>span {
+    background-image: none;
+    background: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+
+  // ===========================================================================
+  //  mainBunner
+  // ============================================================================
+  .mainBunner {
+    width: 100%;
+    margin-bottom: 40px;
+  }
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    width: 55px;
+    height: 55px;
+    background-color: #dcdcdc;
+    border-radius: 50%;
+    background-size: 20px;
+  }
+
+  // ===========================================================================
+  //  page
+  // ============================================================================
+  .page-item.active {
+    .page-link {
+      background-color: #f3f3f3;
+      color: #333;
+      border-color: #999;
+    }
+  }
+  .page-link {
+    color: #333;
+    &:hover {
+      color: #bf0000;
+    }
+  }
+
+  // ===========================================================================
+  //  cartImg
+  // ============================================================================
+  .cartImg {
+    height: 30px;
+  }
+
+  // ===========================================================================
+  //  navbar
+  // ============================================================================
+  .navbar-nav {
+    flex-direction: row;
+  }
+  .navbar-nav .dropdown-menu {
+    @include mq(s) {
+      position: absolute;
+      float: none;
+    }
+  }
+
+
+
+/* フォーム
+------------------------------------- */
+
+.form-group .form-group-header {
+  background-color: rgb(219, 178, 6);
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  height: 10px;
+}
+.form-group {
+  margin-top: 22px;
+}
+.form-group .item-name {
+  font-size: 16px;
+  letter-spacing: .1px;
+  line-height: 24px;
+  color: #202124;
+  font-weight: 400;
+  width: 100%;
+  word-break: break-word;
+    margin-bottom: 16px;
+}
+.form-group .item-name span{
+  background-color: #9b9b9b;
+  color: #fff;
+  padding: 4px;
+  margin-left: 5px;
+  border-radius: 8px;
+  font-size: 0.6em;
+}
+.form-group .item-name span.required{
+  background-color: #d93025;
+}
+.form-group .item-name.required:after {
+  content: '*';
+  color: #d93025;
+}
+.form-group p.error {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: .3px;
+  color: #d93025;
+}
+
+.form-group .text-wrap input[type="text"],
+.form-group .text-wrap input[type="email"],
+.form-group .text-wrap input[type="tel"],
+.form-group .text-wrap input[type="date"],
+.form-group .text-wrap input[type="url"],
+.form-group .text-wrap input[type="password"],
+.form-group .text-wrap input[type="search"],
+.form-group .text-wrap input[type="file"],
+.form-group .textarea-wrap textarea {
+  border: none;
+  outline: none;
+  padding: 8px 0 8px 0;
+  width: 100%;
+}
+.form-group .text-wrap {
+  padding-bottom: 8px;
+}
+.form-group .text-wrap .form-bottom{
+  border-bottom: solid #dadce0 1px;
+}
+.form-group .text-wrap.active .form-bottom{
+  border-bottom-color: #487cff;
+  border-bottom-width: 2px;
+  animation: centerToSide .3s ease 0s 1 forwards;
+}
+@keyframes centerToSide {
+  0% {
+    transform: scaleY(1) scaleX(.1);
+  }
+  100% {
+    transform: scaleY(1) scaleX(1);
+  }
+}
+.form-group.error .text-wrap .form-bottom{
+  border-bottom-color: #d93025;
+}
+.form-group .text-wrap.small {
+  width: 100px;
+}
+.form-group .text-wrap.middle {
+  width: 200px;
+}
+.form-group .text-wrap.large {
+  width: 300px;
+}
+
+/* ラジオボタン */
+.form-group .radio-wrap{
+  margin-top: 5px;
+  padding-bottom: 8px;
+}
+.form-group .radio-wrap:first-child{
+  margin-top: 0;
+}
+.form-group .radio-wrap input{
+  display: none;
+}
+.form-group .radio-wrap input + span{
+  padding-left: 40px;
+  position:relative;
+}
+.form-group .radio-wrap input + span::before{
+  content: "";
+  background-image: url(/assets/front/image/radio.png);
+  background-size: contain;
+  display: block;
+  position: absolute;
+  top: -2px;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  zoom: 150%;
+}
+.form-group .radio-wrap input:checked + span{
+  color: #487cff;
+  font-weight: bold;
+}
+.form-group .radio-wrap input:checked + span::after{
+  content: "";
+  background-image: url(/assets/front/image/radio-checked.png);
+  background-size: contain;
+  display: block;
+  position: absolute;
+  top: -2px;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  zoom: 150%;
+}
+
+/* チェックボックス */
+.form-group .checkbox-wrap label{
+  margin-right: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: inline-block;
+}
+.form-group .checkbox-wrap input{
+  display: none;
+}
+.form-group .checkbox-wrap input + span{
+  padding-left: 40px;
+  position:relative;
+}
+.form-group .checkbox-wrap input + span::before{
+  content: "";
+  background-image: url(/assets/front/image/check.png);
+  background-size: contain;
+  display: block;
+  position: absolute;
+  top: -2px;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  zoom: 150%;
+}
+.form-group .checkbox-wrap input:checked + span{
+  color: #487cff;
+  font-weight: bold;
+}
+.form-group .checkbox-wrap input:checked + span::after{
+  content: "";
+  background-image: url(/assets/front/image/check-checked.png);
+  background-size: contain;
+  display: block;
+  position: absolute;
+  top: -2px;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  zoom: 150%;
+}
+
+/* セレクトボックス */
+.form-group .select-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 250px;
+}
+.form-group .select-wrap:before {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%) translateX(0);
+  content: '';
+  width: 15px;
+  height: 15px;
+  background: url(/assets/front/image/select.png) no-repeat;
+  background-size: contain;
+}
+.form-group .select-wrap select{
+  outline:none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  height: 40px;
+  padding: 5px;
+  border:1px solid #ccc;
+  background-color: #fff;
+  border-radius: 5px;
+}
+.form-group .select-wrap select::-ms-expand {
+  display: none;
+}
+.form-group .select-wrap.active select{
+  border-color: #487cff;
+  border-width: 2px;
+}
+
+
+/* テキストエリア */
+.form-group .textarea-wrap .counter {
+  float: right;
+  font-size: 12px;
+  margin: 10px 0 10px 0;
+}
+.form-group .textarea-wrap {
+  border-radius: 5px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: solid 1px #e6e6e6;
+  padding: 1px;
+}
+.form-group .textarea-wrap textarea{
+  height: 100%;
+}
+.form-group .textarea-wrap.active {
+  border-color: #487cff;
+  border-width: 2px;
+}
+.form-group .textarea-wrap.small {
+    width: 100px;
+}
+.form-group .textarea-wrap.middle {
+    width: 200px;
+}
+.form-group .textarea-wrap.large {
+    width: 300px;
+}
+
+
+
+/* サブミットボタン */
+.submit-wrap {
+text-align: center;
+}
+.submit-wrap .submit-btn {
+position: relative;
+display: inline-block;
+padding: 0.25em 0.5em;
+text-decoration: none;
+color: #FFF;
+border-bottom: solid 2px #383838;
+border-radius: 4px;/*角の丸み*/
+box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 2px 2px rgba(0, 0, 0, 0.19);
+font-weight: bold;
+width: 300px;
+line-height: 40px;
+}
+.submit-btn:active {
+border-bottom: solid 2px #666;
+box-shadow: 0 0 2px rgba(0, 0, 0, 0.30);
+}
+
+.alert ul {
+list-style: none;
+}
+
+
+/** ハンバーガーメニュー */
+.header .nav {
+	position: relative;
+}
+.header .menu-btn {
+	position: absolute;
+	top: 22px;
+	transform: translateY(-50%);
+	box-sizing: border-box;
+	z-index: 9999;
+	line-height: 0;
+}
+.header .menu-btn {
+	cursor: pointer;
+	right: 20px;
+	width: 26px;
+	height: 22px;
+}
+.header .menu-btn figure {
+	position: absolute;
+	margin:0;
+	left: 0;
+	display: block;
+	width: 100%;
+	height: 2px;
+	background: #000;
+	transition: 0.25s;
+}
+.header .menu-btn figure:nth-child(1) {
+	top: 0;
+}
+.header .menu-btn figure:nth-child(2) {
+	top: 50%;
+	margin-top: -1px;
+}
+.header .menu-btn figure:nth-child(3) {
+	bottom: 0;
+}
+.header .menu-btn.on {
+	position: fixed;
+}
+.header .menu-btn.on figure {
+	background: #000;
+}
+.header .menu-btn.on figure:nth-child(1) {
+	top: 50%;
+	margin-top: -1px;
+	transform: rotate(45deg);
+}
+.header .menu-btn.on figure:nth-child(2) {
+	background: transparent;
+}
+.header .menu-btn.on figure:nth-child(3) {
+	bottom: 50%;
+	margin-bottom: -1px;
+	transform: rotate(-45deg);
+}
+
+@media screen and (min-width:992px){
+
+	.header .nav .nav-link {
+		display: block;
+    position: absolute;
+		right: 0;
+    font-size: 20px;
+    margin: 20px;
+	}
+	.header .nav .nav-link a{
+		color: #fff;
+		margin: 0 20px;
+	}
+	.header .nav .nav-link li {
+		list-style: none;
+		float: left;
+		border-right: solid 1px #fff;
+	}
+	.header .nav .nav-link li:last-child {
+		border-right: none;
+	}
+
+	.header .menu-btn {
+		display: none;
+	}
+}
+
+/* サイドメニュー */
+#side-menu {
+  position: fixed;
+  top: 0;
+  right: -340px;
+  max-width: 300px;
+  width: 80%;
+  height: 100%;
+  transition: left .5s, right .5s;
+  background-color: #fff;
+  overflow-y: auto;
+  height: 100%;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  z-index: 999;
+}
+#side-menu::-webkit-scrollbar {
+  display:none;
+}
+#side-menu .search {
+  display: block;
+  position: absolute;
+  margin: 14px;
+}
+#side-menu .side-menu-header {
+  position: fixed;
+  height: 60px;
+  width: 100%;
+  background-color: #fff;
+  z-index: 1;
+}
+#side-menu nav ul {
+  margin: 60px 0 0 0;
+  padding: 0;
+}
+#side-menu nav li {
+  list-style: none;
+  padding-bottom: 10px;
+}
+#side-menu nav li a {
+  border-bottom: 1px solid #d2d0d0;
+  padding: 12px 20px;
+  font-size: 1.2em;
+  display: block;
+	position: relative;
+	text-align: left;
+}
+#side-menu.open {
+  right: 0;
+}
+#side-menu .menu-close-btn {
+  padding: 5px;
+  float: right;
+  zoom: 1.5;
+}
+#layer-panel {
+  display: none;
+  z-index: 99;
+  background: #666;
+  opacity: 0.5;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+}
+#layer-panel.on {
+  display: block;
+}
+
+#navbarSupportedContent {
+  display: none;
+}
+
+/* 画面サイズが992pxより大きい場合に以下を適用 */
+@media screen and (min-width:992px){
+
+  #navbarSupportedContent {
+    display: block;
+  }
+
+}
+
+
+/* ローディング */
+#site_loader_overlay {
+  position: fixed;
+  background: #fff;
+  background: rgba(255,255,255,1);
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  z-index: 99999;
+  opacity: 0.5;
+}
+#site_loader_overlay .site_loader_spinner {
+  width: 60px;
+  height: 60px;
+  margin-top: -30px;
+  margin-left: -30px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  //background-image: url(/assets/front/image/loading.gif);
+  //background-position: center;
+  //background-repeat: no-repeat;
+  //background-size: cover;
+}
+
+
+/* オーバーレイ */
+#overlay-background {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background-color:#0e0e0e;
+  opacity:0.5;
+  z-index:1000
+}
+.isystk-overlay {
+  position:fixed;
+  top: 10%;
+  left: 10%;
+  width: 80%;
+  max-width: 1200px;
+  background: #fff;
+  z-index: 10000;
+  display: none;
+  transition: .1s linear;
+  overflow: hidden;
+}
+.isystk-overlay .wrap {
+  background: #fff;
+  width:100%;
+}
+.isystk-overlay.open {
+  display: block;
+  animation: open-animation .5s ease 0s 1 forwards;
+}
+@keyframes open-animation {
+  0% {
+    transform: scaleY(.1) scaleX(.1);
+  }
+  50% {
+    transform: scaleY(1) scaleX(.1);
+  }
+  100% {
+    transform: scaleY(1) scaleX(1);
+  }
+}
+.isystk-overlay .close {
+  position: absolute;
+  right: 0;
+  margin: 10px 15px;
+  zoom: 100%;
+  color: #333;
+  z-index:1;
+}
+.isystk-overlay .close {
+  zoom: 2;
+}

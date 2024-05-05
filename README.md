@@ -185,35 +185,40 @@ $ brew install mysql-client
 │   │   └── logs （apacheのログ）
 │   ├── mysql （DBサーバー）
 │   │   ├── conf.d (mysqlの設定ファイル)
-│   │   ├── data (mysqlのデータファイル)
-│   │   ├── init （mysqlの初期DDL）
-│   │   ├── logs （mysqlのログ）
-│   │   └── script （mysql関連のスクリプト）
+│   │   ├── initdb.d （mysqlの初期DDL）
+│   │   └── logs （mysqlのログ）
 │   ├── php （PHP-FRM）
 │   │   └── logs （phpのログ）
 │   ├── phpmyadmin （DB管理ツール）
 │   └── s3 （オブジェクトストレージ）
 │
-├── htdocs （Apache公開ディレクトリ）
-│   │
-│   ├── app
-│   │   ├── Console (バッチ)
-│   │   ├── Domain（ドメイン層）
-│   │   ├── Enums (定数)
-│   │   ├── Exceptions (例外処理)
-│   │   ├── Http （プレゼンテーション層）
-│   │   ├── Providers（サービスプロバイダー）
-│   │   ├── Services（ビジネスロジック）
-│   │   └── Utils（共通ユーティル）
-│   ├── bootstrap
-│   ├── config
-│   ├── database
-│   ├── public
-│   ├── resources
-│   ├── routes
-│   ├── storage
-│   ├── tests
-│   └── composer.json
+├── app
+│   ├── Console (バッチ)
+│   ├── Domain（ドメイン層）
+│   │   ├── Entities（エンティティ）
+│   │   └── Repositories（リポジトリー）
+│   ├── Enums (定数)
+│   ├── Exceptions (例外処理)
+│   ├── Http （プレゼンテーション層）
+│   ├── Providers（サービスプロバイダー）
+│   ├── Services（ビジネスロジック）
+│   └── Utils（共通ユーティル）
+├── bootstrap
+├── config
+├── database
+├── public
+├── resources
+│   ├── lang
+│   ├── assets
+│   │   ├── admin（管理画面用のJavaScript、SASS）
+│   │   └── front（フロント画面用のTypeScript,SASS）
+│   ├── layouts
+│   ├── mails
+│   └── vendor
+├── routes
+├── storage
+├── tests
+├── composer.json
 └── dc.sh （Dockerの起動用スクリプト）
 ```
 
