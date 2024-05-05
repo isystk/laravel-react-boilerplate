@@ -209,7 +209,7 @@ $ brew install mysql-client
 ├── public
 ├── resources
 │   ├── lang
-│   ├── src
+│   ├── assets
 │   │   ├── admin（管理画面用のJavaScript、SASS）
 │   │   └── front（フロント画面用のTypeScript,SASS）
 │   ├── layouts

@@ -7,18 +7,18 @@ module.exports = {
       config.module.rules.push({
           test: /\.scss$/,
           use: ['style-loader', 'css-loader', 'sass-loader'],
-          include: path.resolve(__dirname, '../resources/src/front/sass'),
+          include: path.resolve(__dirname, '../resources/assets/front/sass'),
       });
       // alias
       config.resolve.alias = {
           ...config.resolve.alias,
-          "@": path.resolve(__dirname, '../resources/src/front/ts'),
+          "@": path.resolve(__dirname, '../resources/assets/front/ts'),
       }
       return config
   },
   "stories": [
-    "../resources/src/front/ts/stories/**/*.stories.mdx",
-    "../resources/src/front/ts/stories/**/*.stories.@(js|jsx|ts|tsx)"
+    "../resources/assets/front/ts/stories/**/*.stories.mdx",
+    "../resources/assets/front/ts/stories/**/*.stories.@(js|jsx|ts|tsx)"
   ],
   "addons": [
     "@storybook/addon-links",

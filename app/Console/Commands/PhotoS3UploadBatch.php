@@ -31,7 +31,7 @@ class PhotoS3UploadBatch extends Command
     {
         Log::info('PhotoS3UploadBatch START');
 
-        $storagePath = storage_path('app/stock');
+        $storagePath = storage_path('app/stock/images');
         $files = \File::files($storagePath);
         foreach ($files as $file) {
             // ファイル名

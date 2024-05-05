@@ -1,0 +1,21 @@
+/* ===========================================================================
+  footer
+============================================================================= */
+.footer {
+	background-color: #dcdcdc;
+	padding: 60px 0;
+	@include mq(s) {
+		padding: 40px 0;
+	}
+}
+.footer_inner {
+	@include width-base($isBig: true);
+	text-align: center;
+}
+.footer_copy {
+	color: #fff;
+	font-size: 1.2rem;
+	@include mq(s) {
+		font-size: 1.0rem;
+	}
+}

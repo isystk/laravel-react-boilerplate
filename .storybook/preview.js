@@ -1,4 +1,4 @@
-import '../resources/src/front/sass/app.scss';
+import '../resources/assets/front/sass/app.scss';
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
