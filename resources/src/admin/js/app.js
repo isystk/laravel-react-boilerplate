@@ -10,6 +10,7 @@ window.heic2any = heic2any;
 
 require('./plugins/loading');
 require('./plugins/inputNumber');
+require('./plugins/imageUploader');
 
 $(function() {
 

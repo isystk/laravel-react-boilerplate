@@ -185,10 +185,8 @@ $ brew install mysql-client
 │   │   └── logs （apacheのログ）
 │   ├── mysql （DBサーバー）
 │   │   ├── conf.d (mysqlの設定ファイル)
-│   │   ├── data (mysqlのデータファイル)
-│   │   ├── init （mysqlの初期DDL）
-│   │   ├── logs （mysqlのログ）
-│   │   └── script （mysql関連のスクリプト）
+│   │   ├── initdb.d （mysqlの初期DDL）
+│   │   └── logs （mysqlのログ）
 │   ├── php （PHP-FRM）
 │   │   └── logs （phpのログ）
 │   ├── phpmyadmin （DB管理ツール）
@@ -197,6 +195,8 @@ $ brew install mysql-client
 ├── app
 │   ├── Console (バッチ)
 │   ├── Domain（ドメイン層）
+│   │   ├── Entities（エンティティ）
+│   │   └── Repositories（リポジトリー）
 │   ├── Enums (定数)
 │   ├── Exceptions (例外処理)
 │   ├── Http （プレゼンテーション層）
