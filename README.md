@@ -208,6 +208,13 @@ $ brew install mysql-client
 ├── database
 ├── public
 ├── resources
+│   ├── lang
+│   ├── src
+│   │   ├── admin（管理画面用のJavaScript、SASS）
+│   │   └── front（フロント画面用のTypeScript,SASS）
+│   ├── layouts
+│   ├── mails
+│   └── vendor
 ├── routes
 ├── storage
 ├── tests
