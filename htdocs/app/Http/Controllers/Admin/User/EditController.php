@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\User;
 
 use App\Domain\Entities\User;
 use App\Http\Controllers\BaseController;
+use App\Http\Requests\Admin\User\UpdateRequest;
 use App\Services\Admin\User\IndexService;
 use App\Services\Admin\User\UpdateService;
 use Exception;
@@ -37,12 +38,12 @@ class EditController extends BaseController
     /**
      * 顧客変更画面の登録処理
      *
-     * @param Request $request
+     * @param UpdateRequest $request
      * @param User $user
      * @return RedirectResponse
      * @throws Exception
      */
-    public function update(Request $request, User $user): RedirectResponse
+    public function update(UpdateRequest $request, User $user): RedirectResponse
     {
         DB::beginTransaction();
         try {

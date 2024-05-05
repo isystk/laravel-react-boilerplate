@@ -75,7 +75,7 @@ class UpdateRequest extends FormRequest
                 'nullable',
                 'image',
                 'mimes:jpeg,png',
-                'max:100000000',
+                'max:10000',  // 10MB
                 'dimensions:max_width=1200,max_height=1200'
             ],
             // 画像データをbase64で文字列としても受け入れる。バリデーションルールはimageFileが適用される。
