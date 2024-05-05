@@ -42,6 +42,8 @@ class ContactFormRepositoryTest extends TestCase
         $defaultConditions = [
             'your_name' => null,
             'title' => null,
+            'sort_name' => null,
+            'sort_direction' => null,
             'limit' => null,
         ];
 

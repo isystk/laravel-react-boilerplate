@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Admin\Stock;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\StoreStockFormRequest;
+use App\Http\Requests\Admin\Stock\StoreRequest;
 use App\Services\Admin\Stock\CreateService;
-use App\Services\Batch\StockService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -36,11 +35,11 @@ class CreateController extends BaseController
     /**
      * 商品登録画面の登録処理
      *
-     * @param StoreStockFormRequest $request
+     * @param StoreRequest $request
      * @return RedirectResponse
      * @throws \Exception
      */
-    public function store(StoreStockFormRequest $request): RedirectResponse
+    public function store(StoreRequest $request): RedirectResponse
     {
         DB::beginTransaction();
         try {

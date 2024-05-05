@@ -34,18 +34,22 @@ class StockEloquentRepository extends BaseEloquentRepository implements StockRep
      * 検索条件からデータを取得します。
      * @param array{
      *   name : ?string,
+     *   sort_name : ?string,
+     *   sort_direction : 'asc' | 'desc' | null,
      *   limit : ?int,
      * } $conditions
      * @return Collection|LengthAwarePaginator
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator
     {
-        $query = $this->model
-            ->orderBy('updated_at', 'desc')
-            ->orderBy('id', 'asc');
+        $query = $this->model->select();
 
         if (null !== $conditions['name']) {
             $query->where('name', 'like', '%' . $conditions['name'] . '%');
+        }
+
+        if (null !== $conditions['sort_name']) {
+            $query->orderBy($conditions['sort_name'], $conditions['sort_direction'] ?? 'asc');
         }
 
         return null !== $conditions['limit'] ? $query->paginate($conditions['limit']) : $query->get();

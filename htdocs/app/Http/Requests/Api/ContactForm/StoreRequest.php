@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Api\ContactForm;
 
 use App\Utils\UploadImage;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreContactFormRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -20,7 +20,7 @@ class StoreContactFormRequest extends FormRequest
     /**
      * @return array<string, mixed>
      */
-    public function validationData()
+    public function validationData(): array
     {
         $all = parent::validationData();
 
@@ -35,25 +35,59 @@ class StoreContactFormRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, string>
+     * @return array<string, array<string>>
      */
     public function rules(): array
     {
+        $maxlength = config('const.maxlength.contact_forms');
         $rules = [
-            //
-            'your_name' => 'required|string|max:20',
-            'title' => 'required|string|max:50',
-            'email' => 'required|email|max:255',
-            'gender' => 'required',
-            'age' => 'required',
-            'contact' => 'required|string|max:200',
-            'url' => 'url|nullable',
-            'imageFile' => 'nullable|image|mimes:jpeg,png|max:100000000|dimensions:max_width=1200,max_height=1200',
+            'your_name' => [
+                'required',
+                'string',
+                'max:' . $maxlength['your_name'],
+            ],
+            'title' => [
+                'required',
+                'string',
+                'max:' . $maxlength['title'],
+            ],
+            'email' => [
+                'required',
+                'email',
+                'max:' . $maxlength['email'],
+            ],
+            'gender' => [
+                'required',
+            ],
+            'age' => [
+                'required'
+            ],
+            'contact' => [
+                'required',
+                'string',
+                'max:' . $maxlength['contact'],
+            ],
+            'url' => [
+                'url',
+                'nullable',
+            ],
+            'imageFile' => [
+                'nullable',
+                'image',
+                'mimes:jpeg,png',
+                'max:10000',  // 10MB
+                'dimensions:max_width=1200,max_height=1200'
+            ],
             // ファイルのバリデーションよしなに。
-            'imageBase64' => 'nullable|string',
+            'imageBase64' => [
+                'nullable',
+                'string',
+            ],
             // 画像データをbase64で文字列としても受け入れる。バリデーションルールはimageFileが適用される。
-            'fileName' => 'nullable|string',
-            // 画像ファイル名
+            'fileName' => [
+                'nullable',
+                'string',
+            ]
         ];
 
         // $id = $this->get('id');

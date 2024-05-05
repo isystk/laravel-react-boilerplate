@@ -38,6 +38,8 @@ class IndexService extends BaseService
      * @return array{
      *   your_name : ?string,
      *   title : ?string,
+     *   sort_name : ?string,
+     *   sort_direction : 'asc' | 'desc' | null,
      *   limit : int,
      * }
      */
@@ -47,6 +49,8 @@ class IndexService extends BaseService
         $conditions = [
             'your_name' => null,
             'title' => null,
+            'sort_name' => $this->request()->sort_name ?? 'updated_at',
+            'sort_direction' => $this->request()->sort_direction ?? 'desc',
             'limit' => $limit,
         ];
 

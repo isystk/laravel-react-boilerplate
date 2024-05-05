@@ -61,6 +61,8 @@ class StockRepositoryTest extends TestCase
     {
         $defaultConditions = [
             'name' => null,
+            'sort_name' => null,
+            'sort_direction' => null,
             'limit' => null,
         ];
 

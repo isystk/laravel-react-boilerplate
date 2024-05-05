@@ -33,6 +33,8 @@ class BaseStockService extends BaseService
         return $this->stockRepository->getByConditions(
             [
                 'name' => $this->request()->name,
+                'sort_name' => $this->request()->sort_name ?? 'updated_at',
+                'sort_direction' => $this->request()->sort_direction ?? 'desc',
                 'limit' => $limit,
             ]);
     }

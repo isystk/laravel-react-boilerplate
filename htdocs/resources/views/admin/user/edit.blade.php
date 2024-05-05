@@ -42,7 +42,8 @@
                                 type="text"
                                 name="name"
                                 value="{{ old('name', $user->name) }}"
-                                maxlength="100"
+                                class="form-control"
+                                maxlength="{{ config('const.maxlength.users.name') }}"
                             />
                         </div>
                     </div>
@@ -55,7 +56,8 @@
                                 type="text"
                                 name="email"
                                 value="{{ old('email', $user->email) }}"
-                                maxlength="100"
+                                class="form-control"
+                                maxlength="{{ config('const.maxlength.users.email') }}"
                             />
                         </div>
                     </div>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\StoreContactFormRequest;
+use App\Http\Requests\Api\ContactForm\StoreRequest;
 use App\Services\Api\ContactForm\StoreService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
@@ -21,11 +21,11 @@ class ContactFormController extends BaseApiController
     /**
      * お問い合わせ内容を登録します。
      *
-     * @param StoreContactFormRequest $request
+     * @param StoreRequest $request
      * @return JsonResponse
      * @throws \Exception
      */
-    public function store(StoreContactFormRequest $request): JsonResponse
+    public function store(StoreRequest $request): JsonResponse
     {
         DB::beginTransaction();
         try {

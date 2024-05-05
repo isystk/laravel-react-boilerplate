@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Front\Auth;
 
 use App\Domain\Entities\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -17,14 +17,18 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
      */
     public function update(User $user, array $input): void
     {
+        $maxlength = config('const.maxlength.users');
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
-
+            'name' => [
+                'required',
+                'string',
+                'max:255'
+            ],
             'email' => [
                 'required',
                 'string',
                 'email',
-                'max:255',
+                'max:' . $maxlength['email'],
                 Rule::unique('users')->ignore($user->id),
             ],
         ])->validateWithBag('updateProfileInformation');

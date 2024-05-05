@@ -14,6 +14,8 @@ interface UserRepository extends BaseRepository
      * @param array{
      *   name : ?string,
      *   email : ?string,
+     *   sort_name : ?string,
+     *   sort_direction : 'asc' | 'desc' | null,
      *   limit : ?int,
      * } $conditions
      * @return Collection|LengthAwarePaginator

@@ -29,11 +29,38 @@
                             <input
                                 type="text"
                                 name="name"
-                                class="form-control"
-                                size="10"
-                                maxlength="100"
                                 value="{{ $request->name }}"
+                                class="form-control"
+                                maxlength="{{ config('const.maxlength.users.name') }}"
                             />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="control-group" id="orderName">
+                        <label class="col-sm-2 control-label">{{ __('order.Order Date') }}</label>
+                        <div class="col">
+                            <div class="row">
+                                <div class="col">
+                                    <input
+                                        type="text"
+                                        name="order_date_from"
+                                        value="{{ $request->order_date_from }}"
+                                        class="form-control date-picker"
+                                        maxlength="{{ config('const.maxlength.commons.date') }}"
+                                    />
+                                </div>
+                                <span class="pt-2">～</span>
+                                <div class="col">
+                                    <input
+                                        type="text"
+                                        name="order_date_to"
+                                        value="{{ $request->order_date_to }}"
+                                        class="form-control date-picker"
+                                        maxlength="{{ config('const.maxlength.commons.date') }}"
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -56,11 +83,11 @@
                     <table class="table table-hover text-nowrap">
                         <thead>
                             <tr>
-                                <th>{{ __('order.ID') }}</th>
-                                <th>{{ __('order.User Name') }}</th>
-                                <th>{{ __('order.Stock Name') }}</th>
-                                <th>{{ __('order.Quantity') }}</th>
-                                <th>{{ __('order.Order Date') }}</th>
+                                @include('admin.common.sortablelink_th', ['params' => ['id', __('order.ID')]])
+                                @include('admin.common.sortablelink_th', ['params' => ['users.name', __('order.User Name')]])
+                                @include('admin.common.sortablelink_th', ['params' => ['stocks.name', __('order.Stock Name')]])
+                                @include('admin.common.sortablelink_th', ['params' => ['quantity', __('order.Quantity')]])
+                                @include('admin.common.sortablelink_th', ['params' => ['created_at', __('order.Order Date')]])
                             </tr>
                         </thead>
                         <tbody>
@@ -83,7 +110,7 @@
                     </table>
                 </div>
                 <div class="card-footer  ">
-                    {{ $orders->links() }}
+                    {!! $orders->links('admin.common.pagination') !!}
                 </div>
             </div>
         </div>

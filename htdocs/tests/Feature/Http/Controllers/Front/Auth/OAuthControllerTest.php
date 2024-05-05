@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers\Auth;
+namespace Http\Controllers\Front\Auth;
 
 use Tests\TestCase;
 

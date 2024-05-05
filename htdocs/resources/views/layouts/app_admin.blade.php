@@ -9,6 +9,7 @@
 
     <script src="{{ asset('/assets/admin/js/app.js') }}"></script>
     <script src="{{ asset('/assets/admin/js/jquery-plugins.js') }}"></script>
+    <script src="{{ asset('/assets/admin/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="https://kit.fontawesome.com/eea364082e.js" crossorigin="anonymous"></script>
     @yield('scripts')
 
@@ -16,17 +17,17 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <link href="{{ asset('/assets/admin/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('/assets/admin/vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini {{ auth()->guard('admin')->check() ? '' : 'no-sidemenu' }}">
 <div id="app" class="wrapper">
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
-            </li>
-        </ul>
-        @guest('admin')
-        @else
+    @auth('admin')
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+                </li>
+            </ul>
             <div class="dropdown ml-auto">
                 <button
                     type="button"
@@ -51,10 +52,9 @@
                     </form>
                 </div>
             </div>
-        @endguest
-    </nav>
-
-    @include('admin.common.sidemenu')
+        </nav>
+        @include('admin.common.sidemenu')
+    @endauth
 
     <div class="content-wrapper">
         <div class="content-header">

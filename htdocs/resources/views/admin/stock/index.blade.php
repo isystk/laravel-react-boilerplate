@@ -39,10 +39,9 @@
                             <input
                                 type="text"
                                 name="name"
-                                class="form-control"
-                                size="10"
-                                maxlength="100"
                                 value="{{ $request->name }}"
+                                class="form-control"
+                                maxlength="{{ config('const.maxlength.stocks.name') }}"
                             >
                         </div>
                     </div>
@@ -93,11 +92,11 @@
                     <table class="table table-hover text-nowrap">
                         <thead>
                             <tr>
-                                <th>{{ __('stock.ID') }}</th>
-                                <th>{{ __('stock.Name') }}</th>
-                                <th>{{ __('stock.Price') }}</th>
-                                <th>{{ __('stock.Quantity') }}</th>
-                                <th>{{ __('common.Registration Date') }}</th>
+                                @include('admin.common.sortablelink_th', ['params' => ['id', __('stock.ID')]])
+                                @include('admin.common.sortablelink_th', ['params' => ['name', __('stock.Name')]])
+                                @include('admin.common.sortablelink_th', ['params' => ['price', __('stock.Price')]])
+                                @include('admin.common.sortablelink_th', ['params' => ['quantity', __('stock.Quantity')]])
+                                @include('admin.common.sortablelink_th', ['params' => ['created_at', __('common.Registration Date')]])
                                 <th></th>
                             </tr>
                         </thead>
@@ -121,7 +120,7 @@
                     </table>
                 </div>
                 <div class="card-footer  ">
-                    {{ $stocks->links() }}
+                    {!! $stocks->links('admin.common.pagination') !!}
                 </div>
             </div>
         </div>

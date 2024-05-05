@@ -30,10 +30,9 @@
                             <input
                                 type="text"
                                 name="name"
-                                class="form-control"
-                                size="10"
-                                maxlength="100"
                                 value="{{ $request->name }}"
+                                class="form-control"
+                                maxlength="{{ config('const.maxlength.users.name') }}"
                             >
                         </div>
                     </div>
@@ -44,9 +43,9 @@
                         <input
                             type="email"
                             name="email"
-                            class="form-control"
-                            maxlength="100"
                             value="{{ $request->email }}"
+                            class="form-control"
+                            maxlength="{{ config('const.maxlength.users.email') }}"
                         >
                     </div>
                 </div>
@@ -70,10 +69,10 @@
                     <table class="table table-hover text-nowrap">
                         <thead>
                         <tr>
-                            <th>{{ __('user.ID') }}</th>
-                            <th>{{ __('user.Name') }}</th>
-                            <th>{{ __('user.EMail') }}</th>
-                            <th>{{ __('common.Registration Date') }}</th>
+                            @include('admin.common.sortablelink_th', ['params' => ['id', __('user.ID')]])
+                            @include('admin.common.sortablelink_th', ['params' => ['name', __('user.Name')]])
+                            @include('admin.common.sortablelink_th', ['params' => ['email', __('user.EMail')]])
+                            @include('admin.common.sortablelink_th', ['params' => ['created_at', __('common.Registration Date')]])
                         </tr>
                         </thead>
                         <tbody>
@@ -95,7 +94,7 @@
                     </table>
                 </div>
                 <div class="card-footer  ">
-                    {{ $users->links() }}
+                    {!! $users->links('admin.common.pagination') !!}
                 </div>
             </div>
         </div>

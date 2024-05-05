@@ -29,10 +29,9 @@
                             <input
                                 type="text"
                                 name="userName"
-                                class="form-control"
-                                size="10"
-                                maxlength="100"
                                 value="{{ $request->userName }}"
+                                class="form-control"
+                                maxlength="{{ config('const.maxlength.contact_forms.your_name') }}"
                             />
                         </div>
                     </div>
@@ -42,10 +41,9 @@
                             <input
                                 type="text"
                                 name="title"
-                                class="form-control"
-                                size="10"
-                                maxlength="100"
                                 value="{{ $request->title }}"
+                                class="form-control"
+                                maxlength="{{ config('const.maxlength.contact_forms.title') }}"
                             />
                         </div>
                     </div>
@@ -70,10 +68,10 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>{{ __('contact.ID') }}</th>
-                                <th>{{ __('contact.Name') }}</th>
-                                <th>{{ __('contact.Title') }}</th>
-                                <th>{{ __('common.Registration Date') }}</th>
+                                @include('admin.common.sortablelink_th', ['params' => ['id', __('contact.ID')]])
+                                @include('admin.common.sortablelink_th', ['params' => ['your_name', __('contact.Name')]])
+                                @include('admin.common.sortablelink_th', ['params' => ['title', __('contact.Title')]])
+                                @include('admin.common.sortablelink_th', ['params' => ['created_at', __('common.Registration Date')]])
                                 <th></th>
                             </tr>
                         </thead>
@@ -101,7 +99,7 @@
                     </table>
                 </div>
                 <div class="card-footer  ">
-                    {{ $contactForms->links() }}
+                    {!! $contactForms->links('admin.common.pagination') !!}
                 </div>
             </div>
         </div>
