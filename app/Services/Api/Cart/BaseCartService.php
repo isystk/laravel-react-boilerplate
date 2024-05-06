@@ -41,8 +41,8 @@ class BaseCartService extends BaseService
      */
     private function convertToMycart(Cart $cart): array
     {
-        $carts = $this->getMyCart();
-        $datas = $carts['data']->map(function ($cart, $key)
+        $items = $this->getMyCart();
+        $datas = $items['carts']->map(function ($cart, $key)
         {
             $data = [];
             $data['id'] = $cart->id;
@@ -56,30 +56,30 @@ class BaseCartService extends BaseService
         return [
             'data' => $datas,
             'username' => Auth::user()->email,
-            'count' => $carts['count'],
-            'sum' => $carts['sum'],
+            'count' => $items['sum_count'],
+            'sum' => $items['sum_price'],
         ];
     }
 
     /**
      * @return array{
-     *     data: Collection,
-     *     count: int,
-     *     sum: int
+     *     carts: Collection,
+     *     sum_price: int,
+     *     sum_count: int
      * }
      */
     protected function getMyCart(): array
     {
         $userId = Auth::id();
-        $data['data'] = $this->cartRepository->getByUserId($userId);
+        $items = [];
+        $items['carts'] = $this->cartRepository->getByUserId($userId);
 
-        $data['count'] = 0;
-        $data['sum'] = 0;
-
-        foreach ($data['data'] as $cart) {
-            $data['count']++;
-            $data['sum'] += $cart->stock->price;
+        $items['sum_price'] = 0;
+        $items['sum_count'] = 0;
+        foreach ($items['carts'] as $cart) {
+            $items['sum_price'] += $cart->stock->price;
+            $items['sum_count']++;
         }
-        return $data;
+        return $items;
     }
 }

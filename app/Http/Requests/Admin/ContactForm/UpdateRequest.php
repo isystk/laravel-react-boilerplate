@@ -18,18 +18,25 @@ class UpdateRequest extends FormRequest
     }
 
     /**
-     * @return array<string, mixed>
+     * This method prepares file instante
      */
-    public function validationData(): array
+    protected function prepareForValidation(): void
     {
-        $all = parent::validationData();
-
+        $data = $this->all();
+        $imageFiles = [];
         // imageBase64パラメータがあればUploadedFileオブジェクトに変換してimageFileパラメータに上書きする。
-        if ($this->has('imageBase64') && $this->imageBase64 !== null) {
-            $all['imageFile'] = UploadImage::convertBase64($this->imageBase64);
+        if ($this->has('imageBase64_1') && $this->imageBase64_1 !== null) {
+            $imageFiles[0] = UploadImage::convertBase64($this->imageBase64_1);
         }
-
-        return $all;
+        if ($this->has('imageBase64_2') && $this->imageBase64_2 !== null) {
+            $imageFiles[1] = UploadImage::convertBase64($this->imageBase64_2);
+        }
+        if ($this->has('imageBase64_3') && $this->imageBase64_3 !== null) {
+            $imageFiles[2] = UploadImage::convertBase64($this->imageBase64_3);
+        }
+        $this->merge([
+            'image_files' => collect($imageFiles)
+        ]);
     }
 
     /**
@@ -41,10 +48,10 @@ class UpdateRequest extends FormRequest
     {
         $maxlength = config('const.maxlength.contact_forms');
         return [
-            'your_name' => [
+            'user_name' => [
                 'required',
                 'string',
-                'max:' . $maxlength['your_name']
+                'max:' . $maxlength['user_name']
             ],
             'title' => [
                 'required',
@@ -71,22 +78,6 @@ class UpdateRequest extends FormRequest
                 'url',
                 'nullable'
             ],
-            'imageFile' => [
-                'nullable',
-                'image',
-                'mimes:jpeg,png',
-                'max:10000',  // 10MB
-                'dimensions:max_width=1200,max_height=1200'
-            ],
-            // 画像データをbase64で文字列としても受け入れる。バリデーションルールはimageFileが適用される。
-            'imageBase64' => [
-                'nullable',
-                'string',
-            ],
-            'fileName' => [
-                'nullable',
-                'string',
-            ]
         ];
     }
 
@@ -98,7 +89,7 @@ class UpdateRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'your_name' => __('contact.Name'),
+            'user_name' => __('contact.Name'),
             'title' => __('contact.Title'),
             'email' => __('contact.EMail'),
             'gender' => __('contact.Gender'),

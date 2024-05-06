@@ -21,7 +21,7 @@ class ContactFormEloquentRepository extends BaseEloquentRepository implements Co
     /**
      * 検索条件からデータを取得します。
      * @param array{
-     *   your_name : ?string,
+     *   user_name : ?string,
      *   title : ?string,
      *   sort_name : ?string,
      *   sort_direction : 'asc' | 'desc' | null,
@@ -33,8 +33,8 @@ class ContactFormEloquentRepository extends BaseEloquentRepository implements Co
     {
         $query = $this->model->select();
 
-        if (null !== $conditions['your_name']) {
-            $query->where('your_name', 'like', '%' . $conditions['your_name'] . '%');
+        if (null !== $conditions['user_name']) {
+            $query->where('user_name', 'like', '%' . $conditions['user_name'] . '%');
         }
         if (null !== $conditions['title']) {
             $query->where('title', 'like', '%' . $conditions['title'] . '%');

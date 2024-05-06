@@ -2,9 +2,9 @@
 
 namespace App\Services\Api\Cart;
 
-use App\Domain\Entities\Cart;
 use App\Domain\Repositories\Cart\CartRepository;
 use App\Domain\Repositories\Order\OrderRepository;
+use App\Domain\Repositories\Order\OrderStockRepository;
 use App\Domain\Repositories\Stock\StockRepository;
 use App\Mail\MailNotification;
 use Illuminate\Http\Request;
@@ -23,24 +23,30 @@ class CheckoutService extends BaseCartService
      */
     protected OrderRepository $orderRepository;
 
+    /**
+     * @var OrderStockRepository
+     */
+    protected OrderStockRepository $orderStockRepository;
+
     public function __construct(
         Request $request,
         CartRepository $cartRepository,
         StockRepository $stockRepository,
         OrderRepository $orderRepository,
+        OrderStockRepository $orderStockRepository,
     )
     {
         parent::__construct($request, $cartRepository);
         $this->stockRepository = $stockRepository;
         $this->orderRepository = $orderRepository;
+        $this->orderStockRepository = $orderStockRepository;
     }
 
     /**
      * @param Request $request
-     * @param Cart $cart
      * @throws \Exception
      */
-    public function checkout(Request $request, Cart $cart): void
+    public function checkout(Request $request): void
     {
         // Stripe::setApiKey(env('STRIPE_SECRET'));
 
@@ -49,8 +55,8 @@ class CheckoutService extends BaseCartService
         //   'email' => $request->stripeEmail,
         //   'source' => $request->stripeToken
         // ));
-
-        $data = $this->getMyCart();
+        $userId = Auth::id();
+        $items = $this->getMyCart();
 
         // // 料金の支払いを実行
         // $charge = Charge::create(array(
@@ -59,17 +65,21 @@ class CheckoutService extends BaseCartService
         //   'currency' => 'jpy'
         // ));
 
-        $stocks = [];
+        $order = $this->orderRepository->create([
+            'user_id' => $userId,
+            'sum_price' => $items['sum_price'],
+        ]);
 
         // 発注履歴に追加する。
-        foreach ($data['data'] as $my_cart) {
-            $stock = $this->stockRepository->getById($my_cart->stock_id);
+        $stocks = [];
+        foreach ($items['carts'] as $cart) {
+            $stock = $cart->stock;
 
-            $order = $this->orderRepository->create([
-                'stock_id' => $my_cart->stock_id,
-                'user_id' => $my_cart->user_id,
+            $orderStock = $this->orderStockRepository->create([
+                'order_id' => $order->id,
+                'stock_id' => $cart->stock_id,
                 'price' => $stock->price,
-                'quantity' => 1,
+                'quantity' => 1, // TODO 商品毎に個数をサマリーしたい
             ]);
 
             // 在庫を減らす
@@ -83,8 +93,8 @@ class CheckoutService extends BaseCartService
 
             $stocks[] = (object)[
                 'name' => $stock->name,
-                'quantity' => $order->quantity,
-                'price' => $order->price,
+                'quantity' => $orderStock->quantity,
+                'price' => $orderStock->price,
             ];
         }
 
@@ -92,7 +102,7 @@ class CheckoutService extends BaseCartService
 
         $mailData = (object)[
             'name' => $user->name,
-            'amount' => $data['sum'],
+            'amount' => $items['sum_price'],
             'stocks' => $stocks,
         ];
 

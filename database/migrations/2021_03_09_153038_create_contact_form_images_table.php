@@ -5,16 +5,16 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-class CreateContactFormImagesTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('contact_form_images', function (Blueprint $table) {
+        Schema::create('contact_form_images', static function (Blueprint $table) {
             $table->bigIncrements('id')->comment('お問い合わせ画像ID');
             $table->unsignedBigInteger('contact_form_id')->comment('お問い合わせID');
             $table->string('file_name', 100)->comment('ファイル名');
@@ -31,8 +31,8 @@ class CreateContactFormImagesTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('contact_form_images');
     }
-}
+};

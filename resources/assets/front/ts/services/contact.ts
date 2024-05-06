@@ -19,7 +19,7 @@ export default class ContactService {
             result = response.result;
             this.main.setAppRoot();
         } catch (e) {
-            alert("お気に入りの取得に失敗しました");
+            alert("お問い合わせの登録に失敗しました");
         }
         // ローディングを非表示にする
         this.main.hideLoading();

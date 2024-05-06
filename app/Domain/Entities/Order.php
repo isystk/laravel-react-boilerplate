@@ -5,13 +5,12 @@ namespace App\Domain\Entities;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $id
- * @property int $stock_id
  * @property int $user_id
- * @property int|null $price
- * @property int|null $quantity
+ * @property int|null $sum_price
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
@@ -25,10 +24,8 @@ class Order extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'stock_id',
         'user_id',
-        'price',
-        'quantity',
+        'sum_price',
     ];
 
     /**
@@ -42,14 +39,9 @@ class Order extends Model
     ];
 
     // 親テーブル
-    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    // 親テーブル
-    public function stock(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(Stock::class);
-    }
 }

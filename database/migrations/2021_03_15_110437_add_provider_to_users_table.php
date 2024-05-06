@@ -3,19 +3,17 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
 
-class AddProviderToUsersTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
+        Schema::table('users', static function (Blueprint $table) {
             // カラム追加
             $table->string('provider_id')->comment('プロバイダID')->nullable()->after('id');
             $table->string('provider_name')->comment('プロバイダ名')->nullable()->after('provider_id');
@@ -32,9 +30,9 @@ class AddProviderToUsersTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('users', static function (Blueprint $table) {
             //
             // 複合ユニークキー削除
             $table->dropUnique(['provider_id', 'provider_name']);
@@ -45,4 +43,4 @@ class AddProviderToUsersTable extends Migration
             $table->string('password')->nullable(false)->change();
         });
     }
-}
+};

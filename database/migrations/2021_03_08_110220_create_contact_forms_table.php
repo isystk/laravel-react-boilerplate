@@ -5,18 +5,18 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-class CreateContactFormsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('contact_forms', function (Blueprint $table) {
+        Schema::create('contact_forms', static function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('your_name', 20)->comment('お名前');
+            $table->string('user_name', 20)->comment('お名前');
             $table->string('title', 50)->comment('タイトル');
             $table->string('email', 255)->comment('メールアドレス');
             $table->longText('url')->comment('URL')->nullable($value = true);
@@ -37,4 +37,4 @@ class CreateContactFormsTable extends Migration
     {
         Schema::dropIfExists('contact_forms');
     }
-}
+};

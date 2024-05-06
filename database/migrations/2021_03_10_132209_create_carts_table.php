@@ -5,16 +5,16 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-class CreateCartsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('carts', function (Blueprint $table) {
+        Schema::create('carts', static function (Blueprint $table) {
             $table->bigIncrements('id')->comment('カートID');
             $table->unsignedBigInteger('stock_id')->comment('商品ID');
             $table->unsignedBigInteger('user_id')->comment('ユーザID');
@@ -33,8 +33,8 @@ class CreateCartsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('carts');
     }
-}
+};

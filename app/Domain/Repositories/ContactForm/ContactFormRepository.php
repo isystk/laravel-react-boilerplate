@@ -11,7 +11,7 @@ interface ContactFormRepository extends BaseRepository
     /**
      * 検索条件からデータを取得します。
      * @param array{
-     *   your_name : ?string,
+     *   user_name : ?string,
      *   title : ?string,
      *   sort_name : ?string,
      *   sort_direction : 'asc' | 'desc' | null,

@@ -3,11 +3,11 @@
 namespace Domain\Repositories\Order;
 
 use App\Domain\Entities\Order;
+use App\Domain\Entities\OrderStock;
 use App\Domain\Entities\Stock;
 use App\Domain\Entities\User;
 use App\Domain\Repositories\Order\OrderRepository;
 use App\Utils\DateUtil;
-use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -66,11 +66,15 @@ class OrderRepositoryTest extends TestCase
         $stock2 = Stock::factory(['name' => 'stock2'])->create();
 
         /** @var Order $order1 */
-        $order1 = Order::factory(['user_id' => $user1->id, 'stock_id' => $stock1->id, 'created_at' => '2024-04-01'])->create();
+        $order1 = Order::factory(['user_id' => $user1->id, 'created_at' => '2024-04-01'])->create();
+        OrderStock::factory(['order_id' => $order1->id, 'stock_id' => $stock1->id, 'price' => $stock1->price, 'quantity' => 1])->create();
+        OrderStock::factory(['order_id' => $order1->id, 'stock_id' => $stock2->id, 'price' => $stock2->price, 'quantity' => 1])->create();
         /** @var Order $order2 */
-        $order2 = Order::factory(['user_id' => $user1->id, 'stock_id' => $stock2->id, 'created_at' => '2024-05-01'])->create();
+        $order2 = Order::factory(['user_id' => $user1->id, 'created_at' => '2024-05-01'])->create();
+        OrderStock::factory(['order_id' => $order2->id, 'stock_id' => $stock2->id, 'price' => $stock2->price, 'quantity' => 1])->create();
         /** @var Order $order3 */
-        $order3 = Order::factory(['user_id' => $user2->id, 'stock_id' => $stock1->id, 'created_at' => '2024-06-01'])->create();
+        $order3 = Order::factory(['user_id' => $user2->id, 'created_at' => '2024-06-01'])->create();
+        OrderStock::factory(['order_id' => $order3->id, 'stock_id' => $stock1->id, 'price' => $stock1->price, 'quantity' => 1])->create();
         $orders = $this->repository->getConditionsWithUserStock([
             ...$defaultConditions,
             'user_name' => $user1->name

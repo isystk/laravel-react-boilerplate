@@ -22,7 +22,7 @@ class ContactFormFactory extends Factory
     public function definition(): array
     {
         return [
-            'your_name' => $this->faker->text(20),
+            'user_name' => $this->faker->text(20),
             'title' => $this->faker->realText(50),
             'email' => $this->faker->unique()->email,
             'url' => $this->faker->url,

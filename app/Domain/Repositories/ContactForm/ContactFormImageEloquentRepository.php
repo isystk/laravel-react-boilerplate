@@ -25,7 +25,8 @@ class ContactFormImageEloquentRepository extends BaseEloquentRepository implemen
     public function getByContactFormId(int $contactFormId): Collection
     {
         return $this->model
-            ->where('contact_form_id', $contactFormId,)
+            ->where('contact_form_id', $contactFormId)
+            ->orderBy('id', 'asc')
             ->get();
     }
 

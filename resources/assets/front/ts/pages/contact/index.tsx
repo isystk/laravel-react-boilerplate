@@ -31,19 +31,21 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
     };
 
     const initialValues = {
-        your_name: auth.name || "",
+        user_name: auth.name || "",
         email: auth.email || "",
         gender: "",
         age: "",
         title: "",
         contact: "",
         url: "",
-        imageBase64: "",
+        imageBase64_1: "",
+        imageBase64_2: "",
+        imageBase64_3: "",
         caution: [],
     };
 
     const validation = Yup.object().shape({
-        your_name: Yup.string()
+        user_name: Yup.string()
             .max(20, "お名前は20文字以下を入れてください")
             .required("お名前を入力してください"),
         email: Yup.string()
@@ -59,7 +61,6 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
             .max(200, "タイトルは200文字以下を入れてください")
             .required("本文を入力してください"),
         url: Yup.string().url("URLを正しく入力してください"),
-        imageBase64: Yup.string().required("画像を選択してください"),
         caution: Yup.array().min(1, "注意事項に同意してください"),
     });
 
@@ -85,7 +86,7 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
                                 <FormGroup>
                                     <div style={{ width: "100%" }}>
                                         <Label
-                                            for="your_name"
+                                            for="user_name"
                                             className="item-name"
                                         >
                                             お名前を入力してください
@@ -96,19 +97,19 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
                                         <div className="text-wrap large">
                                             <Input
                                                 type="text"
-                                                id="your_name"
-                                                name="your_name"
-                                                value={values.your_name}
+                                                id="user_name"
+                                                name="user_name"
+                                                value={values.user_name}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
                                                 invalid={Boolean(
-                                                    touched.your_name &&
-                                                        errors.your_name
+                                                    touched.user_name &&
+                                                        errors.user_name
                                                 )}
                                             />
                                             <div className="form-bottom"></div>
                                             <p className="error">
-                                                {errors.your_name}
+                                                {errors.user_name}
                                             </p>
                                         </div>
                                     </div>
@@ -297,14 +298,36 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
                                 <FormGroup>
                                     <div style={{ width: "100%" }}>
                                         <Label className="item-name">
-                                            画像を選択してください
-                                            <span className="required">
-                                                必須
-                                            </span>
+                                            画像1を選択してください
+                                            <span>任意</span>
                                         </Label>
                                         <ImageFileInput
-                                            label="画像"
-                                            name="imageBase64"
+                                            label="画像1"
+                                            name="imageBase64_1"
+                                        />
+                                    </div>
+                                </FormGroup>
+                                <FormGroup>
+                                    <div style={{ width: "100%" }}>
+                                        <Label className="item-name">
+                                            画像2を選択してください
+                                            <span>任意</span>
+                                        </Label>
+                                        <ImageFileInput
+                                            label="画像2"
+                                            name="imageBase64_2"
+                                        />
+                                    </div>
+                                </FormGroup>
+                                <FormGroup>
+                                    <div style={{ width: "100%" }}>
+                                        <Label className="item-name">
+                                            画像3を選択してください
+                                            <span>任意</span>
+                                        </Label>
+                                        <ImageFileInput
+                                            label="画像3"
+                                            name="imageBase64_3"
                                         />
                                     </div>
                                 </FormGroup>

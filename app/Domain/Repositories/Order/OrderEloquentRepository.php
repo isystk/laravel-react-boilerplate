@@ -37,10 +37,8 @@ class OrderEloquentRepository extends BaseEloquentRepository implements OrderRep
             ->select('orders.*')
             ->with([
                 'user',
-                'stock',
             ])
-            ->join('users', 'users.id', 'orders.user_id')
-            ->join('stocks', 'stocks.id', 'orders.stock_id');
+            ->join('users', 'users.id', 'orders.user_id');
 
         if (null !== $conditions['user_name']) {
             $query->where('users.name', 'like', '%' . $conditions['user_name'] . '%');

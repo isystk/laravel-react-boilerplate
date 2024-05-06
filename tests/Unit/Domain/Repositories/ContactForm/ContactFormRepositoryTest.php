@@ -40,7 +40,7 @@ class ContactFormRepositoryTest extends TestCase
     public function testGetByConditions(): void
     {
         $defaultConditions = [
-            'your_name' => null,
+            'user_name' => null,
             'title' => null,
             'sort_name' => null,
             'sort_direction' => null,
@@ -51,16 +51,16 @@ class ContactFormRepositoryTest extends TestCase
         $this->assertSame(0, $stocks->count(), 'データがない状態で正常に動作することを始めにテスト');
 
         /** @var ContactForm $expectContactForm1 */
-        $expectContactForm1 = ContactForm::factory(['your_name' => 'user1', 'title' => 'title1'])->create();
+        $expectContactForm1 = ContactForm::factory(['user_name' => 'user1', 'title' => 'title1'])->create();
         /** @var ContactForm $expectContactForm2 */
-        $expectContactForm2 = ContactForm::factory(['your_name' => 'user2', 'title' => 'title2'])->create();
+        $expectContactForm2 = ContactForm::factory(['user_name' => 'user2', 'title' => 'title2'])->create();
 
         /** @var ContactForm $contactForm */
         $contactForm = $this->repository->getByConditions([
             ...$defaultConditions,
-            'your_name' => 'user1'
+            'user_name' => 'user1'
         ])->first();
-        $this->assertSame($expectContactForm1->id, $contactForm->id, 'your_nameで検索が出来ることをテスト');
+        $this->assertSame($expectContactForm1->id, $contactForm->id, 'user_nameで検索が出来ることをテスト');
 
         /** @var ContactForm $contactForm */
         $contactForm = $this->repository->getByConditions([

@@ -85,8 +85,7 @@
                             <tr>
                                 @include('admin.common.sortablelink_th', ['params' => ['id', __('order.ID')]])
                                 @include('admin.common.sortablelink_th', ['params' => ['users.name', __('order.User Name')]])
-                                @include('admin.common.sortablelink_th', ['params' => ['stocks.name', __('order.Stock Name')]])
-                                @include('admin.common.sortablelink_th', ['params' => ['quantity', __('order.Quantity')]])
+                                @include('admin.common.sortablelink_th', ['params' => ['sum_price', __('order.Sum Price')]])
                                 @include('admin.common.sortablelink_th', ['params' => ['created_at', __('order.Order Date')]])
                             </tr>
                         </thead>
@@ -95,8 +94,7 @@
                             <tr>
                                 <th>{{ $order->id }}</th>
                                 <td>{{ $order->user->name }}</td>
-                                <td>{{ $order->stock->name }}</td>
-                                <td>{{ $order->quantity }}</td>
+                                <td>{{ $order->sum_price }}</td>
                                 <td>{{ $order->created_at }}</td>
                                 <td>
                                     <a
