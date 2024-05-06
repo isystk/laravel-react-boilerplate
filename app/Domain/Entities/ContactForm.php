@@ -7,11 +7,10 @@ use App\Enums\Gender;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
- * @property string|null $your_name
+ * @property string|null $user_name
  * @property string|null $title
  * @property string|null $email
  * @property string|null $url
@@ -30,7 +29,7 @@ class ContactForm extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'your_name',
+        'user_name',
         'title',
         'email',
         'url',

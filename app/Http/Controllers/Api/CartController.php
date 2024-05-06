@@ -152,7 +152,7 @@ class CartController extends BaseApiController
             /** @var CheckoutService $service */
             $service = app(CheckoutService::class);
             // 支払い処理の実行
-            $service->checkout($request, $cart);
+            $service->checkout($request);
 
             // 削除後の情報を取得
             $carts = $service->searchMyCart($cart);

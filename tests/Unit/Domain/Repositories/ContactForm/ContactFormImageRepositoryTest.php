@@ -41,9 +41,9 @@ class ContactFormImageRepositoryTest extends TestCase
     public function testGetByConditions(): void
     {
         /** @var ContactForm $contactForm1 */
-        $contactForm1 = ContactForm::factory(['your_name' => 'user1', 'title' => 'title1'])->create();
+        $contactForm1 = ContactForm::factory(['user_name' => 'user1', 'title' => 'title1'])->create();
         /** @var ContactForm $contactForm2 */
-        $contactForm2 = ContactForm::factory(['your_name' => 'user2', 'title' => 'title1'])->create();
+        $contactForm2 = ContactForm::factory(['user_name' => 'user2', 'title' => 'title1'])->create();
 
         $contactFormImages = $this->repository->getByContactFormId($contactForm1->id);
         $this->assertSame(0, $contactFormImages->count(), 'データがない状態で正常に動作することを始めにテスト');

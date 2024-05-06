@@ -22,8 +22,7 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'price' => $this->faker->numberBetween(1, 6),
-            'quantity' => $this->faker->numberBetween(0, 10),
+            'sum_price' => $this->faker->numberBetween(1, 6),
         ];
     }
 

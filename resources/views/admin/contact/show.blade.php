@@ -21,7 +21,7 @@
                 <div class="control-group">
                     <label class="col-sm-6 control-label">{{ __('contact.Name') }}</label>
                     <div class="col-sm-12">
-                        {{ $contactForm->your_name }}
+                        {{ $contactForm->user_name }}
                     </div>
                 </div>
             </div>

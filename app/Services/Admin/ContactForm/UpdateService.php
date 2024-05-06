@@ -7,9 +7,8 @@ use App\Domain\Entities\ContactFormImage;
 use App\Domain\Repositories\ContactForm\ContactFormImageRepository;
 use App\Domain\Repositories\ContactForm\ContactFormRepository;
 use App\Enums\PhotoType;
+use App\Http\Requests\Admin\ContactForm\UpdateRequest;
 use App\Services\BaseService;
-use App\Utils\UploadImage;
-use Illuminate\Http\Request;
 
 class UpdateService extends BaseService
 {
@@ -24,7 +23,7 @@ class UpdateService extends BaseService
     protected ContactFormImageRepository $contactFormImageRepository;
 
     public function __construct(
-        Request $request,
+        UpdateRequest $request,
         ContactFormRepository $contactFormRepository,
         ContactFormImageRepository $contactFormImageRepository
     )
@@ -42,7 +41,7 @@ class UpdateService extends BaseService
     {
         $request = $this->request();
         $model = [
-            'your_name' => $request->your_name,
+            'user_name' => $request->user_name,
             'title' => $request->title,
             'email' => $request->email,
             'url' => $request->url,
@@ -57,26 +56,23 @@ class UpdateService extends BaseService
         );
 
         // お問い合わせ画像テーブルを登録（Delete→Insert）
-        if (null !== $request->imageBase64) {
-            $file = UploadImage::convertBase64($request->imageBase64);
-            $fileName = time() . $request->fileName;
-
-            $contactFormImages = $this->contactFormImageRepository->getByContactFormId($contactFormId);
-            foreach ($contactFormImages as $contactFormImage) {
-                if (!$contactFormImage instanceof ContactFormImage) {
-                    throw new \RuntimeException('An unexpected error occurred.');
-                }
-                $this->contactFormImageRepository->delete($contactFormImage->id);
+        $contactFormImages = $this->contactFormImageRepository->getByContactFormId($contactFormId)->all();
+        foreach ($contactFormImages as $contactFormImage) {
+            if (!$contactFormImage instanceof ContactFormImage) {
+                throw new \RuntimeException('An unexpected error occurred.');
             }
+            $this->contactFormImageRepository->delete($contactFormImage->id);
+        }
+        foreach ($request['image_files'] as $i => $imageFile) {
+            $fileName = $imageFile->getClientOriginalName();
             $this->contactFormImageRepository->create(
                 [
                     'contact_form_id' => $contactFormId,
                     'file_name' => $fileName,
                 ]
             );
-
             //s3に画像をアップロード
-            $file->storeAs(PhotoType::Contact->dirName() . '/', $fileName);
+            $imageFile->storeAs(PhotoType::Contact->dirName() . '/', $fileName);
         }
 
         return $contactForm;

@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Domain\Entities\Cart;
-use App\Domain\Entities\ContactForm;
 use App\Domain\Repositories\Admin\AdminEloquentRepository;
 use App\Domain\Repositories\Admin\AdminRepository;
 use App\Domain\Repositories\Cart\CartEloquentRepository;
@@ -14,6 +12,8 @@ use App\Domain\Repositories\ContactForm\ContactFormImageRepository;
 use App\Domain\Repositories\ContactForm\ContactFormRepository;
 use App\Domain\Repositories\Order\OrderEloquentRepository;
 use App\Domain\Repositories\Order\OrderRepository;
+use App\Domain\Repositories\Order\OrderStockEloquentRepository;
+use App\Domain\Repositories\Order\OrderStockRepository;
 use App\Domain\Repositories\Stock\StockEloquentRepository;
 use App\Domain\Repositories\Stock\StockRepository;
 use App\Domain\Repositories\User\UserEloquentRepository;
@@ -33,6 +33,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ContactFormRepository::class, ContactFormEloquentRepository::class);
         $this->app->bind(ContactFormImageRepository::class, ContactFormImageEloquentRepository::class);
         $this->app->bind(OrderRepository::class, OrderEloquentRepository::class);
+        $this->app->bind(OrderStockRepository::class, OrderStockEloquentRepository::class);
         $this->app->bind(StockRepository::class, StockEloquentRepository::class);
         $this->app->bind(UserRepository::class, UserEloquentRepository::class);
     }

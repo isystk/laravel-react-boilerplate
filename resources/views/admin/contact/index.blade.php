@@ -31,7 +31,7 @@
                                 name="userName"
                                 value="{{ $request->userName }}"
                                 class="form-control"
-                                maxlength="{{ config('const.maxlength.contact_forms.your_name') }}"
+                                maxlength="{{ config('const.maxlength.contact_forms.user_name') }}"
                             />
                         </div>
                     </div>
@@ -69,7 +69,7 @@
                         <thead>
                             <tr>
                                 @include('admin.common.sortablelink_th', ['params' => ['id', __('contact.ID')]])
-                                @include('admin.common.sortablelink_th', ['params' => ['your_name', __('contact.Name')]])
+                                @include('admin.common.sortablelink_th', ['params' => ['user_name', __('contact.Name')]])
                                 @include('admin.common.sortablelink_th', ['params' => ['title', __('contact.Title')]])
                                 @include('admin.common.sortablelink_th', ['params' => ['created_at', __('common.Registration Date')]])
                                 <th></th>
@@ -79,7 +79,7 @@
                         @foreach($contactForms as $contactForm)
                             <tr>
                                 <th>{{ $contactForm->id }}</th>
-                                <td>{{ $contactForm->your_name }}</td>
+                                <td>{{ $contactForm->user_name }}</td>
                                 <td
                                     class="text-truncate"
                                     style="max-width: 350px;"

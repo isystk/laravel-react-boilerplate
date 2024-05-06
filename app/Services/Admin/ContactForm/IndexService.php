@@ -36,7 +36,7 @@ class IndexService extends BaseService
     /**
      * リクエストパラメータから検索条件に変換します。
      * @return array{
-     *   your_name : ?string,
+     *   user_name : ?string,
      *   title : ?string,
      *   sort_name : ?string,
      *   sort_direction : 'asc' | 'desc' | null,
@@ -47,7 +47,7 @@ class IndexService extends BaseService
     {
         $limit = 20;
         $conditions = [
-            'your_name' => null,
+            'user_name' => null,
             'title' => null,
             'sort_name' => $this->request()->sort_name ?? 'updated_at',
             'sort_direction' => $this->request()->sort_direction ?? 'desc',
@@ -55,7 +55,7 @@ class IndexService extends BaseService
         ];
 
         if (null !== $this->request()['userName']) {
-            $conditions['your_name'] = $this->request()['userName'];
+            $conditions['user_name'] = $this->request()['userName'];
         }
         if (null !== $this->request()['title']) {
             $conditions['title'] = $this->request()['title'];

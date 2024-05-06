@@ -29,7 +29,7 @@ return [
             'quantity' => 10,
         ],
         'contact_forms' => [
-            'your_name' => 50,
+            'user_name' => 50,
             'title' => 50,
             'email' => 255,
             'url' => 255,

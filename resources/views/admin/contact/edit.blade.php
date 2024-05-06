@@ -43,10 +43,10 @@
                         <div class="col-sm-12">
                             <input
                                 type="text"
-                                name="your_name"
-                                value="{{ old('your_name', $contactForm->your_name) }}"
+                                name="user_name"
+                                value="{{ old('user_name', $contactForm->user_name) }}"
                                 class="form-control"
-                                maxlength="{{ config('const.maxlength.contact_forms.your_name') }}"
+                                maxlength="{{ config('const.maxlength.contact_forms.user_name') }}"
                             />
                         </div>
                     </div>
@@ -152,29 +152,64 @@
 
                 <div class="form-group">
                     <div class="control-group" id="userName">
-                        <label class="col-sm-6 control-label">{{ __('contact.Image') }}</label>
+                        <label class="col-sm-6 control-label">{{ __('contact.Image') }}1</label>
                         <div class="col-sm-12">
-                            {{--
-                        <p><input type="file" name="imageFile"></p>
-                        <br>
-                        --}}
-                            <p><input id="js-uploadImage" type="file">
+                            <p><input class="js-uploadImage" type="file" accept="image/png, image/jpeg" >
                             </p>
-                            <div id="result">
-                                @if (old('imageBase64'))
-                                    <img src="{{ old('imageBase64') }}" width="200px" />
-                                    <input type="hidden" name="imageBase64" value="{{ old('imageBase64') }}" />
-                                    <input type="hidden" name="fileName" value="{{ old('fileName') }}" />
-                                @elseif ($contactFormImages)
-                                    @foreach($contactFormImages as $contactFormImage)
-                                        @if ($contactFormImage['file_name'])
-                                            <img
-                                                src="{{ asset('uploads/contact/' . $contactFormImage['file_name']) }}"
-                                                width="200px"
-                                                id="contactFormImage"
-                                            />
-                                        @endif
-                                    @endforeach
+                            <div class="result">
+                                @if (old('imageBase64_1'))
+                                    <img src="{{ old('imageBase64_1') }}" width="200px" />
+                                    <input type="hidden" name="imageBase64_1" value="{{ old('imageBase64_1') }}" />
+                                    <input type="hidden" name="fileName_1" value="{{ old('fileName_1') }}" />
+                                @elseif (1 <= $contactFormImages->count())
+                                    <img
+                                        src="{{ asset('uploads/contact/' . $contactFormImages->first()['file_name']) }}"
+                                        width="200px"
+                                    />
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="control-group" id="userName">
+                        <label class="col-sm-6 control-label">{{ __('contact.Image') }}2</label>
+                        <div class="col-sm-12">
+                            <p><input class="js-uploadImage" type="file" accept="image/png, image/jpeg" >
+                            </p>
+                            <div class="result">
+                                @if (old('imageBase64_2'))
+                                    <img src="{{ old('imageBase64_2') }}" width="200px" />
+                                    <input type="hidden" name="imageBase64_2" value="{{ old('imageBase64_2') }}" />
+                                    <input type="hidden" name="fileName_2" value="{{ old('fileName_2') }}" />
+                                @elseif (2 <= $contactFormImages->count())
+                                    <img
+                                        src="{{ asset('uploads/contact/' . $contactFormImages->skip(1)->first()['file_name']) }}"
+                                        width="200px"
+                                    />
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="control-group" id="userName">
+                        <label class="col-sm-6 control-label">{{ __('contact.Image') }}3</label>
+                        <div class="col-sm-12">
+                            <p><input class="js-uploadImage" type="file" accept="image/png, image/jpeg" >
+                            </p>
+                            <div class="result">
+                                @if (old('imageBase64_3'))
+                                    <img src="{{ old('imageBase64_3') }}" width="200px" />
+                                    <input type="hidden" name="imageBase64_3" value="{{ old('imageBase64_3') }}" />
+                                    <input type="hidden" name="fileName_3" value="{{ old('fileName_3') }}" />
+                                @elseif (3 <= $contactFormImages->count())
+                                    <img
+                                        src="{{ asset('uploads/contact/' . $contactFormImages->skip(2)->first()['file_name']) }}"
+                                        width="200px"
+                                    />
                                 @endif
                             </div>
                         </div>
@@ -192,20 +227,24 @@
     <script>
         $(function () {
             // 画像ファイルアップロード
-            $('#js-uploadImage').imageUploader({
-                dropAreaSelector: '#drop-zone',
-                successCallback: function (res) {
+            $('.js-uploadImage').each(function (i) {
+                const self = $(this),
+                    parent = self.closest('div'),
+                    result = parent.find('.result');
+                self.imageUploader({
+                    dropAreaSelector: '#drop-zone',
+                    successCallback: function (res) {
+                        result.empty()
+                            .append('<img src="' + res.fileData + '" width="200px" />')
+                            .append(`<input type="hidden" name="imageBase64_${i+1}" value="` + res.fileData + '" />')
+                            .append('<input type="hidden" name="fileName_${i+1}" value="' + res.fileName + '" />');
 
-                    $('#result').empty();
-                    $('#result').append('<img src="' + res.fileData + '" width="200px" />');
-                    $('#result').append('<input type="hidden" name="imageBase64" value="' + res.fileData + '" />');
-                    $('#result').append('<input type="hidden" name="fileName" value="' + res.fileName + '" />');
-
-                    $('.error-message').empty();
-                },
-                errorCallback: function (res) {
-                    $('.error-message').text(res[0]);
-                }
+                        $('.error-message').empty();
+                    },
+                    errorCallback: function (res) {
+                        $('.error-message').text(res[0]);
+                    }
+                });
             });
         });
     </script>
