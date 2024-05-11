@@ -18,7 +18,7 @@ class OrderObserver implements ShouldHandleEventsAfterCommit
         $yearMonth = $order->created_at->format('Ym');
         $monthlySale = MonthlySale::where('year_month', $yearMonth)->first();
         if (null === $monthlySale) {
-            MonthlySale::created([
+            MonthlySale::create([
                 'year_month' => $yearMonth,
                 'order_count' => 1,
                 'amount' => $sumPrice,
@@ -39,23 +39,23 @@ class OrderObserver implements ShouldHandleEventsAfterCommit
     public function updated(Order $order): void
     {
         if($order->isDirty('sum_price')){
-//            $sumPrice = $order->sum_price;
-//            $yearMonth = $order->created_at->format('Ym');
-//            $monthlySale = MonthlySale::where('year_month', $yearMonth)->first();
-//            if (null !== $monthlySale) {
-//                MonthlySale::created([
-//                    'year_month' => $yearMonth,
-//                    'order_count' => 1,
-//                    'amount' => $sumPrice,
-//                ]);
-//            } else {
-//                MonthlySale::where('id', $monthlySale->id)
-//                    ->update([
-//                        'year_month' => $yearMonth,
-//                        'order_count' => $monthlySale->order_count + 1,
-//                        'amount' => $monthlySale->amount + $sumPrice,
-//                    ]);
-//            }
+            $sumPrice = $order->sum_price;
+            $yearMonth = $order->created_at->format('Ym');
+            $monthlySale = MonthlySale::where('year_month', $yearMonth)->first();
+            if (null !== $monthlySale) {
+                MonthlySale::create([
+                    'year_month' => $yearMonth,
+                    'order_count' => 1,
+                    'amount' => $sumPrice,
+                ]);
+            } else {
+                MonthlySale::where('id', $monthlySale->id)
+                    ->update([
+                        'year_month' => $yearMonth,
+                        'order_count' => $monthlySale->order_count + 1,
+                        'amount' => $monthlySale->amount + $sumPrice,
+                    ]);
+            }
         }
     }
 
