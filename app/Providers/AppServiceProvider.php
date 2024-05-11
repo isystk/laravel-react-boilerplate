@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Domain\Entities\Order;
+use App\Observers\OrderObserver;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\Config;
@@ -40,5 +42,8 @@ class AppServiceProvider extends ServiceProvider
 
         // ルートのURLを強制する
         URL::forceRootUrl(Config::get('app.url'));
+
+        // Observer
+        Order::observe(OrderObserver::class);
     }
 }
