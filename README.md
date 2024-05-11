@@ -11,7 +11,6 @@
 
 Laravel ＆ React.js の学習用サンプルアプリケーションです。
 
-
 ### 対象としている方
 - Laravelを初めて学習してみたい方
 - Dockerを利用したLaravelの開発環境を構築したい方
