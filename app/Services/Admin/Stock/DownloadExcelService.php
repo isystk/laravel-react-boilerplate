@@ -33,7 +33,7 @@ class DownloadExcelService extends BaseStockService implements FromCollection, W
     }
 
     /**
-     * @return Collection
+     * @return Collection<int, mixed>
      */
     public function collection(): Collection
     {

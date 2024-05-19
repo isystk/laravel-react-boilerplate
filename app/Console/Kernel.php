@@ -13,8 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array<int, string>
      */
     protected $commands = [
-        // 商品データのCSV出力バッチ
-        \App\Console\Commands\StockCSVBatch::class,
+        //
     ];
 
     /**
@@ -25,9 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // 毎日1時に実行
-        $schedule->command('stockcsv')
-            ->dailyAt('01:00');
+        //
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Domain\Repositories\Stock;
 
+use App\Domain\Entities\Stock;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use App\Domain\Repositories\BaseRepository;
@@ -10,7 +11,7 @@ interface StockRepository extends BaseRepository
 {
     /**
      * @param int $limit
-     * @return LengthAwarePaginator
+     * @return LengthAwarePaginator<Stock>
      */
     public function getByLimit(int $limit = 0): LengthAwarePaginator;
 
@@ -22,7 +23,7 @@ interface StockRepository extends BaseRepository
      *   sort_direction : 'asc' | 'desc' | null,
      *   limit : ?int,
      * } $conditions
-     * @return Collection|LengthAwarePaginator
+     * @return Collection<int, Stock>|LengthAwarePaginator<Stock>
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator;
 

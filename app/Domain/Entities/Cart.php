@@ -36,7 +36,7 @@ class Cart extends Model
 
     // 親テーブル
     /**
-     * @return BelongsTo
+     * @return BelongsTo<User, Cart>
      */
     public function user(): BelongsTo
     {
@@ -44,7 +44,7 @@ class Cart extends Model
     }
 
     /**
-     * @return BelongsTo
+     * @return BelongsTo<Stock, Cart>
      */
     public function stock(): BelongsTo
     {

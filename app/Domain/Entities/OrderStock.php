@@ -43,12 +43,17 @@ class OrderStock extends Model
     ];
 
     // 親テーブル
+    /**
+     * @return BelongsTo<Order, OrderStock>
+     */
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
     }
 
-    // 親テーブル
+    /**
+     * @return BelongsTo<Stock, OrderStock>
+     */
     public function stock(): BelongsTo
     {
         return $this->belongsTo(Stock::class);

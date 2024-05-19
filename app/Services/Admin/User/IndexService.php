@@ -2,6 +2,7 @@
 
 namespace App\Services\Admin\User;
 
+use App\Domain\Entities\Stock;
 use App\Domain\Repositories\User\UserRepository;
 use App\Services\BaseService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -26,7 +27,7 @@ class IndexService extends BaseService
     }
 
     /**
-     * @return LengthAwarePaginator
+     * @return LengthAwarePaginator<Stock>
      */
     public function searchUser(): LengthAwarePaginator
     {

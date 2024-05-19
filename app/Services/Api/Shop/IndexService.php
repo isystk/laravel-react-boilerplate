@@ -2,6 +2,7 @@
 
 namespace App\Services\Api\Shop;
 
+use App\Domain\Entities\Stock;
 use App\Domain\Repositories\Stock\StockRepository;
 use App\Services\BaseService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -24,7 +25,7 @@ class IndexService extends BaseService
     }
 
     /**
-     * @return LengthAwarePaginator
+     * @return LengthAwarePaginator<Stock>
      */
     public function searchStock(): LengthAwarePaginator
     {

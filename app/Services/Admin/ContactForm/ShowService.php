@@ -2,6 +2,7 @@
 
 namespace App\Services\Admin\ContactForm;
 
+use App\Domain\Entities\ContactFormImage;
 use App\Domain\Repositories\ContactForm\ContactFormImageRepository;
 use App\Services\BaseService;
 use Illuminate\Database\Eloquent\Collection;
@@ -25,7 +26,7 @@ class ShowService extends BaseService
 
     /**
      * @param int $contactFormId
-     * @return Collection
+     * @return Collection<int, ContactFormImage>
      */
     public function getContactFormImage(int $contactFormId): Collection
     {

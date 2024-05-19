@@ -2,6 +2,7 @@
 
 namespace App\Services\Admin\Order;
 
+use App\Domain\Entities\OrderStock;
 use App\Domain\Repositories\Order\OrderStockRepository;
 use App\Services\BaseService;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class ShowService extends BaseService
 
     /**
      * @param int $orderId
-     * @return Collection
+     * @return Collection<int, OrderStock>
      */
     public function getOrderStock(int $orderId): Collection
     {

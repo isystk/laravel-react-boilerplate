@@ -5,6 +5,7 @@ namespace Domain\Repositories\Stock;
 use App\Domain\Entities\Stock;
 use App\Domain\Repositories\Stock\StockRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Stripe\Collection;
 use Tests\TestCase;
 
 class StockRepositoryTest extends TestCase
@@ -45,10 +46,11 @@ class StockRepositoryTest extends TestCase
         /** @var Stock $expectStock1 */
         $expectStock1 = Stock::factory(['name' => 'stock1'])->create();
         /** @var Stock $expectStock2 */
-        $expectStock2 = Stock::factory(['name' => 'stock2'])->create();
+        $expectStock2 = Stock::factory(['name' => 'stock1'])->create();
         /** @var Stock $expectStock3 */
         $expectStock3 = Stock::factory(['name' => 'stock3'])->create();
 
+        /** @var array<Stock> $stocks */
         $stocks = $this->repository->getByLimit(2)->items();
         $this->assertCount(2, $stocks, '指定した件数のデータが取得されることをテスト');
         $this->assertSame($expectStock3->id, $stocks[0]->id, '最新順に取得されることをテスト');

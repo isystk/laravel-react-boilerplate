@@ -29,7 +29,7 @@ class OrderEloquentRepository extends BaseEloquentRepository implements OrderRep
      *   sort_direction : 'asc' | 'desc' | null,
      *   limit : ?int,
      * } $conditions
-     * @return Collection|LengthAwarePaginator
+     * @return Collection<int, Order>|LengthAwarePaginator<Order>
      */
     public function getConditionsWithUserStock(array $conditions): Collection|LengthAwarePaginator
     {

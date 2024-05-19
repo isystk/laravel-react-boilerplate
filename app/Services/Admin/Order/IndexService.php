@@ -2,6 +2,7 @@
 
 namespace App\Services\Admin\Order;
 
+use App\Domain\Entities\Order;
 use App\Domain\Repositories\Order\OrderRepository;
 use App\Services\BaseService;
 use App\Utils\DateUtil;
@@ -26,7 +27,7 @@ class IndexService extends BaseService
     }
 
     /**
-     * @return Collection|LengthAwarePaginator|array<string>
+     * @return Collection<int, Order>|LengthAwarePaginator<Order>|array<string>
      */
     public function searchOrder(): Collection|LengthAwarePaginator|array
     {

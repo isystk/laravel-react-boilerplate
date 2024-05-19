@@ -63,7 +63,7 @@ class BaseCartService extends BaseService
 
     /**
      * @return array{
-     *     carts: Collection,
+     *     carts: Collection<int, Cart>,
      *     sum_price: int,
      *     sum_count: int
      * }
