@@ -2,11 +2,10 @@
 
 namespace App\Services\Admin\User;
 
-use App\Domain\Entities\Stock;
+use App\Domain\Entities\User;
 use App\Domain\Repositories\User\UserRepository;
 use App\Services\BaseService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class IndexService extends BaseService
@@ -27,7 +26,7 @@ class IndexService extends BaseService
     }
 
     /**
-     * @return LengthAwarePaginator<Stock>
+     * @return LengthAwarePaginator<User>
      */
     public function searchUser(): LengthAwarePaginator
     {

@@ -9,6 +9,7 @@ return [
     'Customers' => '顧客管理',
     'Inquiries' => 'お問い合わせ',
     'System' => 'システム管理',
+    'Staffs' => 'スタッフ管理',
     'Photos' => '画像管理',
 
 ];

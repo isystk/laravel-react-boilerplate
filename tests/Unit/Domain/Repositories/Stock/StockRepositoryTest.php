@@ -5,7 +5,6 @@ namespace Domain\Repositories\Stock;
 use App\Domain\Entities\Stock;
 use App\Domain\Repositories\Stock\StockRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Stripe\Collection;
 use Tests\TestCase;
 
 class StockRepositoryTest extends TestCase
@@ -46,7 +45,7 @@ class StockRepositoryTest extends TestCase
         /** @var Stock $expectStock1 */
         $expectStock1 = Stock::factory(['name' => 'stock1'])->create();
         /** @var Stock $expectStock2 */
-        $expectStock2 = Stock::factory(['name' => 'stock1'])->create();
+        $expectStock2 = Stock::factory(['name' => 'stock2'])->create();
         /** @var Stock $expectStock3 */
         $expectStock3 = Stock::factory(['name' => 'stock3'])->create();
 

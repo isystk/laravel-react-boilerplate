@@ -136,6 +136,44 @@ Breadcrumbs::for('admin.contact.edit', static function ($breadcrumbs, $contactFo
     ]);
 });
 
+// Home > スタッフ一覧
+Breadcrumbs::for('admin.staff', static function ($breadcrumbs) {
+    $breadcrumbs->parent('admin.home');
+    $breadcrumbs->push(__('staff.Staff List'), 'admin.staff');
+});
+
+// Home > スタッフ一覧 > 商品登録
+Breadcrumbs::for('admin.staff.create', static function ($breadcrumbs) {
+    $breadcrumbs->parent('admin.staff');
+    $breadcrumbs->push(__('stock.Staff Regist'), 'admin.staff.create');
+});
+
+// Home > スタッフ一覧 > スタッフ詳細
+Breadcrumbs::for('admin.staff.show', static function ($breadcrumbs, $staff) {
+    $breadcrumbs->parent('admin.staff');
+    $breadcrumbs->push(
+        $staff->name,
+        'admin.staff.show',
+        [
+            'params' => [
+                'staff' => $staff,
+            ],
+        ]);
+});
+
+// Home > スタッフ一覧 > スタッフ詳細 > スタッフ編集
+Breadcrumbs::for('admin.staff.edit', static function ($breadcrumbs, $staff) {
+    $breadcrumbs->parent('admin.staff.show', $staff);
+    $breadcrumbs->push(
+        $staff->name . 'の変更',
+        'admin.staff.edit',
+        [
+            'params' => [
+                'staff' => $staff,
+            ],
+        ]);
+});
+
 // Home > 画像一覧
 Breadcrumbs::for('admin.photo', static function ($breadcrumbs) {
   $breadcrumbs->parent('admin.home');

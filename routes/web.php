@@ -48,6 +48,15 @@ Route::prefix('admin')->group(function () {
 
         Route::get('photo', [\App\Http\Controllers\Admin\Photo\ListController::class, 'index'])->name('admin.photo');
         Route::post('photo/destroy', [\App\Http\Controllers\Admin\Photo\ListController::class, 'destroy'])->name('admin.photo.destroy');
+
+        Route::get('staff', [\App\Http\Controllers\Admin\Staff\ListController::class, 'index'])->name('admin.staff');
+        Route::get('staff/create', [\App\Http\Controllers\Admin\Staff\CreateController::class, 'create'])->name('admin.staff.create');
+        Route::post('staff/store', [\App\Http\Controllers\Admin\Staff\CreateController::class, 'store'])->name('admin.staff.store');
+        Route::get('staff/{staff}', [\App\Http\Controllers\Admin\Staff\DetailController::class, 'show'])->name('admin.staff.show');
+        Route::post('staff/{staff}/destroy', [\App\Http\Controllers\Admin\Staff\DetailController::class, 'destroy'])->name('admin.staff.destroy');
+        Route::get('staff/{staff}/edit', [\App\Http\Controllers\Admin\Staff\EditController::class, 'edit'])->name('admin.staff.edit');
+        Route::post('staff/{staff}/update', [\App\Http\Controllers\Admin\Staff\EditController::class, 'update'])->name('admin.staff.update');
+
     });
 });
 
