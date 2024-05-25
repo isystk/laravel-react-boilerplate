@@ -21,7 +21,13 @@
     <div class="card">
         <div class="card-body text-center">
             <form method="GET" action="{{ route('admin.staff.create') }}">
-                <button type="submit" class="btn btn-primary">
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                    @cannot('high-manager')
+                        disabled="disabled"
+                    @endcan
+                >
                     {{ __('common.Regist') }}
                 </button>
             </form>
@@ -65,6 +71,23 @@
                         >
                     </div>
                 </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">{{ __('staff.Role') }}</label>
+                    <div class="col-sm-4">
+                        <select
+                            name="role"
+                            class="form-control"
+                        >
+                            <option value="">未選択</option>
+                            @foreach(App\Enums\AdminRole::cases() as $item)
+                                <option
+                                    value="{{ $item->value }}"
+                                    {{ ($item->value === $request->role) ? 'selected' : '' }}
+                                >{{ $item->label() }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="card-footer text-center">
                 <button type="submit" class="btn btn-secondary">{{ __('common.Search') }}</button>
@@ -74,6 +97,7 @@
     <form action="{{ route('admin.staff') }}" method="GET" id="pagingForm">
         <input type="hidden" name="name" value="{{ $request->name }}" />
         <input type="hidden" name="email" value="{{ $request->email }}" />
+        <input type="hidden" name="role" value="{{ $request->role }}" />
     </form>
     <div class="row">
         <div class="col-12">
@@ -88,6 +112,7 @@
                             @include('admin.common.sortablelink_th', ['params' => ['id', __('staff.ID')]])
                             @include('admin.common.sortablelink_th', ['params' => ['name', __('staff.Name')]])
                             @include('admin.common.sortablelink_th', ['params' => ['email', __('staff.EMail')]])
+                            @include('admin.common.sortablelink_th', ['params' => ['role', __('staff.Role')]])
                             @include('admin.common.sortablelink_th', ['params' => ['created_at', __('common.Registration Date')]])
                         </tr>
                         </thead>
@@ -97,6 +122,7 @@
                                 <th>{{ $staff->id }}</th>
                                 <td>{{ $staff->name }}</td>
                                 <td>{{ $staff->email }}</td>
+                                <td>{{ App\Enums\AdminRole::getLabel($staff->role) }}</td>
                                 <td>{{ $staff->created_at }}</td>
                                 <td>
                                     <a

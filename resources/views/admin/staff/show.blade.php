@@ -52,7 +52,15 @@
                 >
                     @csrf
                     <div class="mx-auto">
-                        <input class="btn btn-info" type="submit" value="{{ __('common.Change') }}">
+                        <button
+                            class="btn btn-info"
+                            type="submit"
+                            @cannot('high-manager')
+                                disabled="disabled"
+                            @endcan
+                        >
+                            {{ __('common.Change') }}
+                        </button>
                     </div>
                 </form>
             </div>
@@ -63,7 +71,13 @@
                     id="delete_{{ $staff->id }}"
                 >
                     @csrf
-                    <a href="#" class="btn btn-danger js-deleteBtn" data-id="{{ $staff->id }}">{{ __('common.Delete') }}</a>
+                    <button
+                        class="btn btn-danger js-deleteBtn"
+                        data-id="{{ $staff->id }}"
+                        @cannot('high-manager')
+                            disabled="disabled"
+                        @endcan
+                    >{{ __('common.Delete') }}</button>
                 </form>
             </div>
         </div>

@@ -14,6 +14,7 @@ interface AdminRepository extends BaseRepository
      * @param array{
      *   name : ?string,
      *   email : ?string,
+     *   role : ?string,
      *   sort_name : ?string,
      *   sort_direction : 'asc' | 'desc' | null,
      *   limit : ?int,

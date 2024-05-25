@@ -23,6 +23,7 @@ class AdminEloquentRepository extends BaseEloquentRepository implements AdminRep
      * @param array{
      *   name : ?string,
      *   email : ?string,
+     *   role : ?string,
      *   sort_name : ?string,
      *   sort_direction : 'asc' | 'desc' | null,
      *   limit : ?int,
@@ -38,6 +39,9 @@ class AdminEloquentRepository extends BaseEloquentRepository implements AdminRep
         }
         if (null !== $conditions['email']) {
             $query->where('email', 'like', '%' . $conditions['email'] . '%');
+        }
+        if (null !== $conditions['role']) {
+            $query->where('role', $conditions['role']);
         }
 
         if (null !== $conditions['sort_name']) {

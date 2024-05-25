@@ -30,12 +30,14 @@ class IndexService extends BaseService
      */
     public function searchStaff(): LengthAwarePaginator
     {
+        $request = $this->request();
         $limit = 20;
         return $this->adminRepository->getByConditions([
-            'name' => $this->request()->name,
-            'email' => $this->request()->email,
-            'sort_name' => $this->request()->sort_name ?? 'updated_at',
-            'sort_direction' => $this->request()->sort_direction ?? 'desc',
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role,
+            'sort_name' => $request->sort_name ?? 'updated_at',
+            'sort_direction' => $request->sort_direction ?? 'desc',
             'limit' => $limit,
         ]);
     }

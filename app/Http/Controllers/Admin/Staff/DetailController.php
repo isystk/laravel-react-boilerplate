@@ -42,6 +42,8 @@ class DetailController extends BaseController
      */
     public function destroy(Admin $staff): RedirectResponse
     {
+        // 上位管理者のみがアクセス可能
+        $this->authorize('high-manager');
         if (auth()->id() === $staff->id) {
             $errors = new MessageBag;
             $errors->add('errors', '自分自身を削除することはできません');

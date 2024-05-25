@@ -9,6 +9,7 @@ return [
     'ID' => 'ID',
     'Name' => '氏名',
     'EMail' => 'メールアドレス',
+    'Role' => '権限',
     'Password' => 'パスワード',
     'PasswordConfirm' => 'パスワード確認',
 

@@ -64,7 +64,12 @@
                 </div>
             </div>
             <div class="card-footer text-center  ">
-                <input class="btn btn-info" type="submit" value="{{__('common.Execute')}}" />
+                <button
+                    class="btn btn-info"
+                    type="submit"
+                >
+                    {{ __('common.Execute') }}
+                </button>
             </div>
         </div>
     </form>

@@ -42,6 +42,8 @@ class DetailController extends BaseController
      */
     public function destroy(User $user): RedirectResponse
     {
+        // 上位管理者のみがアクセス可能
+        $this->authorize('high-manager');
         DB::beginTransaction();
         try {
             /** @var DestroyService $service */

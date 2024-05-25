@@ -22,6 +22,7 @@ class AdminsTableSeeder extends Seeder
                 'name' => '管理者A',
                 'email' => 'sample@sample.com',
                 'password' => Hash::make('password'),
+                'role' => 'high-manager'
             ]
         ]);
     }

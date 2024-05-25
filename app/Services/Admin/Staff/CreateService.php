@@ -4,6 +4,7 @@ namespace App\Services\Admin\Staff;
 
 use App\Domain\Entities\Admin;
 use App\Domain\Repositories\Admin\AdminRepository;
+use App\Enums\AdminRole;
 use App\Services\BaseService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -34,6 +35,7 @@ class CreateService extends BaseService
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => AdminRole::Manager->value,
         ];
         return $this->adminRepository->create(
             $model

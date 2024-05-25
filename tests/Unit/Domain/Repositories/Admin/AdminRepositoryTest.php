@@ -4,6 +4,7 @@ namespace Tests\Unit\Domain\Repositories\Admin;
 
 use App\Domain\Repositories\Admin\AdminRepository;
 use App\Domain\Entities\Admin;
+use App\Enums\AdminRole;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -42,6 +43,7 @@ class AdminRepositoryTest extends TestCase
         $defaultConditions = [
             'name' => null,
             'email' => null,
+            'role' => null,
             'sort_name' => null,
             'sort_direction' => null,
             'limit' => null,
@@ -51,9 +53,17 @@ class AdminRepositoryTest extends TestCase
         $this->assertSame(0, $admins->count(), 'データがない状態で正常に動作することを始めにテスト');
 
         /** @var Admin $expectAdmin1 */
-        $expectAdmin1 = Admin::factory(['name' => 'admin1', 'email' => 'admin1@test.com'])->create();
+        $expectAdmin1 = Admin::factory([
+            'name' => 'admin1',
+            'email' => 'admin1@test.com',
+            'role' => AdminRole::HighManager->value
+        ])->create();
         /** @var Admin $expectAdmin2 */
-        $expectAdmin2 = Admin::factory(['name' => 'admin2', 'email' => 'admin2@test.com'])->create();
+        $expectAdmin2 = Admin::factory([
+            'name' => 'admin2',
+            'email' => 'admin2@test.com',
+            'role' => AdminRole::Manager->value
+        ])->create();
 
         /** @var Admin $admin */
         $admin = $this->repository->getByConditions([
@@ -68,6 +78,13 @@ class AdminRepositoryTest extends TestCase
             'email' => 'admin2@test.com'
         ])->first();
         $this->assertSame($expectAdmin2->id, $admin->id, 'emailで検索が出来ることをテスト');
+
+        /** @var Admin $admin */
+        $admin = $this->repository->getByConditions([
+            ...$defaultConditions,
+            'role' => AdminRole::HighManager->value
+        ])->first();
+        $this->assertSame($expectAdmin1->id, $admin->id, 'roleで検索が出来ることをテスト');
 
         $admins = $this->repository->getByConditions([
             ...$defaultConditions,
