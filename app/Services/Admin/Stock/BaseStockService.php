@@ -2,6 +2,7 @@
 
 namespace App\Services\Admin\Stock;
 
+use App\Domain\Entities\Stock;
 use App\Domain\Repositories\Stock\StockRepository;
 use App\Services\BaseService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -26,7 +27,7 @@ class BaseStockService extends BaseService
 
     /**
      * @param int $limit
-     * @return Collection|LengthAwarePaginator
+     * @return Collection<int, Stock>|LengthAwarePaginator<Stock>
      */
     public function searchStock(int $limit = 20): Collection|LengthAwarePaginator
     {

@@ -49,6 +49,7 @@ class StockRepositoryTest extends TestCase
         /** @var Stock $expectStock3 */
         $expectStock3 = Stock::factory(['name' => 'stock3'])->create();
 
+        /** @var array<Stock> $stocks */
         $stocks = $this->repository->getByLimit(2)->items();
         $this->assertCount(2, $stocks, '指定した件数のデータが取得されることをテスト');
         $this->assertSame($expectStock3->id, $stocks[0]->id, '最新順に取得されることをテスト');

@@ -90,6 +90,15 @@
                     >
                         <li class="nav-item">
                             <a
+                                href="{{ url('/admin/staff') }}"
+                                class="nav-link @isset($subMenu){{ $subMenu === 'staff' ? 'active' : '' }} - @endisset"
+                            >
+                                <i class="fa fa-layer-group nav-icon"></i>
+                                <p>{{ __('menu.Staffs') }}</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a
                                 href="{{ url('/admin/photo') }}"
                                 class="nav-link @isset($subMenu){{ $subMenu === 'photo' ? 'active' : '' }} - @endisset"
                             >

@@ -59,6 +59,7 @@ class ExportMonthlySalesTest extends TestCase
     public function testAllValues(): void
     {
         // 月別売上の作成
+        /** @var MonthlySale $m1 */
         $m1 = MonthlySale::factory([
             'year_month' => "202404",
             'order_count' => 111,
@@ -83,16 +84,19 @@ class ExportMonthlySalesTest extends TestCase
     public function testSortOrder(): void
     {
         // 月別売上の作成
+        /** @var MonthlySale $m1 */
         $m1 = MonthlySale::factory([
             'year_month' => "202404",
             'order_count' => 222,
             'amount' => 54321,
         ])->create();
+        /** @var MonthlySale $m2 */
         $m2 = MonthlySale::factory([
             'year_month' => "202405",
             'order_count' => 333,
             'amount' => 65432,
         ])->create();
+        /** @var MonthlySale $m3 */
         $m3 = MonthlySale::factory([
             'year_month' => "202406",
             'order_count' => 111,

@@ -81,7 +81,7 @@ class ExportMonthlySales extends Command
 
     /**
      * 出力対象の月別売上データを取得します。
-     * @return Collection<MonthlySale>
+     * @return Collection<int, MonthlySale>
      */
     private function getMonthlySales(): Collection
     {

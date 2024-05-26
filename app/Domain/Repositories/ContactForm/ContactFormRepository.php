@@ -2,6 +2,7 @@
 
 namespace App\Domain\Repositories\ContactForm;
 
+use App\Domain\Entities\ContactForm;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use App\Domain\Repositories\BaseRepository;
@@ -17,7 +18,7 @@ interface ContactFormRepository extends BaseRepository
      *   sort_direction : 'asc' | 'desc' | null,
      *   limit : ?int,
      * } $conditions
-     * @return Collection|LengthAwarePaginator
+     * @return Collection<int, ContactForm>|LengthAwarePaginator<ContactForm>
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator;
 

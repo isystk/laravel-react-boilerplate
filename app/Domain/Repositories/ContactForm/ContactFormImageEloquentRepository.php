@@ -20,14 +20,16 @@ class ContactFormImageEloquentRepository extends BaseEloquentRepository implemen
     /**
      * contactFormId からデータを取得します。
      * @param int $contactFormId
-     * @return Collection
+     * @return Collection<int, ContactFormImage>
      */
     public function getByContactFormId(int $contactFormId): Collection
     {
-        return $this->model
+        /** @var Collection<int, ContactFormImage> $items */
+        $items = $this->model
             ->where('contact_form_id', $contactFormId)
             ->orderBy('id', 'asc')
             ->get();
+        return $items;
     }
 
 }

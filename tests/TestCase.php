@@ -64,7 +64,7 @@ abstract class TestCase extends BaseTestCase
     /**
      * CSVファイルを読み込んで配列データを返却します。
      * @param string $path
-     * @return array
+     * @return array<array<string>>
      */
     protected function readCsv(string $path): array
     {

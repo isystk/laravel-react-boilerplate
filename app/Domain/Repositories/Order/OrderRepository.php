@@ -2,6 +2,7 @@
 
 namespace App\Domain\Repositories\Order;
 
+use App\Domain\Entities\Order;
 use Carbon\CarbonImmutable;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
@@ -19,7 +20,7 @@ interface OrderRepository extends BaseRepository
      *   sort_direction : 'asc' | 'desc' | null,
      *   limit : ?int,
      * } $conditions
-     * @return Collection|LengthAwarePaginator
+     * @return Collection<int, Order>|LengthAwarePaginator<Order>
      */
     public function getConditionsWithUserStock(array $conditions): Collection|LengthAwarePaginator;
 

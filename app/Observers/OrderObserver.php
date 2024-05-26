@@ -42,7 +42,7 @@ class OrderObserver implements ShouldHandleEventsAfterCommit
             $sumPrice = $order->sum_price;
             $yearMonth = $order->created_at->format('Ym');
             $monthlySale = MonthlySale::where('year_month', $yearMonth)->first();
-            if (null !== $monthlySale) {
+            if (null === $monthlySale) {
                 MonthlySale::create([
                     'year_month' => $yearMonth,
                     'order_count' => 1,

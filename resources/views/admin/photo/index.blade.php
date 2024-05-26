@@ -91,11 +91,13 @@
                                     />
                                 </td>
                                 <td>
-                                    <a
-                                        href="#"
+                                    <button
                                         class="btn btn-danger btn-sm js-deleteBtn"
                                         data-id="{{ $photo['fileName'] }}"
-                                    >削除する</a>
+                                        @cannot('high-manager')
+                                            disabled="disabled"
+                                        @endcan
+                                    >削除する</button>
                                     <form
                                         id="delete_{{ $photo['fileName'] }}"
                                         action="{{ route('admin.photo.destroy') }}"

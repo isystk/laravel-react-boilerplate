@@ -39,6 +39,9 @@ class Order extends Model
     ];
 
     // 親テーブル
+    /**
+     * @return BelongsTo<User, Order>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

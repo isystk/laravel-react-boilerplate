@@ -27,7 +27,7 @@ class ContactFormEloquentRepository extends BaseEloquentRepository implements Co
      *   sort_direction : 'asc' | 'desc' | null,
      *   limit : ?int,
      * } $conditions
-     * @return Collection|LengthAwarePaginator
+     * @return Collection<int, ContactForm>|LengthAwarePaginator<ContactForm>
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator
     {

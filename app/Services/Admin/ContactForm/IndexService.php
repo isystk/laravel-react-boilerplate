@@ -2,6 +2,7 @@
 
 namespace App\Services\Admin\ContactForm;
 
+use App\Domain\Entities\ContactForm;
 use App\Domain\Repositories\ContactForm\ContactFormRepository;
 use App\Services\BaseService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -25,7 +26,7 @@ class IndexService extends BaseService
     }
 
     /**
-     * @return Collection|LengthAwarePaginator|array<string>
+     * @return Collection<int, ContactForm>|LengthAwarePaginator<ContactForm>|array<string>
      */
     public function searchContactForm(): Collection|LengthAwarePaginator|array
     {

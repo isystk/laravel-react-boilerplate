@@ -40,7 +40,7 @@ class ContactFormImage extends Model
 
     // 親テーブル
     /**
-     * @return BelongsTo
+     * @return BelongsTo<ContactForm, ContactFormImage>
      */
     public function contactForm(): BelongsTo
     {

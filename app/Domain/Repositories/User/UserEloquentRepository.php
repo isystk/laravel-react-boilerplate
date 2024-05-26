@@ -26,7 +26,7 @@ class UserEloquentRepository extends BaseEloquentRepository implements UserRepos
      *   sort_direction : 'asc' | 'desc' | null,
      *   limit : ?int,
      * } $conditions
-     * @return Collection|LengthAwarePaginator
+     * @return Collection<int, User>|LengthAwarePaginator<User>
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator
     {

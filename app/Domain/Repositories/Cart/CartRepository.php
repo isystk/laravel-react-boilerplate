@@ -2,6 +2,7 @@
 
 namespace App\Domain\Repositories\Cart;
 
+use App\Domain\Entities\Cart;
 use App\Domain\Repositories\BaseRepository;
 use Illuminate\Support\Collection;
 
@@ -10,7 +11,7 @@ interface CartRepository extends BaseRepository
     /**
      * ユーザーIDからデータを取得します。
      * @param int $userId
-     * @return Collection
+     * @return Collection<int, Cart>
      */
     public function getByUserId(int $userId): Collection;
 

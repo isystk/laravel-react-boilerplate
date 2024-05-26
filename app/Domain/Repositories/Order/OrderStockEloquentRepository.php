@@ -20,13 +20,15 @@ class OrderStockEloquentRepository extends BaseEloquentRepository implements Ord
     /**
      * orderId からデータを取得します。
      * @param int $orderId
-     * @return Collection
+     * @return Collection<int, OrderStock>
      */
     public function getByOrderId(int $orderId): Collection
     {
-        return $this->model
+        /** @var Collection<int, OrderStock> $items */
+        $items = $this->model
             ->where('order_id', $orderId,)
             ->get();
+        return $items;
     }
 
 }
