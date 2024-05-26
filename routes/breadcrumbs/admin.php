@@ -145,7 +145,7 @@ Breadcrumbs::for('admin.staff', static function ($breadcrumbs) {
 // Home > スタッフ一覧 > 商品登録
 Breadcrumbs::for('admin.staff.create', static function ($breadcrumbs) {
     $breadcrumbs->parent('admin.staff');
-    $breadcrumbs->push(__('stock.Staff Regist'), 'admin.staff.create');
+    $breadcrumbs->push(__('staff.Staff Regist'), 'admin.staff.create');
 });
 
 // Home > スタッフ一覧 > スタッフ詳細

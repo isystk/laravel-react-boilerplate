@@ -31,7 +31,7 @@
                 <div class="control-group">
                     <label class="col-sm-2 control-label">{{ __('staff.Name') }}</label>
                     <div class="col-sm-4">
-                        {{ $staff -> name }}
+                        {{ $staff->name }}
                     </div>
                 </div>
             </div>
@@ -39,7 +39,15 @@
                 <div class="control-group">
                     <label class="col-sm-2 control-label">{{ __('staff.EMail') }}</label>
                     <div class="col-sm-4">
-                        {{ $staff -> email }}
+                        {{ $staff->email }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-group">
+                    <label class="col-sm-2 control-label">{{ __('staff.Role') }}</label>
+                    <div class="col-sm-4">
+                        {{ App\Enums\AdminRole::getLabel($staff->role) }}
                     </div>
                 </div>
             </div>

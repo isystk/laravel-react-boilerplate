@@ -34,6 +34,7 @@ class UpdateService extends BaseService
         $model = [
             'name' => $request->name,
             'email' => $request->email,
+            'role' => $request->role,
         ];
         return $this->adminRepository->update(
             $adminId,

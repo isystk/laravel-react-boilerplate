@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Admin\Staff;
 
+use App\Enums\AdminRole;
+use Illuminate\Validation\Rules\Enum;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -53,6 +55,10 @@ class StoreRequest extends FormRequest
                 Password::default(),
                 'confirmed'
             ],
+            'role' => [
+                'required',
+                new Enum(AdminRole::class),
+            ],
         ];
     }
 
@@ -67,6 +73,17 @@ class StoreRequest extends FormRequest
             'name' => __('staff.Name'),
             'email' => __('staff.EMail'),
             'password' => __('staff.Password'),
+            'role' => __('staff.Role'),
+        ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            '*.Illuminate\Validation\Rules\Enum' => ':attribute の値が不正です。',
         ];
     }
 

@@ -61,6 +61,25 @@
                 </div>
             </div>
             <div class="form-group">
+                <div class="control-group" id="staffName">
+                    <label class="col-sm-6 control-label">{{ __('staff.Role') }}</label>
+                    <div class="col-sm-12">
+                        <select
+                            name="role"
+                            class="form-control"
+                        >
+                            <option value="">未選択</option>
+                            @foreach(App\Enums\AdminRole::cases() as $item)
+                                <option
+                                    value="{{ $item->value }}"
+                                    {{ ($item->value === old('role')) ? 'selected' : '' }}
+                                >{{ $item->label() }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
                 <div class="control-group">
                     <label class="col-sm-6 control-label">{{ __('staff.Password') }}</label>
                     <div class="col-sm-12">

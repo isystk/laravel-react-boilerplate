@@ -127,4 +127,6 @@ return [
         'caution' => '注意事項',
     ],
 
+    'cannot be changed for yourself.' => '自分の権限は変更できません。'
+
 ];
