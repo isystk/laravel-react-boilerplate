@@ -9,9 +9,7 @@ use Tests\TestCase;
 
 class StockRepositoryTest extends TestCase
 {
-    /**
-     * 各テストの実行後にテーブルを空にする。
-     */
+
     use RefreshDatabase;
 
     private StockRepository $repository;

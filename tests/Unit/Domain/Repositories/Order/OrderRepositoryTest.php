@@ -13,9 +13,7 @@ use Tests\TestCase;
 
 class OrderRepositoryTest extends TestCase
 {
-    /**
-     * 各テストの実行後にテーブルを空にする。
-     */
+
     use RefreshDatabase;
 
     private OrderRepository $repository;

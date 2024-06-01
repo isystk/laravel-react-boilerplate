@@ -29,6 +29,7 @@ class IndexService extends BaseService
     /**
      * リクエストパラメータから検索条件に変換します。
      * @param Request $request
+     * @param int $limit
      * @return array{
      *   user_name : ?string,
      *   title : ?string,
@@ -37,9 +38,8 @@ class IndexService extends BaseService
      *   limit : int,
      * }
      */
-    public function convertConditionsFromRequest(Request $request): array
+    public function convertConditionsFromRequest(Request $request, int $limit = 20): array
     {
-        $limit = 20;
         $conditions = [
             'user_name' => null,
             'title' => null,

@@ -9,9 +9,7 @@ use Tests\TestCase;
 
 class ContactFormRepositoryTest extends TestCase
 {
-    /**
-     * 各テストの実行後にテーブルを空にする。
-     */
+
     use RefreshDatabase;
 
     private ContactFormRepository $repository;

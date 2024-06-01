@@ -1,19 +1,19 @@
 <?php
 
-namespace Domain\Repositories\ContactForm;
+namespace Tests\Unit\Services\Admin\ContactForm;
 
 use App\Domain\Entities\ContactForm;
 use App\Domain\Entities\ContactFormImage;
-use App\Domain\Repositories\ContactForm\ContactFormImageRepository;
+use App\Services\Admin\ContactForm\ShowService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class ContactFormImageRepositoryTest extends TestCase
+class ShowServiceTest extends TestCase
 {
 
     use RefreshDatabase;
 
-    private ContactFormImageRepository $repository;
+    private ShowService $service;
 
     /**
      * 各テストの実行前に起動する。
@@ -21,8 +21,7 @@ class ContactFormImageRepositoryTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-
-        $this->repository = app(ContactFormImageRepository::class);
+        $this->service = app(ShowService::class);
     }
 
     /**
@@ -30,20 +29,20 @@ class ContactFormImageRepositoryTest extends TestCase
      */
     public function testInstanceOf(): void
     {
-        $this->assertInstanceOf(ContactFormImageRepository::class, $this->repository);
+        $this->assertInstanceOf(ShowService::class, $this->service);
     }
 
     /**
-     * getByConditionsのテスト
+     * getContactFormImageのテスト
      */
-    public function testGetByConditions(): void
+    public function testGetContactFormImage(): void
     {
         /** @var ContactForm $contactForm1 */
         $contactForm1 = ContactForm::factory(['user_name' => 'user1', 'title' => 'title1'])->create();
         /** @var ContactForm $contactForm2 */
         $contactForm2 = ContactForm::factory(['user_name' => 'user2', 'title' => 'title1'])->create();
 
-        $contactFormImages = $this->repository->getByContactFormId($contactForm1->id);
+        $contactFormImages = $this->service->getContactFormImage($contactForm1->id);
         $this->assertSame(0, $contactFormImages->count(), 'データがない状態で正常に動作することを始めにテスト');
 
         /** @var ContactFormImage $expectContactForm1Image1 */
@@ -55,7 +54,7 @@ class ContactFormImageRepositoryTest extends TestCase
         $expectContactFormImageIds = [$expectContactForm1Image1->id, $expectContactForm1Image2->id];
 
         /** @var ContactFormImage $contactFormImages */
-        $contactFormImages = $this->repository->getByContactFormId($contactForm1->id);
+        $contactFormImages = $this->service->getContactFormImage($contactForm1->id);
         $contactFormImageIds = $contactFormImages->pluck('id')->all();
 
         $this->assertSame($expectContactFormImageIds, $contactFormImageIds, 'contact_form_idで検索が出来ることをテスト');

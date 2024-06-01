@@ -4,15 +4,12 @@ namespace Tests\Unit\Domain\Repositories\User;
 
 use App\Domain\Repositories\User\UserRepository;
 use App\Domain\Entities\User;
-use FontLib\TrueType\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class UserRepositoryTest extends TestCase
 {
-    /**
-     * 各テストの実行後にテーブルを空にする。
-     */
+
     use RefreshDatabase;
 
     private UserRepository $repository;

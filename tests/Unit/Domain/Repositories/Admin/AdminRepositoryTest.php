@@ -10,9 +10,7 @@ use Tests\TestCase;
 
 class AdminRepositoryTest extends TestCase
 {
-    /**
-     * 各テストの実行後にテーブルを空にする。
-     */
+
     use RefreshDatabase;
 
     private AdminRepository $repository;
