@@ -5,24 +5,23 @@ namespace App\Services\Api\Cart;
 use App\Domain\Entities\Cart;
 use App\Domain\Repositories\Cart\CartRepository;
 use App\Services\BaseService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class BaseCartService extends BaseService
 {
 
-    /**
-     * @var CartRepository
-     */
-    protected CartRepository $cartRepository;
+    private CartRepository $cartRepository;
 
+    /**
+     * Create a new controller instance.
+     *
+     * @param CartRepository $cartRepository
+     */
     public function __construct(
-        Request $request,
         CartRepository $cartRepository,
     )
     {
-        parent::__construct($request);
         $this->cartRepository = $cartRepository;
     }
 
@@ -62,6 +61,7 @@ class BaseCartService extends BaseService
     }
 
     /**
+     * カートに追加された商品を取得します。
      * @return array{
      *     carts: Collection<int, Cart>,
      *     sum_price: int,
@@ -82,4 +82,5 @@ class BaseCartService extends BaseService
         }
         return $items;
     }
+
 }

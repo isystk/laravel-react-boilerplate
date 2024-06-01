@@ -6,31 +6,31 @@ use App\Domain\Entities\ContactFormImage;
 use App\Domain\Repositories\ContactForm\ContactFormImageRepository;
 use App\Domain\Repositories\ContactForm\ContactFormRepository;
 use App\Services\BaseService;
-use Illuminate\Http\Request;
 
 class DestroyService extends BaseService
 {
-    /**
-     * @var ContactFormRepository
-     */
-    protected ContactFormRepository $contactFormRepository;
+
+    private ContactFormRepository $contactFormRepository;
+
+    private ContactFormImageRepository $contactFormImageRepository;
 
     /**
-     * @var ContactFormImageRepository
+     * Create a new controller instance.
+     *
+     * @param ContactFormRepository $contactFormRepository
+     * @param ContactFormImageRepository $contactFormImageRepository
      */
-    protected ContactFormImageRepository $contactFormImageRepository;
-
     public function __construct(
-        Request $request,
         ContactFormRepository $contactFormRepository,
         ContactFormImageRepository $contactFormImageRepository
     )
     {
-        parent::__construct($request);
         $this->contactFormRepository = $contactFormRepository;
         $this->contactFormImageRepository = $contactFormImageRepository;
     }
+
     /**
+     * お問い合わせを削除します。
      * @param int $contactFormId
      */
     public function delete(int $contactFormId): void

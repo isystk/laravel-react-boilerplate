@@ -6,7 +6,6 @@ use App\Domain\Entities\ContactForm;
 use App\Http\Controllers\BaseController;
 use App\Services\Admin\ContactForm\DestroyService;
 use App\Services\Admin\ContactForm\ShowService;
-use App\Services\Api\ContactForm\StoreService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
@@ -14,14 +13,6 @@ use Illuminate\View\View;
 
 class DetailController extends BaseController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * お問い合わせ詳細画面の初期表示

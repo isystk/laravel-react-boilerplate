@@ -12,34 +12,72 @@ use Illuminate\Http\Request;
 
 class IndexService extends BaseService
 {
-    /**
-     * @var OrderRepository
-     */
-    protected OrderRepository $orderRepository;
 
+    private OrderRepository $orderRepository;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @param OrderRepository $orderRepository
+     */
     public function __construct(
-        Request $request,
         OrderRepository $orderRepository
     )
     {
-        parent::__construct($request);
         $this->orderRepository = $orderRepository;
     }
 
     /**
-     * @return Collection<int, Order>|LengthAwarePaginator<Order>|array<string>
+     * リクエストパラメータから検索条件に変換します。
+     * @param Request $request
+     * @return array{
+     *   user_name : ?string,
+     *   order_date_from : ?string,
+     *   order_date_to : ?string,
+     *   sort_name : string,
+     *   sort_direction : 'asc' | 'desc',
+     *   limit : int,
+     * }
      */
-    public function searchOrder(): Collection|LengthAwarePaginator|array
+    public function convertConditionsFromRequest(Request $request): array
     {
         $limit = 20;
-        return $this->orderRepository->getConditionsWithUserStock([
-            'user_name' => $this->request()->name,
-            'order_date_from' => DateUtil::toCarbonImmutable($this->request()->order_date_from)?->startOfDay(),
-            'order_date_to' => DateUtil::toCarbonImmutable($this->request()->order_date_to)?->endOfDay(),
-            'sort_name' => $this->request()->sort_name ?? 'created_at',
-            'sort_direction' => $this->request()->sort_direction ?? 'desc',
+        $conditions = [
+            'user_name' => $request->name,
+            'order_date_from' => null,
+            'order_date_to' => null,
+            'sort_name' => $request->sort_name ?? 'updated_at',
+            'sort_direction' => $request->sort_direction ?? 'desc',
             'limit' => $limit,
-        ]);
+        ];
+
+        $orderDateFrom = DateUtil::toCarbonImmutable($request->order_date_from);
+        if (null !== $orderDateFrom) {
+            $conditions['order_date_from'] = $orderDateFrom->startOfDay()->format('Y-m-d');
+        }
+        $orderDateTo = DateUtil::toCarbonImmutable($request->order_date_to);
+        if (null !== $orderDateTo) {
+            $conditions['order_date_to'] = $orderDateTo->startOfDay()->format('Y-m-d');
+        }
+
+        return $conditions;
+    }
+
+    /**
+     * 注文情報を検索します。
+     * @param array{
+     *   user_name : ?string,
+     *   order_date_from : ?string,
+     *   order_date_to : ?string,
+     *   sort_name : string,
+     *   sort_direction : 'asc' | 'desc',
+     *   limit : int,
+     * } $conditions
+     * @return Collection<int, Order>|LengthAwarePaginator<Order>|array<string>
+     */
+    public function searchOrder(array $conditions): Collection|LengthAwarePaginator|array
+    {
+        return $this->orderRepository->getConditionsWithUserStock($conditions);
     }
 
 }

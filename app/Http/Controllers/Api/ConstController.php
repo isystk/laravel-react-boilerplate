@@ -5,18 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Utils\ConstUtil;
 use Illuminate\Http\JsonResponse;
 
-
 class ConstController extends BaseApiController
 {
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * 定数の一覧をJSONで返却します。

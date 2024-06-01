@@ -13,14 +13,6 @@ use Illuminate\View\View;
 
 class EditController extends BaseController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * 商品変更画面の初期表示
@@ -47,7 +39,7 @@ class EditController extends BaseController
         try {
             /** @var UpdateService $service */
             $service = app(UpdateService::class);
-            $service->update($stock->id);
+            $service->update($stock->id, $request);
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();

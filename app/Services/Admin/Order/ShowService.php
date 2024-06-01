@@ -5,26 +5,27 @@ namespace App\Services\Admin\Order;
 use App\Domain\Entities\OrderStock;
 use App\Domain\Repositories\Order\OrderStockRepository;
 use App\Services\BaseService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 class ShowService extends BaseService
 {
-    /**
-     * @var OrderStockRepository
-     */
-    protected OrderStockRepository $orderStockRepository;
 
+    private OrderStockRepository $orderStockRepository;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @param OrderStockRepository $orderStockRepository
+     */
     public function __construct(
-        Request $request,
         OrderStockRepository $orderStockRepository
     )
     {
-        parent::__construct($request);
         $this->orderStockRepository = $orderStockRepository;
     }
 
     /**
+     * 注文情報を取得します。
      * @param int $orderId
      * @return Collection<int, OrderStock>
      */

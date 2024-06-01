@@ -2,20 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Domain\Entities\Stock;
 use App\Services\Api\Shop\IndexService;
 use Illuminate\Http\JsonResponse;
 
 class ShopController extends BaseApiController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * 商品一覧のデータをJSONで返却します。

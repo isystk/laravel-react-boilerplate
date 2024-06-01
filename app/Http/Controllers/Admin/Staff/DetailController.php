@@ -13,14 +13,6 @@ use Illuminate\Support\MessageBag;
 
 class DetailController extends BaseController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * 顧客詳細画面の初期表示

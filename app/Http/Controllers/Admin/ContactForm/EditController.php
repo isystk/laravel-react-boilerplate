@@ -14,14 +14,6 @@ use Illuminate\View\View;
 
 class EditController extends BaseController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * お問い合わせ変更画面の初期表示
@@ -52,7 +44,7 @@ class EditController extends BaseController
         try {
             /** @var UpdateService $service */
             $service = app(UpdateService::class);
-            $service->update($contactForm->id);
+            $service->update($contactForm->id, $request);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();

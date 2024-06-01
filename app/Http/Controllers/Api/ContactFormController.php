@@ -9,14 +9,6 @@ use Illuminate\Support\Facades\DB;
 
 class ContactFormController extends BaseApiController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * お問い合わせ内容を登録します。
@@ -31,7 +23,7 @@ class ContactFormController extends BaseApiController
         try {
             /** @var StoreService $service */
             $service = app(StoreService::class);
-            $service->save();
+            $service->save($request);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();

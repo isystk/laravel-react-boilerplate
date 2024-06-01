@@ -12,14 +12,6 @@ use Illuminate\View\View;
 
 class CreateController extends BaseController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * 商品登録画面の初期表示
@@ -45,7 +37,7 @@ class CreateController extends BaseController
         try {
             /** @var CreateService $service */
             $service = app(CreateService::class);
-            $service->save();
+            $service->save($request);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();

@@ -3,18 +3,37 @@
 namespace App\Services\Admin\Stock;
 
 use App\Domain\Entities\Stock;
+use App\Domain\Repositories\Stock\StockRepository;
+use Illuminate\Http\Request;
 
 class DownloadPdfService extends BaseStockService
 {
+
+    private StockRepository $stockRepository;
+
     /**
+     * Create a new controller instance.
+     *
+     * @param StockRepository $stockRepository
+     */
+    public function __construct(
+        StockRepository $stockRepository
+    )
+    {
+        $this->stockRepository = $stockRepository;
+    }
+
+    /**
+     * PDFに出力する商品データを取得します。
      * @return array{
      *     0: array<string>,
      *     1: array<array<string|int>>
      * }
      */
-    public function getPdfData(): array
+    public function getPdfData(Request $request): array
     {
-        $stocks = $this->searchStock(0);
+        $conditions = $this->convertConditionsFromRequest($request, 0);
+        $stocks = $this->stockRepository->getByConditions($conditions);
 
         $headers = ['ID', '商品名', '価格'];
         $rows = [];

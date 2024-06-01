@@ -13,14 +13,6 @@ use Illuminate\Http\Request;
 
 class CartController extends BaseApiController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * マイカートのデータをJSONで返却します。

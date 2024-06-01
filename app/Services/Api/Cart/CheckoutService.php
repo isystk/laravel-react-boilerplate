@@ -13,30 +13,29 @@ use Illuminate\Support\Facades\Mail;
 
 class CheckoutService extends BaseCartService
 {
-    /**
-     * @var StockRepository
-     */
+
+    private CartRepository $cartRepository;
     protected StockRepository $stockRepository;
-
-    /**
-     * @var OrderRepository
-     */
     protected OrderRepository $orderRepository;
-
-    /**
-     * @var OrderStockRepository
-     */
     protected OrderStockRepository $orderStockRepository;
 
+    /**
+     * Create a new controller instance.
+     *
+     * @param CartRepository $cartRepository
+     * @param StockRepository $stockRepository
+     * @param OrderRepository $orderRepository
+     * @param OrderStockRepository $orderStockRepository
+     */
     public function __construct(
-        Request $request,
         CartRepository $cartRepository,
         StockRepository $stockRepository,
         OrderRepository $orderRepository,
         OrderStockRepository $orderStockRepository,
     )
     {
-        parent::__construct($request, $cartRepository);
+        parent::__construct($cartRepository);
+        $this->cartRepository = $cartRepository;
         $this->stockRepository = $stockRepository;
         $this->orderRepository = $orderRepository;
         $this->orderStockRepository = $orderStockRepository;

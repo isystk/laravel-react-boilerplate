@@ -2,41 +2,39 @@
 
 namespace App\Services\Admin\Stock;
 
-use App\Domain\Entities\Stock;
-use App\Domain\Repositories\Stock\StockRepository;
 use App\Services\BaseService;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class BaseStockService extends BaseService
 {
-    /**
-     * @var StockRepository
-     */
-    protected StockRepository $stockRepository;
-
-    public function __construct(
-        Request $request,
-        StockRepository $stockRepository
-    )
-    {
-        parent::__construct($request);
-        $this->stockRepository = $stockRepository;
-    }
 
     /**
+     * リクエストパラメータから検索条件に変換します。
+     * @param Request $request
      * @param int $limit
-     * @return Collection<int, Stock>|LengthAwarePaginator<Stock>
+     * @return array{
+     *   name : ?string,
+     *   sort_name : string,
+     *   sort_direction : 'asc' | 'desc',
+     *   limit : int,
+     * }
      */
-    public function searchStock(int $limit = 20): Collection|LengthAwarePaginator
+    public function convertConditionsFromRequest(Request $request, int $limit = 20): array
     {
-        return $this->stockRepository->getByConditions(
-            [
-                'name' => $this->request()->name,
-                'sort_name' => $this->request()->sort_name ?? 'updated_at',
-                'sort_direction' => $this->request()->sort_direction ?? 'desc',
-                'limit' => $limit,
-            ]);
+        $conditions = [
+            'name' => null,
+            'email' => null,
+            'role' => null,
+            'sort_name' => $request->sort_name ?? 'updated_at',
+            'sort_direction' => $request->sort_direction ?? 'desc',
+            'limit' => $limit,
+        ];
+
+        if (null !== $request->name) {
+            $conditions['name'] = $request->name;
+        }
+
+        return $conditions;
     }
+
 }

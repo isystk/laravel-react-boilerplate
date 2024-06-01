@@ -8,14 +8,6 @@ use Illuminate\Http\Request;
 
 class LikeController extends BaseApiController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * お気に入りデータをJSONで返却します。

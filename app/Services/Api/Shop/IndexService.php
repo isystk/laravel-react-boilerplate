@@ -6,31 +6,31 @@ use App\Domain\Entities\Stock;
 use App\Domain\Repositories\Stock\StockRepository;
 use App\Services\BaseService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Http\Request;
 
 class IndexService extends BaseService
 {
-    /**
-     * @var StockRepository
-     */
-    protected StockRepository $stockRepository;
 
+    private StockRepository $stockRepository;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @param StockRepository $stockRepository
+     */
     public function __construct(
-        Request $request,
-        StockRepository $stockRepository,
+        StockRepository $stockRepository
     )
     {
-        parent::__construct($request);
         $this->stockRepository = $stockRepository;
     }
 
     /**
+     * 商品を検索します。
      * @return LengthAwarePaginator<Stock>
      */
     public function searchStock(): LengthAwarePaginator
     {
-        $limit = 6;
-        return $this->stockRepository->getByLimit($limit);
+        return $this->stockRepository->getByLimit(6);
     }
 
 }

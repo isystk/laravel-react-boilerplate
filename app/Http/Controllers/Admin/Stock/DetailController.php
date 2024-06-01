@@ -11,14 +11,6 @@ use Illuminate\View\View;
 
 class DetailController extends BaseController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * 商品詳細画面の登録処理

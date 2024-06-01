@@ -11,33 +11,67 @@ use Illuminate\Http\Request;
 class IndexService extends BaseService
 {
 
-    /**
-     * @var UserRepository
-     */
-    protected UserRepository $userRepository;
+    private UserRepository $userRepository;
 
+    /**
+     * Create a new controller instance.
+     *
+     * @param UserRepository $userRepository
+     */
     public function __construct(
-        Request $request,
         UserRepository $userRepository
     )
     {
-        parent::__construct($request);
         $this->userRepository = $userRepository;
     }
 
     /**
+     * リクエストパラメータから検索条件に変換します。
+     * @param Request $request
+     * @param int $limit
+     * @return array{
+     *   name : ?string,
+     *   email : ?string,
+     *   sort_name : string,
+     *   sort_direction : 'asc' | 'desc',
+     *   limit : int,
+     * }
+     */
+    public function convertConditionsFromRequest(Request $request, int $limit = 20): array
+    {
+        $conditions = [
+            'name' => null,
+            'email' => null,
+            'role' => null,
+            'sort_name' => $request->sort_name ?? 'updated_at',
+            'sort_direction' => $request->sort_direction ?? 'desc',
+            'limit' => $limit,
+        ];
+
+        if (null !== $request->name) {
+            $conditions['name'] = $request->name;
+        }
+        if (null !== $request->email) {
+            $conditions['email'] = $request->email;
+        }
+
+        return $conditions;
+    }
+
+    /**
+     * ユーザーを検索します。
+     * @param array{
+     *   name : ?string,
+     *   email : ?string,
+     *   sort_name : string,
+     *   sort_direction : 'asc' | 'desc',
+     *   limit : int,
+     * } $conditions
      * @return LengthAwarePaginator<User>
      */
-    public function searchUser(): LengthAwarePaginator
+    public function searchUser(array $conditions): LengthAwarePaginator
     {
-        $limit = 20;
-        return $this->userRepository->getByConditions([
-            'name' => $this->request()->name,
-            'email' => $this->request()->email,
-            'sort_name' => $this->request()->sort_name ?? 'updated_at',
-            'sort_direction' => $this->request()->sort_direction ?? 'desc',
-            'limit' => $limit,
-        ]);
+        return $this->userRepository->getByConditions($conditions);
     }
 
 }

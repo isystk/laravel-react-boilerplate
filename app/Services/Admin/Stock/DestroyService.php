@@ -4,25 +4,26 @@ namespace App\Services\Admin\Stock;
 
 use App\Domain\Repositories\Stock\StockRepository;
 use App\Services\BaseService;
-use Illuminate\Http\Request;
 
 class DestroyService extends BaseService
 {
-    /**
-     * @var StockRepository
-     */
-    protected StockRepository $stockRepository;
 
+    private StockRepository $stockRepository;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @param StockRepository $stockRepository
+     */
     public function __construct(
-        Request $request,
         StockRepository $stockRepository
     )
     {
-        parent::__construct($request);
         $this->stockRepository = $stockRepository;
     }
 
     /**
+     * 商品を削除します。
      * @param int $id
      */
     public function delete(int $id): void

@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Admin\Stock;
 
-use App\Domain\Entities\Stock;
 use App\Http\Controllers\BaseController;
 use App\Services\Admin\Stock\DownloadCsvService;
 use App\Services\Admin\Stock\DownloadExcelService;
 use App\Services\Admin\Stock\DownloadPdfService;
 use App\Services\Admin\Stock\IndexService;
-use App\Utils\CsvUtil;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Request;
@@ -18,14 +16,6 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ListController extends BaseController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * 商品一覧画面の初期表示
@@ -37,7 +27,9 @@ class ListController extends BaseController
     {
         /** @var IndexService $service */
         $service = app(IndexService::class);
-        $stocks = $service->searchStock();
+
+        $conditions = $service->convertConditionsFromRequest($request);
+        $stocks = $service->searchStock($conditions);
 
         return view('admin.stock.index', compact('stocks', 'request'));
     }
@@ -53,7 +45,7 @@ class ListController extends BaseController
     {
         /** @var DownloadCsvService $service */
         $service = app(DownloadCsvService::class);
-        $csvData = $service->getCsvData();
+        $csvData = $service->getCsvData($request);
 
         return response()->make($csvData, 200, [
             'Content-Type' => 'text/csv',
@@ -71,7 +63,7 @@ class ListController extends BaseController
     {
         /** @var DownloadExcelService $service */
         $service = app(DownloadExcelService::class);
-        return $service->setTemplate(resource_path('excel/template.xlsx'))
+        return $service->setUp(storage_path('app/stock/excel/template.xlsx'), $request)
             ->download('stocks.xlsx');
     }
 
@@ -85,7 +77,7 @@ class ListController extends BaseController
     {
         /** @var DownloadPdfService $service */
         $service = app(DownloadPdfService::class);
-        [$headers, $rows] = $service->getPdfData();
+        [$headers, $rows] = $service->getPdfData($request);
 
         /** @var PDF $pdf */
         $pdf = app(PDF::class);

@@ -3,44 +3,41 @@
 namespace App\Services\Api\ContactForm;
 
 use App\Domain\Entities\ContactForm;
-use App\Domain\Entities\ContactFormImage;
 use App\Domain\Repositories\ContactForm\ContactFormImageRepository;
 use App\Domain\Repositories\ContactForm\ContactFormRepository;
 use App\Enums\PhotoType;
 use App\Http\Requests\Api\ContactForm\StoreRequest;
 use App\Services\BaseService;
-use App\Utils\UploadImage;
-use Illuminate\Http\Request;
 
 class StoreService extends BaseService
 {
-    /**
-     * @var ContactFormRepository
-     */
-    protected ContactFormRepository $contactFormRepository;
+
+    private ContactFormRepository $contactFormRepository;
+
+    private ContactFormImageRepository $contactFormImageRepository;
 
     /**
-     * @var ContactFormImageRepository
+     * Create a new controller instance.
+     *
+     * @param ContactFormRepository $contactFormRepository
+     * @param ContactFormImageRepository $contactFormImageRepository
      */
-    protected ContactFormImageRepository $contactFormImageRepository;
-
     public function __construct(
-        StoreRequest $storeRequest,
         ContactFormRepository $contactFormRepository,
         ContactFormImageRepository $contactFormImageRepository
     )
     {
-        parent::__construct($storeRequest);
         $this->contactFormRepository = $contactFormRepository;
         $this->contactFormImageRepository = $contactFormImageRepository;
     }
 
     /**
+     * お問い合わせを登録します。
+     * @param StoreRequest $request
      * @return ContactForm
      */
-    public function save(): ContactForm
+    public function save(StoreRequest $request): ContactForm
     {
-        $request = $this->request();
         $model = [
             'user_name' => $request->user_name,
             'title' => $request->title,

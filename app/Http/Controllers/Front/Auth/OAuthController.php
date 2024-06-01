@@ -10,14 +10,6 @@ use Laravel\Socialite\Facades\Socialite;
 
 class OAuthController extends BaseController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * 各SNSのOAuth認証画面にリダイレクトして認証
