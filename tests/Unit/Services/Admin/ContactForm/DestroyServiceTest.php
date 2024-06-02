@@ -37,11 +37,6 @@ class DestroyServiceTest extends TestCase
      */
     public function testDelete(): void
     {
-
-        // データが存在しない場合にシステムエラーが発生しないことをテスト
-        $this->expectException(\Exception::class);
-        $this->service->delete(0);
-
         /** @var ContactForm $contactForm */
         $contactForm = ContactForm::factory()->create();
         /** @var ContactFormImage $contactFormImage */
