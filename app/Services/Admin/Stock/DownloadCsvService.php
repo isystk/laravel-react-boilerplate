@@ -5,7 +5,6 @@ namespace App\Services\Admin\Stock;
 use App\Domain\Entities\Stock;
 use App\Domain\Repositories\Stock\StockRepository;
 use App\Utils\CsvUtil;
-use Illuminate\Http\Request;
 
 class DownloadCsvService extends BaseStockService
 {
@@ -25,15 +24,49 @@ class DownloadCsvService extends BaseStockService
     }
 
     /**
-     * @param Request $request
+     * 商品情報のCSVデータを取得します。
+     * @param array{
+     *   name : ?string,
+     *   sort_name : string,
+     *   sort_direction : 'asc' | 'desc',
+     *   limit : int,
+     * } $conditions
      * @return string
      */
-    public function getCsvData(Request $request): string
+    public function getCsvData(array $conditions): string
     {
-        $conditions = $this->convertConditionsFromRequest($request, 0);
-        $stocks = $this->stockRepository->getByConditions($conditions);
+        $headers = $this->getHeader();
+        $rows = $this->getDetail($conditions);
 
-        $headers = ['ID', '商品名', '価格'];
+        return CsvUtil::make($rows, $headers);
+    }
+
+    /**
+     * ヘッダーを取得します。
+     * @return array<string>
+     */
+    private function getHeader(): array
+    {
+        return [
+            'ID',
+            '商品名',
+            '価格'
+        ];
+    }
+
+    /**
+     * 詳細データを取得します。
+     * @param array{
+     *   name : ?string,
+     *   sort_name : string,
+     *   sort_direction : 'asc' | 'desc',
+     *   limit : int,
+     * } $conditions
+     * @return array<array<string>>>
+     */
+    private function getDetail(array $conditions): array
+    {
+        $stocks = $this->stockRepository->getByConditions($conditions);
         $rows = [];
         foreach ($stocks as $stock) {
             if (!$stock instanceof Stock) {
@@ -45,7 +78,6 @@ class DownloadCsvService extends BaseStockService
             $row[] = $stock->price;
             $rows[] = $row;
         }
-
-        return CsvUtil::make($rows, $headers);
+        return $rows;
     }
 }

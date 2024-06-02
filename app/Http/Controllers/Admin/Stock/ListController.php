@@ -45,7 +45,9 @@ class ListController extends BaseController
     {
         /** @var DownloadCsvService $service */
         $service = app(DownloadCsvService::class);
-        $csvData = $service->getCsvData($request);
+
+        $conditions = $service->convertConditionsFromRequest($request, 0);
+        $csvData = $service->getCsvData($conditions);
 
         return response()->make($csvData, 200, [
             'Content-Type' => 'text/csv',
@@ -77,7 +79,9 @@ class ListController extends BaseController
     {
         /** @var DownloadPdfService $service */
         $service = app(DownloadPdfService::class);
-        [$headers, $rows] = $service->getPdfData($request);
+
+        $conditions = $service->convertConditionsFromRequest($request, 0);
+        [$headers, $rows] = $service->getPdfData($conditions);
 
         /** @var PDF $pdf */
         $pdf = app(PDF::class);
