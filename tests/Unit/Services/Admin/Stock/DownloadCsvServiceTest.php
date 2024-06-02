@@ -37,7 +37,7 @@ class DownloadCsvServiceTest extends TestCase
      */
     public function testSearchStock(): void
     {
-        $output = 'storage\test\test.csv';
+        $output = 'storage/test/test.csv';
 
         $default = [
             'name' => null,
