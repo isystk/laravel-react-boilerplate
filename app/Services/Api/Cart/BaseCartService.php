@@ -3,9 +3,10 @@
 namespace App\Services\Api\Cart;
 
 use App\Domain\Entities\Cart;
+use App\Domain\Entities\Stock;
+use App\Domain\Entities\User;
 use App\Domain\Repositories\Cart\CartRepository;
 use App\Services\BaseService;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class BaseCartService extends BaseService
@@ -26,59 +27,50 @@ class BaseCartService extends BaseService
     }
 
     /**
-     * @param Cart $cart
-     * @return array<string>
-     */
-    public function searchMyCart(Cart $cart): array
-    {
-        return $this->convertToMycart($cart);
-    }
-
-    /**
-     * @param Cart $cart
-     * @return array<string, string>
-     */
-    private function convertToMycart(Cart $cart): array
-    {
-        $items = $this->getMyCart();
-        $datas = $items['carts']->map(function ($cart, $key)
-        {
-            $data = [];
-            $data['id'] = $cart->id;
-            $data['stock_id'] = $cart->stock->id;
-            $data['name'] = $cart->stock->name;
-            $data['price'] = $cart->stock->price;
-            $data['imgpath'] = $cart->stock->imgpath;
-            return $data;
-        });
-
-        return [
-            'data' => $datas,
-            'username' => Auth::user()->email,
-            'count' => $items['sum_count'],
-            'sum' => $items['sum_price'],
-        ];
-    }
-
-    /**
      * カートに追加された商品を取得します。
      * @return array{
-     *     carts: Collection<int, Cart>,
-     *     sum_price: int,
-     *     sum_count: int
+     *     data: array{
+     *         id: int,
+     *         stock_id: int,
+     *         name: string|null,
+     *         price: int|null,
+     *         quantity: int|null,
+     *         imgpath: string,
+     *     }[],
+     *     username: string,
+     *     sum: int,
+     *     count: int,
      * }
      */
-    protected function getMyCart(): array
+    public function getMyCart(): array
     {
-        $userId = Auth::id();
-        $items = [];
-        $items['carts'] = $this->cartRepository->getByUserId($userId);
+        /** @var User $user */
+        $user = Auth::user();
+        $items = [
+            'data' => [],
+            'username' => $user->email,
+            'sum' => 0,
+            'count' => 0,
+        ];
 
-        $items['sum_price'] = 0;
-        $items['sum_count'] = 0;
-        foreach ($items['carts'] as $cart) {
-            $items['sum_price'] += $cart->stock->price;
-            $items['sum_count']++;
+        $carts = $this->cartRepository->getByUserId($user->id);
+        $items['data'] = $carts->map(function ($cart) {
+            /** @var Cart $cart */
+            /** @var Stock $stock */
+            $stock = $cart->stock;
+            return [
+                'id' => $cart->id,
+                'stock_id' => $stock->id,
+                'name' => $stock->name,
+                'price' => $stock->price,
+                'quantity' => $stock->quantity,
+                'imgpath' => $stock->imgpath,
+            ];
+        })->all();
+
+        foreach ($items['data'] as $item) {
+            $items['sum'] += $item['price'];
+            $items['count']++;
         }
         return $items;
     }

@@ -66,32 +66,30 @@ class CheckoutService extends BaseCartService
 
         $order = $this->orderRepository->create([
             'user_id' => $userId,
-            'sum_price' => $items['sum_price'],
+            'sum_price' => $items['sum'],
         ]);
 
         // 発注履歴に追加する。
         $stocks = [];
-        foreach ($items['carts'] as $cart) {
-            $stock = $cart->stock;
-
+        foreach ($items['data'] as $data) {
             $orderStock = $this->orderStockRepository->create([
                 'order_id' => $order->id,
-                'stock_id' => $cart->stock_id,
-                'price' => $stock->price,
+                'stock_id' => $data['stock_id'],
+                'price' => $data['price'],
                 'quantity' => 1, // TODO 商品毎に個数をサマリーしたい
             ]);
 
             // 在庫を減らす
-            $quantity = $stock->quantity - $order->quantity;
+            $quantity = $data['quantity'] - $order->quantity;
             $this->stockRepository->update(
-                $stock->id,
+                $data['stock_id'],
                 [
                     'quantity' => $quantity,
                 ]
             );
 
             $stocks[] = (object)[
-                'name' => $stock->name,
+                'name' => $data['name'],
                 'quantity' => $orderStock->quantity,
                 'price' => $orderStock->price,
             ];
@@ -101,7 +99,7 @@ class CheckoutService extends BaseCartService
 
         $mailData = (object)[
             'name' => $user->name,
-            'amount' => $items['sum_price'],
+            'amount' => $items['sum'],
             'stocks' => $stocks,
         ];
 
