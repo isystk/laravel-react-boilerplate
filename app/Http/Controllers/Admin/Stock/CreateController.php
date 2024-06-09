@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use Throwable;
 
 class CreateController extends BaseController
 {
@@ -29,7 +30,7 @@ class CreateController extends BaseController
      *
      * @param StoreRequest $request
      * @return RedirectResponse
-     * @throws \Exception
+     * @throws Throwable
      */
     public function store(StoreRequest $request): RedirectResponse
     {
@@ -39,7 +40,7 @@ class CreateController extends BaseController
             $service = app(CreateService::class);
             $service->save($request);
             DB::commit();
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             DB::rollBack();
             throw $e;
         }

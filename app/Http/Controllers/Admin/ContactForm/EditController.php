@@ -7,13 +7,11 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\Admin\ContactForm\UpdateRequest;
 use App\Services\Admin\ContactForm\EditService;
 use App\Services\Admin\ContactForm\UpdateService;
-use Exception;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
-use Symfony\Component\HttpFoundation\Response as ResponseAlias;
+use Throwable;
 
 class EditController extends BaseController
 {
@@ -21,17 +19,13 @@ class EditController extends BaseController
     /**
      * お問い合わせ変更画面の初期表示
      *
-     * @param Request $request
      * @param ContactForm $contactForm
      * @return Response|View
      */
-    public function edit(Request $request, ContactForm $contactForm)
+    public function edit(ContactForm $contactForm)
     {
-        $user = $request->user();
-        if ('high-manager' !== $user->role) {
-            // high-managerロール以外の場合
-            return response('権限がありません', ResponseAlias::HTTP_FORBIDDEN);
-        }
+        // 上位管理者のみがアクセス可能
+        $this->authorize('high-manager');
 
         /** @var EditService $service */
         $service = app(EditService::class);
@@ -46,7 +40,7 @@ class EditController extends BaseController
      * @param UpdateRequest $request
      * @param ContactForm $contactForm
      * @return RedirectResponse
-     * @throws Exception
+     * @throws Throwable
      */
     public function update(UpdateRequest $request, ContactForm $contactForm): RedirectResponse
     {
@@ -56,7 +50,7 @@ class EditController extends BaseController
             $service = app(UpdateService::class);
             $service->update($contactForm->id, $request);
             DB::commit();
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             DB::rollBack();
             throw $e;
         }

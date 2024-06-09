@@ -11,6 +11,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Throwable;
 
 class EditController extends BaseController
 {
@@ -23,6 +24,8 @@ class EditController extends BaseController
      */
     public function edit(Admin $staff): View
     {
+        // 上位管理者のみがアクセス可能
+        $this->authorize('high-manager');
         $staff->password = Hash::make($staff->password);
         return view('admin.staff.edit', compact('staff'));
     }
@@ -33,7 +36,7 @@ class EditController extends BaseController
      * @param UpdateRequest $request
      * @param Admin $staff
      * @return RedirectResponse
-     * @throws Exception
+     * @throws Throwable
      */
     public function update(UpdateRequest $request, Admin $staff): RedirectResponse
     {
@@ -43,7 +46,7 @@ class EditController extends BaseController
             $service = app(UpdateService::class);
             $service->update($staff->id, $request);
             DB::commit();
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             DB::rollBack();
             throw $e;
         }

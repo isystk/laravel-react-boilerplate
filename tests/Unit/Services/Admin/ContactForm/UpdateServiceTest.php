@@ -73,23 +73,20 @@ class UpdateServiceTest extends TestCase
         $this->service->update($contactForm->id, $request);
 
         // データが更新されたことをテスト
-        $updatedContactForm = ContactForm::find($contactForm->id);
-        $this->assertEquals('bbb', $updatedContactForm->user_name);
-        $this->assertEquals('タイトル2', $updatedContactForm->title);
-        $this->assertEquals('bbb@test.com', $updatedContactForm->email);
-        $this->assertEquals('https://bbb.test.com', $updatedContactForm->url);
-        $this->assertEquals(Gender::Female->value, $updatedContactForm->gender);
-        $this->assertEquals(Age::Over40->value, $updatedContactForm->age);
-        $this->assertEquals('お問い合わせ2', $updatedContactForm->contact);
+        $this->assertDatabaseHas('contact_forms', ['id' => $contactForm->id, 'user_name' => 'bbb']);
+        $this->assertDatabaseHas('contact_forms', ['id' => $contactForm->id, 'title' => 'タイトル2']);
+        $this->assertDatabaseHas('contact_forms', ['id' => $contactForm->id, 'email' => 'bbb@test.com']);
+        $this->assertDatabaseHas('contact_forms', ['id' => $contactForm->id, 'url' => 'https://bbb.test.com']);
+        $this->assertDatabaseHas('contact_forms', ['id' => $contactForm->id, 'gender' => Gender::Female->value]);
+        $this->assertDatabaseHas('contact_forms', ['id' => $contactForm->id, 'age' => Age::Over40->value]);
+        $this->assertDatabaseHas('contact_forms', ['id' => $contactForm->id, 'contact' => 'お問い合わせ2']);
 
         // 元の画像が削除されたことをテスト
         $this->assertDatabaseMissing('contact_form_images', ['id' => $contactFormImage->id]);
 
         // 新しい画像が登録されたことをテスト
-        $this->assertDatabaseMissing('contact_form_images', ['id' => $contactFormImage->id]);
-        $updatedContactFormImage = ContactFormImage::where(['contact_form_id' => $contactForm->id]);
-        $fileNames = $updatedContactFormImage->pluck('file_name')->all();
-        $this->assertSame(['file2.jpg', 'file3.jpg'], $fileNames);
+        $this->assertDatabaseHas('contact_form_images', ['contact_form_id' => $contactForm->id, 'file_name' => 'file2.jpg']);
+        $this->assertDatabaseHas('contact_form_images', ['contact_form_id' => $contactForm->id, 'file_name' => 'file3.jpg']);
 
         // テスト後にファイルを削除
         Storage::delete('contact/file2.jpg');

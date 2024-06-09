@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Utils\ConstUtil;
 use Illuminate\Http\JsonResponse;
+use Throwable;
 
 class ConstController extends BaseApiController
 {
@@ -23,7 +24,7 @@ class ConstController extends BaseApiController
                     'data' => $consts,
                 ],
             ];
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             $result = [
                 'result' => false,
                 'error' => [

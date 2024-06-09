@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Domain\Entities\Cart;
 use App\Services\Api\Cart\AddCartService;
 use App\Services\Api\Cart\CheckoutService;
 use App\Services\Api\Cart\CreatePaymentService;
@@ -10,6 +9,7 @@ use App\Services\Api\Cart\DeleteCartService;
 use App\Services\Api\Cart\MyCartService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Throwable;
 
 class CartController extends BaseApiController
 {
@@ -28,7 +28,7 @@ class CartController extends BaseApiController
                 'result' => true,
                 'carts' => $carts,
             ];
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             $result = [
                 'result' => false,
                 'error' => [
@@ -61,7 +61,7 @@ class CartController extends BaseApiController
                 'message' => $message,
                 'carts' => $carts,
             ];
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             $result = [
                 'result' => false,
                 'error' => [
@@ -94,7 +94,7 @@ class CartController extends BaseApiController
                 'message' => $message,
                 'carts' => $carts,
             ];
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             $result = [
                 'result' => false,
                 'error' => [
@@ -117,7 +117,7 @@ class CartController extends BaseApiController
             /** @var CreatePaymentService $service */
             $service = app(CreatePaymentService::class);
             $result = $service->createPayment($request);
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             $result = [
                 'result' => false,
                 'error' => [
@@ -149,7 +149,7 @@ class CartController extends BaseApiController
                 'result' => true,
                 'carts' => $carts,
             ];
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             $result = [
                 'result' => false,
                 'error' => [

@@ -6,10 +6,10 @@ use App\Domain\Entities\User;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Admin\User\UpdateRequest;
 use App\Services\Admin\User\UpdateService;
-use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class EditController extends BaseController
 {
@@ -31,7 +31,7 @@ class EditController extends BaseController
      * @param UpdateRequest $request
      * @param User $user
      * @return RedirectResponse
-     * @throws Exception
+     * @throws Throwable
      */
     public function update(UpdateRequest $request, User $user): RedirectResponse
     {
@@ -41,7 +41,7 @@ class EditController extends BaseController
             $service = app(UpdateService::class);
             $service->update($user->id, $request);
             DB::commit();
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             DB::rollBack();
             throw $e;
         }

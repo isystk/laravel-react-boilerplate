@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Utils\CookieUtil;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Throwable;
 
 class LikeController extends BaseApiController
 {
@@ -24,7 +25,7 @@ class LikeController extends BaseApiController
                     'data' => $likes,
                 ],
             ];
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             $result = [
                 'result' => false,
                 'error' => [
@@ -50,7 +51,7 @@ class LikeController extends BaseApiController
             $result = [
                 'result' => true,
             ];
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             $result = [
                 'result' => false,
                 'error' => [
@@ -75,7 +76,7 @@ class LikeController extends BaseApiController
             $result = [
                 'result' => true,
             ];
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             $result = [
                 'result' => false,
                 'error' => [

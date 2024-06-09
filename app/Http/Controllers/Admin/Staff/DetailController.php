@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Admin\Staff;
 use App\Domain\Entities\Admin;
 use App\Http\Controllers\BaseController;
 use App\Services\Admin\Staff\DestroyService;
-use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\MessageBag;
+use Throwable;
 
 class DetailController extends BaseController
 {
@@ -30,7 +30,7 @@ class DetailController extends BaseController
      *
      * @param Admin $staff
      * @return RedirectResponse
-     * @throws Exception
+     * @throws Throwable
      */
     public function destroy(Admin $staff): RedirectResponse
     {
@@ -48,7 +48,7 @@ class DetailController extends BaseController
             $service = app(DestroyService::class);
             $service->delete($staff->id);
             DB::commit();
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             DB::rollBack();
             throw $e;
         }

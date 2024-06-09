@@ -6,10 +6,10 @@ use App\Domain\Entities\ContactForm;
 use App\Http\Controllers\BaseController;
 use App\Services\Admin\ContactForm\DestroyService;
 use App\Services\Admin\ContactForm\ShowService;
-use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use Throwable;
 
 class DetailController extends BaseController
 {
@@ -35,7 +35,7 @@ class DetailController extends BaseController
      *
      * @param ContactForm $contactForm
      * @return RedirectResponse
-     * @throws Exception
+     * @throws Throwable
      */
     public function destroy(ContactForm $contactForm): RedirectResponse
     {
@@ -47,7 +47,7 @@ class DetailController extends BaseController
             $service = app(DestroyService::class);
             $service->delete($contactForm->id);
             DB::commit();
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             DB::rollBack();
             throw $e;
         }

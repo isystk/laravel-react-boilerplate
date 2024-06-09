@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Services\Api\Shop\IndexService;
 use Illuminate\Http\JsonResponse;
+use Throwable;
 
 class ShopController extends BaseApiController
 {
@@ -22,7 +23,7 @@ class ShopController extends BaseApiController
                 'result' => true,
                 'stocks' => $stocks,
             ];
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             $result = [
                 'result' => false,
                 'error' => [

@@ -6,6 +6,7 @@ use App\Http\Requests\Api\ContactForm\StoreRequest;
 use App\Services\Api\ContactForm\StoreService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class ContactFormController extends BaseApiController
 {
@@ -15,7 +16,7 @@ class ContactFormController extends BaseApiController
      *
      * @param StoreRequest $request
      * @return JsonResponse
-     * @throws \Exception
+     * @throws Throwable
      */
     public function store(StoreRequest $request): JsonResponse
     {
@@ -25,7 +26,7 @@ class ContactFormController extends BaseApiController
             $service = app(StoreService::class);
             $service->save($request);
             DB::commit();
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             DB::rollBack();
             throw $e;
         }
