@@ -6,7 +6,6 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\Admin\Stock\StoreRequest;
 use App\Services\Admin\Stock\CreateService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Throwable;
@@ -17,11 +16,12 @@ class CreateController extends BaseController
     /**
      * 商品登録画面の初期表示
      *
-     * @param Request $request
      * @return View
      */
-    public function create(Request $request): View
+    public function create(): View
     {
+        // 上位管理者のみがアクセス可能
+        $this->authorize('high-manager');
         return view('admin.stock.create');
     }
 
