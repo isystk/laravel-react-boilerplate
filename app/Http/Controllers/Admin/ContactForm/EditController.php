@@ -9,8 +9,11 @@ use App\Services\Admin\ContactForm\EditService;
 use App\Services\Admin\ContactForm\UpdateService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class EditController extends BaseController
 {
@@ -18,11 +21,18 @@ class EditController extends BaseController
     /**
      * お問い合わせ変更画面の初期表示
      *
+     * @param Request $request
      * @param ContactForm $contactForm
-     * @return View
+     * @return Response|View
      */
-    public function edit(ContactForm $contactForm): View
+    public function edit(Request $request, ContactForm $contactForm)
     {
+        $user = $request->user();
+        if ('high-manager' !== $user->role) {
+            // high-managerロール以外の場合
+            return response('権限がありません', ResponseAlias::HTTP_FORBIDDEN);
+        }
+
         /** @var EditService $service */
         $service = app(EditService::class);
         $contactFormImages = $service->getContactFormImage($contactForm->id);
