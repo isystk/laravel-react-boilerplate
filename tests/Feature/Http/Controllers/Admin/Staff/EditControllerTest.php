@@ -59,7 +59,7 @@ class EditControllerTest extends TestCase
         $this->actingAs($admin1, 'admin');
 
         // manager権限ではアクセスできないことのテスト
-        $response = $this->post(route('admin.staff.update', $admin1), []);
+        $response = $this->put(route('admin.staff.update', $admin1), []);
         $response->assertForbidden();
 
         /** @var Admin $admin2 */
@@ -70,7 +70,7 @@ class EditControllerTest extends TestCase
         ]);
         $this->actingAs($admin2, 'admin');
 
-        $redirectResponse = $this->post(route('admin.staff.update', $admin1), [
+        $redirectResponse = $this->put(route('admin.staff.update', $admin1), [
             'name' => '管理者A',
             'email' => 'adminA@test.com',
             'role' => 'high-manager'

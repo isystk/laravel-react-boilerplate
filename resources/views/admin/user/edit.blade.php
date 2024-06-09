@@ -31,6 +31,7 @@
     @endif
 
     <form method="POST" enctype="multipart/form-data" action="{{ route('admin.user.update', ['user' => $user]) }}">
+        @method('PUT')
         @csrf
         <div class="card card-purple">
             <div class="card-body">

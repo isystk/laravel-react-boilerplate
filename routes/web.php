@@ -22,9 +22,9 @@ Route::prefix('admin')->group(function () {
 
         Route::get('user', [\App\Http\Controllers\Admin\User\ListController::class, 'index'])->name('admin.user');
         Route::get('user/{user}', [\App\Http\Controllers\Admin\User\DetailController::class, 'show'])->name('admin.user.show');
-        Route::post('user/{user}/destroy', [\App\Http\Controllers\Admin\User\DetailController::class, 'destroy'])->name('admin.user.destroy');
+        Route::delete('user/{user}/destroy', [\App\Http\Controllers\Admin\User\DetailController::class, 'destroy'])->name('admin.user.destroy');
         Route::get('user/{user}/edit', [\App\Http\Controllers\Admin\User\EditController::class, 'edit'])->name('admin.user.edit');
-        Route::post('user/{user}/update', [\App\Http\Controllers\Admin\User\EditController::class, 'update'])->name('admin.user.update');
+        Route::put('user/{user}/update', [\App\Http\Controllers\Admin\User\EditController::class, 'update'])->name('admin.user.update');
 
         Route::get('stock', [\App\Http\Controllers\Admin\Stock\ListController::class, 'index'])->name('admin.stock');
         Route::get('stock/downloadExcel', [\App\Http\Controllers\Admin\Stock\ListController::class, 'downloadExcel'])->name('admin.stock.downloadExcel');
@@ -33,29 +33,29 @@ Route::prefix('admin')->group(function () {
         Route::get('stock/create', [\App\Http\Controllers\Admin\Stock\CreateController::class, 'create'])->name('admin.stock.create');
         Route::post('stock/store', [\App\Http\Controllers\Admin\Stock\CreateController::class, 'store'])->name('admin.stock.store');
         Route::get('stock/{stock}', [\App\Http\Controllers\Admin\Stock\DetailController::class, 'show'])->name('admin.stock.show');
-        Route::post('stock/{stock}/destroy', [\App\Http\Controllers\Admin\Stock\DetailController::class, 'destroy'])->name('admin.stock.destroy');
+        Route::delete('stock/{stock}/destroy', [\App\Http\Controllers\Admin\Stock\DetailController::class, 'destroy'])->name('admin.stock.destroy');
         Route::get('stock/{stock}/edit', [\App\Http\Controllers\Admin\Stock\EditController::class, 'edit'])->name('admin.stock.edit');
-        Route::post('stock/{stock}/update', [\App\Http\Controllers\Admin\Stock\EditController::class, 'update'])->name('admin.stock.update');
+        Route::put('stock/{stock}/update', [\App\Http\Controllers\Admin\Stock\EditController::class, 'update'])->name('admin.stock.update');
 
         Route::get('order', [\App\Http\Controllers\Admin\Order\ListController::class, 'index'])->name('admin.order');
         Route::get('order/{order}', [\App\Http\Controllers\Admin\Order\DetailController::class, 'show'])->name('admin.order.show');
 
         Route::get('contact', [\App\Http\Controllers\Admin\ContactForm\ListController::class, 'index'])->name('admin.contact');
         Route::get('contact/{contactForm}', [\App\Http\Controllers\Admin\ContactForm\DetailController::class, 'show'])->name('admin.contact.show');
-        Route::post('contact/{contactForm}/destroy', [\App\Http\Controllers\Admin\ContactForm\DetailController::class, 'destroy'])->name('admin.contact.destroy');
+        Route::delete('contact/{contactForm}/destroy', [\App\Http\Controllers\Admin\ContactForm\DetailController::class, 'destroy'])->name('admin.contact.destroy');
         Route::get('contact/{contactForm}/edit', [\App\Http\Controllers\Admin\ContactForm\EditController::class, 'edit'])->name('admin.contact.edit');
-        Route::post('contact/{contactForm}/update', [\App\Http\Controllers\Admin\ContactForm\EditController::class, 'update'])->name('admin.contact.update');
+        Route::put('contact/{contactForm}/update', [\App\Http\Controllers\Admin\ContactForm\EditController::class, 'update'])->name('admin.contact.update');
 
         Route::get('photo', [\App\Http\Controllers\Admin\Photo\ListController::class, 'index'])->name('admin.photo');
-        Route::post('photo/destroy', [\App\Http\Controllers\Admin\Photo\ListController::class, 'destroy'])->name('admin.photo.destroy');
+        Route::delete('photo/destroy', [\App\Http\Controllers\Admin\Photo\ListController::class, 'destroy'])->name('admin.photo.destroy');
 
         Route::get('staff', [\App\Http\Controllers\Admin\Staff\ListController::class, 'index'])->name('admin.staff');
         Route::get('staff/create', [\App\Http\Controllers\Admin\Staff\CreateController::class, 'create'])->name('admin.staff.create');
         Route::post('staff/store', [\App\Http\Controllers\Admin\Staff\CreateController::class, 'store'])->name('admin.staff.store');
         Route::get('staff/{staff}', [\App\Http\Controllers\Admin\Staff\DetailController::class, 'show'])->name('admin.staff.show');
-        Route::post('staff/{staff}/destroy', [\App\Http\Controllers\Admin\Staff\DetailController::class, 'destroy'])->name('admin.staff.destroy');
+        Route::delete('staff/{staff}/destroy', [\App\Http\Controllers\Admin\Staff\DetailController::class, 'destroy'])->name('admin.staff.destroy');
         Route::get('staff/{staff}/edit', [\App\Http\Controllers\Admin\Staff\EditController::class, 'edit'])->name('admin.staff.edit');
-        Route::post('staff/{staff}/update', [\App\Http\Controllers\Admin\Staff\EditController::class, 'update'])->name('admin.staff.update');
+        Route::put('staff/{staff}/update', [\App\Http\Controllers\Admin\Staff\EditController::class, 'update'])->name('admin.staff.update');
 
     });
 });

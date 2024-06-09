@@ -83,7 +83,7 @@ class DetailControllerTest extends TestCase
         $this->actingAs($admin1, 'admin');
 
         // manager権限ではアクセスできないことのテスト
-        $response = $this->post(route('admin.contact.destroy', $contactForm));
+        $response = $this->delete(route('admin.contact.destroy', $contactForm));
         $response->assertForbidden();
 
         /** @var Admin $admin2 */
@@ -93,7 +93,7 @@ class DetailControllerTest extends TestCase
         ]);
         $this->actingAs($admin2, 'admin');
 
-        $redirectResponse = $this->post(route('admin.contact.destroy', $contactForm));
+        $redirectResponse = $this->delete(route('admin.contact.destroy', $contactForm));
         $response = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();
 

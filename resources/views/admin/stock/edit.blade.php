@@ -31,6 +31,7 @@
     @endif
 
     <form method="POST" enctype="multipart/form-data" action="{{route('admin.stock.update', ['stock' => $stock])}}">
+        @method('PUT')
         @csrf
         <div class="card card-purple">
             <div class="card-body">

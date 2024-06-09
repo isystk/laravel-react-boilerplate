@@ -51,7 +51,7 @@ class DetailControllerTest extends TestCase
         $this->actingAs($admin1, 'admin');
 
         // manager権限ではアクセスできないことのテスト
-        $response = $this->post(route('admin.staff.destroy', $admin1));
+        $response = $this->delete(route('admin.staff.destroy', $admin1));
         $response->assertForbidden();
 
         /** @var Admin $admin2 */
@@ -62,11 +62,11 @@ class DetailControllerTest extends TestCase
         $this->actingAs($admin2, 'admin');
 
         // 自分は削除できないことのテスト
-        $response = $this->post(route('admin.staff.destroy', $admin2));
+        $response = $this->delete(route('admin.staff.destroy', $admin2));
         $response->assertSessionHasErrors('errors', '自分自身を削除することはできません');
 
         // 自分以外は削除出来ることのテスト
-        $redirectResponse = $this->post(route('admin.staff.destroy', $admin1));
+        $redirectResponse = $this->delete(route('admin.staff.destroy', $admin1));
         $response = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();
 

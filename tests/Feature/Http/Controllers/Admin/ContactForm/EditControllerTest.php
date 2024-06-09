@@ -90,7 +90,7 @@ class EditControllerTest extends TestCase
         $contactFormImage = ContactFormImage::factory(['contact_form_id' => $contactForm->id, 'file_name' => 'image1.jpg'])->create();
 
         // manager権限ではアクセスできないことのテスト
-        $response = $this->post(route('admin.contact.update', $contactForm), []);
+        $response = $this->put(route('admin.contact.update', $contactForm), []);
         $response->assertForbidden();
 
         /** @var Admin $admin2 */
@@ -100,7 +100,7 @@ class EditControllerTest extends TestCase
         ]);
         $this->actingAs($admin2, 'admin');
 
-        $redirectResponse = $this->post(route('admin.contact.update', $contactForm), [
+        $redirectResponse = $this->put(route('admin.contact.update', $contactForm), [
             'user_name' => 'bbb',
             'title' => 'タイトル2',
             'email' => 'bbb@test.com',

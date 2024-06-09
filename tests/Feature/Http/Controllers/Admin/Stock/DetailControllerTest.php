@@ -67,7 +67,7 @@ class DetailControllerTest extends TestCase
         ]);
 
         // manager権限ではアクセスできないことのテスト
-        $response = $this->post(route('admin.stock.destroy', $stock));
+        $response = $this->delete(route('admin.stock.destroy', $stock));
         $response->assertForbidden();
 
         /** @var Admin $admin2 */
@@ -77,7 +77,7 @@ class DetailControllerTest extends TestCase
         ]);
         $this->actingAs($admin2, 'admin');
 
-        $redirectResponse = $this->post(route('admin.stock.destroy', $stock));
+        $redirectResponse = $this->delete(route('admin.stock.destroy', $stock));
         $response = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();
 

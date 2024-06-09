@@ -104,6 +104,7 @@
                                         method="POST"
                                         style="display: none;"
                                     >
+                                        @method('DELETE')
                                         @csrf
                                         <input type="hidden" name="fileName" value="{{ $photo['fileName'] }}"/>
                                     </form>

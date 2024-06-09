@@ -36,6 +36,7 @@
                 method="POST" enctype="multipart/form-data"
                 action="{{ route('admin.contact.update', ['contactForm' => $contactForm]) }}"
             >
+                @method('PUT')
                 @csrf
                 <div class="form-group">
                     <div class="control-group" id="userName">

@@ -76,7 +76,7 @@ class EditControllerTest extends TestCase
         ]);
 
         // manager権限ではアクセスできないことのテスト
-        $response = $this->post(route('admin.stock.update', $stock), []);
+        $response = $this->put(route('admin.stock.update', $stock), []);
         $response->assertForbidden();
 
         /** @var Admin $admin2 */
@@ -89,7 +89,7 @@ class EditControllerTest extends TestCase
 
         $image2 = UploadedFile::fake()->image('image2.jpg');
         $base64String = base64_encode(file_get_contents($image2->path()));
-        $redirectResponse = $this->post(route('admin.stock.update', $stock), [
+        $redirectResponse = $this->put(route('admin.stock.update', $stock), [
             'name' => 'bbb',
             'detail' => 'bbbの説明',
             'price' => 222,
