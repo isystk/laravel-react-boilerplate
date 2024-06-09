@@ -4,6 +4,7 @@ namespace Feature\Http\Controllers\Admin\Stock;
 
 use App\Domain\Entities\Admin;
 use App\Domain\Entities\Stock;
+use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -19,6 +20,7 @@ class EditControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->withoutMiddleware(ValidateCsrfToken::class);
     }
 
     /**

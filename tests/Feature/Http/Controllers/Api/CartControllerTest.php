@@ -5,6 +5,7 @@ namespace Feature\Http\Controllers\Api;
 use App\Domain\Entities\Cart;
 use App\Domain\Entities\Stock;
 use App\Domain\Entities\User;
+use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -18,6 +19,7 @@ class CartControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->withoutMiddleware(ValidateCsrfToken::class);
     }
 
     /**

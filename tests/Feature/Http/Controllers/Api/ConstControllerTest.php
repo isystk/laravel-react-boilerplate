@@ -3,6 +3,7 @@
 namespace Feature\Http\Controllers\Api;
 
 use App\Utils\ConstUtil;
+use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -16,6 +17,7 @@ class ConstControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->withoutMiddleware(ValidateCsrfToken::class);
     }
 
     /**
