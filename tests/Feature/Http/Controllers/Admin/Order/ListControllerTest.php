@@ -55,7 +55,10 @@ class ListControllerTest extends TestCase
         /** @var Order $order2 */
         $order2 = Order::factory(['user_id' => $user2->id, 'created_at' => '2024-06-01'])->create();
         OrderStock::factory(['order_id' => $order2->id, 'stock_id' => $stock3->id])->create();
-        $response = $this->get(route('admin.order'));
+        $response = $this->get(route('admin.order'), [
+            'sort_name' => 'created_at',
+            'sort_direction' => 'desc',
+        ]);
         $response->assertSuccessful();
         $response->assertSeeInOrder(['user2', 'user1']);
     }

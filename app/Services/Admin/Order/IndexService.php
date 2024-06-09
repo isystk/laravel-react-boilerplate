@@ -46,7 +46,7 @@ class IndexService extends BaseService
             'user_name' => $request->name,
             'order_date_from' => null,
             'order_date_to' => null,
-            'sort_name' => $request->sort_name ?? 'created_at',
+            'sort_name' => $request->sort_name ?? 'updated_at',
             'sort_direction' => $request->sort_direction ?? 'desc',
             'limit' => $limit,
         ];
