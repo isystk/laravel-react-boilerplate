@@ -38,11 +38,11 @@ class ListControllerTest extends TestCase
         $this->actingAs($admin, 'admin');
 
         $response = $this->get(route('admin.stock'), [
-            'sort_name' => 'created_at',
-            'sort_direction' => 'desc',
+            'sort_name' => 'id',
+            'sort_direction' => 'asc',
         ]);
         $response->assertSuccessful();
-        $response->assertSeeInOrder(['stock2', 'stock1']);
+        $response->assertSeeInOrder(['stock1', 'stock2']);
     }
 
 }

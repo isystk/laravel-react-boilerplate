@@ -56,11 +56,11 @@ class ListControllerTest extends TestCase
         $order2 = Order::factory(['user_id' => $user2->id, 'created_at' => '2024-06-01'])->create();
         OrderStock::factory(['order_id' => $order2->id, 'stock_id' => $stock3->id])->create();
         $response = $this->get(route('admin.order'), [
-            'sort_name' => 'created_at',
-            'sort_direction' => 'desc',
+            'sort_name' => 'id',
+            'sort_direction' => 'asc',
         ]);
         $response->assertSuccessful();
-        $response->assertSeeInOrder(['user2', 'user1']);
+        $response->assertSeeInOrder(['user1', 'user2']);
     }
 
 }
