@@ -11,57 +11,65 @@ use Illuminate\Http\Request;
 
 class IndexService extends BaseService
 {
-    /**
-     * @var ContactFormRepository
-     */
-    protected ContactFormRepository $contactFormRepository;
+    private ContactFormRepository $contactFormRepository;
 
+    /**
+     * Create a new controller instance.
+     *
+     * @param ContactFormRepository $contactFormRepository
+     */
     public function __construct(
-        Request $request,
         ContactFormRepository $contactFormRepository
     )
     {
-        parent::__construct($request);
         $this->contactFormRepository = $contactFormRepository;
     }
 
     /**
-     * @return Collection<int, ContactForm>|LengthAwarePaginator<ContactForm>|array<string>
-     */
-    public function searchContactForm(): Collection|LengthAwarePaginator|array
-    {
-        $conditions = $this->convertConditionsFromRequest();
-        return $this->contactFormRepository->getByConditions($conditions);
-    }
-
-    /**
      * リクエストパラメータから検索条件に変換します。
+     * @param Request $request
+     * @param int $limit
      * @return array{
      *   user_name : ?string,
      *   title : ?string,
-     *   sort_name : ?string,
-     *   sort_direction : 'asc' | 'desc' | null,
+     *   sort_name : string,
+     *   sort_direction : 'asc' | 'desc',
      *   limit : int,
      * }
      */
-    private function convertConditionsFromRequest(): array
+    public function convertConditionsFromRequest(Request $request, int $limit = 20): array
     {
-        $limit = 20;
         $conditions = [
             'user_name' => null,
             'title' => null,
-            'sort_name' => $this->request()->sort_name ?? 'updated_at',
-            'sort_direction' => $this->request()->sort_direction ?? 'desc',
+            'sort_name' => $request->sort_name ?? 'updated_at',
+            'sort_direction' => $request->sort_direction ?? 'desc',
             'limit' => $limit,
         ];
 
-        if (null !== $this->request()['userName']) {
-            $conditions['user_name'] = $this->request()['userName'];
+        if (null !== $request->userName) {
+            $conditions['user_name'] = $request->userName;
         }
-        if (null !== $this->request()['title']) {
-            $conditions['title'] = $this->request()['title'];
+        if (null !== $request->title) {
+            $conditions['title'] = $request->title;
         }
 
         return $conditions;
+    }
+
+    /**
+     * お問い合わせを検索します。
+     * @param array{
+     *   user_name : ?string,
+     *   title : ?string,
+     *   sort_name : string,
+     *   sort_direction : 'asc' | 'desc',
+     *   limit : int,
+     * } $conditions
+     * @return Collection<int, ContactForm>|LengthAwarePaginator<ContactForm>|array<string>
+     */
+    public function searchContactForm(array $conditions): Collection|LengthAwarePaginator|array
+    {
+        return $this->contactFormRepository->getByConditions($conditions);
     }
 }

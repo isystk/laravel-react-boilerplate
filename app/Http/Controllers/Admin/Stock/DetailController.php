@@ -8,17 +8,10 @@ use App\Services\Admin\Stock\DestroyService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use Throwable;
 
 class DetailController extends BaseController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * 商品詳細画面の登録処理
@@ -36,7 +29,7 @@ class DetailController extends BaseController
      *
      * @param Stock $stock
      * @return RedirectResponse
-     * @throws \Exception
+     * @throws Throwable
      */
     public function destroy(Stock $stock): RedirectResponse
     {
@@ -48,7 +41,7 @@ class DetailController extends BaseController
             $service = app(DestroyService::class);
             $service->delete($stock->id);
             DB::commit();
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             DB::rollBack();
             throw $e;
         }

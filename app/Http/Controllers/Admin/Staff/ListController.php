@@ -11,14 +11,6 @@ use Illuminate\Http\Request;
 
 class ListController extends BaseController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * 顧客一覧画面の初期表示
@@ -30,7 +22,9 @@ class ListController extends BaseController
     {
         /** @var IndexService $service */
         $service = app(IndexService::class);
-        $staffs = $service->searchStaff();
+
+        $conditions = $service->convertConditionsFromRequest($request);
+        $staffs = $service->searchStaff($conditions);
 
         return view('admin.staff.index', compact('staffs', 'request'));
     }

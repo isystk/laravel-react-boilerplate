@@ -9,14 +9,6 @@ use Illuminate\View\View;
 
 class DetailController extends BaseController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * 注文履歴詳細画面の初期表示

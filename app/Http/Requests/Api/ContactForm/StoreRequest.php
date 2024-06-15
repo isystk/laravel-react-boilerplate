@@ -2,8 +2,11 @@
 
 namespace App\Http\Requests\Api\ContactForm;
 
+use App\Enums\Age;
+use App\Enums\Gender;
 use App\Utils\UploadImage;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 
 class StoreRequest extends FormRequest
 {
@@ -47,7 +50,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         $maxlength = config('const.maxlength.contact_forms');
-        $rules = [
+        return [
             'user_name' => [
                 'required',
                 'string',
@@ -65,9 +68,11 @@ class StoreRequest extends FormRequest
             ],
             'gender' => [
                 'required',
+                new Enum(Gender::class),
             ],
             'age' => [
-                'required'
+                'required',
+                new Enum(Age::class),
             ],
             'contact' => [
                 'required',
@@ -78,16 +83,10 @@ class StoreRequest extends FormRequest
                 'url',
                 'nullable',
             ],
+            'caution' => [
+                'required',
+            ],
         ];
-
-        // $id = $this->get('id');
-        $contact = $this->route('contact');
-        if (empty($contact)) {
-            // store
-            $rules['caution'] = 'required';
-        }
-
-        return $rules;
     }
 
     /**
@@ -95,7 +94,7 @@ class StoreRequest extends FormRequest
      *
      * @return array<string, string>
      */
-    public function attributes()
+    public function attributes(): array
     {
         return [
             'user_name' => __('contact.Name'),
@@ -106,6 +105,16 @@ class StoreRequest extends FormRequest
             'contact' => __('contact.Contact'),
             'url' => __('contact.URL'),
             'imageFile' => __('contact.Image'),
+        ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            '*.Illuminate\Validation\Rules\Enum' => ':attributeの値が不正です。',
         ];
     }
 

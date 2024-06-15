@@ -26,10 +26,6 @@ class CsvUtil
         rewind($stream);
         $csv = str_replace(PHP_EOL, "\r\n", stream_get_contents($stream));
         $csv = "\xEF\xBB\xBF" . $csv; // BOM 追加
-        $csv = mb_convert_encoding($csv, 'SJIS-win', 'UTF-8');
-        if (!is_string($csv)) {
-            throw new \RuntimeException('An unexpected error occurred.');
-        }
         return $csv;
     }
 

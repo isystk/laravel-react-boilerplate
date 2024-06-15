@@ -4,26 +4,25 @@ namespace App\Services\Admin\Staff;
 
 use App\Domain\Repositories\Admin\AdminRepository;
 use App\Services\BaseService;
-use Illuminate\Http\Request;
 
 class DestroyService extends BaseService
 {
+    private AdminRepository $adminRepository;
 
     /**
-     * @var AdminRepository
+     * Create a new controller instance.
+     *
+     * @param AdminRepository $adminRepository
      */
-    protected AdminRepository $adminRepository;
-
     public function __construct(
-        Request $request,
         AdminRepository $adminRepository
     )
     {
-        parent::__construct($request);
         $this->adminRepository = $adminRepository;
     }
 
     /**
+     * 管理者を削除します。
      * @param int $id
      */
     public function delete(int $id): void

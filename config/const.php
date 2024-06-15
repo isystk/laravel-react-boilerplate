@@ -8,13 +8,13 @@ return [
         ],
         'users' => [
             'name' => 50,
-            'email' => 255,
-            'password' => 8,
+            'email' => 64,
+            'password' => 12,
         ],
         'admins' => [
             'name' => 50,
-            'email' => 255,
-            'password' => 255,
+            'email' => 64,
+            'password' => 12,
         ],
         'stocks' => [
             'name' => 50,
@@ -31,7 +31,7 @@ return [
         'contact_forms' => [
             'user_name' => 50,
             'title' => 50,
-            'email' => 255,
+            'email' => 64,
             'url' => 255,
             'contact' => 200
         ],

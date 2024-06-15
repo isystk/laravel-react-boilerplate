@@ -4,19 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Utils\ConstUtil;
 use Illuminate\Http\JsonResponse;
-
+use Throwable;
 
 class ConstController extends BaseApiController
 {
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * 定数の一覧をJSONで返却します。
@@ -33,7 +24,7 @@ class ConstController extends BaseApiController
                     'data' => $consts,
                 ],
             ];
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             $result = [
                 'result' => false,
                 'error' => [

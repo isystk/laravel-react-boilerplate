@@ -85,7 +85,7 @@ class UpdateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            '*.Illuminate\Validation\Rules\Enum' => ':attribute の値が不正です。',
+            '*.Illuminate\Validation\Rules\Enum' => ':attributeの値が不正です。',
         ];
     }
 

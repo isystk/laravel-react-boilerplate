@@ -17,7 +17,6 @@ class CreateNewUserTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-
         $this->withoutMiddleware(ValidateCsrfToken::class);
     }
 

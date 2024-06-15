@@ -6,25 +6,25 @@ use App\Domain\Entities\ContactFormImage;
 use App\Domain\Repositories\ContactForm\ContactFormImageRepository;
 use App\Services\BaseService;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
 
 class ShowService extends BaseService
 {
-    /**
-     * @var ContactFormImageRepository
-     */
-    protected ContactFormImageRepository $contactFormImageRepository;
+    private ContactFormImageRepository $contactFormImageRepository;
 
+    /**
+     * Create a new controller instance.
+     *
+     * @param ContactFormImageRepository $contactFormImageRepository
+     */
     public function __construct(
-        Request $request,
         ContactFormImageRepository $contactFormImageRepository
     )
     {
-        parent::__construct($request);
         $this->contactFormImageRepository = $contactFormImageRepository;
     }
 
     /**
+     * お問い合わせを取得します。
      * @param int $contactFormId
      * @return Collection<int, ContactFormImage>
      */

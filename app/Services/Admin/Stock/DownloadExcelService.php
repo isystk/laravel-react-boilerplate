@@ -3,8 +3,10 @@
 namespace App\Services\Admin\Stock;
 
 use App\Domain\Entities\Stock;
+use App\Domain\Repositories\Stock\StockRepository;
 use App\Utils\ExtendWorksheets;
 use Closure;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
@@ -13,22 +15,42 @@ use Maatwebsite\Excel\Events\BeforeExport;
 use Maatwebsite\Excel\Events\BeforeWriting;
 use Maatwebsite\Excel\Excel;
 use Maatwebsite\Excel\Files\LocalTemporaryFile;
+use RuntimeException;
 
 class DownloadExcelService extends BaseStockService implements FromCollection, WithEvents
 {
     use Exportable;
 
-    private ?string $template_file = null;
+    private StockRepository $stockRepository;
+
+    private string $templateFile;
+    private Request $request;
 
     /**
-     * @param string $template_file
+     * Create a new controller instance.
+     *
+     * @param StockRepository $stockRepository
+     */
+    public function __construct(
+        StockRepository $stockRepository
+    )
+    {
+        $this->stockRepository = $stockRepository;
+    }
+
+    /**
+     * Setup
+     * @param string $templateFile
+     * @param Request $request
      * @return $this
      */
-    public function setTemplate(string $template_file): static
+    public function setUp(string $templateFile, Request $request): static
     {
-        if (file_exists($template_file)) {
-            $this->template_file = $template_file;
+        if (!file_exists($templateFile)) {
+            throw new RuntimeException('The template file does not exist.');
         }
+        $this->templateFile = $templateFile;
+        $this->request = $request;
         return $this;
     }
 
@@ -50,10 +72,7 @@ class DownloadExcelService extends BaseStockService implements FromCollection, W
             BeforeExport::class => function (BeforeExport $event)
             {
                 // テンプレート読み込み
-                if (is_null($this->template_file)) {
-                    return;
-                }
-                $event->writer->reopen(new LocalTemporaryFile($this->template_file), Excel::XLSX);
+                $event->writer->reopen(new LocalTemporaryFile($this->templateFile), Excel::XLSX);
                 $event->writer->getSheetByIndex(0);
                 return $event->getWriter()->getSheetByIndex(0);
             },
@@ -66,7 +85,9 @@ class DownloadExcelService extends BaseStockService implements FromCollection, W
                 // 独自ワークシートクラス
                 $esh = new ExtendWorksheets($event->writer->getSheetByIndex(0)->getDelegate());
 
-                $stocks = $this->searchStock(0);
+                $conditions = $this->convertConditionsFromRequest($this->request, 0);
+                $stocks = $this->stockRepository->getByConditions($conditions);
+
                 $datas = [];
                 foreach ($stocks as $key => $stock) {
                     if (!$stock instanceof Stock) {

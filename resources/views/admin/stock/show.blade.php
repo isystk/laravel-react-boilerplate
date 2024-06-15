@@ -60,23 +60,17 @@
         </div>
         <div class="card-footer text-center position-relative">
             <div class="d-inline-block">
-                <form
-                    method="GET"
-                    action="{{ route('admin.stock.edit', ['stock' => $stock ]) }}"
-                >
-                    @csrf
-                    <div class="mx-auto">
-                        <button
-                            class="btn btn-info"
-                            type="submit"
-                            @cannot('high-manager')
-                                disabled="disabled"
-                            @endcan
-                        >
-                            {{ __('common.Change') }}
-                        </button>
-                    </div>
-                </form>
+                <div class="mx-auto">
+                    <a
+                        class="btn btn-info"
+                        href="{{ route('admin.stock.edit', ['stock' => $stock ]) }}"
+                        @cannot('high-manager')
+                            disabled="disabled"
+                        @endcan
+                    >
+                        {{ __('common.Change') }}
+                    </a>
+                </div>
             </div>
             <div class="d-inline-block position-absolute" style="right: 30px;">
                 <form
@@ -84,6 +78,7 @@
                     action="{{ route('admin.stock.destroy', ['stock' => $stock ]) }}"
                     id="delete_{{ $stock->id }}"
                 >
+                    @method('DELETE')
                     @csrf
                     <button
                         class="btn btn-danger js-deleteBtn"

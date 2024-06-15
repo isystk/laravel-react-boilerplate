@@ -12,34 +12,32 @@ use App\Services\BaseService;
 
 class UpdateService extends BaseService
 {
-    /**
-     * @var ContactFormRepository
-     */
-    protected ContactFormRepository $contactFormRepository;
+    private ContactFormRepository $contactFormRepository;
+    private ContactFormImageRepository $contactFormImageRepository;
 
     /**
-     * @var ContactFormImageRepository
+     * Create a new controller instance.
+     *
+     * @param ContactFormRepository $contactFormRepository
+     * @param ContactFormImageRepository $contactFormImageRepository
      */
-    protected ContactFormImageRepository $contactFormImageRepository;
-
     public function __construct(
-        UpdateRequest $request,
         ContactFormRepository $contactFormRepository,
         ContactFormImageRepository $contactFormImageRepository
     )
     {
-        parent::__construct($request);
         $this->contactFormRepository = $contactFormRepository;
         $this->contactFormImageRepository = $contactFormImageRepository;
     }
 
     /**
+     * お問い合わせを更新します。
      * @param int $contactFormId
+     * @param UpdateRequest $request
      * @return ContactForm
      */
-    public function update(int $contactFormId): ContactForm
+    public function update(int $contactFormId, UpdateRequest $request): ContactForm
     {
-        $request = $this->request();
         $model = [
             'user_name' => $request->user_name,
             'title' => $request->title,

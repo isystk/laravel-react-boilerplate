@@ -36,23 +36,17 @@
         </div>
         <div class="card-footer text-center position-relative">
             <div class="d-inline-block">
-                <form
-                    method="GET"
-                    action="{{ route('admin.user.edit', ['user' => $user ]) }}"
-                >
-                    @csrf
-                    <div class="mx-auto">
-                        <button
-                            class="btn btn-info"
-                            type="submit"
-                            @cannot('high-manager')
-                                disabled="disabled"
-                            @endcan
-                        >
-                            {{ __('common.Change') }}
-                        </button>
-                    </div>
-                </form>
+                <div class="mx-auto">
+                    <a
+                        class="btn btn-info"
+                        href="{{ route('admin.user.edit', ['user' => $user ]) }}"
+                        @cannot('high-manager')
+                            disabled="disabled"
+                        @endcan
+                    >
+                        {{ __('common.Change') }}
+                    </a>
+                </div>
             </div>
             <div class="d-inline-block position-absolute" style="right: 30px;">
                 <form
@@ -60,6 +54,7 @@
                     action="{{ route('admin.user.destroy', ['user' => $user ]) }}"
                     id="delete_{{ $user->id }}"
                 >
+                    @method('DELETE')
                     @csrf
                     <button
                         class="btn btn-danger js-deleteBtn"

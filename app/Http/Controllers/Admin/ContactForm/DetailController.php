@@ -6,22 +6,13 @@ use App\Domain\Entities\ContactForm;
 use App\Http\Controllers\BaseController;
 use App\Services\Admin\ContactForm\DestroyService;
 use App\Services\Admin\ContactForm\ShowService;
-use App\Services\Api\ContactForm\StoreService;
-use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use Throwable;
 
 class DetailController extends BaseController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * お問い合わせ詳細画面の初期表示
@@ -44,7 +35,7 @@ class DetailController extends BaseController
      *
      * @param ContactForm $contactForm
      * @return RedirectResponse
-     * @throws Exception
+     * @throws Throwable
      */
     public function destroy(ContactForm $contactForm): RedirectResponse
     {
@@ -56,7 +47,7 @@ class DetailController extends BaseController
             $service = app(DestroyService::class);
             $service->delete($contactForm->id);
             DB::commit();
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             DB::rollBack();
             throw $e;
         }

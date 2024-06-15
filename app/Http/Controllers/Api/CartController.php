@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Domain\Entities\Cart;
 use App\Services\Api\Cart\AddCartService;
 use App\Services\Api\Cart\CheckoutService;
 use App\Services\Api\Cart\CreatePaymentService;
@@ -10,34 +9,26 @@ use App\Services\Api\Cart\DeleteCartService;
 use App\Services\Api\Cart\MyCartService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Throwable;
 
 class CartController extends BaseApiController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * マイカートのデータをJSONで返却します。
-     * @param Cart $cart
      * @return JsonResponse
      */
-    public function myCart(Cart $cart): JsonResponse
+    public function myCart(): JsonResponse
     {
         try {
             /** @var MyCartService $service */
             $service = app(MyCartService::class);
-            $carts = $service->searchMyCart($cart);
+            $carts = $service->getMyCart();
             $result = [
                 'result' => true,
                 'carts' => $carts,
             ];
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             $result = [
                 'result' => false,
                 'error' => [
@@ -52,10 +43,9 @@ class CartController extends BaseApiController
     /**
      * マイカートに商品を追加します。
      * @param Request $request
-     * @param Cart $cart
      * @return JsonResponse
      */
-    public function addMycart(Request $request, Cart $cart): JsonResponse
+    public function addMycart(Request $request): JsonResponse
     {
         try {
             /** @var AddCartService $service */
@@ -64,14 +54,14 @@ class CartController extends BaseApiController
             $message = $service->addMyCart($request->stock_id);
 
             //追加後の情報を取得
-            $carts = $service->searchMyCart($cart);
+            $carts = $service->getMyCart();
 
             $result = [
                 'result' => true,
                 'message' => $message,
                 'carts' => $carts,
             ];
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             $result = [
                 'result' => false,
                 'error' => [
@@ -86,10 +76,9 @@ class CartController extends BaseApiController
     /**
      * マイカートから商品を削除します。
      * @param Request $request
-     * @param Cart $cart
      * @return JsonResponse
      */
-    public function deleteCart(Request $request, Cart $cart): JsonResponse
+    public function deleteCart(Request $request): JsonResponse
     {
         try {
             /** @var DeleteCartService $service */
@@ -98,14 +87,14 @@ class CartController extends BaseApiController
             $message =$service->deleteMyCart($request->cart_id);
 
             //追加後の情報を取得
-            $carts = $service->searchMyCart($cart);
+            $carts = $service->getMyCart();
 
             $result = [
                 'result' => true,
                 'message' => $message,
                 'carts' => $carts,
             ];
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             $result = [
                 'result' => false,
                 'error' => [
@@ -128,7 +117,7 @@ class CartController extends BaseApiController
             /** @var CreatePaymentService $service */
             $service = app(CreatePaymentService::class);
             $result = $service->createPayment($request);
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             $result = [
                 'result' => false,
                 'error' => [
@@ -143,25 +132,24 @@ class CartController extends BaseApiController
     /**
      * マイカートのデータをStripeで決済処理します。
      * @param Request $request
-     * @param Cart $cart
      * @return JsonResponse
      */
-    public function checkout(Request $request, Cart $cart): JsonResponse
+    public function checkout(Request $request): JsonResponse
     {
         try {
             /** @var CheckoutService $service */
             $service = app(CheckoutService::class);
             // 支払い処理の実行
-            $service->checkout($request);
+            $service->checkout($request->stripeEmail, $request->stripeToken);
 
             // 削除後の情報を取得
-            $carts = $service->searchMyCart($cart);
+            $carts = $service->getMyCart();
 
             $result = [
                 'result' => true,
                 'carts' => $carts,
             ];
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             $result = [
                 'result' => false,
                 'error' => [

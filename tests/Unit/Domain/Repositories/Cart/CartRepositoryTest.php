@@ -11,9 +11,7 @@ use Tests\TestCase;
 
 class CartRepositoryTest extends TestCase
 {
-    /**
-     * 各テストの実行後にテーブルを空にする。
-     */
+
     use RefreshDatabase;
 
     private CartRepository $repository;

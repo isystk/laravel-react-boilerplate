@@ -11,14 +11,6 @@ use Illuminate\View\View;
 
 class ListController extends BaseController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * 画像一覧画面の初期表示
@@ -30,7 +22,9 @@ class ListController extends BaseController
     {
         /** @var IndexService $service */
         $service = app(IndexService::class);
-        $photos = $service->searchPhotoList();
+
+        $conditions = $service->convertConditionsFromRequest($request);
+        $photos = $service->searchPhotoList($conditions);
 
         return view('admin.photo.index', compact('photos', 'request'));
     }

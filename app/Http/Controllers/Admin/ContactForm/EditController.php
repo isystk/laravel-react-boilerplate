@@ -7,30 +7,26 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\Admin\ContactForm\UpdateRequest;
 use App\Services\Admin\ContactForm\EditService;
 use App\Services\Admin\ContactForm\UpdateService;
-use Exception;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use Throwable;
 
 class EditController extends BaseController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * お問い合わせ変更画面の初期表示
      *
      * @param ContactForm $contactForm
-     * @return View
+     * @return Response|View
      */
-    public function edit(ContactForm $contactForm): View
+    public function edit(ContactForm $contactForm)
     {
+        // 上位管理者のみがアクセス可能
+        $this->authorize('high-manager');
+
         /** @var EditService $service */
         $service = app(EditService::class);
         $contactFormImages = $service->getContactFormImage($contactForm->id);
@@ -44,7 +40,7 @@ class EditController extends BaseController
      * @param UpdateRequest $request
      * @param ContactForm $contactForm
      * @return RedirectResponse
-     * @throws Exception
+     * @throws Throwable
      */
     public function update(UpdateRequest $request, ContactForm $contactForm): RedirectResponse
     {
@@ -52,9 +48,9 @@ class EditController extends BaseController
         try {
             /** @var UpdateService $service */
             $service = app(UpdateService::class);
-            $service->update($contactForm->id);
+            $service->update($contactForm->id, $request);
             DB::commit();
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             DB::rollBack();
             throw $e;
         }

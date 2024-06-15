@@ -5,17 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Utils\CookieUtil;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Throwable;
 
 class LikeController extends BaseApiController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * お気に入りデータをJSONで返却します。
@@ -32,7 +25,7 @@ class LikeController extends BaseApiController
                     'data' => $likes,
                 ],
             ];
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             $result = [
                 'result' => false,
                 'error' => [
@@ -58,7 +51,7 @@ class LikeController extends BaseApiController
             $result = [
                 'result' => true,
             ];
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             $result = [
                 'result' => false,
                 'error' => [
@@ -83,7 +76,7 @@ class LikeController extends BaseApiController
             $result = [
                 'result' => true,
             ];
-        } catch (\Exception $e) {
+        } catch (Throwable $e) {
             $result = [
                 'result' => false,
                 'error' => [

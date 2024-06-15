@@ -9,14 +9,6 @@ use Illuminate\View\View;
 
 class ListController extends BaseController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * お問い合わせ一覧の初期表示
@@ -28,7 +20,9 @@ class ListController extends BaseController
     {
         /** @var IndexService $service */
         $service = app(IndexService::class);
-        $contactForms = $service->searchContactForm();
+
+        $conditions = $service->convertConditionsFromRequest($request);
+        $contactForms = $service->searchContactForm($conditions);
 
         return view('admin.contact.index', compact('contactForms', 'request'));
     }

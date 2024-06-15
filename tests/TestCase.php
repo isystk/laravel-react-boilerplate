@@ -73,14 +73,21 @@ abstract class TestCase extends BaseTestCase
         if ($csvFile === false) {
             return $rows;
         }
-        $bom = fread($csvFile, 3);
-        if ($bom !== "\xEF\xBB\xBF") {
-            // 先頭にBOMがついている場合は削除
-            fseek($csvFile, 0);
+
+        // SJIS-winからUTF-8にエンコード
+//        stream_filter_append($csvFile, 'convert.iconv.SJIS-win/UTF-8');
+        // BOMを削除する
+        $bom = pack('H*', 'EFBBBF');
+
+        $first3bytes = fread($csvFile, 3);
+        if ($first3bytes !== $bom) {
+            rewind($csvFile);
         }
+
         while (($row = fgetcsv($csvFile)) !== false) {
             $rows[] = $row;
         }
+
         fclose($csvFile);
         return $rows;
     }

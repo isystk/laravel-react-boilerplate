@@ -4,37 +4,38 @@ namespace App\Services\Admin\User;
 
 use App\Domain\Entities\User;
 use App\Domain\Repositories\User\UserRepository;
+use App\Http\Requests\Admin\User\UpdateRequest;
 use App\Services\BaseService;
-use Illuminate\Http\Request;
 
 class UpdateService extends BaseService
 {
+    private UserRepository $userRepository;
 
     /**
-     * @var UserRepository
+     * Create a new controller instance.
+     *
+     * @param UserRepository $userRepository
      */
-    protected UserRepository $userRepository;
-
     public function __construct(
-        Request $request,
         UserRepository $userRepository
     )
     {
-        parent::__construct($request);
         $this->userRepository = $userRepository;
     }
 
     /**
+     * ユーザーを更新します。
      * @param int $userId
+     * @param UpdateRequest $request
      * @return User
      */
-    public function update(int $userId): User
+    public function update(int $userId, UpdateRequest $request): User
     {
         return $this->userRepository->update(
             $userId,
             [
-                'name' => $this->request()->input('name'),
-                'email' => $this->request()->input('email'),
+                'name' => $request->name,
+                'email' => $request->email,
             ]
         );
     }
