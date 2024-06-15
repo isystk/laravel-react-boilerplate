@@ -37,10 +37,7 @@ class ListControllerTest extends TestCase
         ])->create();
         $this->actingAs($admin, 'admin');
 
-        $response = $this->get(route('admin.stock'), [
-            'sort_name' => 'id',
-            'sort_direction' => 'asc',
-        ]);
+        $response = $this->get(route('admin.stock') . '?sort_name=id&sort_direction=asc');
         $response->assertSuccessful();
         $response->assertSeeInOrder(['stock1', 'stock2']);
     }
