@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin\Stock;
 
+use App\Rules\Base64ImageRule;
 use App\Utils\UploadImage;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -59,16 +60,16 @@ class StoreRequest extends FormRequest
                 'required',
                 'numeric',
             ],
-            'imageFile' => [
-                'required',
-                'image',
-                'mimes:jpeg,png',
-                'max:10000',  // 10MB
-                'dimensions:max_width=1200,max_height=1200',
-            ],
+//            'imageFile' => [
+//                'required',
+//                'image',
+//                'mimes:jpeg,png',
+//                'max:10000',  // 10MB
+//                'dimensions:max_width=1200,max_height=1200',
+//            ],
             'imageBase64' => [
                 'nullable',
-                'string',
+                new Base64ImageRule(['jpeg']),
             ],
             // 画像データをbase64で文字列としても受け入れる。バリデーションルールはimageFileが適用される。
             'fileName' => [
@@ -91,7 +92,7 @@ class StoreRequest extends FormRequest
             'price' => __('stock.Price'),
             'detail' => __('stock.Detail'),
             'quantity' => __('stock.Quantity'),
-            'imageFile' => __('stock.Image'),
+            'imageBase64' => __('stock.Image'),
         ];
     }
 

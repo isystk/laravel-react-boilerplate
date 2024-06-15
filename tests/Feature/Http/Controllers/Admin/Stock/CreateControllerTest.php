@@ -73,7 +73,7 @@ class CreateControllerTest extends TestCase
         $this->actingAs($admin2, 'admin');
 
         $image1 = UploadedFile::fake()->image('image1.jpg');
-        $base64String = base64_encode(file_get_contents($image1->path()));
+        $base64String = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($image1->path()));
         $redirectResponse = $this->post(route('admin.stock.store'), [
             'name' => 'aaa',
             'detail' => 'aaaの説明',

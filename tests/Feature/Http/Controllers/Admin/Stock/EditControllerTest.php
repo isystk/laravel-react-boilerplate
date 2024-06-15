@@ -90,7 +90,7 @@ class EditControllerTest extends TestCase
         $this->actingAs($admin2, 'admin');
 
         $image2 = UploadedFile::fake()->image('image2.jpg');
-        $base64String = base64_encode(file_get_contents($image2->path()));
+        $base64String = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($image2->path()));
         $redirectResponse = $this->put(route('admin.stock.update', $stock), [
             'name' => 'bbb',
             'detail' => 'bbbの説明',

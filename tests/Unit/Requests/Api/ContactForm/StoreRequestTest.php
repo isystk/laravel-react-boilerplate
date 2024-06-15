@@ -157,7 +157,7 @@ class StoreRequestTest extends TestCase
                 'expect'    => false,
                 'attribute' => 'gender',
                 'messages' => [
-                    '性別 の値が不正です。'
+                    '性別の値が不正です。'
                 ]
             ],
             'OK : gender が正常' => [
@@ -179,7 +179,7 @@ class StoreRequestTest extends TestCase
                 'expect'    => false,
                 'attribute' => 'age',
                 'messages' => [
-                    '年齢 の値が不正です。'
+                    '年齢の値が不正です。'
                 ]
             ],
             'OK : age が正常' => [

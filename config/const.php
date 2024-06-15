@@ -9,12 +9,12 @@ return [
         'users' => [
             'name' => 50,
             'email' => 64,
-            'password' => 8,
+            'password' => 12,
         ],
         'admins' => [
             'name' => 50,
             'email' => 64,
-            'password' => 255,
+            'password' => 12,
         ],
         'stocks' => [
             'name' => 50,
