@@ -9,7 +9,6 @@ use Illuminate\Support\Collection;
 
 class ShowService extends BaseService
 {
-
     private OrderStockRepository $orderStockRepository;
 
     /**

@@ -6,7 +6,6 @@ use App\Domain\Repositories\Cart\CartRepository;
 
 class DeleteCartService extends BaseCartService
 {
-
     private CartRepository $cartRepository;
 
     /**

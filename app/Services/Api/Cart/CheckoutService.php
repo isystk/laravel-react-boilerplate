@@ -2,22 +2,21 @@
 
 namespace App\Services\Api\Cart;
 
+use App\Domain\Entities\Stock;
 use App\Domain\Repositories\Cart\CartRepository;
 use App\Domain\Repositories\Order\OrderRepository;
 use App\Domain\Repositories\Order\OrderStockRepository;
 use App\Domain\Repositories\Stock\StockRepository;
 use App\Mail\MailNotification;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class CheckoutService extends BaseCartService
 {
-
     private CartRepository $cartRepository;
-    protected StockRepository $stockRepository;
-    protected OrderRepository $orderRepository;
-    protected OrderStockRepository $orderStockRepository;
+    private StockRepository $stockRepository;
+    private OrderRepository $orderRepository;
+    private OrderStockRepository $orderStockRepository;
 
     /**
      * Create a new controller instance.
@@ -42,25 +41,27 @@ class CheckoutService extends BaseCartService
     }
 
     /**
-     * @param Request $request
-     * @throws \Exception
+     * 決済処理を行います。
+     * @param string|null $stripeEmail
+     * @param string|null $stripeToken
+     * @return void
      */
-    public function checkout(Request $request): void
+    public function checkout(?string $stripeEmail,?string $stripeToken): void
     {
         // Stripe::setApiKey(env('STRIPE_SECRET'));
 
         // // 料金を支払う人
         // $customer = Customer::create(array(
-        //   'email' => $request->stripeEmail,
-        //   'source' => $request->stripeToken
+        //   'email' => $stripeEmail,
+        //   'source' => $stripeToken
         // ));
         $userId = Auth::id();
         $items = $this->getMyCart();
 
-        // // 料金の支払いを実行
+        // Stripe 料金の支払いを実行
         // $charge = Charge::create(array(
         //   'customer' => $customer->id,
-        //   'amount' => $data['sum'],
+        //   'amount' => $items['sum'],
         //   'currency' => 'jpy'
         // ));
 
@@ -80,11 +81,12 @@ class CheckoutService extends BaseCartService
             ]);
 
             // 在庫を減らす
-            $quantity = $data['quantity'] - $order->quantity;
+            $stock = Stock::find($data['stock_id']);
+            $newQuantity = $stock->quantity - 1;
             $this->stockRepository->update(
                 $data['stock_id'],
                 [
-                    'quantity' => $quantity,
+                    'quantity' => $newQuantity,
                 ]
             );
 

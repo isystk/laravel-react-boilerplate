@@ -7,7 +7,6 @@ use App\Domain\Repositories\Stock\StockRepository;
 
 class DownloadPdfService extends BaseStockService
 {
-
     private StockRepository $stockRepository;
 
     /**

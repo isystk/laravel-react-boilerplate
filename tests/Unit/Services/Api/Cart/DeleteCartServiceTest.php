@@ -34,7 +34,7 @@ class DeleteCartServiceTest extends TestCase
     }
 
     /**
-     * getMyCartのテスト
+     * deleteMyCartのテスト
      */
     public function testGetMyCart(): void
     {

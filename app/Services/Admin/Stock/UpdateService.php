@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 
 class UpdateService extends BaseService
 {
-
     private StockRepository $stockRepository;
 
     /**

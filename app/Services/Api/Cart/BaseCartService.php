@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class BaseCartService extends BaseService
 {
-
     private CartRepository $cartRepository;
 
     /**

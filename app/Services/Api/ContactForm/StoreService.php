@@ -11,9 +11,7 @@ use App\Services\BaseService;
 
 class StoreService extends BaseService
 {
-
     private ContactFormRepository $contactFormRepository;
-
     private ContactFormImageRepository $contactFormImageRepository;
 
     /**

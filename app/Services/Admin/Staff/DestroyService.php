@@ -7,7 +7,6 @@ use App\Services\BaseService;
 
 class DestroyService extends BaseService
 {
-
     private AdminRepository $adminRepository;
 
     /**

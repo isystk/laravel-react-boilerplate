@@ -8,7 +8,6 @@ use App\Utils\CsvUtil;
 
 class DownloadCsvService extends BaseStockService
 {
-
     private StockRepository $stockRepository;
 
     /**

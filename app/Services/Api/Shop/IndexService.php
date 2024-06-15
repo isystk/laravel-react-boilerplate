@@ -9,7 +9,6 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class IndexService extends BaseService
 {
-
     private StockRepository $stockRepository;
 
     /**

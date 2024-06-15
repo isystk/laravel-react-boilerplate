@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 
 class IndexService extends BaseService
 {
-
     private ContactFormRepository $contactFormRepository;
 
     /**

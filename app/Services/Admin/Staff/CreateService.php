@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Hash;
 
 class CreateService extends BaseService
 {
-
     private AdminRepository $adminRepository;
 
     /**

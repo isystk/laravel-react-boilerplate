@@ -9,7 +9,6 @@ use Illuminate\Support\Collection;
 
 class IndexService extends BaseStockService
 {
-
     private StockRepository $stockRepository;
 
     /**

@@ -12,9 +12,7 @@ use App\Services\BaseService;
 
 class UpdateService extends BaseService
 {
-
     private ContactFormRepository $contactFormRepository;
-
     private ContactFormImageRepository $contactFormImageRepository;
 
     /**

@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 
 class AddCartService extends BaseCartService
 {
-
     private CartRepository $cartRepository;
 
     /**

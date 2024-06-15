@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 
 class IndexService extends BaseService
 {
-
     private UserRepository $userRepository;
 
     /**

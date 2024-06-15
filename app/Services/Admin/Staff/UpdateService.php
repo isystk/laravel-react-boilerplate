@@ -9,7 +9,6 @@ use App\Services\BaseService;
 
 class UpdateService extends BaseService
 {
-
     private AdminRepository $adminRepository;
 
     /**

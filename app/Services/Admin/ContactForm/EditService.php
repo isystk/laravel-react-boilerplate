@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Collection;
 
 class EditService extends BaseService
 {
-
     private ContactFormImageRepository $contactFormImageRepository;
 
     /**
