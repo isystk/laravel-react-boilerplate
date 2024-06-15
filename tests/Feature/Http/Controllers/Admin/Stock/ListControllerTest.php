@@ -5,6 +5,7 @@ namespace Feature\Http\Controllers\Admin\Stock;
 use App\Domain\Entities\Admin;
 use App\Domain\Entities\Stock;
 use App\Enums\AdminRole;
+use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -18,6 +19,7 @@ class ListControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->withoutMiddleware(ValidateCsrfToken::class);
     }
 
     /**
@@ -35,9 +37,12 @@ class ListControllerTest extends TestCase
         ])->create();
         $this->actingAs($admin, 'admin');
 
-        $response = $this->get(route('admin.stock'));
+        $response = $this->get(route('admin.stock'), [
+            'sort_name' => 'id',
+            'sort_direction' => 'asc',
+        ]);
         $response->assertSuccessful();
-        $response->assertSeeInOrder(['stock2', 'stock1']);
+        $response->assertSeeInOrder(['stock1', 'stock2']);
     }
 
 }

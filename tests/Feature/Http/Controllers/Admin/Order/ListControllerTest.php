@@ -7,6 +7,7 @@ use App\Domain\Entities\Order;
 use App\Domain\Entities\OrderStock;
 use App\Domain\Entities\Stock;
 use App\Domain\Entities\User;
+use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -20,6 +21,7 @@ class ListControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->withoutMiddleware(ValidateCsrfToken::class);
     }
 
     /**
@@ -53,7 +55,10 @@ class ListControllerTest extends TestCase
         /** @var Order $order2 */
         $order2 = Order::factory(['user_id' => $user2->id, 'created_at' => '2024-06-01'])->create();
         OrderStock::factory(['order_id' => $order2->id, 'stock_id' => $stock3->id])->create();
-        $response = $this->get(route('admin.order'));
+        $response = $this->get(route('admin.order'), [
+            'sort_name' => 'id',
+            'sort_direction' => 'asc',
+        ]);
         $response->assertSuccessful();
         $response->assertSeeInOrder(['user1', 'user2']);
     }

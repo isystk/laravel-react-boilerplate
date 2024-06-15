@@ -2,6 +2,7 @@
 
 namespace Http\Controllers\Front\Auth;
 
+use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Tests\TestCase;
 
 class OAuthControllerTest extends TestCase
@@ -10,6 +11,7 @@ class OAuthControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->withoutMiddleware(ValidateCsrfToken::class);
 //        $this->providerName = 'google';
     }
 

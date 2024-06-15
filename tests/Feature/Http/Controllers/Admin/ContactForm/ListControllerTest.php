@@ -4,6 +4,7 @@ namespace Feature\Http\Controllers\Admin\ContactForm;
 
 use App\Domain\Entities\Admin;
 use App\Domain\Entities\ContactForm;
+use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -17,6 +18,7 @@ class ListControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->withoutMiddleware(ValidateCsrfToken::class);
     }
 
     /**
