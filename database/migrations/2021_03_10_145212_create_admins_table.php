@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('admins', static function (Blueprint $table) { //ここを変更
             $table->increments('id')->comment('管理者ID');
             $table->string('name')->comment('管理者名');
-            $table->string('email')->unique()->comment('メールアドレス');
+            $table->string('email', 64)->unique()->comment('メールアドレス');
             $table->string('password')->comment('パスワード');
             $table->rememberToken();
             $table->timestamps();

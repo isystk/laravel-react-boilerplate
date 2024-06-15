@@ -18,7 +18,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('user_name', 20)->comment('お名前');
             $table->string('title', 50)->comment('タイトル');
-            $table->string('email', 255)->comment('メールアドレス');
+            $table->string('email', 64)->comment('メールアドレス');
             $table->longText('url')->comment('URL')->nullable($value = true);
             $table->boolean('gender')->comment('性別');
             $table->tinyInteger('age')->comment('年齢');

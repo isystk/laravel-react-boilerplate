@@ -1,17 +1,17 @@
 <?php
 
-namespace Requests\Admin\ContactForm;
+namespace Requests\Api\ContactForm;
 
 use App\Enums\Age;
 use App\Enums\Gender;
-use App\Http\Requests\Admin\ContactForm\UpdateRequest;
+use App\Http\Requests\Api\ContactForm\StoreRequest;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 use Tests\TestCase;
 
-class UpdateRequestTest extends TestCase
+class StoreRequestTest extends TestCase
 {
-    private UpdateRequest $request;
+    private StoreRequest $request;
     /**
      * @var array<string, string>
      */
@@ -20,7 +20,7 @@ class UpdateRequestTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->request = new UpdateRequest();
+        $this->request = new StoreRequest();
         $this->baseRequest = [
             'user_name' => 'user1',
             'title' => 'titleA',
@@ -29,6 +29,7 @@ class UpdateRequestTest extends TestCase
             'age' => Age::Over20->value,
             'contact' => '1234567890abcdef',
             'url' => 'https://test.co.jp',
+            'caution' => 'caution',
         ];
     }
 
@@ -221,6 +222,20 @@ class UpdateRequestTest extends TestCase
                 'attrs'     => ['url' => 'https://111.test.com'],
                 'expect'    => true,
                 'attribute' => 'url',
+                'messages' => []
+            ],
+            'NG : caution 必須条件を満たさない' => [
+                'attrs'     => ['caution' => null],
+                'expect'    => false,
+                'attribute' => 'caution',
+                'messages' => [
+                    '注意事項を入力してください。'
+                ]
+            ],
+            'OK : caution が正常' => [
+                'attrs'     => ['caution' => 'caution'],
+                'expect'    => true,
+                'attribute' => 'caution',
                 'messages' => []
             ],
 

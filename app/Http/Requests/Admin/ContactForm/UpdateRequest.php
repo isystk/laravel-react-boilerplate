@@ -2,8 +2,11 @@
 
 namespace App\Http\Requests\Admin\ContactForm;
 
+use App\Enums\Age;
+use App\Enums\Gender;
 use App\Utils\UploadImage;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 
 class UpdateRequest extends FormRequest
 {
@@ -64,10 +67,12 @@ class UpdateRequest extends FormRequest
                 'max:' . $maxlength['email']
             ],
             'gender' => [
-                'required'
+                'required',
+                new Enum(Gender::class),
             ],
             'age' => [
-                'required'
+                'required',
+                new Enum(Age::class),
             ],
             'contact' => [
                 'required',
@@ -97,6 +102,16 @@ class UpdateRequest extends FormRequest
             'contact' => __('contact.Contact'),
             'url' => __('contact.URL'),
             'imageFile' => __('contact.Image'),
+        ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            '*.Illuminate\Validation\Rules\Enum' => ':attribute の値が不正です。',
         ];
     }
 
