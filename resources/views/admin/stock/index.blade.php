@@ -13,17 +13,15 @@
 @section('content')
     <div class="card">
         <div class="card-body text-center">
-            <form method="GET" action="{{ route('admin.stock.create') }}">
-                <button
-                    type="submit"
-                    class="btn btn-primary"
-                    @cannot('high-manager')
-                        disabled="disabled"
-                    @endcan
-                >
-                    {{ __('common.Regist') }}
-                </button>
-            </form>
+            <a
+                href="{{ route('admin.stock.create') }}"
+                class="btn btn-primary"
+                @cannot('high-manager')
+                    disabled="disabled"
+                @endcan
+            >
+                {{ __('common.Regist') }}
+            </a>
         </div>
     </div>
 

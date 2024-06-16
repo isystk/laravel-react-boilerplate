@@ -52,11 +52,13 @@ Route::prefix('admin')->group(function () {
         Route::get('staff', [\App\Http\Controllers\Admin\Staff\ListController::class, 'index'])->name('admin.staff');
         Route::get('staff/create', [\App\Http\Controllers\Admin\Staff\CreateController::class, 'create'])->name('admin.staff.create');
         Route::post('staff/store', [\App\Http\Controllers\Admin\Staff\CreateController::class, 'store'])->name('admin.staff.store');
+        Route::get('staff/import', [\App\Http\Controllers\Admin\Staff\ImportController::class, 'index'])->name('admin.staff.import');
+        Route::post('staff/import/regist', [\App\Http\Controllers\Admin\Staff\ImportController::class, 'regist'])->name('admin.staff.import.regist');
+        Route::get('staff/import/export', [\App\Http\Controllers\Admin\Staff\ImportController::class, 'export'])->name('admin.staff.import.export');
         Route::get('staff/{staff}', [\App\Http\Controllers\Admin\Staff\DetailController::class, 'show'])->name('admin.staff.show');
         Route::delete('staff/{staff}/destroy', [\App\Http\Controllers\Admin\Staff\DetailController::class, 'destroy'])->name('admin.staff.destroy');
         Route::get('staff/{staff}/edit', [\App\Http\Controllers\Admin\Staff\EditController::class, 'edit'])->name('admin.staff.edit');
         Route::put('staff/{staff}/update', [\App\Http\Controllers\Admin\Staff\EditController::class, 'update'])->name('admin.staff.update');
-
     });
 });
 

@@ -15,7 +15,7 @@ class DetailController extends BaseController
 {
 
     /**
-     * 顧客詳細画面の初期表示
+     * スタッフ詳細画面の初期表示
      *
      * @param Admin $staff
      * @return View
@@ -26,7 +26,7 @@ class DetailController extends BaseController
     }
 
     /**
-     * 顧客詳細画面の削除処理
+     * スタッフ詳細画面の削除処理
      *
      * @param Admin $staff
      * @return RedirectResponse

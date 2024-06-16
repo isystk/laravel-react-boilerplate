@@ -13,7 +13,7 @@ class ListController extends BaseController
 {
 
     /**
-     * 顧客一覧画面の初期表示
+     * スタッフ一覧画面の初期表示
      *
      * @param Request $request
      * @return Application|Factory|View

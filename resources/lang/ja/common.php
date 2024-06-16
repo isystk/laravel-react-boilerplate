@@ -17,6 +17,7 @@ return [
     'CSV Download' => 'CSVダウンロード',
     'Excel Download' => 'Excelダウンロード',
     'PDF Download' => 'PDFダウンロード',
+    'Import' => 'インポート',
     'Back' => '前に戻る',
     'Execute' => '登録する',
     'Change' => '変更する',

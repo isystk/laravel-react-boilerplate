@@ -20,17 +20,23 @@
 
     <div class="card">
         <div class="card-body text-center">
-            <form method="GET" action="{{ route('admin.staff.create') }}">
-                <button
-                    type="submit"
-                    class="btn btn-primary"
-                    @cannot('high-manager')
-                        disabled="disabled"
-                    @endcan
+            <div class="btn-container d-flex justify-content-between">
+                <a
+                    href="{{ route('admin.staff.create') }}"
+                    class="btn btn-primary m-auto"
+                    @cannot('high-manager') disabled="disabled" @endcan
                 >
                     {{ __('common.Regist') }}
-                </button>
-            </form>
+                </a>
+                <a
+                    href="{{ route('admin.staff.import') }}"
+                    class="btn btn-primary position-absolute"
+                    style="right: 20px"
+                    @cannot('high-manager') disabled="disabled" @endcan
+                >
+                    {{ __('common.Import') }}
+                </a>
+            </div>
         </div>
     </div>
 
