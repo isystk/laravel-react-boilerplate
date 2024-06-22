@@ -23,4 +23,10 @@ interface AdminRepository extends BaseRepository
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator;
 
+    /**
+     * すべてのデータをIDの昇順で取得します。
+     * @return Collection<int, Admin>
+     */
+    public function getAllOrderById(): Collection;
+
 }

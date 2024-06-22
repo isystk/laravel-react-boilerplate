@@ -2,6 +2,8 @@
 
 return [
 
+    'upload_max_filesize' => 104857600, // 100MB
+
     'maxlength' => [
         'commons' => [
             'date' => 10

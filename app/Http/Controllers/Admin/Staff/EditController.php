@@ -6,7 +6,6 @@ use App\Domain\Entities\Admin;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Admin\Staff\UpdateRequest;
 use App\Services\Admin\Staff\UpdateService;
-use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;

@@ -10,6 +10,8 @@ use App\Domain\Repositories\ContactForm\ContactFormEloquentRepository;
 use App\Domain\Repositories\ContactForm\ContactFormImageEloquentRepository;
 use App\Domain\Repositories\ContactForm\ContactFormImageRepository;
 use App\Domain\Repositories\ContactForm\ContactFormRepository;
+use App\Domain\Repositories\ImportHistory\ImportHistoryEloquentRepository;
+use App\Domain\Repositories\ImportHistory\ImportHistoryRepository;
 use App\Domain\Repositories\Order\OrderEloquentRepository;
 use App\Domain\Repositories\Order\OrderRepository;
 use App\Domain\Repositories\Order\OrderStockEloquentRepository;
@@ -36,6 +38,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(OrderStockRepository::class, OrderStockEloquentRepository::class);
         $this->app->bind(StockRepository::class, StockEloquentRepository::class);
         $this->app->bind(UserRepository::class, UserEloquentRepository::class);
+        $this->app->bind(ImportHistoryRepository::class, ImportHistoryEloquentRepository::class);
     }
 
 }

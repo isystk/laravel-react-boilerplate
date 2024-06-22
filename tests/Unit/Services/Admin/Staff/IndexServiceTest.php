@@ -3,8 +3,6 @@
 namespace Tests\Unit\Services\Admin\Staff;
 
 use App\Domain\Entities\Admin;
-use App\Domain\Entities\Stock;
-use App\Domain\Entities\User;
 use App\Enums\AdminRole;
 use App\Services\Admin\Staff\IndexService;
 use Illuminate\Foundation\Testing\RefreshDatabase;

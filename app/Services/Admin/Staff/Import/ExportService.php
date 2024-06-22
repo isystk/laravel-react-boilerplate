@@ -3,7 +3,10 @@
 namespace App\Services\Admin\Staff\Import;
 
 use App\Domain\Repositories\Admin\AdminRepository;
+use App\FileIO\Exports\StaffExport;
 use App\Services\BaseService;
+use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ExportService extends BaseService
 {
@@ -22,12 +25,21 @@ class ExportService extends BaseService
     }
 
     /**
-     * 管理者をエクスポートします。
-     * @return array
+     * 管理者をCSVでエクスポートします。
      */
-    public function export(): array
+    public function exportCsv(): BinaryFileResponse
     {
-
-        return [];
+        $admins = $this->adminRepository->getAllOrderById();
+        return Excel::download(new StaffExport($admins), 'staff.csv', \Maatwebsite\Excel\Excel::CSV);
     }
+
+    /**
+     * 管理者をExcelでエクスポートします。
+     */
+    public function exportExcel(): BinaryFileResponse
+    {
+        $admins = $this->adminRepository->getAllOrderById();
+        return Excel::download(new StaffExport($admins), 'staff.xlsx');
+    }
+
 }

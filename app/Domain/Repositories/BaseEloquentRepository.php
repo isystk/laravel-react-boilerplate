@@ -60,7 +60,6 @@ abstract class BaseEloquentRepository implements BaseRepository
     /**
      * @return Collection
      */
-    // @phpstan-ignore-next-line
     public function getAll(): Collection
     {
         return $this->model->all();

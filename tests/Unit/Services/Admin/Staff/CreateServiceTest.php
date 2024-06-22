@@ -4,10 +4,9 @@ namespace Tests\Unit\Services\Admin\Staff;
 
 use App\Domain\Entities\Admin;
 use App\Enums\AdminRole;
-use App\Services\Admin\Staff\CreateService;
 use App\Http\Requests\Admin\Staff\StoreRequest;
+use App\Services\Admin\Staff\CreateService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class CreateServiceTest extends TestCase
