@@ -27,9 +27,7 @@ Route::prefix('admin')->group(function () {
         Route::put('user/{user}/update', [\App\Http\Controllers\Admin\User\EditController::class, 'update'])->name('admin.user.update');
 
         Route::get('stock', [\App\Http\Controllers\Admin\Stock\ListController::class, 'index'])->name('admin.stock');
-        Route::get('stock/downloadExcel', [\App\Http\Controllers\Admin\Stock\ListController::class, 'downloadExcel'])->name('admin.stock.downloadExcel');
-        Route::get('stock/downloadCsv', [\App\Http\Controllers\Admin\Stock\ListController::class, 'downloadCsv'])->name('admin.stock.downloadCsv');
-        Route::get('stock/downloadPdf', [\App\Http\Controllers\Admin\Stock\ListController::class, 'downloadPdf'])->name('admin.stock.downloadPdf');
+        Route::get('stock/export', [\App\Http\Controllers\Admin\Stock\ListController::class, 'export'])->name('admin.stock.export');
         Route::get('stock/create', [\App\Http\Controllers\Admin\Stock\CreateController::class, 'create'])->name('admin.stock.create');
         Route::post('stock/store', [\App\Http\Controllers\Admin\Stock\CreateController::class, 'store'])->name('admin.stock.store');
         Route::get('stock/{stock}', [\App\Http\Controllers\Admin\Stock\DetailController::class, 'show'])->name('admin.stock.show');

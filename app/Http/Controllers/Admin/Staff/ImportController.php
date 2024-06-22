@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Throwable;
 
@@ -47,14 +48,11 @@ class ImportController extends BaseController
 
         /** @var ExportService $service */
         $service = app(ExportService::class);
-        return ('csv' === $fileType) ? $service->exportCsv(): $service->exportExcel();
-    }
+        $export = $service->getExport();
 
-    /**
-     * スタッフ一括インポート画面
-     *
-     * @return View
-     *
+        return ('csv' === $fileType) ?
+            Excel::download($export, 'staff.csv', \Maatwebsite\Excel\Excel::CSV):
+            Excel::download($export, 'staff.xlsx');
     }
 
     /**

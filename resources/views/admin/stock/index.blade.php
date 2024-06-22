@@ -79,15 +79,15 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
                             <a
                                 class="dropdown-item text-muted js-download"
-                                href="{{ route('admin.stock.downloadCsv') }}"
+                                href="{{ route('admin.stock.export') . '?file_type=csv' }}"
                             >{{ __('common.CSV Download') }}</a>
                             <a
                                 class="dropdown-item text-muted js-download"
-                                href="{{ route('admin.stock.downloadExcel') }}"
+                                href="{{ route('admin.stock.export') . '?file_type=xlsx' }}"
                             >{{ __('common.Excel Download') }}</a>
                             <a
                                 class="dropdown-item text-muted js-download"
-                                href="{{ route('admin.stock.downloadPdf') }}"
+                                href="{{ route('admin.stock.export') . '?file_type=pdf' }}"
                             >{{ __('common.PDF Download') }}</a>
                         </div>
                     </div>
@@ -138,8 +138,9 @@
             $('.js-download').click(function (e) {
                 e.preventDefault();
                 const form = $('#pagingForm');
-                form.attr('action', $(this).attr('href'));
-                form.submit();
+                const url = $(this).attr('href');
+                const serializedData = form.serialize();
+                window.location.href = url + '&' + serializedData;
             });
         });
     </script>
