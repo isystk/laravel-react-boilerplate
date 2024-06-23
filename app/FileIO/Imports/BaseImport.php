@@ -52,7 +52,7 @@ abstract class BaseImport implements WithMapping, WithStartRow, WithValidation
     /**
      * @return array<int, array<int, array<string, string>>>
      */
-    public function array(): array
+    public function getSheets(): array
     {
         return $this->toArray($this->filePath);
     }
@@ -72,8 +72,7 @@ abstract class BaseImport implements WithMapping, WithStartRow, WithValidation
     {
         $errors = [];
 
-        // 項目数以外のチェック
-        $rows = $this->array()[0];
+        $rows = $this->getSheets()[0];
         foreach ($rows as $i => $row) {
             $validator = Validator::make($row, $this->rules(), $this->customValidationMessages(), $this->customValidationAttributes());
             if ($validator->fails()) {

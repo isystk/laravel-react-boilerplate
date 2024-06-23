@@ -2,7 +2,6 @@
 
 namespace App\Jobs\Import;
 
-use App\FileIO\Imports\BaseImport;
 use App\FileIO\Imports\StaffImport;
 use App\Services\Jobs\Import\StaffRegistService;
 use Closure;
@@ -23,15 +22,12 @@ class ImportStaffJobs extends BaseImportJobs
 
     /**
      * スタッフを一括登録する
-     * @param BaseImport $import
+     * @param array<array<string, ?string>> $rows
      */
-    protected function importData(BaseImport $import): void
+    protected function importData(array $rows): void
     {
         app(StaffRegistService::class)->exec(
-            $this->importHistoryId,
-            $import,
-            $this->fileName,
-            $this->admin->id,
+            $rows,
             function ($message)
             {
                 $this->outputLog($message);

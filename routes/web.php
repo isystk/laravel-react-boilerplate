@@ -53,6 +53,7 @@ Route::prefix('admin')->group(function () {
         Route::get('staff/import', [\App\Http\Controllers\Admin\Staff\ImportController::class, 'index'])->name('admin.staff.import');
         Route::post('staff/import/store', [\App\Http\Controllers\Admin\Staff\ImportController::class, 'store'])->name('admin.staff.import.store');
         Route::get('staff/import/export', [\App\Http\Controllers\Admin\Staff\ImportController::class, 'export'])->name('admin.staff.import.export');
+        Route::get('staff/import/import_file/{importHistoryId}', [\App\Http\Controllers\Admin\Staff\ImportController::class, 'importFile'])->name('admin.staff.import.import_file');
         Route::get('staff/{staff}', [\App\Http\Controllers\Admin\Staff\DetailController::class, 'show'])->name('admin.staff.show');
         Route::delete('staff/{staff}/destroy', [\App\Http\Controllers\Admin\Staff\DetailController::class, 'destroy'])->name('admin.staff.destroy');
         Route::get('staff/{staff}/edit', [\App\Http\Controllers\Admin\Staff\EditController::class, 'edit'])->name('admin.staff.edit');

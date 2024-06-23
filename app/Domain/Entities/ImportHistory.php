@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $id
  * @property int $job_id
+ * @property int $type
  * @property string $file_name
  * @property int $status
  * @property int $import_user_id
- * @property Carbon|null $created_at
- * @property string $save_file_name
  * @property Carbon|null $import_at
+ * @property string $save_file_name
+ * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
 class ImportHistory extends Model

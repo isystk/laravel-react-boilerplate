@@ -39,12 +39,19 @@ class ImportService extends BaseService
     public function createJob(?UploadedFile $importFile): void
     {
         if (!$importFile instanceof UploadedFile) {
-            throw ValidationException::withMessages(['upload_file' => 'An unexpected error has occurred.']);
+            throw ValidationException::withMessages(['import_file' => 'An unexpected error has occurred.']);
         }
         $admin = auth()->user();
         if (null === $admin) {
-            throw ValidationException::withMessages(['upload_file' => 'An unexpected error has occurred.']);
+            throw ValidationException::withMessages(['import_file' => 'An unexpected error has occurred.']);
         }
+
+        // 処理中のJobが存在する場合は何もしない。
+        $hasProcessing = $this->importHistoryRepository->hasProcessingByImportHistory(ImportType::Staff);
+        if ($hasProcessing) {
+            throw ValidationException::withMessages(['import_file' => '処理中のファイルがあります。しばらくお待ち下さい。']);
+        }
+
         // アップロードファイルをストレージに保存
         $disk = 'local'; // ローカルストレージを指定
         $directory = 'import_job/' . ImportType::Staff->value;

@@ -9,7 +9,6 @@ use Illuminate\Validation\Rules\Enum;
 class StaffImport extends BaseImport
 {
     protected array $attribute = [
-        "ID" => 'id',
         "名前" => 'name',
         "メールアドレス" => 'email',
         "権限" => 'role',
@@ -29,7 +28,6 @@ class StaffImport extends BaseImport
         };
 
         return array_merge(
-            $cell('id', function($val) { return $this->trimData($val); }),
             $cell('name', function($val) { return $this->trimData($val); }),
             $cell('email', function($val) { return $this->trimData($val); }),
             $cell('role', function($val) { return $this->trimData($val); }),
@@ -53,7 +51,6 @@ class StaffImport extends BaseImport
                 'string',
                 'email',
                 'max:' . $maxlength['email'],
-//                'unique:admins,email',
             ],
             'role' => [
                 'required',

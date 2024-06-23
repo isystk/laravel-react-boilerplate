@@ -60,7 +60,8 @@ abstract class BaseImportJobs extends BaseJobs
             }
             // DB登録処理
             DB::transaction(function () use($import) {
-                $this->importData($import);
+                $rows = $import->getSheets()[0]; // 先頭シートのデータを取得
+                $this->importData($rows);
             });
 
             // インポート履歴のステータスを「正常終了」に更新
@@ -101,8 +102,8 @@ abstract class BaseImportJobs extends BaseJobs
 
     /**
      * インポート処理を実行します。
-     * @param BaseImport $import
+     * @param array<array<string, ?string>> $rows
      */
-    abstract protected function importData(BaseImport $import): void;
+    abstract protected function importData(array $rows): void;
 
 }

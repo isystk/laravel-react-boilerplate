@@ -52,6 +52,19 @@ class AdminEloquentRepository extends BaseEloquentRepository implements AdminRep
     }
 
     /**
+     * メールアドレスからレコードを取得します。
+     * @param string $email
+     * @return Admin|null
+     */
+    public function getByEmail(string $email): ?Admin {
+        /** @var Admin $model */
+        $model = $this->model->select()
+            ->where('email', $email)
+            ->first();
+        return $model;
+    }
+
+    /**
      * すべてのデータをIDの昇順で取得します。
      * @return Collection
      */

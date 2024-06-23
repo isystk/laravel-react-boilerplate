@@ -3,9 +3,10 @@
 namespace App\Services\Jobs\Import;
 
 use App\Domain\Repositories\Admin\AdminRepository;
-use App\FileIO\Imports\BaseImport;
+use App\Enums\AdminRole;
 use App\Services\BaseService;
 use Closure;
+use Illuminate\Support\Facades\Hash;
 
 class StaffRegistService extends BaseService
 {
@@ -25,24 +26,35 @@ class StaffRegistService extends BaseService
 
     /**
      * 管理者を登録します。
-     * @param int $importHistoryId
-     * @param BaseImport $import
-     * @param string $fileName
-     * @param int $adminId
+     * @param  array<array<string, ?string>> $rows
      * @param Closure $outputLog
      */
     public function exec(
-        int $importHistoryId,
-        BaseImport $import,
-        string $fileName,
-        int $adminId,
+        array $rows,
         Closure $outputLog
     ): void
     {
-        // ファイルの中身をチェックする
-        $rows = $import->array();
+        foreach ($rows as $row) {
 
-        $outputLog($fileName);
+            $admin = $this->adminRepository->getByEmail($row['email']);
+            $exist = null !== $admin;
+
+            if ($exist) {
+                $this->adminRepository->update($admin->id, [
+                    'name' => $row['name'],
+                    'role' => AdminRole::get($row['role'])?->value,
+                ]);
+                $outputLog('Admin updated. id:[' . $admin->id . ']');
+            } else {
+                $newAdmin = $this->adminRepository->create([
+                    'name' => $row['name'],
+                    'email' => $row['email'],
+                    'password' => Hash::make('password'),
+                    'role' => AdminRole::get($row['role'])?->value,
+                ]);
+                $outputLog('Admin registered. id:[' . $newAdmin->id . ']');
+            }
+        }
     }
 
 }

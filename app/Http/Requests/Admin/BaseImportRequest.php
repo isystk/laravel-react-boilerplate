@@ -44,7 +44,10 @@ abstract class BaseImportRequest extends FormRequest
                 // UTF-8以外の文字コードでアップロードされた場合は、UTF-8に変換する
                 $tmp = mb_convert_encoding($tmp, 'UTF-8', $enc);
             }
-            $tmp = "\xef\xbb\xbf" . $tmp; // BOMを追加
+            // BOMが存在しない場合のみ追加
+            if (!str_starts_with($tmp, "\xEF\xBB\xBF")) {
+                $tmp = "\xef\xbb\xbf" . $tmp; // BOMを追加
+            }
             file_put_contents($filePath, $tmp);
         }
     }
