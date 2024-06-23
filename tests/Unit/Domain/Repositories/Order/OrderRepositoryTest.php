@@ -50,8 +50,8 @@ class OrderRepositoryTest extends TestCase
             'limit' => null,
         ];
 
-        $users = $this->repository->getConditionsWithUserStock($defaultConditions);
-        $this->assertSame(0, $users->count(), 'データがない状態で正常に動作することを始めにテスト');
+        $result = $this->repository->getConditionsWithUserStock($defaultConditions);
+        $this->assertSame(0, $result->count(), 'データがない状態で正常に動作することを始めにテスト');
 
         /** @var User $user1 */
         $user1 = User::factory(['name' => 'user1', 'email' => 'user1@test.com'])->create();

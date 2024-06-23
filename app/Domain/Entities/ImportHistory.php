@@ -3,6 +3,7 @@
 namespace App\Domain\Entities;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -19,6 +20,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ImportHistory extends Model
 {
+    use HasFactory;
+
     /**
      * The attributes that are mass assignable.
      *
