@@ -3,8 +3,6 @@
 namespace Tests\Unit\Services\Admin\Staff;
 
 use App\Domain\Entities\Admin;
-use App\Domain\Entities\Stock;
-use App\Domain\Entities\User;
 use App\Enums\AdminRole;
 use App\Services\Admin\Staff\IndexService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -49,7 +47,7 @@ class IndexServiceTest extends TestCase
         ];
 
         $admins = $this->service->searchStaff($default);
-        $this->assertCount(0, $admins->items(), '引数がない状態でエラーにならないことを始めにテスト');
+        $this->assertCount(0, $admins->items(), 'データがない状態でエラーにならないことを始めにテスト');
 
         /** @var Admin $admin1 */
         $admin1 = Admin::factory([

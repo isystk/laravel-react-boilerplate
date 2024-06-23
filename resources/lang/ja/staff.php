@@ -4,6 +4,7 @@ return [
 
     'Staff List' => 'スタッフ一覧',
     'Staff Regist' => 'スタッフ登録',
+    'Staff Import' => 'スタッフ一括登録',
     'Staff ID:' => 'スタッフID:',
 
     'ID' => 'ID',

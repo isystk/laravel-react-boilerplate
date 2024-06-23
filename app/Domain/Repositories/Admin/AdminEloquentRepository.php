@@ -4,8 +4,8 @@ namespace App\Domain\Repositories\Admin;
 
 use App\Domain\Entities\Admin;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
 use App\Domain\Repositories\BaseEloquentRepository;
+use Illuminate\Database\Eloquent\Collection;
 
 class AdminEloquentRepository extends BaseEloquentRepository implements AdminRepository
 {
@@ -49,6 +49,30 @@ class AdminEloquentRepository extends BaseEloquentRepository implements AdminRep
         }
 
         return null !== $conditions['limit'] ? $query->paginate($conditions['limit']) : $query->get();
+    }
+
+    /**
+     * メールアドレスからレコードを取得します。
+     * @param string $email
+     * @return Admin|null
+     */
+    public function getByEmail(string $email): ?Admin {
+        /** @var Admin $model */
+        $model = $this->model->select()
+            ->where('email', $email)
+            ->first();
+        return $model;
+    }
+
+    /**
+     * すべてのデータをIDの昇順で取得します。
+     * @return Collection
+     */
+    public function getAllOrderById(): Collection
+    {
+        $query = $this->model->select();
+        $query = $query->orderBy('id', 'asc');
+        return $query->get();
     }
 
 }

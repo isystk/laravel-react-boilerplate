@@ -6,7 +6,6 @@ use App\Domain\Entities\Admin;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Admin\Staff\UpdateRequest;
 use App\Services\Admin\Staff\UpdateService;
-use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +16,7 @@ class EditController extends BaseController
 {
 
     /**
-     * 顧客変更画面の初期表示
+     * スタッフ変更画面の初期表示
      *
      * @param Admin $staff
      * @return View
@@ -31,7 +30,7 @@ class EditController extends BaseController
     }
 
     /**
-     * 顧客変更画面の登録処理
+     * スタッフ変更画面の登録処理
      *
      * @param UpdateRequest $request
      * @param Admin $staff

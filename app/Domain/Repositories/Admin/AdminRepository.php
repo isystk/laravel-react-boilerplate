@@ -23,4 +23,17 @@ interface AdminRepository extends BaseRepository
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator;
 
+    /**
+     * メールアドレスからレコードを取得します。
+     * @param string $email
+     * @return Admin|null
+     */
+    public function getByEmail(string $email): ?Admin;
+
+    /**
+     * すべてのデータをIDの昇順で取得します。
+     * @return Collection<int, Admin>
+     */
+    public function getAllOrderById(): Collection;
+
 }

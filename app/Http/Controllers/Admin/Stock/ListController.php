@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\Admin\Stock;
 
 use App\Http\Controllers\BaseController;
-use App\Services\Admin\Stock\DownloadCsvService;
-use App\Services\Admin\Stock\DownloadExcelService;
-use App\Services\Admin\Stock\DownloadPdfService;
+use App\Services\Admin\Stock\ExportService;
 use App\Services\Admin\Stock\IndexService;
 use Barryvdh\DomPDF\PDF;
-use Illuminate\Contracts\Container\BindingResolutionException;
+use Excel;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
@@ -35,57 +33,35 @@ class ListController extends BaseController
     }
 
     /**
-     * 商品一覧画面のCSVダウンロード処理
+     * 商品一覧画面のエクスポート処理
      *
      * @param Request $request
-     * @return Response
-     * @throws BindingResolutionException
+     * @return Response|BinaryFileResponse
      */
-    public function downloadCsv(Request $request): Response
+    public function export(Request $request): Response|BinaryFileResponse
     {
-        /** @var DownloadCsvService $service */
-        $service = app(DownloadCsvService::class);
+        $fileType = $request->file_type;
+        if (!in_array($fileType, ['csv', 'xlsx', 'pdf'])) {
+            abort(400);
+        }
 
+        /** @var ExportService $service */
+        $service = app(ExportService::class);
         $conditions = $service->convertConditionsFromRequest($request, 0);
-        $csvData = $service->getCsvData($conditions);
+        $export = $service->getExport($conditions);
 
-        return response()->make($csvData, 200, [
-            'Content-Type' => 'text/csv',
-            'Content-Disposition' => "attachment; filename=stocks.csv",
-        ]);
+        if ('csv' === $fileType) {
+            return Excel::download($export, 'stocks.csv', \Maatwebsite\Excel\Excel::CSV);
+        }
+        if ('pdf' === $fileType) {
+            $headers = $export->headings();
+            $rows = $export->collection();
+            /** @var PDF $pdf */
+            $pdf = app(PDF::class);
+            return $pdf->loadView('admin.stock.pdf', compact('headers', 'rows'))
+                ->download('stocks.pdf');
+        }
+        return Excel::download($export, 'stocks.xlsx');
     }
 
-    /**
-     * 商品一覧画面のExcelダウンロード処理
-     *
-     * @param Request $request
-     * @return BinaryFileResponse|Response
-     */
-    public function downloadExcel(Request $request): Response|BinaryFileResponse
-    {
-        /** @var DownloadExcelService $service */
-        $service = app(DownloadExcelService::class);
-        return $service->setUp(storage_path('app/stock/excel/template.xlsx'), $request)
-            ->download('stocks.xlsx');
-    }
-
-    /**
-     * 商品一覧画面のPDFダウンロード処理
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function downloadPdf(Request $request): Response
-    {
-        /** @var DownloadPdfService $service */
-        $service = app(DownloadPdfService::class);
-
-        $conditions = $service->convertConditionsFromRequest($request, 0);
-        [$headers, $rows] = $service->getPdfData($conditions);
-
-        /** @var PDF $pdf */
-        $pdf = app(PDF::class);
-        return $pdf->loadView('admin.stock.pdf', compact('headers', 'rows'))
-            ->download('stocks.pdf');
-    }
 }

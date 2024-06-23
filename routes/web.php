@@ -27,9 +27,7 @@ Route::prefix('admin')->group(function () {
         Route::put('user/{user}/update', [\App\Http\Controllers\Admin\User\EditController::class, 'update'])->name('admin.user.update');
 
         Route::get('stock', [\App\Http\Controllers\Admin\Stock\ListController::class, 'index'])->name('admin.stock');
-        Route::get('stock/downloadExcel', [\App\Http\Controllers\Admin\Stock\ListController::class, 'downloadExcel'])->name('admin.stock.downloadExcel');
-        Route::get('stock/downloadCsv', [\App\Http\Controllers\Admin\Stock\ListController::class, 'downloadCsv'])->name('admin.stock.downloadCsv');
-        Route::get('stock/downloadPdf', [\App\Http\Controllers\Admin\Stock\ListController::class, 'downloadPdf'])->name('admin.stock.downloadPdf');
+        Route::get('stock/export', [\App\Http\Controllers\Admin\Stock\ListController::class, 'export'])->name('admin.stock.export');
         Route::get('stock/create', [\App\Http\Controllers\Admin\Stock\CreateController::class, 'create'])->name('admin.stock.create');
         Route::post('stock/store', [\App\Http\Controllers\Admin\Stock\CreateController::class, 'store'])->name('admin.stock.store');
         Route::get('stock/{stock}', [\App\Http\Controllers\Admin\Stock\DetailController::class, 'show'])->name('admin.stock.show');
@@ -52,11 +50,14 @@ Route::prefix('admin')->group(function () {
         Route::get('staff', [\App\Http\Controllers\Admin\Staff\ListController::class, 'index'])->name('admin.staff');
         Route::get('staff/create', [\App\Http\Controllers\Admin\Staff\CreateController::class, 'create'])->name('admin.staff.create');
         Route::post('staff/store', [\App\Http\Controllers\Admin\Staff\CreateController::class, 'store'])->name('admin.staff.store');
+        Route::get('staff/import', [\App\Http\Controllers\Admin\Staff\ImportController::class, 'index'])->name('admin.staff.import');
+        Route::post('staff/import/store', [\App\Http\Controllers\Admin\Staff\ImportController::class, 'store'])->name('admin.staff.import.store');
+        Route::get('staff/import/export', [\App\Http\Controllers\Admin\Staff\ImportController::class, 'export'])->name('admin.staff.import.export');
+        Route::get('staff/import/import_file/{importHistoryId}', [\App\Http\Controllers\Admin\Staff\ImportController::class, 'importFile'])->name('admin.staff.import.import_file');
         Route::get('staff/{staff}', [\App\Http\Controllers\Admin\Staff\DetailController::class, 'show'])->name('admin.staff.show');
         Route::delete('staff/{staff}/destroy', [\App\Http\Controllers\Admin\Staff\DetailController::class, 'destroy'])->name('admin.staff.destroy');
         Route::get('staff/{staff}/edit', [\App\Http\Controllers\Admin\Staff\EditController::class, 'edit'])->name('admin.staff.edit');
         Route::put('staff/{staff}/update', [\App\Http\Controllers\Admin\Staff\EditController::class, 'update'])->name('admin.staff.update');
-
     });
 });
 

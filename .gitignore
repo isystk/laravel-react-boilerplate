@@ -35,3 +35,7 @@ docker/php/logs
 
 # s3
 docker/s3/data
+
+# job
+storage/app/import_job
+

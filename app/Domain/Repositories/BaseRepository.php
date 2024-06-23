@@ -29,7 +29,6 @@ interface BaseRepository
     /**
      * @return Collection
      */
-    // @phpstan-ignore-next-line
     public function getAll(): Collection;
 
     /**

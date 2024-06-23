@@ -326,8 +326,11 @@ $ ./dc.sh php login
 # PHPサーバーにログインしてみる
 $ ./dc.sh php login
 
-# フロントエンドをビルドする。
+# フロントエンドをビルドする
 $ yarn && yarn run dev
+
+# Jobキューを起動する
+$ php artisan queue:listen --timeout=0;
 ```
 
 その他（補足）

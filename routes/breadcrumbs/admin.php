@@ -174,6 +174,12 @@ Breadcrumbs::for('admin.staff.edit', static function ($breadcrumbs, $staff) {
         ]);
 });
 
+// Home > スタッフ一覧 > スタッフ一括インポート
+Breadcrumbs::for('admin.staff.import', static function ($breadcrumbs) {
+    $breadcrumbs->parent('admin.staff');
+    $breadcrumbs->push(__('staff.Staff Import'), 'admin.staff.import');
+});
+
 // Home > 画像一覧
 Breadcrumbs::for('admin.photo', static function ($breadcrumbs) {
   $breadcrumbs->parent('admin.home');

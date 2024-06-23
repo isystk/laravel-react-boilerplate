@@ -14,7 +14,7 @@ class CreateController extends BaseController
 {
 
     /**
-     * 商品登録画面の初期表示
+     * スタッフ登録画面の初期表示
      *
      * @return View
      */
@@ -26,7 +26,7 @@ class CreateController extends BaseController
     }
 
     /**
-     * 商品登録画面の登録処理
+     * スタッフ登録画面の登録処理
      *
      * @param StoreRequest $request
      * @return RedirectResponse
