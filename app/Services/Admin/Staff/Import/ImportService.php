@@ -2,6 +2,7 @@
 
 namespace App\Services\Admin\Staff\Import;
 
+use App\Domain\Entities\Admin;
 use App\Domain\Entities\ImportHistory;
 use App\Domain\Repositories\ImportHistory\ImportHistoryRepository;
 use App\Enums\ImportType;
@@ -33,20 +34,13 @@ class ImportService extends BaseService
 
     /**
      * 管理者をインポートするJobを登録します。
-     * @param UploadedFile|null $importFile
+     * @param UploadedFile $importFile
+     * @param Admin $admin
      * @return void
      */
-    public function createJob(?UploadedFile $importFile): void
+    public function createJob(UploadedFile $importFile, Admin $admin): void
     {
-        if (!$importFile instanceof UploadedFile) {
-            throw ValidationException::withMessages(['import_file' => 'An unexpected error has occurred.']);
-        }
-        $admin = auth()->user();
-        if (null === $admin) {
-            throw ValidationException::withMessages(['import_file' => 'An unexpected error has occurred.']);
-        }
-
-        // 処理中のJobが存在する場合は何もしない。
+        // 処理中（または処理待ち）のJobが存在する場合は何もしない。
         $hasProcessing = $this->importHistoryRepository->hasProcessingByImportHistory(ImportType::Staff);
         if ($hasProcessing) {
             throw ValidationException::withMessages(['import_file' => '処理中のファイルがあります。しばらくお待ち下さい。']);
@@ -61,7 +55,7 @@ class ImportService extends BaseService
         $filePath = $importFile->store($directory, $disk);
 
         if (false === $filePath) {
-            throw ValidationException::withMessages(['upload_file' => 'An unexpected error has occurred.']);
+            throw ValidationException::withMessages(['import_file' => 'An unexpected error has occurred.']);
         }
         // インポート履歴の登録
         $importHistory = $this->importHistoryRepository->create([

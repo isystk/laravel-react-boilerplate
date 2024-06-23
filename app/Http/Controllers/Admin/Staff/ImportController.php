@@ -11,8 +11,10 @@ use App\Services\Admin\Staff\Import\IndexService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Throwable;
@@ -74,11 +76,16 @@ class ImportController extends BaseController
         // 上位管理者のみがアクセス可能
         $this->authorize('high-manager');
 
+        if (!$request->upload_file instanceof UploadedFile) {
+            throw ValidationException::withMessages(['import_file' => 'An unexpected error has occurred.']);
+        }
+        $admin = $request->user();
+
         DB::beginTransaction();
         try {
             /** @var ImportService $service */
             $service = app(ImportService::class);
-            $service->createJob($request->upload_file);
+            $service->createJob($request->upload_file, $admin);
             DB::commit();
         } catch (Throwable $e) {
             DB::rollBack();

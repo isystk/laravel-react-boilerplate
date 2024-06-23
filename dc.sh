@@ -68,7 +68,7 @@ case ${1} in
     mysql)
       case ${2} in
           login)
-              mysql -u user -ppassword -h 127.0.0.1 laraec
+              mysql -u root -ppassword -h 127.0.0.1
           ;;
           export)
               mysqldump --skip-column-statistics -u root -h 127.0.0.1 -A > ${3}
