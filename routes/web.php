@@ -20,6 +20,9 @@ Route::prefix('admin')->group(function () {
         Route::post('logout', [App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('admin.logout');
         Route::get('home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
 
+        Route::get('passwordChange', [\App\Http\Controllers\Admin\PasswordChangeController::class, 'index'])->name('admin.passwordChange');
+        Route::put('passwordChange/update', [\App\Http\Controllers\Admin\PasswordChangeController::class, 'update'])->name('admin.passwordChange.update');
+
         Route::get('user', [\App\Http\Controllers\Admin\User\ListController::class, 'index'])->name('admin.user');
         Route::get('user/{user}', [\App\Http\Controllers\Admin\User\DetailController::class, 'show'])->name('admin.user.show');
         Route::delete('user/{user}/destroy', [\App\Http\Controllers\Admin\User\DetailController::class, 'destroy'])->name('admin.user.destroy');
