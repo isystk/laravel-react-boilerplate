@@ -318,7 +318,7 @@ $ ./dc.sh php login
 > ./vendor/bin/phpstan analyse --memory-limit=1G
 
 # PHPUnit でテストコードを実行する
-> php artisan test
+> ./vendor/bin/phpunit tests
 ```
 
 フロントエンド環境を構築する

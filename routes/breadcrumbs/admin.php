@@ -6,12 +6,19 @@
 // Home
 use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
 
+// Home
 Breadcrumbs::for('admin.home', static function ($trail) {
   $trail->push(
       'HOME',
       'admin.home',
       []
   );
+});
+
+// Home > パスワード変更
+Breadcrumbs::for('admin.passwordChange', static function ($breadcrumbs) {
+    $breadcrumbs->parent('admin.home');
+    $breadcrumbs->push(__('common.Password Change'), 'admin.passwordChange');
 });
 
 // Home > 商品一覧

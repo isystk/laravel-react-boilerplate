@@ -41,6 +41,12 @@
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown1">
                     <a
                         class="dropdown-item"
+                        href="{{ route('admin.passwordChange') }}"
+                    >
+                        {{ __('common.Password Change') }}
+                    </a>
+                    <a
+                        class="dropdown-item"
                         href="#"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                     >

@@ -17,6 +17,10 @@ class UpdateRequestTest extends TestCase
      */
     private array $baseRequest;
 
+    /**
+     * 各テストの実行前に起動する。
+     * @return void
+     */
     public function setUp(): void
     {
         parent::setUp();

@@ -7,6 +7,7 @@ return [
     'EMail' => 'メールアドレス',
     'Password' => 'パスワード',
     'HOME' => 'HOME',
+    'Password Change' => 'パスワード変更',
     'Welcom!' => 'ようこそ！',
     'Regist' => '新規登録',
     'Search Condition' => '検索条件',
