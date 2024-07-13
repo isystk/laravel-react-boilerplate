@@ -7,6 +7,9 @@ use App\Enums\Gender;
 use App\Http\Requests\Admin\ContactForm\UpdateRequest;
 use Exception;
 use Illuminate\Support\Facades\Validator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class UpdateRequestTest extends TestCase
@@ -36,20 +39,22 @@ class UpdateRequestTest extends TestCase
         ];
     }
 
-    /**
-     * @test
-     * @group validate
+     /**
+     * バリデーションのテスト
      * @param array<string> $attrs 変更する値の配列
      * @param boolean $expect 期待されるバリデーション結果
      * @param string $attribute 属性の名称
      * @param array<string> $messages 期待されるエラーメッセージ
      * @throws Exception
-     * @dataProvider dataValidate
      */
+    #[Test]
+    #[Group('validate')]
+    #[DataProvider('dataValidate')]
     public function validate(array $attrs, bool $expect, string $attribute, array $messages): void
     {
         //リクエストデータ作成
         $requestData = [...$this->baseRequest, ...$attrs];
+        $this->request->merge($requestData);
         //バリデーションルール取得
         $rules     = $this->request->rules();
         $validator = Validator::make($requestData, $rules, $this->request->messages(), $this->request->attributes());

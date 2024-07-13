@@ -7,6 +7,9 @@ use App\Enums\Gender;
 use App\Http\Requests\Api\ContactForm\StoreRequest;
 use Exception;
 use Illuminate\Support\Facades\Validator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class StoreRequestTest extends TestCase
@@ -34,15 +37,15 @@ class StoreRequestTest extends TestCase
     }
 
     /**
-     * @test
-     * @group validate
      * @param array<string> $attrs 変更する値の配列
      * @param boolean $expect 期待されるバリデーション結果
      * @param string $attribute 属性の名称
      * @param array<string> $messages 期待されるエラーメッセージ
      * @throws Exception
-     * @dataProvider dataValidate
      */
+    #[Test]
+    #[Group('validate')]
+    #[DataProvider('dataValidate')]
     public function validate(array $attrs, bool $expect, string $attribute, array $messages): void
     {
         //リクエストデータ作成
