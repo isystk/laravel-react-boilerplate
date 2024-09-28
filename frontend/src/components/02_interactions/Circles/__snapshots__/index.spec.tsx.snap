@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Circles Match Snapshot 1`] = `
+<div
+  className="css-1wwfi4"
+>
+  <ul
+    className="css-10ffb9g"
+  >
+    <li
+      className="css-i6ammj"
+    />
+    <li
+      className="css-l07tar"
+    />
+    <li
+      className="css-1hre2z7"
+    />
+    <li
+      className="css-p2xyi8"
+    />
+    <li
+      className="css-u8edpl"
+    />
+    <li
+      className="css-ik3prs"
+    />
+    <li
+      className="css-1wh69e5"
+    />
+    <li
+      className="css-1cg3at6"
+    />
+    <li
+      className="css-1iaru34"
+    />
+    <li
+      className="css-1io9drp"
+    />
+  </ul>
+  <div
+    className="relative"
+  >
+    <div
+      style={
+        {
+          "height": "600px",
+        }
+      }
+    />
+  </div>
+</div>
+`;

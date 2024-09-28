@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Loading Match Snapshot 1`] = `
+<div
+  className="css-0 fixed top-0 left-0 w-full h-full z-30 "
+>
+  <div
+    className="absolute bottom-0 right-0 p-8 flex justify-center"
+  >
+    <div
+      className="animate-spin h-10 w-10 border-4 border-gray-500 rounded-full border-t-transparent"
+    />
+  </div>
+</div>
+`;

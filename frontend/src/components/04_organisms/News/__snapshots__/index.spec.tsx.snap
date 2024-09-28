@@ -1,0 +1,117 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`News Match Snapshot 1`] = `
+<section
+  className="css-0"
+>
+  <div
+    className="flex items-center bg-base justify-center w-full"
+  >
+    <div
+      className="py-32 w-full"
+    >
+      <div
+        className="undefined css-pjt9eq css-1exhw58"
+      >
+        <p
+          className="text-black font-bold text-3xl md:mb-16 text-center"
+        >
+          NEWS
+        </p>
+      </div>
+      <div
+        className="md:px-64"
+      >
+        <div
+          className="undefined css-pjt9eq css-1exhw58"
+        >
+          <div
+            className="flex flex-wrap items-center p-8 md:mb-16"
+          >
+            <div
+              className="flex w-full md:w-1/2 justify-end items-center"
+            >
+              <div
+                className="w-full"
+              >
+                <p
+                  className="text-accent font-bold text-xl mb-4"
+                >
+                  2022.04.22
+                </p>
+                <p
+                  className="font-bold break-words mb-4"
+                >
+                  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                </p>
+              </div>
+            </div>
+            <div
+              className="flex w-full md:w-1/2 justify-center md:justify-start items-center"
+            >
+              <div
+                className="mx-4 md:mx-0 md:ml-16 rounded-lg overflow-hidden"
+              >
+                <div>
+                  <img
+                    alt="dummy"
+                    className="css-s08p0c zoom"
+                    src="/images/dummy_480x320.png"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="undefined css-pjt9eq css-1exhw58"
+        >
+          <div
+            className="bg-gray-300 flex-none h-px"
+          />
+          <div
+            className="flex flex-wrap items-center p-8 md:mb-16"
+          >
+            <div
+              className="flex w-full md:w-1/2 justify-end items-center"
+            >
+              <div
+                className="w-full"
+              >
+                <p
+                  className="text-accent font-bold text-xl mb-4"
+                >
+                  2022.04.22
+                </p>
+                <p
+                  className="font-bold break-words mb-4"
+                >
+                  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                </p>
+              </div>
+            </div>
+            <div
+              className="flex w-full md:w-1/2 justify-center md:justify-start items-center"
+            >
+              <div
+                className="mx-4 md:mx-0 md:ml-16 rounded-lg overflow-hidden"
+              >
+                <div>
+                  <img
+                    alt="dummy"
+                    className="css-s08p0c zoom"
+                    src="/images/dummy_480x320.png"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="mb-36"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+`;

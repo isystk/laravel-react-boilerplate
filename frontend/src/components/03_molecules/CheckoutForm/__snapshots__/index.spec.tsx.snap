@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CheckoutForm Match Snapshot 1`] = `
+<div>
+  <form
+    className="css-11os301"
+    onSubmit={[Function]}
+  >
+    <div
+      className="flex flex-wrap items-center md:mb-8"
+    >
+      <label
+        className="selected w-full md:w-1/2"
+        onClick={[Function]}
+      >
+        <div
+          className="border text-center rounded-lg md:mr-4 py-12 h-72 mb-8"
+        >
+          <div
+            className="mb-12"
+          >
+            その他
+          </div>
+          <div
+            className="font-bold text-5xl mb-12"
+          >
+            ¥999
+          </div>
+          <input
+            name="planId"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="radio"
+            value={1}
+          />
+        </div>
+      </label>
+    </div>
+    <div
+      className="flex flex-col mb-4"
+    >
+      <input
+        className="css-0 p-3 w-full bg-gray-200 rounded-md"
+        name="name"
+        onBlur={[Function]}
+        onChange={[Function]}
+        placeholder="your name"
+        type="text"
+      />
+    </div>
+    <div
+      className="flex flex-col mb-4"
+    >
+      <input
+        className="css-0 p-3 w-full bg-gray-200 rounded-md"
+        name="email"
+        onBlur={[Function]}
+        onChange={[Function]}
+        placeholder="Email address"
+        type="email"
+      />
+    </div>
+    <div
+      className="p-4 bg-gray-200 rounded-md"
+    >
+      <div />
+    </div>
+    <div>
+      <button
+        className="bg-blue-500 rounded-md text-white border-none rounded-5 px-20 py-4 text-18 cursor-pointer mt-10"
+        disabled={true}
+        type="submit"
+      >
+        Buy Now
+      </button>
+    </div>
+  </form>
+  <div
+    className="css-0 fixed top-0 left-0 w-full h-full z-30 hidden"
+  >
+    <div
+      className="absolute bottom-0 right-0 p-8 flex justify-center"
+    >
+      <div
+        className="animate-spin h-10 w-10 border-4 border-gray-500 rounded-full border-t-transparent"
+      />
+    </div>
+  </div>
+</div>
+`;

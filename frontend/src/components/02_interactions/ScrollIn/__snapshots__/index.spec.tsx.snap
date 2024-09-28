@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ScrollIn Match Snapshot 1`] = `
+<div
+  className="undefined css-pjt9eq css-xrumgy"
+>
+  <div>
+    Hello!
+  </div>
+</div>
+`;

@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input Match Snapshot 1`] = `
+<input
+  className="css-0 p-3 w-full bg-gray-200 rounded-md"
+  name="email"
+  onBlur={[Function]}
+  onChange={[Function]}
+  placeholder="メールアドレス"
+  type="email"
+/>
+`;

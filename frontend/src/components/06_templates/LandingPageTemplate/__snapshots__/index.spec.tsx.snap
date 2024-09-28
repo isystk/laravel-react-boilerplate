@@ -1,0 +1,569 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LandingPageTemplate Match Snapshot 1`] = `
+<DocumentFragment>
+  <header
+    class="css-0 bg-main z-50 flex justify-between items-center h-16 px-4 py-4 sm:px-8 w-full"
+  >
+    <a
+      class="css-0"
+      href="#"
+    >
+      <div
+        class="w-20 md:w-40"
+      >
+        <img
+          class="css-s08p0c "
+          src="/images/logo.png"
+        />
+      </div>
+    </a>
+    <div
+      class="flex pr-3 z-50 md:hidden "
+    >
+      <button
+        class="space-y-2 css-jgxxba"
+      >
+        <div
+          class="w-6 h-0.5 bg-black"
+        />
+        <div
+          class="w-6 h-0.5 bg-black"
+        />
+        <div
+          class="w-6 h-0.5 bg-black"
+        />
+      </button>
+    </div>
+    <nav
+      class="hidden sm:block"
+    >
+      <ul
+        class="flex gap-6"
+      >
+        <li>
+          <a
+            href="http://localhost:9000/"
+            rel=""
+          >
+            Home
+          </a>
+        </li>
+        <li>
+          <a
+            href="http://localhost:9000/product/prod_NpvV9ohJIlgElI/payment"
+            rel=""
+          >
+            Rates
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://blog.isystk.com/contact/"
+            rel="noreferrer"
+            target="_blank"
+          >
+            Contact Us
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <section
+    class="css-0"
+    style="height: calc(100vh - 4rem);"
+  >
+    <div
+      class="flex flex-wrap items-center h-full bg-main justify-center"
+    >
+      <div
+        class="flex w-full md:w-1/2 justify-center md:justify-end md:pr-16"
+      >
+        <div
+          class="w-36 md:w-72"
+        >
+          <img
+            alt="Line App"
+            class="css-s08p0c "
+            src="/images/iphone.png"
+          />
+        </div>
+      </div>
+      <div
+        class="flex w-full md:w-1/2 justify-center md:justify-start pb-8"
+      >
+        <div
+          class="px-8"
+        >
+          <div
+            class="undefined css-1atwhfb css-1exhw58"
+          >
+            <p
+              class="text-accent text-xl md:text-3xl font-bold mb-6 "
+            >
+              One million registered within one month of release!
+            </p>
+          </div>
+          <div
+            class="undefined css-1atwhfb css-xrumgy"
+          >
+            <h1
+              class="text-gray-700 text-2xl md:text-4xl font-bold mb-6 "
+            >
+              The topic of ________. 
+              <br />
+               Available on line!
+            </h1>
+          </div>
+          <div
+            class="undefined css-1atwhfb css-6y95dw"
+          >
+            <a
+              class="css-0 p-2 pl-4 pr-4 flex items-center justify-center bg-accent rounded-full"
+              href="#"
+            >
+              <img
+                alt="Add me as a friend and ask me a question"
+                height="50px"
+                src="/images/icon-line.png"
+                width="50px"
+              />
+              <span
+                class="text-white font-bold"
+              >
+                Add me as a friend and ask me a question
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section
+    class="css-0"
+  >
+    <div
+      class="flex items-center bg-black justify-center w-full"
+    >
+      <div
+        class="py-32 w-full"
+      >
+        <div
+          class="undefined css-1atwhfb css-1exhw58"
+        >
+          <p
+            class="text-white font-bold text-3xl md:mb-16 text-center"
+          >
+            PRICE
+          </p>
+        </div>
+        <div
+          class="flex flex-wrap items-center p-8 md:mb-16"
+        >
+          <div
+            class="flex w-full md:w-1/2 justify-end items-center"
+          >
+            <div
+              class="w-full md:w-72 md:mr-8 css-1atwhfb css-1exhw58"
+            >
+              <div
+                class="bg-white bg-opacity-20 rounded-lg py-16 h-64 mb-8 md:mb-0"
+              >
+                <p
+                  class="text-white text-center mb-8"
+                >
+                  Limited number of chats
+                </p>
+                <p
+                  class="text-white font-bold text-center text-5xl"
+                >
+                  free
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="flex w-full md:w-1/2 justify-start items-center"
+          >
+            <div
+              class="w-full md:w-72 md:ml-8 css-1atwhfb css-1exhw58"
+            >
+              <div
+                class="bg-white bg-opacity-20 rounded-lg py-16 h-64 "
+              >
+                <p
+                  class="text-white text-center mb-8"
+                >
+                  Unlimited Chat
+                </p>
+                <div
+                  class="px-8"
+                >
+                  <p
+                    class="text-white font-bold text-left text-4xl"
+                  >
+                    <span
+                      class="text-white text-xl mr-4"
+                    >
+                      monthly
+                    </span>
+                    ¥980
+                  </p>
+                  <p
+                    class="text-white font-bold text-left text-4xl"
+                  >
+                    <span
+                      class="text-white text-xl mr-4"
+                    >
+                      yearly
+                    </span>
+                    ¥9,800
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex items-center justify-center px-8"
+        >
+          <a
+            class="css-0 p-2 pl-4 pr-4 flex items-center justify-center bg-accent rounded-full"
+            href="#"
+          >
+            <img
+              alt="Add me as a friend and ask me a question"
+              height="50px"
+              src="/images/icon-line.png"
+              width="50px"
+            />
+            <span
+              class="text-white font-bold"
+            >
+              Add me as a friend and ask me a question
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div
+    class="h-96"
+  />
+  <section
+    class="css-0"
+  >
+    <div
+      class="flex items-center bg-base justify-center w-full"
+    >
+      <div
+        class="py-32 w-full"
+      >
+        <div
+          class="undefined css-1atwhfb css-1exhw58"
+        >
+          <p
+            class="text-black font-bold text-3xl md:mb-16 text-center"
+          >
+            NEWS
+          </p>
+        </div>
+        <div
+          class="md:px-64"
+        >
+          <div
+            class="undefined css-1atwhfb css-1exhw58"
+          >
+            <div
+              class="flex flex-wrap items-center p-8 md:mb-16"
+            >
+              <div
+                class="flex w-full md:w-1/2 justify-end items-center"
+              >
+                <div
+                  class="w-full"
+                >
+                  <p
+                    class="text-accent font-bold text-xl mb-4"
+                  >
+                    2022.04.22
+                  </p>
+                  <p
+                    class="font-bold break-words mb-4"
+                  >
+                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                  </p>
+                </div>
+              </div>
+              <div
+                class="flex w-full md:w-1/2 justify-center md:justify-start items-center"
+              >
+                <div
+                  class="mx-4 md:mx-0 md:ml-16 rounded-lg overflow-hidden"
+                >
+                  <div>
+                    <img
+                      alt="dummy"
+                      class="css-s08p0c zoom"
+                      src="/images/dummy_480x320.png"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="undefined css-1atwhfb css-1exhw58"
+          >
+            <div
+              class="bg-gray-300 flex-none h-px"
+            />
+            <div
+              class="flex flex-wrap items-center p-8 md:mb-16"
+            >
+              <div
+                class="flex w-full md:w-1/2 justify-end items-center"
+              >
+                <div
+                  class="w-full"
+                >
+                  <p
+                    class="text-accent font-bold text-xl mb-4"
+                  >
+                    2022.04.22
+                  </p>
+                  <p
+                    class="font-bold break-words mb-4"
+                  >
+                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                  </p>
+                </div>
+              </div>
+              <div
+                class="flex w-full md:w-1/2 justify-center md:justify-start items-center"
+              >
+                <div
+                  class="mx-4 md:mx-0 md:ml-16 rounded-lg overflow-hidden"
+                >
+                  <div>
+                    <img
+                      alt="dummy"
+                      class="css-s08p0c zoom"
+                      src="/images/dummy_480x320.png"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="mb-36"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer
+    class="css-0 relative"
+  >
+    <div
+      class="absolute left-0 right-0 -mt-64 md:-mt-32"
+    >
+      <div
+        class="flex w-full md:w-4/5 bg-main rounded-tr-full py-24 px-8 pb-16"
+      />
+      <div
+        class="flex flex-wrap w-full md:w-4/5 bg-main md:px-40 pb-16"
+      >
+        <div
+          class="flex w-full md:w-1/2 justify-center md:justify-end items-center md:pr-8 mb-8"
+        >
+          <div>
+            <img
+              alt="line-me"
+              class="css-s08p0c "
+              loading="lazy"
+              src="https://qr-official.line.me/gs/M_618ecvqb_GW.png"
+            />
+          </div>
+        </div>
+        <div
+          class="flex w-full md:w-1/2 justify-center md:justify-start items-center md:pl-8"
+        >
+          <div
+            class="px-8 md:px-0"
+          >
+            <p
+              class="text-accent text-xl md:text-3xl font-bold mb-6 "
+            >
+              Why is the sky blue? 
+              <br />
+               Tell me a delicious recipe! 
+              <br />
+               and more!
+            </p>
+            <a
+              class="css-0 p-2 pl-4 pr-4 flex items-center justify-center bg-accent rounded-full"
+              href="#"
+            >
+              <img
+                alt="Add me as a friend and ask me a question"
+                height="50px"
+                src="/images/icon-line.png"
+                width="50px"
+              />
+              <span
+                class="text-white font-bold"
+              >
+                Add me as a friend and ask me a question
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="bg-accent rounded-tl-full py-36 px-8 pb-16"
+    />
+    <div
+      class="bg-accent py-96 px-8 pb-16"
+    >
+      <nav
+        class="flex flex-wrap items-center justify-center"
+      >
+        <a
+          class="w-full mb-6 md:w-48"
+          href="https://blog.isystk.com/company/"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <p
+            class="text-white text-center font-bold"
+          >
+            Company
+          </p>
+        </a>
+        <a
+          class="w-full mb-6 md:w-48"
+          href="https://blog.isystk.com/privacy-poricy/"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <p
+            class="text-white text-center font-bold"
+          >
+            Privcy Policy
+          </p>
+        </a>
+        <a
+          class="w-full mb-6 md:w-48"
+          href="https://blog.isystk.com/contact/"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <p
+            class="text-white text-center font-bold"
+          >
+            Contact Us
+          </p>
+        </a>
+        <a
+          class="w-full mb-6 md:w-48"
+          href="https://twitter.com/ise0615"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <p
+            class="text-white text-center font-bold"
+          >
+            <svg
+              class="text-white h-6 w-6 m-auto"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M8.12 20.329c7.75 0 11.99-6.414 11.99-11.989v-.546c.823-.597 1.534-1.336 2.097-2.184-.759.338-1.562.566-2.396.668a4.192 4.192 0 0 0 1.836-2.315 8.331 8.331 0 0 1-2.65 1.011 4.156 4.156 0 0 0-7.113 3.795 11.817 11.817 0 0 1-8.583-4.34 4.156 4.156 0 0 0 1.288 5.559A4.103 4.103 0 0 1 2.3 7.627v.055a4.156 4.156 0 0 0 3.32 4.072 4.16 4.16 0 0 1-1.868.071 4.155 4.155 0 0 0 3.87 2.878 8.343 8.343 0 0 1-5.164 1.78A8.756 8.756 0 0 1 0 16.736 11.722 11.722 0 0 0 8.12 20.33"
+              />
+            </svg>
+          </p>
+        </a>
+      </nav>
+      <div
+        class="flex items-center justify-center "
+      >
+        <p
+          class="text-white text-center text-sm"
+        >
+          © 2023 Ise Inc. All Right Reserved. Illustration by Yoshitaka Ise
+        </p>
+      </div>
+    </div>
+  </footer>
+  <button
+    class="css-0 fixed bottom-6 md:bottom-20 right-6 md:right-20 w-12 md:w-16 h-12 md:h-16 border-none bg-main rounded-full cursor-pointer transition-opacity duration-200 ease-in-out css-14nb29t"
+  >
+    <span
+      class="text-bold text-gray-600"
+    >
+      ^
+    </span>
+  </button>
+  <div
+    class="md:hidden"
+  >
+    <div
+      class="undefined fixed top-0 right-0 z-30 bg-base h-screen w-64 css-hc9ocb"
+    >
+      <div
+        class="mt-24"
+      />
+      <ul
+        class="list-none"
+      >
+        <li
+          class="py-4"
+        >
+          <a
+            class="block text-gray-700 font-bold whitespace-nowrap px-4"
+            href="http://localhost:9000/"
+            rel=""
+          >
+            Home
+          </a>
+        </li>
+        <li
+          class="py-4"
+        >
+          <a
+            class="block text-gray-700 font-bold whitespace-nowrap px-4"
+            href="http://localhost:9000/product/prod_NpvV9ohJIlgElI/payment"
+            rel=""
+          >
+            Rates
+          </a>
+        </li>
+        <li
+          class="py-4"
+        >
+          <a
+            class="block text-gray-700 font-bold whitespace-nowrap px-4"
+            href="https://blog.isystk.com/contact/"
+            rel="noreferrer"
+            target="_blank"
+          >
+            Contact Us
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div
+      class="hidden z-20 bg-black opacity-50 fixed top-0 w-full h-screen"
+    />
+  </div>
+  <script
+    type="application/ld+json"
+  >
+    {"@context":"https://schema.org/","@type":"Article","image":["http://localhost:9000/images/logo.png"],"datePublished":"2023-05-20T00:00:00Z","author":{"@type":"Person","name":"Yoshitaka Ise","url":"https://profile.isystk.com"},"publisher":{"@type":"Organization","name":"サンプル商品","logo":{"@type":"ImageObject","url":"http://localhost:9000/images/iphone.png","width":430,"height":861}},"description":"ここに商品の説明を記載します。"}
+  </script>
+</DocumentFragment>
+`;

@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SlideMenu Match Snapshot 1`] = `
+[
+  <div
+    className="undefined fixed top-0 right-0 z-30 bg-base h-screen w-64 css-1mfqb2z"
+  >
+    <div
+      className="mt-24"
+    />
+    <ul
+      className="list-none"
+    >
+      <li
+        className="py-4"
+      >
+        <a
+          className="block text-gray-700 font-bold whitespace-nowrap px-4"
+          href="https://menu1"
+          rel=""
+        >
+          Menu1
+        </a>
+      </li>
+      <li
+        className="py-4"
+      >
+        <a
+          className="block text-gray-700 font-bold whitespace-nowrap px-4"
+          href="https://menu2"
+          rel=""
+        >
+          Menu2
+        </a>
+      </li>
+      <li
+        className="py-4"
+      >
+        <a
+          className="block text-gray-700 font-bold whitespace-nowrap px-4"
+          href="https://menu3"
+          rel="noreferrer"
+          target="_blank"
+        >
+          Menu3
+        </a>
+      </li>
+    </ul>
+  </div>,
+  <div
+    className="block z-20 bg-black opacity-50 fixed top-0 w-full h-screen"
+    onClick={[Function]}
+  />,
+]
+`;

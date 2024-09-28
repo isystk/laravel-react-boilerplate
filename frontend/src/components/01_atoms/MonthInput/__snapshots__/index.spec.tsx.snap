@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MonthInput Match Snapshot 1`] = `
+<div
+  className="react-month-picker"
+>
+  <input
+    className="css-0 p-3 bg-gray-200  border border-gray-200 rounded  leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+    onBlur={[Function]}
+    onChange={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onMouseDown={[Function]}
+    onPaste={[Function]}
+    placeholder="生年月日"
+    type="text"
+    value=""
+  />
+</div>
+`;

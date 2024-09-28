@@ -1,0 +1,130 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer Match Snapshot 1`] = `
+[
+  <footer
+    className="css-0 relative"
+  >
+    <div
+      className="absolute left-0 right-0 -mt-64 md:-mt-32"
+    >
+      <div
+        className="flex w-full md:w-4/5 bg-main rounded-tr-full py-24 px-8 pb-16"
+      />
+      <div
+        className="flex flex-wrap w-full md:w-4/5 bg-main md:px-40 pb-16"
+      >
+        <div
+          className="flex w-full md:w-1/2 justify-center md:justify-end items-center md:pr-8 mb-8"
+        >
+          <div>
+            <img
+              alt="line-me"
+              className="css-s08p0c "
+              loading="lazy"
+              src="https://qr-official.line.me/gs/M_618ecvqb_GW.png"
+            />
+          </div>
+        </div>
+        <div
+          className="flex w-full md:w-1/2 justify-center md:justify-start items-center md:pl-8"
+        >
+          <div
+            className="px-8 md:px-0"
+          >
+            <p
+              className="text-accent text-xl md:text-3xl font-bold mb-6 "
+            >
+              Why is the sky blue? 
+              <br />
+               Tell me a delicious recipe! 
+              <br />
+               and more!
+            </p>
+            <a
+              className="css-0 p-2 pl-4 pr-4 flex items-center justify-center bg-accent rounded-full"
+              href="#"
+            >
+              <img
+                alt="Add me as a friend and ask me a question"
+                height="50px"
+                src="/images/icon-line.png"
+                width="50px"
+              />
+              <span
+                className="text-white font-bold"
+              >
+                Add me as a friend and ask me a question
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="bg-accent rounded-tl-full py-36 px-8 pb-16"
+    />
+    <div
+      className="bg-accent py-96 px-8 pb-16"
+    >
+      <nav
+        className="flex flex-wrap items-center justify-center"
+      >
+        <a
+          className="w-full mb-6 md:w-48"
+          href="https://menu1"
+          rel=""
+        >
+          <p
+            className="text-white text-center font-bold"
+          >
+            Menu1
+          </p>
+        </a>
+        <a
+          className="w-full mb-6 md:w-48"
+          href="https://menu2"
+          rel=""
+        >
+          <p
+            className="text-white text-center font-bold"
+          >
+            Menu2
+          </p>
+        </a>
+        <a
+          className="w-full mb-6 md:w-48"
+          href="https://menu3"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <p
+            className="text-white text-center font-bold"
+          >
+            Menu3
+          </p>
+        </a>
+      </nav>
+      <div
+        className="flex items-center justify-center "
+      >
+        <p
+          className="text-white text-center text-sm"
+        >
+          © 2023 Ise Inc. All Right Reserved. Illustration by Yoshitaka Ise
+        </p>
+      </div>
+    </div>
+  </footer>,
+  <button
+    className="css-0 fixed bottom-6 md:bottom-20 right-6 md:right-20 w-12 md:w-16 h-12 md:h-16 border-none bg-main rounded-full cursor-pointer transition-opacity duration-200 ease-in-out css-14nb29t"
+    onClick={[Function]}
+  >
+    <span
+      className="text-bold text-gray-600"
+    >
+      ^
+    </span>
+  </button>,
+]
+`;

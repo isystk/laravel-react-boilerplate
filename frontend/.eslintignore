@@ -1,0 +1,35 @@
+# Common
+.github
+node_modules
+dist
+.nuxt
+coverage
+
+# Internals
+.storybook
+.vscode
+.idea
+internals
+stories
+tools
+
+# build file 
+out/**
+
+# static file 
+public/**
+
+# config file 
+.eslintrc.js
+next.config.js
+
+# docker
+docker/**
+
+# sam
+aws-sam
+
+# amplify
+amplify
+
+src/models

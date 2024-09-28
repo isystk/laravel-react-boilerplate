@@ -16,7 +16,7 @@ services:
      - ./apache/conf.d:/etc/apache2/conf.d
      - ./apache/ssl:/etc/apache2/ssl
      - ./apache/logs:/var/log/apache2
-     - ..:/var/www/html
+     - ../backend:/var/www/html
 
   php:
     image: laraec/php
@@ -30,7 +30,7 @@ services:
     volumes:
      - ./php/logs:/var/log/php
      - ./php/php.ini:/usr/local/etc/php/php.ini
-     - ..:/var/www/html
+     - ../backend:/var/www/html
 
   mysql:
     image: laraec/mysql

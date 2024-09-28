@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Hamburger Match Snapshot 1`] = `
+<button
+  className="space-y-2 css-jgxxba"
+  onClick={[Function]}
+>
+  <div
+    className="w-6 h-0.5 bg-black"
+  />
+  <div
+    className="w-6 h-0.5 bg-black"
+  />
+  <div
+    className="w-6 h-0.5 bg-black"
+  />
+</button>
+`;

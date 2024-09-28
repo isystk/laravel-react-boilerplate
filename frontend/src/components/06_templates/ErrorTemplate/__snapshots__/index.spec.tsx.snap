@@ -1,0 +1,157 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LandingPageTemplate Match Snapshot 1`] = `
+<DocumentFragment>
+  <header
+    class="css-0 bg-main z-50 flex justify-between items-center h-16 px-4 py-4 sm:px-8 w-full"
+  >
+    <a
+      class="css-0"
+      href="#"
+    >
+      <div
+        class="w-20 md:w-40"
+      >
+        <img
+          class="css-s08p0c "
+          src="/images/logo.png"
+        />
+      </div>
+    </a>
+    <div
+      class="flex pr-3 z-50 md:hidden "
+    >
+      <button
+        class="space-y-2 css-jgxxba"
+      >
+        <div
+          class="w-6 h-0.5 bg-black"
+        />
+        <div
+          class="w-6 h-0.5 bg-black"
+        />
+        <div
+          class="w-6 h-0.5 bg-black"
+        />
+      </button>
+    </div>
+    <nav
+      class="hidden sm:block"
+    >
+      <ul
+        class="flex gap-6"
+      >
+        <li>
+          <a
+            href="http://localhost:9000/"
+            rel=""
+          >
+            Home
+          </a>
+        </li>
+        <li>
+          <a
+            href="http://localhost:9000/product/prod_NpvV9ohJIlgElI/payment"
+            rel=""
+          >
+            Rates
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://blog.isystk.com/contact/"
+            rel="noreferrer"
+            target="_blank"
+          >
+            Contact Us
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <div
+    class="flex items-center justify-center"
+  >
+    <div
+      class="p-3 md:p-32 w-full "
+    >
+      <div
+        class="py-8"
+      >
+        <p
+          class="font-bold text-3xl md:mb-16 text-center"
+        >
+          404 Error
+        </p>
+        <div
+          class="flex flex-wrap items-center p-8 md:mb-16"
+        >
+          <div
+            class="flex w-full justify-center items-center"
+          >
+            <p
+              class="text-2xl "
+            >
+              The page could not be displayed properly. 
+              <br />
+              Please check the information you entered and try again in a few minutes.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="md:hidden"
+  >
+    <div
+      class="undefined fixed top-0 right-0 z-30 bg-base h-screen w-64 css-hc9ocb"
+    >
+      <div
+        class="mt-24"
+      />
+      <ul
+        class="list-none"
+      >
+        <li
+          class="py-4"
+        >
+          <a
+            class="block text-gray-700 font-bold whitespace-nowrap px-4"
+            href="http://localhost:9000/"
+            rel=""
+          >
+            Home
+          </a>
+        </li>
+        <li
+          class="py-4"
+        >
+          <a
+            class="block text-gray-700 font-bold whitespace-nowrap px-4"
+            href="http://localhost:9000/product/prod_NpvV9ohJIlgElI/payment"
+            rel=""
+          >
+            Rates
+          </a>
+        </li>
+        <li
+          class="py-4"
+        >
+          <a
+            class="block text-gray-700 font-bold whitespace-nowrap px-4"
+            href="https://blog.isystk.com/contact/"
+            rel="noreferrer"
+            target="_blank"
+          >
+            Contact Us
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div
+      class="hidden z-20 bg-black opacity-50 fixed top-0 w-full h-screen"
+    />
+  </div>
+</DocumentFragment>
+`;

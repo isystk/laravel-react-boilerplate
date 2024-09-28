@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Price Match Snapshot 1`] = `
+<section
+  className="css-0"
+>
+  <div
+    className="flex items-center bg-black justify-center w-full"
+  >
+    <div
+      className="py-32 w-full"
+    >
+      <div
+        className="undefined css-pjt9eq css-1exhw58"
+      >
+        <p
+          className="text-white font-bold text-3xl md:mb-16 text-center"
+        >
+          PRICE
+        </p>
+      </div>
+      <div
+        className="flex flex-wrap items-center p-8 md:mb-16"
+      >
+        <div
+          className="flex w-full md:w-1/2 justify-end items-center"
+        >
+          <div
+            className="w-full md:w-72 md:mr-8 css-pjt9eq css-1exhw58"
+          >
+            <div
+              className="bg-white bg-opacity-20 rounded-lg py-16 h-64 mb-8 md:mb-0"
+            >
+              <p
+                className="text-white text-center mb-8"
+              >
+                Limited number of chats
+              </p>
+              <p
+                className="text-white font-bold text-center text-5xl"
+              >
+                free
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          className="flex w-full md:w-1/2 justify-start items-center"
+        >
+          <div
+            className="w-full md:w-72 md:ml-8 css-pjt9eq css-1exhw58"
+          >
+            <div
+              className="bg-white bg-opacity-20 rounded-lg py-16 h-64 "
+            >
+              <p
+                className="text-white text-center mb-8"
+              >
+                Unlimited Chat
+              </p>
+              <div
+                className="px-8"
+              >
+                <p
+                  className="text-white font-bold text-left text-4xl"
+                >
+                  <span
+                    className="text-white text-xl mr-4"
+                  >
+                    monthly
+                  </span>
+                  ¥980
+                </p>
+                <p
+                  className="text-white font-bold text-left text-4xl"
+                >
+                  <span
+                    className="text-white text-xl mr-4"
+                  >
+                    yearly
+                  </span>
+                  ¥9,800
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="flex items-center justify-center px-8"
+      >
+        <a
+          className="css-0 p-2 pl-4 pr-4 flex items-center justify-center bg-accent rounded-full"
+          href="#"
+        >
+          <img
+            alt="Add me as a friend and ask me a question"
+            height="50px"
+            src="/images/icon-line.png"
+            width="50px"
+          />
+          <span
+            className="text-white font-bold"
+          >
+            Add me as a friend and ask me a question
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+`;

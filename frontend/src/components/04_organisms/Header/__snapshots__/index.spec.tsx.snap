@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LandingPageTemplate Match Snapshot 1`] = `
+<DocumentFragment>
+  <header
+    class="css-0 bg-main z-50 flex justify-between items-center h-16 px-4 py-4 sm:px-8 w-full"
+  >
+    <a
+      class="css-0"
+      href="#"
+    >
+      <div
+        class="w-20 md:w-40"
+      >
+        <img
+          class="css-s08p0c "
+          src="/images/logo.png"
+        />
+      </div>
+    </a>
+    <div
+      class="flex pr-3 z-50 md:hidden fixed right-5"
+    >
+      <button
+        class="space-y-2 css-jgxxba"
+      >
+        <div
+          class="w-6 h-0.5 bg-black translate-y-2.5 rotate-45"
+        />
+        <div
+          class="w-6 h-0.5 bg-black -rotate-45"
+        />
+        <div
+          class="opacity-0"
+        />
+      </button>
+    </div>
+    <nav
+      class="hidden sm:block"
+    >
+      <ul
+        class="flex gap-6"
+      >
+        <li>
+          <a
+            href="https://menu1"
+            rel=""
+          >
+            Menu1
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://menu2"
+            rel=""
+          >
+            Menu2
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://menu3"
+            rel="noreferrer"
+            target="_blank"
+          >
+            Menu3
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+</DocumentFragment>
+`;

@@ -1,0 +1,2 @@
+﻿﻿"ID","名前","メールアドレス","権限"
+"1","管理者A","sample@sample.com","high-manager"

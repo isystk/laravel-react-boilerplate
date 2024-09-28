@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainVisual Match Snapshot 1`] = `
+<section
+  className="css-0"
+  style={
+    {
+      "height": "calc(100vh - 4rem)",
+    }
+  }
+>
+  <div
+    className="flex flex-wrap items-center h-full bg-main justify-center"
+  >
+    <div
+      className="flex w-full md:w-1/2 justify-center md:justify-end md:pr-16"
+    >
+      <div
+        className="w-36 md:w-72"
+      >
+        <img
+          alt="Line App"
+          className="css-s08p0c "
+          src="/images/iphone.png"
+        />
+      </div>
+    </div>
+    <div
+      className="flex w-full md:w-1/2 justify-center md:justify-start pb-8"
+    >
+      <div
+        className="px-8"
+      >
+        <div
+          className="undefined css-pjt9eq css-1exhw58"
+        >
+          <p
+            className="text-accent text-xl md:text-3xl font-bold mb-6 "
+          >
+            One million registered within one month of release!
+          </p>
+        </div>
+        <div
+          className="undefined css-pjt9eq css-xrumgy"
+        >
+          <h1
+            className="text-gray-700 text-2xl md:text-4xl font-bold mb-6 "
+          >
+            The topic of ________. 
+            <br />
+             Available on line!
+          </h1>
+        </div>
+        <div
+          className="undefined css-pjt9eq css-6y95dw"
+        >
+          <a
+            className="css-0 p-2 pl-4 pr-4 flex items-center justify-center bg-accent rounded-full"
+            href="#"
+          >
+            <img
+              alt="Add me as a friend and ask me a question"
+              height="50px"
+              src="/images/icon-line.png"
+              width="50px"
+            />
+            <span
+              className="text-white font-bold"
+            >
+              Add me as a friend and ask me a question
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+`;

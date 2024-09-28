@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LineButton Match Snapshot 1`] = `
+<a
+  className="css-0 p-2 pl-4 pr-4 flex items-center justify-center bg-accent rounded-full"
+  href="#"
+>
+  <img
+    alt="友達に追加して質問してみる"
+    height="50px"
+    src="/images/icon-line.png"
+    width="50px"
+  />
+  <span
+    className="text-white font-bold"
+  >
+    友達に追加して質問してみる
+  </span>
+</a>
+`;

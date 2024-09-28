@@ -193,33 +193,35 @@ $ brew install mysql-client
 │   ├── phpmyadmin （DB管理ツール）
 │   └── s3 （オブジェクトストレージ）
 │
-├── app
-│   ├── Console (バッチ)
-│   ├── Domain（ドメイン層）
-│   │   ├── Entities（エンティティ）
-│   │   └── Repositories（リポジトリー）
-│   ├── Enums (定数)
-│   ├── Exceptions (例外処理)
-│   ├── Http （プレゼンテーション層）
-│   ├── Providers（サービスプロバイダー）
-│   ├── Services（ビジネスロジック）
-│   └── Utils（共通ユーティル）
-├── bootstrap
-├── config
-├── database
-├── public
-├── resources
-│   ├── lang
-│   ├── assets
-│   │   ├── admin（管理画面用のJavaScript、SASS）
-│   │   └── front（フロント画面用のTypeScript,SASS）
-│   ├── layouts
-│   ├── mails
-│   └── vendor
-├── routes
-├── storage
-├── tests
-├── composer.json
+├── backend（フロントAPI及び管理画面）
+│   ├── app
+│   │   ├── Console (バッチ)
+│   │   ├── Domain（ドメイン層）
+│   │   │   ├── Entities（エンティティ）
+│   │   │   └── Repositories（リポジトリー）
+│   │   ├── Enums (定数)
+│   │   ├── Exceptions (例外処理)
+│   │   ├── Http （プレゼンテーション層）
+│   │   ├── Providers（サービスプロバイダー）
+│   │   ├── Services（ビジネスロジック）
+│   │   └── Utils（共通ユーティル）
+│   ├── bootstrap
+│   ├── config
+│   ├── database
+│   ├── public
+│   ├── resources
+│   │   ├── lang
+│   │   ├── assets
+│   │   │   ├── admin（管理画面用のJavaScript、SASS）
+│   │   │   └── front（フロント画面用のTypeScript,SASS）
+│   │   ├── layouts
+│   │   ├── mails
+│   │   └── vendor
+│   ├── routes
+│   ├── storage
+│   ├── tests
+│   └── composer.json
+├── frontend (フロント画面）
 └── dc.sh （Dockerの起動用スクリプト）
 ```
 
@@ -297,8 +299,8 @@ $ ./dc.sh php login
 # .envをコピーする
 > cp .env.example .env
 
-# モジュールをダウンロード
-> composer update
+# モジュールをインストール
+> composer install
 
 # encryption keyを生成する
 > php artisan key:generate
@@ -341,9 +343,9 @@ $ open https://localhost/
 # ブラウザでアクセス（管理画面）
 $ open https://localhost/admin/
 
-# バッチを実行する（商品CSV出力バッチ）
+# バッチを実行する（月別売上データ出力バッチ）
 $ ./dc.sh php login
-$ php artisan stockcsv
+$ php artisan export_monthly_sales ./sample.csv
 
 # サーバーを停止する場合
 $ ./dc.sh stop

@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ScrollTop Match Snapshot 1`] = `
+<button
+  className="css-0 fixed bottom-6 md:bottom-20 right-6 md:right-20 w-12 md:w-16 h-12 md:h-16 border-none bg-main rounded-full cursor-pointer transition-opacity duration-200 ease-in-out css-14nb29t"
+  onClick={[Function]}
+>
+  <span
+    className="text-bold text-gray-600"
+  >
+    ^
+  </span>
+</button>
+`;

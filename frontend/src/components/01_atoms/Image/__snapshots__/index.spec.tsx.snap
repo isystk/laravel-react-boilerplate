@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Image Match Snapshot 1`] = `
+<div
+  className="w-64 rounded-lg overflow-hidden"
+>
+  <div>
+    <img
+      alt="dummy"
+      className="css-s08p0c zoom"
+      loading="lazy"
+      src="/images/dummy_480x320.png"
+    />
+  </div>
+</div>
+`;

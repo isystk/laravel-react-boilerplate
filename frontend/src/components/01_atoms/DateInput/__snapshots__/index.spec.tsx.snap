@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DateInput Match Snapshot 1`] = `
+<div
+  className="react-datepicker-wrapper"
+>
+  <div
+    className="react-datepicker__input-container"
+  >
+    <input
+      autoComplete="off"
+      className="css-0 p-3 bg-gray-200  border border-gray-200 rounded  leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+      disabled={false}
+      name="birthday"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      placeholder="生年月日"
+      readOnly={false}
+      type="text"
+      value=""
+    />
+  </div>
+</div>
+`;

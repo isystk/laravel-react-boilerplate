@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LandingPageTemplate Match Snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="relative"
+  >
+    <button
+      class="css-0 flex items-center justify-between md:py-2 pl-3 md:pr-4 rounded md:border-0 md:p-0 "
+      data-dropdown-toggle="dropdownNavbar"
+      id="dropdownNavbarLink"
+    >
+      <span
+        class="w-32 md:w-48 md:pr-4 truncate"
+      >
+        サンプル太郎
+      </span>
+      <svg
+        aria-hidden="true"
+        class="w-5 h-5 ml-1"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          clip-rule="evenodd"
+          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+          fill-rule="evenodd"
+        />
+      </svg>
+    </button>
+    <div
+      class="hidden z-10 font-normal bg-white divide-y divide-gray-100 rounded-lg shadow absolute right-0 w-48"
+      id="dropdownNavbar"
+    >
+      <ul
+        aria-labelledby="dropdownLargeButton"
+        class="py-2 text-sm text-gray-700 dark:text-gray-400"
+      >
+        <li>
+          <a
+            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            href="#"
+          >
+            リンク1
+          </a>
+        </li>
+        <li>
+          <a
+            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            href="#"
+          >
+            リンク2
+          </a>
+        </li>
+        <li>
+          <a
+            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            href="#"
+          >
+            リンク3
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</DocumentFragment>
+`;

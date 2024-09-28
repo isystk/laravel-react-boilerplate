@@ -1,0 +1,81 @@
+## コンポーネントの作成単位について
+
+コンポーネントの粒度は「Atomic design」に基づき、
+その責務に応じて以下7つのレベルに分割、作成する。
+- atoms
+- interactions
+- molecules
+- organisms
+- layouts
+- templates
+- pages
+
+それぞれの詳細は各ディレクトリ内のreadme.txtを参照。
+
+## コンポーネントの実装について
+
+各コンポーネントは以下のレイヤー層に分けて実装する
+- Presenter 層
+- Container 層
+
+関心毎にレイヤーを分割することにより、ソース変更時の他レイヤーへの影響を切り離し、
+後の改修や依存ライブラリの変更時に手を加えやすいものとする。
+
+### 要点
+#### Presenter 層
+ DOM構造を構築することだけに注力する完全にstatelessなレイヤー。状態やロジックを持たない。<br/>
+ return を用いない記法を用い、式のみで構成する。
+
+#### Container 層
+ 状態管理ライブラリ「redux」のプラクティス。<br/>
+ 状態をもつコンポーネント(以後「Container Component」)が状態を持たないコンポーネント(以後「Stateless Component」)を包括し、
+ stateless componentに対してアプリケーションの状態を外部から接続するというアプローチ。<br/>
+ ロジックとUIの実装を切り離し、stateless componentを純粋なFunction component(関数コンポーネント)たらしめる役割を持つ。
+
+#### ※ その他
+ 状態を持たないコンポーネントに対してもContainer Componentを作成する。<br/>
+ 必要ではないが、スタイルの画一や改修の可能性を考慮して作成することとする。
+
+
+#### 記述例
+```
+import React, { FC } from 'react'
+import { ContainerProps, WithChildren } from 'types'
+import MainService from '@/services/main'
+import { useI18n } from '@/components/i18n'
+import * as styles from './styles'
+
+/** XxxxProps Props */
+export type XxxxProps = WithChildren & {
+  main: MainService
+}
+/** Presenter Props */
+export type PresenterProps = XxxxProps & { 
+  t
+}
+
+/** Presenter Component */
+const XxxxPresenter: FC<PresenterProps> = ({ children, main, t, ...props }) => (
+  <>
+  </>
+)
+
+/** Container Component */
+const XxxxContainer: React.FC<ContainerProps<XxxxProps, PresenterProps>> = ({
+  presenter,
+  ...props
+}) => {
+  const { t } = useI18n('Common')
+  
+  return presenter({
+    t,
+    ...props,
+  })
+}
+
+export default connect<XxxxProps, PresenterProps>(
+'Xxxx',
+XxxxPresenter,
+XxxxContainer
+)
+```

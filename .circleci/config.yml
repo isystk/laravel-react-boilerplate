@@ -34,6 +34,7 @@ jobs:
             - v1-dependencies-
 
       - run:
+          working_directory: backend
           command: composer install -n --prefer-dist
 
       - save_cache:
@@ -42,11 +43,14 @@ jobs:
             - ./vendor
 
       - run:
+          working_directory: backend
           command: echo "DB_HOST=127.0.0.1" >> .env.testing
       - run:
+          working_directory: backend
           command: php artisan key:generate --env=testing
 
       - run:
+          working_directory: backend
           command: |
             php artisan test --env=testing
 
