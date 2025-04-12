@@ -4,19 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>@yield('title')｜{{ config('app.name', 'Laravel') }}</title>
-
-    <script src="{{ asset('/assets/admin/js/app.js') }}"></script>
-    <script src="{{ asset('/assets/admin/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
-    <script src="https://kit.fontawesome.com/eea364082e.js" crossorigin="anonymous"></script>
+    @vite('resources/assets/admin/sass/app.scss')
+    @vite('resources/assets/admin/js/app.js')
     @yield('scripts')
-
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <link href="{{ asset('/assets/admin/css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('/assets/admin/vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini {{ auth()->guard('admin')->check() ? '' : 'no-sidemenu' }}">
 <div id="app" class="wrapper">

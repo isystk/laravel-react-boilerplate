@@ -1,0 +1,102 @@
+@mixin clearfix {
+	&::after {
+		content: '';
+		display: block;
+		clear: both;
+	}
+}
+
+@mixin mq($bp) {
+	@media #{map-get($breakpoint, $bp)} {
+		@content;
+	}
+}
+
+@mixin width-base($isBig:false, $isSmall:false) {
+	width: $width_base-l;
+	max-width: if($isBig, $width_max-l, if($isSmall, $width_max-s, $width_max));
+	margin: 0 auto;
+	@include mq(m) {
+		width: $width_base-m;
+	}
+	@include mq(s) {
+		width: $width_base-s;
+	}
+}
+
+@mixin currentNav ($bodyID) {
+	##{$bodyID} & {
+		@include navActive;
+	}
+}
+
+@mixin navActive {
+	background-color: #e5e4e4;
+}
+
+@mixin linkText($hoverTarget:null) {
+	color: $color_link;
+	text-decoration: underline;
+	@include hoverText($hoverTarget);
+}
+
+@mixin hoverText($hoverTarget:null) {
+	// hover対象の指定があればそれに、なければ自分自身のhoverにスタイル設定
+	$selector: if($hoverTarget, "#{$hoverTarget}:hover &", "&:hover");
+	#{$selector} {
+		color: $color_link-hover;
+		text-decoration: none;
+	}
+}
+
+@mixin arrow($color: #fff, $size: 7px, $weight: 2px, $direction: right) {
+	@if not map-has-key($drct-arrow, $direction) {$direction: right;}
+	&::after {
+		content: '';
+		display: inline-block;
+		position: absolute;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		margin: auto;
+		width: $size;
+		height: $size;
+		border-top: solid $weight $color;
+		border-right: solid $weight $color;
+		transform: map-get($drct-arrow, $direction);
+	}
+}
+
+@mixin tabBox_tab($title) {
+	&::before {
+		content: $title;
+		display: inline-block;
+		font-size: 1.8rem;
+		font-weight: bold;
+		padding: 2px 20px;
+		background-color: $color_main;
+		color: #fff;
+		border-radius: 7px 7px 0 0;
+	}
+}
+
+@mixin tabBox_contents {
+	padding: 30px;
+	background-color: $color_bg-gray;
+	border-top: solid 3px $color_main;
+	@include mq(s) {
+		padding: 15px;
+	}
+}
+
+@mixin text-hide {
+	text-indent: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+@mixin text-show {
+	text-indent: 0;
+	white-space: normal;
+	overflow: visible;
+}

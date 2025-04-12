@@ -1,0 +1,142 @@
+/* ===========================================================================
+  util
+============================================================================= */
+/*  margin
+------------------------------------ */
+@for $value from 0 through 10 {
+	.mt#{$value * 10} {
+		margin-top: 10px * $value !important;
+	}
+	.mr#{$value * 10} {
+		margin-right: 10px * $value !important;
+	}
+	.mb#{$value * 10} {
+		margin-bottom: 10px * $value !important;
+	}
+	.ml#{$value * 10} {
+		margin-left: 10px * $value !important;
+	}
+	@include mq(s){
+		.mt#{$value * 10} {
+			margin-top: 5px * $value !important;
+		}
+		.mr#{$value * 10} {
+			margin-right: 5px * $value !important;
+		}
+		.mb#{$value * 10} {
+			margin-bottom: 5px * $value !important;
+		}
+		.ml#{$value * 10} {
+			margin-left: 5px * $value !important;
+		}
+	}
+}
+
+/*  padding
+------------------------------------ */
+@for $value from 0 through 10 {
+	.pt#{$value * 10} {
+		padding-top: 10px * $value !important;
+	}
+	.pr#{$value * 10} {
+		padding-right: 10px * $value !important;
+	}
+	.pb#{$value * 10} {
+		padding-bottom: 10px * $value !important;
+	}
+	.pl#{$value * 10} {
+		padding-left: 10px * $value !important;
+	}
+	@include mq(s){
+		.pt#{$value * 10} {
+			padding-top: 5px * $value !important;
+		}
+		.pr#{$value * 10} {
+			padding-right: 5px * $value !important;
+		}
+		.pb#{$value * 10} {
+			padding-bottom: 5px * $value !important;
+		}
+		.pl#{$value * 10} {
+			padding-left: 5px * $value !important;
+		}
+	}
+}
+
+/*  font-size
+------------------------------------ */
+.fz-xs {
+	font-size: $font_size - 0.4rem !important;
+}
+.fz-s {
+	font-size: $font_size - 0.2rem !important;
+}
+.fz-m {
+	font-size: $font_size !important;
+}
+.fz-l {
+	font-size: $font_size + 0.2rem !important;
+}
+.fz-xl {
+	font-size: $font_size + 0.4rem !important;
+}
+
+/*  font-weight
+------------------------------------ */
+.fw-n {
+	font-weight: normal !important;
+}
+.fw-b {
+	font-weight: bold !important;
+}
+
+/*  text-align
+------------------------------------ */
+.ta-left {
+	text-align: left !important;
+}
+.ta-right {
+	text-align: right !important;
+}
+.ta-center {
+	text-align: center !important;
+}
+
+/*  vertical-align
+------------------------------------ */
+.va-top {
+	vertical-align: top !important;
+}
+.va-middle {
+	vertical-align: middle !important;
+}
+.va-bottom {
+	vertical-align: bottom !important;
+}
+.va-base {
+	vertical-align: baseline !important;
+}
+
+/*  display
+------------------------------------ */
+.d-i {
+	display: inline !important;
+}
+.d-ib {
+	display: inline-block !important;
+}
+.d-b {
+	display: block !important;
+}
+.d-none {
+	display: none !important;
+}
+
+/*  color
+------------------------------------ */
+.c-red {
+	color: $color_font-red !important;
+}
+.c-blue {
+	color: $color_main !important;
+}

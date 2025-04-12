@@ -27,3 +27,19 @@ AH00558: httpd: Could not reliably determine the server's fully qualified domain
 [Sat Apr 12 09:20:32.268841 2025] [ssl:warn] [pid 1:tid 1] AH01909: localhost:443:0 server certificate does NOT include an ID which matches the server name
 [Sat Apr 12 09:20:32.270583 2025] [mpm_prefork:notice] [pid 1:tid 1] AH00163: Apache/2.4.62 (Unix) OpenSSL/3.3.2 configured -- resuming normal operations
 [Sat Apr 12 09:20:32.270596 2025] [core:notice] [pid 1:tid 1] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Sat Apr 12 10:37:43.519538 2025] [mpm_prefork:notice] [pid 1:tid 1] AH00169: caught SIGTERM, shutting down
+[Sat Apr 12 10:38:02.769360 2025] [ssl:warn] [pid 1:tid 1] AH01909: localhost:443:0 server certificate does NOT include an ID which matches the server name
+[Sat Apr 12 10:38:02.770802 2025] [so:warn] [pid 1:tid 1] AH01574: module env_module is already loaded, skipping
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.18.0.6. Set the 'ServerName' directive globally to suppress this message
+[Sat Apr 12 10:38:02.771887 2025] [ssl:warn] [pid 1:tid 1] AH01873: Init: Session Cache is not configured [hint: SSLSessionCache]
+[Sat Apr 12 10:38:02.772858 2025] [ssl:warn] [pid 1:tid 1] AH01909: localhost:443:0 server certificate does NOT include an ID which matches the server name
+[Sat Apr 12 10:38:02.775160 2025] [mpm_prefork:notice] [pid 1:tid 1] AH00163: Apache/2.4.62 (Unix) OpenSSL/3.3.2 configured -- resuming normal operations
+[Sat Apr 12 10:38:02.775199 2025] [core:notice] [pid 1:tid 1] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
+[Sat Apr 12 10:39:58.827349 2025] [mpm_prefork:notice] [pid 1:tid 1] AH00169: caught SIGTERM, shutting down
+[Sat Apr 12 10:41:24.718859 2025] [ssl:warn] [pid 1:tid 1] AH01909: localhost:443:0 server certificate does NOT include an ID which matches the server name
+[Sat Apr 12 10:41:24.720215 2025] [so:warn] [pid 1:tid 1] AH01574: module env_module is already loaded, skipping
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.18.0.5. Set the 'ServerName' directive globally to suppress this message
+[Sat Apr 12 10:41:24.721004 2025] [ssl:warn] [pid 1:tid 1] AH01873: Init: Session Cache is not configured [hint: SSLSessionCache]
+[Sat Apr 12 10:41:24.721580 2025] [ssl:warn] [pid 1:tid 1] AH01909: localhost:443:0 server certificate does NOT include an ID which matches the server name
+[Sat Apr 12 10:41:24.723671 2025] [mpm_prefork:notice] [pid 1:tid 1] AH00163: Apache/2.4.62 (Unix) OpenSSL/3.3.2 configured -- resuming normal operations
+[Sat Apr 12 10:41:24.723687 2025] [core:notice] [pid 1:tid 1] AH00094: Command line: '/usr/sbin/httpd -D FOREGROUND'
