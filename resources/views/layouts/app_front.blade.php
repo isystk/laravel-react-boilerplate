@@ -10,7 +10,7 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-    <link href="{{ asset('/assets/front/css/app.css') }}" rel="stylesheet">
+    @vite('resources/assets/front/sass/app.scss')
 </head>
 <body>
 <div id="react-root"></div>
@@ -20,7 +20,7 @@
     laravelSession['resent'] = @if(session('resent'))'{{session('resent')}}'@else''@endif;
     var laravelErrors =@php print(htmlspecialchars_decode($errors))@endphp;
 </script>
-<script src="{{ asset('/assets/front/js/app.js') }}" defer></script>
+@vite('resources/assets/front/ts/app.tsx')
 <script src="https://js.stripe.com/v3/"></script>
 
 </body>

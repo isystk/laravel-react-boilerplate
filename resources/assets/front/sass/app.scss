@@ -1,17 +1,13 @@
 
+@use 'base';
+@use 'header';
+@use 'headerNav';
+@use 'footer';
+@use 'util';
+@use 'style';
+
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 
-// Variables
-@import 'variables';
-
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
-
-@import 'base';
-@import 'mixin';
-@import 'header';
-@import 'headerNav';
-@import 'footer';
-@import 'util';
-@import 'style';
+@import '../../../../node_modules/bootstrap/scss/bootstrap';
