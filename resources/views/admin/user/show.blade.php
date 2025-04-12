@@ -73,7 +73,7 @@
 @endsection
 
 @section('scripts')
-    <script>
+    <script type="module">
         $(function () {
             // 削除確認用のダイアログを表示
             $('.js-deleteBtn').click(function (e) {

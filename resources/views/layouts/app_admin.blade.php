@@ -7,6 +7,8 @@
     <title>@yield('title')｜{{ config('app.name', 'Laravel') }}</title>
     @vite('resources/assets/admin/sass/app.scss')
     @vite('resources/assets/admin/js/app.js')
+    @vite('resources/assets/admin/js/plugins')
+    @vite('resources/assets/admin/js/pages/common.js')
     @yield('scripts')
 </head>
 <body class="hold-transition sidebar-mini {{ auth()->guard('admin')->check() ? '' : 'no-sidemenu' }}">

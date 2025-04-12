@@ -311,7 +311,8 @@ $ ./dc.sh php login
 $ ./dc.sh php login
 
 # フロントエンドをビルドする
-$ yarn && yarn run dev
+$ npm install
+$ npm run build
 
 ```
 

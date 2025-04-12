@@ -124,7 +124,7 @@
 @endsection
 
 @section('scripts')
-    <script>
+    <script type="module">
         $(function () {
             // 画像ファイルアップロード
             $('#js-uploadImage').imageUploader({

@@ -14,7 +14,7 @@
 </head>
 <body>
 <div id="react-root"></div>
-<script>
+<script type="module">
     var laravelSession = {};
     laravelSession['status'] = @if(session('status'))'{{session('status')}}'@else''@endif;
     laravelSession['resent'] = @if(session('resent'))'{{session('resent')}}'@else''@endif;

@@ -1,7 +1,7 @@
 <aside class="main-sidebar sidebar-dark-purple elevation-4">
     <a href="{{ url('/admin') }}" class="brand-link">
         <img
-            src="{{ asset('/assets/admin/image/AdminLTELogo.png') }}"
+            src="{{ Vite::asset('resources/assets/admin/image/AdminLTELogo.png') }}"
             alt="AdminSample Logo"
             class="brand-image img-circle elevation-3"
             style="opacity: .8"
