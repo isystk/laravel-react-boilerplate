@@ -1,0 +1,41 @@
+/.phpunit.cache
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+.env
+.env.backup
+.env.production
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+npm-debug.log
+yarn-error.log
+/.fleet
+/.idea
+
+.DS_Store
+.history
+*.log
+!.gitkeep
+
+# mysql
+docker/mysql/data
+!docker/mysql/data/.gitkeep
+docker/mysql/logs
+!docker/mysql/logs/.gitkeep
+
+docker/apache/logs
+!docker/apache/logs/.gitkeep
+docker/php/logs
+!docker/php/logs/.gitkeep
+
+# s3
+docker/s3/data
+
+# job
+storage/app/import_job
+

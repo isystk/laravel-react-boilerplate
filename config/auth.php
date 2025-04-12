@@ -36,18 +36,9 @@ return [
     */
 
     'guards' => [
-        'api' => [
-            'driver' => 'token',
-            'provider' => 'users',
-            'hash' => false,
-        ],
-        'user' => [
+        'web' => [
             'driver' => 'session',
             'provider' => 'users',
-        ],
-        'admin' => [
-            'driver' => 'session',
-            'provider' => 'admins',
         ],
     ],
 
@@ -71,12 +62,13 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => \App\Domain\Entities\User::class,
+            'model' => env('AUTH_MODEL', \app\Models\User::class),
         ],
-        'admins' => [
-            'driver' => 'eloquent',
-            'model' => \App\Domain\Entities\Admin::class,
-        ],
+
+        // 'users' => [
+        //     'driver' => 'database',
+        //     'table' => 'users',
+        // ],
     ],
 
     /*
