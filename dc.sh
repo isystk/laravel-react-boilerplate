@@ -1,7 +1,7 @@
 #! /bin/bash
 
 DOCKER_HOME=./docker
-DOCKER_COMPOSE="docker-compose -f $DOCKER_HOME/docker-compose.yml"
+DOCKER_COMPOSE="docker compose -f $DOCKER_HOME/docker-compose.yml"
 
 function usage {
     cat <<EOF
