@@ -37,7 +37,7 @@ case ${1} in
     init)
         # 停止＆削除（コンテナ・イメージ・ボリューム）
         pushd $DOCKER_HOME
-        docker-compose down --rmi all --volumes
+        docker compose down --rmi all --volumes
         rm -Rf ./mysql/logs && mkdir ./mysql/logs && chmod 777 ./mysql/logs
         rm -Rf ./apache/logs && mkdir ./apache/logs && chmod 777 ./apache/logs
         rm -Rf ./php/logs && mkdir ./php/logs && chmod 777 ./php/logs
@@ -50,7 +50,7 @@ case ${1} in
 
     stop)
         pushd $DOCKER_HOME
-        docker-compose down
+        docker compose down
         popd
     ;;
 

@@ -120,7 +120,6 @@ https://laraec.isystk.com/admin/
 ## 🔧 開発環境の構築
 
 ※ この環境を利用する為には、事前にdocker、docker-composeが動作する状態であることが前提条件です。
-(Windowsの場合は、以下を参考に「WSL」と「Docker Desktop for Windows」を用意してください)
 Github CodeSpace を利用する場合は、Dockerの起動から進めてください。
 
 ### WSLのインストール（Windowsの場合）
@@ -141,38 +140,19 @@ $ update-locale LANG=ja_JP.UTF8
 $ apt -y install manpages-ja manpages-ja-dev
 ```
 
-### Docker Desktop for Windows のインストール（Windowsの場合）
-
-https://docs.docker.com/docker-for-windows/install/
-```
-↓コマンドプロンプトでバージョンが表示されればOK
-docker --version
-```
-
-### WSL2から、Docker for Windows を利用できるようにする（Windowsの場合）
+### Dockerを利用できるようにする
 
 ```
-１．Docker Desktop を開いて、Settingを開く
-２．Resourcesの「Enable integration with my default WSL distro」にチェックをつけてWSLから Docker 統合を有効にする
-３．ResourcesのWSL INTEGRATION から、"Ubuntu" をスイッチをONにします。
-
-# WSL 上にDockerとDocker Composeをインストールする。
-$ apt install docker
-$ apt install docker-compose
-
-これでWSLで起動したDockerコンテナがホストマシン側で利用できるようになります。
+# DockerとDocker Composeをインストールする。
+$ apt install -y docker-ce docker-compose
+$ service docker start
 ```
 
 ### MySQL Client のインストール
 
 ```
 # MySQLに接続する為のコマンドをインストールします。（バージョンは何でもOK）
-
-# Windowsの場合
 $ apt install mysql-client
-
-# Macの場合
-$ brew install mysql-client
 ```
 
 ## 📦 ディレクトリ構造
@@ -278,17 +258,6 @@ $ ./dc.sh start
 $ ./dc.sh mysql login
 ```
 
-minioにバケットを作成する
-
-[こちら](http://localhost:9001/)から以下のID/パスワードでログイン後、「laraec.isystk.com」という名前のバケットを作成します。
-作成後、Manage から Access Policy を「Public」に変更してバケット内ファイルを外部参照可能な状態に公開します。
-
-|Username | Password
-|----|----
-|access_key | secret_key
-
-![minio](./documents/minio.png "minio")
-
 バックエンド環境を構築する
 ```
 # PHPサーバーにログインしてみる（composer や artisan などのコマンドは基本的にここで行う）
@@ -309,28 +278,41 @@ $ ./dc.sh php login
 # ディレクトリにアクセス権限を付与
 > chmod 777 -R bootstrap/cache
 > chmod 777 -R storage
-> chmod 777 -R resources/excel
-
-# テスト用の商品画像をS3（Minio）にアップロードします。※事前に minioをセットアップしておくこと
-> php artisan s3upload
 
 # Larastan を実行してコードをチェックする
 > ./vendor/bin/phpstan analyse --memory-limit=1G
 
 # PHPUnit でテストコードを実行する
 > ./vendor/bin/phpunit tests
+
+# Jobキューを起動する
+$ php artisan queue:listen --timeout=0;
+```
+
+minioにバケットを作成する
+
+[こちら](http://localhost:9001/)から以下のID/パスワードでログイン後、「laraec.isystk.com」という名前のバケットを作成します。
+作成後、Manage から Access Policy を「Public」に変更してバケット内ファイルを外部参照可能な状態に公開します。
+
+|Username | Password
+|----|----
+|access_key | secret_key
+
+![minio](./documents/minio.png "minio")
+
+```
+# テスト用の商品画像をS3（Minio）にアップロードします。
+$ ./dc.sh php login
+> php artisan s3upload
 ```
 
 フロントエンド環境を構築する
 ```
-# PHPサーバーにログインしてみる
 $ ./dc.sh php login
 
 # フロントエンドをビルドする
 $ yarn && yarn run dev
 
-# Jobキューを起動する
-$ php artisan queue:listen --timeout=0;
 ```
 
 その他（補足）
