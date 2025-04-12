@@ -53,6 +53,10 @@ class IndexService extends BaseService
                 continue;
             }
             $dirName = substr($file, 0, strpos($file, '/'));
+            if (empty($dirName)) {
+                // ルート直下のファイルは何もしない
+                continue;
+            }
             $photoType = PhotoType::getIdByDirName($dirName);
             if (null !== $conditions['file_type'] && $conditions['file_type'] !== $photoType->value) {
                 continue;

@@ -16,6 +16,8 @@ export default defineConfig({
                 'resources/assets/front/ts/app.tsx',
                 'resources/assets/front/sass/app.scss',
                 'resources/assets/admin/js/app.js',
+                'resources/assets/admin/js/plugins/index.js',
+                'resources/assets/admin/js/pages/common.js',
                 'resources/assets/admin/sass/app.scss',
             ],
             refresh: true,
