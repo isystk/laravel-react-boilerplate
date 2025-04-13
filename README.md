@@ -242,6 +242,7 @@ Options:
   mysql export <PAHT>      MySQLデータベースのdumpファイルをエクスポートします。
   mysql import <PAHT>      MySQLデータベースにdumpファイルをインポートします。
   php login                PHP-FPMのサーバーにログインします。
+  php test                 Laravelのテストコードを実行します。
   --version, -v     バージョンを表示します。
   --help, -h        ヘルプを表示します。
 ```
@@ -289,9 +290,9 @@ minioにバケットを作成して、外部アクセス可能な状態にする
 [こちら](http://localhost:9001/)から以下のID/パスワードでログイン後、「laraec.isystk.com」という名前のバケットを作成します。
 作成後、Manage から Access Policy を「Public」に変更してバケット内ファイルを外部参照可能な状態に公開します。
 
-| Username   | Password
-|------------|----
-| access_key | secret_key
+| Username | Password
+|----------|----
+| admin    | password
 
 ![minio](./documents/minio.png "minio")
 

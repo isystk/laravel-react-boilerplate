@@ -20,6 +20,7 @@ Options:
   mysql export <PAHT>      MySQLデータベースのdumpファイルをエクスポートします。
   mysql import <PAHT>      MySQLデータベースにdumpファイルをインポートします。
   php login                PHP-FPMのサーバーにログインします。
+  php test                 Laravelのテストコードを実行します。
   --version, -v     バージョンを表示します。
   --help, -h        ヘルプを表示します。
 EOF
@@ -41,6 +42,7 @@ case ${1} in
         rm -Rf ./mysql/logs && mkdir ./mysql/logs && chmod 777 ./mysql/logs
         rm -Rf ./apache/logs && mkdir ./apache/logs && chmod 777 ./apache/logs
         rm -Rf ./php/logs && mkdir ./php/logs && chmod 777 ./php/logs
+        chmod 777 -R ./docker/phpmyadmin/sessions
         rm -Rf ./vendor
         rm -Rf ./node_modules
         popd
