@@ -27,7 +27,7 @@ interface BaseRepository
     public function delete(int $id): void;
 
     /**
-     * @return Collection
+     * @return Collection<int, mixed>
      */
     public function getAll(): Collection;
 

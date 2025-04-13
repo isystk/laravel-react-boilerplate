@@ -27,7 +27,6 @@ class ExportService extends BaseStockService
      *   name : ?string,
      *   sort_name : string,
      *   sort_direction : 'asc' | 'desc',
-     *   limit : int,
      * } $conditions
      * @return StockExport
      */

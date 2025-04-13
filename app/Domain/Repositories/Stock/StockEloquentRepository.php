@@ -21,15 +21,14 @@ class StockEloquentRepository extends BaseEloquentRepository implements StockRep
     /**
      * 指定した件数のデータを最新順に取得します。
      * @param int $limit
-     * @return LengthAwarePaginator<Stock>
+     * @return LengthAwarePaginator<int, Stock>
      */
     public function getByLimit(int $limit = 0): LengthAwarePaginator
     {
-        /** @var LengthAwarePaginator<Stock> $paginator */
-        $paginator = $this->model
+        /** @var LengthAwarePaginator<int, Stock> */
+        return $this->model
             ->orderBy('id', 'desc')
             ->paginate($limit);
-        return $paginator;
     }
 
     /**
@@ -40,7 +39,7 @@ class StockEloquentRepository extends BaseEloquentRepository implements StockRep
      *   sort_direction : 'asc' | 'desc' | null,
      *   limit : ?int,
      * } $conditions
-     * @return Collection<int, Stock>|LengthAwarePaginator<Stock>
+     * @return Collection<int, Stock>|LengthAwarePaginator<int, Stock>
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator
     {

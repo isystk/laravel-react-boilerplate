@@ -58,7 +58,7 @@ abstract class BaseEloquentRepository implements BaseRepository
     }
 
     /**
-     * @return Collection
+     * @return Collection<int, mixed>
      */
     public function getAll(): Collection
     {

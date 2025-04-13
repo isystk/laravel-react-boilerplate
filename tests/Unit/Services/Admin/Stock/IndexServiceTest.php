@@ -54,7 +54,7 @@ class IndexServiceTest extends TestCase
 
         $input = $default;
         $input['name'] = 'stock2';
-        /** @var LengthAwarePaginator<int, Stock> $orders */
+        /** @var LengthAwarePaginator<int, Stock> $stocks */
         $stocks = $this->service->searchStock($input);
         $stockIds = $stocks->pluck('id')->all();
         $this->assertSame([$stock2->id], $stockIds, 'nameで検索が出来ることをテスト');
@@ -62,7 +62,7 @@ class IndexServiceTest extends TestCase
         $input = $default;
         $input['sort_name'] = 'id';
         $input['sort_direction'] = 'desc';
-        /** @var LengthAwarePaginator<int, Stock> $orders */
+        /** @var LengthAwarePaginator<int, Stock> $stocks */
         $stocks = $this->service->searchStock($input);
         $stockIds = $stocks->pluck('id')->all();
         $this->assertSame([$stock2->id, $stock1->id], $stockIds, 'ソート指定で検索が出来ることをテスト');

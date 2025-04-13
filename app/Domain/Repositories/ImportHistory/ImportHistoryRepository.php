@@ -2,6 +2,7 @@
 
 namespace App\Domain\Repositories\ImportHistory;
 
+use App\Domain\Entities\ImportHistory;
 use App\Domain\Repositories\BaseRepository;
 use App\Enums\ImportType;
 use Illuminate\Support\Collection;
@@ -11,7 +12,7 @@ interface ImportHistoryRepository extends BaseRepository
     /**
      * インポートタイプからデータを取得します。
      * @param ImportType $importType
-     * @return Collection
+     * @return Collection<int, ImportHistory>
      */
     public function getByImportHistory(ImportType $importType): Collection;
 

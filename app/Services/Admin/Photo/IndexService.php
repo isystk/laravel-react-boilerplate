@@ -46,7 +46,6 @@ class IndexService extends BaseService
     public function searchPhotoList(array $conditions): array
     {
         $photos = [];
-        /** @var array<string> $files */
         $stockFiles = Storage::allFiles('stock');
         $contactFiles = Storage::allFiles('contact');
         $files = array_merge($stockFiles, $contactFiles);

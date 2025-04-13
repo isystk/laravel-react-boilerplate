@@ -27,13 +27,13 @@ class StockExport implements FromCollection, WithHeadings
      *
      * @return Collection<int, array{
      *     id: int,
-     *     name: string|null,
-     *     price: int|null
+     *     name: string,
+     *     price: int
      * }> エクスポート用にフォーマットされた商品のコレクション
      */
     public function collection(): Collection
     {
-        return $this->stocks->map(function ($stock) {
+        return $this->stocks->map(function (Stock $stock) {
             return [
                 'id' => $stock->id,
                 'name' => $stock->name,

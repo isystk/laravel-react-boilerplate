@@ -22,15 +22,14 @@ class ImportHistoryEloquentRepository extends BaseEloquentRepository implements 
     /**
      * インポートタイプからデータを取得します。
      * @param ImportType $importType
-     * @return Collection
+     * @return Collection<int, ImportHistory>
      */
     public function getByImportHistory(ImportType $importType): Collection {
-        /** @var Collection<int, ImportHistory> $items */
-        $items = $this->model
+        /** @var Collection<int, ImportHistory> */
+        return $this->model
             ->where('type', $importType->value)
             ->orderBy('created_at', 'desc')
             ->get();
-        return $items;
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Domain\Entities;
 
 use Carbon\Carbon;
+use Database\Factories\Domain\Entities\MonthlySaleFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,12 +17,13 @@ use Illuminate\Database\Eloquent\Model;
  */
 class MonthlySale extends Model
 {
+    /** @phpstan-use HasFactory<MonthlySaleFactory> */
     use HasFactory;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = [
         'year_month',

@@ -40,7 +40,6 @@ class ExportServiceTest extends TestCase
             'name' => null,
             'sort_name' => 'updated_at',
             'sort_direction' => 'asc',
-            'limit' => null,
         ];
 
         $export = $this->service->getExport($default);

@@ -15,7 +15,7 @@ class StaffImport extends BaseImport
     ];
 
     /**
-     * @param array<int, ?string> $row
+     * @param array<int, mixed> $row
      * @return array<string, ?string>
      */
     public function map($row): array

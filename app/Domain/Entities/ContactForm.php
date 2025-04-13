@@ -5,6 +5,7 @@ namespace App\Domain\Entities;
 use App\Enums\Age;
 use App\Enums\Gender;
 use Carbon\Carbon;
+use Database\Factories\Domain\Entities\ContactFormFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,12 +22,13 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ContactForm extends Model
 {
+    /** @phpstan-use HasFactory<ContactFormFactory> */
     use HasFactory;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = [
         'user_name',

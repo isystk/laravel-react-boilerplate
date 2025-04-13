@@ -37,10 +37,6 @@ class IndexService extends BaseService
         $importHistories = $this->importHistoryRepository->getByImportHistory(ImportType::Staff);
 
         $importHistories = $importHistories->map(function ($importHistory) {
-            if (!$importHistory instanceof ImportHistory) {
-                throw new RuntimeException('An unexpected error has occurred.');
-            }
-
             $admin = Admin::find($importHistory->import_user_id);
 
             // インポート履歴を表示用に加工

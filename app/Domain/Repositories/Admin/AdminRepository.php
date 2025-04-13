@@ -19,7 +19,7 @@ interface AdminRepository extends BaseRepository
      *   sort_direction : 'asc' | 'desc' | null,
      *   limit : ?int,
      * } $conditions
-     * @return Collection<int, Admin>|LengthAwarePaginator<Admin>
+     * @return Collection<int, Admin>|LengthAwarePaginator<int, Admin>
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator;
 

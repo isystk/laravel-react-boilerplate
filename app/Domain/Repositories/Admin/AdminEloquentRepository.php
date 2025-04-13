@@ -28,7 +28,7 @@ class AdminEloquentRepository extends BaseEloquentRepository implements AdminRep
      *   sort_direction : 'asc' | 'desc' | null,
      *   limit : ?int,
      * } $conditions
-     * @return Collection<int, Admin>|LengthAwarePaginator<Admin>
+     * @return Collection<int, Admin>|LengthAwarePaginator<int, Admin>
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator
     {
@@ -57,21 +57,21 @@ class AdminEloquentRepository extends BaseEloquentRepository implements AdminRep
      * @return Admin|null
      */
     public function getByEmail(string $email): ?Admin {
-        /** @var Admin $model */
-        $model = $this->model->select()
+        /** @var Admin */
+        return $this->model->select()
             ->where('email', $email)
             ->first();
-        return $model;
     }
 
     /**
      * すべてのデータをIDの昇順で取得します。
-     * @return Collection
+     * @return Collection<int, Admin>
      */
     public function getAllOrderById(): Collection
     {
         $query = $this->model->select();
         $query = $query->orderBy('id', 'asc');
+        /** @var Collection<int, Admin> */
         return $query->get();
     }
 

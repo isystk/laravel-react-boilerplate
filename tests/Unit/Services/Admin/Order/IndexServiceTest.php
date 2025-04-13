@@ -77,21 +77,21 @@ class IndexServiceTest extends TestCase
         $input['user_name'] = 'user2';
         /** @var LengthAwarePaginator<int, Order> $orders */
         $orders = $this->service->searchOrder($input);
-        $orderIds = $orders->pluck('id')->all();
+        $orderIds = collect($orders->items())->pluck('id')->all();
         $this->assertSame([$order2->id], $orderIds, 'user_nameで検索が出来ることをテスト');
 
         $input = $default;
         $input['order_date_from'] = DateUtil::toCarbonImmutable('2024-06-01');
         /** @var LengthAwarePaginator<int, Order> $orders */
         $orders = $this->service->searchOrder($input);
-        $orderIds = $orders->pluck('id')->all();
+        $orderIds = collect($orders->items())->pluck('id')->all();
         $this->assertSame([$order2->id], $orderIds, 'order_date_fromで検索が出来ることをテスト');
 
         $input = $default;
         $input['order_date_to'] = DateUtil::toCarbonImmutable('2024-05-01');
         /** @var LengthAwarePaginator<int, Order> $orders */
         $orders = $this->service->searchOrder($input);
-        $orderIds = $orders->pluck('id')->all();
+        $orderIds = collect($orders->items())->pluck('id')->all();
         $this->assertSame([$order1->id], $orderIds, 'order_date_toで検索が出来ることをテスト');
 
         $input = $default;
@@ -99,7 +99,7 @@ class IndexServiceTest extends TestCase
         $input['sort_direction'] = 'desc';
         /** @var LengthAwarePaginator<int, Order> $orders */
         $orders = $this->service->searchOrder($input);
-        $orderIds = $orders->pluck('id')->all();
+        $orderIds = collect($orders->items())->pluck('id')->all();
         $this->assertSame([$order2->id, $order1->id], $orderIds, 'ソート指定で検索が出来ることをテスト');
 
     }

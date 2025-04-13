@@ -23,7 +23,7 @@ interface StockRepository extends BaseRepository
      *   sort_direction : 'asc' | 'desc' | null,
      *   limit : ?int,
      * } $conditions
-     * @return Collection<int, Stock>|LengthAwarePaginator<Stock>
+     * @return Collection<int, Stock>|LengthAwarePaginator<int, Stock>
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator;
 

@@ -37,9 +37,9 @@ enum AdminRole: string
 
     /**
      * @param string|null $code
-     * @return ?string
+     * @return string
      */
-    public static function getLabel(?string $code): ?string
+    public static function getLabel(?string $code): string
     {
         if (null === $code || null === self::get($code)) {
             return "";
