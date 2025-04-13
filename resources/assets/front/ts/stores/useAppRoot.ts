@@ -1,27 +1,14 @@
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppState, useAppDispatch } from "./appContext";
 import MainService from "@/services/main";
-import { forceRender, setAppRoot } from ".";
-
-interface IRootState {
-    app: App;
-}
-
-type App = {
-    root: MainService;
-};
 
 const useAppRoot = () => {
-    const dispatch = useDispatch();
-    const { root } = useSelector<IRootState, App>((state) => state.app);
-    // const [, forceRender] = useReducer((boolean) => !boolean, false)
+    const {  root } = useAppState();
+    const dispatch = useAppDispatch();
 
-    const _setAppRoot = async (appRoot: MainService) => {
-        // @ts-ignore
-        dispatch(setAppRoot(appRoot));
-        // forceRender()
-        // @ts-ignore
-        dispatch(forceRender());
+    const _setAppRoot = async (service: MainService) => {
+        dispatch({ type: "SET_STATE", payload: service });
+        dispatch({ type: "TOGGLE_STATE" });
     };
 
     useEffect(() => {

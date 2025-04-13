@@ -14,7 +14,6 @@
         "laravel-vite-plugin": "^1.2.0",
         "path": "^0.12.7",
         "react-test-renderer": "^18.1.0",
-        "redux-devtools-extension": "^2.13.9",
         "sass-embedded": "^1.86.3",
         "typescript": "^5.8.3",
         "vite": "^6.2.6",
@@ -35,11 +34,8 @@
         "react-helmet-async": "^2.0.5",
         "react-image-base64": "^1.1.2",
         "react-js-pagination": "^3.0.3",
-        "react-redux": "^8.0.1",
         "react-router-dom": "^6.30.0",
         "reactstrap": "^8.10.1",
-        "redux": "^4.2.0",
-        "redux-thunk": "^2.4.1",
         "yup": "^1.6.1"
     }
 }

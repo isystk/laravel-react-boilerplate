@@ -1,20 +1,9 @@
 import React from "react";
 import Router from "@/router";
 import axios from "axios";
-import { Provider } from "react-redux";
 import { createRoot } from 'react-dom/client';
-import { createStore, applyMiddleware } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
-import thunk from "redux-thunk";
-
-import reducers from "@/stores";
 import { Session } from "@/services/auth";
-// 開発環境の場合は、redux-devtools-extension を利用できるようにする
-const enhancer =
-    process.env.NODE_ENV === "development"
-        ? composeWithDevTools(applyMiddleware(thunk))
-        : applyMiddleware(thunk);
-const store = createStore(reducers, enhancer);
+import { AppProvider } from "./stores/appContext";
 
 const render = (session: Session) => {
     console.log("session", session);
@@ -22,9 +11,9 @@ const render = (session: Session) => {
     if (container) {
         const root = createRoot(container);
         root.render(
-            <Provider store={store}>
+            <AppProvider>
                 <Router session={session} />
-            </Provider>
+            </AppProvider>
         );
     }
 };
