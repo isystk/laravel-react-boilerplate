@@ -11,10 +11,10 @@
 <body>
 <div id="react-root"></div>
 <script type="module">
-    const laravelSession = {};
-    laravelSession['status'] = @if(session('status'))'{{session('status')}}'@else''@endif;
-    laravelSession['resent'] = @if(session('resent'))'{{session('resent')}}'@else''@endif;
-    const laravelErrors =@php print(htmlspecialchars_decode($errors))@endphp;
+    window.laravelSession = {};
+    window.laravelSession['status'] = @if(session('status'))'{{session('status')}}'@else''@endif;
+    window.laravelSession['resent'] = @if(session('resent'))'{{session('resent')}}'@else''@endif;
+    window.laravelErrors =@php print(htmlspecialchars_decode($errors))@endphp;
 </script>
 @vite('resources/assets/front/ts/app.tsx')
 <script src="https://js.stripe.com/v3/"></script>
