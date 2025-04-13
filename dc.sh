@@ -93,6 +93,10 @@ case ${1} in
           login)
               $DOCKER_COMPOSE exec php /bin/bash
           ;;
+          test)
+              $DOCKER_COMPOSE exec php ./vendor/bin/phpstan analyse --memory-limit=1G
+              $DOCKER_COMPOSE exec php ./vendor/bin/phpunit tests
+          ;;
           *)
               usage
           ;;

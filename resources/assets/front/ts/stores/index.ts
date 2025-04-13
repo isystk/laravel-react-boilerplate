@@ -12,7 +12,7 @@ const AppSlice = createSlice({
     name: "app",
     initialState: {} as App,
     reducers: {
-        toggleState(state?) {
+        toggleState(state = {} as App) {
             state.bool = !state.bool;
         },
         setState(state, action: PayloadAction<MainService>) {

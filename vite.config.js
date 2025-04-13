@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import react from '@vitejs/plugin-react';
 import path from 'path';
+import checker from 'vite-plugin-checker';
 
 export default defineConfig({
    server: {
@@ -22,7 +23,8 @@ export default defineConfig({
             ],
             refresh: true,
         }),
-        react()
+        react(),
+        checker({ typescript: true }),
     ],
     resolve: {
         alias: {

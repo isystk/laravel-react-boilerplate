@@ -34,7 +34,7 @@ Laravel ＆ React.js の学習用サンプルアプリケーションです。
 #### ■ アプリケーション
 
 - Laravel 12
-- React 18
+- React 19
 - Typescript
 - Adminlte 3
 - Bootstrap 4
@@ -277,8 +277,11 @@ $ ./dc.sh start
 
 # データベースとPHPが立ち上がるまで少し待ちます。(初回は5分程度)
 
-# MySQLにログインしてみる（ログインが出来れば成功です）
+# MySQLにログインしてみる
 $ ./dc.sh mysql login
+
+# PHPサーバーにログインしてみる
+$ ./dc.sh php login
 ```
 
 minioにバケットを作成して、外部アクセス可能な状態にする。
