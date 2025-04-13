@@ -64,6 +64,10 @@ jobs:
 
       - run:
           command: |
+            ./vendor/bin/phpstan analyse --memory-limit=1G
+
+      - run:
+          command: |
             php artisan test --env=testing
 
 workflows:
