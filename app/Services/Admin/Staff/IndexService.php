@@ -71,7 +71,7 @@ class IndexService extends BaseService
      *   sort_direction : 'asc' | 'desc',
      *   limit : int,
      * } $conditions
-     * @return LengthAwarePaginator<Admin>
+     * @return LengthAwarePaginator<int, Admin>
      */
     public function searchStaff(array $conditions): LengthAwarePaginator
     {

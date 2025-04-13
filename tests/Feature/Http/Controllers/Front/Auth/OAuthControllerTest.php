@@ -7,7 +7,6 @@ use Tests\TestCase;
 
 class OAuthControllerTest extends TestCase
 {
-
     public function setUp(): void
     {
         parent::setUp();
@@ -20,11 +19,11 @@ class OAuthControllerTest extends TestCase
      */
     public function testShowGoogleOAuth(): void
     {
-        // 認証キーを設定しないと動かないので一旦コメントアウト
-        $this->assertTrue(true);
-        // // URLをコール
-        // $this->get(route('socialOAuth', ['provider' => $this->providerName]))
-        //     ->assertStatus(200);
+        $this->markTestSkipped('認証キーを設定しないと動かないので一旦スキップ');
+
+//        // URLをコール
+//        $this->get(route('socialOAuth', ['provider' => $this->providerName]))
+//            ->assertStatus(200);
     }
 
     /**
@@ -32,10 +31,10 @@ class OAuthControllerTest extends TestCase
      */
     public function testRegistGoogleOAuth(): void
     {
-        // 認証キーを設定しないと動かないので一旦コメントアウト
-        $this->assertTrue(true);
-        // // URLをコール
-        // $this->get(route('oauthCallback', ['provider' => $this->providerName]))
-        //     ->assertStatus(200);
+        $this->markTestSkipped('認証キーを設定しないと動かないので一旦スキップ');
+
+//        // URLをコール
+//        $this->get(route('oauthCallback', ['provider' => $this->providerName]))
+//            ->assertStatus(200);
     }
 }

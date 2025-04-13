@@ -33,8 +33,9 @@ class ExportService extends BaseStockService
      */
     public function getExport(array $conditions): StockExport
     {
+        $conditions['limit'] = null;
         $stocks = $this->stockRepository->getByConditions($conditions);
-        return new StockExport(collect($stocks->items()));
+        return new StockExport($stocks);
     }
 
 }

@@ -25,7 +25,11 @@ class StockExport implements FromCollection, WithHeadings
     /**
      * 商品のデータをコレクションとして返します。
      *
-     * @return Collection<array> エクスポート用にフォーマットされた商品のコレクション
+     * @return Collection<int, array{
+     *     id: int,
+     *     name: string|null,
+     *     price: int|null
+     * }> エクスポート用にフォーマットされた商品のコレクション
      */
     public function collection(): Collection
     {

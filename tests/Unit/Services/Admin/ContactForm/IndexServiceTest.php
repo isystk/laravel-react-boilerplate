@@ -4,6 +4,7 @@ namespace Tests\Unit\Services\Admin\ContactForm;
 
 use App\Domain\Entities\ContactForm;
 use App\Services\Admin\ContactForm\IndexService;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -54,14 +55,14 @@ class IndexServiceTest extends TestCase
 
         $input = $default;
         $input['user_name'] = 'user2';
-        /** @var ContactForm $contactForms */
+        /** @var Collection<int, ContactForm> $contactForms */
         $contactForms = $this->service->searchContactForm($input);
         $contactFormIds = $contactForms->pluck('id')->all();
         $this->assertSame([$contactForm2->id], $contactFormIds, 'user_nameで検索が出来ることをテスト');
 
         $input = $default;
         $input['title'] = 'title2';
-        /** @var ContactForm $contactForms */
+        /** @var Collection<int, ContactForm> $contactForms */
         $contactForms = $this->service->searchContactForm($input);
         $contactFormIds = $contactForms->pluck('id')->all();
         $this->assertSame([$contactForm2->id], $contactFormIds, 'titleで検索が出来ることをテスト');
@@ -69,7 +70,7 @@ class IndexServiceTest extends TestCase
         $input = $default;
         $input['sort_name'] = 'id';
         $input['sort_direction'] = 'desc';
-        /** @var ContactForm $contactForms */
+        /** @var Collection<int, ContactForm> $contactForms */
         $contactForms = $this->service->searchContactForm($input);
         $contactFormIds = $contactForms->pluck('id')->all();
         $this->assertSame([$contactForm2->id, $contactForm1->id], $contactFormIds, 'ソート指定で検索が出来ることをテスト');

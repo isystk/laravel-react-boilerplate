@@ -54,11 +54,8 @@ class UpdateService extends BaseService
         );
 
         // お問い合わせ画像テーブルを登録（Delete→Insert）
-        $contactFormImages = $this->contactFormImageRepository->getByContactFormId($contactFormId)->all();
+        $contactFormImages = $this->contactFormImageRepository->getByContactFormId($contactFormId);
         foreach ($contactFormImages as $contactFormImage) {
-            if (!$contactFormImage instanceof ContactFormImage) {
-                throw new \RuntimeException('An unexpected error occurred.');
-            }
             $this->contactFormImageRepository->delete($contactFormImage->id);
         }
         foreach ($request['image_files'] as $i => $imageFile) {

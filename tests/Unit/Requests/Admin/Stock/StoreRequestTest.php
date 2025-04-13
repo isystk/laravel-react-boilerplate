@@ -15,7 +15,7 @@ class StoreRequestTest extends TestCase
 {
     private StoreRequest $request;
     /**
-     * @var array<string, string>
+     * @var array<string, int|string>
      */
     private array $baseRequest;
 

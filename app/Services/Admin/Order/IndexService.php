@@ -6,6 +6,7 @@ use App\Domain\Entities\Order;
 use App\Domain\Repositories\Order\OrderRepository;
 use App\Services\BaseService;
 use App\Utils\DateUtil;
+use Carbon\CarbonImmutable;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -31,8 +32,8 @@ class IndexService extends BaseService
      * @param Request $request
      * @return array{
      *   user_name : ?string,
-     *   order_date_from : ?string,
-     *   order_date_to : ?string,
+     *   order_date_from : ?CarbonImmutable,
+     *   order_date_to : ?CarbonImmutable,
      *   sort_name : string,
      *   sort_direction : 'asc' | 'desc',
      *   limit : int,
@@ -52,11 +53,11 @@ class IndexService extends BaseService
 
         $orderDateFrom = DateUtil::toCarbonImmutable($request->order_date_from);
         if (null !== $orderDateFrom) {
-            $conditions['order_date_from'] = $orderDateFrom->startOfDay()->format('Y-m-d');
+            $conditions['order_date_from'] = $orderDateFrom->startOfDay();
         }
         $orderDateTo = DateUtil::toCarbonImmutable($request->order_date_to);
         if (null !== $orderDateTo) {
-            $conditions['order_date_to'] = $orderDateTo->startOfDay()->format('Y-m-d');
+            $conditions['order_date_to'] = $orderDateTo->startOfDay();
         }
 
         return $conditions;
@@ -66,15 +67,15 @@ class IndexService extends BaseService
      * 注文情報を検索します。
      * @param array{
      *   user_name : ?string,
-     *   order_date_from : ?string,
-     *   order_date_to : ?string,
+     *   order_date_from : ?CarbonImmutable,
+     *   order_date_to : ?CarbonImmutable,
      *   sort_name : string,
      *   sort_direction : 'asc' | 'desc',
      *   limit : int,
      * } $conditions
-     * @return Collection<int, Order>|LengthAwarePaginator<Order>|array<string>
+     * @return Collection<int, Order>|LengthAwarePaginator<int, Order>
      */
-    public function searchOrder(array $conditions): Collection|LengthAwarePaginator|array
+    public function searchOrder(array $conditions): Collection|LengthAwarePaginator
     {
         return $this->orderRepository->getConditionsWithUserStock($conditions);
     }

@@ -39,5 +39,10 @@ return [
         ],
         'contact_form_images' => [
          ],
-    ]
+    ],
+
+    'stripe' => [
+        'key' => env('STRIPE_KEY', ''),
+        'secret' => env('STRIPE_SECRET', ''),
+     ],
 ];

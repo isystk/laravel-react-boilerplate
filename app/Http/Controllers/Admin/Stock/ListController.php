@@ -6,10 +6,10 @@ use App\Http\Controllers\BaseController;
 use App\Services\Admin\Stock\ExportService;
 use App\Services\Admin\Stock\IndexService;
 use Barryvdh\DomPDF\PDF;
-use Excel;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
+use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ListController extends BaseController
@@ -47,7 +47,7 @@ class ListController extends BaseController
 
         /** @var ExportService $service */
         $service = app(ExportService::class);
-        $conditions = $service->convertConditionsFromRequest($request, 0);
+        $conditions = $service->convertConditionsFromRequest($request);
         $export = $service->getExport($conditions);
 
         if ('csv' === $fileType) {

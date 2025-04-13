@@ -40,14 +40,13 @@ class ExportServiceTest extends TestCase
             'name' => null,
             'sort_name' => 'updated_at',
             'sort_direction' => 'asc',
-            'limit' => 20,
+            'limit' => null,
         ];
 
         $export = $this->service->getExport($default);
         $this->assertSame(['ID', '商品名', '価格'], $export->headings(), 'ヘッダーが正しいこと');
 
-        /** @var Stock $stock1 */
-        $stock1 = Stock::factory(['name' => 'stock1', 'price' => 111])->create();
+        Stock::factory(['name' => 'stock1', 'price' => 111])->create();
         /** @var Stock $stock2 */
         $stock2 = Stock::factory(['name' => 'stock2', 'price' => 222])->create();
 

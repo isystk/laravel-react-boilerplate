@@ -11,7 +11,7 @@ interface StockRepository extends BaseRepository
 {
     /**
      * @param int $limit
-     * @return LengthAwarePaginator<Stock>
+     * @return LengthAwarePaginator<int, Stock>
      */
     public function getByLimit(int $limit = 0): LengthAwarePaginator;
 

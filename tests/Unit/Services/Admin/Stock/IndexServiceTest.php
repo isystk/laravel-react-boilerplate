@@ -5,6 +5,7 @@ namespace Tests\Unit\Services\Admin\Stock;
 use App\Domain\Entities\Stock;
 use App\Services\Admin\Stock\IndexService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Tests\TestCase;
 
 class IndexServiceTest extends TestCase
@@ -53,7 +54,7 @@ class IndexServiceTest extends TestCase
 
         $input = $default;
         $input['name'] = 'stock2';
-        /** @var Stock $stocks */
+        /** @var LengthAwarePaginator<int, Stock> $orders */
         $stocks = $this->service->searchStock($input);
         $stockIds = $stocks->pluck('id')->all();
         $this->assertSame([$stock2->id], $stockIds, 'nameで検索が出来ることをテスト');
@@ -61,7 +62,7 @@ class IndexServiceTest extends TestCase
         $input = $default;
         $input['sort_name'] = 'id';
         $input['sort_direction'] = 'desc';
-        /** @var Stock $stocks */
+        /** @var LengthAwarePaginator<int, Stock> $orders */
         $stocks = $this->service->searchStock($input);
         $stockIds = $stocks->pluck('id')->all();
         $this->assertSame([$stock2->id, $stock1->id], $stockIds, 'ソート指定で検索が出来ることをテスト');

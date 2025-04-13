@@ -51,11 +51,8 @@ class IndexService extends BaseService
                 'file_name' => $importHistory->file_name,
                 'status' => JobStatus::getLabel($importHistory->status),
             ];
-        })->toArray();
-        if (!is_array($importHistories)) {
-            throw new RuntimeException('An unexpected error has occurred.');
-        }
-        return $importHistories;
+        });
+        return $importHistories->toArray();
     }
 
 }

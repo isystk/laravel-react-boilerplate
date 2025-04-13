@@ -25,7 +25,12 @@ class StaffExport implements FromCollection, WithHeadings
     /**
      * 管理者のデータをコレクションとして返します。
      *
-     * @return Collection<array> エクスポート用にフォーマットされた管理者のコレクション
+     * @return Collection<int, array{
+     *     id: int,
+     *     name: string,
+     *     email: string,
+     *     role: string
+     * }> エクスポート用にフォーマットされた管理者のコレクション
      */
     public function collection(): Collection
     {

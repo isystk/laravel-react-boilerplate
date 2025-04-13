@@ -10,4 +10,3 @@ parameters:
     # The level 9 is the highest level
     level: 6
 
-    checkGenericClassInNonGenericObjectType: false

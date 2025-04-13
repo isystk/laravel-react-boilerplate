@@ -5,6 +5,7 @@ namespace Tests\Unit\Services\Admin\User;
 use App\Domain\Entities\User;
 use App\Services\Admin\User\IndexService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Tests\TestCase;
 
 class IndexServiceTest extends TestCase
@@ -61,13 +62,13 @@ class IndexServiceTest extends TestCase
 
         $input = $default;
         $input['name'] = 'user2';
-        /** @var User $users */
+        /** @var LengthAwarePaginator<int, User> $users */
         $users = $this->service->searchUser($input);
         $userIds = $users->pluck('id')->all();
         $this->assertSame([$user2->id], $userIds, 'nameで検索が出来ることをテスト');
 
         $input['email'] = 'user2@test.com';
-        /** @var User $users */
+        /** @var LengthAwarePaginator<int, User> $users */
         $users = $this->service->searchUser($input);
         $userIds = $users->pluck('id')->all();
         $this->assertSame([$user2->id], $userIds, 'emailで検索が出来ることをテスト');
@@ -75,7 +76,7 @@ class IndexServiceTest extends TestCase
         $input = $default;
         $input['sort_name'] = 'id';
         $input['sort_direction'] = 'desc';
-        /** @var User $users */
+        /** @var LengthAwarePaginator<int, User> $users */
         $users = $this->service->searchUser($input);
         $userIds = $users->pluck('id')->all();
         $this->assertSame([$user2->id, $user1->id], $userIds, 'ソート指定で検索が出来ることをテスト');

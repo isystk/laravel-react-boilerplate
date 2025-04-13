@@ -15,7 +15,7 @@ class UpdateRequestTest extends TestCase
 {
     private UpdateRequest $request;
     /**
-     * @var array<string, string>
+     * @var array<string, int|string>
      */
     private array $baseRequest;
 

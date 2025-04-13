@@ -36,7 +36,7 @@ class UpdateRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, array<string>>
+     * @return array<string, array<string|Base64ImageRule>>
      */
     public function rules(): array
     {

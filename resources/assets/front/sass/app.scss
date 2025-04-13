@@ -1,10 +1,10 @@
 
-@use 'base';
-@use 'header';
-@use 'headerNav';
-@use 'footer';
-@use 'util';
-@use 'style';
+@import 'base';
+@import 'header';
+@import 'headerNav';
+@import 'footer';
+@import 'util';
+@import 'style';
 
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');

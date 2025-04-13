@@ -47,7 +47,9 @@ class IndexService extends BaseService
     {
         $photos = [];
         /** @var array<string> $files */
-        $files = Storage::allFiles();
+        $stockFiles = Storage::allFiles('stock');
+        $contactFiles = Storage::allFiles('contact');
+        $files = array_merge($stockFiles, $contactFiles);
         foreach ($files as $file) {
             if (null !== $conditions['file_name'] && !str_contains($file, $conditions['file_name'])) {
                 continue;

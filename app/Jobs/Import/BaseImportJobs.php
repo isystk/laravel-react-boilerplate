@@ -5,7 +5,6 @@ namespace App\Jobs\Import;
 use App\Domain\Entities\Admin;
 use App\Domain\Repositories\ImportHistory\ImportHistoryRepository;
 use App\Enums\JobStatus;
-use App\FileIO\Imports\BaseImport;
 use App\Jobs\BaseJobs;
 use Closure;
 use Illuminate\Support\Facades\DB;
@@ -52,7 +51,7 @@ abstract class BaseImportJobs extends BaseJobs
             // インポート履歴のステータスを「処理中」に更新
             $this->changeStatus(JobStatus::Processing);
 
-            $import = $this->createImporter()(storage_path('app') . '/' . $this->filePath, $this->fileName);
+            $import = $this->createImporter()(storage_path('app') . '/private/' . $this->filePath, $this->fileName);
             // 入力チェック
             $errors = $import->validate();
             if (0 < count($errors)) {
