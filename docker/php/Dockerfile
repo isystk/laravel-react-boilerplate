@@ -3,7 +3,7 @@ FROM php:8.3-fpm
 RUN apt-get update \
   && apt-get install -y wget git unzip libzip-dev zlib1g-dev mariadb-client libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
   && : 'Install Node.js' \
-  && curl -sL https://deb.nodesource.com/setup_20.x | bash - \
+  && curl -sL https://deb.nodesource.com/setup_22.x | bash - \
   && apt-get install -y nodejs \
   && : 'Install PHP Extensions' \
   && docker-php-ext-install zip pdo_mysql \

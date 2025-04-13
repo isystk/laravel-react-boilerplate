@@ -12,6 +12,7 @@ Usage:
 
 Options:
   stats|st                 Dockerコンテナの状態を表示します。
+  logs                     Dockerコンテナのログを表示します。
   init                     Dockerコンテナ・イメージ・生成ファイルの状態を初期化します。
   start                    すべてのDaemonを起動します。
   stop                     すべてのDaemonを停止します。
@@ -35,6 +36,10 @@ case ${1} in
         docker container stats
     ;;
 
+    logs)
+        $DOCKER_COMPOSE logs -f
+    ;;
+
     init)
         # 停止＆削除（コンテナ・イメージ・ボリューム）
         pushd $DOCKER_HOME
@@ -42,7 +47,7 @@ case ${1} in
         rm -Rf ./mysql/logs && mkdir ./mysql/logs && chmod 777 ./mysql/logs
         rm -Rf ./apache/logs && mkdir ./apache/logs && chmod 777 ./apache/logs
         rm -Rf ./php/logs && mkdir ./php/logs && chmod 777 ./php/logs
-        chmod 777 -R ./docker/phpmyadmin/sessions
+        rm -Rf ./phpmyadmin/sessions && mkdir ./phpmyadmin/sessions && chmod 777 -R ./phpmyadmin/sessions
         rm -Rf ./vendor
         rm -Rf ./node_modules
         popd

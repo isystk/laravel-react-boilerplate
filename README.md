@@ -234,6 +234,7 @@ Usage:
 
 Options:
   stats|st                 Dockerコンテナの状態を表示します。
+  logs                     Dockerコンテナのログを表示します。
   init                     Dockerコンテナ・イメージ・生成ファイルの状態を初期化します。
   start                    すべてのDaemonを起動します。
   stop                     すべてのDaemonを停止します。
