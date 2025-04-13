@@ -14,6 +14,9 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Excel;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 
+/**
+ * @implements WithMapping<array<int, mixed>>
+ */
 abstract class BaseImport implements WithMapping, WithStartRow, WithValidation
 {
     use Importable;
@@ -97,16 +100,16 @@ abstract class BaseImport implements WithMapping, WithStartRow, WithValidation
 
     /**
      * 配列データをヘッダーをキーとした連想配列に変換します
-     * @param array<int, ?string> $row
+     * @param array<int, mixed> $row
      * @return array<string, ?string>
      */
     protected function getRowMap(array $row): array {
         return collect($this->header)->mapWithKeys(function ($col, $i) use($row) {
             $key = $this->attribute[$this->trimData($col)]??null;
             if (!is_string($key)) {
-                return [(string)$key => $row[$i]];
+                return [(string)$key => (string)$row[$i]];
             }
-            return [$key => $row[$i]];
+            return [$key => (string)$row[$i]];
         })->all();
     }
 
@@ -130,8 +133,7 @@ abstract class BaseImport implements WithMapping, WithStartRow, WithValidation
         if (Excel::XLS === $this->readerType || Excel::XLSX === $this->readerType) {
             // Excelの書式が「日付」の場合は、数値が渡されるため、日付文字列に変換する
             if (is_numeric($col)) {
-                // @phpstan-ignore-next-line
-                return Date::excelToDateTimeObject($col)->format($format);
+                return Date::excelToDateTimeObject((int)$col)->format($format);
             }
         }
         return $col;
@@ -151,8 +153,8 @@ abstract class BaseImport implements WithMapping, WithStartRow, WithValidation
     }
 
     /**
-     * @param array<int, string> $row
-     * @return array<string, string>
+     * @param array<int, mixed> $row
+     * @return array<string, ?string>
      */
     abstract public function map($row): array;
 

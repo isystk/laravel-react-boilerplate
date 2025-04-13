@@ -3,6 +3,7 @@
 namespace App\Domain\Entities;
 
 use Carbon\Carbon;
+use Database\Factories\Domain\Entities\ImportHistoryFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,12 +21,13 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ImportHistory extends Model
 {
+    /** @phpstan-use HasFactory<ImportHistoryFactory> */
     use HasFactory;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = [
         'job_id',

@@ -36,9 +36,6 @@ class DestroyService extends BaseService
         // お問い合わせ画像テーブルを削除
         $contactFormImages = $this->contactFormImageRepository->getByContactFormId($contactFormId);
         foreach ($contactFormImages as $contactFormImage) {
-            if (!$contactFormImage instanceof ContactFormImage) {
-                throw new \RuntimeException('An unexpected error occurred.');
-            }
             $this->contactFormImageRepository->delete($contactFormImage->id);
         }
         // お問い合わせテーブルを削除

@@ -30,7 +30,7 @@ class UpdateRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, array<string>>
+     * @return array<string, array<string|Enum|\Closure>>
      */
     public function rules(): array
     {

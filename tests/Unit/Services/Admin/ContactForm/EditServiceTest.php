@@ -53,7 +53,6 @@ class EditServiceTest extends TestCase
         $expectContactForm2Image1 = ContactFormImage::factory(['contact_form_id' => $contactForm2->id])->create();
         $expectContactFormImageIds = [$expectContactForm1Image1->id, $expectContactForm1Image2->id];
 
-        /** @var ContactFormImage $contactFormImages */
         $contactFormImages = $this->service->getContactFormImage($contactForm1->id);
         $contactFormImageIds = $contactFormImages->pluck('id')->all();
 

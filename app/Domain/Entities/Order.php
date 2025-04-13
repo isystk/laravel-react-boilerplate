@@ -3,6 +3,7 @@
 namespace App\Domain\Entities;
 
 use Carbon\Carbon;
+use Database\Factories\Domain\Entities\OrderFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,12 +17,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Order extends Model
 {
+    /** @phpstan-use HasFactory<OrderFactory> */
     use HasFactory;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = [
         'user_id',
@@ -40,7 +42,7 @@ class Order extends Model
 
     // 親テーブル
     /**
-     * @return BelongsTo<User, Order>
+     * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo
     {

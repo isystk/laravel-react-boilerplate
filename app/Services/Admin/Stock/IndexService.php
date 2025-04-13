@@ -31,7 +31,7 @@ class IndexService extends BaseStockService
      *   sort_direction : 'asc' | 'desc',
      *   limit : int,
      * } $conditions
-     * @return Collection<int, Stock>|LengthAwarePaginator<Stock>
+     * @return Collection<int, Stock>|LengthAwarePaginator<int, Stock>
      */
     public function searchStock(array $conditions): Collection|LengthAwarePaginator
     {

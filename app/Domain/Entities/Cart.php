@@ -3,6 +3,7 @@
 namespace App\Domain\Entities;
 
 use Carbon\Carbon;
+use Database\Factories\Domain\Entities\CartFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,8 +18,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Cart extends Model
 {
+    /** @phpstan-use HasFactory<CartFactory> */
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
     protected $fillable = [
         'stock_id',
         'user_id',
@@ -36,7 +43,7 @@ class Cart extends Model
 
     // 親テーブル
     /**
-     * @return BelongsTo<User, Cart>
+     * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo
     {
@@ -44,7 +51,7 @@ class Cart extends Model
     }
 
     /**
-     * @return BelongsTo<Stock, Cart>
+     * @return BelongsTo<Stock, $this>
      */
     public function stock(): BelongsTo
     {

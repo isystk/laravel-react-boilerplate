@@ -3,6 +3,7 @@
 namespace App\Domain\Entities;
 
 use Carbon\Carbon;
+use Database\Factories\Domain\Entities\ContactFormImageFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,12 +17,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class ContactFormImage extends Model
 {
+    /** @phpstan-use HasFactory<ContactFormImageFactory> */
     use HasFactory;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = [
         'contact_form_id',
@@ -40,7 +42,7 @@ class ContactFormImage extends Model
 
     // 親テーブル
     /**
-     * @return BelongsTo<ContactForm, ContactFormImage>
+     * @return BelongsTo<ContactForm, $this>
      */
     public function contactForm(): BelongsTo
     {

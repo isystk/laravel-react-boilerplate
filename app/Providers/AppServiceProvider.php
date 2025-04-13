@@ -9,7 +9,6 @@ use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
-use Laravel\Dusk\DuskServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,10 +19,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        if ($this->app->environment('local')) {
-            // ローカル環境の場合にだけ、Seleniumを使用する為に必要な設定を追加する
-            $this->app->register(DuskServiceProvider::class);
-        }
+
     }
 
     /**

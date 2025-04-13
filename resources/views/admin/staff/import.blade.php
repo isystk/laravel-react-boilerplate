@@ -106,7 +106,7 @@
 @endsection
 
 @section('scripts')
-    <script>
+    <script type="module">
         $(function () {
 
         });

@@ -18,7 +18,7 @@ interface UserRepository extends BaseRepository
      *   sort_direction : 'asc' | 'desc' | null,
      *   limit : ?int,
      * } $conditions
-     * @return Collection<int, User>|LengthAwarePaginator<User>
+     * @return Collection<int, User>|LengthAwarePaginator<int, User>
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator;
 

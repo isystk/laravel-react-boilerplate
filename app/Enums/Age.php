@@ -44,9 +44,9 @@ enum Age: int
 
     /**
      * @param ?int $code
-     * @return ?string
+     * @return string
      */
-    public static function getLabel(?int $code): ?string
+    public static function getLabel(?int $code): string
     {
         if (null === $code || null === self::get($code)) {
             return "";

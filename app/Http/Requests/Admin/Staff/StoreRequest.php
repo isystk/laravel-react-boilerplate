@@ -30,7 +30,7 @@ class StoreRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, array<string>>
+     * @return array<string, array<string|Password|Enum>>
      */
     public function rules(): array
     {

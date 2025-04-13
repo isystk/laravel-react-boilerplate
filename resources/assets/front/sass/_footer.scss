@@ -1,3 +1,5 @@
+@use './mixin' as *;
+
 /* ===========================================================================
   footer
 ============================================================================= */
@@ -9,8 +11,8 @@
 	}
 }
 .footer_inner {
+    text-align: center;
 	@include width-base($isBig: true);
-	text-align: center;
 }
 .footer_copy {
 	color: #fff;

@@ -32,7 +32,7 @@ class ConstUtil
         return [
             [
                 'name' => 'stripe_key',
-                'data' => env('STRIPE_KEY'),
+                'data' => config('const.stripe.key'),
             ],
             [
                 'name' => 'gender',

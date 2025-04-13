@@ -66,9 +66,9 @@ class IndexService extends BaseService
      *   sort_direction : 'asc' | 'desc',
      *   limit : int,
      * } $conditions
-     * @return Collection<int, ContactForm>|LengthAwarePaginator<ContactForm>|array<string>
+     * @return Collection<int, ContactForm>|LengthAwarePaginator<int, ContactForm>
      */
-    public function searchContactForm(array $conditions): Collection|LengthAwarePaginator|array
+    public function searchContactForm(array $conditions): Collection|LengthAwarePaginator
     {
         return $this->contactFormRepository->getByConditions($conditions);
     }

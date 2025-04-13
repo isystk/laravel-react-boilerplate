@@ -20,7 +20,7 @@ interface OrderRepository extends BaseRepository
      *   sort_direction : 'asc' | 'desc' | null,
      *   limit : ?int,
      * } $conditions
-     * @return Collection<int, Order>|LengthAwarePaginator<Order>
+     * @return Collection<int, Order>|LengthAwarePaginator<int, Order>
      */
     public function getConditionsWithUserStock(array $conditions): Collection|LengthAwarePaginator;
 

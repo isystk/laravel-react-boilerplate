@@ -132,7 +132,7 @@
 @endsection
 
 @section('scripts')
-    <script>
+    <script type="module">
         $(function () {
             // ダウンロード
             $('.js-download').click(function (e) {

@@ -41,11 +41,14 @@ case ${1} in
         rm -Rf ./mysql/logs && mkdir ./mysql/logs && chmod 777 ./mysql/logs
         rm -Rf ./apache/logs && mkdir ./apache/logs && chmod 777 ./apache/logs
         rm -Rf ./php/logs && mkdir ./php/logs && chmod 777 ./php/logs
+        rm -Rf ./vendor
+        rm -Rf ./node_modules
         popd
     ;;
 
     start)
         $DOCKER_COMPOSE up -d
+        $DOCKER_COMPOSE exec -d php php artisan queue:listen --timeout=0
     ;;
 
     stop)
@@ -71,10 +74,12 @@ case ${1} in
               mysql -u root -ppassword -h 127.0.0.1
           ;;
           export)
-              mysqldump --skip-column-statistics -u root -h 127.0.0.1 -A > ${3}
+              mysqldump --skip-column-statistics -u root -ppassword -h 127.0.0.1 laraec > ${3}
           ;;
           import)
-              mysql -u root -h 127.0.0.1 --default-character-set=utf8mb4 < ${3}
+              mysql -u root -ppassword -h 127.0.0.1 -e 'drop database if exists laraec;'
+              mysql -u root -ppassword -h 127.0.0.1 -e 'create database if not exists laraec;'
+              mysql -u root -ppassword -h 127.0.0.1 --default-character-set=utf8mb4 laraec < ${3}
               $DOCKER_COMPOSE restart mysql
           ;;
           *)

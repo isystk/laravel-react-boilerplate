@@ -25,7 +25,7 @@ class IndexService extends BaseService
 
     /**
      * 商品を検索します。
-     * @return LengthAwarePaginator<Stock>
+     * @return LengthAwarePaginator<int, Stock>
      */
     public function searchStock(): LengthAwarePaginator
     {

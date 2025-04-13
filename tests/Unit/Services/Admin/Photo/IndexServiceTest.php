@@ -37,6 +37,8 @@ class IndexServiceTest extends TestCase
      */
     public function testSearchPhotoList(): void
     {
+        Storage::fake();
+
         $default = [
             'file_name' => null,
             'file_type' => null,
@@ -61,10 +63,5 @@ class IndexServiceTest extends TestCase
         $photos = $this->service->searchPhotoList($input);
         $fileNames = collect($photos)->pluck('fileName')->all();
         $this->assertSame(['stock/stock1.jpg', 'stock/stock2.jpg'], $fileNames, 'file_nameで検索が出来ることをテスト');
-
-        // テストファイルを削除
-        Storage::delete('contact\contact1.jpg');
-        Storage::delete('stock\stock1.jpg');
-        Storage::delete('stock\stock2.jpg');
     }
 }

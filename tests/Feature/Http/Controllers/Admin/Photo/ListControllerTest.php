@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature\Http\Controllers\Admin\Photo;
+namespace Http\Controllers\Admin\Photo;
 
 use App\Domain\Entities\Admin;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
@@ -26,6 +26,8 @@ class ListControllerTest extends TestCase
      */
     public function testIndex(): void
     {
+        Storage::fake();
+
         /** @var Admin $admin */
         $admin = Admin::factory()->create([
             'name' => '管理者A',
@@ -41,15 +43,10 @@ class ListControllerTest extends TestCase
         $response = $this->get(route('admin.photo'));
         $response->assertSuccessful();
         $response->assertSeeInOrder([
-            'contact/contact1.jpg',
             'stock/stock1.jpg',
-            'stock/stock2.jpg'
+            'stock/stock2.jpg',
+            'contact/contact1.jpg',
         ]);
-
-        // テストファイルを削除
-        Storage::delete('contact\contact1.jpg');
-        Storage::delete('stock\stock1.jpg');
-        Storage::delete('stock\stock2.jpg');
     }
 
     /**
@@ -57,6 +54,8 @@ class ListControllerTest extends TestCase
      */
     public function testDestroy(): void
     {
+        Storage::fake();
+
         /** @var Admin $admin */
         $admin = Admin::factory()->create([
             'name' => '管理者A',

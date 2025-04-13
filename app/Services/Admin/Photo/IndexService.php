@@ -46,13 +46,18 @@ class IndexService extends BaseService
     public function searchPhotoList(array $conditions): array
     {
         $photos = [];
-        /** @var array<string> $files */
-        $files = Storage::allFiles();
+        $stockFiles = Storage::allFiles('stock');
+        $contactFiles = Storage::allFiles('contact');
+        $files = array_merge($stockFiles, $contactFiles);
         foreach ($files as $file) {
             if (null !== $conditions['file_name'] && !str_contains($file, $conditions['file_name'])) {
                 continue;
             }
             $dirName = substr($file, 0, strpos($file, '/'));
+            if (empty($dirName)) {
+                // ルート直下のファイルは何もしない
+                continue;
+            }
             $photoType = PhotoType::getIdByDirName($dirName);
             if (null !== $conditions['file_type'] && $conditions['file_type'] !== $photoType->value) {
                 continue;

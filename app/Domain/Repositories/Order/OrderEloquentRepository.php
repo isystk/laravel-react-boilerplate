@@ -29,7 +29,7 @@ class OrderEloquentRepository extends BaseEloquentRepository implements OrderRep
      *   sort_direction : 'asc' | 'desc' | null,
      *   limit : ?int,
      * } $conditions
-     * @return Collection<int, Order>|LengthAwarePaginator<Order>
+     * @return Collection<int, Order>|LengthAwarePaginator<int, Order>
      */
     public function getConditionsWithUserStock(array $conditions): Collection|LengthAwarePaginator
     {
@@ -44,10 +44,10 @@ class OrderEloquentRepository extends BaseEloquentRepository implements OrderRep
             $query->where('users.name', 'like', '%' . $conditions['user_name'] . '%');
         }
         if (null !== $conditions['order_date_from']) {
-            $query->where('orders.created_at', '>=', $conditions['order_date_from']);
+            $query->where('orders.created_at', '>=', $conditions['order_date_from']->format('Y-m-d'));
         }
         if (null !== $conditions['order_date_to']) {
-            $query->where('orders.created_at', '<=', $conditions['order_date_to']);
+            $query->where('orders.created_at', '<=', $conditions['order_date_to']->format('Y-m-d'));
         }
 
         if (null !== $conditions['sort_name']) {

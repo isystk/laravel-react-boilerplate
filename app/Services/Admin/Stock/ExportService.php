@@ -27,14 +27,14 @@ class ExportService extends BaseStockService
      *   name : ?string,
      *   sort_name : string,
      *   sort_direction : 'asc' | 'desc',
-     *   limit : int,
      * } $conditions
      * @return StockExport
      */
     public function getExport(array $conditions): StockExport
     {
+        $conditions['limit'] = null;
         $stocks = $this->stockRepository->getByConditions($conditions);
-        return new StockExport(collect($stocks->items()));
+        return new StockExport($stocks);
     }
 
 }

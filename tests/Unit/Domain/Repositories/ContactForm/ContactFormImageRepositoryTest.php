@@ -50,11 +50,9 @@ class ContactFormImageRepositoryTest extends TestCase
         $expectContactForm1Image1 = ContactFormImage::factory(['contact_form_id' => $contactForm1->id])->create();
         /** @var ContactFormImage $expectContactForm1Image2 */
         $expectContactForm1Image2 = ContactFormImage::factory(['contact_form_id' => $contactForm1->id])->create();
-        /** @var ContactFormImage $expectContactForm2Image1 */
-        $expectContactForm2Image1 = ContactFormImage::factory(['contact_form_id' => $contactForm2->id])->create();
+        ContactFormImage::factory(['contact_form_id' => $contactForm2->id])->create();
         $expectContactFormImageIds = [$expectContactForm1Image1->id, $expectContactForm1Image2->id];
 
-        /** @var ContactFormImage $contactFormImages */
         $contactFormImages = $this->repository->getByContactFormId($contactForm1->id);
         $contactFormImageIds = $contactFormImages->pluck('id')->all();
 

@@ -66,7 +66,7 @@ class IndexService extends BaseService
      *   sort_direction : 'asc' | 'desc',
      *   limit : int,
      * } $conditions
-     * @return LengthAwarePaginator<User>
+     * @return LengthAwarePaginator<int, User>
      */
     public function searchUser(array $conditions): LengthAwarePaginator
     {

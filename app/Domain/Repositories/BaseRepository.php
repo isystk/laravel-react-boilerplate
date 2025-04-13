@@ -7,18 +7,16 @@ use Illuminate\Support\Collection;
 interface BaseRepository
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @return mixed
      */
-    // @phpstan-ignore-next-line
     public function create(array $data): mixed;
 
     /**
      * @param int $id
-     * @param array $data
+     * @param array<string, mixed> $data
      * @return mixed
      */
-    // @phpstan-ignore-next-line
     public function update(int $id, array $data): mixed;
 
     /**
@@ -27,7 +25,7 @@ interface BaseRepository
     public function delete(int $id): void;
 
     /**
-     * @return Collection
+     * @return Collection<int, mixed>
      */
     public function getAll(): Collection;
 

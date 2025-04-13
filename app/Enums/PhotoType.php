@@ -44,9 +44,9 @@ enum PhotoType: int
 
     /**
      * @param ?int $code
-     * @return ?string
+     * @return string
      */
-    public static function getLabel(?int $code): ?string
+    public static function getLabel(?int $code): string
     {
         if (null === $code || null === self::get($code)) {
             return "";
@@ -54,7 +54,7 @@ enum PhotoType: int
         return self::get($code)->label();
     }
 
-    public static function getIdByDirName(string $dirName): ?PhotoType
+    public static function getIdByDirName(string $dirName): PhotoType
     {
         return match ($dirName) {
             'stock' => self::Stock,

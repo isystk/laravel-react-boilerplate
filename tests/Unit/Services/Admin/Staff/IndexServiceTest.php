@@ -6,6 +6,7 @@ use App\Domain\Entities\Admin;
 use App\Enums\AdminRole;
 use App\Services\Admin\Staff\IndexService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Tests\TestCase;
 
 class IndexServiceTest extends TestCase
@@ -64,19 +65,19 @@ class IndexServiceTest extends TestCase
 
         $input = $default;
         $input['name'] = 'user2';
-        /** @var Admin $admins */
+        /** @var LengthAwarePaginator<int, Admin> $admins */
         $admins = $this->service->searchStaff($input);
         $adminIds = $admins->pluck('id')->all();
         $this->assertSame([$admin2->id], $adminIds, 'nameで検索が出来ることをテスト');
 
         $input['email'] = 'user2@test.com';
-        /** @var Admin $admins */
+        /** @var LengthAwarePaginator<int, Admin> $admins */
         $admins = $this->service->searchStaff($input);
         $adminIds = $admins->pluck('id')->all();
         $this->assertSame([$admin2->id], $adminIds, 'emailで検索が出来ることをテスト');
 
         $input['role'] = AdminRole::Manager->value;
-        /** @var Admin $admins */
+        /** @var LengthAwarePaginator<int, Admin> $admins */
         $admins = $this->service->searchStaff($input);
         $adminIds = $admins->pluck('id')->all();
         $this->assertSame([$admin2->id], $adminIds, 'roleで検索が出来ることをテスト');
@@ -84,7 +85,7 @@ class IndexServiceTest extends TestCase
         $input = $default;
         $input['sort_name'] = 'id';
         $input['sort_direction'] = 'desc';
-        /** @var Admin $admins */
+        /** @var LengthAwarePaginator<int, Admin> $admins */
         $admins = $this->service->searchStaff($input);
         $adminIds = $admins->pluck('id')->all();
         $this->assertSame([$admin2->id, $admin1->id], $adminIds, 'ソート指定で検索が出来ることをテスト');
