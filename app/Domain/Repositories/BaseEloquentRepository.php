@@ -16,10 +16,9 @@ abstract class BaseEloquentRepository implements BaseRepository
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @return mixed
      */
-    // @phpstan-ignore-next-line
     public function create(array $data): mixed
     {
         return $this->model->create($data);
@@ -27,10 +26,9 @@ abstract class BaseEloquentRepository implements BaseRepository
 
     /**
      * @param int $id
-     * @param array $data
+     * @param array<string, mixed> $data
      * @return mixed
      */
-    // @phpstan-ignore-next-line
     public function update(int $id, array $data): mixed
     {
         $record = $this->getById($id);

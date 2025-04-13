@@ -133,8 +133,7 @@ abstract class BaseImport implements WithMapping, WithStartRow, WithValidation
         if (Excel::XLS === $this->readerType || Excel::XLSX === $this->readerType) {
             // Excelの書式が「日付」の場合は、数値が渡されるため、日付文字列に変換する
             if (is_numeric($col)) {
-                // @phpstan-ignore-next-line
-                return Date::excelToDateTimeObject($col)->format($format);
+                return Date::excelToDateTimeObject((int)$col)->format($format);
             }
         }
         return $col;
