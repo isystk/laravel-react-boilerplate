@@ -71,10 +71,12 @@ case ${1} in
               mysql -u root -ppassword -h 127.0.0.1
           ;;
           export)
-              mysqldump --skip-column-statistics -u root -h 127.0.0.1 -A > ${3}
+              mysqldump --skip-column-statistics -u root -ppassword -h 127.0.0.1 laraec > ${3}
           ;;
           import)
-              mysql -u root -h 127.0.0.1 --default-character-set=utf8mb4 < ${3}
+              mysql -u root -ppassword -h 127.0.0.1 -e 'drop database if exists laraec;'
+              mysql -u root -ppassword -h 127.0.0.1 -e 'create database if not exists laraec;'
+              mysql -u root -ppassword -h 127.0.0.1 --default-character-set=utf8mb4 laraec < ${3}
               $DOCKER_COMPOSE restart mysql
           ;;
           *)

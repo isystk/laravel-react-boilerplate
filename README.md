@@ -34,7 +34,7 @@ Laravel ＆ React.js の学習用サンプルアプリケーションです。
 
 #### ■ アプリケーション
 
-- Laravel 11
+- Laravel 12
 - React 18
 - Typescript
 - Adminlte 3
@@ -324,9 +324,9 @@ $ open https://localhost/
 # ブラウザでアクセス（管理画面）
 $ open https://localhost/admin/
 
-# バッチを実行する（商品CSV出力バッチ）
+# バッチを実行する（月別売上金額出力バッチ）
 $ ./dc.sh php login
-$ php artisan stockcsv
+$ php artisan export_monthly_sales ./output.csv
 
 # サーバーを停止する場合
 $ ./dc.sh stop
