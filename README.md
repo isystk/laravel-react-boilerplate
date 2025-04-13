@@ -34,7 +34,7 @@ Laravel ＆ React.js の学習用サンプルアプリケーションです。
 #### ■ アプリケーション
 
 - Laravel 12
-- React 19
+- React 18
 - Typescript
 - Adminlte 3
 - Bootstrap 4
