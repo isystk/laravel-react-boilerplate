@@ -89,24 +89,6 @@ services:
     volumes:
       - s3-store:/data
 
-  # ↓ ここから、Seleniumでテストをしたい場合に必要
-#  selenium-hub:
-#    image: selenium/hub:3.141.59-vanadium
-#    container_name: selenium-hub
-#    ports:
-#      - 4444:4444
-#  chrome:
-#    image: selenium/node-chrome:3.141.59-vanadium
-#    container_name: selenium-chrome
-#    volumes:
-#      - /dev/shm:/dev/shm
-#    depends_on:
-#      - selenium-hub
-#    environment:
-#      - HUB_HOST=selenium-hub
-#      - HUB_PORT=4444
-  # ↑ ここまで、Seleniumでテストをしたい場合に必要
-
 volumes:
   db-store:
   s3-store:

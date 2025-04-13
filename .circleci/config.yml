@@ -21,12 +21,28 @@ jobs:
     steps:
       - checkout
 
-      - run: sudo apt update
+      - run: sudo apt install
 
       - run:
           name: Install php-gd
           command: |
             sudo apt-get -y install libpng-dev
+
+      - run:
+          name: Install Node.js
+          command: |
+            curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+            node -v
+            npm -v
+
+      - run:
+          name: Install npm dependencies
+          command: npm install
+
+      - run:
+          name: Build frontend assets
+          command: npm run build
 
       - restore_cache:
           keys:
