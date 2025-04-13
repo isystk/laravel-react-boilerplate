@@ -41,11 +41,14 @@ case ${1} in
         rm -Rf ./mysql/logs && mkdir ./mysql/logs && chmod 777 ./mysql/logs
         rm -Rf ./apache/logs && mkdir ./apache/logs && chmod 777 ./apache/logs
         rm -Rf ./php/logs && mkdir ./php/logs && chmod 777 ./php/logs
+        rm -Rf ./vendor
+        rm -Rf ./node_modules
         popd
     ;;
 
     start)
         $DOCKER_COMPOSE up -d
+        $DOCKER_COMPOSE exec -d php php artisan queue:listen --timeout=0
     ;;
 
     stop)
