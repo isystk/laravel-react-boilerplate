@@ -291,13 +291,15 @@ $ ./dc.sh php login
 > php artisan s3upload
 ```
 
-# ブラウザでアクセス（フロント）
+ブラウザでアクセス（フロント）
+
 https://localhost/
 
-# ブラウザでアクセス（管理画面）
+ブラウザでアクセス（管理画面）
+
 https://localhost/admin/
 
-# サーバーを停止する場合
+サーバーを停止する場合
 ```
 $ ./dc.sh stop
 ```
