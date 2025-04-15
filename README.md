@@ -15,10 +15,10 @@ Laravel ＆ React.js の学習用サンプルアプリケーションです。
 - Laravelを初めて学習してみたい方
 - Dockerを利用したLaravelの開発環境を構築したい方
 - ECサイトを学習してみたい方
-- 管理画面も作成（マルチログイン）を作成したい方
+- フロントと管理画面で認証を別けたい（マルチログイン）をしたい方
 - Stripeを利用した決算処理を作成してみたい方
 - ソーシャルログインを作成してみたい方
-- オブジェクトストレージへの画像アップロードを作成してみたい方
+- 画像の管理をS3などのオブジェクトストレージにしたい方
 - フロントエンドをReact.jsで作成してみたい方
 
 ### 利用している技術
@@ -29,9 +29,8 @@ Laravel ＆ React.js の学習用サンプルアプリケーションです。
 - phpMyAdmin　・・・　起動したMySQLのデータを参照・編集するためのツールです。
 - MailHog 　・・・　ダミーのSMTPサーバーです。送信したメールをブラウザで閲覧することが可能です。実際にはメールは送信されないので開発時の誤送信してしまう心配がありません。
 - Minio 　・・・　S3に完全互換性のあるオブジェクトストレージです。アップロードした画像の保存先として利用しています。
-- Redis 　・・・　永続化可能なインメモリデータベースです。DBから取得したデータのキャッシュとして利用しています。
 
-#### ■ アプリケーション
+#### ■ 使用しているライブラリ
 
 - Laravel 12
 - React 18
@@ -113,39 +112,9 @@ https://laraec.isystk.com/admin/
 
 #### ■ バッチ処理
 
-- 商品CSV出力バッチ
+- 月別売上金額出力バッチ
 - S3商品画像アップロードバッチ
 
-## 🔧 開発環境の構築
-
-※ この環境を利用する為には、事前にdocker、docker-composeが動作する状態であることが前提条件です。
-Github CodeSpace を利用する場合は、Dockerの起動から進めてください。
-
-### WSLのインストール（Windowsの場合）
-参考
-https://docs.microsoft.com/ja-jp/windows/wsl/install
-
-WSLでUbuntuを起動する
-```
-# 初回起動時に、ユーザ名とパスワードが聞かれます。
-# 何も入力せずにEnterを押すとroot ユーザーで利用できるようになるので、rootユーザーとして設定します。
-
-# 初めにライブラリを最新化します。
-$ apt update
-
-# 日本語に対応しておきます。
-$ apt -y install language-pack-ja
-$ update-locale LANG=ja_JP.UTF8
-$ apt -y install manpages-ja manpages-ja-dev
-```
-
-### Dockerを利用できるようにする
-
-```
-# DockerとDocker Composeをインストールする。
-$ apt install -y docker-ce docker-compose
-$ service docker start
-```
 
 ## 📦 ディレクトリ構造
 
@@ -219,6 +188,37 @@ $ service docker start
 └── dc.sh （Dockerの起動用スクリプト）
 ```
 
+## 🔧 開発環境の構築
+
+※ この環境を利用する為には、事前にdocker、docker-composeが動作する状態であることが前提条件です。
+Github CodeSpace を利用する場合は、Dockerの起動から進めてください。
+
+### WSLのインストール（Windowsの場合）
+参考
+https://docs.microsoft.com/ja-jp/windows/wsl/install
+
+WSLでUbuntuを起動する
+```
+# 初回起動時に、ユーザ名とパスワードが聞かれます。
+# 何も入力せずにEnterを押すとroot ユーザーで利用できるようになるので、rootユーザーとして設定します。
+
+# 初めにライブラリを最新化します。
+$ apt update
+
+# 日本語に対応しておきます。
+$ apt -y install language-pack-ja
+$ update-locale LANG=ja_JP.UTF8
+$ apt -y install manpages-ja manpages-ja-dev
+```
+
+### Dockerを利用できるようにする
+
+```
+# DockerとDocker Composeをインストールする。
+$ apt install -y docker-ce docker-compose
+$ service docker start
+```
+
 ## 🖊️ Docker 操作用シェルスクリプトの使い方
 
 ```
@@ -241,6 +241,67 @@ Options:
   --help, -h        ヘルプを表示します。
 ```
 
+## 💬 Dockerの起動
+
+各種デーモンを起動する
+```
+# 初期化処理（初回のみ、環境をリセットしたい場合に実行する）
+$ ./dc.sh init
+
+# Dockerでローカル環境に各種デーモンを構築・起動する
+$ ./dc.sh start
+
+# データベースとPHPが立ち上がるまで少し待ちます。(初回は5分程度)
+
+# MySQLにログインしてみる
+$ ./dc.sh mysql login
+
+# PHPサーバーにログインしてみる
+$ ./dc.sh php login
+
+# 起動に問題がある場合は、以下のコマンドで状況を確認してみてください。
+$ ./dc.sh st
+$ ./dc.sh logs
+```
+
+minioにバケットを作成して、外部アクセス可能な状態にする。
+
+[こちら](http://localhost:9001/)から以下のID/パスワードでログイン後、「laraec.isystk.com」という名前のバケットを作成します。
+作成後、Manage から Access Policy を「Public」に変更してバケット内ファイルを外部参照可能な状態に公開します。
+
+| Username | Password
+|----------|----
+| admin    | password
+
+![minio](./documents/minio.png "minio")
+
+
+動作確認
+```
+# PHPサーバーにログインしてみる（composer や artisan などのコマンドは基本的にここで行う）
+$ ./dc.sh php login
+
+# Larastan を実行してコードをチェックする
+> ./vendor/bin/phpstan analyse --memory-limit=1G
+
+# PHPUnit でテストコードを実行する
+> ./vendor/bin/phpunit tests
+
+# テスト用の商品画像をS3（Minio）にアップロード
+> php artisan s3upload
+```
+
+# ブラウザでアクセス（フロント）
+https://localhost/
+
+# ブラウザでアクセス（管理画面）
+https://localhost/admin/
+
+# サーバーを停止する場合
+```
+$ ./dc.sh stop
+```
+
 ### mailhog 
 ダミーのメールサーバーです。実際にはメールは送信されず、送信されたメールはブラウザで閲覧できます。
 Dockerを起動後に以下のURLにアクセスすると利用可能です。
@@ -259,63 +320,6 @@ http://localhost:9001
 Dockerを起動後に以下のURLにアクセスすると利用可能です。
 
 http://localhost:8888/
-
-## 💬 使い方
-
-各種デーモンを起動する
-```
-# 下準備（初回のみ）
-$ ./dc.sh init
-
-# Dockerでローカル環境に各種デーモンを構築・起動する
-$ ./dc.sh start
-
-# データベースとPHPが立ち上がるまで少し待ちます。(初回は5分程度)
-
-# MySQLにログインしてみる
-$ ./dc.sh mysql login
-
-# PHPサーバーにログインしてみる
-$ ./dc.sh php login
-```
-
-minioにバケットを作成して、外部アクセス可能な状態にする。
-
-[こちら](http://localhost:9001/)から以下のID/パスワードでログイン後、「laraec.isystk.com」という名前のバケットを作成します。
-作成後、Manage から Access Policy を「Public」に変更してバケット内ファイルを外部参照可能な状態に公開します。
-
-| Username | Password
-|----------|----
-| admin    | password
-
-![minio](./documents/minio.png "minio")
-
-バックエンド環境を構築する
-```
-# PHPサーバーにログインしてみる（composer や artisan などのコマンドは基本的にここで行う）
-$ ./dc.sh php login
-
-# Larastan を実行してコードをチェックする
-> ./vendor/bin/phpstan analyse --memory-limit=1G
-
-# PHPUnit でテストコードを実行する
-> ./vendor/bin/phpunit tests
-
-# テスト用の商品画像をS3（Minio）にアップロード
-> php artisan s3upload
-```
-
-動作確認
-```
-# ブラウザでアクセス（フロント）
-https://localhost/
-
-# ブラウザでアクセス（管理画面）
-https://localhost/admin/
-
-# サーバーを停止する場合
-$ ./dc.sh stop
-```
 
 ## 🎨 参考
 
