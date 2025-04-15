@@ -147,13 +147,6 @@ $ apt install -y docker-ce docker-compose
 $ service docker start
 ```
 
-### MySQL Client のインストール
-
-```
-# MySQLに接続する為のコマンドをインストールします。（バージョンは何でもOK）
-$ apt install mysql-client
-```
-
 ## 📦 ディレクトリ構造
 
 ```

@@ -28,9 +28,5 @@ php artisan migrate:fresh --seed
 echo "🔐 Fixing permissions..."
 chmod -R 777 bootstrap/cache storage
 
-## キューリスナーを起動（永続化）
-#echo "🚀 Starting Laravel queue listener..."
-#exec php artisan queue:listen --timeout=0
-
 echo "🚀 Starting php-fpm..."
 exec php-fpm

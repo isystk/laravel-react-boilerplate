@@ -33,7 +33,7 @@ function version {
 
 case ${1} in
     stats|st)
-        docker container stats
+        $DOCKER_COMPOSE ps
     ;;
 
     logs)
@@ -78,7 +78,7 @@ case ${1} in
     mysql)
       case ${2} in
           login)
-              mysql -u root -ppassword -h 127.0.0.1
+              $DOCKER_COMPOSE exec mysql bash -c 'mysql -u root -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE'
           ;;
           export)
               mysqldump --skip-column-statistics -u root -ppassword -h 127.0.0.1 laraec > ${3}
