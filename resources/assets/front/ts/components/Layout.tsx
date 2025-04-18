@@ -3,7 +3,6 @@ import CommonHeader from "@/components/commons/Header";
 import CommonFooter from "@/components/commons/Footer";
 import Loading from "@/components/commons/Loading";
 import MainService from "@/services/main";
-import { Helmet, HelmetProvider } from "react-helmet-async";
 
 type Props = {
     appRoot: MainService;
@@ -13,19 +12,17 @@ type Props = {
 
 const Layout: FC<Props> = ({ appRoot, children, title }) => {
     return (
-        <HelmetProvider>
-            <Helmet>
-                <title>{title + " | LaraEC"}</title>
-                <meta
-                    name="description"
-                    content="Laravel ＆ React.js の学習用サンプルアプリケーションです。"
-                />
-            </Helmet>
+        <>
+            <title>{title + " | LaraEC"}</title>
+            <meta
+                name="description"
+                content="Laravel ＆ React.js の学習用サンプルアプリケーションです。"
+            />
             <CommonHeader appRoot={appRoot} />
             {children}
             <CommonFooter />
             <Loading appRoot={appRoot} />
-        </HelmetProvider>
+        </>
     );
 };
 

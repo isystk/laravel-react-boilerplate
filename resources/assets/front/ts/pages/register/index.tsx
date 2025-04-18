@@ -1,5 +1,4 @@
 import React, { useState, FC } from "react";
-import { Form } from "reactstrap";
 import TextInput from "@/components/elements/TextInput";
 import SubmitButton from "@/components/elements/SubmitButton";
 import CSRFToken from "@/components/elements/CSRFToken";
@@ -18,7 +17,7 @@ const RegisterForm: FC<Props> = ({ appRoot }) => {
         <Layout appRoot={appRoot} title="会員登録">
             <main className="main">
                 <Box title="会員登録" small={true}>
-                    <Form method="POST" action="/register" id="login-form">
+                    <form method="POST" action="/register" id="login-form">
                         <CSRFToken appRoot={appRoot} />
                         <TextInput
                             identity="name"
@@ -49,7 +48,7 @@ const RegisterForm: FC<Props> = ({ appRoot }) => {
                             label="パスワード（確認）"
                         />
                         <SubmitButton label="新規登録" />
-                    </Form>
+                    </form>
                 </Box>
             </main>
         </Layout>
