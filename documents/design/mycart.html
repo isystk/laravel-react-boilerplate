@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta
+        http-equiv="Content-Type"
+        content="text/html; charset=UTF-8"
+    >
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+    <title>マイカート | LaraEC</title>
+    <link
+        rel="dns-prefetch"
+        href="https://fonts.gstatic.com/"
+    >
+    <link
+        rel="stylesheet"
+        href="./app.css"
+    >
+    <meta
+        name="description"
+        content="Laravel ＆ React.js の学習用サンプルアプリケーションです。"
+        data-rh="true"
+    >
+</head>
+<body class="vsc-initialized">
+<div id="react-root">
+    <header class="header shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white headerNav">
+            <a
+                class="header_logo"
+                href="./index.html"
+            >
+                <img
+                    src="https://localhost/assets/front/image/logo.png"
+                    alt=""
+                >
+            </a>
+            <div
+                class=""
+                id="navbarSupportedContent"
+            >
+                <ul class="navbar-nav ml-auto">
+                    <div class="dropdown">
+                        <a
+                            id="logout-nav"
+                            aria-haspopup="true"
+                            href="#"
+                            class="dropdown-toggle nav-link"
+                            aria-expanded="false"
+                        >テスト1 様
+                        </a>
+                        <div
+                            tabindex="-1"
+                            role="menu"
+                            aria-hidden="true"
+                            class="dropdown-menu"
+                        >
+                            <button
+                                type="button"
+                                tabindex="0"
+                                role="menuitem"
+                                class="dropdown-item"
+                            >ログアウト
+                            </button>
+                            <form
+                                id="logout-form"
+                                action="#"
+                                method="POST"
+                                class=""
+                                style="display: none;"
+                            >
+                            </form>
+                            <button
+                                type="button"
+                                tabindex="0"
+                                role="menuitem"
+                                class="dropdown-item"
+                            >カートを見る
+                            </button>
+                        </div>
+                        <form
+                            id="mycart-form"
+                            action="./mycart.html"
+                            method="POST"
+                            class=""
+                            style="display: none;"
+                        >
+                        </form>
+                    </div>
+                    <a href="#">
+                        <img
+                            src="https://localhost/assets/front/image/cart.png"
+                            class="cartImg ml-3"
+                        >
+                    </a>
+                    <li class="nav-item">
+                        <a
+                            class="btn btn-link text-danger"
+                            href="./contact.html"
+                        >お問い合わせ
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="menu-btn">
+                <figure></figure>
+                <figure></figure>
+                <figure></figure>
+            </div>
+            <div
+                id="side-menu"
+                class=""
+            >
+                <div class="side-menu-header">
+                    <p style="margin: 20px; font-size: 16px;">テスト1 様</p>
+                </div>
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="#">ログアウト</a>
+                            <form
+                                id="logout-form"
+                                action="https://localhost/logout"
+                                method="POST"
+                                class=""
+                                style="display: none;"
+                            >
+                            </form>
+                        </li>
+                        <li>
+                            <a href="./mycart.html">カートを見る</a>
+                            <form
+                                id="mycart-form"
+                                action="https://localhost/mycart"
+                                method="POST"
+                                class=""
+                                style="display: none;"
+                            >
+                            </form>
+                        </li>
+                        <li>
+                            <a href="./contact.html">お問い合わせ</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div
+                id="layer-panel"
+                class=""
+            ></div>
+        </nav>
+    </header>
+    <main class="main">
+        <div class="contentsArea">
+            <h2 class="heading02">テスト1さんのカートの中身</h2>
+            <div>
+                <p class="text-center mt20"></p>
+                <br>
+                <div class="block01">
+                    <div class="block01_item">
+                        <img
+                            src="https://localhost/uploads/stock/megane.jpg"
+                            alt=""
+                            class="block01_img"
+                        >
+                        <p>メガネ</p>
+                        <p class="c-red mb20">4200円</p>
+                        <input
+                            type="button"
+                            class="btn-01"
+                            value="カートから削除する"
+                        >
+                    </div>
+                    <div class="block01_item">
+                        <img
+                            src="https://localhost/uploads/stock/headphone.jpg"
+                            alt=""
+                            class="block01_img"
+                        >
+                        <p>Bluetoothヘッドフォン</p>
+                        <p class="c-red mb20">10000円</p>
+                        <input
+                            type="button"
+                            class="btn-01"
+                            value="カートから削除する"
+                        >
+                    </div>
+                    <div class="block01_item">
+                        <img
+                            src="https://localhost/uploads/stock/hat.jpg"
+                            alt=""
+                            class="block01_img"
+                        >
+                        <p>麦わら帽子</p>
+                        <p class="c-red mb20">3200円</p>
+                        <input
+                            type="button"
+                            class="btn-01"
+                            value="カートから削除する"
+                        >
+                    </div>
+                    <div class="block01_item">
+                        <img
+                            src="https://localhost/uploads/stock/aguiter.jpg"
+                            alt=""
+                            class="block01_img"
+                        >
+                        <p>アコースティックギター</p>
+                        <p class="c-red mb20">25600円</p>
+                        <input
+                            type="button"
+                            class="btn-01"
+                            value="カートから削除する"
+                        >
+                    </div>
+                </div>
+                <div class="block02">
+                    <p>合計個数：4個</p>
+                    <p style="font-size: 1.2em; font-weight: bold;">合計金額：43000円</p>
+                </div>
+                <div style="margin: 40px 15px; text-align: center;">
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >決済をする
+                    </button>
+                </div>
+                <p class="mt30 ta-center">
+                    <a
+                        class="text-danger btn"
+                        href="https://localhost/"
+                    >商品一覧へ戻る
+                    </a>
+                </p>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer_inner">
+            <p class="mt20">
+                <img
+                    src="https://localhost/assets/front/image/logo_02.png"
+                    alt=""
+                >
+            </p>
+            <p class="mt10">
+                <small class="fz-s">©️isystk このページは架空のページです。実際の人物・団体とは関係ありません。</small>
+            </p>
+        </div>
+    </footer>
+    <div class="isystk-overlay ">
+        <button
+            type="button"
+            class="close"
+            aria-label="Close"
+        >
+            <span aria-hidden="true">×</span>
+        </button>
+        <div style="padding: 20px;">
+            <h2 style="font-size: 16px; text-align: center; font-weight: bold;">決済情報の入力</h2>
+            <form action="https://localhost/mycart#">
+                <input
+                    name="_token"
+                    type="hidden"
+                    class="form-control"
+                    value="ng7ONMMNUjpMWlX2vNlXP902QsJ68hXw2FNLXklM"
+                >
+                <div class="form-group">
+                    <label class="">金額</label>
+                    <p>43000円</p>
+                    <div class="invalid-feedback"></div>
+                </div>
+                <div class="form-group">
+                    <label class="">メールアドレス</label>
+                    <p>test1@test.com</p>
+                    <div class="invalid-feedback"></div>
+                </div>
+                <legend class="col-form-label">カード番号</legend>
+                <div class="p-2 bg-light StripeElement StripeElement--empty">
+                    <div
+                        class="__PrivateStripeElement"
+                        style="margin: 0px !important; padding: 0px !important; border: none !important; display: block !important; background: transparent !important; position: relative !important; opacity: 1 !important;"
+                    >
+                        <iframe
+                            name="__privateStripeFrame79419"
+                            frameborder="0"
+                            allowtransparency="true"
+                            scrolling="no"
+                            role="presentation"
+                            allow="payment *"
+                            src="./マイカート _ LaraEC_files/elements-inner-card-d154b4eb5c97f6879456a2615fbd4f3f.html"
+                            title="セキュアなカード番号入力フレーム"
+                            style="border: 0px !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; user-select: none !important; transform: translate(0px) !important; color-scheme: light only !important; height: 16.8px;"
+                        ></iframe>
+                        <input
+                            class="__PrivateStripeElement-input"
+                            aria-hidden="true"
+                            aria-label=" "
+                            autocomplete="false"
+                            maxlength="1"
+                            style="border: none !important; display: block !important; position: absolute !important; height: 1px !important; top: -1px !important; left: 0px !important; padding: 0px !important; margin: 0px !important; width: 100% !important; opacity: 0 !important; background: transparent !important; pointer-events: none !important; font-size: 16px !important;"
+                        >
+                        <div style="display: block !important; position: absolute !important; top: 50% !important; right: 0px !important; width: 0px !important; margin: 0px !important; padding: 0px !important; border: 0px !important; background: none !important; opacity: 1 !important; overflow: hidden !important; pointer-events: auto !important; transition: none !important;">
+                            <iframe
+                                name="cardNumberButton79423"
+                                frameborder="0"
+                                allowtransparency="true"
+                                scrolling="no"
+                                src="./マイカート _ LaraEC_files/elements-inner-link-button-for-card-caa181fd90a55489e70e24e7f91d7c14.html"
+                                style="margin: 0px !important; user-select: none !important; transform: translate(0px) !important; color-scheme: light only !important; display: block !important; position: absolute !important; top: 0px !important; right: 0px !important; height: 0px !important; width: var(--stripeElementWidth) !important; padding: 0px !important; border: 0px !important; overflow: hidden !important; opacity: 1 !important;"
+                            ></iframe>
+                        </div>
+                    </div>
+                </div>
+                <legend class="col-form-label">有効期限</legend>
+                <div class="p-2 bg-light StripeElement StripeElement--empty">
+                    <div
+                        class="__PrivateStripeElement"
+                        style="margin: 0px !important; padding: 0px !important; border: none !important; display: block !important; background: transparent !important; position: relative !important; opacity: 1 !important;"
+                    >
+                        <iframe
+                            name="__privateStripeFrame79420"
+                            frameborder="0"
+                            allowtransparency="true"
+                            scrolling="no"
+                            role="presentation"
+                            allow="payment *"
+                            src="./マイカート _ LaraEC_files/elements-inner-card-d154b4eb5c97f6879456a2615fbd4f3f(1).html"
+                            title="セキュアな有効期限入力フレーム"
+                            style="border: 0px !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; user-select: none !important; transform: translate(0px) !important; color-scheme: light only !important; height: 16.8px;"
+                        ></iframe>
+                        <input
+                            class="__PrivateStripeElement-input"
+                            aria-hidden="true"
+                            aria-label=" "
+                            autocomplete="false"
+                            maxlength="1"
+                            style="border: none !important; display: block !important; position: absolute !important; height: 1px !important; top: -1px !important; left: 0px !important; padding: 0px !important; margin: 0px !important; width: 100% !important; opacity: 0 !important; background: transparent !important; pointer-events: none !important; font-size: 16px !important;"
+                        >
+                        <div style="display: block !important; position: absolute !important; top: 50% !important; right: 0px !important; width: 0px !important; margin: 0px !important; padding: 0px !important; border: 0px !important; background: none !important; opacity: 1 !important; overflow: hidden !important; pointer-events: auto !important; transition: none !important;">
+                            <iframe
+                                name="cardExpiryButton79424"
+                                frameborder="0"
+                                allowtransparency="true"
+                                scrolling="no"
+                                src="./マイカート _ LaraEC_files/elements-inner-link-button-for-card-caa181fd90a55489e70e24e7f91d7c14(1).html"
+                                style="margin: 0px !important; user-select: none !important; transform: translate(0px) !important; color-scheme: light only !important; display: block !important; position: absolute !important; top: 0px !important; right: 0px !important; height: 0px !important; width: var(--stripeElementWidth) !important; padding: 0px !important; border: 0px !important; overflow: hidden !important; opacity: 1 !important;"
+                            ></iframe>
+                        </div>
+                    </div>
+                </div>
+                <legend class="col-form-label">セキュリティーコード</legend>
+                <div class="p-2 bg-light StripeElement StripeElement--empty">
+                    <div
+                        class="__PrivateStripeElement"
+                        style="margin: 0px !important; padding: 0px !important; border: none !important; display: block !important; background: transparent !important; position: relative !important; opacity: 1 !important;"
+                    >
+                        <iframe
+                            name="__privateStripeFrame79421"
+                            frameborder="0"
+                            allowtransparency="true"
+                            scrolling="no"
+                            role="presentation"
+                            allow="payment *"
+                            src="./マイカート _ LaraEC_files/elements-inner-card-d154b4eb5c97f6879456a2615fbd4f3f(2).html"
+                            title="セキュアな CVC 入力フレーム"
+                            style="border: 0px !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; user-select: none !important; transform: translate(0px) !important; color-scheme: light only !important; height: 16.8px;"
+                        ></iframe>
+                        <input
+                            class="__PrivateStripeElement-input"
+                            aria-hidden="true"
+                            aria-label=" "
+                            autocomplete="false"
+                            maxlength="1"
+                            style="border: none !important; display: block !important; position: absolute !important; height: 1px !important; top: -1px !important; left: 0px !important; padding: 0px !important; margin: 0px !important; width: 100% !important; opacity: 0 !important; background: transparent !important; pointer-events: none !important; font-size: 16px !important;"
+                        >
+                        <div style="display: block !important; position: absolute !important; top: 50% !important; right: 0px !important; width: 0px !important; margin: 0px !important; padding: 0px !important; border: 0px !important; background: none !important; opacity: 1 !important; overflow: hidden !important; pointer-events: auto !important; transition: none !important;">
+                            <iframe
+                                name="cardCvcButton79425"
+                                frameborder="0"
+                                allowtransparency="true"
+                                scrolling="no"
+                                src="./マイカート _ LaraEC_files/elements-inner-link-button-for-card-caa181fd90a55489e70e24e7f91d7c14(2).html"
+                                style="margin: 0px !important; user-select: none !important; transform: translate(0px) !important; color-scheme: light only !important; display: block !important; position: absolute !important; top: 0px !important; right: 0px !important; height: 0px !important; width: var(--stripeElementWidth) !important; padding: 0px !important; border: 0px !important; overflow: hidden !important; opacity: 1 !important;"
+                            ></iframe>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-center">
+                    <button
+                        type="submit"
+                        class="my-3 btn btn-primary"
+                    >購入する
+                    </button>
+                </p>
+            </form>
+            <p class="fz-s">テスト用クレジットカード番号
+                <br>
+                5555555555554444
+            </p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

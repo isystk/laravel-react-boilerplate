@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta
+        http-equiv="Content-Type"
+        content="text/html; charset=UTF-8"
+    >
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+    <title>TOP | LaraEC</title>
+    <link
+        rel="stylesheet"
+        href="./app.css"
+    >
+    <meta
+        name="description"
+        content="Laravel ＆ React.js の学習用サンプルアプリケーションです。"
+        data-rh="true"
+    >
+</head>
+<body class="vsc-initialized">
+<div id="react-root">
+    <header class="header shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white headerNav">
+            <a
+                class="header_logo"
+                href="./index.html"
+            >
+                <img
+                    src="https://localhost/assets/front/image/logo.png"
+                    alt=""
+                >
+            </a>
+            <div
+                class=""
+                id="navbarSupportedContent"
+            >
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a
+                            class="btn btn-danger mr-3"
+                            href="./login.html"
+                        >ログイン
+                        </a>
+                    </li>
+                    <div class="dropdown">
+                        <a
+                            id="logout-nav"
+                            aria-haspopup="true"
+                            href="#"
+                            class="dropdown-toggle nav-link"
+                            aria-expanded="false"
+                        >テスト1 様
+                        </a>
+                        <div
+                            tabindex="-1"
+                            role="menu"
+                            aria-hidden="true"
+                            class="dropdown-menu"
+                        >
+                            <button
+                                type="button"
+                                tabindex="0"
+                                role="menuitem"
+                                class="dropdown-item"
+                            >ログアウト
+                            </button>
+                            <form
+                                id="logout-form"
+                                action="#"
+                                method="POST"
+                                class=""
+                                style="display: none;"
+                            >
+                            </form>
+                            <button
+                                type="button"
+                                tabindex="0"
+                                role="menuitem"
+                                class="dropdown-item"
+                            >カートを見る
+                            </button>
+                        </div>
+                        <form
+                            id="mycart-form"
+                            action="./mycart.html"
+                            method="POST"
+                            class=""
+                            style="display: none;"
+                        >
+                            <input
+                                name="_token"
+                                type="hidden"
+                                class="form-control"
+                                value="ng7ONMMNUjpMWlX2vNlXP902QsJ68hXw2FNLXklM"
+                            >
+                        </form>
+                    </div>
+                    <li class="nav-item">
+                        <a
+                            class="btn btn-link text-danger"
+                            href="./register.html"
+                        >新規登録
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="./mycart.html">
+                            <img
+                                src="https://localhost/assets/front/image/cart.png"
+                                class="cartImg ml-3"
+                            >
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a
+                            class="btn btn-link text-danger"
+                            href="./contact.html"
+                        >お問い合わせ
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="menu-btn">
+                <figure></figure>
+                <figure></figure>
+                <figure></figure>
+            </div>
+            <div
+                id="side-menu"
+                class=""
+            >
+                <div class="side-menu-header">
+                    <p style="margin: 20px; font-size: 16px;"></p>
+                </div>
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="./login.html">ログイン</a>
+                        </li>
+                        <li>
+                            <a href="./register.html">新規登録</a>
+                        </li>
+                         <li>
+                            <a href="#">ログアウト</a>
+                            <form
+                                id="logout-form"
+                                action="https://localhost/logout"
+                                method="POST"
+                                class=""
+                                style="display: none;"
+                            >
+                            </form>
+                        </li>
+                        <li>
+                            <a href="./mycart.html">カートを見る</a>
+                            <form
+                                id="mycart-form"
+                                action="https://localhost/mycart"
+                                method="POST"
+                                class=""
+                                style="display: none;"
+                            >
+                            </form>
+                        </li>
+                        <li>
+                            <a href="./contact.html">お問い合わせ</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div
+                id="layer-panel"
+                class=""
+            ></div>
+        </nav>
+    </header>
+    <main class="main">
+        <div class="contentsArea">
+            <div style="margin-bottom: 25px;">
+                <div class="carousel slide">
+                    <ol class="carousel-indicators">
+                        <li class=""></li>
+                        <li class="active"></li>
+                        <li class=""></li>
+                        <li class=""></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item">
+                            <img
+                                src="https://localhost/assets/front/image/bunner_01.jpg"
+                                alt="Slide 1"
+                            >
+                            <div class="carousel-caption d-none d-md-block">
+                                <h3>Slide 1</h3>
+                                <p>Slide 1</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item active">
+                            <img
+                                src="https://localhost/assets/front/image/bunner_02.jpg"
+                                alt="Slide 2"
+                            >
+                            <div class="carousel-caption d-none d-md-block">
+                                <h3>Slide 2</h3>
+                                <p>Slide 2</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img
+                                src="https://localhost/assets/front/image/bunner_01.jpg"
+                                alt="Slide 3"
+                            >
+                            <div class="carousel-caption d-none d-md-block">
+                                <h3>Slide 3</h3>
+                                <p>Slide 3</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img
+                                src="https://localhost/assets/front/image/bunner_02.jpg"
+                                alt="Slide 4"
+                            >
+                            <div class="carousel-caption d-none d-md-block">
+                                <h3>Slide 4</h3>
+                                <p>Slide 4</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a
+                        class="carousel-control-prev"
+                        role="button"
+                        tabindex="0"
+                        style="cursor: pointer;"
+                    >
+                        <span
+                            class="carousel-control-prev-icon"
+                            aria-hidden="true"
+                        ></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a
+                        class="carousel-control-next"
+                        role="button"
+                        tabindex="0"
+                        style="cursor: pointer;"
+                    >
+                        <span
+                            class="carousel-control-next-icon"
+                            aria-hidden="true"
+                        ></span>
+                        <span
+                            class="sr-only"
+                        >Next
+                        </span>
+                    </a>
+                </div>
+            </div>
+            <div class="">
+                <div class="block01">
+                    <div class="block01_item">
+                        <div class="text-right mb-2">
+                            <a
+                                href="https://localhost/#"
+                                class="btn btn-sm btn-secondary"
+                                data-id="{stock.id}"
+                            >気になる
+                            </a>
+                        </div>
+                        <img
+                            src="https://localhost/uploads/stock/soujiki.jpg"
+                            alt=""
+                            class="block01_img"
+                        >
+                        <p>ロボット掃除機</p>
+                        <p class="c-red">84200円</p>
+                        <p class="mb20">自動で掃除してくれる便利な掃除機です。</p>
+                        <a
+                            href="./mycart.html"
+                        >
+                            <input
+                                type="hidden"
+                                name="stock_id"
+                                value="16"
+                            >
+                            <input
+                                type="button"
+                                class="btn-gray"
+                                value="カートに入れる（残り0個）"
+                            >
+                        </a>
+                    </div>
+                    <div class="block01_item">
+                        <div class="text-right mb-2">
+                            <a
+                                href="https://localhost/#"
+                                class="btn btn-sm btn-success"
+                                data-id="{stock.id}"
+                            >気になる
+                            </a>
+                        </div>
+                        <img
+                            src="https://localhost/uploads/stock/megane.jpg"
+                            alt=""
+                            class="block01_img"
+                        >
+                        <p>メガネ</p>
+                        <p class="c-red">4200円</p>
+                        <p class="mb20">シンプルな黒縁メガネです。</p>
+                        <a
+                            href="./mycart.html"
+                        >
+                            <input
+                                type="hidden"
+                                name="stock_id"
+                                value="15"
+                            >
+                            <input
+                                type="button"
+                                class="btn-01"
+                                value="カートに入れる（残り46個）"
+                            >
+                        </a>
+                    </div>
+                    <div class="block01_item">
+                        <div class="text-right mb-2">
+                            <a
+                                href="https://localhost/#"
+                                class="btn btn-sm btn-secondary"
+                                data-id="{stock.id}"
+                            >気になる
+                            </a>
+                        </div>
+                        <img
+                            src="https://localhost/uploads/stock/hat.jpg"
+                            alt=""
+                            class="block01_img"
+                        >
+                        <p>麦わら帽子</p>
+                        <p class="c-red">3200円</p>
+                        <p class="mb20">夏にぴったりな麦わら帽子です。</p>
+                        <a
+                            href="./mycart.html"
+                        >
+                            <input
+                                type="hidden"
+                                name="stock_id"
+                                value="14"
+                            >
+                            <input
+                                type="button"
+                                class="btn-01"
+                                value="カートに入れる（残り12個）"
+                            >
+                        </a>
+                    </div>
+                    <div class="block01_item">
+                        <div class="text-right mb-2">
+                            <a
+                                href="https://localhost/#"
+                                class="btn btn-sm btn-secondary"
+                                data-id="{stock.id}"
+                            >気になる
+                            </a>
+                        </div>
+                        <img
+                            src="https://localhost/uploads/stock/eguiter.jpg"
+                            alt=""
+                            class="block01_img"
+                        >
+                        <p>エレキギター</p>
+                        <p class="c-red">15600円</p>
+                        <p class="mb20">初心者向けのエントリーモデルです。</p>
+                        <a
+                            href="./mycart.html"
+                        >
+                            <input
+                                type="hidden"
+                                name="stock_id"
+                                value="13"
+                            >
+                            <input
+                                type="button"
+                                class="btn-gray"
+                                value="カートに入れる（残り0個）"
+                            >
+                        </a>
+                    </div>
+                    <div class="block01_item">
+                        <div class="text-right mb-2">
+                            <a
+                                href="https://localhost/#"
+                                class="btn btn-sm btn-secondary"
+                                data-id="{stock.id}"
+                            >気になる
+                            </a>
+                        </div>
+                        <img
+                            src="https://localhost/uploads/stock/aguiter.jpg"
+                            alt=""
+                            class="block01_img"
+                        >
+                        <p>アコースティックギター</p>
+                        <p class="c-red">25600円</p>
+                        <p class="mb20">初心者向けのエントリーモデルです。</p>
+                        <a
+                            href="./mycart.html"
+                        >
+                            <input
+                                type="hidden"
+                                name="stock_id"
+                                value="12"
+                            >
+                            <input
+                                type="button"
+                                class="btn-01"
+                                value="カートに入れる（残り9個）"
+                            >
+                        </a>
+                    </div>
+                    <div class="block01_item">
+                        <div class="text-right mb-2">
+                            <a
+                                href="https://localhost/#"
+                                class="btn btn-sm btn-secondary"
+                                data-id="{stock.id}"
+                            >気になる
+                            </a>
+                        </div>
+                        <img
+                            src="https://localhost/uploads/stock/pc.jpg"
+                            alt=""
+                            class="block01_img"
+                        >
+                        <p>デスクトップパソコン</p>
+                        <p class="c-red">11200円</p>
+                        <p class="mb20">最新OS搭載のデスクトップパソコンです。</p>
+                        <a
+                            href="./mycart.html"
+                        >
+                            <input
+                                type="hidden"
+                                name="stock_id"
+                                value="11"
+                            >
+                            <input
+                                type="button"
+                                class="btn-01"
+                                value="カートに入れる（残り6個）"
+                            >
+                        </a>
+                    </div>
+                </div>
+                <div class="mt40">
+                    <ul class="pagination">
+                        <li class="page-item disabled">
+                            <a
+                                class="page-link"
+                                href="https://localhost/#"
+                                aria-label="Go to first page"
+                            >«
+                            </a>
+                        </li>
+                        <li class="page-item disabled">
+                            <a
+                                class="page-link"
+                                href="https://localhost/#"
+                                aria-label="Go to previous page"
+                            >⟨
+                            </a>
+                        </li>
+                        <li class="page-item active">
+                            <a
+                                class="page-link undefined"
+                                href="https://localhost/#"
+                                aria-label="Go to page number 1"
+                            >1
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a
+                                class="page-link"
+                                href="https://localhost/#"
+                                aria-label="Go to page number 2"
+                            >2
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a
+                                class="page-link"
+                                href="https://localhost/#"
+                                aria-label="Go to page number 3"
+                            >3
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a
+                                class="page-link"
+                                href="https://localhost/#"
+                                aria-label="Go to next page"
+                            >⟩
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a
+                                class="page-link"
+                                href="https://localhost/#"
+                                aria-label="Go to last page"
+                            >»
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer_inner">
+            <p class="mt20">
+                <img
+                    src="https://localhost/assets/front/image/logo_02.png"
+                    alt=""
+                >
+            </p>
+            <p class="mt10">
+                <small class="fz-s">
+                    ©️isystk このページは架空のページです。実際の人物・団体とは関係ありません。
+                </small>
+            </p>
+        </div>
+    </footer>
+</div>
+</body>
+</html>
