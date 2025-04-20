@@ -14,6 +14,7 @@
         rel="dns-prefetch"
         href="https://fonts.gstatic.com/"
     >
+    <script src="https://cdn.tailwindcss.com"></script>
     <link
         rel="stylesheet"
         href="./app.css"
@@ -26,132 +27,208 @@
 </head>
 <body class="vsc-initialized">
 <div id="react-root">
-    <header class="header shadow-sm">
-        <nav class="navbar navbar-expand-md navbar-light bg-white headerNav">
+    <header class="shadow-sm">
+        <nav class="flex flex-wrap items-center justify-between bg-white px-4 py-3">
+            <!-- ロゴ -->
             <a
-                class="header_logo"
                 href="./index.html"
+                class="flex items-center"
             >
                 <img
                     src="https://localhost/assets/front/image/logo.png"
                     alt=""
+                    class="h-10 md:h-auto"
                 >
             </a>
-            <div
-                class=""
-                id="navbarSupportedContent"
-            >
-                <ul class="navbar-nav ml-auto">
-                    <div class="dropdown">
-                        <a
-                            id="logout-nav"
-                            aria-haspopup="true"
-                            href="#"
-                            class="dropdown-toggle nav-link"
-                            aria-expanded="false"
-                        >テスト1 様
-                        </a>
-                        <div
-                            tabindex="-1"
-                            role="menu"
-                            aria-hidden="true"
-                            class="dropdown-menu"
-                        >
-                            <button
-                                type="button"
-                                tabindex="0"
-                                role="menuitem"
-                                class="dropdown-item"
-                            >ログアウト
-                            </button>
-                            <form
-                                id="logout-form"
-                                action="#"
-                                method="POST"
-                                class=""
-                                style="display: none;"
-                            >
-                            </form>
-                            <button
-                                type="button"
-                                tabindex="0"
-                                role="menuitem"
-                                class="dropdown-item"
-                            >カートを見る
-                            </button>
-                        </div>
+            <!-- メニュー（PC表示） -->
+            <div class="hidden md:flex items-center space-x-4 ml-auto">
+                <a
+                    href="./login.html"
+                    class="btn bg-red-600 text-white px-4 py-2 rounded mr-3"
+                >ログイン
+                </a>
+                <!-- ドロップダウン -->
+                <div class="relative">
+                    <button
+                        id="dropdownToggle"
+                        class="text-gray-800 cursor-pointer focus:outline-none"
+                    >
+                        テスト1 様
+                    </button>
+                    <div
+                        id="dropdownMenu"
+                        class="absolute right-0 mt-1 w-40 bg-white border rounded shadow-md z-10 hidden"
+                    >
+                        <button
+                            type="button"
+                            class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                        >ログアウト
+                        </button>
                         <form
-                            id="mycart-form"
-                            action="./mycart.html"
+                            id="logout-form"
+                            action="#"
                             method="POST"
-                            class=""
-                            style="display: none;"
-                        >
-                        </form>
+                            class="hidden"
+                        ></form>
+                        <button
+                            type="button"
+                            class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                        >カートを見る
+                        </button>
                     </div>
-                    <a href="#">
-                        <img
-                            src="https://localhost/assets/front/image/cart.png"
-                            class="cartImg ml-3"
-                        >
-                    </a>
-                    <li class="nav-item">
-                        <a
-                            class="btn btn-link text-danger"
-                            href="./contact.html"
-                        >お問い合わせ
-                        </a>
-                    </li>
-                </ul>
+                </div>
+                <a
+                    href="./register.html"
+                    class="text-red-600 hover:underline"
+                >新規登録
+                </a>
+                <a
+                    href="./mycart.html"
+                    class="ml-3"
+                >
+                    <img
+                        src="https://localhost/assets/front/image/cart.png"
+                        alt="カート"
+                        class="h-10"
+                    >
+                </a>
+                <a
+                    href="./contact.html"
+                    class="text-red-600 hover:underline"
+                >お問い合わせ
+                </a>
             </div>
-            <div class="menu-btn">
-                <figure></figure>
-                <figure></figure>
-                <figure></figure>
+            <!-- ハンバーガーメニュー -->
+            <div class="menu-btn flex flex-col justify-center space-y-1.5 ml-4 md:hidden cursor-pointer">
+                <span class="block w-6 h-0.5 bg-black"></span>
+                <span class="block w-6 h-0.5 bg-black"></span>
+                <span class="block w-6 h-0.5 bg-black"></span>
             </div>
+            <!-- サイドメニュー -->
             <div
                 id="side-menu"
-                class=""
+                class="fixed inset-y-0 right-0 w-64 bg-white shadow-lg z-40 transform translate-x-full transition-transform duration-300"
             >
-                <div class="side-menu-header">
-                    <p style="margin: 20px; font-size: 16px;">テスト1 様</p>
+                <div class="p-5 text-lg font-medium border-b">
+                    <p class="text-gray-700"></p>
                 </div>
                 <nav>
-                    <ul>
+                    <ul class="flex flex-col p-4 space-y-2">
                         <li>
-                            <a href="#">ログアウト</a>
+                            <a
+                                href="./login.html"
+                                class="block text-gray-800 hover:text-red-600"
+                            >ログイン
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="./register.html"
+                                class="block text-gray-800 hover:text-red-600"
+                            >新規登録
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="#"
+                                class="block text-gray-800 hover:text-red-600"
+                            >ログアウト
+                            </a>
                             <form
                                 id="logout-form"
                                 action="https://localhost/logout"
                                 method="POST"
-                                class=""
-                                style="display: none;"
-                            >
-                            </form>
+                                class="hidden"
+                            ></form>
                         </li>
                         <li>
-                            <a href="./mycart.html">カートを見る</a>
+                            <a
+                                href="./mycart.html"
+                                class="block text-gray-800 hover:text-red-600"
+                            >カートを見る
+                            </a>
                             <form
                                 id="mycart-form"
                                 action="https://localhost/mycart"
                                 method="POST"
-                                class=""
-                                style="display: none;"
-                            >
-                            </form>
+                                class="hidden"
+                            ></form>
                         </li>
                         <li>
-                            <a href="./contact.html">お問い合わせ</a>
+                            <a
+                                href="./contact.html"
+                                class="block text-gray-800 hover:text-red-600"
+                            >お問い合わせ
+                            </a>
                         </li>
                     </ul>
                 </nav>
             </div>
+            <!-- オーバーレイ -->
             <div
                 id="layer-panel"
-                class=""
+                class="hidden fixed inset-0 bg-black bg-opacity-50 z-30"
             ></div>
         </nav>
+        <script>
+            // ドロップダウンの開閉
+            document.addEventListener('DOMContentLoaded', () => {
+                const toggle = document.getElementById('dropdownToggle');
+                const menu = document.getElementById('dropdownMenu');
+
+                // トグルで開閉
+                toggle.addEventListener('click', (e) => {
+                    e.stopPropagation(); // 外部クリックで即閉じないように
+                    menu.classList.toggle('hidden');
+                });
+
+                // メニュー外をクリックしたら閉じる
+                document.addEventListener('click', (e) => {
+                    if (!menu.contains(e.target) && !toggle.contains(e.target)) {
+                        menu.classList.add('hidden');
+                    }
+                });
+
+                // Escキーで閉じる
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        menu.classList.add('hidden');
+                    }
+                });
+            });
+
+            // サイドメニューの開閉
+            document.addEventListener('DOMContentLoaded', () => {
+                const menuBtn = document.querySelector('.menu-btn');
+                const sideMenu = document.getElementById('side-menu');
+                const overlay = document.getElementById('layer-panel');
+
+                // サイドメニューを開く
+                menuBtn.addEventListener('click', () => {
+                    sideMenu.classList.remove('translate-x-full');
+                    sideMenu.classList.add('translate-x-0');
+                    overlay.classList.remove('hidden');
+                });
+
+                // オーバーレイをクリックしたら閉じる
+                overlay.addEventListener('click', () => {
+                    sideMenu.classList.add('translate-x-full');
+                    sideMenu.classList.remove('translate-x-0');
+                    overlay.classList.add('hidden');
+                });
+
+                // エスケープキーで閉じる
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        sideMenu.classList.add('translate-x-full');
+                        sideMenu.classList.remove('translate-x-0');
+                        overlay.classList.add('hidden');
+                    }
+                });
+            });
+        </script>
     </header>
+
     <main class="main">
         <div class="contentsArea">
             <h2 class="heading02">テスト1さんのカートの中身</h2>
@@ -243,6 +320,7 @@
                 <img
                     src="https://localhost/assets/front/image/logo_02.png"
                     alt=""
+                    class="m-auto"
                 >
             </p>
             <p class="mt10">

@@ -10,6 +10,7 @@
         content="width=device-width, initial-scale=1"
     >
     <title>TOP | LaraEC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link
         rel="stylesheet"
         href="./app.css"
@@ -22,242 +23,332 @@
 </head>
 <body class="vsc-initialized">
 <div id="react-root">
-    <header class="header shadow-sm">
-        <nav class="navbar navbar-expand-md navbar-light bg-white headerNav">
+    <header class="shadow-sm">
+        <nav class="flex flex-wrap items-center justify-between bg-white px-4 py-3">
+            <!-- ロゴ -->
             <a
-                class="header_logo"
                 href="./index.html"
+                class="flex items-center"
             >
                 <img
                     src="https://localhost/assets/front/image/logo.png"
                     alt=""
+                    class="h-10 md:h-auto"
                 >
             </a>
-            <div
-                class=""
-                id="navbarSupportedContent"
-            >
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a
-                            class="btn btn-danger mr-3"
-                            href="./login.html"
-                        >ログイン
-                        </a>
-                    </li>
-                    <div class="dropdown">
-                        <a
-                            id="logout-nav"
-                            aria-haspopup="true"
-                            href="#"
-                            class="dropdown-toggle nav-link"
-                            aria-expanded="false"
-                        >テスト1 様
-                        </a>
-                        <div
-                            tabindex="-1"
-                            role="menu"
-                            aria-hidden="true"
-                            class="dropdown-menu"
-                        >
-                            <button
-                                type="button"
-                                tabindex="0"
-                                role="menuitem"
-                                class="dropdown-item"
-                            >ログアウト
-                            </button>
-                            <form
-                                id="logout-form"
-                                action="#"
-                                method="POST"
-                                class=""
-                                style="display: none;"
-                            >
-                            </form>
-                            <button
-                                type="button"
-                                tabindex="0"
-                                role="menuitem"
-                                class="dropdown-item"
-                            >カートを見る
-                            </button>
-                        </div>
+            <!-- メニュー（PC表示） -->
+            <div class="hidden md:flex items-center space-x-4 ml-auto">
+                <a
+                    href="./login.html"
+                    class="btn bg-red-600 text-white px-4 py-2 rounded mr-3"
+                >ログイン
+                </a>
+                <!-- ドロップダウン -->
+                <div class="relative">
+                    <button
+                        id="dropdownToggle"
+                        class="text-gray-800 cursor-pointer focus:outline-none"
+                    >
+                        テスト1 様
+                    </button>
+                    <div
+                        id="dropdownMenu"
+                        class="absolute right-0 mt-1 w-40 bg-white border rounded shadow-md z-10 hidden"
+                    >
+                        <button
+                            type="button"
+                            class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                        >ログアウト
+                        </button>
                         <form
-                            id="mycart-form"
-                            action="./mycart.html"
+                            id="logout-form"
+                            action="#"
                             method="POST"
-                            class=""
-                            style="display: none;"
-                        >
-                            <input
-                                name="_token"
-                                type="hidden"
-                                class="form-control"
-                                value="ng7ONMMNUjpMWlX2vNlXP902QsJ68hXw2FNLXklM"
-                            >
-                        </form>
+                            class="hidden"
+                        ></form>
+                        <button
+                            type="button"
+                            class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                        >カートを見る
+                        </button>
                     </div>
-                    <li class="nav-item">
-                        <a
-                            class="btn btn-link text-danger"
-                            href="./register.html"
-                        >新規登録
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="./mycart.html">
-                            <img
-                                src="https://localhost/assets/front/image/cart.png"
-                                class="cartImg ml-3"
-                            >
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a
-                            class="btn btn-link text-danger"
-                            href="./contact.html"
-                        >お問い合わせ
-                        </a>
-                    </li>
-                </ul>
+                </div>
+                <a
+                    href="./register.html"
+                    class="text-red-600 hover:underline"
+                >新規登録
+                </a>
+                <a
+                    href="./mycart.html"
+                    class="ml-3"
+                >
+                    <img
+                        src="https://localhost/assets/front/image/cart.png"
+                        alt="カート"
+                        class="h-10"
+                    >
+                </a>
+                <a
+                    href="./contact.html"
+                    class="text-red-600 hover:underline"
+                >お問い合わせ
+                </a>
             </div>
-            <div class="menu-btn">
-                <figure></figure>
-                <figure></figure>
-                <figure></figure>
+            <!-- ハンバーガーメニュー -->
+            <div class="menu-btn flex flex-col justify-center space-y-1.5 ml-4 md:hidden cursor-pointer">
+                <span class="block w-6 h-0.5 bg-black"></span>
+                <span class="block w-6 h-0.5 bg-black"></span>
+                <span class="block w-6 h-0.5 bg-black"></span>
             </div>
+            <!-- サイドメニュー -->
             <div
                 id="side-menu"
-                class=""
+                class="fixed inset-y-0 right-0 w-64 bg-white shadow-lg z-40 transform translate-x-full transition-transform duration-300"
             >
-                <div class="side-menu-header">
-                    <p style="margin: 20px; font-size: 16px;"></p>
+                <div class="p-5 text-lg font-medium border-b">
+                    <p class="text-gray-700"></p>
                 </div>
                 <nav>
-                    <ul>
+                    <ul class="flex flex-col p-4 space-y-2">
                         <li>
-                            <a href="./login.html">ログイン</a>
+                            <a
+                                href="./login.html"
+                                class="block text-gray-800 hover:text-red-600"
+                            >ログイン
+                            </a>
                         </li>
                         <li>
-                            <a href="./register.html">新規登録</a>
+                            <a
+                                href="./register.html"
+                                class="block text-gray-800 hover:text-red-600"
+                            >新規登録
+                            </a>
                         </li>
-                         <li>
-                            <a href="#">ログアウト</a>
+                        <li>
+                            <a
+                                href="#"
+                                class="block text-gray-800 hover:text-red-600"
+                            >ログアウト
+                            </a>
                             <form
                                 id="logout-form"
                                 action="https://localhost/logout"
                                 method="POST"
-                                class=""
-                                style="display: none;"
-                            >
-                            </form>
+                                class="hidden"
+                            ></form>
                         </li>
                         <li>
-                            <a href="./mycart.html">カートを見る</a>
+                            <a
+                                href="./mycart.html"
+                                class="block text-gray-800 hover:text-red-600"
+                            >カートを見る
+                            </a>
                             <form
                                 id="mycart-form"
                                 action="https://localhost/mycart"
                                 method="POST"
-                                class=""
-                                style="display: none;"
-                            >
-                            </form>
+                                class="hidden"
+                            ></form>
                         </li>
                         <li>
-                            <a href="./contact.html">お問い合わせ</a>
+                            <a
+                                href="./contact.html"
+                                class="block text-gray-800 hover:text-red-600"
+                            >お問い合わせ
+                            </a>
                         </li>
                     </ul>
                 </nav>
             </div>
+            <!-- オーバーレイ -->
             <div
                 id="layer-panel"
-                class=""
+                class="hidden fixed inset-0 bg-black bg-opacity-50 z-30"
             ></div>
         </nav>
+        <script>
+            // ドロップダウンの開閉
+            document.addEventListener('DOMContentLoaded', () => {
+                const toggle = document.getElementById('dropdownToggle');
+                const menu = document.getElementById('dropdownMenu');
+
+                // トグルで開閉
+                toggle.addEventListener('click', (e) => {
+                    e.stopPropagation(); // 外部クリックで即閉じないように
+                    menu.classList.toggle('hidden');
+                });
+
+                // メニュー外をクリックしたら閉じる
+                document.addEventListener('click', (e) => {
+                    if (!menu.contains(e.target) && !toggle.contains(e.target)) {
+                        menu.classList.add('hidden');
+                    }
+                });
+
+                // Escキーで閉じる
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        menu.classList.add('hidden');
+                    }
+                });
+            });
+
+            // サイドメニューの開閉
+            document.addEventListener('DOMContentLoaded', () => {
+                const menuBtn = document.querySelector('.menu-btn');
+                const sideMenu = document.getElementById('side-menu');
+                const overlay = document.getElementById('layer-panel');
+
+                // サイドメニューを開く
+                menuBtn.addEventListener('click', () => {
+                    sideMenu.classList.remove('translate-x-full');
+                    sideMenu.classList.add('translate-x-0');
+                    overlay.classList.remove('hidden');
+                });
+
+                // オーバーレイをクリックしたら閉じる
+                overlay.addEventListener('click', () => {
+                    sideMenu.classList.add('translate-x-full');
+                    sideMenu.classList.remove('translate-x-0');
+                    overlay.classList.add('hidden');
+                });
+
+                // エスケープキーで閉じる
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        sideMenu.classList.add('translate-x-full');
+                        sideMenu.classList.remove('translate-x-0');
+                        overlay.classList.add('hidden');
+                    }
+                });
+            });
+        </script>
     </header>
     <main class="main">
         <div class="contentsArea">
-            <div style="margin-bottom: 25px;">
-                <div class="carousel slide">
-                    <ol class="carousel-indicators">
-                        <li class=""></li>
-                        <li class="active"></li>
-                        <li class=""></li>
-                        <li class=""></li>
-                    </ol>
-                    <div class="carousel-inner">
-                        <div class="carousel-item">
+            <div class="mb-5 md:mb-10">
+                <div
+                    class="relative w-full overflow-hidden"
+                    id="carousel"
+                >
+                    <!-- Slides -->
+                    <div
+                        class="flex transition-transform duration-700 ease-in-out"
+                        id="carousel-slides"
+                    >
+                        <div class="w-full flex-shrink-0 relative">
                             <img
                                 src="https://localhost/assets/front/image/bunner_01.jpg"
                                 alt="Slide 1"
+                                class="w-full h-auto object-cover"
                             >
-                            <div class="carousel-caption d-none d-md-block">
-                                <h3>Slide 1</h3>
+                            <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4 hidden md:block">
+                                <h3 class="text-xl font-bold">Slide 1</h3>
                                 <p>Slide 1</p>
                             </div>
                         </div>
-                        <div class="carousel-item active">
+                        <div class="w-full flex-shrink-0 relative">
                             <img
                                 src="https://localhost/assets/front/image/bunner_02.jpg"
                                 alt="Slide 2"
+                                class="w-full h-auto object-cover"
                             >
-                            <div class="carousel-caption d-none d-md-block">
-                                <h3>Slide 2</h3>
+                            <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4 hidden md:block">
+                                <h3 class="text-xl font-bold">Slide 2</h3>
                                 <p>Slide 2</p>
                             </div>
                         </div>
-                        <div class="carousel-item">
+                        <div class="w-full flex-shrink-0 relative">
                             <img
                                 src="https://localhost/assets/front/image/bunner_01.jpg"
                                 alt="Slide 3"
+                                class="w-full h-auto object-cover"
                             >
-                            <div class="carousel-caption d-none d-md-block">
-                                <h3>Slide 3</h3>
+                            <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4 hidden md:block">
+                                <h3 class="text-xl font-bold">Slide 3</h3>
                                 <p>Slide 3</p>
                             </div>
                         </div>
-                        <div class="carousel-item">
+                        <div class="w-full flex-shrink-0 relative">
                             <img
                                 src="https://localhost/assets/front/image/bunner_02.jpg"
                                 alt="Slide 4"
+                                class="w-full h-auto object-cover"
                             >
-                            <div class="carousel-caption d-none d-md-block">
-                                <h3>Slide 4</h3>
+                            <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4 hidden md:block">
+                                <h3 class="text-xl font-bold">Slide 4</h3>
                                 <p>Slide 4</p>
                             </div>
                         </div>
                     </div>
-                    <a
-                        class="carousel-control-prev"
-                        role="button"
-                        tabindex="0"
-                        style="cursor: pointer;"
+                    <!-- Controls -->
+                    <button
+                        id="prev"
+                        class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 text-white p-2 rounded-full"
                     >
-                        <span
-                            class="carousel-control-prev-icon"
-                            aria-hidden="true"
-                        ></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a
-                        class="carousel-control-next"
-                        role="button"
-                        tabindex="0"
-                        style="cursor: pointer;"
+                        &#10094;
+                    </button>
+                    <button
+                        id="next"
+                        class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 text-white p-2 rounded-full"
                     >
-                        <span
-                            class="carousel-control-next-icon"
-                            aria-hidden="true"
-                        ></span>
-                        <span
-                            class="sr-only"
-                        >Next
-                        </span>
-                    </a>
+                        &#10095;
+                    </button>
+                    <!-- Indicators -->
+                    <div
+                        class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2"
+                        id="carousel-indicators"
+                    >
+                        <button
+                            class="w-3 h-3 rounded-full bg-white opacity-50"
+                            data-slide="0"
+                        ></button>
+                        <button
+                            class="w-3 h-3 rounded-full bg-white opacity-50"
+                            data-slide="1"
+                        ></button>
+                        <button
+                            class="w-3 h-3 rounded-full bg-white opacity-50"
+                            data-slide="2"
+                        ></button>
+                        <button
+                            class="w-3 h-3 rounded-full bg-white opacity-50"
+                            data-slide="3"
+                        ></button>
+                    </div>
                 </div>
+                <script>
+                    const slides = document.getElementById("carousel-slides");
+                    const indicators = document.querySelectorAll("#carousel-indicators button");
+                    let current = 0;
+                    const total = indicators.length;
+
+                    function updateSlide(index) {
+                        slides.style.transform = `translateX(-${index * 100}%)`;
+                        indicators.forEach((btn, i) => {
+                            btn.classList.toggle("opacity-100", i === index);
+                            btn.classList.toggle("opacity-50", i !== index);
+                        });
+                        current = index;
+                    }
+
+                    document.getElementById("prev").addEventListener("click", () => {
+                        updateSlide((current - 1 + total) % total);
+                    });
+
+                    document.getElementById("next").addEventListener("click", () => {
+                        updateSlide((current + 1) % total);
+                    });
+
+                    indicators.forEach((btn, i) => {
+                        btn.addEventListener("click", () => updateSlide(i));
+                    });
+
+                    // 初期状態
+                    updateSlide(current);
+                </script>
             </div>
-            <div class="">
+            <div>
                 <div class="block01">
                     <div class="block01_item">
                         <div class="text-right mb-2">
@@ -452,65 +543,82 @@
                         </a>
                     </div>
                 </div>
-                <div class="mt40">
-                    <ul class="pagination">
-                        <li class="page-item disabled">
-                            <a
-                                class="page-link"
-                                href="https://localhost/#"
-                                aria-label="Go to first page"
-                            >«
-                            </a>
-                        </li>
-                        <li class="page-item disabled">
-                            <a
-                                class="page-link"
-                                href="https://localhost/#"
-                                aria-label="Go to previous page"
-                            >⟨
-                            </a>
-                        </li>
-                        <li class="page-item active">
-                            <a
-                                class="page-link undefined"
-                                href="https://localhost/#"
-                                aria-label="Go to page number 1"
-                            >1
-                            </a>
-                        </li>
-                        <li class="page-item">
-                            <a
-                                class="page-link"
-                                href="https://localhost/#"
-                                aria-label="Go to page number 2"
-                            >2
-                            </a>
-                        </li>
-                        <li class="page-item">
-                            <a
-                                class="page-link"
-                                href="https://localhost/#"
-                                aria-label="Go to page number 3"
-                            >3
-                            </a>
-                        </li>
-                        <li class="page-item">
-                            <a
-                                class="page-link"
-                                href="https://localhost/#"
-                                aria-label="Go to next page"
-                            >⟩
-                            </a>
-                        </li>
-                        <li class="page-item">
-                            <a
-                                class="page-link"
-                                href="https://localhost/#"
-                                aria-label="Go to last page"
-                            >»
-                            </a>
-                        </li>
-                    </ul>
+                <div class="mt-10 text-center">
+                    <nav
+                        class="isolate inline-flex -space-x-px rounded-md shadow-xs"
+                        aria-label="Pagination"
+                    >
+                        <a
+                            href="#"
+                            class="btn"
+                        >
+                            <span class="sr-only">Previous</span>
+                            <svg
+                                class="size-5"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                aria-hidden="true"
+                                data-slot="icon"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
+                        </a>
+                        <a
+                            href="#"
+                            aria-current="page"
+                            class="btn active"
+                        >1
+                        </a>
+                        <a
+                            href="#"
+                            class="btn"
+                        >2
+                        </a>
+                        <a
+                            href="#"
+                            class="btn"
+                        >3
+                        </a>
+                        <span class="inline-flex items-center px-4 py-2 text-gray-700 ring-1 ring-gray-300 ring-inset">⋯</span>
+                        <a
+                            href="#"
+                            class="btn"
+                        >8
+                        </a>
+                        <a
+                            href="#"
+                            class="btn"
+                        >9
+                        </a>
+                        <a
+                            href="#"
+                            class="btn"
+                        >10
+                        </a>
+                        <a
+                            href="#"
+                            class="btn"
+                        >
+                            <span class="sr-only">Next</span>
+                            <svg
+                                class="size-5"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                aria-hidden="true"
+                                data-slot="icon"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
+                        </a>
+                    </nav>
                 </div>
             </div>
         </div>
@@ -521,6 +629,7 @@
                 <img
                     src="https://localhost/assets/front/image/logo_02.png"
                     alt=""
+                    class="m-auto"
                 >
             </p>
             <p class="mt10">
