@@ -1,11 +1,4 @@
 import React, { FC, useState } from "react";
-import {
-    Dropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    Form,
-} from "reactstrap";
 import CSRFToken from "@/components/elements/CSRFToken";
 import { Url } from "@/constants/url";
 import Logo from "@/components/commons/Logo";
@@ -20,7 +13,7 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
     const navigate = useNavigate();
     const push_mycart = () => navigate(Url.MYCART);
 
-    const [isDropdownOpen, setDropdownOpen] = useState(false);
+    // const [isDropdownOpen, setDropdownOpen] = useState(false);
     const [isSideMenu, setSideMenu] = useState(false);
     const { isLogined, name } = appRoot.auth;
 
@@ -33,21 +26,19 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
                             // ログイン済みの場合
                             return (
                                 <>
-                                    <Dropdown
-                                        isOpen={isDropdownOpen}
-                                        toggle={() => {
-                                            setDropdownOpen(!isDropdownOpen);
-                                        }}
+                                    <div
+                                        // isOpen={isDropdownOpen}
+                                        // toggle={() => {
+                                        //     setDropdownOpen(!isDropdownOpen);
+                                        // }}
                                     >
-                                        <DropdownToggle
-                                            caret
-                                            nav
+                                        <div
                                             id="logout-nav"
                                         >
                                             {name + " 様"}
-                                        </DropdownToggle>
-                                        <DropdownMenu>
-                                            <DropdownItem
+                                        </div>
+                                        <div>
+                                            <div
                                                 onClick={(e) => {
                                                     e.preventDefault();
                                                     const element: HTMLFormElement =
@@ -60,30 +51,30 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
                                                 }}
                                             >
                                                 ログアウト
-                                            </DropdownItem>
-                                            <Form
+                                            </div>
+                                            <form
                                                 id="logout-form"
                                                 action={Url.LOGOUT}
                                                 method="POST"
                                                 style={{ display: "none" }}
                                             >
                                                 <CSRFToken appRoot={appRoot} />
-                                            </Form>
-                                            <DropdownItem
+                                            </form>
+                                            <div
                                                 onClick={mycartSubmit}
                                             >
                                                 カートを見る
-                                            </DropdownItem>
-                                        </DropdownMenu>
-                                        <Form
+                                            </div>
+                                        </div>
+                                        <form
                                             id="mycart-form"
                                             action={Url.MYCART}
                                             method="POST"
                                             style={{ display: "none" }}
                                         >
                                             <CSRFToken appRoot={appRoot} />
-                                        </Form>
-                                    </Dropdown>
+                                        </form>
+                                    </div>
 
                                     <a href="#" onClick={mycartSubmit}>
                                         <img
@@ -180,7 +171,7 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
                                                 >
                                                     ログアウト
                                                 </a>
-                                                <Form
+                                                <form
                                                     id="logout-form"
                                                     action={Url.LOGOUT}
                                                     method="POST"
@@ -189,7 +180,7 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
                                                     <CSRFToken
                                                         appRoot={appRoot}
                                                     />
-                                                </Form>
+                                                </form>
                                             </li>
                                             <li>
                                                 <a
@@ -198,7 +189,7 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
                                                 >
                                                     カートを見る
                                                 </a>
-                                                <Form
+                                                <form
                                                     id="mycart-form"
                                                     action={Url.MYCART}
                                                     method="POST"
@@ -207,7 +198,7 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
                                                     <CSRFToken
                                                         appRoot={appRoot}
                                                     />
-                                                </Form>
+                                                </form>
                                             </li>
                                         </>
                                     );

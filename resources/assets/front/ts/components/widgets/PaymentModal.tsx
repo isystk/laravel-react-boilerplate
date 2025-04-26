@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import { Button, FormGroup, Label, FormFeedback } from "reactstrap";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Url } from "@/constants/url";
@@ -73,16 +72,16 @@ const PaymentModal: FC<Props> = ({ isOpen, handleClose, appRoot, amount }) => {
                     {({ values, errors }) => (
                         <Form>
                             <CSRFToken appRoot={appRoot} />
-                            <FormGroup>
-                                <Label>金額</Label>
+                            <div>
+                                <label>金額</label>
                                 <p>{values.amount}円</p>
-                                <FormFeedback>{errors.amount}</FormFeedback>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label>メールアドレス</Label>
+                                <div>{errors.amount}</div>
+                            </div>
+                            <div>
+                                <label>メールアドレス</label>
                                 <p>{values.username}</p>
-                                <FormFeedback>{errors.username}</FormFeedback>
-                            </FormGroup>
+                                <div>{errors.username}</div>
+                            </div>
                             <legend className="col-form-label">
                                 カード番号
                             </legend>
@@ -94,13 +93,13 @@ const PaymentModal: FC<Props> = ({ isOpen, handleClose, appRoot, amount }) => {
                             </legend>
                             <CardCvcElement className="p-2 bg-light" />
                             <p className="text-center">
-                                <Button
+                                <button
                                     type="submit"
                                     className="my-3"
                                     color="primary"
                                 >
                                     購入する
-                                </Button>
+                                </button>
                             </p>
                         </Form>
                     )}

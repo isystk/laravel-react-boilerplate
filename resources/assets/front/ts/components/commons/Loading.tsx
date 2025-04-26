@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import MainService from "@/services/main";
-import { Spinner } from "reactstrap";
 import Portal from "@/components/commons/Portal";
 
 type Props = {
@@ -14,7 +13,7 @@ const Loading: FC<Props> = ({ appRoot }) => {
             {isShowLoading && (
                 <div id="site_loader_overlay">
                     <div className="site_loader_spinner">
-                        <Spinner>Loading...</Spinner>
+                        <div>Loading...</div>
                     </div>
                 </div>
             )}

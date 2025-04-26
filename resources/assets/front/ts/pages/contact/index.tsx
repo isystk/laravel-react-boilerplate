@@ -1,13 +1,11 @@
 import * as React from "react";
 import * as Yup from "yup";
 import { FC } from "react";
-import { FormGroup, Label, Input, Button } from "reactstrap";
-import { Formik, Form } from "formik";
+import { Formik } from "formik";
 import CSRFToken from "@/components/elements/CSRFToken";
 import Layout from "@/components/Layout";
 import MainService from "@/services/main";
 import { KeyValue } from "@/services/const";
-import ImageFileInput from "@/components/elements/ImageFile";
 import Box from "@/components/Box";
 import { useNavigate } from "react-router-dom";
 import { Url } from "@/constants/url";
@@ -79,33 +77,33 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
                             handleBlur,
                             values,
                             errors,
-                            touched,
+                            // touched,
                         }) => (
-                            <Form>
+                            <form>
                                 <CSRFToken appRoot={appRoot} />
-                                <FormGroup>
+                                <div>
                                     <div style={{ width: "100%" }}>
-                                        <Label
-                                            for="user_name"
+                                        <label
+                                            // for="user_name"
                                             className="item-name"
                                         >
                                             お名前を入力してください
                                             <span className="required">
                                                 必須
                                             </span>
-                                        </Label>
+                                        </label>
                                         <div className="text-wrap large">
-                                            <Input
+                                            <input
                                                 type="text"
                                                 id="user_name"
                                                 name="user_name"
                                                 value={values.user_name}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                invalid={Boolean(
-                                                    touched.user_name &&
-                                                        errors.user_name
-                                                )}
+                                                // invalid={Boolean(
+                                                //     touched.user_name &&
+                                                //         errors.user_name
+                                                // )}
                                             />
                                             <div className="form-bottom"></div>
                                             <p className="error">
@@ -113,40 +111,40 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
                                             </p>
                                         </div>
                                     </div>
-                                </FormGroup>
-                                <FormGroup>
+                                </div>
+                                <div>
                                     <div style={{ width: "100%" }}>
-                                        <Label className="item-name">
+                                        <label className="item-name">
                                             返信先のメールアドレスを入力してください
                                             <span className="required">
                                                 必須
                                             </span>
-                                        </Label>
+                                        </label>
                                         <div className="text-wrap large">
-                                            <Input
+                                            <input
                                                 type="email"
                                                 name="email"
                                                 value={values.email}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                invalid={Boolean(
-                                                    touched.email &&
-                                                        errors.email
-                                                )}
+                                                // invalid={Boolean(
+                                                //     touched.email &&
+                                                //         errors.email
+                                                // )}
                                             />
                                             <div className="form-bottom"></div>
                                         </div>
                                         <p className="error">{errors.email}</p>
                                     </div>
-                                </FormGroup>
-                                <FormGroup>
+                                </div>
+                                <div>
                                     <div style={{ width: "100%" }}>
-                                        <Label className="item-name">
+                                        <label className="item-name">
                                             性別を教えて下さい
                                             <span className="required">
                                                 必須
                                             </span>
-                                        </Label>
+                                        </label>
                                         {consts.gender &&
                                             (
                                                 consts.gender.data as KeyValue[]
@@ -155,8 +153,8 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
                                                     className="radio-wrap"
                                                     key={index}
                                                 >
-                                                    <Label>
-                                                        <Input
+                                                    <label>
+                                                        <input
                                                             type="radio"
                                                             name="gender"
                                                             value={e.key}
@@ -170,36 +168,36 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
                                                                 handleChange
                                                             }
                                                             onBlur={handleBlur}
-                                                            invalid={Boolean(
-                                                                touched.gender &&
-                                                                    errors.gender
-                                                            )}
+                                                            // invalid={Boolean(
+                                                            //     touched.gender &&
+                                                            //         errors.gender
+                                                            // )}
                                                         />{" "}
                                                         <span>{e.value}</span>
-                                                    </Label>
+                                                    </label>
                                                 </div>
                                             ))}
                                         <p className="error">{errors.gender}</p>
                                     </div>
-                                </FormGroup>
-                                <FormGroup>
+                                </div>
+                                <div>
                                     <div style={{ width: "100%" }}>
-                                        <Label className="item-name">
+                                        <label className="item-name">
                                             年齢を教えて下さい
                                             <span className="required">
                                                 必須
                                             </span>
-                                        </Label>
+                                        </label>
                                         <div className="select-wrap">
-                                            <Input
+                                            <input
                                                 type="select"
                                                 name="age"
                                                 value={values.age}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                invalid={Boolean(
-                                                    touched.age && errors.age
-                                                )}
+                                                // invalid={Boolean(
+                                                //     touched.age && errors.age
+                                                // )}
                                             >
                                                 <option value="">
                                                     選択してください
@@ -216,55 +214,55 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
                                                             {e.value}
                                                         </option>
                                                     ))}
-                                            </Input>
+                                            </input>
                                         </div>
                                         <p className="error">{errors.age}</p>
                                     </div>
-                                </FormGroup>
-                                <FormGroup>
+                                </div>
+                                <div>
                                     <div style={{ width: "100%" }}>
-                                        <Label className="item-name">
+                                        <label className="item-name">
                                             件名を入力してください
                                             <span className="required">
                                                 必須
                                             </span>
-                                        </Label>
+                                        </label>
                                         <div className="text-wrap large">
-                                            <Input
+                                            <input
                                                 type="text"
                                                 name="title"
                                                 value={values.title}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                invalid={Boolean(
-                                                    touched.title &&
-                                                        errors.title
-                                                )}
+                                                // invalid={Boolean(
+                                                //     touched.title &&
+                                                //         errors.title
+                                                // )}
                                             />
                                             <div className="form-bottom"></div>
                                         </div>
                                         <p className="error">{errors.title}</p>
                                     </div>
-                                </FormGroup>
-                                <FormGroup>
+                                </div>
+                                <div>
                                     <div style={{ width: "100%" }}>
-                                        <Label className="item-name">
+                                        <label className="item-name">
                                             お問い合わせ内容
                                             <span className="required">
                                                 必須
                                             </span>
-                                        </Label>
+                                        </label>
                                         <div className="textarea-wrap large">
-                                            <Input
+                                            <input
                                                 type="textarea"
                                                 name="contact"
                                                 value={values.contact}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                invalid={Boolean(
-                                                    touched.contact &&
-                                                        errors.contact
-                                                )}
+                                                // invalid={Boolean(
+                                                //     touched.contact &&
+                                                //         errors.contact
+                                                // )}
                                             />
                                             <div className="form-bottom"></div>
                                         </div>
@@ -272,79 +270,76 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
                                             {errors.contact}
                                         </p>
                                     </div>
-                                </FormGroup>
-                                <FormGroup>
+                                </div>
+                                <div>
                                     <div style={{ width: "100%" }}>
-                                        <Label className="item-name">
+                                        <label className="item-name">
                                             ホームページURLを入力してください
                                             <span>任意</span>
-                                        </Label>
+                                        </label>
                                         <div className="text-wrap large">
-                                            <Input
+                                            <input
                                                 type="url"
                                                 name="url"
                                                 value={values.url}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                invalid={Boolean(
-                                                    touched.url && errors.url
-                                                )}
+                                                // invalid={Boolean(
+                                                //     touched.url && errors.url
+                                                // )}
                                             />
                                             <div className="form-bottom"></div>
                                         </div>
                                         <p className="error">{errors.url}</p>
                                     </div>
-                                </FormGroup>
-                                <FormGroup>
+                                </div>
+                                <div>
                                     <div style={{ width: "100%" }}>
-                                        <Label className="item-name">
+                                        <label className="item-name">
                                             画像1を選択してください
                                             <span>任意</span>
-                                        </Label>
-                                        <ImageFileInput
-                                            label="画像1"
+                                        </label>
+                                        <input type="file"
                                             name="imageBase64_1"
                                         />
                                     </div>
-                                </FormGroup>
-                                <FormGroup>
+                                </div>
+                                <div>
                                     <div style={{ width: "100%" }}>
-                                        <Label className="item-name">
+                                        <label className="item-name">
                                             画像2を選択してください
                                             <span>任意</span>
-                                        </Label>
-                                        <ImageFileInput
-                                            label="画像2"
+                                        </label>
+                                        <input type="file"
                                             name="imageBase64_2"
                                         />
                                     </div>
-                                </FormGroup>
-                                <FormGroup>
+                                </div>
+                                <div>
                                     <div style={{ width: "100%" }}>
-                                        <Label className="item-name">
+                                        <label className="item-name">
                                             画像3を選択してください
                                             <span>任意</span>
-                                        </Label>
-                                        <ImageFileInput
-                                            label="画像3"
+                                        </label>
+                                        <input type="file"
                                             name="imageBase64_3"
                                         />
                                     </div>
-                                </FormGroup>
-                                <FormGroup>
+                                </div>
+                                <div>
                                     <div style={{ width: "100%" }}>
                                         <div className="checkbox-wrap">
                                             <label>
-                                                <Input
+                                                <input
                                                     type="checkbox"
                                                     name="caution"
                                                     value="1"
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
-                                                    invalid={Boolean(
-                                                        touched.caution &&
-                                                            errors.caution
-                                                    )}
+                                                    // invalid={Boolean(
+                                                    //     touched.caution &&
+                                                    //         errors.caution
+                                                    // )}
                                                 />{" "}
                                                 <span>注意事項に同意する</span>
                                             </label>
@@ -353,22 +348,20 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
                                             {errors.caution}
                                         </p>
                                     </div>
-                                </FormGroup>
+                                </div>
                                 <div
                                     className="submit-wrap"
                                     style={{ width: "300px", margin: "auto" }}
                                 >
-                                    <Button
+                                    <button
                                         type="submit"
                                         color="primary"
-                                        block
                                         disabled={!isValid}
-                                        fullWidth
                                     >
                                         送信する
-                                    </Button>
+                                    </button>
                                 </div>
-                            </Form>
+                            </form>
                         )}
                     </Formik>
                 </Box>

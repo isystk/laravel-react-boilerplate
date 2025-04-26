@@ -1,7 +1,6 @@
 import React, { useState, FC } from "react";
 import { Field } from "formik";
 import ReactImageBase64 from "react-image-base64";
-import { CardImg, Col, Container, Row } from "reactstrap";
 
 type Props = {
     label: string;
@@ -12,9 +11,9 @@ export const ImageFileInput: FC<Props> = ({ label, name, ...rest }) => {
     const [photoErrors, setPhotoErrors] = useState<string[]>([]);
 
     return (
-        <Container>
-            <Row>
-                <Col md="6">
+        <div>
+            <div>
+                <div>
                     <Field name={name} {...rest}>
                         {
                             // @ts-ignore
@@ -54,8 +53,8 @@ export const ImageFileInput: FC<Props> = ({ label, name, ...rest }) => {
                             }
                         }
                     </Field>
-                </Col>
-                <Col md="6">
+                </div>
+                <div>
                     <Field name={name} {...rest}>
                         {
                             // @ts-ignore
@@ -63,7 +62,7 @@ export const ImageFileInput: FC<Props> = ({ label, name, ...rest }) => {
                                 const { values } = form;
                                 console.log(values);
                                 return (
-                                    <CardImg
+                                    <img
                                         src={
                                             values[name] ||
                                             "/assets/front/image/no_image.png"
@@ -74,9 +73,9 @@ export const ImageFileInput: FC<Props> = ({ label, name, ...rest }) => {
                             }
                         }
                     </Field>
-                </Col>
-            </Row>
-        </Container>
+                </div>
+            </div>
+        </div>
     );
 };
 

@@ -1,14 +1,5 @@
 import React, { FC } from "react";
-import {
-    Container,
-    Row,
-    Col,
-    Card,
-    CardHeader,
-    CardBody,
-    Breadcrumb,
-    BreadcrumbItem,
-} from "reactstrap";
+
 import { Url } from "@/constants/url";
 import { Link } from "react-router-dom";
 
@@ -24,22 +15,22 @@ const Box: FC<Props> = ({ title, children, small }) => {
     };
     return (
         <>
-            <Container>
-                <Row className="justify-content-center">
-                    <Col {...grids}>
-                        <Breadcrumb>
-                            <BreadcrumbItem>
+            <div>
+                <div className="justify-content-center">
+                    <div {...grids}>
+                        <div>
+                            <div>
                                 <Link to={Url.TOP}>TOP</Link>
-                            </BreadcrumbItem>
-                            <BreadcrumbItem active>{title}</BreadcrumbItem>
-                        </Breadcrumb>
-                        <Card>
-                            <CardHeader className="pl-md-5">{title}</CardHeader>
-                            <CardBody className="pl-md-5">{children}</CardBody>
-                        </Card>
-                    </Col>
-                </Row>
-            </Container>
+                            </div>
+                            <div >{title}</div>
+                        </div>
+                        <div>
+                            <div className="pl-md-5">{title}</div>
+                            <div className="pl-md-5">{children}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </>
     );
 };

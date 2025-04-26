@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Url } from "@/constants/url";
 import PaymentModal from "@/components/widgets/PaymentModal";
-import { Button } from "reactstrap";
 import Layout from "@/components/Layout";
 import { FC, useEffect, useState } from "react";
 import MainService from "@/services/main";
@@ -101,7 +100,7 @@ const MyCart: FC<Props> = ({ appRoot }) => {
                                                 textAlign: "center",
                                             }}
                                         >
-                                            <Button
+                                            <button
                                                 type="submit"
                                                 color="primary"
                                                 onClick={() => {
@@ -109,7 +108,7 @@ const MyCart: FC<Props> = ({ appRoot }) => {
                                                 }}
                                             >
                                                 決済をする
-                                            </Button>
+                                            </button>
                                         </div>
                                         <Elements stripe={stripePromise}>
                                             <PaymentModal

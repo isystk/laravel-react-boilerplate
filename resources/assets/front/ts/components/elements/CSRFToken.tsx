@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import { Input } from "reactstrap";
 import MainService from "@/services/main";
 
 type Props = {
@@ -8,7 +7,7 @@ type Props = {
 
 const CSRFToken: FC<Props> = ({ appRoot }) => {
     const { csrf } = appRoot.auth;
-    return <Input type="hidden" name="_token" defaultValue={csrf} />;
+    return <input type="hidden" name="_token" defaultValue={csrf} />;
 };
 
 export default CSRFToken;
