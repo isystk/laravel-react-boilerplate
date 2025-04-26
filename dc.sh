@@ -46,7 +46,6 @@ case ${1} in
         rm -Rf ./mysql/logs && mkdir ./mysql/logs && chmod 777 ./mysql/logs
         rm -Rf ./apache/logs && mkdir ./apache/logs && chmod 777 ./apache/logs
         rm -Rf ./php/logs && mkdir ./php/logs && chmod 777 ./php/logs
-        rm -Rf ./phpmyadmin/sessions && mkdir ./phpmyadmin/sessions && chmod 777 -R ./phpmyadmin/sessions
         rm -Rf ./vendor
         rm -Rf ./node_modules
         popd

@@ -41,21 +41,14 @@ services:
             - ./mysql/conf:/etc/mysql/conf.d
             - ./mysql/initdb.d:/docker-entrypoint-initdb.d
 
-    phpmyadmin:
-        image: laraec/phpmyadmin
-        container_name: laraec-phpmyadmin
-        build:
-            context: ./phpmyadmin
-            dockerfile: Dockerfile
+    adminer:
+        image: adminer
+        container_name: laraec-adminer
+        restart: always
         ports:
-            - 8888:80
+            - 8888:8080
         environment:
-            - PMA_ARBITRARY=1
-            - PMA_HOST=mysql
-            - PMA_USER=root
-            - PMA_PASSWORD=password
-        volumes:
-            - ./phpmyadmin/sessions:/sessions
+            - ADMINER_DEFAULT_SERVER=mysql
 
     mailpit:
         image: axllent/mailpit
