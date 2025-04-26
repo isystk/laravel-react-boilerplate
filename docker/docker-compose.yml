@@ -12,8 +12,7 @@ services:
             - 5173:5173
         restart: always
         volumes:
-            - ./app/conf.d:/etc/apache2/conf.d
-            - ./app/ssl:/etc/apache2/ssl
+            - ./app/sites-enabled:/etc/apache2/sites-enabled
             - ./app/logs/apache:/var/log/apache2
             - ./app/logs/php:/var/log/php
             - ./app/php.ini:/usr/local/etc/php/php.ini

@@ -28,6 +28,13 @@ RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 # Apache モジュール有効化
 RUN a2enmod rewrite ssl proxy proxy_fcgi
 
+# 自己署名証明書を生成
+RUN mkdir -p /etc/apache2/ssl && \
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+    -keyout /etc/apache2/ssl/server.key \
+    -out /etc/apache2/ssl/server.crt \
+    -subj "/C=JP/ST=Tokyo/L=Chiyoda/O=Example/CN=localhost"
+
 # ServerName を明示（SSL 警告対策）
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
