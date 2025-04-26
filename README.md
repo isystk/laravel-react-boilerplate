@@ -158,6 +158,11 @@ https://laraec.isystk.com/admin/
 │   ├── factories
 │   ├── migrations
 │   └── seeders
+├── docker
+│   ├── app
+│   ├── docker-compose.yml
+│   ├── mysql
+│   └── phpmyadmin
 ├── documents（ドキュメント関連）
 ├── public
 │   ├── .htaccess
@@ -231,12 +236,11 @@ Options:
   init                     Dockerコンテナ・イメージ・生成ファイルの状態を初期化します。
   start                    すべてのDaemonを起動します。
   stop                     すべてのDaemonを停止します。
-  apache restart           Apacheを再起動します。
   mysql login              MySQLデータベースにログインします。
   mysql export <PAHT>      MySQLデータベースのdumpファイルをエクスポートします。
   mysql import <PAHT>      MySQLデータベースにdumpファイルをインポートします。
-  php login                PHP-FPMのサーバーにログインします。
-  php test                 Laravelのテストコードを実行します。
+  app login                Webサーバーにログインします。
+  app test                 Laravelのテストコードを実行します。
   --version, -v     バージョンを表示します。
   --help, -h        ヘルプを表示します。
 ```
@@ -256,8 +260,8 @@ $ ./dc.sh start
 # MySQLにログインしてみる
 $ ./dc.sh mysql login
 
-# PHPサーバーにログインしてみる
-$ ./dc.sh php login
+# Webサーバーにログインしてみる
+$ ./dc.sh app login
 
 # 起動に問題がある場合は、以下のコマンドで状況を確認してみてください。
 $ ./dc.sh st
@@ -278,8 +282,8 @@ minioにバケットを作成して、外部アクセス可能な状態にする
 
 動作確認
 ```
-# PHPサーバーにログインしてみる（composer や artisan などのコマンドは基本的にここで行う）
-$ ./dc.sh php login
+# Webサーバーにログインする（composer や npm などのコマンドは基本的にここで行う）
+$ ./dc.sh app login
 
 # Larastan を実行してコードをチェックする
 > ./vendor/bin/phpstan analyse --memory-limit=1G

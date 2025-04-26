@@ -16,12 +16,11 @@ Options:
   init                     Dockerコンテナ・イメージ・生成ファイルの状態を初期化します。
   start                    すべてのDaemonを起動します。
   stop                     すべてのDaemonを停止します。
-  apache restart           Apacheを再起動します。
   mysql login              MySQLデータベースにログインします。
   mysql export <PAHT>      MySQLデータベースのdumpファイルをエクスポートします。
   mysql import <PAHT>      MySQLデータベースにdumpファイルをインポートします。
-  php login                PHP-FPMのサーバーにログインします。
-  php test                 Laravelのテストコードを実行します。
+  app login                Webサーバーにログインします。
+  app test                 Laravelのテストコードを実行します。
   --version, -v     バージョンを表示します。
   --help, -h        ヘルプを表示します。
 EOF
@@ -64,17 +63,6 @@ case ${1} in
         popd
     ;;
 
-    apache)
-      case ${2} in
-          restart)
-              $DOCKER_COMPOSE restart apache
-          ;;
-          *)
-              usage
-          ;;
-      esac
-    ;;
-
     mysql)
       case ${2} in
           login)
@@ -95,14 +83,14 @@ case ${1} in
       esac
     ;;
 
-    php)
+    app)
       case ${2} in
           login)
-              $DOCKER_COMPOSE exec php /bin/bash
+              $DOCKER_COMPOSE exec app /bin/bash
           ;;
           test)
-              $DOCKER_COMPOSE exec php ./vendor/bin/phpstan analyse --memory-limit=1G
-              $DOCKER_COMPOSE exec php ./vendor/bin/phpunit tests
+              $DOCKER_COMPOSE exec app ./vendor/bin/phpstan analyse --memory-limit=1G
+              $DOCKER_COMPOSE exec app ./vendor/bin/phpunit tests
           ;;
           *)
               usage
