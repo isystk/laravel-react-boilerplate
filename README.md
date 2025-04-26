@@ -26,8 +26,8 @@ Laravel ＆ React.js の学習用サンプルアプリケーションです。
 #### ■ インフラ
 - Apache 2.4.46　・・・　WebサーバーとしてApacheを採用しました。自己証明書を設定済みなので開発環境でSSLとして動作可能です。
 - MySQL 8　・・・　DBサーバーにはMySQLを採用しました。データファイルや設定ファイル、 ログなどはコンテナの外に出して 開発時に参照出来るようにしています。
-- phpMyAdmin　・・・　起動したMySQLのデータを参照・編集するためのツールです。
-- MailHog 　・・・　ダミーのSMTPサーバーです。送信したメールをブラウザで閲覧することが可能です。実際にはメールは送信されないので開発時の誤送信してしまう心配がありません。
+- adminer　・・・　起動したMySQLのデータを参照・編集するためのツールです。
+- mailpit 　・・・　ダミーのSMTPサーバーです。送信したメールをブラウザで閲覧することが可能です。実際にはメールは送信されないので開発時の誤送信してしまう心配がありません。
 - Minio 　・・・　S3に完全互換性のあるオブジェクトストレージです。アップロードした画像の保存先として利用しています。
 
 #### ■ 使用しているライブラリ
@@ -158,6 +158,11 @@ https://laraec.isystk.com/admin/
 │   ├── factories
 │   ├── migrations
 │   └── seeders
+├── docker
+│   ├── app
+│   ├── docker-compose.yml
+│   ├── mysql
+│   └── adminer
 ├── documents（ドキュメント関連）
 ├── public
 │   ├── .htaccess
@@ -231,12 +236,11 @@ Options:
   init                     Dockerコンテナ・イメージ・生成ファイルの状態を初期化します。
   start                    すべてのDaemonを起動します。
   stop                     すべてのDaemonを停止します。
-  apache restart           Apacheを再起動します。
   mysql login              MySQLデータベースにログインします。
   mysql export <PAHT>      MySQLデータベースのdumpファイルをエクスポートします。
   mysql import <PAHT>      MySQLデータベースにdumpファイルをインポートします。
-  php login                PHP-FPMのサーバーにログインします。
-  php test                 Laravelのテストコードを実行します。
+  app login                Webサーバーにログインします。
+  app test                 Laravelのテストコードを実行します。
   --version, -v     バージョンを表示します。
   --help, -h        ヘルプを表示します。
 ```
@@ -256,8 +260,8 @@ $ ./dc.sh start
 # MySQLにログインしてみる
 $ ./dc.sh mysql login
 
-# PHPサーバーにログインしてみる
-$ ./dc.sh php login
+# Webサーバーにログインしてみる
+$ ./dc.sh app login
 
 # 起動に問題がある場合は、以下のコマンドで状況を確認してみてください。
 $ ./dc.sh st
@@ -278,8 +282,8 @@ minioにバケットを作成して、外部アクセス可能な状態にする
 
 動作確認
 ```
-# PHPサーバーにログインしてみる（composer や artisan などのコマンドは基本的にここで行う）
-$ ./dc.sh php login
+# Webサーバーにログインする（composer や npm などのコマンドは基本的にここで行う）
+$ ./dc.sh app login
 
 # Larastan を実行してコードをチェックする
 > ./vendor/bin/phpstan analyse --memory-limit=1G
@@ -304,7 +308,7 @@ https://localhost/admin/
 $ ./dc.sh stop
 ```
 
-### mailhog 
+### mailpit 
 ダミーのメールサーバーです。実際にはメールは送信されず、送信されたメールはブラウザで閲覧できます。
 Dockerを起動後に以下のURLにアクセスすると利用可能です。
 
@@ -317,7 +321,7 @@ Dockerを起動後に以下のURLにアクセスすると利用可能です。
 http://localhost:9001
 
 
-### phpMyAdmin
+### adminer
 データベースに接続してデータの参照や編集が可能です。
 Dockerを起動後に以下のURLにアクセスすると利用可能です。
 

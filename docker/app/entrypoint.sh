@@ -28,5 +28,6 @@ php artisan migrate:fresh --seed
 echo "🔐 Fixing permissions..."
 chmod -R 777 bootstrap/cache storage
 
-echo "🚀 Starting php-fpm..."
-exec php-fpm
+# Apache をフォアグラウンドで起動
+echo "🚀 Starting Apache..."
+exec apache2-foreground

@@ -16,12 +16,11 @@ Options:
   init                     Dockerコンテナ・イメージ・生成ファイルの状態を初期化します。
   start                    すべてのDaemonを起動します。
   stop                     すべてのDaemonを停止します。
-  apache restart           Apacheを再起動します。
   mysql login              MySQLデータベースにログインします。
   mysql export <PAHT>      MySQLデータベースのdumpファイルをエクスポートします。
   mysql import <PAHT>      MySQLデータベースにdumpファイルをインポートします。
-  php login                PHP-FPMのサーバーにログインします。
-  php test                 Laravelのテストコードを実行します。
+  app login                Webサーバーにログインします。
+  app test                 Laravelのテストコードを実行します。
   --version, -v     バージョンを表示します。
   --help, -h        ヘルプを表示します。
 EOF
@@ -47,7 +46,6 @@ case ${1} in
         rm -Rf ./mysql/logs && mkdir ./mysql/logs && chmod 777 ./mysql/logs
         rm -Rf ./apache/logs && mkdir ./apache/logs && chmod 777 ./apache/logs
         rm -Rf ./php/logs && mkdir ./php/logs && chmod 777 ./php/logs
-        rm -Rf ./phpmyadmin/sessions && mkdir ./phpmyadmin/sessions && chmod 777 -R ./phpmyadmin/sessions
         rm -Rf ./vendor
         rm -Rf ./node_modules
         popd
@@ -62,17 +60,6 @@ case ${1} in
         pushd $DOCKER_HOME
         docker compose down
         popd
-    ;;
-
-    apache)
-      case ${2} in
-          restart)
-              $DOCKER_COMPOSE restart apache
-          ;;
-          *)
-              usage
-          ;;
-      esac
     ;;
 
     mysql)
@@ -95,14 +82,14 @@ case ${1} in
       esac
     ;;
 
-    php)
+    app)
       case ${2} in
           login)
-              $DOCKER_COMPOSE exec php /bin/bash
+              $DOCKER_COMPOSE exec app /bin/bash
           ;;
           test)
-              $DOCKER_COMPOSE exec php ./vendor/bin/phpstan analyse --memory-limit=1G
-              $DOCKER_COMPOSE exec php ./vendor/bin/phpunit tests
+              $DOCKER_COMPOSE exec app ./vendor/bin/phpstan analyse --memory-limit=1G
+              $DOCKER_COMPOSE exec app ./vendor/bin/phpunit tests
           ;;
           *)
               usage
