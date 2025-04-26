@@ -25,7 +25,7 @@
         data-rh="true"
     >
 </head>
-<body class="vsc-initialized">
+<body>
 <div id="react-root">
     <header class="shadow-sm">
         <nav class="flex flex-wrap items-center justify-between bg-white px-4 py-3">
@@ -229,163 +229,90 @@
         </script>
     </header>
 
-    <main class="main">
-        <div class="container">
-            <div class="justify-content-center row">
-                <div class="col-md-8">
-                    <nav
-                        class=""
-                        aria-label="breadcrumb"
-                    >
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item">
-                                <a href="https://localhost/">TOP</a>
-                            </li>
-                            <li
-                                class="active breadcrumb-item"
-                                aria-current="page"
-                            >ログイン
-                            </li>
-                        </ol>
-                    </nav>
-                    <div class="card">
-                        <div class="pl-md-5 card-header">ログイン</div>
-                        <div class="pl-md-5 card-body">
-                            <div
-                                class="row"
-                                style="width: 235px; margin: auto;"
-                            >
-                                <div class="col">
-                                    <form
-                                        method="GET"
-                                        action="https://localhost/auth/google"
-                                        class=""
-                                    >
-                                        <button
-                                            type="submit"
-                                            class="btn btn-danger"
-                                        >Googleアカウントでログイン
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                            <form
-                                method="POST"
-                                action="https://localhost/login"
-                                id="login-form"
-                                class=""
-                            >
-                                <input
-                                    name="_token"
-                                    type="hidden"
-                                    class="form-control"
-                                    value="pxTuCGwPEymiRpQ6R5Puby0qrmPOZpBfnHEcCoAA"
-                                >
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="text-md-right col-md-4">
-                                            <label
-                                                for="email"
-                                                class=""
-                                            >メールアドレス
-                                            </label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input
-                                                identity="email"
-                                                controltype="email"
-                                                label="メールアドレス"
-                                                name="email"
-                                                type="text"
-                                                class="form-control"
-                                            >
-                                            <span
-                                                class="invalid-feedback"
-                                                role="alert"
-                                            >
-                                                <strong></strong>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="text-md-right col-md-4">
-                                            <label
-                                                for="password"
-                                                class=""
-                                            >パスワード
-                                            </label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input
-                                                identity="password"
-                                                controltype="password"
-                                                autocomplete="current-password"
-                                                label="パスワード"
-                                                name="password"
-                                                type="text"
-                                                class="form-control"
-                                            >
-                                            <span
-                                                class="invalid-feedback"
-                                                role="alert"
-                                            >
-                                                <strong></strong>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <input
-                                    type="hidden"
-                                    name="g-recaptcha-response"
-                                    value=""
-                                >
-                                <div class="form-group">
-                                    <div class="checkbox-wrap text-center">
-                                        <label>
-                                            <input
-                                                id="remember"
-                                                name="remember"
-                                                type="checkbox"
-                                                class="form-check-input form-check-input"
-                                                value="1"
-                                            >
-                                            <span>Remember Me</span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div
-                                    class="row"
-                                    style="width: 350px; margin: auto;"
-                                >
-                                    <div class="col">
-                                        <p class="border">テスト用ユーザ
-                                            <br>
-                                            メールアドレス: test1@test.com
-                                            <br>
-                                            パスワード: password
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="form-group mt-3 row">
-                                    <div class="text-center col">
-                                        <button
-                                            type="submit"
-                                            class="btn btn-primary"
-                                        >ログイン
-                                        </button>
-                                        <a
-                                            class="btn btn-link"
-                                            href="https://localhost/password/reset"
-                                        >パスワードを忘れた方
-                                        </a>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+    <div>
+        <div class="content">
+            <div class="flex justify-center">
+              <div class="w-full ">
+                <nav aria-label="breadcrumb" class="mb-4 ml-2 md:ml-0">
+                  <ol class="flex flex-wrap text-gray-600 text-sm">
+                    <li>
+                      <a href="https://localhost/" class="hover:underline">TOP</a>
+                    </li>
+                    <li class="mx-2">/</li>
+                    <li class="text-gray-500" aria-current="page">ログイン</li>
+                  </ol>
+                </nav>
+                <div class="bg-white rounded shadow">
+                  <div class="px-6 py-4 border-b text-lg font-semibold">ログイン</div>
+                  <div class="px-6 py-4">
+                    <div class="flex justify-center mb-6 w-6/12 m-auto mb-2" >
+                      <form method="GET" action="https://localhost/auth/google" class="w-full">
+                        <button type="submit" class="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700">
+                          Googleアカウントでログイン
+                        </button>
+                      </form>
                     </div>
+
+                    <form method="POST" action="https://localhost/login" id="login-form">
+                      <input type="hidden" name="_token" value="pxTuCGwPEymiRpQ6R5Puby0qrmPOZpBfnHEcCoAA">
+
+                      <div class="mb-4">
+                        <div class="flex flex-wrap items-center">
+                          <div class="w-full md:w-4/12 text-right pr-4 mb-2 md:mb-0">
+                            <label for="email" class="block text-gray-700">メールアドレス</label>
+                          </div>
+                          <div class="w-full md:w-6/12">
+                            <input name="email" type="text" id="email" class="w-full border rounded px-3 py-2" />
+                            <span class="text-red-600 text-sm block mt-1"></span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="mb-4">
+                        <div class="flex flex-wrap items-center">
+                          <div class="w-full md:w-4/12 text-right pr-4 mb-2 md:mb-0">
+                            <label for="password" class="block text-gray-700">パスワード</label>
+                          </div>
+                          <div class="w-full md:w-6/12">
+                            <input name="password" type="password" id="password" autocomplete="current-password" class="w-full border rounded px-3 py-2" />
+                            <span class="text-red-600 text-sm block mt-1"></span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="mb-4">
+                        <div class="flex justify-center">
+                          <label class="inline-flex items-center">
+                            <input id="remember" name="remember" type="checkbox" class="form-checkbox" value="1">
+                            <span class="ml-2 text-gray-700">Remember Me</span>
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="flex justify-center mb-6 w-6/12 m-auto">
+                        <div class="w-full">
+                          <p class="border p-4 text-sm text-gray-700">
+                            テスト用ユーザ<br>
+                            メールアドレス: test1@test.com<br>
+                            パスワード: password
+                          </p>
+                        </div>
+                      </div>
+
+                      <div class="flex justify-center mt-6">
+                        <div class="text-center">
+                          <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            ログイン
+                          </button>
+                          <a href="https://localhost/password/reset" class="ml-4 text-blue-600 hover:underline">
+                            パスワードを忘れた方
+                          </a>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
                 </div>
+              </div>
             </div>
         </div>
     </main>

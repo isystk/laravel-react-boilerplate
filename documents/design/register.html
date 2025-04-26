@@ -21,7 +21,7 @@
         data-rh="true"
     >
 </head>
-<body class="vsc-initialized">
+<body>
 <div id="react-root">
     <header class="shadow-sm">
         <nav class="flex flex-wrap items-center justify-between bg-white px-4 py-3">
@@ -224,157 +224,66 @@
             });
         </script>
     </header>
-    <main class="main">
-        <div class="container">
-            <div class="justify-content-center row">
-                <div class="col-md-8">
-                    <nav
-                        class=""
-                        aria-label="breadcrumb"
-                    >
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item">
-                                <a href="https://localhost/">TOP</a>
-                            </li>
-                            <li
-                                class="active breadcrumb-item"
-                                aria-current="page"
-                            >会員登録
-                            </li>
-                        </ol>
-                    </nav>
-                    <div class="card">
-                        <div class="pl-md-5 card-header">会員登録</div>
-                        <div class="pl-md-5 card-body">
-                            <form
-                                method="POST"
-                                action="https://localhost/register"
-                                id="login-form"
-                                class=""
-                            >
-                                <input
-                                    name="_token"
-                                    type="hidden"
-                                    class="form-control"
-                                    value="oUJZS4ukGJdoDYlXZJIpHhjBnQvdLLgfkuBJM8lD"
-                                >
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="text-md-right col-md-4">
-                                            <label
-                                                for="name"
-                                                class=""
-                                            >お名前
-                                            </label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input
-                                                id="name"
-                                                type="text"
-                                                name="name"
-                                                class="form-control"
-                                                value=""
-                                            >
-                                            <span
-                                                class="invalid-feedback"
-                                                role="alert"
-                                            >
-                                                <strong></strong>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="text-md-right col-md-4">
-                                            <label
-                                                for="email"
-                                                class=""
-                                            >メールアドレス
-                                            </label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input
-                                                id="email"
-                                                type="email"
-                                                name="email"
-                                                class="form-control"
-                                                value=""
-                                            >
-                                            <span
-                                                class="invalid-feedback"
-                                                role="alert"
-                                            >
-                                                <strong></strong>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="text-md-right col-md-4">
-                                            <label
-                                                for="password"
-                                                class=""
-                                            >パスワード
-                                            </label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input
-                                                id="password"
-                                                type="password"
-                                                autocomplete="new-password"
-                                                name="password"
-                                                class="form-control"
-                                            >
-                                            <span
-                                                class="invalid-feedback"
-                                                role="alert"
-                                            >
-                                                <strong></strong>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="text-md-right col-md-4">
-                                            <label
-                                                for="password_confirmation"
-                                                class=""
-                                            >パスワード（確認）
-                                            </label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input
-                                                id="password_confirmation"
-                                                type="password"
-                                                autocomplete="new-password"
-                                                name="password_confirmation"
-                                                class="form-control"
-                                            >
-                                            <span
-                                                class="invalid-feedback"
-                                                role="alert"
-                                            >
-                                                <strong></strong>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group mb-0 row">
-                                    <div class="offset-md-4 col-md-6">
-                                        <button
-                                            type="submit"
-                                            class="btn btn-primary"
-                                        >新規登録
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
+    <div>
+        <div class="content">
+            <div class="flex justify-center">
+              <div class="w-full">
+                <nav aria-label="breadcrumb" class="mb-4 ml-2 md:ml-0">
+                  <ol class="flex text-gray-600 text-sm space-x-2">
+                    <li>
+                      <a href="https://localhost/" class="text-blue-600 hover:underline">TOP</a>
+                    </li>
+                    <li>/</li>
+                    <li class="text-gray-500" aria-current="page">会員登録</li>
+                  </ol>
+                </nav>
+                <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                  <div class="px-6 py-4 text-lg font-semibold border-b">会員登録</div>
+                  <div class="px-6 py-4">
+                    <form method="POST" action="https://localhost/register" id="login-form" class="space-y-6">
+                      <input name="_token" type="hidden" value="oUJZS4ukGJdoDYlXZJIpHhjBnQvdLLgfkuBJM8lD">
+
+                      <div class="flex flex-col md:flex-row md:items-center">
+                        <label for="name" class="md:w-1/3 text-gray-700 mb-2 md:mb-0 text-right pr-4">お名前</label>
+                        <div class="md:w-2/3">
+                          <input id="name" type="text" name="name" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                          <span class="text-red-500 text-sm"></span>
                         </div>
-                    </div>
+                      </div>
+
+                      <div class="flex flex-col md:flex-row md:items-center">
+                        <label for="email" class="md:w-1/3 text-gray-700 mb-2 md:mb-0 text-right pr-4">メールアドレス</label>
+                        <div class="md:w-2/3">
+                          <input id="email" type="email" name="email" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                          <span class="text-red-500 text-sm"></span>
+                        </div>
+                      </div>
+
+                      <div class="flex flex-col md:flex-row md:items-center">
+                        <label for="password" class="md:w-1/3 text-gray-700 mb-2 md:mb-0 text-right pr-4">パスワード</label>
+                        <div class="md:w-2/3">
+                          <input id="password" type="password" name="password" autocomplete="new-password" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                          <span class="text-red-500 text-sm"></span>
+                        </div>
+                      </div>
+
+                      <div class="flex flex-col md:flex-row md:items-center">
+                        <label for="password_confirmation" class="md:w-1/3 text-gray-700 mb-2 md:mb-0 text-right pr-4">パスワード（確認）</label>
+                        <div class="md:w-2/3">
+                          <input id="password_confirmation" type="password" name="password_confirmation" autocomplete="new-password" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                          <span class="text-red-500 text-sm"></span>
+                        </div>
+                      </div>
+
+                      <div class="flex justify-center">
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-md">
+                          新規登録
+                        </button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
+              </div>
             </div>
         </div>
     </main>

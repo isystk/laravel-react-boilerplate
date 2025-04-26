@@ -25,7 +25,7 @@
         data-rh="true"
     >
 </head>
-<body class="vsc-initialized">
+<body>
 <div id="react-root">
     <header class="shadow-sm">
         <nav class="flex flex-wrap items-center justify-between bg-white px-4 py-3">
@@ -229,9 +229,9 @@
         </script>
     </header>
 
-    <main class="main">
-        <div class="contentsArea">
-            <h2 class="heading02">テスト1さんのカートの中身</h2>
+    <div>
+        <div class="content">
+            <h2 class="mycart-title">テスト1さんのカートの中身</h2>
             <div>
                 <p class="text-center mt20"></p>
                 <br>
@@ -299,18 +299,12 @@
                 </div>
                 <div style="margin: 40px 15px; text-align: center;">
                     <button
+                        id="payment"
                         type="submit"
                         class="btn btn-primary"
-                    >決済をする
+                    >支払いをする
                     </button>
                 </div>
-                <p class="mt30 ta-center">
-                    <a
-                        class="text-danger btn"
-                        href="https://localhost/"
-                    >商品一覧へ戻る
-                    </a>
-                </p>
             </div>
         </div>
     </main>
@@ -328,158 +322,58 @@
             </p>
         </div>
     </footer>
-    <div class="isystk-overlay ">
-        <button
-            type="button"
-            class="close"
-            aria-label="Close"
-        >
+    <div id="paymentModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+        <div class="bg-white rounded-lg shadow-lg relative w-full max-w-md mx-4">
+          <button id="closeModal" type="button" aria-label="Close" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
             <span aria-hidden="true">×</span>
-        </button>
-        <div style="padding: 20px;">
-            <h2 style="font-size: 16px; text-align: center; font-weight: bold;">決済情報の入力</h2>
-            <form action="https://localhost/mycart#">
-                <input
-                    name="_token"
-                    type="hidden"
-                    class="form-control"
-                    value="ng7ONMMNUjpMWlX2vNlXP902QsJ68hXw2FNLXklM"
-                >
-                <div class="form-group">
-                    <label class="">金額</label>
-                    <p>43000円</p>
-                    <div class="invalid-feedback"></div>
-                </div>
-                <div class="form-group">
-                    <label class="">メールアドレス</label>
-                    <p>test1@test.com</p>
-                    <div class="invalid-feedback"></div>
-                </div>
-                <legend class="col-form-label">カード番号</legend>
-                <div class="p-2 bg-light StripeElement StripeElement--empty">
-                    <div
-                        class="__PrivateStripeElement"
-                        style="margin: 0px !important; padding: 0px !important; border: none !important; display: block !important; background: transparent !important; position: relative !important; opacity: 1 !important;"
-                    >
-                        <iframe
-                            name="__privateStripeFrame79419"
-                            frameborder="0"
-                            allowtransparency="true"
-                            scrolling="no"
-                            role="presentation"
-                            allow="payment *"
-                            src="./マイカート _ LaraEC_files/elements-inner-card-d154b4eb5c97f6879456a2615fbd4f3f.html"
-                            title="セキュアなカード番号入力フレーム"
-                            style="border: 0px !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; user-select: none !important; transform: translate(0px) !important; color-scheme: light only !important; height: 16.8px;"
-                        ></iframe>
-                        <input
-                            class="__PrivateStripeElement-input"
-                            aria-hidden="true"
-                            aria-label=" "
-                            autocomplete="false"
-                            maxlength="1"
-                            style="border: none !important; display: block !important; position: absolute !important; height: 1px !important; top: -1px !important; left: 0px !important; padding: 0px !important; margin: 0px !important; width: 100% !important; opacity: 0 !important; background: transparent !important; pointer-events: none !important; font-size: 16px !important;"
-                        >
-                        <div style="display: block !important; position: absolute !important; top: 50% !important; right: 0px !important; width: 0px !important; margin: 0px !important; padding: 0px !important; border: 0px !important; background: none !important; opacity: 1 !important; overflow: hidden !important; pointer-events: auto !important; transition: none !important;">
-                            <iframe
-                                name="cardNumberButton79423"
-                                frameborder="0"
-                                allowtransparency="true"
-                                scrolling="no"
-                                src="./マイカート _ LaraEC_files/elements-inner-link-button-for-card-caa181fd90a55489e70e24e7f91d7c14.html"
-                                style="margin: 0px !important; user-select: none !important; transform: translate(0px) !important; color-scheme: light only !important; display: block !important; position: absolute !important; top: 0px !important; right: 0px !important; height: 0px !important; width: var(--stripeElementWidth) !important; padding: 0px !important; border: 0px !important; overflow: hidden !important; opacity: 1 !important;"
-                            ></iframe>
-                        </div>
-                    </div>
-                </div>
-                <legend class="col-form-label">有効期限</legend>
-                <div class="p-2 bg-light StripeElement StripeElement--empty">
-                    <div
-                        class="__PrivateStripeElement"
-                        style="margin: 0px !important; padding: 0px !important; border: none !important; display: block !important; background: transparent !important; position: relative !important; opacity: 1 !important;"
-                    >
-                        <iframe
-                            name="__privateStripeFrame79420"
-                            frameborder="0"
-                            allowtransparency="true"
-                            scrolling="no"
-                            role="presentation"
-                            allow="payment *"
-                            src="./マイカート _ LaraEC_files/elements-inner-card-d154b4eb5c97f6879456a2615fbd4f3f(1).html"
-                            title="セキュアな有効期限入力フレーム"
-                            style="border: 0px !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; user-select: none !important; transform: translate(0px) !important; color-scheme: light only !important; height: 16.8px;"
-                        ></iframe>
-                        <input
-                            class="__PrivateStripeElement-input"
-                            aria-hidden="true"
-                            aria-label=" "
-                            autocomplete="false"
-                            maxlength="1"
-                            style="border: none !important; display: block !important; position: absolute !important; height: 1px !important; top: -1px !important; left: 0px !important; padding: 0px !important; margin: 0px !important; width: 100% !important; opacity: 0 !important; background: transparent !important; pointer-events: none !important; font-size: 16px !important;"
-                        >
-                        <div style="display: block !important; position: absolute !important; top: 50% !important; right: 0px !important; width: 0px !important; margin: 0px !important; padding: 0px !important; border: 0px !important; background: none !important; opacity: 1 !important; overflow: hidden !important; pointer-events: auto !important; transition: none !important;">
-                            <iframe
-                                name="cardExpiryButton79424"
-                                frameborder="0"
-                                allowtransparency="true"
-                                scrolling="no"
-                                src="./マイカート _ LaraEC_files/elements-inner-link-button-for-card-caa181fd90a55489e70e24e7f91d7c14(1).html"
-                                style="margin: 0px !important; user-select: none !important; transform: translate(0px) !important; color-scheme: light only !important; display: block !important; position: absolute !important; top: 0px !important; right: 0px !important; height: 0px !important; width: var(--stripeElementWidth) !important; padding: 0px !important; border: 0px !important; overflow: hidden !important; opacity: 1 !important;"
-                            ></iframe>
-                        </div>
-                    </div>
-                </div>
-                <legend class="col-form-label">セキュリティーコード</legend>
-                <div class="p-2 bg-light StripeElement StripeElement--empty">
-                    <div
-                        class="__PrivateStripeElement"
-                        style="margin: 0px !important; padding: 0px !important; border: none !important; display: block !important; background: transparent !important; position: relative !important; opacity: 1 !important;"
-                    >
-                        <iframe
-                            name="__privateStripeFrame79421"
-                            frameborder="0"
-                            allowtransparency="true"
-                            scrolling="no"
-                            role="presentation"
-                            allow="payment *"
-                            src="./マイカート _ LaraEC_files/elements-inner-card-d154b4eb5c97f6879456a2615fbd4f3f(2).html"
-                            title="セキュアな CVC 入力フレーム"
-                            style="border: 0px !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; user-select: none !important; transform: translate(0px) !important; color-scheme: light only !important; height: 16.8px;"
-                        ></iframe>
-                        <input
-                            class="__PrivateStripeElement-input"
-                            aria-hidden="true"
-                            aria-label=" "
-                            autocomplete="false"
-                            maxlength="1"
-                            style="border: none !important; display: block !important; position: absolute !important; height: 1px !important; top: -1px !important; left: 0px !important; padding: 0px !important; margin: 0px !important; width: 100% !important; opacity: 0 !important; background: transparent !important; pointer-events: none !important; font-size: 16px !important;"
-                        >
-                        <div style="display: block !important; position: absolute !important; top: 50% !important; right: 0px !important; width: 0px !important; margin: 0px !important; padding: 0px !important; border: 0px !important; background: none !important; opacity: 1 !important; overflow: hidden !important; pointer-events: auto !important; transition: none !important;">
-                            <iframe
-                                name="cardCvcButton79425"
-                                frameborder="0"
-                                allowtransparency="true"
-                                scrolling="no"
-                                src="./マイカート _ LaraEC_files/elements-inner-link-button-for-card-caa181fd90a55489e70e24e7f91d7c14(2).html"
-                                style="margin: 0px !important; user-select: none !important; transform: translate(0px) !important; color-scheme: light only !important; display: block !important; position: absolute !important; top: 0px !important; right: 0px !important; height: 0px !important; width: var(--stripeElementWidth) !important; padding: 0px !important; border: 0px !important; overflow: hidden !important; opacity: 1 !important;"
-                            ></iframe>
-                        </div>
-                    </div>
-                </div>
-                <p class="text-center">
-                    <button
-                        type="submit"
-                        class="my-3 btn btn-primary"
-                    >購入する
-                    </button>
-                </p>
+          </button>
+          <div class="p-6">
+            <h2 class="text-lg font-bold text-center mb-6">決済情報の入力</h2>
+            <form action="#" class="space-y-4">
+              <div class="space-y-1">
+                <label class="block text-gray-700">金額</label>
+                <p class="text-gray-900">43000円</p>
+                <div class="text-red-500 text-sm"></div>
+              </div>
+              <div class="space-y-1">
+                <label class="block text-gray-700">メールアドレス</label>
+                <p class="text-gray-900">test1@test.com</p>
+                <div class="text-red-500 text-sm"></div>
+              </div>
+              <div class="space-y-1">
+                <legend class="block text-gray-700">カード番号</legend>
+              </div>
+              <div class="space-y-1">
+                <legend class="block text-gray-700">有効期限</legend>
+              </div>
+              <div class="space-y-1">
+                <legend class="block text-gray-700">セキュリティーコード</legend>
+              </div>
+              <div class="text-center">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-md my-3">
+                  購入する
+                </button>
+              </div>
             </form>
-            <p class="fz-s">テスト用クレジットカード番号
-                <br>
-                5555555555554444
+            <p class="text-sm text-gray-600 mt-6 text-center">
+              テスト用クレジットカード番号<br>5555555555554444
             </p>
+          </div>
         </div>
     </div>
+    <script>
+        const openModal = document.getElementById('payment');
+        const closeModal = document.getElementById('closeModal');
+        const paymentModal = document.getElementById('paymentModal');
+
+        openModal.addEventListener('click', () => {
+          paymentModal.classList.remove('hidden');
+        });
+
+        closeModal.addEventListener('click', () => {
+          paymentModal.classList.add('hidden');
+        });
+    </script>
 </div>
 </body>
 </html>

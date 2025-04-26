@@ -21,7 +21,7 @@
         data-rh="true"
     >
 </head>
-<body class="vsc-initialized">
+<body>
 <div id="react-root">
     <header class="shadow-sm">
         <nav class="flex flex-wrap items-center justify-between bg-white px-4 py-3">
@@ -224,312 +224,179 @@
             });
         </script>
     </header>
-    <main class="main">
-        <div class="container">
-            <div class="justify-content-center row">
-                <div class="col-md-12">
-                    <nav
-                        class=""
-                        aria-label="breadcrumb"
-                    >
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item">
-                                <a href="https://localhost/">TOP</a>
-                            </li>
-                            <li
-                                class="active breadcrumb-item"
-                                aria-current="page"
-                            >お問い合わせ
-                            </li>
-                        </ol>
-                    </nav>
-                    <div class="card">
-                        <div class="pl-md-5 card-header">お問い合わせ</div>
-                        <div class="pl-md-5 card-body">
-                            <form action="https://localhost/contact#">
-                                <input
-                                    name="_token"
-                                    type="hidden"
-                                    class="form-control"
-                                    value="ng7ONMMNUjpMWlX2vNlXP902QsJ68hXw2FNLXklM"
-                                >
-                                <div class="form-group">
-                                    <div style="width: 100%;">
-                                        <label
-                                            for="user_name"
-                                            class="item-name"
-                                        >お名前を入力してください
-                                            <span class="required">必須</span>
-                                        </label>
-                                        <div class="text-wrap large">
-                                            <input
-                                                id="user_name"
-                                                name="user_name"
-                                                type="text"
-                                                class="form-control"
-                                                aria-invalid="false"
-                                                value="テスト1"
-                                            >
-                                            <div class="form-bottom"></div>
-                                            <p class="error"></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div style="width: 100%;">
-                                        <label class="item-name">返信先のメールアドレスを入力してください
-                                            <span class="required">必須</span>
-                                        </label>
-                                        <div class="text-wrap large">
-                                            <input
-                                                name="email"
-                                                type="email"
-                                                class="form-control"
-                                                aria-invalid="false"
-                                                value="test1@test.com"
-                                            >
-                                            <div class="form-bottom"></div>
-                                        </div>
-                                        <p class="error"></p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div style="width: 100%;">
-                                        <label class="item-name">性別を教えて下さい
-                                            <span class="required">必須</span>
-                                        </label>
-                                        <div class="radio-wrap">
-                                            <label class="">
-                                                <input
-                                                    name="gender"
-                                                    type="radio"
-                                                    class="form-check-input"
-                                                    aria-invalid="false"
-                                                    value="0"
-                                                >
-                                                <span>男性</span>
-                                            </label>
-                                        </div>
-                                        <div class="radio-wrap">
-                                            <label class="">
-                                                <input
-                                                    name="gender"
-                                                    type="radio"
-                                                    class="form-check-input"
-                                                    aria-invalid="false"
-                                                    value="1"
-                                                >
-                                                <span>女性</span>
-                                            </label>
-                                        </div>
-                                        <p class="error"></p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div style="width: 100%;">
-                                        <label class="item-name">年齢を教えて下さい
-                                            <span class="required">必須</span>
-                                        </label>
-                                        <div class="select-wrap">
-                                            <select
-                                                name="age"
-                                                class="form-control"
-                                                aria-invalid="false"
-                                            >
-                                                <option value="">選択してください</option>
-                                                <option value="1">～19歳</option>
-                                                <option value="2">20歳～29歳</option>
-                                                <option value="3">30歳～39歳</option>
-                                                <option value="4">40歳～49歳</option>
-                                                <option value="5">50歳～59歳</option>
-                                                <option value="6">60歳～</option>
-                                            </select>
-                                        </div>
-                                        <p class="error"></p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div style="width: 100%;">
-                                        <label class="item-name">件名を入力してください
-                                            <span class="required">必須</span>
-                                        </label>
-                                        <div class="text-wrap large">
-                                            <input
-                                                name="title"
-                                                type="text"
-                                                class="form-control"
-                                                aria-invalid="false"
-                                                value=""
-                                            >
-                                            <div class="form-bottom"></div>
-                                        </div>
-                                        <p class="error"></p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div style="width: 100%;">
-                                        <label class="item-name">お問い合わせ内容
-                                            <span class="required">必須</span>
-                                        </label>
-                                        <div class="textarea-wrap large">
-                                            <textarea
-                                                name="contact"
-                                                class="form-control"
-                                                aria-invalid="false"
-                                            ></textarea>
-                                            <div class="form-bottom"></div>
-                                        </div>
-                                        <p class="error"></p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div style="width: 100%;">
-                                        <label class="item-name">ホームページURLを入力してください
-                                            <span>任意</span>
-                                        </label>
-                                        <div class="text-wrap large">
-                                            <input
-                                                name="url"
-                                                type="url"
-                                                class="form-control"
-                                                aria-invalid="false"
-                                                value=""
-                                            >
-                                            <div class="form-bottom"></div>
-                                        </div>
-                                        <p class="error"></p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div style="width: 100%;">
-                                        <label class="item-name">画像1を選択してください
-                                            <span>任意</span>
-                                        </label>
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div
-                                                        id="drop-zone"
-                                                        class=""
-                                                    >
-                                                        <p>写真をドラッグ＆ドロップもしくは</p>
-                                                        <input
-                                                            type="file"
-                                                            id="js-image-base64"
-                                                            accept="image/*"
-                                                            capture="environment"
-                                                        >
-                                                    </div>
-                                                    <p class="error"></p>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <img
-                                                        src="https://localhost/assets/front/image/no_image.png"
-                                                        alt="Contemplative Reptile"
-                                                        class="card-img"
-                                                    >
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div style="width: 100%;">
-                                        <label class="item-name">画像2を選択してください
-                                            <span>任意</span>
-                                        </label>
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div
-                                                        id="drop-zone"
-                                                        class=""
-                                                    >
-                                                        <p>写真をドラッグ＆ドロップもしくは</p>
-                                                        <input
-                                                            type="file"
-                                                            id="js-image-base64"
-                                                            accept="image/*"
-                                                            capture="environment"
-                                                        >
-                                                    </div>
-                                                    <p class="error"></p>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <img
-                                                        src="https://localhost/assets/front/image/no_image.png"
-                                                        alt="Contemplative Reptile"
-                                                        class="card-img"
-                                                    >
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div style="width: 100%;">
-                                        <label class="item-name">画像3を選択してください
-                                            <span>任意</span>
-                                        </label>
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div
-                                                        id="drop-zone"
-                                                        class=""
-                                                    >
-                                                        <p>写真をドラッグ＆ドロップもしくは</p>
-                                                        <input
-                                                            type="file"
-                                                            id="js-image-base64"
-                                                            accept="image/*"
-                                                            capture="environment"
-                                                        >
-                                                    </div>
-                                                    <p class="error"></p>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <img
-                                                        src="https://localhost/assets/front/image/no_image.png"
-                                                        alt="Contemplative Reptile"
-                                                        class="card-img"
-                                                    >
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div style="width: 100%;">
-                                        <div class="checkbox-wrap">
-                                            <label>
-                                                <input
-                                                    name="caution"
-                                                    type="checkbox"
-                                                    class="form-check-input"
-                                                    aria-invalid="false"
-                                                    value="1"
-                                                >
-                                                <span>注意事項に同意する</span>
-                                            </label>
-                                        </div>
-                                        <p class="error"></p>
-                                    </div>
-                                </div>
-                                <div
-                                    class="submit-wrap"
-                                    style="width: 300px; margin: auto;"
-                                >
-                                    <button
-                                        type="submit"
-                                        class="btn btn-primary btn-block"
-                                    >送信する
-                                    </button>
-                                </div>
-                            </form>
+    <div>
+        <div class="content">
+            <div class="flex justify-center">
+              <div class="w-full">
+                <nav aria-label="breadcrumb" class="mb-4 ml-2 md:ml-0">
+                  <ol class="flex text-gray-600 space-x-2 text-sm">
+                    <li>
+                      <a href="https://localhost/" class="hover:underline">TOP</a>
+                    </li>
+                    <li>/</li>
+                    <li class="text-gray-500">お問い合わせ</li>
+                  </ol>
+                </nav>
+                <div class="bg-white rounded shadow">
+                  <div class="border-b px-6 py-4 text-lg font-semibold">お問い合わせ</div>
+                  <div class="px-6 py-4">
+                    <form action="https://localhost/contact#">
+                      <input type="hidden" name="_token" value="ng7ONMMNUjpMWlX2vNlXP902QsJ68hXw2FNLXklM">
+
+                      <!-- 名前 -->
+                      <div class="mb-4">
+                        <label for="user_name" class="block text-sm font-medium text-gray-700">
+                          お名前を入力してください <span class="text-red-500">必須</span>
+                        </label>
+                        <input id="user_name" name="user_name" type="text" value="テスト1" class="mt-1 block w-full border border-gray-300 rounded p-2">
+                        <p class="text-red-500 text-xs mt-1"></p>
+                      </div>
+
+                      <!-- メール -->
+                      <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">
+                          返信先のメールアドレスを入力してください <span class="text-red-500">必須</span>
+                        </label>
+                        <input name="email" type="email" value="test1@test.com" class="mt-1 block w-full border border-gray-300 rounded p-2">
+                        <p class="text-red-500 text-xs mt-1"></p>
+                      </div>
+
+                      <!-- 性別 -->
+                      <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">
+                          性別を教えて下さい <span class="text-red-500">必須</span>
+                        </label>
+                        <div class="flex items-center space-x-4 mt-2">
+                          <label class="flex items-center">
+                            <input type="radio" name="gender" value="0" class="form-radio">
+                            <span class="ml-2">男性</span>
+                          </label>
+                          <label class="flex items-center">
+                            <input type="radio" name="gender" value="1" class="form-radio">
+                            <span class="ml-2">女性</span>
+                          </label>
                         </div>
-                    </div>
+                        <p class="text-red-500 text-xs mt-1"></p>
+                      </div>
+
+                      <!-- 年齢 -->
+                      <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">
+                          年齢を教えて下さい <span class="text-red-500">必須</span>
+                        </label>
+                        <select name="age" class="mt-1 block w-full border border-gray-300 rounded p-2">
+                          <option value="">選択してください</option>
+                          <option value="1">～19歳</option>
+                          <option value="2">20歳～29歳</option>
+                          <option value="3">30歳～39歳</option>
+                          <option value="4">40歳～49歳</option>
+                          <option value="5">50歳～59歳</option>
+                          <option value="6">60歳～</option>
+                        </select>
+                        <p class="text-red-500 text-xs mt-1"></p>
+                      </div>
+
+                      <!-- 件名 -->
+                      <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">
+                          件名を入力してください <span class="text-red-500">必須</span>
+                        </label>
+                        <input name="title" type="text" class="mt-1 block w-full border border-gray-300 rounded p-2">
+                        <p class="text-red-500 text-xs mt-1"></p>
+                      </div>
+
+                      <!-- お問い合わせ内容 -->
+                      <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">
+                          お問い合わせ内容 <span class="text-red-500">必須</span>
+                        </label>
+                        <textarea name="contact" class="mt-1 block w-full border border-gray-300 rounded p-2" rows="4"></textarea>
+                        <p class="text-red-500 text-xs mt-1"></p>
+                      </div>
+
+                      <!-- ホームページURL -->
+                      <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">
+                          ホームページURLを入力してください <span class="text-gray-500">任意</span>
+                        </label>
+                        <input name="url" type="url" class="mt-1 block w-full border border-gray-300 rounded p-2">
+                        <p class="text-red-500 text-xs mt-1"></p>
+                      </div>
+
+                      <!-- 画像1 -->
+                      <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700">
+                          画像1を選択してください <span class="text-gray-500">任意</span>
+                        </label>
+                        <div class="flex space-x-4 mt-2">
+                          <div class="w-1/2">
+                            <div id="drop-zone" class="border border-dashed border-gray-400 p-4 text-center rounded">
+                              <p>写真をドラッグ＆ドロップもしくは</p>
+                              <input type="file" id="js-image-base64" accept="image/*" class="mt-2">
+                            </div>
+                          </div>
+                          <div class="w-1/2">
+                            <img src="https://localhost/assets/front/image/no_image.png" alt="Contemplative Reptile" class="rounded w-full object-cover">
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- 画像2 -->
+                      <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700">
+                          画像2を選択してください <span class="text-gray-500">任意</span>
+                        </label>
+                        <div class="flex space-x-4 mt-2">
+                          <div class="w-1/2">
+                            <div id="drop-zone" class="border border-dashed border-gray-400 p-4 text-center rounded">
+                              <p>写真をドラッグ＆ドロップもしくは</p>
+                              <input type="file" id="js-image-base64" accept="image/*" class="mt-2">
+                            </div>
+                          </div>
+                          <div class="w-1/2">
+                            <img src="https://localhost/assets/front/image/no_image.png" alt="Contemplative Reptile" class="rounded w-full object-cover">
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- 画像3 -->
+                      <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700">
+                          画像3を選択してください <span class="text-gray-500">任意</span>
+                        </label>
+                        <div class="flex space-x-4 mt-2">
+                          <div class="w-1/2">
+                            <div id="drop-zone" class="border border-dashed border-gray-400 p-4 text-center rounded">
+                              <p>写真をドラッグ＆ドロップもしくは</p>
+                              <input type="file" id="js-image-base64" accept="image/*" class="mt-2">
+                            </div>
+                          </div>
+                          <div class="w-1/2">
+                            <img src="https://localhost/assets/front/image/no_image.png" alt="Contemplative Reptile" class="rounded w-full object-cover">
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- 注意事項 -->
+                      <div class="mb-6">
+                        <label class="inline-flex items-center">
+                          <input type="checkbox" name="caution" value="1" class="form-checkbox">
+                          <span class="ml-2 text-gray-700">注意事項に同意する</span>
+                        </label>
+                        <p class="text-red-500 text-xs mt-1"></p>
+                      </div>
+
+                      <!-- 送信ボタン -->
+                      <div class="w-72 mx-auto">
+                        <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">
+                          送信する
+                        </button>
+                      </div>
+
+                    </form>
+                  </div>
                 </div>
+              </div>
             </div>
         </div>
     </main>
