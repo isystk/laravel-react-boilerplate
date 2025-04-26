@@ -26,7 +26,7 @@ ENV TZ=Asia/Tokyo
 RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
 # Apache モジュール有効化
-RUN a2enmod rewrite ssl proxy proxy_fcgi
+RUN a2enmod rewrite ssl proxy proxy_fcgi proxy_http
 
 # 自己署名証明書を生成
 RUN mkdir -p /etc/apache2/ssl && \

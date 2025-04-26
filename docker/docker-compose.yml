@@ -57,9 +57,9 @@ services:
         volumes:
             - ./phpmyadmin/sessions:/sessions
 
-    mailhog:
-        image: mailhog/mailhog:latest
-        container_name: laraec-mailhog
+    mailpit:
+        image: axllent/mailpit
+        container_name: laraec-mailpit
         ports:
             - 8025:8025
             - 25:1025
