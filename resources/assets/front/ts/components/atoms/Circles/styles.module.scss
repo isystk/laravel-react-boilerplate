@@ -1,0 +1,239 @@
+@use "@/styles/variable";
+
+.area {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.circles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes fadeOutRotation {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+    border-radius: 0;
+  }
+  100% {
+    transform: translateY(-2000px) rotate(720deg);
+    opacity: 0;
+    border-radius: 50%;
+  }
+}
+
+.circle {
+  position: absolute;
+  display: block;
+  list-style: none;
+  background: variable.$white;
+  bottom: -150px;
+}
+
+.circlesLi1 {
+  @extend .circle;
+  left: 25%;
+  width: 80px;
+  height: 80px;
+  animation: fadeOutRotation 25s linear infinite;
+  animation-delay: 0s;
+  animation-duration: 10s;
+}
+
+.circlesLi2 {
+  @extend .circle;
+  left: 95%;
+  width: 20px;
+  height: 20px;
+  animation: fadeOutRotation 25s linear infinite;
+  animation-delay: 2s;
+  animation-duration: 12s;
+}
+
+.circlesLi3 {
+  @extend .circle;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  animation: fadeOutRotation 25s linear infinite;
+  animation-delay: 4s;
+  animation-duration: 10s;
+}
+
+.circlesLi4 {
+  @extend .circle;
+  left: 40%;
+  width: 60px;
+  height: 60px;
+  animation: fadeOutRotation 25s linear infinite;
+  animation-delay: 0s;
+  animation-duration: 18s;
+}
+
+.circlesLi5 {
+  @extend .circle;
+  left: 65%;
+  width: 20px;
+  height: 20px;
+  animation: fadeOutRotation 25s linear infinite;
+  animation-delay: 0s;
+  animation-duration: 20s;
+}
+
+.circlesLi6 {
+  @extend .circle;
+  left: 75%;
+  width: 110px;
+  height: 110px;
+  animation: fadeOutRotation 25s linear infinite;
+  animation-delay: 3s;
+  animation-duration: 50s;
+}
+
+.circlesLi7 {
+  @extend .circle;
+  left: 35%;
+  width: 120px;
+  height: 120px;
+  animation: fadeOutRotation 25s linear infinite;
+  animation-delay: 7s;
+  animation-duration: 40s;
+}
+
+.circlesLi8 {
+  @extend .circle;
+  left: 50%;
+  width: 25px;
+  height: 25px;
+  animation: fadeOutRotation 25s linear infinite;
+  animation-delay: 15s;
+  animation-duration: 25s;
+}
+
+.circlesLi9 {
+  @extend .circle;
+  left: 90%;
+  width: 15px;
+  height: 15px;
+  animation: fadeOutRotation 25s linear infinite;
+  animation-delay: 2s;
+  animation-duration: 15s;
+}
+
+.circlesLi10 {
+  @extend .circle;
+  left: 5%;
+  width: 50px;
+  height: 50px;
+  animation: fadeOutRotation 25s linear infinite;
+  animation-delay: 0s;
+  animation-duration: 35s;
+}
+
+.circlesLi11 {
+  @extend .circle;
+  left: 15%;
+  width: 40px;
+  height: 40px;
+  animation: fadeOutRotation 25s linear infinite;
+  animation-delay: 0s;
+  animation-duration: 30s;
+}
+
+.circlesLi12 {
+  @extend .circle;
+  left: 3%;
+  width: 15px;
+  height: 15px;
+  animation: fadeOutRotation 25s linear infinite;
+  animation-delay: 2s;
+  animation-duration: 12s;
+}
+
+.circlesLi13 {
+  @extend .circle;
+  left: 92%;
+  width: 30px;
+  height: 30px;
+  animation: fadeOutRotation 25s linear infinite;
+  animation-delay: 7s;
+  animation-duration: 20s;
+}
+
+.circlesLi14 {
+  @extend .circle;
+  left: 30%;
+  width: 30px;
+  height: 30px;
+  animation: fadeOutRotation 25s linear infinite;
+  animation-delay: 0s;
+  animation-duration: 18s;
+}
+
+.circlesLi15 {
+  @extend .circle;
+  left: 55%;
+  width: 20px;
+  height: 20px;
+  animation: fadeOutRotation 25s linear infinite;
+  animation-delay: 4s;
+  animation-duration: 10s;
+}
+
+.circlesLi16 {
+  @extend .circle;
+  left: 85%;
+  width: 60px;
+  height: 60px;
+  animation: fadeOutRotation 25s linear infinite;
+  animation-delay: 3s;
+  animation-duration: 40s;
+}
+
+.circlesLi17 {
+  @extend .circle;
+  left: 25%;
+  width: 60px;
+  height: 60px;
+  animation: fadeOutRotation 25s linear infinite;
+  animation-delay: 7s;
+  animation-duration: 20s;
+}
+
+.circlesLi18 {
+  @extend .circle;
+  left: 10%;
+  width: 15px;
+  height: 15px;
+  animation: fadeOutRotation 25s linear infinite;
+  animation-delay: 15s;
+  animation-duration: 15s;
+}
+
+.circlesLi19 {
+  @extend .circle;
+  left: 10%;
+  width: 15px;
+  height: 15px;
+  animation: fadeOutRotation 25s linear infinite;
+  animation-delay: 2s;
+  animation-duration: 25s;
+}
+
+.circlesLi20 {
+  @extend .circle;
+  left: 95%;
+  width: 50px;
+  height: 50px;
+  animation: fadeOutRotation 25s linear infinite;
+  animation-delay: 0s;
+  animation-duration: 35s;
+}

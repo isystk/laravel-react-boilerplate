@@ -1,0 +1,8 @@
+@use "@/styles/variable";
+
+.footer {
+  background-color: variable.$blue;
+  color: variable.$white;
+  padding: 12px 6px;
+  text-align: center;
+}

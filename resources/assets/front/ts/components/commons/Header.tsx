@@ -19,7 +19,7 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
 
     const renderLoginPc = (): JSX.Element => {
         return (
-            <div className="" id="navbarSupportedContent">
+            <div className="hidden md:flex items-center space-x-4 ml-auto">
                 <ul className="navbar-nav ml-auto">
                     {(() => {
                         if (isLogined) {
@@ -256,8 +256,8 @@ export const CommonHeader: FC<Props> = ({ appRoot }) => {
 
     return (
         <>
-            <header className="header shadow-sm">
-                <nav className="navbar navbar-expand-md navbar-light bg-white headerNav">
+            <header className="shadow-sm">
+                <nav className="flex flex-wrap items-center justify-between bg-white px-4 py-3">
                     <Logo />
                     {renderLoginPc()}
                     {renderLoginSp()}

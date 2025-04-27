@@ -1,0 +1,13 @@
+@use "@/styles/variable";
+
+.sideMenu {
+  background-color: variable.$gray;
+  color: variable.$black;
+  padding: 10px;
+
+  .title {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+}
+

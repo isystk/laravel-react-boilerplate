@@ -1,0 +1,169 @@
+@use './variable' as *;
+
+/* ===========================================================================
+  base
+============================================================================= */
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video, a {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+body {
+    font-size: 16px;
+    font-family: ヒラギノ角ゴ Pro W3, Hiragino Kaku Gothic Pro, メイリオ, Meiryo, sans-serif;
+    color: #333;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    background: #eaeded
+}
+
+nav ul, nav ol {
+    list-style: none
+}
+
+a {
+    color: $blue;
+    text-decoration: none;
+
+    &:hover {
+        opacity: 0.7;
+        text-decoration: underline;
+    }
+}
+
+.btn {
+    padding: 0.5rem 0.75rem;
+    background-color: white;
+    border-radius: 0.25rem;
+    transition: background-color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #dee2e6;
+    cursor: pointer;
+
+    &.active {
+        background: #007bff;
+        color: white;
+    }
+
+    &:hover {
+        opacity: 0.7;
+        text-decoration: none !important;
+    }
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+}
+
+.btn-secondary {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+.btn-danger {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+
+.content {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 10px 0 50px;
+}
+
+@media only screen and (min-width: 767px) {
+    .content {
+        padding: 30px 0 100px;
+    }
+}
+
+.mycart-title {
+    font-size: 1.8rem;
+    color: #333;
+    text-align: center;
+    font-weight: 700
+}
+
+.card {
+    display: flex;
+    flex-wrap: wrap
+}
+
+.card_item {
+    width: calc((100% - 50px) / 3);
+    margin-right: 25px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between
+}
+
+.card_item:nth-of-type(3n) {
+    margin-right: 0
+}
+
+.card_item:nth-of-type(n+4) {
+    margin-top: 25px
+}
+
+@media only screen and (max-width: 767px) {
+    .card_item {
+        width: 100%;
+        margin: 0
+    }
+
+    .card_item:nth-of-type(n+2) {
+        margin-top: 20px
+    }
+
+    .card_item:nth-of-type(3n) {
+        margin-right: 0
+    }
+}

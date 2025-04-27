@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
+import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import checker from 'vite-plugin-checker';
@@ -15,7 +16,7 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/assets/front/ts/app.tsx',
-                'resources/assets/front/sass/app.scss',
+                'resources/assets/front/css/app.css',
                 'resources/assets/admin/js/app.js',
                 'resources/assets/admin/js/plugins/index.js',
                 'resources/assets/admin/js/pages/common.js',
@@ -23,6 +24,7 @@ export default defineConfig({
             ],
             refresh: true,
         }),
+        tailwindcss(),
         react(),
         checker({ typescript: true }),
     ],

@@ -1,0 +1,30 @@
+@use './variable' as *;
+
+.footer {
+    background-color: #dcdcdc;
+    padding: 60px 0
+}
+
+.footer_inner {
+    text-align: center;
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto
+}
+
+.footer_copy {
+    color: #fff;
+    font-size: 1.2rem
+}
+
+@media only screen and (max-width: 767px) {
+    .footer {
+        padding: 40px 0
+    }
+    .footer_inner {
+        width: calc(100% - 30px)
+    }
+    .footer_copy {
+        font-size: 1rem
+    }
+}
