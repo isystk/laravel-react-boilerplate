@@ -242,10 +242,6 @@
                                 alt="Slide 1"
                                 class="w-full h-auto object-cover"
                             >
-                            <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4 hidden md:block">
-                                <h3 class="text-xl font-bold">Slide 1</h3>
-                                <p>Slide 1</p>
-                            </div>
                         </div>
                         <div class="w-full flex-shrink-0 relative">
                             <img
@@ -253,10 +249,6 @@
                                 alt="Slide 2"
                                 class="w-full h-auto object-cover"
                             >
-                            <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4 hidden md:block">
-                                <h3 class="text-xl font-bold">Slide 2</h3>
-                                <p>Slide 2</p>
-                            </div>
                         </div>
                         <div class="w-full flex-shrink-0 relative">
                             <img
@@ -264,10 +256,6 @@
                                 alt="Slide 3"
                                 class="w-full h-auto object-cover"
                             >
-                            <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4 hidden md:block">
-                                <h3 class="text-xl font-bold">Slide 3</h3>
-                                <p>Slide 3</p>
-                            </div>
                         </div>
                         <div class="w-full flex-shrink-0 relative">
                             <img
@@ -275,22 +263,18 @@
                                 alt="Slide 4"
                                 class="w-full h-auto object-cover"
                             >
-                            <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4 hidden md:block">
-                                <h3 class="text-xl font-bold">Slide 4</h3>
-                                <p>Slide 4</p>
-                            </div>
                         </div>
                     </div>
                     <!-- Controls -->
                     <button
                         id="prev"
-                        class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 text-white p-2 rounded-full"
+                        class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 text-white p-2 rounded-full w-10"
                     >
                         &#10094;
                     </button>
                     <button
                         id="next"
-                        class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 text-white p-2 rounded-full"
+                        class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 text-white p-2 rounded-full w-10"
                     >
                         &#10095;
                     </button>
@@ -349,8 +333,8 @@
                 </script>
             </div>
             <div>
-                <div class="block01">
-                    <div class="block01_item">
+                <div class="card">
+                    <div class="card_item">
                         <div class="text-right mb-2">
                             <a
                                 href="https://localhost/#"
@@ -362,7 +346,7 @@
                         <img
                             src="https://localhost/uploads/stock/soujiki.jpg"
                             alt=""
-                            class="block01_img"
+                            class="mb-2"
                         >
                         <p>ロボット掃除機</p>
                         <p class="c-red">84200円</p>
@@ -376,17 +360,17 @@
                                 value="16"
                             >
                             <input
-                                type="button"
-                                class="btn-gray"
-                                value="カートに入れる（残り0個）"
-                            >
+                              type="button"
+                              class="block mx-auto rounded-full bg-gray-600 text-white text-sm py-1 px-2"
+                              value="カートに入れる（残り0個）"
+                            />
                         </a>
                     </div>
-                    <div class="block01_item">
+                    <div class="card_item">
                         <div class="text-right mb-2">
                             <a
                                 href="https://localhost/#"
-                                class="btn btn-sm btn-success"
+                                class="btn btn-sm btn-primary"
                                 data-id="{stock.id}"
                             >気になる
                             </a>
@@ -394,7 +378,7 @@
                         <img
                             src="https://localhost/uploads/stock/megane.jpg"
                             alt=""
-                            class="block01_img"
+                            class="mb-2"
                         >
                         <p>メガネ</p>
                         <p class="c-red">4200円</p>
@@ -409,12 +393,12 @@
                             >
                             <input
                                 type="button"
-                                class="btn-01"
+                                class="btn block mx-auto rounded-full bg-red-600 text-white text-sm py-1 px-2"
                                 value="カートに入れる（残り46個）"
                             >
                         </a>
                     </div>
-                    <div class="block01_item">
+                    <div class="card_item">
                         <div class="text-right mb-2">
                             <a
                                 href="https://localhost/#"
@@ -426,7 +410,7 @@
                         <img
                             src="https://localhost/uploads/stock/hat.jpg"
                             alt=""
-                            class="block01_img"
+                            class="mb-2"
                         >
                         <p>麦わら帽子</p>
                         <p class="c-red">3200円</p>
@@ -441,12 +425,12 @@
                             >
                             <input
                                 type="button"
-                                class="btn-01"
+                                class="btn block mx-auto rounded-full bg-red-600 text-white text-sm py-1 px-2"
                                 value="カートに入れる（残り12個）"
                             >
                         </a>
                     </div>
-                    <div class="block01_item">
+                    <div class="card_item">
                         <div class="text-right mb-2">
                             <a
                                 href="https://localhost/#"
@@ -458,7 +442,7 @@
                         <img
                             src="https://localhost/uploads/stock/eguiter.jpg"
                             alt=""
-                            class="block01_img"
+                            class="mb-2"
                         >
                         <p>エレキギター</p>
                         <p class="c-red">15600円</p>
@@ -473,12 +457,12 @@
                             >
                             <input
                                 type="button"
-                                class="btn-gray"
+                                class="block mx-auto rounded-full bg-gray-600 text-white text-sm py-1 px-2"
                                 value="カートに入れる（残り0個）"
                             >
                         </a>
                     </div>
-                    <div class="block01_item">
+                    <div class="card_item">
                         <div class="text-right mb-2">
                             <a
                                 href="https://localhost/#"
@@ -490,7 +474,7 @@
                         <img
                             src="https://localhost/uploads/stock/aguiter.jpg"
                             alt=""
-                            class="block01_img"
+                            class="mb-2"
                         >
                         <p>アコースティックギター</p>
                         <p class="c-red">25600円</p>
@@ -505,12 +489,12 @@
                             >
                             <input
                                 type="button"
-                                class="btn-01"
+                                class="btn block mx-auto rounded-full bg-red-600 text-white text-sm py-1 px-2"
                                 value="カートに入れる（残り9個）"
                             >
                         </a>
                     </div>
-                    <div class="block01_item">
+                    <div class="card_item">
                         <div class="text-right mb-2">
                             <a
                                 href="https://localhost/#"
@@ -522,7 +506,7 @@
                         <img
                             src="https://localhost/uploads/stock/pc.jpg"
                             alt=""
-                            class="block01_img"
+                            class="mb-2"
                         >
                         <p>デスクトップパソコン</p>
                         <p class="c-red">11200円</p>
@@ -537,7 +521,7 @@
                             >
                             <input
                                 type="button"
-                                class="btn-01"
+                                class="btn block mx-auto rounded-full bg-red-600 text-white text-sm py-1 px-2"
                                 value="カートに入れる（残り6個）"
                             >
                         </a>
