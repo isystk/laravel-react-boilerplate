@@ -2,18 +2,19 @@ import { FC, useState } from "react";
 import styles from './styles.module.scss';
 
 type Props = {
+    text: string,
     items: Array<{ text: string, onClick?: () => void }>,
     className?: string
 };
 
-const SideMenu: FC<Props> = ({ items, className = '' }: Props) => {
+const SideMenu: FC<Props> = ({ text, items, className = '' }: Props) => {
     const [isOpen, setOpen] = useState(false);
 
     return (
         <>
             {/* ハンバーガーメニュー */}
             <div
-                className={`${styles.menuBtn}`}
+                className={styles.menuBtn}
                 onClick={() => setOpen(!isOpen)}
             >
                 <span></span>
@@ -22,17 +23,17 @@ const SideMenu: FC<Props> = ({ items, className = '' }: Props) => {
             </div>
             {/* サイドメニュー */}
             <div
-                className={`${styles.sideMenu} ${className}  ${isOpen ? 'translate-x-0' : 'hidden translate-x-full '} fixed inset-y-0 right-0 w-64 bg-white shadow-lg z-40 transform transition-transform duration-300`}
+                className={`${styles.sideMenu} ${className} ${isOpen ? styles.open : styles.closed}`}
             >
-                <div className="p-5 text-lg font-medium border-b">
-                    <p className="text-gray-700"></p>
+                <div className={styles.menuHeader}>
+                    <p>{text}</p>
                 </div>
                 <nav>
-                    <ul className="flex flex-col p-4 space-y-2">
+                    <ul className={styles.menuList}>
                         {items.map(({ text, onClick }, index) => (
                             <li key={index}>
                                 <a
-                                    className="block p-2 rounded hover:bg-gray-100 cursor-pointer"
+                                    className={styles.menuItem}
                                     onClick={() => {
                                         onClick?.();
                                         setOpen(false);
@@ -47,7 +48,7 @@ const SideMenu: FC<Props> = ({ items, className = '' }: Props) => {
             </div>
             {/* オーバーレイ */}
             <div
-                className={`${isOpen ? '' : 'hidden'} fixed inset-0 bg-black bg-opacity-50 z-30`}
+                className={`${styles.overlay} ${isOpen ? styles.visible : styles.hidden}`}
                 onClick={() => setOpen(!isOpen)}
             ></div>
         </>

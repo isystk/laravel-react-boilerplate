@@ -57,6 +57,7 @@ const Header = () => {
 
                 {/* サイドメニュー */}
                 <SideMenu
+                    text={"テスト 様"}
                     items={[
                         {
                             text: "ログイン",
