@@ -1,0 +1,24 @@
+
+.sideMenu {
+}
+
+.menuBtn {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 1rem;
+    cursor: pointer;
+    gap: 0.375rem;
+    span {
+        display: block;
+        width: 1.5rem;
+        height: 2px;
+        background-color: black;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .menuBtn {
+        display: flex;
+    }
+}

@@ -24,8 +24,12 @@ time, mark, audio, video, a {
     background: transparent;
 }
 
+html {
+  font-size: 16px;
+}
+
 body {
-    font-size: 16px;
+    font-size: 1rem;
     font-family: ヒラギノ角ゴ Pro W3, Hiragino Kaku Gothic Pro, メイリオ, Meiryo, sans-serif;
     color: #333;
     word-wrap: break-word;

@@ -7,12 +7,14 @@
         "check": "tsc --noEmit"
     },
     "devDependencies": {
-        "@tailwindcss/vite": "^4.0.0",
+        "@tailwindcss/postcss": "^4.1.4",
         "@vitejs/plugin-react": "^4.3.4",
+        "autoprefixer": "^10.4.21",
         "axios": "^1.8.2",
         "concurrently": "^9.0.1",
         "laravel-vite-plugin": "^1.2.0",
         "path": "^0.12.7",
+        "postcss": "^8.5.3",
         "sass-embedded": "^1.86.3",
         "tailwindcss": "^4.1.4",
         "typescript": "^5.8.3",
