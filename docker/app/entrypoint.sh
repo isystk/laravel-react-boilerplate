@@ -18,7 +18,7 @@ composer install
 echo "🔧 Running npm install..."
 npm install
 echo "🔧 Running npm run build..."
-npm run build
+npm run build || echo "Build failed: ignoring and continuing"
 
 echo "🔐 Generating app key..."
 php artisan key:generate
