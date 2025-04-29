@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import Portal from "@/components/commons/Portal";
 
 type Props = {
     children: React.ReactNode;
@@ -9,7 +8,7 @@ type Props = {
 
 const Modal: FC<Props> = ({ children, isOpen, handleClose }) => {
     return (
-        <Portal>
+        <>
             {isOpen && <div id="overlay-background"></div>}
             <div className={`isystk-overlay ${isOpen ? "open" : ""}`}>
                 <button
@@ -22,7 +21,7 @@ const Modal: FC<Props> = ({ children, isOpen, handleClose }) => {
                 </button>
                 {children}
             </div>
-        </Portal>
+        </>
     );
 };
 

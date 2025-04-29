@@ -1,0 +1,73 @@
+import { useNavigate } from "react-router-dom";
+import Image from "@/components/atoms/Image";
+import { Url } from "@/constants/url";
+import MainService from "@/services/main";
+
+export type Props = {
+    key: number|string;
+    id: number;
+    name: string;
+    imgpath: string;
+    price: string | number;
+    detail: string;
+    quantity: number;
+    isLike: boolean;
+    appRoot: MainService;
+}
+
+const StockItem = ({id, name, imgpath, price, detail, quantity, isLike, appRoot}: Props) => {
+    const navigate = useNavigate();
+
+    const handleLikeClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        if (isLike) {
+            await appRoot.like.removeLikeAsync(id);
+        } else {
+            await appRoot.like.addLikeAsync(id);
+        }
+    };
+
+    const handleAddToCart = async () => {
+        if (!appRoot.auth.isLogined) {
+            navigate(Url.LOGIN);
+            return;
+        }
+        const result = await appRoot.cart.addCart(id);
+        if (result) {
+            navigate(Url.MYCART);
+        }
+    };
+
+    return (
+        <div className="card_item">
+            <div className="text-right mb-2">
+                <button
+                    className={`btn btn-sm ${isLike ? "btn-primary" : "btn-secondary"}`}
+                    data-id={id}
+                    onClick={handleLikeClick}
+                >
+                    気になる
+                </button>
+            </div>
+            <Image
+                src={`/uploads/stock/${imgpath}`}
+                alt={name}
+                className="mb-2"
+            />
+            <p>{name}</p>
+            <p className="c-red">{price}</p>
+            <p className="mb20">{detail}</p>
+            <button
+                className={`btn btn-sm text-center mx-auto mt-auto ${
+                    quantity === 0 ? "btn-secondary disabled" : "btn-danger"
+                }`}
+                onClick={handleAddToCart}
+                disabled={quantity === 0}
+            >
+                カートに入れる（残り{quantity}個）
+            </button>
+        </div>
+    );
+};
+
+export default StockItem;

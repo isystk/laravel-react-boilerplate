@@ -1,6 +1,6 @@
 import React, { FC, Suspense, useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import AuthCheck from "@/components/auths/AuthCheck";
+import AuthCheck from "@/components/AuthCheck";
 import ContactComplete from "@/pages/contact/complete";
 import ContactCreate from "@/pages/contact";
 import EMailForm from "@/pages/password/reset";

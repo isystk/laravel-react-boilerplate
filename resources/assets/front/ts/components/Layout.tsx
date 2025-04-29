@@ -1,7 +1,4 @@
 import React, { FC } from "react";
-import CommonHeader from "@/components/commons/Header";
-import CommonFooter from "@/components/commons/Footer";
-import Loading from "@/components/commons/Loading";
 import MainService from "@/services/main";
 
 type Props = {
@@ -18,10 +15,7 @@ const Layout: FC<Props> = ({ appRoot, children, title }) => {
                 name="description"
                 content="Laravel ＆ React.js の学習用サンプルアプリケーションです。"
             />
-            <CommonHeader appRoot={appRoot} />
             {children}
-            <CommonFooter />
-            <Loading appRoot={appRoot} />
         </>
     );
 };

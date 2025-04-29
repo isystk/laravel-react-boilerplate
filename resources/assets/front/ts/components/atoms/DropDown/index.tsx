@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from './styles.module.scss';
 
 type Props = {
@@ -7,7 +7,7 @@ type Props = {
     className?: string
 };
 
-const DropDown: FC<Props> = ({ text, items, className }: Props) => {
+const DropDown = ({ text, items, className }: Props) => {
     const [isOpen, setOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 

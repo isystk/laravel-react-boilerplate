@@ -4,7 +4,7 @@ import {Link, useNavigate} from "react-router-dom";
 import { Url } from "@/constants/url";
 import Image from "@/components/atoms/Image";
 import DropDown from "@/components/atoms/DropDown";
-import SideMenu from "@/components/atoms/SideMenu";
+import SideMenu from "@/components/organisms/SideMenu";
 
 const Header = () => {
     const navigate = useNavigate();
