@@ -120,11 +120,13 @@ a {
     max-width: 1000px;
     margin: 0 auto;
     padding: 20px 0 20px;
+    min-height: calc(100vh - 272px); /* Header: 69px + Footer: 203px */
 }
 
 @media only screen and (min-width: 767px) {
     .content {
         padding: 40px 0 40px;
+        min-height: calc(100vh - 328px); /* Header: 84px + Footer: 244px */
     }
 }
 

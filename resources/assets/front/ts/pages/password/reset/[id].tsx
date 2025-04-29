@@ -1,18 +1,15 @@
-import React, { useState, FC } from "react";
-import TextInput from "@/components/elements/TextInput";
-import SubmitButton from "@/components/elements/SubmitButton";
+import React, { useState } from "react";
 import CSRFToken from "@/components/elements/CSRFToken";
 import RequestToken from "@/components/elements/RequestToken";
 import SessionAlert from "@/components/elements/SessionAlert";
-import Box from "@/components/Box";
-import Layout from "@/components/Layout";
-import MainService from "@/services/main";
+import BasicLayout from "@/components/templates/BasicLayout";
+import useAppRoot from "@/stores/useAppRoot";
+import TextInput from "@/components/atoms/TextInput";
 
-type Props = {
-    appRoot: MainService;
-};
+const ResetForm = () => {
+    const appRoot = useAppRoot();
+    if (!appRoot) return <></>;
 
-const ResetForm: FC<Props> = ({ appRoot }) => {
     const [email, setEmail] = useState<string>("");
 
     const handleSetEmail = (value: string) => {
@@ -20,17 +17,17 @@ const ResetForm: FC<Props> = ({ appRoot }) => {
     };
 
     return (
-        <Layout appRoot={appRoot} title="パスワード変更">
-            <main className="main">
-                <Box title="パスワード変更" small={true}>
-                    <SessionAlert target="status" />
-                    <form
-                        method="POST"
-                        action="/reset-password"
-                        id="login-form"
-                    >
-                        <CSRFToken appRoot={appRoot} />
-                        <RequestToken />
+        <BasicLayout title="パスワード変更">
+            <div className="bg-white p-6 rounded-md shadow-md ">
+                <SessionAlert target="status" />
+                <form
+                    method="POST"
+                    action="/reset-password"
+                    id="login-form"
+                >
+                    <CSRFToken appRoot={appRoot} />
+                    <RequestToken />
+                    <div className="mx-auto my-5 w-100">
                         <TextInput
                             identity="email"
                             controlType="email"
@@ -38,24 +35,31 @@ const ResetForm: FC<Props> = ({ appRoot }) => {
                             defaultValue={email}
                             action={handleSetEmail}
                             autoFocus={true}
+                            className="mb-5"
                         />
                         <TextInput
                             identity="password"
                             controlType="password"
                             autoComplete="new-password"
                             label="新しいパスワード"
+                            className="mb-5"
                         />
                         <TextInput
                             identity="password_confirmation"
                             controlType="password"
                             autoComplete="new-password"
                             label="新しいパスワード(確認)"
+                            className="mb-5"
                         />
-                        <SubmitButton label="パスワードを変更する" />
-                    </form>
-                </Box>
-            </main>
-        </Layout>
+                        <div className="mt-3 text-center">
+                            <button type="submit" className="btn btn-primary mr-5">
+                                パスワードを変更する
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </BasicLayout>
     );
 };
 

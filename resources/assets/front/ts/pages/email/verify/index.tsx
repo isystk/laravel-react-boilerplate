@@ -1,18 +1,16 @@
-import React, { FC } from "react";
+import React from "react";
 import SessionAlert from "@/components/elements/SessionAlert";
-import Box from "@/components/Box";
-import Layout from "@/components/Layout";
-import MainService from "@/services/main";
 import CSRFToken from "@/components/elements/CSRFToken";
+import BasicLayout from "@/components/templates/BasicLayout";
+import useAppRoot from "@/stores/useAppRoot";
 
-type Props = {
-    appRoot: MainService;
-};
+const Verify = () => {
+    const appRoot = useAppRoot();
+    if (!appRoot) return <></>;
 
-const Verify: FC<Props> = ({ appRoot }) => (
-    <Layout appRoot={appRoot} title="メールを確認してください">
-        <main className="main">
-            <Box title="メールを確認してください">
+    return (
+        <BasicLayout title="メールを確認してください">
+            <div className="bg-white p-6 rounded-md shadow-md ">
                 <SessionAlert target="resent" />
                 確認用リンクが記載されたメールをご確認ください。メールが届いていない場合は{" "}
                 <a
@@ -40,9 +38,9 @@ const Verify: FC<Props> = ({ appRoot }) => (
                 >
                     <CSRFToken appRoot={appRoot} />
                 </form>
-            </Box>
-        </main>
-    </Layout>
-);
+            </div>
+        </BasicLayout>
+    );
+}
 
 export default Verify;

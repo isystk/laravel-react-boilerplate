@@ -1,39 +1,41 @@
-import React, { FC } from "react";
-import TextInput from "@/components/elements/TextInput";
-import SubmitButton from "@/components/elements/SubmitButton";
+import React from "react";
 import CSRFToken from "@/components/elements/CSRFToken";
 import SessionAlert from "@/components/elements/SessionAlert";
-import Box from "@/components/Box";
-import Layout from "@/components/Layout";
-import MainService from "@/services/main";
+import BasicLayout from "@/components/templates/BasicLayout";
+import useAppRoot from "@/stores/useAppRoot";
+import TextInput from "@/components/atoms/TextInput";
 
-type Props = {
-    appRoot: MainService;
-};
+const ResetForm = () => {
+    const appRoot = useAppRoot();
+    if (!appRoot) return <></>;
 
-const ResetForm: FC<Props> = ({ appRoot }) => {
     return (
-        <Layout appRoot={appRoot} title="パスワードリセット">
-            <main className="main">
-                <Box title="パスワードリセット" small={true}>
-                    <SessionAlert target="status" />
-                    <form
-                        method="POST"
-                        action="/forgot-password"
-                        id="login-form"
-                    >
-                        <CSRFToken appRoot={appRoot} />
+        <BasicLayout title="パスワードリセット">
+            <div className="bg-white p-6 rounded-md shadow-md ">
+                <form
+                    method="POST"
+                    action="/forgot-password"
+                    id="login-form"
+                >
+                    <CSRFToken appRoot={appRoot} />
+                    <div className="mx-auto my-5 w-100">
+                        <SessionAlert target="status" className="mb-5" />
                         <TextInput
                             identity="email"
                             controlType="email"
                             label="メールアドレス"
                             autoFocus={true}
+                            className="mb-5"
                         />
-                        <SubmitButton label="メールを送信する" />
-                    </form>
-                </Box>
-            </main>
-        </Layout>
+                        <div className="mt-3 text-center">
+                            <button type="submit" className="btn btn-primary mr-5">
+                                メールを送信する
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </BasicLayout>
     );
 };
 

@@ -4,9 +4,17 @@ import {APP_NAME} from "@/constants/app";
 import {Link} from "react-router-dom";
 import { Url } from "@/constants/url";
 
-export type Props = object
+export type Props = {
+    hasLink?: boolean;
+}
 
-const Logo = () => {
+const Logo = ({hasLink = true}: Props) => {
+    return (
+        hasLink ? <LinkLogo /> : <NoLinkLogo />
+    );
+};
+
+const LinkLogo = () => {
     return (
         <Link
             to={Url.TOP}
@@ -14,6 +22,12 @@ const Logo = () => {
         >
             <Image src="/assets/front/image/logo.png" width={200} height={60} alt={APP_NAME} className={styles.logoImage} />
         </Link>
+    );
+};
+
+const NoLinkLogo = () => {
+    return (
+        <Image src="/assets/front/image/logo.png" width={200} height={60} alt={APP_NAME} className={styles.logoImage} />
     );
 };
 

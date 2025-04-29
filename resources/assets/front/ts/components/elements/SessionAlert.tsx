@@ -1,16 +1,17 @@
-import React, { FC } from "react";
+import React from "react";
 
 type Props = {
     target: string;
+    className?: string;
 };
 
-const SessionAlert: FC<Props> = (props) => {
-    if (window.laravelSession[props.target] !== "") {
+const SessionAlert= ({target, className}: Props) => {
+    if (window.laravelSession[target] !== "") {
         return (
-            <div color="success" role="alert">
-                {props.target === "resent"
+            <div className={`bg-gray-100 text-center py-4 lg:px-4 ${className}`}>
+                {target === "resent"
                     ? "あなたのメールアドレスに新しい認証リンクが送信されました。"
-                    : window.laravelSession[props.target]}
+                    : window.laravelSession[target]}
             </div>
         );
     } else {

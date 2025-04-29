@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { useState } from "react";
 import styles from './styles.module.scss';
 
 type Props = {
@@ -7,7 +7,7 @@ type Props = {
     className?: string
 };
 
-const SideMenu: FC<Props> = ({ text, items, className = '' }: Props) => {
+const SideMenu = ({ text, items, className = '' }: Props) => {
     const [isOpen, setOpen] = useState(false);
 
     return (
@@ -27,6 +27,14 @@ const SideMenu: FC<Props> = ({ text, items, className = '' }: Props) => {
             >
                 <div className={styles.menuHeader}>
                     <p>{text}</p>
+                    {/* バツボタン */}
+                    <div
+                        className={styles.closeBtn}
+                        onClick={() => setOpen(false)}
+                    >
+                        <span></span>
+                        <span></span>
+                    </div>
                 </div>
                 <nav>
                     <ul className={styles.menuList}>

@@ -3,16 +3,15 @@ import { Url } from "@/constants/url";
 import { useLocation, useNavigate } from "react-router-dom";
 import BasicLayout from "@/components/templates/BasicLayout";
 import Carousel from "@/components/atoms/Carousel";
-import MainService from "@/services/main";
 import Pagination from "@/components/atoms/Pagination";
 import React, { useEffect, FC } from "react";
 import StockItems from "@/components/organisms/StockItems";
+import useAppRoot from "@/stores/useAppRoot";
 
-type Props = {
-    appRoot: MainService;
-};
+const Index = () => {
+    const appRoot = useAppRoot();
+    if (!appRoot) return <></>;
 
-const Index: FC<Props> = ({ appRoot }) => {
     const navigate = useNavigate();
     const { search } = useLocation();
     const stocks = appRoot.shop.stocks.data.map((stock) => ({
@@ -33,10 +32,10 @@ const Index: FC<Props> = ({ appRoot }) => {
     return (
         <BasicLayout title="TOP">
             <Carousel images={[
-                    { src: '/assets/front/image/bunner_01.jpg', alt: 'Slide 1' },
-                    { src: '/assets/front/image/bunner_02.jpg', alt: 'Slide 2' },
-                    { src: '/assets/front/image/bunner_01.jpg', alt: 'Slide 3' },
-                    { src: '/assets/front/image/bunner_02.jpg', alt: 'Slide 4' },
+                    { src: '/assets/front/image/banner_01.jpg', alt: 'Slide 1' },
+                    { src: '/assets/front/image/banner_02.jpg', alt: 'Slide 2' },
+                    { src: '/assets/front/image/banner_01.jpg', alt: 'Slide 3' },
+                    { src: '/assets/front/image/banner_02.jpg', alt: 'Slide 4' },
                 ]}
                 autoPlay={true}
                 autoPlayInterval={5000} // 5秒ごとにスライド
@@ -46,8 +45,8 @@ const Index: FC<Props> = ({ appRoot }) => {
                 <Pagination
                     activePage={current_page}
                     totalItemsCount={total}
-                    itemsCountPerPage="6"
-                    pageRangeDisplayed="3"
+                    itemsCountPerPage={6}
+                    pageRangeDisplayed={3}
                     onChange={(pageNo) => {
                         navigate(`${Url.TOP}?page=${pageNo}`);
                     }}
