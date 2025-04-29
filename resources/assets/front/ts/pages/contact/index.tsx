@@ -22,9 +22,11 @@ const ContactCreate = () => {
 
     const handleSubmit = async (values) => {
         // 入力したお問い合わせ内容を送信する。
-        await appRoot.contact.registContact(values);
-        // 完了画面を表示する
-        navigate(Url.contactComplete);
+        const result = await appRoot.contact.registContact(values);
+        if (result) {
+            // 完了画面を表示する
+            navigate(Url.contactComplete);
+        }
     };
 
     const initialValues = {
@@ -90,7 +92,7 @@ const ContactCreate = () => {
                                 onBlur={handleBlur}
                                 required={true}
                                 error={errors.user_name as string}
-                                className="mb-5 w-100"
+                                className="mb-5 md:w-100"
                             />
                             <TextInput
                                 label="メールアドレス"
@@ -102,7 +104,7 @@ const ContactCreate = () => {
                                 onBlur={handleBlur}
                                 required={true}
                                 error={errors.email as string}
-                                className="mb-5 w-100"
+                                className="mb-5 md:w-100"
                             />
                             <SelectionInput
                                 label="性別"
@@ -121,7 +123,7 @@ const ContactCreate = () => {
                                 onChange={handleChange}
                                 required={true}
                                 error={errors.gender as string}
-                                className="mb-5 w-100"
+                                className="mb-5 md:w-100"
                             />
                             <SelectBox
                                 label="年齢"
@@ -139,7 +141,7 @@ const ContactCreate = () => {
                                 onChange={handleChange}
                                 error={errors.age as string}
                                 required={true}
-                                className="mb-5 w-100"
+                                className="mb-5 md:w-100"
                             />
                             <TextInput
                                 label="件名"
@@ -151,7 +153,7 @@ const ContactCreate = () => {
                                 onBlur={handleBlur}
                                 required={true}
                                 error={errors.title as string}
-                                className="mb-5 w-100"
+                                className="mb-5 md:w-100"
                             />
                             <TextArea
                                 label="お問い合わせ内容"
@@ -162,7 +164,7 @@ const ContactCreate = () => {
                                 onBlur={handleBlur}
                                 required={true}
                                 error={errors.contact as string}
-                                className="mb-5 w-100"
+                                className="mb-5 md:w-100"
                             />
                             <TextInput
                                 label="ホームページURL"
@@ -173,7 +175,7 @@ const ContactCreate = () => {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 error={errors.url as string}
-                                className="mb-5 w-100"
+                                className="mb-5 md:w-100"
                             />
                             <ImageInput
                                 label="画像1"
@@ -183,7 +185,7 @@ const ContactCreate = () => {
                                 required={true}
                                 setFieldValue={setFieldValue}
                                 error={errors.imageBase64_1 as string}
-                                className="mb-5 w-100"
+                                className="mb-5 md:w-100"
                             />
                             <ImageInput
                                 label="画像2"
@@ -192,7 +194,7 @@ const ContactCreate = () => {
                                 value={values.imageBase64_2}
                                 setFieldValue={setFieldValue}
                                 error={errors.imageBase64_2 as string}
-                                className="mb-5 w-100"
+                                className="mb-5 md:w-100"
                             />
                             <ImageInput
                                 label="画像3"
@@ -201,7 +203,7 @@ const ContactCreate = () => {
                                 value={values.imageBase64_3}
                                 setFieldValue={setFieldValue}
                                 error={errors.imageBase64_3 as string}
-                                className="mb-5 w-100"
+                                className="mb-5 md:w-100"
                             />
                             <SelectionInput
                                 identity="caution"
@@ -212,7 +214,7 @@ const ContactCreate = () => {
                                 onChange={handleChange}
                                 required={true}
                                 error={errors.caution as string}
-                                className="mb-5 w-100"
+                                className="mb-5 md:w-100"
                             />
                             <div className="text-center">
                                 <button

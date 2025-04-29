@@ -4,9 +4,10 @@ import BasicLayout from "@/components/templates/BasicLayout";
 import useAppRoot from "@/stores/useAppRoot";
 import {Link} from "react-router-dom";
 import TextInput from "@/components/atoms/TextInput";
+
+// TODO react-google-recaptcha-v3 が react19では未だサポートされていないのでコメントアウト
 // import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 // import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
-
 // const ReChaptcha = () => {
 //     const [token, setToken] = useState<string>("");
 //     const { executeRecaptcha } = useGoogleReCaptcha();
@@ -40,21 +41,22 @@ const LoginForm = () => {
                 </div>
                 <form method="POST" action={Url.login} id="login-form">
                     <CSRFToken />
-                    <div className="mx-auto my-5 w-100">
+                    <div className="mx-auto md:w-100">
                         <TextInput
                             identity="email"
                             controlType="email"
                             label="メールアドレス"
                             autoFocus={true}
-                            className="mb-5"
+                            className="mb-5 md:w-100"
                         />
                         <TextInput
                             identity="password"
                             controlType="password"
                             autoComplete="current-password"
                             label="パスワード"
-                            className="mb-5"
+                            className="mb-5 md:w-100"
                         />
+                        {/*TODO react-google-recaptcha-v3 が react19では未だサポートされていないのでコメントアウト*/}
                         {/*<GoogleReCaptchaProvider*/}
                         {/*    reCaptchaKey={*/}
                         {/*        import.meta.env.MIX_RECAPTCHAV3_SITEKEY + ""*/}
@@ -73,7 +75,7 @@ const LoginForm = () => {
                             <span>Remember Me</span>
                         </p>
                     </div>
-                    <div className="mx-auto my-5 border w-100 p-3">
+                    <div className="mx-auto my-5 border p-3 md:w-100">
                         テスト用ユーザ
                         <br />
                         メールアドレス: test1@test.com

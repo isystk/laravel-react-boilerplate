@@ -78,9 +78,6 @@ export default class CartService {
                 }),
             });
             const { result, carts } = await response.json();
-            console.log({
-                carts
-            })
             if (result) {
                 this.carts = carts;
             }
@@ -117,7 +114,7 @@ export default class CartService {
         this.main.setAppRoot();
     }
 
-    async payment(stripe, elements, values: Form): Promise<void> {
+    async payment(stripe, elements, values: Form): Promise<boolean> {
         // ローディングを表示する
         this.main.showLoading();
         try {
@@ -146,23 +143,26 @@ export default class CartService {
             });
 
             if (
-                confirmRes.paymentIntent &&
-                confirmRes.paymentIntent.status === "succeeded"
+                !confirmRes.paymentIntent ||
+                confirmRes.paymentIntent.status !== "succeeded"
             ) {
-                // 決算処理が完了したら、注文履歴に追加してマイカートから商品を削除する。
-                const response = await fetch(Api.checkout, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
-                await response.json();
+                throw new Error();
             }
+            // 決算処理が完了したら、注文履歴に追加してマイカートから商品を削除する。
+            await fetch(Api.checkout, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
         } catch (e) {
             alert("決算処理に失敗しました");
+            this.main.hideLoading();
+            this.main.setAppRoot();
+            return false;
         }
-        // ローディングを非表示にする
         this.main.hideLoading();
         this.main.setAppRoot();
+        return true;
     }
 }

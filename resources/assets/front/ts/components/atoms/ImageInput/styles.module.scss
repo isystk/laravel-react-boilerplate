@@ -1,6 +1,7 @@
 @use "@/styles/variable" as *;;
 
 .formControl {
+    width: 100%;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     &:focus {
         outline: 0;

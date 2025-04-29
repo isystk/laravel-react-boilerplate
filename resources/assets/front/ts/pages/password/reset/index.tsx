@@ -17,7 +17,7 @@ const ResetForm = () => {
                     id="login-form"
                 >
                     <CSRFToken />
-                    <div className="mx-auto my-5 w-100">
+                    <div className="mx-auto md:w-100">
                         <SessionAlert target="status" className="mb-5" />
                         <TextInput
                             identity="email"

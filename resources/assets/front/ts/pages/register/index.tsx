@@ -15,7 +15,7 @@ const RegisterForm = () => {
              <div className="bg-white p-6 rounded-md shadow-md ">
                  <form method="POST" action="/register" id="login-form">
                      <CSRFToken />
-                     <div className="mx-auto my-5 w-100">
+                     <div className="mx-auto md:w-100">
                          <TextInput
                              identity="name"
                              controlType="text"

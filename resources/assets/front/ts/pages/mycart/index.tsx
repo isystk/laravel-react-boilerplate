@@ -65,7 +65,6 @@ const MyCart = () => {
                                             handleClose={() => {
                                                 setIsOpen(false);
                                             }}
-                                            appRoot={appRoot}
                                             amount={carts.sum}
                                         />
                                     </Elements>

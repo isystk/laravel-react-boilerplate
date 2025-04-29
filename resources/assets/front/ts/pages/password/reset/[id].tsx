@@ -27,7 +27,7 @@ const ResetForm = () => {
                 >
                     <CSRFToken />
                     <RequestToken />
-                    <div className="mx-auto my-5 w-100">
+                    <div className="mx-auto md:w-100">
                         <TextInput
                             identity="email"
                             controlType="email"
