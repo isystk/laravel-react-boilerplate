@@ -1,4 +1,3 @@
-import * as React from "react";
 import {useEffect, useState} from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -43,7 +42,7 @@ const MyCart = () => {
                                             <CartItem key={index} {...cart} />
                                         ))}
                                     </div>
-                                    <div className="bg-white mt-5 p-10">
+                                    <div className="bg-white mt-10 p-10">
                                         <div className="w-50 m-auto">
                                             <p className="font-bold">合計個数：{carts.count}個</p>
                                             <p className="font-bold">合計金額：{carts.sum}円</p>

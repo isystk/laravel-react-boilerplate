@@ -8,6 +8,7 @@
     },
     "devDependencies": {
         "@tailwindcss/postcss": "^4.1.4",
+        "@types/lodash": "^4.17.16",
         "@types/react-dom": "^19.1.2",
         "@vitejs/plugin-react": "^4.3.4",
         "autoprefixer": "^10.4.21",
@@ -31,6 +32,7 @@
         "formik": "^2.4.6",
         "heic2any": "^0.0.4",
         "jquery": "^3.7.1",
+        "lodash": "^4.17.21",
         "react": "^19.1.0",
         "react-dom": "^19.1.0",
         "react-image-base64": "^1.1.2",

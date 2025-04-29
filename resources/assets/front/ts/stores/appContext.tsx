@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useContext, ReactNode } from "react";
+import { createContext, useReducer, useContext, ReactNode } from "react";
 import MainService from "@/services/main";
 
 // --- 型定義 ---

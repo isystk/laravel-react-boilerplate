@@ -1,4 +1,4 @@
-import React, { useEffect, useState, FC } from "react";
+import {useEffect, useState, ChangeEvent} from "react";
 import styles from './styles.module.scss';
 
 type Props = {
@@ -10,8 +10,8 @@ type Props = {
     action?: any;
     autoFocus?: boolean;
     required?: boolean;
-    onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-    onBlur?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+    onBlur?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
     value?: string;
     className?: string;
     error?: string;
@@ -24,15 +24,7 @@ type Valid = {
     error: string;
 };
 
-declare global {
-    interface Window {
-        laravelErrors: {
-            [key: string]: string[];
-        };
-    }
-}
-
-const TextArea: FC<Props> = (props) => {
+const TextArea = (props: Props) => {
     const [valid, setValid] = useState<Valid>({ error: "", isInvalid: "" });
 
     useEffect(() => {
@@ -57,7 +49,12 @@ const TextArea: FC<Props> = (props) => {
 
     return (
         <div className={props.className}>
-            <label className="font-bold" htmlFor={props.identity}>{props.label}</label>
+            <label className="font-bold" htmlFor={props.identity}>
+                {props.label}
+                {props.required && (
+                    <span className="ml-2 text-red-600 text-sm font-normal">必須</span>
+                )}
+            </label>
             <textarea
                 id={props.identity}
                 name={props.name || props.identity}

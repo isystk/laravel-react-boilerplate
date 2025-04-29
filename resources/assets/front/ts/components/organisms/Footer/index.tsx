@@ -1,5 +1,5 @@
 import styles from './styles.module.scss';
-import Logo from "@/components/molecules/Logo";
+import Logo from "@/components/atoms/Logo";
 
 const Footer = () => {
     return (

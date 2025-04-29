@@ -1,6 +1,4 @@
-import * as React from "react";
 import { Navigate } from "react-router-dom";
-import { FC } from "react";
 import { Url } from "@/constants/url";
 import { Session } from "@/services/auth";
 
@@ -9,7 +7,7 @@ type Props = {
     component: React.ReactNode;
 };
 
-const AuthCheck: FC<Props> = ({ session, component }) => {
+const AuthCheck = ({ session, component }: Props) => {
     // ログインしてなければログイン画面へとばす
     if (!session.id) {
         return <Navigate to={Url.LOGIN} />;

@@ -1,4 +1,3 @@
-import React from "react";
 import styles from './styles.module.scss';
 import useAppRoot from "@/stores/useAppRoot";
 import Portal from "@/components/atoms/Portal";

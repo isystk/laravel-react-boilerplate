@@ -1,4 +1,4 @@
-import React, { FC, Suspense, useEffect } from "react";
+import { FC, Suspense, useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AuthCheck from "@/components/AuthCheck";
 import ContactComplete from "@/pages/contact/complete";

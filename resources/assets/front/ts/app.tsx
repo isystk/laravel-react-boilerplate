@@ -1,4 +1,3 @@
-import React from "react";
 import Router from "@/router";
 import axios from "axios";
 import { createRoot } from 'react-dom/client';

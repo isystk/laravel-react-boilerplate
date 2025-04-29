@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import CSRFToken from "@/components/atoms/CSRFToken";
 import BasicLayout from "@/components/templates/BasicLayout";
 import useAppRoot from "@/stores/useAppRoot";

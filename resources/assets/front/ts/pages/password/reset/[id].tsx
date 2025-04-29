@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import CSRFToken from "@/components/atoms/CSRFToken";
 import RequestToken from "@/components/atoms/RequestToken";
 import SessionAlert from "@/components/atoms/SessionAlert";

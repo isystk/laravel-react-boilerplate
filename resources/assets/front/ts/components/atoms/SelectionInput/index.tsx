@@ -1,4 +1,4 @@
-import React, { useEffect, useState, FC } from "react";
+import { useEffect, useState } from "react";
 import styles from './styles.module.scss';
 
 type Option = {
@@ -25,15 +25,7 @@ type Valid = {
     error: string;
 };
 
-declare global {
-    interface Window {
-        laravelErrors: {
-            [key: string]: string[];
-        };
-    }
-}
-
-const SelectionInput: FC<Props> = (props) => {
+const SelectionInput = (props: Props) => {
     const [valid, setValid] = useState<Valid>({ error: "", isInvalid: "" });
 
     useEffect(() => {
@@ -52,7 +44,12 @@ const SelectionInput: FC<Props> = (props) => {
 
     return (
         <div className={props.className}>
-            <p className="font-bold">{props.label}</p>
+            <label className="font-bold" htmlFor={props.identity}>
+                {props.label}
+                {props.required && (
+                    <span className="ml-2 text-red-600 text-sm font-normal">必須</span>
+                )}
+            </label>
             <div className="space-y-2">
                 {props.options.map((option, index) => {
                     const id = `${props.identity}_${index}`;

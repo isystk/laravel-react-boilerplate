@@ -1,4 +1,3 @@
-import React, { FC } from "react";
 import styles from './styles.module.scss';
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -22,7 +21,7 @@ type Props = {
     amount: number;
 };
 
-const PaymentModal: FC<Props> = ({ isOpen, handleClose, appRoot, amount }) => {
+const PaymentModal = ({ isOpen, handleClose, appRoot, amount }: Props) => {
     const navigate = useNavigate();
     const stripe = useStripe();
     const elements = useElements();

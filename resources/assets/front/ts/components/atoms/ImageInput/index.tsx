@@ -1,4 +1,4 @@
-import React, { useEffect, useState, FC, ChangeEvent } from "react";
+import { useEffect, useState, ChangeEvent } from "react";
 import styles from './styles.module.scss';
 
 type Props = {
@@ -18,18 +18,10 @@ type Valid = {
     error: string;
 };
 
-declare global {
-    interface Window {
-        laravelErrors: {
-            [key: string]: string[];
-        };
-    }
-}
-
-const ImageInput: FC<Props> = (props) => {
+const ImageInput = (props: Props) => {
     const [valid, setValid] = useState<Valid>({ error: "", isInvalid: "" });
     const [preview, setPreview] = useState<string | null>(null);
-    const [base64, setBase64] = useState<string>("");
+    const [, setBase64] = useState<string>("");
 
     useEffect(() => {
         if (props.error) {
@@ -71,7 +63,12 @@ const ImageInput: FC<Props> = (props) => {
 
     return (
         <div className={props.className}>
-            <label className="font-bold" htmlFor={props.identity}>{props.label}</label>
+            <label className="font-bold" htmlFor={props.identity}>
+                {props.label}
+                {props.required && (
+                    <span className="ml-2 text-red-600 text-sm font-normal">必須</span>
+                )}
+            </label>
             <input
                 type="file"
                 accept="image/*"

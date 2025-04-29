@@ -1,4 +1,4 @@
-import React, { useEffect, useState, FC } from "react";
+import {useEffect, useState, ChangeEvent} from "react";
 import styles from './styles.module.scss';
 
 type Props = {
@@ -11,8 +11,8 @@ type Props = {
     action?: any;
     autoFocus?: boolean;
     required?: boolean;
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+    onBlur?: (e: ChangeEvent<HTMLInputElement>) => void;
     value?: string;
     className?: string;
     error?: string;
@@ -23,15 +23,7 @@ type Valid = {
     error: string;
 };
 
-declare global {
-    interface Window {
-        laravelErrors: {
-            [key: string]: string[];
-        };
-    }
-}
-
-const TextInput: FC<Props> = (props) => {
+const TextInput = (props: Props) => {
     const [valid, setValid] = useState<Valid>({ error: "", isInvalid: "" });
 
     useEffect(() => {
@@ -56,7 +48,12 @@ const TextInput: FC<Props> = (props) => {
 
     return (
         <div className={props.className}>
-            <label className="font-bold" htmlFor={props.identity}>{props.label}</label>
+            <label className="font-bold" htmlFor={props.identity}>
+                {props.label}
+                {props.required && (
+                    <span className="ml-2 text-red-600 text-sm font-normal">必須</span>
+                )}
+            </label>
             <input
                 id={props.identity}
                 name={props.name || props.identity}

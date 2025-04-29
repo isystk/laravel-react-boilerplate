@@ -24,8 +24,8 @@ const CartItem = ({id, name, imgpath, price, detail }: Props) => {
         <div className={styles.cardItem}>
             <Image
                 src={`/uploads/stock/${imgpath}`}
-                width="276"
-                height="184"
+                width={276}
+                height={184}
                 alt={name}
                 className="mb-2 w-100"
             />

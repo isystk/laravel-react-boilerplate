@@ -1,5 +1,3 @@
-import React from "react";
-import MainService from "@/services/main";
 import BasicLayout from "@/components/templates/BasicLayout";
 
 const NotFound = () => {

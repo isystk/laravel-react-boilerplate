@@ -1,11 +1,7 @@
-import React, { FC } from "react";
 import SessionAlert from "@/components/atoms/SessionAlert";
 import BasicLayout from "@/components/templates/BasicLayout";
 
-type Props = {
-};
-
-const Home: FC<Props> = () => (
+const Home = () => (
     <BasicLayout title="ダッシュボード">
         <div className="bg-white p-6 rounded-md shadow-md">
             <SessionAlert target="status" />

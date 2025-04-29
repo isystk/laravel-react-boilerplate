@@ -1,4 +1,3 @@
-import React from "react";
 import CSRFToken from "@/components/atoms/CSRFToken";
 import SessionAlert from "@/components/atoms/SessionAlert";
 import BasicLayout from "@/components/templates/BasicLayout";

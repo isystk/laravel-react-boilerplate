@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import styles from './styles.module.scss';
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 const Carousel = ({ images, className, autoPlay = false, autoPlayInterval = 3000 }: Props) => {
 
     const [currentSlide, setCurrentSlide] = useState(0);
-    const timerRef = useRef<NodeJS.Timeout | null>(null);
+    const timerRef = useRef<number|null>(null);
 
     const nextSlide = () => {
         setCurrentSlide((prev) => (prev + 1) % images.length);

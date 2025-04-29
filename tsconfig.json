@@ -5,13 +5,12 @@
       "paths": {
         "@/*": ["./resources/assets/front/ts/*"],
       },
-
-      "target": "es5",                          /* ECMAScriptのターゲットバージョンを指定します: 'ES3'（デフォルト）, 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018'または 'ESNEXT' */
-      "module": "commonjs",                     /* モジュールコード生成: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015',または 'ESNext'を指定します。targetがes3かes5ならcommonjsとなる。 */
-      "lib": [
-        "dom"
-      ],
-      "jsx": "react",
+      "target": "esnext",                      /* ECMAScriptのターゲットバージョンを指定します: 'ES3'（デフォルト）, 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018'または 'ESNEXT' */
+      "module": "esnext",                      /* モジュールコード生成: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015',または 'ESNext'を指定します。targetがes3かes5ならcommonjsとなる。 */
+      "moduleResolution": "node",
+      "types": ["vite/client"],
+      "lib": ["esnext", "dom"],
+      "jsx": "react-jsx",
 
       /* 厳密な型チェックオプション */
       "strict": true,                           /* すべての厳密な型チェックオプションを有効にします。 */

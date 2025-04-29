@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Url } from "@/constants/url";
 import { Link } from "react-router-dom";
 import BasicLayout from "@/components/templates/BasicLayout";

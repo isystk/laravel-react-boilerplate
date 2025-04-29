@@ -1,11 +1,11 @@
+import {ReactNode, useEffect} from "react";
 import Header from "@/components/organisms/Header";
 import Footer from "@/components/organisms/Footer";
 import Circles from "@/components/atoms/Circles";
-import React, {useEffect} from "react";
 import Loading from "@/components/atoms/Loading";
 
 type Props = {
-    children: React.ReactNode;
+    children: ReactNode;
     title: string;
 };
 

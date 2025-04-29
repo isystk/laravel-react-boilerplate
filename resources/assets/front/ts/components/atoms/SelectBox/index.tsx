@@ -1,4 +1,4 @@
-import React, { useEffect, useState, FC } from 'react';
+import {useEffect, useState, ChangeEvent} from 'react';
 import styles from './styles.module.scss';
 
 type Option = {
@@ -15,7 +15,7 @@ type Props = {
     required?: boolean;
     error?: string;
     className?: string;
-    onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+    onChange?: (e: ChangeEvent<HTMLSelectElement>) => void;
 };
 
 type Valid = {
@@ -23,15 +23,7 @@ type Valid = {
     error: string;
 };
 
-declare global {
-    interface Window {
-        laravelErrors: {
-            [key: string]: string[];
-        };
-    }
-}
-
-const SelectBox: FC<Props> = ({
+const SelectBox = ({
       identity,
       label,
       options,
@@ -41,7 +33,7 @@ const SelectBox: FC<Props> = ({
       error,
       className,
       onChange,
-  }) => {
+  }: Props) => {
     const [valid, setValid] = useState<Valid>({ error: '', isInvalid: '' });
 
     useEffect(() => {
@@ -60,8 +52,11 @@ const SelectBox: FC<Props> = ({
 
     return (
         <div className={className}>
-            <label htmlFor={identity} className="font-bold block mb-1">
+            <label className="font-bold" htmlFor={identity}>
                 {label}
+                {required && (
+                    <span className="ml-2 text-red-600 text-sm font-normal">必須</span>
+                )}
             </label>
             <select
                 id={identity}

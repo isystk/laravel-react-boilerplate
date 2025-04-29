@@ -1,5 +1,4 @@
 import styles from './styles.module.scss';
-import React from "react";
 
 type Props = {
     activePage: number;
@@ -10,16 +9,16 @@ type Props = {
     className?: string;
 }
 
-const Pagination: React.FC<Props> = ({
+const Pagination = ({
    activePage,
    totalItemsCount,
    itemsCountPerPage,
    pageRangeDisplayed,
    onChange,
    className,
-}) => {
+}: Props) => {
     const totalPages = Math.ceil(totalItemsCount / itemsCountPerPage);
-    const pageNumbers = [];
+    const pageNumbers: number[] = [];
 
     const startPage = Math.max(1, activePage - Math.floor(pageRangeDisplayed / 2));
     const endPage = Math.min(totalPages, startPage + pageRangeDisplayed - 1);
@@ -93,7 +92,7 @@ const Pagination: React.FC<Props> = ({
     );
 };
 
-const PageButton: React.FC<{ key: number; page: number; isActive: boolean; onClick: (page: number) => void }> = ({ page, isActive, onClick }) => (
+const PageButton: React.FC<{ page: number; isActive: boolean; onClick: (page: number) => void }> = ({ page, isActive, onClick }) => (
     <button
         onClick={() => onClick(page)}
         className={`btn ${isActive ? 'btn-primary' : ''}`}

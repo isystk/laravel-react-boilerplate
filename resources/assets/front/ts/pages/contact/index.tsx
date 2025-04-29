@@ -1,4 +1,3 @@
-import * as React from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import CSRFToken from "@/components/atoms/CSRFToken";
@@ -91,6 +90,7 @@ const ContactCreate = () => {
                                 value={values.user_name}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
+                                required={true}
                                 error={errors.user_name as string}
                                 className="mb-5 w-100"
                             />
@@ -102,6 +102,7 @@ const ContactCreate = () => {
                                 value={values.email}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
+                                required={true}
                                 error={errors.email as string}
                                 className="mb-5 w-100"
                             />
@@ -120,6 +121,7 @@ const ContactCreate = () => {
                                     }));
                                 })()}
                                 onChange={handleChange}
+                                required={true}
                                 error={errors.gender as string}
                                 className="mb-5 w-100"
                             />
@@ -138,6 +140,7 @@ const ContactCreate = () => {
                                 })()}
                                 onChange={handleChange}
                                 error={errors.age as string}
+                                required={true}
                                 className="mb-5 w-100"
                             />
                             <TextInput
@@ -148,6 +151,7 @@ const ContactCreate = () => {
                                 value={values.title}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
+                                required={true}
                                 error={errors.title as string}
                                 className="mb-5 w-100"
                             />
@@ -158,6 +162,7 @@ const ContactCreate = () => {
                                 value={values.contact}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
+                                required={true}
                                 error={errors.contact as string}
                                 className="mb-5 w-100"
                             />
@@ -177,6 +182,7 @@ const ContactCreate = () => {
                                 identity="imageBase64_1"
                                 name="imageBase64_1"
                                 value={values.imageBase64_1}
+                                required={true}
                                 setFieldValue={setFieldValue}
                                 error={errors.imageBase64_1 as string}
                                 className="mb-5 w-100"
@@ -185,6 +191,7 @@ const ContactCreate = () => {
                                 label="画像2"
                                 identity="imageBase64_2"
                                 name="imageBase64_2"
+                                value={values.imageBase64_2}
                                 setFieldValue={setFieldValue}
                                 error={errors.imageBase64_2 as string}
                                 className="mb-5 w-100"
@@ -193,6 +200,7 @@ const ContactCreate = () => {
                                 label="画像3"
                                 identity="imageBase64_3"
                                 name="imageBase64_3"
+                                value={values.imageBase64_3}
                                 setFieldValue={setFieldValue}
                                 error={errors.imageBase64_3 as string}
                                 className="mb-5 w-100"
@@ -201,9 +209,10 @@ const ContactCreate = () => {
                                 identity="caution"
                                 name="caution"
                                 controlType="checkbox"
-                                selectedValue={values.caution}
+                                checkedValues={values.caution}
                                 options={[{ value: "true", label: "注意事項に同意"}]}
                                 onChange={handleChange}
+                                required={true}
                                 error={errors.caution as string}
                                 className="mb-5 w-100"
                             />

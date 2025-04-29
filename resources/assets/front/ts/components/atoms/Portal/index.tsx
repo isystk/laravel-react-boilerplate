@@ -1,12 +1,12 @@
+import {useRef, useState, useEffect, ReactNode} from "react";
 import ReactDOM from "react-dom";
-import React, { FC, useRef, useState, useEffect } from "react";
 
 type Props = {
-    children: React.ReactNode;
+    children: ReactNode;
 };
 
-const Portal: FC<Props> = ({ children }) => {
-    const ref = useRef<HTMLElement>();
+const Portal = ({ children }: Props) => {
+    const ref = useRef<HTMLElement>(null);
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {

@@ -1,6 +1,5 @@
-import React from 'react';
 import styles from './styles.module.scss';
-import Logo from "@/components/molecules/Logo";
+import Logo from "@/components/atoms/Logo";
 import {Link, useNavigate} from "react-router-dom";
 import { Url } from "@/constants/url";
 import Image from "@/components/atoms/Image";
@@ -76,7 +75,7 @@ const Header = () => {
                 <SideMenu
                     text={isLogined ? `${name} 様` : ''}
                     items={(() => {
-                        let items = [];
+                        const items: Array<{ text: string; onClick?: () => void }> = [];
                         if (isLogined) {
                             items.push(
                                 {
@@ -101,7 +100,7 @@ const Header = () => {
                                 },
                             );
                         }
-                        items = items.concat([
+                        items.push(
                             {
                                 text: "カートを見る",
                                 onClick: () => navigate(Url.MYCART)
@@ -110,7 +109,7 @@ const Header = () => {
                                 text: "お問い合わせ",
                                 onClick: () => navigate(Url.CONTACT)
                             }
-                        ]);
+                        );
                         return items;
                     })()}
                 />

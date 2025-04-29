@@ -5,7 +5,6 @@ import { Url } from "@/constants/url";
 import useAppRoot from "@/stores/useAppRoot";
 
 export type Props = {
-    key: number|string;
     id: number;
     name: string;
     imgpath: string;
@@ -54,8 +53,8 @@ const StockItem = ({id, name, imgpath, price, detail, quantity, isLike}: Props) 
             </div>
             <Image
                 src={`/uploads/stock/${imgpath}`}
-                width="276"
-                height="184"
+                width={276}
+                height={184}
                 alt={name}
                 className="mb-2 w-100"
             />

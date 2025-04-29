@@ -1,10 +1,10 @@
+import { useEffect } from "react";
 import { type Props as StockItemProps } from "@/components/molecules/StockItem";
 import { Url } from "@/constants/url";
 import { useLocation, useNavigate } from "react-router-dom";
 import BasicLayout from "@/components/templates/BasicLayout";
 import Carousel from "@/components/atoms/Carousel";
 import Pagination from "@/components/atoms/Pagination";
-import React, { useEffect, FC } from "react";
 import StockItems from "@/components/organisms/StockItems";
 import useAppRoot from "@/stores/useAppRoot";
 

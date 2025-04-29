@@ -1,5 +1,3 @@
-import React from "react";
-
 import CSRFToken from "@/components/atoms/CSRFToken";
 import { Url } from "@/constants/url";
 import BasicLayout from "@/components/templates/BasicLayout";
