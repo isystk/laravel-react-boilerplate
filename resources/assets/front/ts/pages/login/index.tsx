@@ -70,7 +70,6 @@ const LoginForm = () => {
                                 type="checkbox"
                                 id="remember"
                                 name="remember"
-                                className="form-check-input"
                                 value="1"
                             />{" "}
                             <span>Remember Me</span>

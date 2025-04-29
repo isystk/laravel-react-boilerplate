@@ -1,21 +1,16 @@
-import React, { useEffect, useState, FC } from "react";
+import React, { useEffect, useState, FC, ChangeEvent } from "react";
 import styles from './styles.module.scss';
 
 type Props = {
     identity: string;
-    controlType: string;
     name?: string;
-    autoComplete?: string;
     label: string;
-    defaultValue?: string;
-    action?: any;
+    value?: string;
     autoFocus?: boolean;
     required?: boolean;
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    value?: string;
     className?: string;
     error?: string;
+    setFieldValue?: (field: string, value: any) => void;
 };
 
 type Valid = {
@@ -31,8 +26,10 @@ declare global {
     }
 }
 
-const TextInput: FC<Props> = (props) => {
+const ImageInput: FC<Props> = (props) => {
     const [valid, setValid] = useState<Valid>({ error: "", isInvalid: "" });
+    const [preview, setPreview] = useState<string | null>(null);
+    const [base64, setBase64] = useState<string>("");
 
     useEffect(() => {
         if (props.error) {
@@ -54,22 +51,46 @@ const TextInput: FC<Props> = (props) => {
         }
     }, [props.error, props.identity]);
 
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            const result = reader.result as string;
+            setBase64(result);
+            setPreview(result);
+
+            // Formik に反映させる
+            if (props.setFieldValue) {
+                props.setFieldValue(props.name || props.identity, result);
+            }
+        };
+        reader.readAsDataURL(file);
+    };
+
     return (
         <div className={props.className}>
             <label className="font-bold" htmlFor={props.identity}>{props.label}</label>
             <input
-                id={props.identity}
-                name={props.name || props.identity}
-                className={`${styles.formControl} ${valid.isInvalid}`}
-                type={props.controlType}
-                autoComplete={props.autoComplete}
+                type="file"
+                accept="image/*"
+                className={`btn ${styles.formControl} ${valid.isInvalid}`}
                 autoFocus={props.autoFocus}
                 required={props.required}
-                onChange={props.onChange}
-                onBlur={props.onBlur}
-                value={props.value}
-                defaultValue={props.defaultValue}
+                onChange={handleChange}
             />
+            <input
+                type="hidden"
+                id={props.identity}
+                name={props.name || props.identity}
+                value={props.value}
+            />
+            {preview && (
+                <div className={styles.previewContainer}>
+                    <img src={preview} alt="プレビュー" className={styles.previewImage} />
+                </div>
+            )}
             {valid.error && (
                 <p className={styles.error}>
                     <strong>{valid.error}</strong>
@@ -79,4 +100,4 @@ const TextInput: FC<Props> = (props) => {
     );
 };
 
-export default TextInput;
+export default ImageInput;

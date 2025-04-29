@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import styles from './styles.module.scss';
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Url } from "@/constants/url";
@@ -77,19 +78,19 @@ const PaymentModal: FC<Props> = ({ isOpen, handleClose, appRoot, amount }) => {
                                 <p className="p-3">{errors.username}</p>
                             )}
                         </div>
-                        <div>
+                        <div className="mt-3">
                             <label className="font-bold">カード番号</label>
-                            <CardNumberElement className="p-2 bg-light" />
+                            <CardNumberElement className={styles.formControl} />
                         </div>
-                        <div>
+                        <div className="mt-3">
                             <label className="font-bold">有効期限</label>
-                            <CardExpiryElement className="p-2 bg-light" />
+                            <CardExpiryElement className={styles.formControl} />
                         </div>
-                        <div>
+                        <div className="mt-3">
                             <label className="font-bold">セキュリティーコード</label>
-                            <CardCvcElement className="p-2 bg-light" />
+                            <CardCvcElement className={styles.formControl} />
                         </div>
-                        <p className="text-center">
+                        <p className="text-center mt-3">
                             <button
                                 type="submit"
                                 className="btn btn-primary"

@@ -3,7 +3,6 @@ import styles from './styles.module.scss';
 
 type Props = {
     identity: string;
-    controlType: string;
     name?: string;
     autoComplete?: string;
     label: string;
@@ -11,11 +10,13 @@ type Props = {
     action?: any;
     autoFocus?: boolean;
     required?: boolean;
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    onBlur?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
     value?: string;
     className?: string;
     error?: string;
+    rows?: number;
+    cols?: number;
 };
 
 type Valid = {
@@ -31,7 +32,7 @@ declare global {
     }
 }
 
-const TextInput: FC<Props> = (props) => {
+const TextArea: FC<Props> = (props) => {
     const [valid, setValid] = useState<Valid>({ error: "", isInvalid: "" });
 
     useEffect(() => {
@@ -57,11 +58,10 @@ const TextInput: FC<Props> = (props) => {
     return (
         <div className={props.className}>
             <label className="font-bold" htmlFor={props.identity}>{props.label}</label>
-            <input
+            <textarea
                 id={props.identity}
                 name={props.name || props.identity}
                 className={`${styles.formControl} ${valid.isInvalid}`}
-                type={props.controlType}
                 autoComplete={props.autoComplete}
                 autoFocus={props.autoFocus}
                 required={props.required}
@@ -69,6 +69,8 @@ const TextInput: FC<Props> = (props) => {
                 onBlur={props.onBlur}
                 value={props.value}
                 defaultValue={props.defaultValue}
+                rows={props.rows || 4}
+                cols={props.cols || 50}
             />
             {valid.error && (
                 <p className={styles.error}>
@@ -79,4 +81,4 @@ const TextInput: FC<Props> = (props) => {
     );
 };
 
-export default TextInput;
+export default TextArea;
