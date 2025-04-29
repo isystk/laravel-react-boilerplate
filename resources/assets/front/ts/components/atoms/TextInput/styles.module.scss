@@ -1,4 +1,4 @@
-@import "@/styles/variable";
+@use "@/styles/variable" as *;;
 
 .formControl {
     display: block;
