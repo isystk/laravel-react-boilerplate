@@ -2,7 +2,7 @@ import styles from './styles.module.scss';
 import { useNavigate } from "react-router-dom";
 import Image from "@/components/atoms/Image";
 import { Url } from "@/constants/url";
-import MainService from "@/services/main";
+import useAppRoot from "@/stores/useAppRoot";
 
 export type Props = {
     key: number|string;
@@ -13,10 +13,12 @@ export type Props = {
     detail: string;
     quantity: number;
     isLike: boolean;
-    appRoot: MainService;
 }
 
-const StockItem = ({id, name, imgpath, price, detail, quantity, isLike, appRoot}: Props) => {
+const StockItem = ({id, name, imgpath, price, detail, quantity, isLike}: Props) => {
+    const appRoot = useAppRoot();
+    if (!appRoot) return <></>;
+
     const navigate = useNavigate();
 
     const handleLikeClick = async (e: React.MouseEvent<HTMLButtonElement>) => {

@@ -1,6 +1,6 @@
 import React from "react";
-import CSRFToken from "@/components/elements/CSRFToken";
-import SessionAlert from "@/components/elements/SessionAlert";
+import CSRFToken from "@/components/atoms/CSRFToken";
+import SessionAlert from "@/components/atoms/SessionAlert";
 import BasicLayout from "@/components/templates/BasicLayout";
 import useAppRoot from "@/stores/useAppRoot";
 import TextInput from "@/components/atoms/TextInput";
@@ -17,7 +17,7 @@ const ResetForm = () => {
                     action="/forgot-password"
                     id="login-form"
                 >
-                    <CSRFToken appRoot={appRoot} />
+                    <CSRFToken />
                     <div className="mx-auto my-5 w-100">
                         <SessionAlert target="status" className="mb-5" />
                         <TextInput

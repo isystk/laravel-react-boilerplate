@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import CSRFToken from "@/components/elements/CSRFToken";
-import RequestToken from "@/components/elements/RequestToken";
-import SessionAlert from "@/components/elements/SessionAlert";
+import CSRFToken from "@/components/atoms/CSRFToken";
+import RequestToken from "@/components/atoms/RequestToken";
+import SessionAlert from "@/components/atoms/SessionAlert";
 import BasicLayout from "@/components/templates/BasicLayout";
 import useAppRoot from "@/stores/useAppRoot";
 import TextInput from "@/components/atoms/TextInput";
@@ -25,7 +25,7 @@ const ResetForm = () => {
                     action="/reset-password"
                     id="login-form"
                 >
-                    <CSRFToken appRoot={appRoot} />
+                    <CSRFToken />
                     <RequestToken />
                     <div className="mx-auto my-5 w-100">
                         <TextInput

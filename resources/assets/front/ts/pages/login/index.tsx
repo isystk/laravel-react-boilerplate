@@ -1,6 +1,6 @@
 import React from "react";
 
-import CSRFToken from "@/components/elements/CSRFToken";
+import CSRFToken from "@/components/atoms/CSRFToken";
 import { Url } from "@/constants/url";
 import BasicLayout from "@/components/templates/BasicLayout";
 import useAppRoot from "@/stores/useAppRoot";
@@ -41,7 +41,7 @@ const LoginForm = () => {
                     </form>
                 </div>
                 <form method="POST" action={Url.LOGIN} id="login-form">
-                    <CSRFToken appRoot={appRoot} />
+                    <CSRFToken />
                     <div className="mx-auto my-5 w-100">
                         <TextInput
                             identity="email"

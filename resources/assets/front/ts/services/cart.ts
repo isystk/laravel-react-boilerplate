@@ -2,7 +2,7 @@ import MainService from "@/services/main";
 import { API } from "@/utilities/api";
 import { API_ENDPOINT } from "@/constants/api";
 
-type Carts = {
+export type Carts = {
     data: Cart[];
     message: string;
     username: string;
@@ -10,7 +10,7 @@ type Carts = {
     sum: number;
 };
 
-type Cart = {
+export type Cart = {
     id: number;
     name: string;
     detail: string;

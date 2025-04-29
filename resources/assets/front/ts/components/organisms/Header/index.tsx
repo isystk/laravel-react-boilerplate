@@ -7,7 +7,7 @@ import Image from "@/components/atoms/Image";
 import DropDown from "@/components/atoms/DropDown";
 import SideMenu from "@/components/organisms/SideMenu";
 import useAppRoot from "@/stores/useAppRoot";
-import CSRFToken from "@/components/elements/CSRFToken";
+import CSRFToken from "@/components/atoms/CSRFToken";
 
 const Header = () => {
     const appRoot = useAppRoot();
@@ -120,7 +120,7 @@ const Header = () => {
                 action={Url.LOGOUT}
                 method="POST"
             >
-                <CSRFToken appRoot={appRoot} />
+                <CSRFToken />
             </form>
         </header>
     );

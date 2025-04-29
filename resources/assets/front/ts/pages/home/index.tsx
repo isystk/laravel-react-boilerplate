@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import SessionAlert from "@/components/elements/SessionAlert";
+import SessionAlert from "@/components/atoms/SessionAlert";
 import BasicLayout from "@/components/templates/BasicLayout";
 
 type Props = {

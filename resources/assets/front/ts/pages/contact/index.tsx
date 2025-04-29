@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Yup from "yup";
 import { Formik } from "formik";
-import CSRFToken from "@/components/elements/CSRFToken";
+import CSRFToken from "@/components/atoms/CSRFToken";
 import { KeyValue } from "@/services/const";
 import { useNavigate } from "react-router-dom";
 import { Url } from "@/constants/url";
@@ -75,7 +75,7 @@ const ContactCreate = () => {
                     // touched,
                 }) => (
                     <form>
-                        <CSRFToken appRoot={appRoot} />
+                        <CSRFToken />
                         <div>
                             <div style={{ width: "100%" }}>
                                 <label

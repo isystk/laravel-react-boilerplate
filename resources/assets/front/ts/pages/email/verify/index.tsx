@@ -1,6 +1,6 @@
 import React from "react";
-import SessionAlert from "@/components/elements/SessionAlert";
-import CSRFToken from "@/components/elements/CSRFToken";
+import SessionAlert from "@/components/atoms/SessionAlert";
+import CSRFToken from "@/components/atoms/CSRFToken";
 import BasicLayout from "@/components/templates/BasicLayout";
 import useAppRoot from "@/stores/useAppRoot";
 
@@ -36,7 +36,7 @@ const Verify = () => {
                     method="POST"
                     style={{ display: "none" }}
                 >
-                    <CSRFToken appRoot={appRoot} />
+                    <CSRFToken />
                 </form>
             </div>
         </BasicLayout>

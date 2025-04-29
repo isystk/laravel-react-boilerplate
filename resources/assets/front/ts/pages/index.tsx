@@ -41,7 +41,7 @@ const Index = () => {
                 autoPlayInterval={5000} // 5秒ごとにスライド
             />
             <div className="mt-5 md:mt-10">
-                <StockItems stocks={stocks}  appRoot={appRoot}/>
+                <StockItems stocks={stocks} />
                 <Pagination
                     activePage={current_page}
                     totalItemsCount={total}
