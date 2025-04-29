@@ -1,0 +1,33 @@
+
+.cardItem {
+    width: 100%;
+    margin: 0;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    &:nth-of-type(n+2) {
+        margin-top: 20px
+    }
+    &:nth-of-type(3n) {
+        margin-right: 0
+    }
+}
+
+@media only screen and (min-width: 767px) {
+    .cardItem {
+        width: calc((100% - 50px) / 3);
+        margin-right: 25px;
+        &:nth-of-type(n+2) {
+            margin-top: 0
+        }
+        &:nth-of-type(3n) {
+            margin-right: 0
+        }
+        &:nth-of-type(n+4) {
+            margin-top: 25px
+        }
+    }
+}

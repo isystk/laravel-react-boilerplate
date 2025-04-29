@@ -1,6 +1,6 @@
-import React, { FC, Suspense, useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import AuthCheck from "@/components/auths/AuthCheck";
+import AuthCheck from "@/components/AuthCheck";
 import ContactComplete from "@/pages/contact/complete";
 import ContactCreate from "@/pages/contact";
 import EMailForm from "@/pages/password/reset";
@@ -11,7 +11,7 @@ import NotFound from "@/pages/NotFound";
 import RegisterForm from "@/pages/register";
 import ResetForm from "@/pages/password/reset/[id]";
 import ShopComplete from "@/pages/complete";
-import ShopTop from "@/pages";
+import Top from "@/pages/top";
 import Verify from "@/pages/email/verify";
 import { Url } from "@/constants/url";
 import useAppRoot from "@/stores/useAppRoot";
@@ -21,8 +21,7 @@ type Props = {
     session: Session;
 };
 
-const Router: FC<Props> = ({ session }) => {
-    // const dispatch = useDispatch();
+const Router = ({ session }: Props) => {
     const appRoot = useAppRoot();
 
     useEffect(() => {
@@ -50,67 +49,22 @@ const Router: FC<Props> = ({ session }) => {
         <BrowserRouter>
             <Suspense fallback={<p>Loading...</p>}>
                 <Routes>
-                    <Route index element={<ShopTop appRoot={appRoot} />} />
-                    <Route
-                        path={Url.LOGIN}
-                        element={<LoginForm appRoot={appRoot} />}
-                    />
-                    <Route
-                        path={Url.REGISTER}
-                        element={<RegisterForm appRoot={appRoot} />}
-                    />
-                    <Route
-                        path={Url.PASSWORD_RESET}
-                        element={<EMailForm appRoot={appRoot} />}
-                    />
-                    <Route
-                        path={`${Url.PASSWORD_RESET}/:id`}
-                        element={<ResetForm appRoot={appRoot} />}
-                    />
-                    <Route
-                        path={Url.EMAIL_VERIFY}
-                        element={<Verify appRoot={appRoot} />}
-                    />
-                    <Route
-                        path={Url.CONTACT}
-                        element={<ContactCreate appRoot={appRoot} />}
-                    />
-                    <Route
-                        path={Url.CONTACT_COMPLETE}
-                        element={<ContactComplete appRoot={appRoot} />}
-                    />
+                    <Route index element={<Top />} />
+                    <Route path={Url.login} element={<LoginForm />}/>
+                    <Route path={Url.register} element={<RegisterForm />}/>
+                    <Route path={Url.passwordReset} element={<EMailForm />}/>
+                    <Route path={`${Url.passwordReset}/:id`} element={<ResetForm />}/>
+                    <Route path={Url.emailVerify} element={<Verify />}/>
+                    <Route path={Url.contact} element={<ContactCreate />}/>
+                    <Route path={Url.contactComplete} element={<ContactComplete />}/>
 
                     {/* ★ログインユーザー専用ここから */}
-                    <Route
-                        path={Url.HOME}
-                        element={
-                            <AuthCheck
-                                session={session}
-                                component={<Home appRoot={appRoot} />}
-                            />
-                        }
-                    />
-                    <Route
-                        path={Url.MYCART}
-                        element={
-                            <AuthCheck
-                                session={session}
-                                component={<MyCart appRoot={appRoot} />}
-                            />
-                        }
-                    />
-                    <Route
-                        path={Url.SHOP_COMPLETE}
-                        element={
-                            <AuthCheck
-                                session={session}
-                                component={<ShopComplete appRoot={appRoot} />}
-                            />
-                        }
-                    />
+                    <Route path={Url.home} element={<AuthCheck session={session} component={<Home />}/>}/>
+                    <Route path={Url.myCart} element={<AuthCheck session={session} component={<MyCart />}/>}/>
+                    <Route path={Url.payComplete} element={<AuthCheck session={session} component={<ShopComplete />}/>}/>
                     {/* ★ログインユーザー専用ここまで */}
 
-                    <Route path="*" element={<NotFound appRoot={appRoot} />} />
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
             </Suspense>
         </BrowserRouter>

@@ -1,21 +1,12 @@
-import React, { FC } from "react";
-import Layout from "@/components/Layout";
-import MainService from "@/services/main";
-import Box from "@/components/Box";
+import BasicLayout from "@/components/templates/BasicLayout";
 
-type Props = {
-    appRoot: MainService;
-};
-
-const NotFound: FC<Props> = ({ appRoot }) => {
+const NotFound = () => {
     return (
-        <Layout appRoot={appRoot} title="Not Found">
-            <main className="main">
-                <Box title="Not Found">
-                    <h1>お探しのページは見つかりません。</h1>
-                </Box>
-            </main>
-        </Layout>
+        <BasicLayout title="Not Found">
+            <div className="bg-white h-100 flex items-center justify-center rounded-md shadow-md">
+                <h2 className="text-center font-bold text-1xl">お探しのページは見つかりません</h2>
+            </div>
+        </BasicLayout>
     );
 };
 

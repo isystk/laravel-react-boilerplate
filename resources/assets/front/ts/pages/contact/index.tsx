@@ -1,22 +1,21 @@
-import * as React from "react";
 import * as Yup from "yup";
-import { FC } from "react";
-import { FormGroup, Label, Input, Button } from "reactstrap";
 import { Formik, Form } from "formik";
-import CSRFToken from "@/components/elements/CSRFToken";
-import Layout from "@/components/Layout";
-import MainService from "@/services/main";
+import CSRFToken from "@/components/atoms/CSRFToken";
 import { KeyValue } from "@/services/const";
-import ImageFileInput from "@/components/elements/ImageFile";
-import Box from "@/components/Box";
 import { useNavigate } from "react-router-dom";
 import { Url } from "@/constants/url";
+import BasicLayout from "@/components/templates/BasicLayout";
+import useAppRoot from "@/stores/useAppRoot";
+import TextInput from "@/components/atoms/TextInput";
+import SelectionInput from "@/components/atoms/SelectionInput";
+import SelectBox from "@/components/atoms/SelectBox";
+import TextArea from "@/components/atoms/TextArea";
+import ImageInput from "@/components/atoms/ImageInput";
 
-type Props = {
-    appRoot: MainService;
-};
+const ContactCreate = () => {
+    const appRoot = useAppRoot();
+    if (!appRoot) return <></>;
 
-const ContactCreate: FC<Props> = ({ appRoot }) => {
     const navigate = useNavigate();
     const auth = appRoot.auth;
     const consts = appRoot.const.data;
@@ -26,7 +25,7 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
         const result = await appRoot.contact.registContact(values);
         if (result) {
             // 完了画面を表示する
-            navigate(Url.CONTACT_COMPLETE);
+            navigate(Url.contactComplete);
         }
     };
 
@@ -59,321 +58,178 @@ const ContactCreate: FC<Props> = ({ appRoot }) => {
             .required("タイトルを入力してください"),
         contact: Yup.string()
             .max(200, "タイトルは200文字以下を入れてください")
-            .required("本文を入力してください"),
+            .required("お問い合わせ内容を入力してください"),
         url: Yup.string().url("URLを正しく入力してください"),
+        imageBase64_1: Yup.string().required("画像1を選択してください"),
         caution: Yup.array().min(1, "注意事項に同意してください"),
     });
 
     return (
-        <Layout appRoot={appRoot} title="お問い合わせ">
-            <main className="main">
-                <Box title="お問い合わせ">
-                    <Formik
-                        initialValues={initialValues}
-                        onSubmit={handleSubmit}
-                        validationSchema={validation}
-                    >
-                        {({
-                            isValid,
-                            handleChange,
-                            handleBlur,
-                            values,
-                            errors,
-                            touched,
-                        }) => (
-                            <Form>
-                                <CSRFToken appRoot={appRoot} />
-                                <FormGroup>
-                                    <div style={{ width: "100%" }}>
-                                        <Label
-                                            for="user_name"
-                                            className="item-name"
-                                        >
-                                            お名前を入力してください
-                                            <span className="required">
-                                                必須
-                                            </span>
-                                        </Label>
-                                        <div className="text-wrap large">
-                                            <Input
-                                                type="text"
-                                                id="user_name"
-                                                name="user_name"
-                                                value={values.user_name}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                                invalid={Boolean(
-                                                    touched.user_name &&
-                                                        errors.user_name
-                                                )}
-                                            />
-                                            <div className="form-bottom"></div>
-                                            <p className="error">
-                                                {errors.user_name}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </FormGroup>
-                                <FormGroup>
-                                    <div style={{ width: "100%" }}>
-                                        <Label className="item-name">
-                                            返信先のメールアドレスを入力してください
-                                            <span className="required">
-                                                必須
-                                            </span>
-                                        </Label>
-                                        <div className="text-wrap large">
-                                            <Input
-                                                type="email"
-                                                name="email"
-                                                value={values.email}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                                invalid={Boolean(
-                                                    touched.email &&
-                                                        errors.email
-                                                )}
-                                            />
-                                            <div className="form-bottom"></div>
-                                        </div>
-                                        <p className="error">{errors.email}</p>
-                                    </div>
-                                </FormGroup>
-                                <FormGroup>
-                                    <div style={{ width: "100%" }}>
-                                        <Label className="item-name">
-                                            性別を教えて下さい
-                                            <span className="required">
-                                                必須
-                                            </span>
-                                        </Label>
-                                        {consts.gender &&
-                                            (
-                                                consts.gender.data as KeyValue[]
-                                            ).map((e, index) => (
-                                                <div
-                                                    className="radio-wrap"
-                                                    key={index}
-                                                >
-                                                    <Label>
-                                                        <Input
-                                                            type="radio"
-                                                            name="gender"
-                                                            value={e.key}
-                                                            checked={
-                                                                values.gender ===
-                                                                e.key + ""
-                                                                    ? true
-                                                                    : false
-                                                            }
-                                                            onChange={
-                                                                handleChange
-                                                            }
-                                                            onBlur={handleBlur}
-                                                            invalid={Boolean(
-                                                                touched.gender &&
-                                                                    errors.gender
-                                                            )}
-                                                        />{" "}
-                                                        <span>{e.value}</span>
-                                                    </Label>
-                                                </div>
-                                            ))}
-                                        <p className="error">{errors.gender}</p>
-                                    </div>
-                                </FormGroup>
-                                <FormGroup>
-                                    <div style={{ width: "100%" }}>
-                                        <Label className="item-name">
-                                            年齢を教えて下さい
-                                            <span className="required">
-                                                必須
-                                            </span>
-                                        </Label>
-                                        <div className="select-wrap">
-                                            <Input
-                                                type="select"
-                                                name="age"
-                                                value={values.age}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                                invalid={Boolean(
-                                                    touched.age && errors.age
-                                                )}
-                                            >
-                                                <option value="">
-                                                    選択してください
-                                                </option>
-                                                {consts.age &&
-                                                    (
-                                                        consts.age
-                                                            .data as KeyValue[]
-                                                    ).map((e, index) => (
-                                                        <option
-                                                            value={e.key}
-                                                            key={index}
-                                                        >
-                                                            {e.value}
-                                                        </option>
-                                                    ))}
-                                            </Input>
-                                        </div>
-                                        <p className="error">{errors.age}</p>
-                                    </div>
-                                </FormGroup>
-                                <FormGroup>
-                                    <div style={{ width: "100%" }}>
-                                        <Label className="item-name">
-                                            件名を入力してください
-                                            <span className="required">
-                                                必須
-                                            </span>
-                                        </Label>
-                                        <div className="text-wrap large">
-                                            <Input
-                                                type="text"
-                                                name="title"
-                                                value={values.title}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                                invalid={Boolean(
-                                                    touched.title &&
-                                                        errors.title
-                                                )}
-                                            />
-                                            <div className="form-bottom"></div>
-                                        </div>
-                                        <p className="error">{errors.title}</p>
-                                    </div>
-                                </FormGroup>
-                                <FormGroup>
-                                    <div style={{ width: "100%" }}>
-                                        <Label className="item-name">
-                                            お問い合わせ内容
-                                            <span className="required">
-                                                必須
-                                            </span>
-                                        </Label>
-                                        <div className="textarea-wrap large">
-                                            <Input
-                                                type="textarea"
-                                                name="contact"
-                                                value={values.contact}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                                invalid={Boolean(
-                                                    touched.contact &&
-                                                        errors.contact
-                                                )}
-                                            />
-                                            <div className="form-bottom"></div>
-                                        </div>
-                                        <p className="error">
-                                            {errors.contact}
-                                        </p>
-                                    </div>
-                                </FormGroup>
-                                <FormGroup>
-                                    <div style={{ width: "100%" }}>
-                                        <Label className="item-name">
-                                            ホームページURLを入力してください
-                                            <span>任意</span>
-                                        </Label>
-                                        <div className="text-wrap large">
-                                            <Input
-                                                type="url"
-                                                name="url"
-                                                value={values.url}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                                invalid={Boolean(
-                                                    touched.url && errors.url
-                                                )}
-                                            />
-                                            <div className="form-bottom"></div>
-                                        </div>
-                                        <p className="error">{errors.url}</p>
-                                    </div>
-                                </FormGroup>
-                                <FormGroup>
-                                    <div style={{ width: "100%" }}>
-                                        <Label className="item-name">
-                                            画像1を選択してください
-                                            <span>任意</span>
-                                        </Label>
-                                        <ImageFileInput
-                                            label="画像1"
-                                            name="imageBase64_1"
-                                        />
-                                    </div>
-                                </FormGroup>
-                                <FormGroup>
-                                    <div style={{ width: "100%" }}>
-                                        <Label className="item-name">
-                                            画像2を選択してください
-                                            <span>任意</span>
-                                        </Label>
-                                        <ImageFileInput
-                                            label="画像2"
-                                            name="imageBase64_2"
-                                        />
-                                    </div>
-                                </FormGroup>
-                                <FormGroup>
-                                    <div style={{ width: "100%" }}>
-                                        <Label className="item-name">
-                                            画像3を選択してください
-                                            <span>任意</span>
-                                        </Label>
-                                        <ImageFileInput
-                                            label="画像3"
-                                            name="imageBase64_3"
-                                        />
-                                    </div>
-                                </FormGroup>
-                                <FormGroup>
-                                    <div style={{ width: "100%" }}>
-                                        <div className="checkbox-wrap">
-                                            <label>
-                                                <Input
-                                                    type="checkbox"
-                                                    name="caution"
-                                                    value="1"
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                    invalid={Boolean(
-                                                        touched.caution &&
-                                                            errors.caution
-                                                    )}
-                                                />{" "}
-                                                <span>注意事項に同意する</span>
-                                            </label>
-                                        </div>
-                                        <p className="error">
-                                            {errors.caution}
-                                        </p>
-                                    </div>
-                                </FormGroup>
-                                <div
-                                    className="submit-wrap"
-                                    style={{ width: "300px", margin: "auto" }}
+        <BasicLayout title="お問い合わせ">
+            <div className="bg-white p-6 rounded-md shadow-md">
+                <Formik
+                    initialValues={initialValues}
+                    onSubmit={handleSubmit}
+                    validationSchema={validation}
+                >
+                    {({
+                          isValid,
+                          handleChange,
+                          handleBlur,
+                          values,
+                          errors,
+                          setFieldValue,
+                      }) => (
+                        <Form>
+                            <CSRFToken />
+                            <TextInput
+                                label="お名前"
+                                controlType="text"
+                                identity="user_name"
+                                name="user_name"
+                                value={values.user_name}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                required={true}
+                                error={errors.user_name as string}
+                                className="mb-5 md:w-100"
+                            />
+                            <TextInput
+                                label="メールアドレス"
+                                controlType="email"
+                                identity="email"
+                                name="email"
+                                value={values.email}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                required={true}
+                                error={errors.email as string}
+                                className="mb-5 md:w-100"
+                            />
+                            <SelectionInput
+                                label="性別"
+                                identity="gender"
+                                name="gender"
+                                controlType="radio"
+                                selectedValue={values.gender}
+                                options={(() => {
+                                    if (!consts.gender) return [];
+                                    const items = consts.gender.data as KeyValue[];
+                                    return items.map(({ key, value }) => ({
+                                        label: value,
+                                        value: String(key),
+                                    }));
+                                })()}
+                                onChange={handleChange}
+                                required={true}
+                                error={errors.gender as string}
+                                className="mb-5 md:w-100"
+                            />
+                            <SelectBox
+                                label="年齢"
+                                identity="age"
+                                name="age"
+                                selectedValue={values.age}
+                                options={(() => {
+                                    if (!consts.age) return [];
+                                    const items = consts.age.data as KeyValue[];
+                                    return items.map(({ key, value }) => ({
+                                        label: value,
+                                        value: String(key),
+                                    }));
+                                })()}
+                                onChange={handleChange}
+                                error={errors.age as string}
+                                required={true}
+                                className="mb-5 md:w-100"
+                            />
+                            <TextInput
+                                label="件名"
+                                controlType="text"
+                                identity="title"
+                                name="title"
+                                value={values.title}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                required={true}
+                                error={errors.title as string}
+                                className="mb-5 md:w-100"
+                            />
+                            <TextArea
+                                label="お問い合わせ内容"
+                                identity="contact"
+                                name="contact"
+                                value={values.contact}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                required={true}
+                                error={errors.contact as string}
+                                className="mb-5 md:w-100"
+                            />
+                            <TextInput
+                                label="ホームページURL"
+                                controlType="url"
+                                identity="url"
+                                name="url"
+                                value={values.url}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                error={errors.url as string}
+                                className="mb-5 md:w-100"
+                            />
+                            <ImageInput
+                                label="画像1"
+                                identity="imageBase64_1"
+                                name="imageBase64_1"
+                                value={values.imageBase64_1}
+                                required={true}
+                                setFieldValue={setFieldValue}
+                                error={errors.imageBase64_1 as string}
+                                className="mb-5 md:w-100"
+                            />
+                            <ImageInput
+                                label="画像2"
+                                identity="imageBase64_2"
+                                name="imageBase64_2"
+                                value={values.imageBase64_2}
+                                setFieldValue={setFieldValue}
+                                error={errors.imageBase64_2 as string}
+                                className="mb-5 md:w-100"
+                            />
+                            <ImageInput
+                                label="画像3"
+                                identity="imageBase64_3"
+                                name="imageBase64_3"
+                                value={values.imageBase64_3}
+                                setFieldValue={setFieldValue}
+                                error={errors.imageBase64_3 as string}
+                                className="mb-5 md:w-100"
+                            />
+                            <SelectionInput
+                                identity="caution"
+                                name="caution"
+                                controlType="checkbox"
+                                checkedValues={values.caution}
+                                options={[{ value: "true", label: "注意事項に同意"}]}
+                                onChange={handleChange}
+                                required={true}
+                                error={errors.caution as string}
+                                className="mb-5 md:w-100"
+                            />
+                            <div className="text-center">
+                                <button
+                                    type="submit"
+                                    className="btn btn-primary"
+                                    disabled={!isValid}
                                 >
-                                    <Button
-                                        type="submit"
-                                        color="primary"
-                                        block
-                                        disabled={!isValid}
-                                        fullWidth
-                                    >
-                                        送信する
-                                    </Button>
-                                </div>
-                            </Form>
-                        )}
-                    </Formik>
-                </Box>
-            </main>
-        </Layout>
+                                    送信する
+                                </button>
+                            </div>
+                        </Form>
+                    )}
+                </Formik>
+            </div>
+        </BasicLayout>
     );
 };
 

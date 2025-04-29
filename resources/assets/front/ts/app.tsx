@@ -1,9 +1,9 @@
-import React from "react";
 import Router from "@/router";
 import axios from "axios";
 import { createRoot } from 'react-dom/client';
 import { Session } from "@/services/auth";
 import { AppProvider } from "./stores/appContext";
+import './styles/app.scss'
 
 const render = (session: Session) => {
     console.log("session", session);

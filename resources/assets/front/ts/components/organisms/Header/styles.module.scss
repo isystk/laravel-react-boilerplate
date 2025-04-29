@@ -1,0 +1,45 @@
+@use "@/styles/variable";
+
+.header {
+    background-color: #fff
+}
+
+.menuContainer {
+    margin-left: auto;
+    ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        li {
+            display: inline-block;
+            margin-right: 12px;
+        }
+    }
+}
+
+.register-link {
+    color: #e11d48; /* red-600 */
+    text-decoration: none;
+}
+
+.register-link:hover {
+    text-decoration: underline;
+}
+
+.cart-link {
+    margin-left: 12px;
+}
+
+.cart-image {
+    height: 40px;
+}
+
+.contact-link {
+    color: #e11d48; /* red-600 */
+    text-decoration: none;
+}
+
+.contact-link:hover {
+    text-decoration: underline;
+}
+

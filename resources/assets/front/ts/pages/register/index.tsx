@@ -1,58 +1,61 @@
-import React, { useState, FC } from "react";
-import { Form } from "reactstrap";
-import TextInput from "@/components/elements/TextInput";
-import SubmitButton from "@/components/elements/SubmitButton";
-import CSRFToken from "@/components/elements/CSRFToken";
-import Box from "@/components/Box";
-import Layout from "@/components/Layout";
-import MainService from "@/services/main";
+import { useState } from "react";
+import CSRFToken from "@/components/atoms/CSRFToken";
+import BasicLayout from "@/components/templates/BasicLayout";
+import useAppRoot from "@/stores/useAppRoot";
+import TextInput from "@/components/atoms/TextInput";
 
-type Props = {
-    appRoot: MainService;
-};
+const RegisterForm = () => {
+    const appRoot = useAppRoot();
+    if (!appRoot) return <></>;
 
-const RegisterForm: FC<Props> = ({ appRoot }) => {
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     return (
-        <Layout appRoot={appRoot} title="会員登録">
-            <main className="main">
-                <Box title="会員登録" small={true}>
-                    <Form method="POST" action="/register" id="login-form">
-                        <CSRFToken appRoot={appRoot} />
-                        <TextInput
-                            identity="name"
-                            controlType="text"
-                            label="お名前"
-                            defaultValue={name}
-                            action={setName}
-                            autoFocus={true}
-                        />
-                        <TextInput
-                            identity="email"
-                            controlType="email"
-                            label="メールアドレス"
-                            defaultValue={email}
-                            action={setEmail}
-                            autoFocus={false}
-                        />
-                        <TextInput
-                            identity="password"
-                            controlType="password"
-                            autoComplete="new-password"
-                            label="パスワード"
-                        />
-                        <TextInput
-                            identity="password_confirmation"
-                            controlType="password"
-                            autoComplete="new-password"
-                            label="パスワード（確認）"
-                        />
-                        <SubmitButton label="新規登録" />
-                    </Form>
-                </Box>
-            </main>
-        </Layout>
+         <BasicLayout title="会員登録">
+             <div className="bg-white p-6 rounded-md shadow-md ">
+                 <form method="POST" action="/register" id="login-form">
+                     <CSRFToken />
+                     <div className="mx-auto md:w-100">
+                         <TextInput
+                             identity="name"
+                             controlType="text"
+                             label="お名前"
+                             defaultValue={name}
+                             action={setName}
+                             autoFocus={true}
+                             className="mb-5"
+                         />
+                         <TextInput
+                             identity="email"
+                             controlType="email"
+                             label="メールアドレス"
+                             defaultValue={email}
+                             action={setEmail}
+                             className="mb-5"
+                         />
+                         <TextInput
+                             identity="password"
+                             controlType="password"
+                             autoComplete="new-password"
+                             label="パスワード"
+                             className="mb-5"
+                         />
+                         <TextInput
+                             identity="password_confirmation"
+                             controlType="password"
+                             autoComplete="new-password"
+                             label="パスワード（確認）"
+                             className="mb-5"
+                         />
+                         <div className="mt-3 text-center">
+                             <button type="submit" className="btn btn-primary mr-5">
+                                 新規登録
+                             </button>
+                         </div>
+                     </div>
+                 </form>
+             </div>
+        </BasicLayout>
     );
 };
 

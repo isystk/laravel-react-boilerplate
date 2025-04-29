@@ -1,45 +1,40 @@
 import Env from "@/constants/env";
 
-/**
- * BFF（バックエンドフォーフロントエンド）用の URL を作成する
- * @param path
- */
 const getBffUrl = (path: string): string => {
-    const url = [Env.externalEndpointUrl, path].join("");
-    return url;
+    return [Env.endpointUrl, path].join("");
 };
 
 /** API のエンドポイント */
-export const API_ENDPOINT = {
+export const Api = {
     /** ログイン状態チェック */
-    LOGIN_CHECK: getBffUrl("/loginCheck"),
+    loginCheck: getBffUrl("/loginCheck"),
     /** ログイン */
-    LOGIN: getBffUrl("/authenticate"),
+    login: getBffUrl("/authenticate"),
     /** ログアウト */
-    LOGOUT: getBffUrl("/logout"),
+    logout: getBffUrl("/logout"),
     /** 共通定数 */
-    CONSTS: getBffUrl("/consts"),
+    consts: getBffUrl("/consts"),
 
     /** お気に入りデータ取得 */
-    LIKES: getBffUrl("/likes"),
+    likes: getBffUrl("/likes"),
     /** お気に入り追加 */
-    LIKES_STORE: getBffUrl("/likes/store"),
+    likesStore: getBffUrl("/likes/store"),
     /** お気に入り削除 */
-    LIKES_DESTROY: getBffUrl("/likes/destroy"),
+    likesDestroy: getBffUrl("/likes/destroy"),
 
     /** お問い合わせ登録 */
-    CONTACT_STORE: getBffUrl("/contact/store"),
+    contactStore: getBffUrl("/contact/store"),
 
     /** 商品一覧データ取得 */
-    SHOPS: getBffUrl("/shops"),
+    shops: getBffUrl("/shops"),
     /** マイカートデータ取得 */
-    MYCARTS: getBffUrl("/mycart"),
+    myCarts: getBffUrl("/mycart"),
     /** カートに商品を追加する */
-    ADD_MYCART: getBffUrl("/addMycart"),
+    addMyCarts: getBffUrl("/addMycart"),
     /** カートから商品を削除する */
-    REMOVE_MYCART: getBffUrl("/cartdelete"),
+    removeMyCart: getBffUrl("/cartdelete"),
     /** Stripe用のペイメント作成 */
-    CREATE_PAYMENT: getBffUrl("/createPayment"),
+    createPayment: getBffUrl("/createPayment"),
     /** 決算処理後の後処理 */
-    CHECKOUT: getBffUrl("/checkout"),
+    checkout: getBffUrl("/checkout"),
 };

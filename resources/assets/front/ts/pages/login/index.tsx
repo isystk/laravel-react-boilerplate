@@ -1,103 +1,98 @@
-import React, { FC, useEffect, useState } from "react";
-
-import { Form, Button, Input, Col, Row, FormGroup } from "reactstrap";
-import TextInput from "@/components/elements/TextInput";
-import LoginButton from "@/components/elements/LoginButton";
-import CSRFToken from "@/components/elements/CSRFToken";
-import Box from "@/components/Box";
-import Layout from "@/components/Layout";
-import MainService from "@/services/main";
+import CSRFToken from "@/components/atoms/CSRFToken";
 import { Url } from "@/constants/url";
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
-import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
+import BasicLayout from "@/components/templates/BasicLayout";
+import useAppRoot from "@/stores/useAppRoot";
+import {Link} from "react-router-dom";
+import TextInput from "@/components/atoms/TextInput";
 
-type Props = {
-    appRoot: MainService;
-};
+// TODO react-google-recaptcha-v3 が react19では未だサポートされていないのでコメントアウト
+// import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+// import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
+// const ReChaptcha = () => {
+//     const [token, setToken] = useState<string>("");
+//     const { executeRecaptcha } = useGoogleReCaptcha();
+//
+//     useEffect(() => {
+//         if (!executeRecaptcha) {
+//             return;
+//         }
+//         (async () => {
+//             const token = await executeRecaptcha("Contact");
+//             setToken(token);
+//         })();
+//     }, [executeRecaptcha]);
+//
+//     return <input type="hidden" name="g-recaptcha-response" value={token} />;
+// };
 
-const ReChaptcha = () => {
-    const [token, setToken] = useState<string>("");
-    const { executeRecaptcha } = useGoogleReCaptcha();
+const LoginForm = () => {
+    const appRoot = useAppRoot();
+    if (!appRoot) return <></>;
 
-    useEffect(() => {
-        if (!executeRecaptcha) {
-            return;
-        }
-        (async () => {
-            const token = await executeRecaptcha("Contact");
-            setToken(token);
-        })();
-    }, [executeRecaptcha]);
-
-    return <input type="hidden" name="g-recaptcha-response" value={token} />;
-};
-
-const LoginForm: FC<Props> = ({ appRoot }) => {
     return (
-        <Layout appRoot={appRoot} title="ログイン">
-            <main className="main">
-                <Box title="ログイン" small={true}>
-                    <Row style={{ width: "235px", margin: "auto" }}>
-                        <Col>
-                            <Form method="GET" action={Url.AUTH_GOOGLE}>
-                                <Button type="submit" color="danger">
-                                    Googleアカウントでログイン
-                                </Button>
-                            </Form>
-                        </Col>
-                    </Row>
-                    <Form method="POST" action={Url.LOGIN} id="login-form">
-                        <CSRFToken appRoot={appRoot} />
+        <BasicLayout title="ログイン">
+            <div className="bg-white p-6 rounded-md shadow-md">
+                <div className="text-center mb-3">
+                    <form method="GET" action={Url.authGoogle}>
+                        <button type="submit" className="btn btn-danger">
+                            Googleアカウントでログイン
+                        </button>
+                    </form>
+                </div>
+                <form method="POST" action={Url.login} id="login-form">
+                    <CSRFToken />
+                    <div className="mx-auto md:w-100">
                         <TextInput
                             identity="email"
                             controlType="email"
                             label="メールアドレス"
                             autoFocus={true}
+                            className="mb-5 md:w-100"
                         />
                         <TextInput
                             identity="password"
                             controlType="password"
                             autoComplete="current-password"
                             label="パスワード"
+                            className="mb-5 md:w-100"
                         />
-                        <GoogleReCaptchaProvider
-                            reCaptchaKey={
-                                process.env.MIX_RECAPTCHAV3_SITEKEY + ""
-                            }
-                            language="ja"
-                        >
-                            <ReChaptcha />
-                        </GoogleReCaptchaProvider>
-                        <FormGroup>
-                            <div className="checkbox-wrap text-center">
-                                <label>
-                                    <Input
-                                        type="checkbox"
-                                        id="remember"
-                                        name="remember"
-                                        className="form-check-input"
-                                        value="1"
-                                    />{" "}
-                                    <span>Remember Me</span>
-                                </label>
-                            </div>
-                        </FormGroup>
-                        <Row style={{ width: "350px", margin: "auto" }}>
-                            <Col>
-                                <p className="border">
-                                    テスト用ユーザ
-                                    <br />
-                                    メールアドレス: test1@test.com
-                                    <br />
-                                    パスワード: password
-                                </p>
-                            </Col>
-                        </Row>
-                        <LoginButton />
-                    </Form>
-                </Box>
-            </main>
-        </Layout>
+                        {/*TODO react-google-recaptcha-v3 が react19では未だサポートされていないのでコメントアウト*/}
+                        {/*<GoogleReCaptchaProvider*/}
+                        {/*    reCaptchaKey={*/}
+                        {/*        import.meta.env.MIX_RECAPTCHAV3_SITEKEY + ""*/}
+                        {/*    }*/}
+                        {/*    language="ja"*/}
+                        {/*>*/}
+                        {/*    <ReChaptcha />*/}
+                        {/*</GoogleReCaptchaProvider>*/}
+                        <p>
+                            <input
+                                type="checkbox"
+                                id="remember"
+                                name="remember"
+                                value="1"
+                            />{" "}
+                            <span>Remember Me</span>
+                        </p>
+                    </div>
+                    <div className="mx-auto my-5 border p-3 md:w-100">
+                        テスト用ユーザ
+                        <br />
+                        メールアドレス: test1@test.com
+                        <br />
+                        パスワード: password
+                    </div>
+                    <div className="mt-3 text-center">
+                        <button type="submit" className="btn btn-primary mr-5">
+                            ログイン
+                        </button>
+                        <Link to={Url.passwordReset} className="btn">
+                            パスワードを忘れた方
+                        </Link>
+                    </div>
+                </form>
+            </div>
+        </BasicLayout>
     );
 };
 

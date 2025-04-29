@@ -1,8 +1,7 @@
 import MainService from "@/services/main";
-import { API } from "@/utilities/api";
-import { API_ENDPOINT } from "@/constants/api";
+import { Api } from "@/constants/api";
 
-type Carts = {
+export type Carts = {
     data: Cart[];
     message: string;
     username: string;
@@ -10,7 +9,7 @@ type Carts = {
     sum: number;
 };
 
-type Cart = {
+export type Cart = {
     id: number;
     name: string;
     detail: string;
@@ -47,9 +46,15 @@ export default class CartService {
         // ローディングを表示する
         this.main.showLoading();
         try {
-            const response = await API.post(API_ENDPOINT.MYCARTS);
-            if (response.result) {
-                this.carts = response.carts;
+            const response = await fetch(Api.myCarts, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            const { result, carts } = await response.json();
+            if (result) {
+                this.carts = carts;
             }
         } catch (e) {
             alert("マイカートの取得に失敗しました");
@@ -59,17 +64,22 @@ export default class CartService {
         this.main.setAppRoot();
     }
 
-    async addCart(stockId: number): Promise<boolean> {
-        let result = false;
+    async addCart(stockId: number): Promise<void> {
         // ローディングを表示する
         this.main.showLoading();
         try {
-            const response = await API.post(API_ENDPOINT.ADD_MYCART, {
-                stock_id: stockId,
+            const response = await fetch(Api.addMyCarts, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify( {
+                    stock_id: stockId,
+                }),
             });
-            if (response.result) {
-                this.carts = response.carts;
-                result = true;
+            const { result, carts } = await response.json();
+            if (result) {
+                this.carts = carts;
             }
         } catch (e) {
             alert("マイカートの追加に失敗しました");
@@ -77,20 +87,24 @@ export default class CartService {
         // ローディングを非表示にする
         this.main.hideLoading();
         this.main.setAppRoot();
-        return result;
     }
 
-    async removeCart(cartId: number): Promise<boolean> {
-        let result = false;
+    async removeCart(cartId: number): Promise<void> {
         // ローディングを表示する
         this.main.showLoading();
         try {
-            const response = await API.post(API_ENDPOINT.REMOVE_MYCART, {
-                cart_id: cartId,
+            const response = await fetch(Api.removeMyCart, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify( {
+                    cart_id: cartId,
+                })
             });
-            if (response.result) {
-                this.carts = response.carts;
-                result = true;
+            const { result, carts } = await response.json();
+            if (result) {
+                this.carts = carts;
             }
         } catch (e) {
             alert("マイカートの削除に失敗しました");
@@ -98,22 +112,24 @@ export default class CartService {
         // ローディングを非表示にする
         this.main.hideLoading();
         this.main.setAppRoot();
-        return result;
     }
 
     async payment(stripe, elements, values: Form): Promise<boolean> {
-        let result = false;
         // ローディングを表示する
         this.main.showLoading();
         try {
             //paymentIntentの作成を（ローカルサーバ経由で）リクエスト
-            const response = await API.post(API_ENDPOINT.CREATE_PAYMENT, {
-                amount: values.amount,
-                username: values.username,
+            const response = await fetch(Api.createPayment, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify( {
+                    amount: values.amount,
+                    username: values.username,
+                }),
             });
-
-            //レスポンスからclient_secretを取得
-            const client_secret = response.client_secret;
+            const { client_secret } = await response.json();
 
             //client_secretを利用して（確認情報をStripeに投げて）決済を完了させる
             const confirmRes = await stripe.confirmCardPayment(client_secret, {
@@ -127,20 +143,26 @@ export default class CartService {
             });
 
             if (
-                confirmRes.paymentIntent &&
-                confirmRes.paymentIntent.status === "succeeded"
+                !confirmRes.paymentIntent ||
+                confirmRes.paymentIntent.status !== "succeeded"
             ) {
-                // 決算処理が完了したら、注文履歴に追加してマイカートから商品を削除する。
-                const response = await API.post(API_ENDPOINT.CHECKOUT, {});
-
-                result = response.result;
+                throw new Error();
             }
+            // 決算処理が完了したら、注文履歴に追加してマイカートから商品を削除する。
+            await fetch(Api.checkout, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
         } catch (e) {
             alert("決算処理に失敗しました");
+            this.main.hideLoading();
+            this.main.setAppRoot();
+            return false;
         }
-        // ローディングを非表示にする
         this.main.hideLoading();
         this.main.setAppRoot();
-        return result;
+        return true;
     }
 }

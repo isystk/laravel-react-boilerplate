@@ -1,21 +1,12 @@
-import React, { FC } from "react";
-import SessionAlert from "@/components/elements/SessionAlert";
-import Box from "@/components/Box";
-import Layout from "@/components/Layout";
-import MainService from "@/services/main";
+import SessionAlert from "@/components/atoms/SessionAlert";
+import BasicLayout from "@/components/templates/BasicLayout";
 
-type Props = {
-    appRoot: MainService;
-};
-
-const Home: FC<Props> = ({ appRoot }) => (
-    <Layout appRoot={appRoot} title="ダッシュボード">
-        <main className="main">
-            <Box title="ダッシュボード">
-                <SessionAlert target="status" />
-                ログインが成功しました！
-            </Box>
-        </main>
-    </Layout>
+const Home = () => (
+    <BasicLayout title="ダッシュボード">
+        <div className="bg-white p-6 rounded-md shadow-md">
+            <SessionAlert target="status" />
+            ログインが成功しました！
+        </div>
+    </BasicLayout>
 );
 export default Home;

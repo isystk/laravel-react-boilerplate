@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    @vite('resources/assets/front/sass/app.scss')
+    @viteReactRefresh
 </head>
 <body>
 <div id="react-root"></div>

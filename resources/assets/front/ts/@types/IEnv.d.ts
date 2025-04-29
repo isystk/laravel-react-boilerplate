@@ -3,10 +3,10 @@
  */
 export interface IEnv
 {
+  /** アプリ名 */
+  appName: string
   /** 環境名 */
   envName: string
-  /** 内部向けエンドポイント URL */
-  internalEndpointUrl: string
-  /** 外部向けエンドポイント URL */
-  externalEndpointUrl: string
+  /** エンドポイント URL */
+  endpointUrl: string
 }
