@@ -1,8 +1,8 @@
 import styles from './styles.module.scss';
-import {ReactNode} from "react";
+import {JSX} from "react";
 
 type Props = {
-    children: ReactNode,
+    children: JSX.Element,
 };
 
 const Circles = ({ children }: Props) => {

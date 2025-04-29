@@ -1,6 +1,5 @@
 import MainService from "@/services/main";
-import { API } from "@/utilities/api";
-import { API_ENDPOINT } from "@/constants/api";
+import { Api } from "@/constants/api";
 
 export default class LikeService {
     main: MainService;
@@ -15,8 +14,9 @@ export default class LikeService {
         // ローディングを表示する
         this.main.showLoading();
         try {
-            const response = await API.get(API_ENDPOINT.LIKES);
-            this.data = response.likes.data;
+            const response = await fetch(Api.likes);
+            const { likes } = await response.json();
+            this.data = likes.data;
             this.main.setAppRoot();
         } catch (e) {
             alert("お気に入りの取得に失敗しました");
@@ -28,10 +28,17 @@ export default class LikeService {
     async addLikeAsync(id: number) {
         this.main.showLoading();
         try {
-            const response = await API.post(API_ENDPOINT.LIKES_STORE, {
-                id: id,
+            const response = await fetch(Api.likesStore, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: id,
+                }),
             });
-            if (response.result) {
+            const { result } = await response.json();
+            if (result) {
                 window.alert("お気に入りに追加しました");
                 const newData: string = id + "";
                 this.data = [newData, ...this.data];
@@ -46,10 +53,13 @@ export default class LikeService {
     async removeLikeAsync(id: number) {
         this.main.showLoading();
         try {
-            const response = await API.post(
-                API_ENDPOINT.LIKES_DESTROY + "/" + id
+            const response = await fetch(
+                Api.likesDestroy + "/" + id, {
+                    method: 'POST',
+                }
             );
-            if (response.result) {
+            const { result } = await response.json();
+            if (result) {
                 this.data = this.data.filter((n) => n !== id + "");
             }
             this.main.setAppRoot();

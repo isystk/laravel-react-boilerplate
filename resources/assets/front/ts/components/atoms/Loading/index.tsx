@@ -1,6 +1,6 @@
 import styles from './styles.module.scss';
 import useAppRoot from "@/stores/useAppRoot";
-import Portal from "@/components/atoms/Portal";
+import Portal from "@/components/interactions/Portal";
 
 const Loading = () => {
     const appRoot = useAppRoot();
@@ -10,12 +10,14 @@ const Loading = () => {
 
     return (
         <Portal>
-            {isShowLoading && (
-                <div className={styles.overlay}>
-                    <div className={styles.spinner}></div>
-                    <p className={styles.message}>Loading...</p>
-                </div>
-            )}
+            <>
+                {isShowLoading && (
+                    <div className={styles.overlay}>
+                        <div className={styles.spinner}></div>
+                        <p className={styles.message}>Loading...</p>
+                    </div>
+                )}
+            </>
         </Portal>
     );
 };

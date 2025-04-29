@@ -1,11 +1,11 @@
 import styles from './styles.module.scss';
-import Portal from "@/components/atoms/Portal";
-import {ReactNode} from "react";
+import Portal from "@/components/interactions/Portal";
+import {JSX} from "react";
 
 type Props = {
     isOpen: boolean;
     onClose: () => void;
-    children: ReactNode;
+    children: JSX.Element;
 }
 
 const Modal = ({ isOpen, onClose, children }: Props) => {

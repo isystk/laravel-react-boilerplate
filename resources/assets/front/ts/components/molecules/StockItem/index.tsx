@@ -31,13 +31,11 @@ const StockItem = ({id, name, imgpath, price, detail, quantity, isLike}: Props) 
 
     const handleAddToCart = async () => {
         if (!appRoot.auth.isLogined) {
-            navigate(Url.LOGIN);
+            navigate(Url.login);
             return;
         }
-        const result = await appRoot.cart.addCart(id);
-        if (result) {
-            navigate(Url.MYCART);
-        }
+        await appRoot.cart.addCart(id);
+        navigate(Url.myCart);
     };
 
     return (

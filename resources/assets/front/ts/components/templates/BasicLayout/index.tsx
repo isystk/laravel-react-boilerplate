@@ -1,7 +1,7 @@
 import {ReactNode, useEffect} from "react";
 import Header from "@/components/organisms/Header";
 import Footer from "@/components/organisms/Footer";
-import Circles from "@/components/atoms/Circles";
+import Circles from "@/components/interactions/Circles";
 import Loading from "@/components/atoms/Loading";
 
 type Props = {

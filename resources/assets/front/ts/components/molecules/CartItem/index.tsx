@@ -12,12 +12,10 @@ const CartItem = ({id, name, imgpath, price, detail }: Props) => {
     if (!appRoot) return <></>;
 
     const handleDeleteFromCart = async () => {
-        const result = await appRoot.cart.removeCart(
+        await appRoot.cart.removeCart(
             id
         );
-        if (result) {
-            await appRoot.cart.readCarts();
-        }
+        await appRoot.cart.readCarts();
     };
 
     return (

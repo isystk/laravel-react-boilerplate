@@ -32,13 +32,13 @@ const LoginForm = () => {
         <BasicLayout title="ログイン">
             <div className="bg-white p-6 rounded-md shadow-md">
                 <div className="text-center mb-3">
-                    <form method="GET" action={Url.AUTH_GOOGLE}>
+                    <form method="GET" action={Url.authGoogle}>
                         <button type="submit" className="btn btn-danger">
                             Googleアカウントでログイン
                         </button>
                     </form>
                 </div>
-                <form method="POST" action={Url.LOGIN} id="login-form">
+                <form method="POST" action={Url.login} id="login-form">
                     <CSRFToken />
                     <div className="mx-auto my-5 w-100">
                         <TextInput
@@ -84,7 +84,7 @@ const LoginForm = () => {
                         <button type="submit" className="btn btn-primary mr-5">
                             ログイン
                         </button>
-                        <Link to={Url.PASSWORD_RESET} className="btn">
+                        <Link to={Url.passwordReset} className="btn">
                             パスワードを忘れた方
                         </Link>
                     </div>

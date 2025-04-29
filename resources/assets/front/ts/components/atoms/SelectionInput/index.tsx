@@ -43,10 +43,10 @@ const SelectionInput = (props: Props) => {
     }, [props.error, props.identity]);
 
     return (
-        <div className={props.className}>
+        <div className={props.className || ''}>
             <label className="font-bold" htmlFor={props.identity}>
                 {props.label}
-                {props.required && (
+                {(props.label && props.required) && (
                     <span className="ml-2 text-red-600 text-sm font-normal">必須</span>
                 )}
             </label>

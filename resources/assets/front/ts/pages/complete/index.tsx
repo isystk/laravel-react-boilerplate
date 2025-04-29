@@ -18,7 +18,7 @@ const ShopComplete = () => {
                         ご登録頂いたメールアドレスへ決済情報をお送りしております。<br />
                         お手続き完了次第商品を発送致します。
                     </p>
-                    <Link to={Url.TOP} className="btn btn-primary mt-10">
+                    <Link to={Url.top} className="btn btn-primary mt-10">
                         商品一覧へ戻る
                     </Link>
                 </div>

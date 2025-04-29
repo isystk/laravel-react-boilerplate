@@ -1,6 +1,5 @@
 import MainService from "@/services/main";
-import { API } from "@/utilities/api";
-import { API_ENDPOINT } from "@/constants/api";
+import { Api } from "@/constants/api";
 import _ from "lodash";
 
 export interface Consts {
@@ -31,9 +30,10 @@ export default class ConstService {
     }
 
     async readConsts() {
-        const response = await API.get(API_ENDPOINT.CONSTS);
+        const response = await fetch(Api.consts);
+        const {consts} = await response.json();
         // APIで返却されるJSONとStoreに保存するオブジェクトのフォーマットが異なるので加工する
-        this.data = _.mapKeys(response.consts.data, "name");
+        this.data = _.mapKeys(consts.data, "name");
         this.main.setAppRoot();
     }
 }

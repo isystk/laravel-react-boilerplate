@@ -4,6 +4,7 @@
 その責務に応じて以下7つのレベルに分割、作成する。
 
 - atoms
+- interactions
 - molecules
 - organisms
 - templates
@@ -12,6 +13,13 @@
 
 最小単位で最も基本的なコンポーネント（例：ボタン、入力フィールド、ラベル）。<br/>
 components/atomsディレクトリに配置。
+
+## Interactions（相互作用）
+
+本来のAtomic Designには存在しない。<br/>
+UIインタラクションをコンポーザブルなコンポーネント（例：ツールチップ、モーダル）。<br/>
+それ以上分解できないものとしてAtomに分類もできるが、煩雑になるので別の層として切り出す。<br/>
+components/interactionsディレクトリに配置。
 
 ## Molecules（分子）
 

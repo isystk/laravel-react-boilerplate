@@ -40,7 +40,7 @@ const Header = () => {
                                                 },
                                                 {
                                                     text: "カートを見る",
-                                                    onClick: () => navigate(Url.MYCART)
+                                                    onClick: () => navigate(Url.myCart)
                                                 }
                                             ]}
                                         />
@@ -50,10 +50,10 @@ const Header = () => {
                                 return (
                                     <>
                                         <li>
-                                            <Link className="btn btn-danger" to={Url.LOGIN}>ログイン</Link>
+                                            <Link className="btn btn-danger" to={Url.login}>ログイン</Link>
                                         </li>
                                         <li>
-                                            <Link to={Url.REGISTER}>新規登録</Link>
+                                            <Link to={Url.register}>新規登録</Link>
                                         </li>
                                     </>
                                 );
@@ -61,13 +61,13 @@ const Header = () => {
                         })()}
                         <li>
                             <Link
-                                to={Url.MYCART}
+                                to={Url.myCart}
                             >
                                 <Image src="https://localhost/assets/front/image/cart.png" width={30} height={30} alt="カート"/>
                             </Link>
                         </li>
                         <li>
-                            <Link to={Url.CONTACT}>お問い合わせ</Link>
+                            <Link to={Url.contact}>お問い合わせ</Link>
                         </li>
                     </ul>
                 </div>
@@ -92,22 +92,22 @@ const Header = () => {
                             items.push(
                                 {
                                     text: "ログイン",
-                                    onClick: () => navigate(Url.LOGIN)
+                                    onClick: () => navigate(Url.login)
                                 },
                                 {
                                     text: "新規登録",
-                                    onClick: () => navigate(Url.REGISTER)
+                                    onClick: () => navigate(Url.register)
                                 },
                             );
                         }
                         items.push(
                             {
                                 text: "カートを見る",
-                                onClick: () => navigate(Url.MYCART)
+                                onClick: () => navigate(Url.myCart)
                             },
                             {
                                 text: "お問い合わせ",
-                                onClick: () => navigate(Url.CONTACT)
+                                onClick: () => navigate(Url.contact)
                             }
                         );
                         return items;
@@ -116,7 +116,7 @@ const Header = () => {
             </nav>
             <form
                 id="logout-form"
-                action={Url.LOGOUT}
+                action={Url.logout}
                 method="POST"
             >
                 <CSRFToken />

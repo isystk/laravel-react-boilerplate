@@ -1,6 +1,5 @@
 import MainService from "@/services/main";
-import { API } from "@/utilities/api";
-import { API_ENDPOINT } from "@/constants/api";
+import { Api } from "@/constants/api";
 
 export interface Page {
     total: number;
@@ -49,11 +48,12 @@ export default class ShopService {
     async readStocks(search = "") {
         // ローディングを表示する
         this.main.showLoading();
-        const response = await API.get(`${API_ENDPOINT.SHOPS}${search}`);
+        const response = await fetch(`${Api.shops}${search}`);
+        const { stocks } = await response.json();
         this.stocks = {
-            current_page: response.stocks.current_page,
-            total: response.stocks.total,
-            data: response.stocks.data,
+            current_page: stocks.current_page,
+            total: stocks.total,
+            data: stocks.data,
         };
         // ローディングを非表示にする
         this.main.hideLoading();

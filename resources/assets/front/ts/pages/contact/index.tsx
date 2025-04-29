@@ -22,11 +22,9 @@ const ContactCreate = () => {
 
     const handleSubmit = async (values) => {
         // 入力したお問い合わせ内容を送信する。
-        const result = await appRoot.contact.registContact(values);
-        if (result) {
-            // 完了画面を表示する
-            navigate(Url.CONTACT_COMPLETE);
-        }
+        await appRoot.contact.registContact(values);
+        // 完了画面を表示する
+        navigate(Url.contactComplete);
     };
 
     const initialValues = {

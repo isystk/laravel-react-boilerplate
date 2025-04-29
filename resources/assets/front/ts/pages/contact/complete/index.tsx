@@ -11,7 +11,7 @@ const ContactComplete = () => {
                     <p className="mt-5">
                         お問い合わせが完了しました。担当者から連絡があるまでお待ち下さい。
                     </p>
-                    <Link to={Url.TOP} className="btn btn-primary mt-10">
+                    <Link to={Url.top} className="btn btn-primary mt-10">
                         商品一覧へ戻る
                     </Link>
                 </div>

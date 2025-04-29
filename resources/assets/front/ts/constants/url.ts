@@ -1,27 +1,27 @@
-/** API のエンドポイント */
+/** 画面のURL */
 export const Url = {
     /** TOP */
-    TOP: "/",
+    top: "/",
     /** ログイン */
-    LOGIN: "/login",
+    login: "/login",
     /** Googleログイン */
-    AUTH_GOOGLE: "/auth/google",
+    authGoogle: "/auth/google",
     /** ログアウト */
-    LOGOUT: "/logout",
+    logout: "/logout",
     /** 会員登録 */
-    REGISTER: "/register",
+    register: "/register",
     /** パスワード忘れ */
-    PASSWORD_RESET: "/password/reset",
+    passwordReset: "/password/reset",
     /** メールアドレス認証 */
-    EMAIL_VERIFY: "/email/verify",
+    emailVerify: "/email/verify",
     /** ユーザーHOME */
-    HOME: "/home",
+    home: "/home",
     /** お問い合わせ */
-    CONTACT: "/contact",
+    contact: "/contact",
     /** お問い合わせ完了 */
-    CONTACT_COMPLETE: "/contact/complete",
+    contactComplete: "/contact/complete",
     /** マイカート */
-    MYCART: "/mycart",
+    myCart: "/mycart",
     /** 購入完了 */
-    SHOP_COMPLETE: "/complete",
+    payComplete: "/complete",
 };

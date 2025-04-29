@@ -1,8 +1,8 @@
-import {useRef, useState, useEffect, ReactNode} from "react";
+import {useRef, useState, useEffect, JSX} from "react";
 import ReactDOM from "react-dom";
 
 type Props = {
-    children: ReactNode;
+    children: JSX.Element;
 };
 
 const Portal = ({ children }: Props) => {
