@@ -1,3 +1,4 @@
+import styles from './styles.module.scss';
 import { useNavigate } from "react-router-dom";
 import Image from "@/components/atoms/Image";
 import { Url } from "@/constants/url";
@@ -39,7 +40,7 @@ const StockItem = ({id, name, imgpath, price, detail, quantity, isLike, appRoot}
     };
 
     return (
-        <div className="card_item">
+        <div className={styles.cardItem}>
             <div className="text-right mb-2">
                 <button
                     className={`btn btn-sm ${isLike ? "btn-primary" : "btn-secondary"}`}
@@ -51,12 +52,14 @@ const StockItem = ({id, name, imgpath, price, detail, quantity, isLike, appRoot}
             </div>
             <Image
                 src={`/uploads/stock/${imgpath}`}
+                width="276"
+                height="184"
                 alt={name}
-                className="mb-2"
+                className="mb-2 w-100"
             />
-            <p>{name}</p>
-            <p className="c-red">{price}</p>
-            <p className="mb20">{detail}</p>
+            <p className="font-bold">{name}</p>
+            <p className="text-red-600">{price}</p>
+            <p>{detail}</p>
             <button
                 className={`btn btn-sm text-center mx-auto mt-auto ${
                     quantity === 0 ? "btn-secondary disabled" : "btn-danger"

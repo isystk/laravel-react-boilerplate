@@ -1,16 +1,23 @@
 import Header from "@/components/organisms/Header";
 import Footer from "@/components/organisms/Footer";
 import Circles from "@/components/atoms/Circles";
+import React, {useEffect} from "react";
 
 type Props = {
     children: React.ReactNode;
     title: string;
-    sideMenuId?: string;
-    isNew?: boolean;
 };
 
+const BasicLayout = ({children, title}: Readonly<Props>) => {
 
-export default function BasicLayout({children, title, sideMenuId, isNew = false}: Readonly<Props>) {
+    // TODO React19以降では、useDocumentMetadataが追加される見込みだがそれまでは手動で直接書き換える
+    useEffect(() => {
+        document.title = title;
+        const metaDescription = document.querySelector("meta[name='description']");
+        if (metaDescription) {
+          metaDescription.setAttribute("content", "Laravel ＆ React.js の学習用サンプルアプリケーションです。");
+        }
+      }, []);
 
     return (
         <>
@@ -24,3 +31,5 @@ export default function BasicLayout({children, title, sideMenuId, isNew = false}
         </>
     );
 }
+
+export default BasicLayout;

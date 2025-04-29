@@ -1,19 +1,22 @@
+import styles from './styles.module.scss';
 import React from "react";
 
-interface PaginationProps {
+type Props = {
     activePage: number;
     totalItemsCount: number;
     itemsCountPerPage: number;
     pageRangeDisplayed: number;
     onChange: (pageNumber: number) => void;
+    className?: string;
 }
 
-const Pagination: React.FC<PaginationProps> = ({
+const Pagination: React.FC<Props> = ({
    activePage,
    totalItemsCount,
    itemsCountPerPage,
    pageRangeDisplayed,
    onChange,
+   className,
 }) => {
     const totalPages = Math.ceil(totalItemsCount / itemsCountPerPage);
     const pageNumbers = [];
@@ -26,23 +29,19 @@ const Pagination: React.FC<PaginationProps> = ({
     }
 
     return (
-        <div className="mt-10 text-center">
-            <nav
-                className="isolate inline-flex -space-x-px rounded-md shadow-xs"
-                aria-label="Pagination"
-            >
+        <div className={className}>
+            <nav className={styles.paginationNav} aria-label="Pagination">
                 <button
                     onClick={() => onChange(activePage - 1)}
                     disabled={activePage === 1}
                     className="btn"
                 >
-                    <span className="sr-only">Previous</span>
+                    <span className={styles.srOnly}>Previous</span>
                     <svg
-                        className="size-5"
+                        className={styles.icon}
                         viewBox="0 0 20 20"
                         fill="currentColor"
                         aria-hidden="true"
-                        data-slot="icon"
                     >
                         <path
                             fillRule="evenodd"
@@ -55,7 +54,7 @@ const Pagination: React.FC<PaginationProps> = ({
                 {startPage > 1 && (
                     <>
                         <PageButton page={1} isActive={activePage === 1} onClick={onChange} />
-                        {startPage > 2 && <span className="inline-flex items-center px-4 py-2 text-gray-700 ring-1 ring-gray-300 ring-inset">⋯</span>}
+                        {startPage > 2 && <span className={styles.ellipsis}>⋯</span>}
                     </>
                 )}
 
@@ -65,7 +64,7 @@ const Pagination: React.FC<PaginationProps> = ({
 
                 {endPage < totalPages && (
                     <>
-                        {endPage < totalPages - 1 && <span className="inline-flex items-center px-4 py-2 text-gray-700 ring-1 ring-gray-300 ring-inset">⋯</span>}
+                        {endPage < totalPages - 1 && <span className={styles.ellipsis}>⋯</span>}
                         <PageButton page={totalPages} isActive={activePage === totalPages} onClick={onChange} />
                     </>
                 )}
@@ -75,13 +74,12 @@ const Pagination: React.FC<PaginationProps> = ({
                     disabled={activePage === totalPages}
                     className="btn"
                 >
-                    <span className="sr-only">Next</span>
+                    <span className={styles.srOnly}>Next</span>
                     <svg
-                        className="size-5"
+                        className={styles.icon}
                         viewBox="0 0 20 20"
                         fill="currentColor"
                         aria-hidden="true"
-                        data-slot="icon"
                     >
                         <path
                             fillRule="evenodd"
@@ -98,7 +96,7 @@ const Pagination: React.FC<PaginationProps> = ({
 const PageButton: React.FC<{ key: number; page: number; isActive: boolean; onClick: (page: number) => void }> = ({ page, isActive, onClick }) => (
     <button
         onClick={() => onClick(page)}
-        className={`btn ${isActive ? "btn-primary" : ""}`}
+        className={`btn ${isActive ? 'btn-primary' : ''}`}
         aria-current={isActive ? "page" : undefined}
     >
         {page}
