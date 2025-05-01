@@ -31,10 +31,6 @@ class ConstUtil
 
         return [
             [
-                'name' => 'stripe_key',
-                'data' => config('const.stripe.key'),
-            ],
-            [
                 'name' => 'gender',
                 'data' => $gender,
             ],

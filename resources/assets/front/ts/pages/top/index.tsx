@@ -30,7 +30,7 @@ const Top = () => {
             price: stock.price + "円",
             isLike: appRoot.like.data.includes(stock.id + ""),
         } as StockItemProps))
-    ,[stockData]);
+    ,[stockData, appRoot.like.data]);
 
     return (
         <BasicLayout title="TOP">
@@ -41,7 +41,7 @@ const Top = () => {
                     { src: '/assets/front/image/banner_02.jpg', alt: 'Slide 4' },
                 ]}
                 autoPlay={true}
-                autoPlayInterval={5000} // 5秒ごとにスライド
+                autoPlayInterval={5000}
             />
             <div className="mt-5 md:mt-10">
                 <StockItems stocks={stocks} />

@@ -157,12 +157,11 @@ export default class CartService {
             });
         } catch (e) {
             alert("決算処理に失敗しました");
+            return false;
+        } finally {
             this.main.hideLoading();
             this.main.setAppRoot();
-            return false;
         }
-        this.main.hideLoading();
-        this.main.setAppRoot();
         return true;
     }
 }

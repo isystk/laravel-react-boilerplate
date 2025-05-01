@@ -9,4 +9,6 @@ export interface IEnv
   envName: string
   /** エンドポイント URL */
   endpointUrl: string
+  /** Stripe キー */
+  stripeKey: string
 }

@@ -19,9 +19,22 @@ type Valid = {
 };
 
 const ImageInput = (props: Props) => {
-    const [valid, setValid] = useState<Valid>({ error: "", isInvalid: "" });
     const [preview, setPreview] = useState<string | null>(null);
     const [, setBase64] = useState<string>("");
+    const [laravelValid, setLaravelValid] = useState<Valid>({ error: "", isInvalid: "" });
+    const [valid, setValid] = useState<Valid>({ error: "", isInvalid: "" });
+
+    // 初回マウント時のみ Laravel のエラーを取り込み
+    useEffect(() => {
+        if (typeof window !== "undefined" && window.laravelErrors?.[props.identity]) {
+            const message = window.laravelErrors[props.identity][0];
+            setLaravelValid({
+                error: message,
+                isInvalid: " is-invalid",
+            });
+            delete window.laravelErrors[props.identity];
+        }
+    }, []);
 
     useEffect(() => {
         if (props.error) {
@@ -29,19 +42,14 @@ const ImageInput = (props: Props) => {
                 error: props.error,
                 isInvalid: " is-invalid",
             });
-        } else if (window.laravelErrors && window.laravelErrors[props.identity]) {
-            setValid({
-                error: window.laravelErrors[props.identity][0],
-                isInvalid: " is-invalid",
-            });
-            delete window.laravelErrors[props.identity];
         } else {
             setValid({
                 error: "",
                 isInvalid: "",
             });
         }
-    }, [props.error, props.identity]);
+    }, [props.error]);
+
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
