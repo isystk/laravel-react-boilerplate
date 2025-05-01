@@ -25,7 +25,20 @@ type Valid = {
 };
 
 const TextArea = (props: Props) => {
+    const [laravelValid, setLaravelValid] = useState<Valid>({ error: "", isInvalid: "" });
     const [valid, setValid] = useState<Valid>({ error: "", isInvalid: "" });
+
+    // 初回マウント時のみ Laravel のエラーを取り込み
+    useEffect(() => {
+        if (typeof window !== "undefined" && window.laravelErrors?.[props.identity]) {
+            const message = window.laravelErrors[props.identity][0];
+            setLaravelValid({
+                error: message,
+                isInvalid: " is-invalid",
+            });
+            delete window.laravelErrors[props.identity];
+        }
+    }, []);
 
     useEffect(() => {
         if (props.error) {
@@ -33,19 +46,13 @@ const TextArea = (props: Props) => {
                 error: props.error,
                 isInvalid: " is-invalid",
             });
-        } else if (window.laravelErrors && window.laravelErrors[props.identity]) {
-            setValid({
-                error: window.laravelErrors[props.identity][0],
-                isInvalid: " is-invalid",
-            });
-            delete window.laravelErrors[props.identity];
         } else {
             setValid({
                 error: "",
                 isInvalid: "",
             });
         }
-    }, [props.error, props.identity]);
+    }, [props.error]);
 
     return (
         <div className={props.className}>
@@ -69,6 +76,11 @@ const TextArea = (props: Props) => {
                 rows={props.rows || 4}
                 cols={props.cols || 50}
             />
+            {laravelValid.error && (
+                <p className={styles.error}>
+                    <strong>{laravelValid.error}</strong>
+                </p>
+            )}
             {valid.error && (
                 <p className={styles.error}>
                     <strong>{valid.error}</strong>

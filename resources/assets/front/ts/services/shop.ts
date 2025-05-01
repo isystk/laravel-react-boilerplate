@@ -45,15 +45,12 @@ export default class ShopService {
     }
 
     // 商品データを取得する
-    async readStocks(search = "") {
+    async readStocks(pageNo = 1) {
         // ローディングを表示する
         this.main.showLoading();
-        const response = await fetch(`${Api.shops}${search}`);
-        const { stocks } = await response.json();
+        const { stocks } = await fetch(`${Api.shops}?page=${pageNo}`).then((res) => res.json());
         this.stocks = {
-            current_page: stocks.current_page,
-            total: stocks.total,
-            data: stocks.data,
+            ...stocks
         };
         // ローディングを非表示にする
         this.main.hideLoading();

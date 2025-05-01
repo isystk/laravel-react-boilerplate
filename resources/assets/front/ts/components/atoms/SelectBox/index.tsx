@@ -23,56 +23,64 @@ type Valid = {
     error: string;
 };
 
-const SelectBox = ({
-      identity,
-      label,
-      options,
-      name,
-      selectedValue,
-      required,
-      error,
-      className,
-      onChange,
-  }: Props) => {
-    const [valid, setValid] = useState<Valid>({ error: '', isInvalid: '' });
+const SelectBox = (props: Props) => {
+    const [laravelValid, setLaravelValid] = useState<Valid>({ error: "", isInvalid: "" });
+    const [valid, setValid] = useState<Valid>({ error: "", isInvalid: "" });
+
+    // 初回マウント時のみ Laravel のエラーを取り込み
+    useEffect(() => {
+        if (typeof window !== "undefined" && window.laravelErrors?.[props.identity]) {
+            const message = window.laravelErrors[props.identity][0];
+            setLaravelValid({
+                error: message,
+                isInvalid: " is-invalid",
+            });
+            delete window.laravelErrors[props.identity];
+        }
+    }, []);
 
     useEffect(() => {
-        if (error) {
-            setValid({ error, isInvalid: ' is-invalid' });
-        } else if (window.laravelErrors && window.laravelErrors[identity]) {
+        if (props.error) {
             setValid({
-                error: window.laravelErrors[identity][0],
-                isInvalid: ' is-invalid',
+                error: props.error,
+                isInvalid: " is-invalid",
             });
-            delete window.laravelErrors[identity];
         } else {
-            setValid({ error: '', isInvalid: '' });
+            setValid({
+                error: "",
+                isInvalid: "",
+            });
         }
-    }, [error, identity]);
+    }, [props.error]);
 
     return (
-        <div className={className}>
-            <label className="font-bold" htmlFor={identity}>
-                {label}
-                {required && (
+        <div className={props.className}>
+            <label className="font-bold" htmlFor={props.identity}>
+                {props.label}
+                {props.required && (
                     <span className="ml-2 text-red-600 text-sm font-normal">必須</span>
                 )}
             </label>
             <select
-                id={identity}
-                name={name || identity}
-                value={selectedValue}
-                onChange={onChange}
-                required={required}
+                id={props.identity}
+                name={props.name || props.identity}
+                value={props.selectedValue}
+                onChange={props.onChange}
+                required={props.required}
                 className={`${styles.formControl} ${valid.isInvalid}`}
             >
                 <option value="">選択してください</option>
-                {options.map((option) => (
+                {props.options.map((option) => (
                     <option key={option.value} value={option.value}>
                         {option.label}
                     </option>
                 ))}
             </select>
+            {laravelValid.error && (
+                <p className={styles.error}>
+                    <strong>{laravelValid.error}</strong>
+                </p>
+            )}
             {valid.error && (
                 <p className={styles.error}>
                     <strong>{valid.error}</strong>

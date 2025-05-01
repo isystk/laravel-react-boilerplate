@@ -116,7 +116,9 @@ return [
     |
     */
 
+    // フロント用(API)のバリデーションメッセージ
     'attributes' => [
+        'name' => 'お名前',
         'password' => 'パスワード',
         'your_name' => '氏名',
         'title' => 'タイトル',

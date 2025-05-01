@@ -3,8 +3,6 @@
 namespace App\Utils;
 
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Str;
-use Symfony\Component\HttpFoundation\File\File;
 
 class UploadImage
 {
@@ -16,26 +14,19 @@ class UploadImage
      */
     public static function convertBase64(string $base64): UploadedFile
     {
-        // base64をデコード。プレフィックスに「data:image/jpeg;base64,」のような文字列がついている場合は除去して処理する。
-        $data = explode(',', $base64);
-        if (isset($data[1])) {
-            $fileData = base64_decode($data[1]);
-        } else {
-            $fileData = base64_decode($data[0]);
-        }
+        // Base64ヘッダーを取り除き、デコード
+        $fileData = base64_decode(preg_replace('/^data:image\/\w+;base64,/', '', $base64));
 
-        // tmp領域に画像ファイルとして保存してUploadedFileとして扱う
-        $tmpFilePath = sys_get_temp_dir() . '/' . Str::uuid()->toString();
+        // 一時ファイルに保存
+        $tmpFilePath = tempnam(sys_get_temp_dir(), 'img_');
         file_put_contents($tmpFilePath, $fileData);
-        $tmpFile = new File($tmpFilePath);
-        $file = new UploadedFile(
-            $tmpFile->getPathname(),
-            $tmpFile->getFilename(),
-            $tmpFile->getMimeType(),
-            0,
-            true // Mark it as test, since the file isn't from real HTTP POST.
-        );
 
-        return $file;
+        return new UploadedFile(
+            $tmpFilePath,
+            basename($tmpFilePath),
+            mime_content_type($tmpFilePath),
+            0,
+            true
+        );
     }
 }

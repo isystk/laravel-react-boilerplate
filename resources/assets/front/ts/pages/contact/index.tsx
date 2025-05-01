@@ -54,10 +54,10 @@ const ContactCreate = () => {
         gender: Yup.number().required("性別を選択してください"),
         age: Yup.number().required("年齢を選択してください"),
         title: Yup.string()
-            .max(50, "タイトルは50文字以下を入れてください")
-            .required("タイトルを入力してください"),
+            .max(50, "件名は50文字以下を入れてください")
+            .required("件名を入力してください"),
         contact: Yup.string()
-            .max(200, "タイトルは200文字以下を入れてください")
+            .max(200, "お問い合わせ内容は200文字以下を入れてください")
             .required("お問い合わせ内容を入力してください"),
         url: Yup.string().url("URLを正しく入力してください"),
         imageBase64_1: Yup.string().required("画像1を選択してください"),

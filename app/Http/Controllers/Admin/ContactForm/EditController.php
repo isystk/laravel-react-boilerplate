@@ -20,9 +20,9 @@ class EditController extends BaseController
      * お問い合わせ変更画面の初期表示
      *
      * @param ContactForm $contactForm
-     * @return Response|View
+     * @return View
      */
-    public function edit(ContactForm $contactForm)
+    public function edit(ContactForm $contactForm): View
     {
         // 上位管理者のみがアクセス可能
         $this->authorize('high-manager');

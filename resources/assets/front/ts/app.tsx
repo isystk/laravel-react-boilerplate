@@ -4,26 +4,32 @@ import { createRoot } from 'react-dom/client';
 import { Session } from "@/services/auth";
 import { AppProvider } from "./stores/appContext";
 import './styles/app.scss'
+import {StrictMode, Suspense} from "react";
 
 const render = (session: Session) => {
-    console.log("session", session);
     const container = document.getElementById("react-root");
-    if (container) {
-        const root = createRoot(container);
-        root.render(
-            <AppProvider>
-                <Router session={session} />
-            </AppProvider>
-        );
+    if (!container) {
+        return;
     }
+
+    const root = createRoot(container);
+    root.render(
+        <StrictMode>
+            <Suspense fallback={<p>Loading...</p>}>
+                <AppProvider>
+                    <Router session={session} />
+                </AppProvider>
+            </Suspense>
+        </StrictMode>
+    );
 };
 
 const init = async () => {
     const params = new URLSearchParams();
     const url = "/api/session";
     try {
-        const response = await axios.post(url, params);
-        render(response.data);
+        const {data : session} = await axios.post(url, params);
+        render(session);
     } catch (e) {
         render({} as Session);
     }
