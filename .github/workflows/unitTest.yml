@@ -1,0 +1,62 @@
+name: unit-test
+
+on:
+  pull_request:
+    branches:
+      - 'master'
+      - 'develop'
+  workflow_dispatch:
+
+jobs:
+  unit-test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: プロジェクトのチェックアウト
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js (プロジェクトにあわせ12を指定する)
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Set up Python (npm install の依存関係である python を設定する)
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'
+
+      - name: PHP設定
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4.26'
+
+      - name: 必要なファイル群の生成
+        run: |
+          sudo chmod -R 777 bootstrap/cache storage
+          cp .env.example .env
+
+      - name: Composer インストール
+        run: |
+          composer install
+
+      - name: npm によるパッケージ化
+        run: |
+          npm install
+          npm run build
+
+      - name: 暗号化キー設定
+        run: |
+          php artisan key:generate
+
+      - name: テーブル構築
+        run: |
+          php artisan migrate:fresh --seed
+
+      - name: PHP Stan 実行
+        run: |
+          ./vendor/bin/phpstan analyse --memory-limit=1G
+
+      - name: PHP Unit 実行
+        run: |
+          ./vendor/bin/phpunit tests
