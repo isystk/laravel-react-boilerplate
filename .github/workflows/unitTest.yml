@@ -26,19 +26,14 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: PHP設定
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.3'
-
       - name: Dockerの初期化
         run: |
-          ./run.sh init
+          sudo ./run.sh init
 
       - name: Dockerの起動
         run: |
-          ./run.sh start
+          sudo ./run.sh start
 
       - name: PHP Unit 実行
         run: |
-          ./run.sh app test
+          sudo ./run.sh app test
