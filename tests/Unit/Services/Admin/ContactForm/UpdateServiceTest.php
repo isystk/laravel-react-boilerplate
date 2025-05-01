@@ -42,6 +42,8 @@ class UpdateServiceTest extends TestCase
      */
     public function testUpdate(): void
     {
+        Storage::fake();
+
         /** @var ContactForm $contactForm */
         $contactForm = ContactForm::factory()->create([
             'user_name' => 'aaa',
@@ -66,10 +68,9 @@ class UpdateServiceTest extends TestCase
         $request['gender'] =  Gender::Female->value;
         $request['age'] = Age::Over40->value;
         $request['contact'] = 'お問い合わせ2';
-        $request['image_files'] = [
-            UploadedFile::fake()->image('file2.jpg'),
-            UploadedFile::fake()->image('file3.jpg')
-        ];
+        $request['delete_image_1'] = '1';
+        $request['image_file_2'] = UploadedFile::fake()->image('image2.jpg');
+        $request['image_file_3'] = UploadedFile::fake()->image('image3.jpg');
         $this->service->update($contactForm->id, $request);
 
         // データが更新されたことをテスト
@@ -85,11 +86,7 @@ class UpdateServiceTest extends TestCase
         $this->assertDatabaseMissing('contact_form_images', ['id' => $contactFormImage->id]);
 
         // 新しい画像が登録されたことをテスト
-        $this->assertDatabaseHas('contact_form_images', ['contact_form_id' => $contactForm->id, 'file_name' => 'file2.jpg']);
-        $this->assertDatabaseHas('contact_form_images', ['contact_form_id' => $contactForm->id, 'file_name' => 'file3.jpg']);
-
-        // テスト後にファイルを削除
-        Storage::delete('contact/file2.jpg');
-        Storage::delete('contact/file3.jpg');
+        $this->assertDatabaseHas('contact_form_images', ['contact_form_id' => $contactForm->id, 'file_name' => 'image2.jpg']);
+        $this->assertDatabaseHas('contact_form_images', ['contact_form_id' => $contactForm->id, 'file_name' => 'image3.jpg']);
     }
 }

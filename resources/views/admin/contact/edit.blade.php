@@ -150,72 +150,43 @@
                         </div>
                     </div>
                 </div>
+                @for ($i = 1; $i <= 3; $i++)
+                    <div class="form-group">
+                        <div class="control-group" id="userName">
+                            <label class="col-sm-6 control-label">{{ __('contact.Image') }}{{ $i }}</label>
+                            <div class="col-sm-12">
+                                <p>
+                                    <input class="js-uploadImage" type="file" accept="image/png, image/jpeg">
+                                </p>
+                                <div class="result">
+                                    @php
+                                        $imageBase64 = old("imageBase64_$i");
+                                        $fileName = old("fileName_$i");
+                                        $imageExists = $contactFormImages->count() >= $i;
+                                        $imageData = $imageExists ? $contactFormImages->skip($i - 1)->first() : null;
+                                    @endphp
 
-                <div class="form-group">
-                    <div class="control-group" id="userName">
-                        <label class="col-sm-6 control-label">{{ __('contact.Image') }}1</label>
-                        <div class="col-sm-12">
-                            <p><input class="js-uploadImage" type="file" accept="image/png, image/jpeg" >
-                            </p>
-                            <div class="result">
-                                @if (old('imageBase64_1'))
-                                    <img src="{{ old('imageBase64_1') }}" width="200px" />
-                                    <input type="hidden" name="imageBase64_1" value="{{ old('imageBase64_1') }}" />
-                                    <input type="hidden" name="fileName_1" value="{{ old('fileName_1') }}" />
-                                @elseif (1 <= $contactFormImages->count())
-                                    <img
-                                        src="{{ asset('uploads/contact/' . $contactFormImages->first()['file_name']) }}"
-                                        width="200px"
-                                    />
-                                @endif
+                                    @if ($imageBase64)
+                                        <img src="{{ $imageBase64 }}" width="200px" />
+                                        <input type="hidden" name="imageBase64_{{ $i }}" value="{{ $imageBase64 }}" />
+                                        <input type="hidden" name="fileName_{{ $i }}" value="{{ $fileName }}" />
+                                        <button type="button" class="btn btn-danger btn-sm js-remove-image" data-target="{{ $i }}">
+                                            {{ __('common.Delete') }}
+                                        </button>
+                                    @elseif ($imageExists)
+                                        <img
+                                            src="{{ asset('uploads/contact/' . $imageData['file_name']) }}"
+                                            width="200px"
+                                        />
+                                        <button type="button" class="btn btn-danger btn-sm ml-2 js-remove-image" data-target="{{ $i }}">
+                                            {{ __('common.Delete') }}
+                                        </button>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="control-group" id="userName">
-                        <label class="col-sm-6 control-label">{{ __('contact.Image') }}2</label>
-                        <div class="col-sm-12">
-                            <p><input class="js-uploadImage" type="file" accept="image/png, image/jpeg" >
-                            </p>
-                            <div class="result">
-                                @if (old('imageBase64_2'))
-                                    <img src="{{ old('imageBase64_2') }}" width="200px" />
-                                    <input type="hidden" name="imageBase64_2" value="{{ old('imageBase64_2') }}" />
-                                    <input type="hidden" name="fileName_2" value="{{ old('fileName_2') }}" />
-                                @elseif (2 <= $contactFormImages->count())
-                                    <img
-                                        src="{{ asset('uploads/contact/' . $contactFormImages->skip(1)->first()['file_name']) }}"
-                                        width="200px"
-                                    />
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="control-group" id="userName">
-                        <label class="col-sm-6 control-label">{{ __('contact.Image') }}3</label>
-                        <div class="col-sm-12">
-                            <p><input class="js-uploadImage" type="file" accept="image/png, image/jpeg" >
-                            </p>
-                            <div class="result">
-                                @if (old('imageBase64_3'))
-                                    <img src="{{ old('imageBase64_3') }}" width="200px" />
-                                    <input type="hidden" name="imageBase64_3" value="{{ old('imageBase64_3') }}" />
-                                    <input type="hidden" name="fileName_3" value="{{ old('fileName_3') }}" />
-                                @elseif (3 <= $contactFormImages->count())
-                                    <img
-                                        src="{{ asset('uploads/contact/' . $contactFormImages->skip(2)->first()['file_name']) }}"
-                                        width="200px"
-                                    />
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endfor
                 <div class="card-footer text-center">
                     <input class="btn btn-info" type="submit" value="{{ __('common.Execute') }}">
                 </div>
@@ -246,6 +217,13 @@
                         $('.error-message').text(res[0]);
                     }
                 });
+            });
+            // 画像削除ボタン
+            $('.js-remove-image').on('click', function () {
+                const index = $(this).data('target');
+                const result = $(this).closest('.result');
+                result.empty();
+                result.append(`<input type="hidden" name="delete_image_${index}" value="1" />`);
             });
         });
     </script>

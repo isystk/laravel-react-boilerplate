@@ -96,6 +96,11 @@ const ImageInput = (props: Props) => {
                     <img src={preview} alt="プレビュー" className={styles.previewImage} />
                 </div>
             )}
+            {laravelValid.error && (
+                <p className={styles.error}>
+                    <strong>{laravelValid.error}</strong>
+                </p>
+            )}
             {valid.error && (
                 <p className={styles.error}>
                     <strong>{valid.error}</strong>

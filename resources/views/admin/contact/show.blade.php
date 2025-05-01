@@ -73,18 +73,18 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="control-group">
-                    <label class="col-sm-6 control-label">{{ __('contact.Image') }}</label>
-                    <div class="col-sm-12">
-                        @foreach($contactFormImages as $contactFormImage)
-                            @if ($contactFormImage['file_name'])
+            @foreach($contactFormImages as $i => $contactFormImage)
+                @if ($contactFormImage['file_name'])
+                    <div class="form-group">
+                        <div class="control-group">
+                            <label class="col-sm-6 control-label">{{ __('contact.Image') }}{{ $i+1 }}</label>
+                            <div class="col-sm-12">
                                 <img src="{{ asset('uploads/contact/' . $contactFormImage['file_name']) }}" width="200px" />
-                            @endif
-                        @endforeach
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+                @endif
+            @endforeach
         </div>
         <div class="card-footer text-center position-relative">
             <div class="d-inline-block">

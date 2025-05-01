@@ -71,6 +71,8 @@ class EditControllerTest extends TestCase
      */
     public function testUpdate(): void
     {
+        Storage::fake();
+
         /** @var Admin $admin1 */
         $admin1 = Admin::factory()->create([
             'name' => '管理者A',
@@ -110,10 +112,9 @@ class EditControllerTest extends TestCase
             'gender' => Gender::Female->value,
             'age' => Age::Over40->value,
             'contact' => 'お問い合わせ2',
-            'image_files' => [
-                UploadedFile::fake()->image('image2.jpg'),
-                UploadedFile::fake()->image('image3.jpg')
-            ]
+            'delete_image_1' => '1',
+            'image_file_2' => UploadedFile::fake()->image('image2.jpg'),
+            'image_file_3' => UploadedFile::fake()->image('image3.jpg'),
         ]);
         $response = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();
@@ -133,10 +134,6 @@ class EditControllerTest extends TestCase
         // 新しい画像が登録されたことをテスト
         $this->assertDatabaseHas('contact_form_images', ['contact_form_id' => $contactForm->id, 'file_name' => 'image2.jpg']);
         $this->assertDatabaseHas('contact_form_images', ['contact_form_id' => $contactForm->id, 'file_name' => 'image3.jpg']);
-
-        // テスト後にファイルを削除
-        Storage::delete('contact/image2.jpg');
-        Storage::delete('contact/image3.jpg');
     }
 
 }

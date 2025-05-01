@@ -25,20 +25,23 @@ class UpdateRequest extends FormRequest
      */
     protected function prepareForValidation(): void
     {
-        $data = $this->all();
-        $imageFiles = [];
+        $imageFile1 = null;
+        $imageFile2 = null;
+        $imageFile3 = null;
         // imageBase64パラメータがあればUploadedFileオブジェクトに変換してimageFileパラメータに上書きする。
         if ($this->has('imageBase64_1') && $this->imageBase64_1 !== null) {
-            $imageFiles[0] = UploadImage::convertBase64($this->imageBase64_1);
+            $imageFile1 = UploadImage::convertBase64($this->imageBase64_1);
         }
         if ($this->has('imageBase64_2') && $this->imageBase64_2 !== null) {
-            $imageFiles[1] = UploadImage::convertBase64($this->imageBase64_2);
+            $imageFile2 = UploadImage::convertBase64($this->imageBase64_2);
         }
         if ($this->has('imageBase64_3') && $this->imageBase64_3 !== null) {
-            $imageFiles[2] = UploadImage::convertBase64($this->imageBase64_3);
+            $imageFile3 = UploadImage::convertBase64($this->imageBase64_3);
         }
         $this->merge([
-            'image_files' => collect($imageFiles)
+            'image_file_1' => $imageFile1,
+            'image_file_2' => $imageFile2,
+            'image_file_3' => $imageFile3
         ]);
     }
 
