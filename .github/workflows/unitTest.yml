@@ -12,9 +12,12 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    env:
+      COMPOSER_MEMORY_LIMIT: -1
+
     steps:
       - name: プロジェクトのチェックアウト
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Dockerの初期化
         run: |
