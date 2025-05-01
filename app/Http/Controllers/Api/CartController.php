@@ -84,7 +84,7 @@ class CartController extends BaseApiController
             /** @var DeleteCartService $service */
             $service = app(DeleteCartService::class);
             //カートから削除の処理
-            $message =$service->deleteMyCart($request->cart_id);
+            $message = $service->deleteMyCart($request->cart_id);
 
             //追加後の情報を取得
             $carts = $service->getMyCart();

@@ -23,8 +23,7 @@ class StoreService extends BaseService
     public function __construct(
         ContactFormRepository $contactFormRepository,
         ContactFormImageRepository $contactFormImageRepository
-    )
-    {
+    ) {
         $this->contactFormRepository = $contactFormRepository;
         $this->contactFormImageRepository = $contactFormImageRepository;
     }

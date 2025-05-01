@@ -16,8 +16,7 @@ class AddCartService extends BaseCartService
      */
     public function __construct(
         CartRepository $cartRepository,
-    )
-    {
+    ) {
         parent::__construct($cartRepository);
         $this->cartRepository = $cartRepository;
     }
@@ -32,7 +31,7 @@ class AddCartService extends BaseCartService
         $userId = Auth::id();
         $this->cartRepository->create([
             'stock_id' => $stockId,
-            'user_id' => $userId
+            'user_id' => $userId,
         ]);
 
         return 'カートに追加しました';

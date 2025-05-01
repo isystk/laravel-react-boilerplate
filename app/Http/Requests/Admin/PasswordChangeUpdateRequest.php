@@ -29,7 +29,7 @@ class PasswordChangeUpdateRequest extends FormRequest
             'password' => [
                 ...$this->passwordRules(),
                 'max:' . $maxlength['password'],
-            ]
+            ],
         ];
     }
 

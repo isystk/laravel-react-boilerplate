@@ -42,6 +42,7 @@ class Cart extends Model
     ];
 
     // 親テーブル
+
     /**
      * @return BelongsTo<User, $this>
      */

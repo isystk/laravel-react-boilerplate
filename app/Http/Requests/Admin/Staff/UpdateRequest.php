@@ -41,7 +41,7 @@ class UpdateRequest extends FormRequest
             'name' => [
                 'required',
                 'string',
-                'max:' . $maxlength['name']
+                'max:' . $maxlength['name'],
             ],
             'email' => [
                 'required',
@@ -53,13 +53,14 @@ class UpdateRequest extends FormRequest
             'role' => [
                 'required',
                 new Enum(AdminRole::class),
-                function($attribute, $value, $fail) use ($staff) {
+                function ($attribute, $value, $fail) use ($staff)
+                {
                     if ($this->role !== $staff->role &&
                         $staff->id === auth()->user()->id) {
                         // 自分の権限は変更させない
                         $fail(__('validation.cannot be changed for yourself.'));
                     }
-                }
+                },
             ],
         ];
     }

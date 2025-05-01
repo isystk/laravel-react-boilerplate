@@ -31,8 +31,7 @@ class CheckoutService extends BaseCartService
         StockRepository $stockRepository,
         OrderRepository $orderRepository,
         OrderStockRepository $orderStockRepository,
-    )
-    {
+    ) {
         parent::__construct($cartRepository);
         $this->cartRepository = $cartRepository;
         $this->stockRepository = $stockRepository;
@@ -46,7 +45,7 @@ class CheckoutService extends BaseCartService
      * @param string|null $stripeToken
      * @return void
      */
-    public function checkout(?string $stripeEmail,?string $stripeToken): void
+    public function checkout(?string $stripeEmail, ?string $stripeToken): void
     {
         // Stripe::setApiKey(env('STRIPE_SECRET'));
 

@@ -23,14 +23,24 @@ class StaffImport extends BaseImport
         // 配列データをヘッダーをキーとした連想配列に変換します
         $rowMap = $this->getRowMap($row);
 
-        $cell = static function(string $key, Closure $callback) use($rowMap) {
-            return [$key => $callback($rowMap[$key]??null)];
+        $cell = static function (string $key, Closure $callback) use ($rowMap)
+        {
+            return [$key => $callback($rowMap[$key] ?? null)];
         };
 
         return array_merge(
-            $cell('name', function($val) { return $this->trimData($val); }),
-            $cell('email', function($val) { return $this->trimData($val); }),
-            $cell('role', function($val) { return $this->trimData($val); }),
+            $cell('name', function ($val)
+            {
+                return $this->trimData($val);
+            }),
+            $cell('email', function ($val)
+            {
+                return $this->trimData($val);
+            }),
+            $cell('role', function ($val)
+            {
+                return $this->trimData($val);
+            }),
         );
     }
 
@@ -44,7 +54,7 @@ class StaffImport extends BaseImport
             'name' => [
                 'required',
                 'string',
-                'max:' . $maxlength['name']
+                'max:' . $maxlength['name'],
             ],
             'email' => [
                 'required',

@@ -22,7 +22,8 @@ class StoreRequest extends BaseImportRequest
      */
     protected function createImporter(): \Closure
     {
-        return static function (string $filePath) {
+        return static function (string $filePath)
+        {
             return new StaffImport($filePath);
         };
     }

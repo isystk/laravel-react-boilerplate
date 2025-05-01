@@ -8,15 +8,18 @@ use Illuminate\Support\Facades\Route;
 | 管理画面
 |--------------------------------------------------------------------------
 */
-Route::prefix('admin')->group(function () {
-    Route::get('/',         static function () {
+Route::prefix('admin')->group(function ()
+{
+    Route::get('/', static function ()
+    {
         return redirect('/admin/home');
     });
     Route::get('login', [App\Http\Controllers\Admin\LoginController::class, 'showLoginForm'])->name('admin.login');
     Route::post('login', [App\Http\Controllers\Admin\LoginController::class, 'login']);
 
     // ログイン後
-    Route::group(['middleware' => 'auth:admin'], static function () {
+    Route::group(['middleware' => 'auth:admin'], static function ()
+    {
         Route::post('logout', [App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('admin.logout');
         Route::get('home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
 
@@ -70,8 +73,8 @@ Route::prefix('admin')->group(function () {
 | ソーシャルログイン
 |--------------------------------------------------------------------------
 */
-Route::prefix('auth')->middleware('guest')->group(function () {
-
+Route::prefix('auth')->middleware('guest')->group(function ()
+{
     Route::get('/{provider}', [\App\Http\Controllers\Front\Auth\OAuthController::class, 'socialOAuth'])
         ->where('provider', 'google')
         ->name('socialOAuth');
@@ -86,7 +89,8 @@ Route::prefix('auth')->middleware('guest')->group(function () {
 | API
 |--------------------------------------------------------------------------
 */
-Route::prefix('api')->middleware('api')->group(function () {
+Route::prefix('api')->middleware('api')->group(function ()
+{
     Route::get('/consts', [App\Http\Controllers\Api\ConstController::class, 'index'])->name('api.consts');
     Route::resource('/likes', App\Http\Controllers\Api\LikeController::class);
     Route::post('/likes/store', [App\Http\Controllers\Api\LikeController::class, 'store']);
@@ -94,7 +98,8 @@ Route::prefix('api')->middleware('api')->group(function () {
     Route::get('/shops', [App\Http\Controllers\Api\ShopController::class, 'index'])->name('api.shops');
     Route::post('/contact/store', [App\Http\Controllers\Api\ContactFormController::class, 'store'])->name('api.contact.store');
 
-    Route::middleware(['auth:sanctum'])->group(function () {
+    Route::middleware(['auth:sanctum'])->group(function ()
+    {
         // ログイン後
         Route::post('/session', function (Request $request) {
             return $request->user();

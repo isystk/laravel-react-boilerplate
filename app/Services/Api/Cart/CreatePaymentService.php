@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Stripe\Exception\ApiErrorException;
 use Stripe\PaymentIntent;
 use Stripe\StripeClient;
-use Stripe\StripeObject;
 
 class CreatePaymentService extends BaseCartService
 {

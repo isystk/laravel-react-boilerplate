@@ -18,8 +18,7 @@ class ShowService extends BaseService
      */
     public function __construct(
         OrderStockRepository $orderStockRepository
-    )
-    {
+    ) {
         $this->orderStockRepository = $orderStockRepository;
     }
 

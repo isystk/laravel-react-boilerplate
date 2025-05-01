@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use App\Domain\Entities\Admin;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -23,9 +23,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('high-manager', static function (Admin $admin) {
+        Gate::define('high-manager', static function (Admin $admin)
+        {
             return $admin->role === 'high-manager';
         });
-
     }
 }

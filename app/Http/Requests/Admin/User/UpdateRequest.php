@@ -2,10 +2,8 @@
 
 namespace App\Http\Requests\Admin\User;
 
-use App\Domain\Entities\User;
 use App\Http\Controllers\Front\Auth\PasswordValidationRules;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
@@ -41,7 +39,7 @@ class UpdateRequest extends FormRequest
             'name' => [
                 'required',
                 'string',
-                'max:' . $maxlength['name']
+                'max:' . $maxlength['name'],
             ],
             'email' => [
                 'required',

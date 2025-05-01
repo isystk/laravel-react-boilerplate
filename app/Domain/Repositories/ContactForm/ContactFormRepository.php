@@ -3,9 +3,9 @@
 namespace App\Domain\Repositories\ContactForm;
 
 use App\Domain\Entities\ContactForm;
+use App\Domain\Repositories\BaseRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
-use App\Domain\Repositories\BaseRepository;
 
 interface ContactFormRepository extends BaseRepository
 {

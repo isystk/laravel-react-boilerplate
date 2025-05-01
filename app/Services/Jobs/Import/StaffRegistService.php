@@ -19,23 +19,20 @@ class StaffRegistService extends BaseService
      */
     public function __construct(
         AdminRepository $adminRepository
-    )
-    {
+    ) {
         $this->adminRepository = $adminRepository;
     }
 
     /**
      * 管理者を登録します。
-     * @param  array<array<string, ?string>> $rows
+     * @param array<array<string, ?string>> $rows
      * @param Closure $outputLog
      */
     public function exec(
         array $rows,
         Closure $outputLog
-    ): void
-    {
+    ): void {
         foreach ($rows as $row) {
-
             $admin = $this->adminRepository->getByEmail($row['email']);
             $exist = null !== $admin;
 

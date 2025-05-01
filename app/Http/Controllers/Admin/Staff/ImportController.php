@@ -60,7 +60,7 @@ class ImportController extends BaseController
         $export = $service->getExport();
 
         return ('csv' === $fileType) ?
-            Excel::download($export, 'staff.csv', \Maatwebsite\Excel\Excel::CSV):
+            Excel::download($export, 'staff.csv', \Maatwebsite\Excel\Excel::CSV) :
             Excel::download($export, 'staff.xlsx');
     }
 
@@ -109,7 +109,7 @@ class ImportController extends BaseController
 
         /** @var importFileService $service */
         $service = app(importFileService::class);
-        [$importFilePath, $importFileName] = $service->getImportFilePath((int) $importHistoryId);
+        [$importFilePath, $importFileName] = $service->getImportFilePath((int)$importHistoryId);
 
         return response()->download(Storage::disk('local')->path($importFilePath), $importFileName);
     }

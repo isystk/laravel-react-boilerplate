@@ -17,8 +17,7 @@ class PasswordChangeUpdateService extends BaseService
      */
     public function __construct(
         AdminRepository $adminRepository
-    )
-    {
+    ) {
         $this->adminRepository = $adminRepository;
     }
 
@@ -32,7 +31,7 @@ class PasswordChangeUpdateService extends BaseService
     {
         return $this->adminRepository->update(
             $adminId,
-             [
+            [
                 'password' => $newPassword,
             ]
         );

@@ -41,7 +41,7 @@ class UpdateRequest extends FormRequest
         $this->merge([
             'image_file_1' => $imageFile1,
             'image_file_2' => $imageFile2,
-            'image_file_3' => $imageFile3
+            'image_file_3' => $imageFile3,
         ]);
     }
 
@@ -57,17 +57,17 @@ class UpdateRequest extends FormRequest
             'user_name' => [
                 'required',
                 'string',
-                'max:' . $maxlength['user_name']
+                'max:' . $maxlength['user_name'],
             ],
             'title' => [
                 'required',
                 'string',
-                'max:' . $maxlength['title']
+                'max:' . $maxlength['title'],
             ],
             'email' => [
                 'required',
                 'email',
-                'max:' . $maxlength['email']
+                'max:' . $maxlength['email'],
             ],
             'gender' => [
                 'required',
@@ -84,7 +84,7 @@ class UpdateRequest extends FormRequest
             ],
             'url' => [
                 'url',
-                'nullable'
+                'nullable',
             ],
         ];
     }
