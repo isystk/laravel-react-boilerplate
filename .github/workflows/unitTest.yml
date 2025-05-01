@@ -16,24 +16,14 @@ jobs:
       - name: プロジェクトのチェックアウト
         uses: actions/checkout@v3
 
-      - name: Setup Node.js (プロジェクトにあわせ12を指定する)
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-
-      - name: Set up Python (npm install の依存関係である python を設定する)
-        uses: actions/setup-python@v3
-        with:
-          python-version: '3.x'
-
       - name: Dockerの初期化
         run: |
-          sudo ./run.sh init
+          ./run.sh init
 
       - name: Dockerの起動
         run: |
-          sudo ./run.sh start
+          ./run.sh start
 
       - name: PHP Unit 実行
         run: |
-          sudo ./run.sh app test
+          ./run.sh app test
