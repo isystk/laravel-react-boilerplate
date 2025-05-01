@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from "react";
+import { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AuthCheck from "@/components/AuthCheck";
 import ContactComplete from "@/pages/contact/complete";
@@ -29,11 +29,6 @@ const Router = ({ session }: Props) => {
         // セッションのセット
         appRoot.auth.setSession(session);
 
-        (async () => {
-            // 定数のセット
-            await appRoot.const.readConsts();
-        })();
-
         // CSRFのセット
         const token = document.head.querySelector<HTMLMetaElement>(
             'meta[name="csrf-token"]'
@@ -41,32 +36,36 @@ const Router = ({ session }: Props) => {
         if (token) {
             appRoot.auth.setCSRF(token.content);
         }
+
+        (async () => {
+            // 定数のセット
+            await appRoot.const.readConsts();
+        })();
+
     }, [appRoot]);
 
     if (!appRoot) return <></>;
 
     return (
         <BrowserRouter>
-            <Suspense fallback={<p>Loading...</p>}>
-                <Routes>
-                    <Route index element={<Top />} />
-                    <Route path={Url.login} element={<LoginForm />}/>
-                    <Route path={Url.register} element={<RegisterForm />}/>
-                    <Route path={Url.passwordReset} element={<EMailForm />}/>
-                    <Route path={`${Url.passwordReset}/:id`} element={<ResetForm />}/>
-                    <Route path={Url.emailVerify} element={<Verify />}/>
-                    <Route path={Url.contact} element={<ContactCreate />}/>
-                    <Route path={Url.contactComplete} element={<ContactComplete />}/>
+            <Routes>
+                <Route index element={<Top />} />
+                <Route path={Url.login} element={<LoginForm />}/>
+                <Route path={Url.register} element={<RegisterForm />}/>
+                <Route path={Url.passwordReset} element={<EMailForm />}/>
+                <Route path={`${Url.passwordReset}/:id`} element={<ResetForm />}/>
+                <Route path={Url.emailVerify} element={<Verify />}/>
+                <Route path={Url.contact} element={<ContactCreate />}/>
+                <Route path={Url.contactComplete} element={<ContactComplete />}/>
 
-                    {/* ★ログインユーザー専用ここから */}
-                    <Route path={Url.home} element={<AuthCheck session={session} component={<Home />}/>}/>
-                    <Route path={Url.myCart} element={<AuthCheck session={session} component={<MyCart />}/>}/>
-                    <Route path={Url.payComplete} element={<AuthCheck session={session} component={<ShopComplete />}/>}/>
-                    {/* ★ログインユーザー専用ここまで */}
+                {/* ★ログインユーザー専用ここから */}
+                <Route path={Url.home} element={<AuthCheck session={session} component={<Home />}/>}/>
+                <Route path={Url.myCart} element={<AuthCheck session={session} component={<MyCart />}/>}/>
+                <Route path={Url.payComplete} element={<AuthCheck session={session} component={<ShopComplete />}/>}/>
+                {/* ★ログインユーザー専用ここまで */}
 
-                    <Route path="*" element={<NotFound />} />
-                </Routes>
-            </Suspense>
+                <Route path="*" element={<NotFound />} />
+            </Routes>
         </BrowserRouter>
     );
 };

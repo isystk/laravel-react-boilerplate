@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import {useEffect, useMemo} from "react";
 import { type Props as StockItemProps } from "@/components/molecules/StockItem";
 import { Url } from "@/constants/url";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -8,26 +8,29 @@ import Pagination from "@/components/atoms/Pagination";
 import StockItems from "@/components/organisms/StockItems";
 import useAppRoot from "@/stores/useAppRoot";
 
-const Index = () => {
+const Top = () => {
     const appRoot = useAppRoot();
     if (!appRoot) return <></>;
 
     const navigate = useNavigate();
-    const { search } = useLocation();
-    const stocks = appRoot.shop.stocks.data.map((stock) => ({
-        ...stock,
-        price: stock.price + "円",
-        isLike: appRoot.like.data.includes(stock.id + ""),
-    } as StockItemProps));
-    const { total, current_page } = appRoot.shop.stocks;
+    const location = useLocation();
+    const pageNo = Number(new URLSearchParams(location.search).get('page') || 1);
 
     useEffect(() => {
         // 商品データを取得する
-        appRoot.shop.readStocks(search);
+        appRoot.shop.readStocks(pageNo);
 
         // お気に入りデータを取得する
         appRoot.like.readLikesAsync();
-    }, [search]);
+    }, [pageNo]);
+
+    const { total, current_page, data: stockData } = appRoot.shop.stocks;
+    const stocks = useMemo(() => stockData.map((stock) => ({
+            ...stock,
+            price: stock.price + "円",
+            isLike: appRoot.like.data.includes(stock.id + ""),
+        } as StockItemProps))
+    ,[stockData]);
 
     return (
         <BasicLayout title="TOP">
@@ -57,4 +60,4 @@ const Index = () => {
     );
 };
 
-export default Index;
+export default Top;

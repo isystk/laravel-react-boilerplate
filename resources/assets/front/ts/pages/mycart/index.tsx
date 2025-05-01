@@ -12,7 +12,7 @@ const MyCart = () => {
 
     const auth = appRoot.auth;
     const { carts } = appRoot.cart;
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [isPaymentModalOpen, setIsPaymentModalOpen] = useState<boolean>(false);
     const stripePromise = loadStripe(appRoot.const.data.stripe_key?.data + "");
 
     useEffect(() => {
@@ -21,7 +21,6 @@ const MyCart = () => {
             await appRoot.cart.readCarts();
         })();
     }, []);
-
 
     return (
         <BasicLayout title="マイカート">
@@ -52,7 +51,7 @@ const MyCart = () => {
                                                 type="submit"
                                                 className="btn btn-primary mt-5"
                                                 onClick={() => {
-                                                    setIsOpen(true);
+                                                    setIsPaymentModalOpen(true);
                                                 }}
                                             >
                                                 決済をする
@@ -61,9 +60,9 @@ const MyCart = () => {
                                     </div>
                                     <Elements stripe={stripePromise}>
                                         <PaymentModal
-                                            isOpen={isOpen}
+                                            isOpen={isPaymentModalOpen}
                                             handleClose={() => {
-                                                setIsOpen(false);
+                                                setIsPaymentModalOpen(false);
                                             }}
                                             amount={carts.sum}
                                         />

@@ -1,10 +1,11 @@
 import { Navigate } from "react-router-dom";
 import { Url } from "@/constants/url";
 import { Session } from "@/services/auth";
+import { ReactNode } from "react";
 
 type Props = {
     session: Session;
-    component: React.ReactNode;
+    component: ReactNode;
 };
 
 const AuthCheck = ({ session, component }: Props) => {
