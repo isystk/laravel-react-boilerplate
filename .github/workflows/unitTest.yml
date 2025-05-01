@@ -29,7 +29,7 @@ jobs:
       - name: PHP設定
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4.26'
+          php-version: '8.1'
 
       - name: 必要なファイル群の生成
         run: |
