@@ -3,10 +3,6 @@ set -e  # エラーが発生した時点で終了
 
 cd /var/www/html
 
-# 最初に権限を設定
-echo "🔐 Fixing permissions..."
-chmod -R 775 /var/www/html
-
 # .env がなければコピー
 echo "📦 Checking .env file..."
 if [ ! -f .env ]; then

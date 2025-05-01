@@ -12,9 +12,6 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    env:
-      COMPOSER_MEMORY_LIMIT: -1
-
     steps:
       - name: プロジェクトのチェックアウト
         uses: actions/checkout@v4
@@ -27,9 +24,8 @@ jobs:
         run: |
           ./run.sh start
 
-      - name: Laravelの環境設定
-        run: |
-          ./run.sh app setup
+      - name: 60s 待機
+        run: sleep 60
 
       - name: PHP Unit 実行
         run: |
