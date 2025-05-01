@@ -24,6 +24,10 @@ jobs:
         run: |
           ./run.sh start
 
+      - name: Laravelの環境設定
+        run: |
+          ./run.sh app setup
+
       - name: PHP Unit 実行
         run: |
           ./run.sh app test
