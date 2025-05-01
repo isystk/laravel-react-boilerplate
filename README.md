@@ -1,7 +1,7 @@
 🌙 laravel-react-boilerplate
 ====
 
-[![isystk](https://circleci.com/gh/isystk/laravel-react-boilerplate.svg?style=svg)](https://circleci.com/gh/circleci/circleci-docs)
+![CI](https://github.com/isystk/laravel-react-boilerplate/actions/workflows/unitTest.yml/badge.svg)
 ![GitHub issues](https://img.shields.io/github/issues/isystk/laravel-react-boilerplate)
 ![GitHub forks](https://img.shields.io/github/forks/isystk/laravel-react-boilerplate)
 ![GitHub stars](https://img.shields.io/github/stars/isystk/laravel-react-boilerplate)
