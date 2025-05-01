@@ -26,37 +26,14 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: PHP設定
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.1'
-
-      - name: 必要なファイル群の生成
+      - name: Dockerの初期化
         run: |
-          sudo chmod -R 777 bootstrap/cache storage
-          cp .env.example .env
+          ./run.sh init
 
-      - name: Composer インストール
+      - name: Dockerの起動
         run: |
-          composer install
-
-      - name: npm によるパッケージ化
-        run: |
-          npm install
-          npm run build
-
-      - name: 暗号化キー設定
-        run: |
-          php artisan key:generate
-
-      - name: テーブル構築
-        run: |
-          php artisan migrate:fresh --seed
-
-      - name: PHP Stan 実行
-        run: |
-          ./vendor/bin/phpstan analyse --memory-limit=1G
+          ./run.sh start
 
       - name: PHP Unit 実行
         run: |
-          ./vendor/bin/phpunit tests
+          ./run.sh app test

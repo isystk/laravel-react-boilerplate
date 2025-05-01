@@ -52,7 +52,7 @@ case ${1} in
     ;;
 
     start)
-        $DOCKER_COMPOSE up -d
+        $DOCKER_COMPOSE up -d --wait
         $DOCKER_COMPOSE exec -d php php artisan queue:listen --timeout=0
     ;;
 
