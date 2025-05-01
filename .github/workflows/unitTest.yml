@@ -16,9 +16,6 @@ jobs:
       - name: プロジェクトのチェックアウト
         uses: actions/checkout@v3
 
-      - name: Set Git safe directory
-        run: git config --global --add safe.directory /var/www/html
-
       - name: Dockerの初期化
         run: |
           ./run.sh init
