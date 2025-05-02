@@ -31,7 +31,7 @@ abstract class BaseEloquentRepository implements BaseRepository
      */
     public function update(int $id, array $data): mixed
     {
-        $record = $this->getById($id);
+        $record = $this->findById($id);
 
         if (null === $record) {
             throw new \RuntimeException('An unexpected error occurred.');
@@ -46,7 +46,7 @@ abstract class BaseEloquentRepository implements BaseRepository
      */
     public function delete(int $id): void
     {
-        $record = $this->getById($id);
+        $record = $this->findById($id);
 
         if (null === $record) {
             throw new \RuntimeException('An unexpected error occurred.');
@@ -67,7 +67,7 @@ abstract class BaseEloquentRepository implements BaseRepository
      * @param int $id
      * @return mixed
      */
-    public function getById(int $id): mixed
+    public function findById(int $id): mixed
     {
         return $this->model->find($id);
     }

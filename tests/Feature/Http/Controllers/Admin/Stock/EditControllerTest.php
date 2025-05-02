@@ -26,7 +26,7 @@ class EditControllerTest extends TestCase
     {
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者A',
-            'role' => 'manager'
+            'role' => 'manager',
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -40,7 +40,7 @@ class EditControllerTest extends TestCase
 
         $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
-            'role' => 'high-manager'
+            'role' => 'high-manager',
         ]);
         $this->actingAs($admin2, 'admin');
 
@@ -58,7 +58,7 @@ class EditControllerTest extends TestCase
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
             'email' => 'admin1@test.com',
-            'role' => 'manager'
+            'role' => 'manager',
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -77,7 +77,7 @@ class EditControllerTest extends TestCase
         $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
             'email' => 'admin2@test.com',
-            'role' => 'high-manager'
+            'role' => 'high-manager',
         ]);
         $this->actingAs($admin2, 'admin');
 

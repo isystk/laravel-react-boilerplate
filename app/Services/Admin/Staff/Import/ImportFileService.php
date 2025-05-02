@@ -35,7 +35,7 @@ class importFileService extends BaseService
     public function getImportFilePath(int $importHistoryId): array
     {
         /** @var ImportHistory $importHistory */
-        $importHistory = $this->importHistoryRepository->getById($importHistoryId);
+        $importHistory = $this->importHistoryRepository->findById($importHistoryId);
 
         $importFilePath = 'import_job/' . ImportType::Staff->value . '/' . $importHistory->save_file_name;
         if (!Storage::disk('local')->exists($importFilePath)) {

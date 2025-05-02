@@ -28,7 +28,7 @@ class ListControllerTest extends TestCase
 
         $admin = $this->createDefaultAdmin([
             'name' => 'admin1',
-            'role' => AdminRole::Manager->value
+            'role' => AdminRole::Manager->value,
         ]);
         $this->actingAs($admin, 'admin');
 

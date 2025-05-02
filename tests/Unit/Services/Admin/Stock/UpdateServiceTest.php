@@ -3,8 +3,8 @@
 namespace Tests\Unit\Services\Admin\Stock;
 
 use App\Domain\Entities\Stock;
-use App\Services\Admin\Stock\UpdateService;
 use App\Http\Requests\Admin\Stock\UpdateRequest;
+use App\Services\Admin\Stock\UpdateService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;

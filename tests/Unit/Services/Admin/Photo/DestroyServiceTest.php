@@ -26,7 +26,7 @@ class DestroyServiceTest extends TestCase
     public function testDelete(): void
     {
         // テスト用のファイルを作成
-        $filePath ='stock\test.jpg';
+        $filePath = 'stock\test.jpg';
         Storage::put($filePath, '');
 
         $this->service->delete($filePath);

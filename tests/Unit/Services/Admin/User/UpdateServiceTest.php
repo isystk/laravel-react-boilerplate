@@ -3,8 +3,8 @@
 namespace Tests\Unit\Services\Admin\User;
 
 use App\Domain\Entities\User;
-use App\Services\Admin\User\UpdateService;
 use App\Http\Requests\Admin\User\UpdateRequest;
+use App\Services\Admin\User\UpdateService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

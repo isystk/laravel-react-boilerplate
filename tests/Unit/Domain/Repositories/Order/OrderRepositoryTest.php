@@ -45,15 +45,35 @@ class OrderRepositoryTest extends TestCase
         $stock2 = $this->createDefaultStock(['name' => 'stock2']);
 
         $order1 = $this->createDefaultOrder(['user_id' => $user1->id, 'created_at' => '2024-04-01']);
-        $this->createDefaultOrderStock(['order_id' => $order1->id, 'stock_id' => $stock1->id, 'price' => $stock1->price, 'quantity' => 1]);
-        $this->createDefaultOrderStock(['order_id' => $order1->id, 'stock_id' => $stock2->id, 'price' => $stock2->price, 'quantity' => 1]);
+        $this->createDefaultOrderStock([
+            'order_id' => $order1->id,
+            'stock_id' => $stock1->id,
+            'price' => $stock1->price,
+            'quantity' => 1,
+        ]);
+        $this->createDefaultOrderStock([
+            'order_id' => $order1->id,
+            'stock_id' => $stock2->id,
+            'price' => $stock2->price,
+            'quantity' => 1,
+        ]);
         $order2 = $this->createDefaultOrder(['user_id' => $user1->id, 'created_at' => '2024-05-01']);
-        $this->createDefaultOrderStock(['order_id' => $order2->id, 'stock_id' => $stock2->id, 'price' => $stock2->price, 'quantity' => 1]);
+        $this->createDefaultOrderStock([
+            'order_id' => $order2->id,
+            'stock_id' => $stock2->id,
+            'price' => $stock2->price,
+            'quantity' => 1,
+        ]);
         $order3 = $this->createDefaultOrder(['user_id' => $user2->id, 'created_at' => '2024-06-01']);
-        $this->createDefaultOrderStock(['order_id' => $order3->id, 'stock_id' => $stock1->id, 'price' => $stock1->price, 'quantity' => 1]);
+        $this->createDefaultOrderStock([
+            'order_id' => $order3->id,
+            'stock_id' => $stock1->id,
+            'price' => $stock1->price,
+            'quantity' => 1,
+        ]);
         $orders = $this->repository->getConditionsWithUserStock([
             ...$defaultConditions,
-            'user_name' => $user1->name
+            'user_name' => $user1->name,
         ]);
         $orderIds = $orders->pluck('id')->all();
         $this->assertSame([$order1->id, $order2->id], $orderIds, 'user_nameで検索が出来ることをテスト');

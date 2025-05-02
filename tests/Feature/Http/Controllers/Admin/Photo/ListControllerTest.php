@@ -27,7 +27,7 @@ class ListControllerTest extends TestCase
 
         $admin = $this->createDefaultAdmin([
             'name' => '管理者A',
-            'role' => 'manager'
+            'role' => 'manager',
         ]);
         $this->actingAs($admin, 'admin');
 
@@ -54,7 +54,7 @@ class ListControllerTest extends TestCase
 
         $admin = $this->createDefaultAdmin([
             'name' => '管理者A',
-            'role' => 'manager'
+            'role' => 'manager',
         ]);
         $this->actingAs($admin, 'admin');
 
@@ -68,12 +68,12 @@ class ListControllerTest extends TestCase
 
         $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
-            'role' => 'high-manager'
+            'role' => 'high-manager',
         ]);
         $this->actingAs($admin2, 'admin');
 
         $redirectResponse = $this->delete(route('admin.photo.destroy'), [
-            'fileName' => 'contact\contact1.jpg'
+            'fileName' => 'contact\contact1.jpg',
         ]);
         $response = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();
@@ -81,7 +81,7 @@ class ListControllerTest extends TestCase
         $this->assertFalse(Storage::exists('contact\contact1.jpg'));
 
         $redirectResponse = $this->delete(route('admin.photo.destroy'), [
-            'fileName' => 'stock\stock1.jpg'
+            'fileName' => 'stock\stock1.jpg',
         ]);
         $response = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();

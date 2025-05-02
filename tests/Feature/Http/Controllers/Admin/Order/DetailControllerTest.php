@@ -24,7 +24,7 @@ class DetailControllerTest extends TestCase
     {
         $admin = $this->createDefaultAdmin([
             'name' => '管理者A',
-            'role' => 'manager'
+            'role' => 'manager',
         ]);
         $this->actingAs($admin, 'admin');
 

@@ -28,7 +28,7 @@ class PasswordChangeUpdateServiceTest extends TestCase
         $admin = $this->createDefaultAdmin([
             'name' => 'aaa',
             'email' => 'aaa@test.com',
-            'password' => Hash::make('password')
+            'password' => Hash::make('password'),
         ]);
 
         $newPassword = Hash::make('newPassword');

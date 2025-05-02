@@ -39,6 +39,7 @@ class ContactFormImageRepositoryTest extends TestCase
         $contactFormImages = $this->repository->getByContactFormId($contactForm1->id);
         $contactFormImageIds = $contactFormImages->pluck('id')->all();
 
-        $this->assertSame($expectContactFormImageIds, $contactFormImageIds, 'contact_form_idで検索が出来ることをテスト');
+        $this->assertSame($expectContactFormImageIds, $contactFormImageIds,
+            'contact_form_idで検索が出来ることをテスト');
     }
 }

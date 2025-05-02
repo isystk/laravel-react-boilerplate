@@ -19,10 +19,10 @@ class ContactFormTest extends TestCase
 
     public function test_getGender(): void
     {
-        $this->sub->gender = Gender::Male->value;
+        $this->sub->gender = (bool)Gender::Male->value;
         $result = $this->sub->getGender();
         $this->assertInstanceOf(Gender::class, $result);
-        $this->assertSame(Gender::Male->value, $result->value);
+        $this->assertSame(Gender::Male, $result);
     }
 
     public function test_getAge(): void
@@ -30,6 +30,6 @@ class ContactFormTest extends TestCase
         $this->sub->age = Age::Over40->value;
         $result = $this->sub->getAge();
         $this->assertInstanceOf(Age::class, $result);
-        $this->assertSame(Age::Over40->value, $result->value);
+        $this->assertSame(Age::Over40, $result);
     }
 }

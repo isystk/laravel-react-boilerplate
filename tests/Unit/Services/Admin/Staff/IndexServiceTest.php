@@ -42,12 +42,12 @@ class IndexServiceTest extends TestCase
         $admin1 = $this->createDefaultAdmin([
             'name' => 'user1',
             'email' => 'user1@test.com',
-            'role' => AdminRole::HighManager->value
+            'role' => AdminRole::HighManager->value,
         ]);
         $admin2 = $this->createDefaultAdmin([
             'name' => 'user2',
             'email' => 'user2@test.com',
-            'role' => AdminRole::Manager->value
+            'role' => AdminRole::Manager->value,
         ]);
 
         $input = $default;
@@ -76,6 +76,5 @@ class IndexServiceTest extends TestCase
         $admins = $this->service->searchStaff($input);
         $adminIds = $admins->pluck('id')->all();
         $this->assertSame([$admin2->id, $admin1->id], $adminIds, 'ソート指定で検索が出来ることをテスト');
-
     }
 }

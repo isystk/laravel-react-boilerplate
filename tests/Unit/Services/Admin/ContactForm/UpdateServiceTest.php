@@ -4,8 +4,8 @@ namespace Tests\Unit\Services\Admin\ContactForm;
 
 use App\Enums\Age;
 use App\Enums\Gender;
-use App\Services\Admin\ContactForm\UpdateService;
 use App\Http\Requests\Admin\ContactForm\UpdateRequest;
+use App\Services\Admin\ContactForm\UpdateService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -38,11 +38,11 @@ class UpdateServiceTest extends TestCase
             'url' => 'https://aaa.test.com',
             'gender' => Gender::Male->value,
             'age' => Age::Over30->value,
-            'contact' => 'お問い合わせ1'
+            'contact' => 'お問い合わせ1',
         ]);
         $contactFormImage = $this->createDefaultContactFormImage([
             'contact_form_id' => $contactForm->id,
-            'file_name' => 'file1.jpg'
+            'file_name' => 'file1.jpg',
         ]);
 
         $request = new UpdateRequest();
@@ -50,7 +50,7 @@ class UpdateServiceTest extends TestCase
         $request['title'] = 'タイトル2';
         $request['email'] = 'bbb@test.com';
         $request['url'] = 'https://bbb.test.com';
-        $request['gender'] =  Gender::Female->value;
+        $request['gender'] = Gender::Female->value;
         $request['age'] = Age::Over40->value;
         $request['contact'] = 'お問い合わせ2';
         $request['delete_image_1'] = '1';
@@ -71,7 +71,9 @@ class UpdateServiceTest extends TestCase
         $this->assertDatabaseMissing('contact_form_images', ['id' => $contactFormImage->id]);
 
         // 新しい画像が登録されたことをテスト
-        $this->assertDatabaseHas('contact_form_images', ['contact_form_id' => $contactForm->id, 'file_name' => 'image2.jpg']);
-        $this->assertDatabaseHas('contact_form_images', ['contact_form_id' => $contactForm->id, 'file_name' => 'image3.jpg']);
+        $this->assertDatabaseHas('contact_form_images',
+            ['contact_form_id' => $contactForm->id, 'file_name' => 'image2.jpg']);
+        $this->assertDatabaseHas('contact_form_images',
+            ['contact_form_id' => $contactForm->id, 'file_name' => 'image3.jpg']);
     }
 }

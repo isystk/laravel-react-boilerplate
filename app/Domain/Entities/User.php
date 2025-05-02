@@ -2,6 +2,8 @@
 
 namespace App\Domain\Entities;
 
+use App\Mails\ResetPasswordToUser;
+use App\Mails\VerifyEmailToUser;
 use Carbon\Carbon;
 use Database\Factories\Domain\Entities\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -73,5 +75,20 @@ class User extends Authenticatable implements MustVerifyEmail
         return !is_null($this->email_verified_at);
     }
 
+    /**
+     * パスワードリセット時に送信するメールオブジェクトを返却する
+     */
+    public function sendPasswordResetNotification($token): void
+    {
+        $this->notify(new ResetPasswordToUser($this, $token));
+    }
+
+    /**
+     * 新規会員登録時に送信するメールオブジェクトを返却する
+     */
+    public function sendEmailVerificationNotification(): void
+    {
+        $this->notify(new VerifyEmailToUser($this));
+    }
 
 }

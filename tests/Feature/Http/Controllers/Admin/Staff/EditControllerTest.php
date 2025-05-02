@@ -24,7 +24,7 @@ class EditControllerTest extends TestCase
     {
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者A',
-            'role' => 'manager'
+            'role' => 'manager',
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -34,7 +34,7 @@ class EditControllerTest extends TestCase
 
         $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
-            'role' => 'high-manager'
+            'role' => 'high-manager',
         ]);
         $this->actingAs($admin2, 'admin');
 
@@ -50,7 +50,7 @@ class EditControllerTest extends TestCase
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
             'email' => 'admin1@test.com',
-            'role' => 'manager'
+            'role' => 'manager',
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -61,14 +61,14 @@ class EditControllerTest extends TestCase
         $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
             'email' => 'admin2@test.com',
-            'role' => 'high-manager'
+            'role' => 'high-manager',
         ]);
         $this->actingAs($admin2, 'admin');
 
         $redirectResponse = $this->put(route('admin.staff.update', $admin1), [
             'name' => '管理者A',
             'email' => 'adminA@test.com',
-            'role' => 'high-manager'
+            'role' => 'high-manager',
         ]);
         $response = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();
@@ -78,7 +78,7 @@ class EditControllerTest extends TestCase
             'id' => $admin1->id,
             'name' => '管理者A',
             'email' => 'adminA@test.com',
-            'role' => 'high-manager'
+            'role' => 'high-manager',
         ]);
     }
 

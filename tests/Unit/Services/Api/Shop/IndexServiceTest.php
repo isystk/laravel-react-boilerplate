@@ -50,6 +50,5 @@ class IndexServiceTest extends TestCase
         $stockIds = collect($items)->pluck('id')->all();
         $this->assertCount(6, $items, '1ページ最大6レコードが取得出来ることをテスト');
         $this->assertSame($expectedStockId, $stockIds, 'ソート指定で検索が出来ることをテスト');
-
     }
 }
