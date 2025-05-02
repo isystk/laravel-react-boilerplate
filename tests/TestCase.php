@@ -2,6 +2,9 @@
 
 namespace Tests;
 
+use App\Domain\Entities\Cart;
+use App\Domain\Entities\Stock;
+use App\Domain\Entities\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use ReflectionClass;
 use ReflectionException;
@@ -90,5 +93,55 @@ abstract class TestCase extends BaseTestCase
 
         fclose($csvFile);
         return $rows;
+    }
+
+    /**
+     * Userを作成する
+     * @param array<string, mixed> $params
+     * @return User
+     */
+    public function createDefaultUser(array $params = []): User
+    {
+        $items = [];
+        if (0 < count($params)) {
+            $items = array_merge($items, $params);
+        }
+        /** @var User */
+        return User::factory($items)->create();
+    }
+
+    /**
+     * Stockを作成する
+     * @param array<string, mixed> $params
+     * @return Stock
+     */
+    public function createDefaultStock(array $params = []): Stock
+    {
+        $items = [];
+        if (0 < count($params)) {
+            $items = array_merge($items, $params);
+        }
+        /** @var Stock */
+        return Stock::factory($items)->create();
+    }
+
+    /**
+     * Cartを作成する
+     * @param array<string, mixed> $params
+     * @return Cart
+     */
+    public function createDefaultCart(array $params = []): Cart
+    {
+        $user = $this->createDefaultUser();
+        $stock = $this->createDefaultStock();
+        $items = [
+            'user_id' => $user->id,
+            'stock_id' => $stock->id,
+        ];
+        if (0 < count($params)) {
+            $items = array_merge($items, $params);
+        }
+        /** @var Cart */
+        return Cart::factory($items)->create();
     }
 }
