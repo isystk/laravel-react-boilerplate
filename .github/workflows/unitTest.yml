@@ -5,6 +5,11 @@ on:
     branches:
       - 'master'
       - 'develop'
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - edited
   workflow_dispatch:
 
 jobs:
