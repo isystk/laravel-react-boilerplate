@@ -36,9 +36,9 @@ mc anonymous set download minio/laraec.isystk.com
 # Minio に画像をアップロード
 php artisan s3upload
 
-# Laravel キューリスナをバックグラウンドで実行
-echo "🎧 Starting queue listener..."
-php artisan queue:listen --timeout=0 &
+## Laravel キューリスナをバックグラウンドで実行
+#echo "🎧 Starting queue listener..."
+#php artisan queue:listen --timeout=0 &
 
 # Apache をフォアグラウンドで起動
 echo "🚀 Starting Apache..."
