@@ -13,7 +13,8 @@
                     <span
                         class="page-link"
                         aria-hidden="true"
-                    >&lt;</span>
+                    >&lt;
+                    </span>
                 </li>
             @else
                 <li class="page-item">
@@ -27,7 +28,8 @@
                             : '' }}"
                         rel="prev"
                         aria-label="@lang('pagination.previous')"
-                    >&lt;</a>
+                    >&lt;
+                    </a>
                 </li>
             @endif
 
@@ -85,7 +87,8 @@
                             : '' }}"
                         rel="next"
                         aria-label="@lang('pagination.next')"
-                    >&gt;</a>
+                    >&gt;
+                    </a>
                 </li>
             @else
                 <li
@@ -96,7 +99,8 @@
                     <span
                         class="page-link"
                         aria-hidden="true"
-                    >&gt;</span>
+                    >&gt;
+                    </span>
                 </li>
             @endif
         </ul>

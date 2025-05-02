@@ -1,5 +1,4 @@
 @extends('layouts.app_admin')
-
 @section('title', __('photo.Photo List'))
 @php
     $menu = 'system';
@@ -15,15 +14,24 @@
         <div class="card-header">
             <h3 class="card-title">{{ __('common.Search Condition') }}</h3>
         </div>
-        <form action="{{ route('admin.photo') }}" method="GET">
+        <form
+            action="{{ route('admin.photo') }}"
+            method="GET"
+        >
             <div class="card-body">
                 @if (session('status'))
-                    <div class="alert alert-success" role="alert">
+                    <div
+                        class="alert alert-success"
+                        role="alert"
+                    >
                         {{ session('status') }}
                     </div>
                 @endif
                 <div class="form-group">
-                    <div class="control-group" id="photoName">
+                    <div
+                        class="control-group"
+                        id="photoName"
+                    >
                         <label class="col-sm-2 control-label">{{ __('photo.File Name') }}</label>
                         <div class="col-sm-4">
                             <input
@@ -35,7 +43,10 @@
                             />
                         </div>
                     </div>
-                    <div class="control-group mt-3" id="userName">
+                    <div
+                        class="control-group mt-3"
+                        id="userName"
+                    >
                         <label class="col-sm-2 control-label">{{ __('photo.Type') }}</label>
                         <div class="col-sm-4">
                             <select
@@ -55,13 +66,28 @@
                 </div>
             </div>
             <div class="card-footer text-center">
-                <button type="submit" class="btn btn-secondary">{{ __('common.Search') }}</button>
+                <button
+                    type="submit"
+                    class="btn btn-secondary"
+                >{{ __('common.Search') }}</button>
             </div>
         </form>
     </div>
-    <form action="{{ route('admin.photo') }}" method="GET" id="pagingForm">
-        <input type="hidden" name="fileName" value="{{ $request->fileName }}">
-        <input type="hidden" name="fileType" value="{{ $request->fileType }}">
+    <form
+        action="{{ route('admin.photo') }}"
+        method="GET"
+        id="pagingForm"
+    >
+        <input
+            type="hidden"
+            name="fileName"
+            value="{{ $request->fileName }}"
+        >
+        <input
+            type="hidden"
+            name="fileType"
+            value="{{ $request->fileType }}"
+        >
     </form>
     <div class="row">
         <div class="col-12">
@@ -72,11 +98,11 @@
                 <div class="card-body table-responsive p-0">
                     <table class="table table-hover text-nowrap">
                         <thead>
-                            <tr>
-                                <th>{{ __('photo.Type') }}</th>
-                                <th>{{ __('photo.File Name') }}</th>
-                                <th>{{ __('photo.Image') }}</th>
-                            </tr>
+                        <tr>
+                            <th>{{ __('photo.Type') }}</th>
+                            <th>{{ __('photo.File Name') }}</th>
+                            <th>{{ __('photo.Image') }}</th>
+                        </tr>
                         </thead>
                         <tbody>
                         @foreach($photos as $photo)
@@ -97,7 +123,8 @@
                                         @cannot('high-manager')
                                             disabled="disabled"
                                         @endcan
-                                    >削除する</button>
+                                    >削除する
+                                    </button>
                                     <form
                                         id="delete_{{ $photo['fileName'] }}"
                                         action="{{ route('admin.photo.destroy') }}"
@@ -106,7 +133,11 @@
                                     >
                                         @method('DELETE')
                                         @csrf
-                                        <input type="hidden" name="fileName" value="{{ $photo['fileName'] }}"/>
+                                        <input
+                                            type="hidden"
+                                            name="fileName"
+                                            value="{{ $photo['fileName'] }}"
+                                        />
                                     </form>
                                 </td>
                             </tr>

@@ -1,5 +1,4 @@
 @extends('layouts.app_admin')
-
 @section('title', __('order.Order ID:') . $order->id)
 @php
     $menu = 'master';
@@ -12,7 +11,10 @@
 
 @section('content')
     <div class="text-left mb-3">
-        <a class="btn btn-secondary" href="{{ route('admin.order') }}">{{ __('common.Back') }}</a>
+        <a
+            class="btn btn-secondary"
+            href="{{ route('admin.order') }}"
+        >{{ __('common.Back') }}</a>
     </div>
 
     <div class="card card-purple">
@@ -44,11 +46,11 @@
             <div class="form-group">
                 <table class="table table-hover text-nowrap">
                     <thead>
-                        <tr>
-                            <th>{{ __('order.Stock Name') }}</th>
-                            <th>{{ __('order.Price') }}</th>
-                            <th>{{ __('order.Quantity') }}</th>
-                        </tr>
+                    <tr>
+                        <th>{{ __('order.Stock Name') }}</th>
+                        <th>{{ __('order.Price') }}</th>
+                        <th>{{ __('order.Quantity') }}</th>
+                    </tr>
                     </thead>
                     <tbody>
                     @foreach($orderStocks as $orderStock)

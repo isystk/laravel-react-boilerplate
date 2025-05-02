@@ -1,5 +1,4 @@
 @extends('layouts.app_admin')
-
 @section('title', __('stock.Stock List'))
 @php
     $menu = 'master';
@@ -29,15 +28,24 @@
         <div class="card-header">
             <h3 class="card-title">{{ __('common.Search Condition') }}</h3>
         </div>
-        <form action="{{ route('admin.stock') }}" method="GET">
+        <form
+            action="{{ route('admin.stock') }}"
+            method="GET"
+        >
             <div class="card-body">
                 @if (session('status'))
-                    <div class="alert alert-success" role="alert">
+                    <div
+                        class="alert alert-success"
+                        role="alert"
+                    >
                         {{ session('status') }}
                     </div>
                 @endif
                 <div class="form-group">
-                    <div class="control-group" id="stockName">
+                    <div
+                        class="control-group"
+                        id="stockName"
+                    >
                         <label class="col-sm-2 control-label">{{ __('stock.Name') }}</label>
                         <div class="col-sm-4">
                             <input
@@ -52,12 +60,23 @@
                 </div>
             </div>
             <div class="card-footer text-center">
-                <button type="submit" class="btn btn-secondary">{{ __('common.Search') }}</button>
+                <button
+                    type="submit"
+                    class="btn btn-secondary"
+                >{{ __('common.Search') }}</button>
             </div>
         </form>
     </div>
-    <form action="{{ route('admin.stock') }}" method="GET" id="pagingForm">
-        <input type="hidden" name="name" value="{{ $request->name }}">
+    <form
+        action="{{ route('admin.stock') }}"
+        method="GET"
+        id="pagingForm"
+    >
+        <input
+            type="hidden"
+            name="name"
+            value="{{ $request->name }}"
+        >
     </form>
     <div class="row">
         <div class="col-12">
@@ -76,7 +95,10 @@
                             {{ __('common.Operation') }}
                             <span class="caret"></span>
                         </button>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                        <div
+                            class="dropdown-menu dropdown-menu-right"
+                            aria-labelledby="dropdownMenu1"
+                        >
                             <a
                                 class="dropdown-item text-muted js-download"
                                 href="{{ route('admin.stock.export') . '?file_type=csv' }}"
@@ -95,14 +117,14 @@
                 <div class="card-body table-responsive p-0">
                     <table class="table table-hover text-nowrap">
                         <thead>
-                            <tr>
-                                @include('admin.common.sortablelink_th', ['params' => ['id', __('stock.ID')]])
-                                @include('admin.common.sortablelink_th', ['params' => ['name', __('stock.Name')]])
-                                @include('admin.common.sortablelink_th', ['params' => ['price', __('stock.Price')]])
-                                @include('admin.common.sortablelink_th', ['params' => ['quantity', __('stock.Quantity')]])
-                                @include('admin.common.sortablelink_th', ['params' => ['created_at', __('common.Registration Date')]])
-                                <th></th>
-                            </tr>
+                        <tr>
+                            @include('admin.common.sortablelink_th', ['params' => ['id', __('stock.ID')]])
+                            @include('admin.common.sortablelink_th', ['params' => ['name', __('stock.Name')]])
+                            @include('admin.common.sortablelink_th', ['params' => ['price', __('stock.Price')]])
+                            @include('admin.common.sortablelink_th', ['params' => ['quantity', __('stock.Quantity')]])
+                            @include('admin.common.sortablelink_th', ['params' => ['created_at', __('common.Registration Date')]])
+                            <th></th>
+                        </tr>
                         </thead>
                         <tbody>
                         @foreach($stocks as $stock)

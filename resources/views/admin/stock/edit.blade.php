@@ -1,5 +1,4 @@
 @extends('layouts.app_admin')
-
 @section('title', $stock->name . __('common.Of Change'))
 @php
     $menu = 'master';
@@ -12,11 +11,17 @@
 
 @section('content')
     <div class="text-left mb-3">
-        <a class="btn btn-secondary" href="{{ route('admin.stock.show', ['stock' => $stock]) }}">{{ __('common.Back') }}</a>
+        <a
+            class="btn btn-secondary"
+            href="{{ route('admin.stock.show', ['stock' => $stock]) }}"
+        >{{ __('common.Back') }}</a>
     </div>
 
     @if (session('status'))
-        <div class="alert alert-success" role="alert">
+        <div
+            class="alert alert-success"
+            role="alert"
+        >
             {{ session('status') }}
         </div>
     @endif
@@ -30,7 +35,11 @@
         </div>
     @endif
 
-    <form method="POST" enctype="multipart/form-data" action="{{route('admin.stock.update', ['stock' => $stock])}}">
+    <form
+        method="POST"
+        enctype="multipart/form-data"
+        action="{{route('admin.stock.update', ['stock' => $stock])}}"
+    >
         @method('PUT')
         @csrf
         <div class="card card-purple">
@@ -93,20 +102,40 @@
                 <div class="form-group">
                     <div class="control-group">
                         <label class="col-sm-2 control-label">{{ __('stock.Image') }}</label>
-                        <div class="col-sm-2" id="drop-zone">
+                        <div
+                            class="col-sm-2"
+                            id="drop-zone"
+                        >
                             {{--
                             <p><input type="file" name="imageFile"></p>
                             <br>
                             --}}
-                            <p><input id="js-uploadImage" type="file"></p>
+                            <p>
+                                <input
+                                    id="js-uploadImage"
+                                    type="file"
+                                >
+                            </p>
                             <div id="result">
                                 @if (old('imageBase64'))
-                                    <img src="{{ old('imageBase64') }}" width="200px" />
-                                    <input type="hidden" name="imageBase64" value="{{ old('imageBase64') }}"/>
-                                    <input type="hidden" name="fileName" value="{{ old('fileName') }}"/>
+                                    <img
+                                        src="{{ old('imageBase64') }}"
+                                        width="200px"
+                                    />
+                                    <input
+                                        type="hidden"
+                                        name="imageBase64"
+                                        value="{{ old('imageBase64') }}"
+                                    />
+                                    <input
+                                        type="hidden"
+                                        name="fileName"
+                                        value="{{ old('fileName') }}"
+                                    />
                                 @elseif ($stock->imgpath)
                                     <img
-                                        src="{{ asset('uploads/stock/' . $stock->imgpath) }}" width="200px"
+                                        src="{{ asset('uploads/stock/' . $stock->imgpath) }}"
+                                        width="200px"
                                         id="stockImage"
                                     >
                                 @endif
@@ -117,7 +146,11 @@
                 </div>
             </div>
             <div class="card-footer text-center  ">
-                <input class="btn btn-info" type="submit" value="{{ __('common.Execute') }}">
+                <input
+                    class="btn btn-info"
+                    type="submit"
+                    value="{{ __('common.Execute') }}"
+                >
             </div>
         </div>
     </form>

@@ -1,5 +1,4 @@
 @extends('layouts.app_admin')
-
 @section('title', __('staff.Staff Regist'))
 @php
     $menu = 'master';
@@ -12,11 +11,17 @@
 
 @section('content')
     <div class="text-left mb-3">
-        <a class="btn btn-secondary" href="{{ route('admin.staff') }}">{{ __('common.Back') }}</a>
+        <a
+            class="btn btn-secondary"
+            href="{{ route('admin.staff') }}"
+        >{{ __('common.Back') }}</a>
     </div>
 
     @if (session('status'))
-        <div class="alert alert-success" role="alert">
+        <div
+            class="alert alert-success"
+            role="alert"
+        >
             {{ session('status') }}
         </div>
     @endif
@@ -29,7 +34,11 @@
             </ul>
         </div>
     @endif
-    <form method="POST" enctype="multipart/form-data" action="{{ route('admin.staff.store') }}">
+    <form
+        method="POST"
+        enctype="multipart/form-data"
+        action="{{ route('admin.staff.store') }}"
+    >
         @csrf
         <div class="card card-purple">
             <div class="form-group">
@@ -61,7 +70,10 @@
                 </div>
             </div>
             <div class="form-group">
-                <div class="control-group" id="staffName">
+                <div
+                    class="control-group"
+                    id="staffName"
+                >
                     <label class="col-sm-6 control-label">{{ __('staff.Role') }}</label>
                     <div class="col-sm-12">
                         <select
@@ -108,7 +120,11 @@
                 </div>
             </div>
             <div class="card-footer text-center  ">
-                <input class="btn btn-info" type="submit" value="{{__('common.Execute')}}" />
+                <input
+                    class="btn btn-info"
+                    type="submit"
+                    value="{{__('common.Execute')}}"
+                />
             </div>
         </div>
     </form>

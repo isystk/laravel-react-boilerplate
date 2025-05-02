@@ -23,8 +23,10 @@
     {!! $params[1] !!}
     <span
         class="sortable_arrow_asc {{ $params[0] === request()->sort_name && 'asc' === request()->sort_direction ? 'enabled_arrow' : 'disabled_arrow' }}"
-    >↑</span>
+    >↑
+    </span>
     <span
         class="sortable_arrow_desc {{ $params[0] === request()->sort_name && 'desc' === request()->sort_direction ? 'enabled_arrow' : 'disabled_arrow' }}"
-    >↓</span>
+    >↓
+    </span>
 </th>
