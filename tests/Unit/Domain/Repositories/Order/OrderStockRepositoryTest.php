@@ -1,11 +1,7 @@
 <?php
 
-namespace Unit\Domain\Repositories\Order;
+namespace Domain\Repositories\Order;
 
-use App\Domain\Entities\Order;
-use App\Domain\Entities\OrderStock;
-use App\Domain\Entities\Stock;
-use App\Domain\Entities\User;
 use App\Domain\Repositories\Order\OrderStockRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -17,9 +13,6 @@ class OrderStockRepositoryTest extends TestCase
 
     private OrderStockRepository $repository;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -28,30 +21,18 @@ class OrderStockRepositoryTest extends TestCase
     }
 
     /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(OrderStockRepository::class, $this->repository);
-    }
-
-    /**
      * getByOrderIdのテスト
      */
     public function testGetByOrderId(): void
     {
-        /** @var User $user1 */
-        $user1 = User::factory(['name' => 'user1', 'email' => 'user1@test.com'])->create();
+        $user1 = $this->createDefaultUser(['name' => 'user1', 'email' => 'user1@test.com']);
 
-        /** @var Stock $stock1 */
-        $stock1 = Stock::factory(['name' => 'stock1'])->create();
-        /** @var Stock $stock2 */
-        $stock2 = Stock::factory(['name' => 'stock2'])->create();
+        $stock1 = $this->createDefaultStock(['name' => 'stock1']);
+        $stock2 = $this->createDefaultStock(['name' => 'stock2']);
 
-        /** @var Order $order */
-        $order = Order::factory(['user_id' => $user1->id, 'created_at' => '2024-04-01'])->create();
-        OrderStock::factory(['order_id' => $order->id, 'stock_id' => $stock1->id, 'price' => $stock1->price, 'quantity' => 1])->create();
-        OrderStock::factory(['order_id' => $order->id, 'stock_id' => $stock2->id, 'price' => $stock2->price, 'quantity' => 1])->create();
+        $order = $this->createDefaultOrder(['user_id' => $user1->id, 'created_at' => '2024-04-01']);
+        $this->createDefaultOrderStock(['order_id' => $order->id, 'stock_id' => $stock1->id, 'price' => $stock1->price, 'quantity' => 1]);
+        $this->createDefaultOrderStock(['order_id' => $order->id, 'stock_id' => $stock2->id, 'price' => $stock2->price, 'quantity' => 1]);
         $orderStocks = $this->repository->getByOrderId($order->id);
         $this->assertSame(2, $orderStocks->count());
     }

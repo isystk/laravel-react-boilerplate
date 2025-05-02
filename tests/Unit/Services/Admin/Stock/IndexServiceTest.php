@@ -15,21 +15,10 @@ class IndexServiceTest extends TestCase
 
     private IndexService $service;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
         $this->service = app(IndexService::class);
-    }
-
-    /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(IndexService::class, $this->service);
     }
 
     /**
@@ -47,10 +36,8 @@ class IndexServiceTest extends TestCase
         $stocks = $this->service->searchStock($default);
         $this->assertSame(0, $stocks->count(), '引数がない状態でエラーにならないことを始めにテスト');
 
-        /** @var Stock $stock1 */
-        $stock1 = Stock::factory(['name' => 'stock1'])->create();
-        /** @var Stock $stock2 */
-        $stock2 = Stock::factory(['name' => 'stock2'])->create();
+        $stock1 = $this->createDefaultStock(['name' => 'stock1']);
+        $stock2 = $this->createDefaultStock(['name' => 'stock2']);
 
         $input = $default;
         $input['name'] = 'stock2';

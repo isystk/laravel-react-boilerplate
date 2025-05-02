@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Services\Admin\Stock;
 
-use App\Domain\Entities\Stock;
 use App\Services\Admin\Stock\DestroyService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -14,9 +13,6 @@ class DestroyServiceTest extends TestCase
 
     private DestroyService $service;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -24,21 +20,11 @@ class DestroyServiceTest extends TestCase
     }
 
     /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(DestroyService::class, $this->service);
-    }
-
-    /**
      * deleteのテスト
      */
     public function testDelete(): void
     {
-        /** @var Stock $stock */
-        $stock = Stock::factory()->create();
-
+        $stock = $this->createDefaultStock();
         $this->service->delete($stock->id);
 
         // データが削除されたことをテスト

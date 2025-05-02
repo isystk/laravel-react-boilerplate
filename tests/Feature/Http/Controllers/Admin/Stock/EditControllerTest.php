@@ -1,9 +1,7 @@
 <?php
 
-namespace Feature\Http\Controllers\Admin\Stock;
+namespace Http\Controllers\Admin\Stock;
 
-use App\Domain\Entities\Admin;
-use App\Domain\Entities\Stock;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -12,9 +10,7 @@ use Tests\TestCase;
 
 class EditControllerTest extends TestCase
 {
-    /**
-     * 各テストの実行後にテーブルを空にする。
-     */
+
     use RefreshDatabase;
 
     public function setUp(): void
@@ -28,15 +24,13 @@ class EditControllerTest extends TestCase
      */
     public function testEdit(): void
     {
-        /** @var Admin $admin1 */
-        $admin1 = Admin::factory()->create([
+        $admin1 = $this->createDefaultAdmin([
             'name' => '管理者A',
             'role' => 'manager'
         ]);
         $this->actingAs($admin1, 'admin');
 
-        /** @var Stock $stock */
-        $stock = Stock::factory()->create([
+        $stock = $this->createDefaultStock([
             'name' => 'aaa',
         ]);
 
@@ -44,8 +38,7 @@ class EditControllerTest extends TestCase
         $response = $this->get(route('admin.stock.edit', $stock));
         $response->assertForbidden();
 
-        /** @var Admin $admin2 */
-        $admin2 = Admin::factory()->create([
+        $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
             'role' => 'high-manager'
         ]);
@@ -60,16 +53,16 @@ class EditControllerTest extends TestCase
      */
     public function testUpdate(): void
     {
-        /** @var Admin $admin1 */
-        $admin1 = Admin::factory()->create([
+        Storage::fake();
+
+        $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
             'email' => 'admin1@test.com',
             'role' => 'manager'
         ]);
         $this->actingAs($admin1, 'admin');
 
-        /** @var Stock $stock */
-        $stock = Stock::factory()->create([
+        $stock = $this->createDefaultStock([
             'name' => 'aaa',
             'detail' => 'aaaの説明',
             'price' => 111,
@@ -81,8 +74,7 @@ class EditControllerTest extends TestCase
         $response = $this->put(route('admin.stock.update', $stock), []);
         $response->assertForbidden();
 
-        /** @var Admin $admin2 */
-        $admin2 = Admin::factory()->create([
+        $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
             'email' => 'admin2@test.com',
             'role' => 'high-manager'
@@ -111,9 +103,6 @@ class EditControllerTest extends TestCase
             'quantity' => 2,
             'imgpath' => 'image2.jpg',
         ]);
-
-        // テスト後にファイルを削除
-        Storage::delete('stock/image2.jpg');
     }
 
 }

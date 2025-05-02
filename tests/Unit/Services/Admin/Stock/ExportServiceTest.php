@@ -2,7 +2,6 @@
 
 namespace Services\Admin\Stock;
 
-use App\Domain\Entities\Stock;
 use App\Services\Admin\Stock\ExportService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -14,21 +13,10 @@ class ExportServiceTest extends TestCase
 
     private ExportService $service;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
         $this->service = app(ExportService::class);
-    }
-
-    /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(ExportService::class, $this->service);
     }
 
     /**
@@ -45,9 +33,8 @@ class ExportServiceTest extends TestCase
         $export = $this->service->getExport($default);
         $this->assertSame(['ID', '商品名', '価格'], $export->headings(), 'ヘッダーが正しいこと');
 
-        Stock::factory(['name' => 'stock1', 'price' => 111])->create();
-        /** @var Stock $stock2 */
-        $stock2 = Stock::factory(['name' => 'stock2', 'price' => 222])->create();
+        $this->createDefaultStock(['name' => 'stock1', 'price' => 111]);
+        $stock2 = $this->createDefaultStock(['name' => 'stock2', 'price' => 222]);
 
         $input = $default;
         $input['name'] = 'stock2';

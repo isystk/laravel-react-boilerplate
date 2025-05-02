@@ -14,21 +14,10 @@ class DestroyServiceTest extends TestCase
 
     private DestroyService $service;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
         $this->service = app(DestroyService::class);
-    }
-
-    /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(DestroyService::class, $this->service);
     }
 
     /**

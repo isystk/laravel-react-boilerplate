@@ -15,21 +15,10 @@ class IndexServiceTest extends TestCase
 
     private IndexService $service;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
         $this->service = app(IndexService::class);
-    }
-
-    /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(IndexService::class, $this->service);
     }
 
     /**
@@ -48,10 +37,8 @@ class IndexServiceTest extends TestCase
         $contactForms = $this->service->searchContactForm($default);
         $this->assertSame(0, $contactForms->count(), '引数がない状態でエラーにならないことを始めにテスト');
 
-        /** @var ContactForm $contactForm1 */
-        $contactForm1 = ContactForm::factory(['user_name' => 'user1', 'title' => 'title1'])->create();
-        /** @var ContactForm $contactForm2 */
-        $contactForm2 = ContactForm::factory(['user_name' => 'user2', 'title' => 'title2'])->create();
+        $contactForm1 = $this->createDefaultContactForm(['user_name' => 'user1', 'title' => 'title1']);
+        $contactForm2 = $this->createDefaultContactForm(['user_name' => 'user2', 'title' => 'title2']);
 
         $input = $default;
         $input['user_name'] = 'user2';

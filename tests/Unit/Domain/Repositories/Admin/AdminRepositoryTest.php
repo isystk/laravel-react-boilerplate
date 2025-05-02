@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Domain\Repositories\Admin;
+namespace Domain\Repositories\Admin;
 
 use App\Domain\Repositories\Admin\AdminRepository;
 use App\Domain\Entities\Admin;
@@ -15,22 +15,11 @@ class AdminRepositoryTest extends TestCase
 
     private AdminRepository $repository;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->repository = app(AdminRepository::class);
-    }
-
-    /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(AdminRepository::class, $this->repository);
     }
 
     /**
@@ -50,18 +39,16 @@ class AdminRepositoryTest extends TestCase
         $admins = $this->repository->getByConditions($defaultConditions);
         $this->assertSame(0, $admins->count(), 'データがない状態で正常に動作することを始めにテスト');
 
-        /** @var Admin $expectAdmin1 */
-        $expectAdmin1 = Admin::factory([
+        $expectAdmin1 = $this->createDefaultAdmin([
             'name' => 'admin1',
             'email' => 'admin1@test.com',
             'role' => AdminRole::HighManager->value
-        ])->create();
-        /** @var Admin $expectAdmin2 */
-        $expectAdmin2 = Admin::factory([
+        ]);
+        $expectAdmin2 = $this->createDefaultAdmin([
             'name' => 'admin2',
             'email' => 'admin2@test.com',
             'role' => AdminRole::Manager->value
-        ])->create();
+        ]);
 
         /** @var Admin $admin */
         $admin = $this->repository->getByConditions([
@@ -101,13 +88,12 @@ class AdminRepositoryTest extends TestCase
         $result = $this->repository->getByEmail($email);
         $this->assertNull($result, 'データがない状態で正常に動作することを始めにテスト');
 
-        Admin::factory([
+        $this->createDefaultAdmin([
             'email' => 'admin1@test.com',
-        ])->create();
-        /** @var Admin $expectAdmin2 */
-        $expectAdmin2 = Admin::factory([
+        ]);
+        $expectAdmin2 = $this->createDefaultAdmin([
             'email' => 'admin2@test.com',
-        ])->create();
+        ]);
 
         $result = $this->repository->getByEmail($email);
         $this->assertSame($expectAdmin2->id, $result->id, '指定したメールアドレスのスタッフが取得できることのテスト');
@@ -121,10 +107,8 @@ class AdminRepositoryTest extends TestCase
         $admins = $this->repository->getAllOrderById();
         $this->assertSame(0, $admins->count(), 'データがない状態で正常に動作することを始めにテスト');
 
-        /** @var Admin $expectAdmin1 */
-        $expectAdmin1 = Admin::factory()->create();
-        /** @var Admin $expectAdmin2 */
-        $expectAdmin2 = Admin::factory()->create();
+        $expectAdmin1 = $this->createDefaultAdmin();
+        $expectAdmin2 = $this->createDefaultAdmin();
 
         $admins = $this->repository->getAllOrderById();
         $expect = [$expectAdmin1->id, $expectAdmin2->id];

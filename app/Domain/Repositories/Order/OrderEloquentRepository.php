@@ -53,6 +53,7 @@ class OrderEloquentRepository extends BaseEloquentRepository implements OrderRep
         if (null !== $conditions['sort_name']) {
             $query->orderBy($conditions['sort_name'], $conditions['sort_direction'] ?? 'asc');
         }
+        $query->orderBy('id', 'asc');
 
         return null !== $conditions['limit'] ? $query->paginate($conditions['limit']) : $query->get();
     }

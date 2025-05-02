@@ -44,4 +44,12 @@ class Stock extends Model
         'updated_at' => 'datetime',
     ];
 
+    /**
+     * 在庫がある場合にTrueを返却する
+     */
+    public function hasQuantity(): bool
+    {
+        return 0 < $this->quantity;
+    }
+
 }
