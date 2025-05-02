@@ -29,8 +29,8 @@ jobs:
         run: |
           ./run.sh start
 
-      - name: 60s 待機
-        run: sleep 60
+      - name: 90s 待機
+        run: sleep 90
 
       - name: PHP Unit 実行
         run: |
