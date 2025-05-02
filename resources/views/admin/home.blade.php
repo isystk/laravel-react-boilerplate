@@ -1,5 +1,4 @@
 @extends('layouts.app_admin')
-
 @section('title', __('common.HOME'))
 
 @section('breadcrumbs')

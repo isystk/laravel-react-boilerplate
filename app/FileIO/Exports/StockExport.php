@@ -33,7 +33,8 @@ class StockExport implements FromCollection, WithHeadings
      */
     public function collection(): Collection
     {
-        return $this->stocks->map(function (Stock $stock) {
+        return $this->stocks->map(function (Stock $stock)
+        {
             return [
                 'id' => $stock->id,
                 'name' => $stock->name,
@@ -52,7 +53,7 @@ class StockExport implements FromCollection, WithHeadings
         return [
             'ID',
             '商品名',
-            '価格'
+            '価格',
         ];
     }
 

@@ -20,8 +20,7 @@ class CreateService extends BaseService
      */
     public function __construct(
         StockRepository $stockRepository
-    )
-    {
+    ) {
         $this->stockRepository = $stockRepository;
     }
 

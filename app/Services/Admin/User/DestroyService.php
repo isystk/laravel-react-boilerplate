@@ -16,8 +16,7 @@ class DestroyService extends BaseService
      */
     public function __construct(
         UserRepository $userRepository
-    )
-    {
+    ) {
         $this->userRepository = $userRepository;
     }
 

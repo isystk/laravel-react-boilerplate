@@ -3,10 +3,10 @@
 namespace App\Domain\Repositories\Order;
 
 use App\Domain\Entities\Order;
+use App\Domain\Repositories\BaseRepository;
 use Carbon\CarbonImmutable;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
-use App\Domain\Repositories\BaseRepository;
 
 interface OrderRepository extends BaseRepository
 {

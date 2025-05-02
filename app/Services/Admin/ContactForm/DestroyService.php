@@ -2,7 +2,6 @@
 
 namespace App\Services\Admin\ContactForm;
 
-use App\Domain\Entities\ContactFormImage;
 use App\Domain\Repositories\ContactForm\ContactFormImageRepository;
 use App\Domain\Repositories\ContactForm\ContactFormRepository;
 use App\Services\BaseService;
@@ -21,8 +20,7 @@ class DestroyService extends BaseService
     public function __construct(
         ContactFormRepository $contactFormRepository,
         ContactFormImageRepository $contactFormImageRepository
-    )
-    {
+    ) {
         $this->contactFormRepository = $contactFormRepository;
         $this->contactFormImageRepository = $contactFormImageRepository;
     }

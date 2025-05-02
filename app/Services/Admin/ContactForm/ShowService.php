@@ -18,8 +18,7 @@ class ShowService extends BaseService
      */
     public function __construct(
         ContactFormImageRepository $contactFormImageRepository
-    )
-    {
+    ) {
         $this->contactFormImageRepository = $contactFormImageRepository;
     }
 

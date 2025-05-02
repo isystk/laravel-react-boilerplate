@@ -1,5 +1,4 @@
 @extends('layouts.app_admin')
-
 @section('title', $stock->name)
 @php
     $menu = 'master';
@@ -12,7 +11,10 @@
 
 @section('content')
     <div class="text-left mb-3">
-        <a class="btn btn-secondary" href="{{ route('admin.stock') }}">{{ __('common.Back') }}</a>
+        <a
+            class="btn btn-secondary"
+            href="{{ route('admin.stock') }}"
+        >{{ __('common.Back') }}</a>
     </div>
 
     <div class="card card-purple">
@@ -52,8 +54,16 @@
             <div class="form-group">
                 <div class="control-group">
                     <label class="col-sm-2 control-label">{{ __('stock.Image') }}</label>
-                    <div class="col-sm-4" id="result">
-                        <img src="{{ asset('/uploads/stock/'.$stock->imgpath) }}" alt="" width="200px" id="stockImage" />
+                    <div
+                        class="col-sm-4"
+                        id="result"
+                    >
+                        <img
+                            src="{{ asset('/uploads/stock/'.$stock->imgpath) }}"
+                            alt=""
+                            width="200px"
+                            id="stockImage"
+                        />
                     </div>
                 </div>
             </div>
@@ -72,7 +82,10 @@
                     </a>
                 </div>
             </div>
-            <div class="d-inline-block position-absolute" style="right: 30px;">
+            <div
+                class="d-inline-block position-absolute"
+                style="right: 30px;"
+            >
                 <form
                     method="POST"
                     action="{{ route('admin.stock.destroy', ['stock' => $stock ]) }}"

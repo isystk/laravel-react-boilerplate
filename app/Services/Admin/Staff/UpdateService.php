@@ -18,8 +18,7 @@ class UpdateService extends BaseService
      */
     public function __construct(
         AdminRepository $adminRepository
-    )
-    {
+    ) {
         $this->adminRepository = $adminRepository;
     }
 

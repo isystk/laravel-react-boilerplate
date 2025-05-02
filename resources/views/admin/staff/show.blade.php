@@ -1,5 +1,4 @@
 @extends('layouts.app_admin')
-
 @section('title', $staff->name)
 @php
     $menu = 'system';
@@ -12,7 +11,10 @@
 
 @section('content')
     <div class="text-left mb-3">
-        <a class="btn btn-secondary" href="{{ route('admin.staff') }}">{{ __('common.Back') }}</a>
+        <a
+            class="btn btn-secondary"
+            href="{{ route('admin.staff') }}"
+        >{{ __('common.Back') }}</a>
     </div>
 
     @if ($errors->any())
@@ -66,7 +68,10 @@
                     </a>
                 </div>
             </div>
-            <div class="d-inline-block position-absolute" style="right: 30px;">
+            <div
+                class="d-inline-block position-absolute"
+                style="right: 30px;"
+            >
                 <form
                     method="POST"
                     action="{{ route('admin.staff.destroy', ['staff' => $staff ]) }}"

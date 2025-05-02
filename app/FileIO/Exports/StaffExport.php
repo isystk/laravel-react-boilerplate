@@ -34,7 +34,8 @@ class StaffExport implements FromCollection, WithHeadings
      */
     public function collection(): Collection
     {
-        return $this->admins->map(function ($admin) {
+        return $this->admins->map(function ($admin)
+        {
             return [
                 'id' => $admin->id,
                 'name' => $admin->name,
@@ -55,7 +56,7 @@ class StaffExport implements FromCollection, WithHeadings
             'ID',
             '名前',
             'メールアドレス',
-            '権限'
+            '権限',
         ];
     }
 

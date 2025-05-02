@@ -26,8 +26,7 @@ class ImportService extends BaseService
      */
     public function __construct(
         ImportHistoryRepository $importHistoryRepository
-    )
-    {
+    ) {
         $this->importHistoryRepository = $importHistoryRepository;
     }
 

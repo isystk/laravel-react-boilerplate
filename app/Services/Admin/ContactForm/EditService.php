@@ -18,8 +18,7 @@ class EditService extends BaseService
      */
     public function __construct(
         ContactFormImageRepository $contactFormImageRepository
-    )
-    {
+    ) {
         $this->contactFormImageRepository = $contactFormImageRepository;
     }
 

@@ -1,5 +1,4 @@
 @extends('layouts.app_admin')
-
 @section('title', __('staff.Staff List'))
 @php
     $menu = 'system';
@@ -13,7 +12,10 @@
 @section('content')
 
     @if (session('status'))
-        <div class="alert alert-success" role="alert">
+        <div
+            class="alert alert-success"
+            role="alert"
+        >
             {{ session('status') }}
         </div>
     @endif
@@ -44,15 +46,24 @@
         <div class="card-header">
             <h3 class="card-title">{{ __('common.Search Condition') }}</h3>
         </div>
-        <form action="{{ route('admin.staff') }}" method="GET">
+        <form
+            action="{{ route('admin.staff') }}"
+            method="GET"
+        >
             <div class="card-body">
                 @if (session('status'))
-                    <div class="alert alert-success" role="alert">
+                    <div
+                        class="alert alert-success"
+                        role="alert"
+                    >
                         {{ session('status') }}
                     </div>
                 @endif
                 <div class="form-group">
-                    <div class="control-group" id="staffName">
+                    <div
+                        class="control-group"
+                        id="staffName"
+                    >
                         <label class="col-sm-2 control-label">{{ __('staff.Name') }}</label>
                         <div class="col-sm-4">
                             <input
@@ -96,14 +107,33 @@
                 </div>
             </div>
             <div class="card-footer text-center">
-                <button type="submit" class="btn btn-secondary">{{ __('common.Search') }}</button>
+                <button
+                    type="submit"
+                    class="btn btn-secondary"
+                >{{ __('common.Search') }}</button>
             </div>
         </form>
     </div>
-    <form action="{{ route('admin.staff') }}" method="GET" id="pagingForm">
-        <input type="hidden" name="name" value="{{ $request->name }}" />
-        <input type="hidden" name="email" value="{{ $request->email }}" />
-        <input type="hidden" name="role" value="{{ $request->role }}" />
+    <form
+        action="{{ route('admin.staff') }}"
+        method="GET"
+        id="pagingForm"
+    >
+        <input
+            type="hidden"
+            name="name"
+            value="{{ $request->name }}"
+        />
+        <input
+            type="hidden"
+            name="email"
+            value="{{ $request->email }}"
+        />
+        <input
+            type="hidden"
+            name="role"
+            value="{{ $request->role }}"
+        />
     </form>
     <div class="row">
         <div class="col-12">

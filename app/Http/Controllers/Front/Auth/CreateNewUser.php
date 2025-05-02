@@ -26,7 +26,7 @@ class CreateNewUser implements CreatesNewUsers
             'name' => [
                 'required',
                 'string',
-                'max:' . $maxlength['name']
+                'max:' . $maxlength['name'],
             ],
             'email' => [
                 'required',

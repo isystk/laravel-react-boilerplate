@@ -3,9 +3,9 @@
 namespace App\Http\Requests\Admin\Staff;
 
 use App\Enums\AdminRole;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Validation\Rules\Password;
-use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequest extends FormRequest
 {
@@ -39,7 +39,7 @@ class StoreRequest extends FormRequest
             'name' => [
                 'required',
                 'string',
-                'max:' . $maxlength['name']
+                'max:' . $maxlength['name'],
             ],
             'email' => [
                 'required',
@@ -53,7 +53,7 @@ class StoreRequest extends FormRequest
                 'string',
                 'max:' . $maxlength['password'],
                 Password::default(),
-                'confirmed'
+                'confirmed',
             ],
             'role' => [
                 'required',

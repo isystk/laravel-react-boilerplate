@@ -75,7 +75,7 @@ class StoreRequest extends FormRequest
             'fileName' => [
                 'nullable',
                 'string',
-            ]
+            ],
         ];
     }
 

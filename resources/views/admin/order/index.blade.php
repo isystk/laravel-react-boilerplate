@@ -1,5 +1,4 @@
 @extends('layouts.app_admin')
-
 @section('title', __('order.Order List'))
 @php
     $menu = 'master';
@@ -15,15 +14,24 @@
         <div class="card-header">
             <h3 class="card-title">{{ __('common.Search Condition') }}</h3>
         </div>
-        <form action="{{ route('admin.order') }}" method="GET">
+        <form
+            action="{{ route('admin.order') }}"
+            method="GET"
+        >
             <div class="card-body">
                 @if (session('status'))
-                    <div class="alert alert-success" role="alert">
+                    <div
+                        class="alert alert-success"
+                        role="alert"
+                    >
                         {{ session('status') }}
                     </div>
                 @endif
                 <div class="form-group">
-                    <div class="control-group" id="orderName">
+                    <div
+                        class="control-group"
+                        id="orderName"
+                    >
                         <label class="col-sm-2 control-label">{{ __('order.User Name') }}</label>
                         <div class="col-sm-4">
                             <input
@@ -37,7 +45,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="control-group" id="orderName">
+                    <div
+                        class="control-group"
+                        id="orderName"
+                    >
                         <label class="col-sm-2 control-label">{{ __('order.Order Date') }}</label>
                         <div class="col">
                             <div class="row">
@@ -66,12 +77,23 @@
                 </div>
             </div>
             <div class="card-footer text-center">
-                <button type="submit" class="btn btn-secondary">{{ __('common.Search') }}</button>
+                <button
+                    type="submit"
+                    class="btn btn-secondary"
+                >{{ __('common.Search') }}</button>
             </div>
         </form>
     </div>
-    <form action="{{ route('admin.order') }}" method="GET" id="pagingForm">
-        <input type="hidden" name="name" value="{{ $request->name }}">
+    <form
+        action="{{ route('admin.order') }}"
+        method="GET"
+        id="pagingForm"
+    >
+        <input
+            type="hidden"
+            name="name"
+            value="{{ $request->name }}"
+        >
     </form>
     <div class="row">
         <div class="col-12">
@@ -82,12 +104,12 @@
                 <div class="card-body table-responsive p-0">
                     <table class="table table-hover text-nowrap">
                         <thead>
-                            <tr>
-                                @include('admin.common.sortablelink_th', ['params' => ['id', __('order.ID')]])
-                                @include('admin.common.sortablelink_th', ['params' => ['users.name', __('order.User Name')]])
-                                @include('admin.common.sortablelink_th', ['params' => ['sum_price', __('order.Sum Price')]])
-                                @include('admin.common.sortablelink_th', ['params' => ['created_at', __('order.Order Date')]])
-                            </tr>
+                        <tr>
+                            @include('admin.common.sortablelink_th', ['params' => ['id', __('order.ID')]])
+                            @include('admin.common.sortablelink_th', ['params' => ['users.name', __('order.User Name')]])
+                            @include('admin.common.sortablelink_th', ['params' => ['sum_price', __('order.Sum Price')]])
+                            @include('admin.common.sortablelink_th', ['params' => ['created_at', __('order.Order Date')]])
+                        </tr>
                         </thead>
                         <tbody>
                         @foreach($orders as $order)

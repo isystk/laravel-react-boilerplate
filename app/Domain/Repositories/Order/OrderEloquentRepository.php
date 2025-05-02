@@ -55,7 +55,6 @@ class OrderEloquentRepository extends BaseEloquentRepository implements OrderRep
         }
 
         return null !== $conditions['limit'] ? $query->paginate($conditions['limit']) : $query->get();
-
     }
 
 }

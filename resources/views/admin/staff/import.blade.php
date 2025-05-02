@@ -1,5 +1,4 @@
 @extends('layouts.app_admin')
-
 @section('title',  __('staff.Staff Import'))
 @php
     $menu = 'system';
@@ -12,7 +11,10 @@
 
 @section('content')
     <div class="text-left mb-3">
-        <a class="btn btn-secondary" href="{{ route('admin.staff') }}">{{ __('common.Back') }}</a>
+        <a
+            class="btn btn-secondary"
+            href="{{ route('admin.staff') }}"
+        >{{ __('common.Back') }}</a>
     </div>
 
     @if ($errors->any())
@@ -41,7 +43,10 @@
                             {{ __('common.Export') }}
                             <span class="caret"></span>
                         </button>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                        <div
+                            class="dropdown-menu dropdown-menu-right"
+                            aria-labelledby="dropdownMenu1"
+                        >
                             <a
                                 class="dropdown-item text-muted js-download"
                                 href="{{ route('admin.staff.import.export') . '?file_type=csv' }}"
@@ -52,7 +57,7 @@
                             >{{ __('common.Excel Download') }}</a>
                         </div>
                     </div>
-                    <div class="text-center" >
+                    <div class="text-center">
                         <form
                             method="POST"
                             action="{{ route('admin.staff.import.store') }}"
@@ -80,24 +85,24 @@
             </div>
             <div class="row mt-4">
                 <div class="col">
-                @if(0 < count($importHistories))
-                    <div class="history">
-                        <table class="border table">
-                           @foreach (array_slice($importHistories, 0, 10) as $importHistory)
-                                <tr data-id="{{ $importHistory["id"] }}">
-                                    <td>{{ $importHistory["import_at"] }}</td>
-                                    <td>{{ $importHistory["import_user_name"] }}</td>
-                                    <td>
-                                        <a
-                                            href="{{ route('admin.staff.import.import_file', $importHistory["id"]) }}"
-                                        >{{ $importHistory["file_name"] }}</a>
-                                    </td>
-                                    <td>{{ $importHistory["status"] }}</td>
-                                </tr>
-                            @endforeach
-                        </table>
-                    </div>
-                @endif
+                    @if(0 < count($importHistories))
+                        <div class="history">
+                            <table class="border table">
+                                @foreach (array_slice($importHistories, 0, 10) as $importHistory)
+                                    <tr data-id="{{ $importHistory["id"] }}">
+                                        <td>{{ $importHistory["import_at"] }}</td>
+                                        <td>{{ $importHistory["import_user_name"] }}</td>
+                                        <td>
+                                            <a
+                                                href="{{ route('admin.staff.import.import_file', $importHistory["id"]) }}"
+                                            >{{ $importHistory["file_name"] }}</a>
+                                        </td>
+                                        <td>{{ $importHistory["status"] }}</td>
+                                    </tr>
+                                @endforeach
+                            </table>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
