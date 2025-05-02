@@ -242,6 +242,7 @@ Options:
   app login                Webサーバーにログインします。
   app test                 Laravelのテストコードを実行します。
   check git-cr             Git 管理下のテキストファイルのうち、CRLF または CR 改行を含むファイルを検出
+  check sh-exec            シェルスクリプトに実行権限が付与されていないファイルを検出
   --version, -v     バージョンを表示します。
   --help, -h        ヘルプを表示します。
 ```

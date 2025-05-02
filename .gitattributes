@@ -41,7 +41,6 @@
 *.xml diff=xml
 *.env diff=astextplain
 *.txt diff=astextplain
-*.sh text eol=lf diff=astextplain
 
 # ========================================
 # Git archive で含めないファイル（主にCI系）
