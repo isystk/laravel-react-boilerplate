@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $email
  * @property string|null $url
  * @property bool $gender
+ * @property int $age
  * @property string|null $contact
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at

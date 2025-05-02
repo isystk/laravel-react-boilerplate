@@ -1,27 +1,35 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mails;
 
 use App\Domain\Entities\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class CheckoutCompleteMailable extends Mailable
+class CheckoutCompleteToUser extends Mailable
 {
     use Queueable, SerializesModels;
 
     private User $user;
     private int $amount;
     /**
-     * @var array{
+     * @var array<array{
      *     name: string,
      *     quantity: int,
      *     price: int
-     * }
+     * }>
      */
     private array $orderItems;
 
+
+    /**
+     * @param  array<array{
+     *     name: string,
+     *     quantity: int,
+     *     price: int
+     * }> $orderItems
+     */
     public function __construct(
         User $user,
         int $amount,
@@ -41,9 +49,9 @@ class CheckoutCompleteMailable extends Mailable
     {
         return $this
             ->from(config('mail.from.address'))
-            ->view('mails.checkout_complete_html')
-            ->text('mails.checkout_complete_text')
             ->subject(config('const.mail.subject.checkout_complete_to_user'))
+            ->view('mails.checkout_complete_to_user_html')
+            ->text('mails.checkout_complete_to_user_text')
             ->with([
                 'user' => $this->user,
                 'amount' => $this->amount,

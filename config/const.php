@@ -43,7 +43,9 @@ return [
 
     'mail' => [
         'subject' => [
-            'checkout_complete_to_user' => '商品の購入が完了しました',
+            'reset_password_to_user' => '【Laraec】パスワードリセットのご案内',
+            'verify_email_to_user' => '【Laraec】メールアドレス確認のお願い',
+            'checkout_complete_to_user' => '【Laraec】ご購入ありがとうございます',
         ],
     ],
 
