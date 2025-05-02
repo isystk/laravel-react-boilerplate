@@ -1,13 +1,13 @@
 import { Url } from '@/constants/url';
 import { Link } from 'react-router-dom';
 import BasicLayout from '@/components/templates/BasicLayout';
-import useAppRoot from '@/stores/useAppRoot';
+import useAppRoot from '@/states/useAppRoot';
 
 const ShopComplete = () => {
-  const appRoot = useAppRoot();
-  if (!appRoot) return <></>;
+  const [state] = useAppRoot();
+  if (!state) return <></>;
 
-  const auth = appRoot.auth;
+  const auth = state.auth;
 
   return (
     <BasicLayout title="商品購入完了">

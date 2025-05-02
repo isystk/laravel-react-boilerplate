@@ -1,10 +1,10 @@
-import useAppRoot from '@/stores/useAppRoot';
+import useAppRoot from '@/states/useAppRoot';
 
 const CSRFToken = () => {
-  const appRoot = useAppRoot();
-  if (!appRoot) return <></>;
+  const [state] = useAppRoot();
+  if (!state) return <></>;
 
-  const { csrf } = appRoot.auth;
+  const { csrf } = state.auth;
   return <input type="hidden" name="_token" defaultValue={csrf || ''} />;
 };
 

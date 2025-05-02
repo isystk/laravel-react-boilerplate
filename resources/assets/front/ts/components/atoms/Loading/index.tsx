@@ -1,12 +1,12 @@
 import styles from './styles.module.scss';
-import useAppRoot from '@/stores/useAppRoot';
+import useAppRoot from '@/states/useAppRoot';
 import Portal from '@/components/interactions/Portal';
 
 const Loading = () => {
-  const appRoot = useAppRoot();
-  if (!appRoot) return null;
+  const [state] = useAppRoot();
+  if (!state) return null;
 
-  const { isShowLoading } = appRoot;
+  const { isShowLoading } = state;
 
   return (
     <Portal>

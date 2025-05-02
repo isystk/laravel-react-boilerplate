@@ -1,11 +1,11 @@
 import SessionAlert from '@/components/atoms/SessionAlert';
 import CSRFToken from '@/components/atoms/CSRFToken';
 import BasicLayout from '@/components/templates/BasicLayout';
-import useAppRoot from '@/stores/useAppRoot';
+import useAppRoot from '@/states/useAppRoot';
 
 const Verify = () => {
-  const appRoot = useAppRoot();
-  if (!appRoot) return <></>;
+  const [state] = useAppRoot();
+  if (!state) return <></>;
 
   return (
     <BasicLayout title="メールを確認してください">

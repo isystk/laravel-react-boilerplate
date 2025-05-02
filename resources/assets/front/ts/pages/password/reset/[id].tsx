@@ -3,12 +3,12 @@ import CSRFToken from '@/components/atoms/CSRFToken';
 import RequestToken from '@/components/atoms/RequestToken';
 import SessionAlert from '@/components/atoms/SessionAlert';
 import BasicLayout from '@/components/templates/BasicLayout';
-import useAppRoot from '@/stores/useAppRoot';
+import useAppRoot from '@/states/useAppRoot';
 import TextInput from '@/components/atoms/TextInput';
 
 const ResetForm = () => {
-  const appRoot = useAppRoot();
-  if (!appRoot) return <></>;
+  const [state] = useAppRoot();
+  if (!state) return <></>;
 
   const [email, setEmail] = useState<string>('');
 

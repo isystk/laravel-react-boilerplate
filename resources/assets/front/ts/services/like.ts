@@ -1,13 +1,14 @@
 import MainService from '@/services/main';
 import { Api } from '@/constants/api';
+import LikeState from '@/states/like';
 
 export default class LikeService {
   main: MainService;
-  data: string[];
+  like: LikeState;
 
   constructor(main: MainService) {
     this.main = main;
-    this.data = [];
+    this.like = main.root.like;
   }
 
   async readLikesAsync() {
@@ -16,8 +17,8 @@ export default class LikeService {
     try {
       const response = await fetch(Api.likes);
       const { likes } = await response.json();
-      this.data = likes.data;
-      this.main.setAppRoot();
+      this.like.data = likes.data;
+      this.main.setRootState();
     } catch (e) {
       alert('お気に入りの取得に失敗しました');
     }
@@ -41,9 +42,9 @@ export default class LikeService {
       if (result) {
         window.alert('お気に入りに追加しました');
         const newData: string = id + '';
-        this.data = [newData, ...this.data];
+        this.like.data = [newData, ...this.like.data];
       }
-      this.main.setAppRoot();
+      this.main.setRootState();
     } catch (e) {
       alert('お気に入りの追加に失敗しました');
     }
@@ -58,9 +59,9 @@ export default class LikeService {
       });
       const { result } = await response.json();
       if (result) {
-        this.data = this.data.filter(n => n !== id + '');
+        this.like.data = this.like.data.filter(n => n !== id + '');
       }
-      this.main.setAppRoot();
+      this.main.setRootState();
     } catch (e) {
       alert('お気に入りの削除に失敗しました');
     }

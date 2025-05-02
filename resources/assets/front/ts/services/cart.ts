@@ -1,45 +1,14 @@
 import MainService from '@/services/main';
 import { Api } from '@/constants/api';
-
-export type Carts = {
-  data: Cart[];
-  message: string;
-  username: string;
-  count: number;
-  sum: number;
-};
-
-export type Cart = {
-  id: number;
-  name: string;
-  detail: string;
-  price: number;
-  imgpath: string;
-  quantity: number;
-  created_at: Date;
-  updated_at: Date;
-};
-
-type Form = {
-  amount: number;
-  username: string;
-};
-
-const initialState: Carts = {
-  data: [],
-  message: '',
-  username: '',
-  count: 0,
-  sum: 0,
-};
+import CartState from '@/states/cart';
 
 export default class CartService {
   main: MainService;
-  carts: Carts;
+  cart: CartState;
 
   constructor(main: MainService) {
     this.main = main;
-    this.carts = initialState;
+    this.cart = main.root.cart;
   }
 
   async readCarts() {
@@ -54,14 +23,14 @@ export default class CartService {
       });
       const { result, carts } = await response.json();
       if (result) {
-        this.carts = carts;
+        this.cart.carts = carts;
       }
     } catch (e) {
       alert('マイカートの取得に失敗しました');
     }
     // ローディングを非表示にする
     this.main.hideLoading();
-    this.main.setAppRoot();
+    this.main.setRootState();
   }
 
   async addCart(stockId: number): Promise<void> {
@@ -79,14 +48,14 @@ export default class CartService {
       });
       const { result, carts } = await response.json();
       if (result) {
-        this.carts = carts;
+        this.cart.carts = carts;
       }
     } catch (e) {
       alert('マイカートの追加に失敗しました');
     }
     // ローディングを非表示にする
     this.main.hideLoading();
-    this.main.setAppRoot();
+    this.main.setRootState();
   }
 
   async removeCart(cartId: number): Promise<void> {
@@ -104,17 +73,17 @@ export default class CartService {
       });
       const { result, carts } = await response.json();
       if (result) {
-        this.carts = carts;
+        this.cart.carts = carts;
       }
     } catch (e) {
       alert('マイカートの削除に失敗しました');
     }
     // ローディングを非表示にする
     this.main.hideLoading();
-    this.main.setAppRoot();
+    this.main.setRootState();
   }
 
-  async payment(stripe, elements, values: Form): Promise<boolean> {
+  async payment(stripe, elements, amount, username): Promise<boolean> {
     // ローディングを表示する
     this.main.showLoading();
     try {
@@ -125,8 +94,8 @@ export default class CartService {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          amount: values.amount,
-          username: values.username,
+          amount,
+          username,
         }),
       });
       const { client_secret } = await response.json();
@@ -137,7 +106,7 @@ export default class CartService {
           // @ts-ignore
           card: elements.getElement('cardNumber'),
           billing_details: {
-            name: values.username,
+            name: username,
           },
         },
       });
@@ -157,7 +126,7 @@ export default class CartService {
       return false;
     } finally {
       this.main.hideLoading();
-      this.main.setAppRoot();
+      this.main.setRootState();
     }
     return true;
   }

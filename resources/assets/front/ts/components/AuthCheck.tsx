@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import { Url } from '@/constants/url';
-import { Session } from '@/services/auth';
+import { Session } from '@/states/auth';
 import { ReactNode } from 'react';
 
 type Props = {
