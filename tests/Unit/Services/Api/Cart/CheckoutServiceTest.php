@@ -26,6 +26,8 @@ class CheckoutServiceTest extends TestCase
      */
     public function testCheckout(): void
     {
+        $this->markTestSkipped('StripeのAPIを叩くテストなので、実行しない');
+
         $user1 = $this->createDefaultUser([
             'name' => 'aaa',
             'email' => 'aaa@test.com',

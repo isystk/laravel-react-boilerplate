@@ -41,6 +41,12 @@ return [
          ],
     ],
 
+    'mail' => [
+        'subject' => [
+            'checkout_complete_to_user' => '商品の購入が完了しました',
+        ],
+    ],
+
     'stripe' => [
         'secret' => env('STRIPE_SECRET', ''),
      ],

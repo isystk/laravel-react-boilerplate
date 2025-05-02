@@ -15,20 +15,20 @@
     商品の購入が完了しました。
 </h1>
 <div>
-    {{ $data->name }}さん。
+    {{ $user->name }}さん。
     <br/>
     <br/>
     この度は、商品をご購入頂き、誠にありがとうございました。
     <br/>
     <br/>
-    合計金額：{{ $data->amount }}円
+    合計金額：{{ $amount }}円
     <br/>
     <br/>
     内訳：
     <br/>
     <ul>
-        @foreach($data->stocks as $stock)
-            <li>{{ $stock->name }} {{ $stock->quantity }}個 {{ $stock->price }}円</li>
+        @foreach($orderItems as $items)
+            <li>{{ $items['name'] }} {{ $items['quantity'] }}個 {{ $items['price'] }}円</li>
         @endforeach
     </ul>
 </div>

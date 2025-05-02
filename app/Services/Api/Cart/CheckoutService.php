@@ -7,9 +7,12 @@ use App\Domain\Repositories\Cart\CartRepository;
 use App\Domain\Repositories\Order\OrderRepository;
 use App\Domain\Repositories\Order\OrderStockRepository;
 use App\Domain\Repositories\Stock\StockRepository;
-use App\Mail\MailNotification;
+use App\Mail\CheckoutCompleteMailable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Stripe\Charge;
+use Stripe\Customer;
+use Stripe\Stripe;
 
 class CheckoutService extends BaseCartService
 {
@@ -47,22 +50,22 @@ class CheckoutService extends BaseCartService
      */
     public function checkout(?string $stripeEmail, ?string $stripeToken): void
     {
-        // Stripe::setApiKey(env('STRIPE_SECRET'));
+        Stripe::setApiKey(config('const.stripe.secret'));
 
-        // // 料金を支払う人
-        // $customer = Customer::create(array(
-        //   'email' => $stripeEmail,
-        //   'source' => $stripeToken
-        // ));
+        // 料金を支払う人
+        $customer = Customer::create(array(
+            'email' => $stripeEmail,
+            'source' => $stripeToken,
+        ));
         $userId = Auth::id();
         $items = $this->getMyCart();
 
         // Stripe 料金の支払いを実行
-        // $charge = Charge::create(array(
-        //   'customer' => $customer->id,
-        //   'amount' => $items['sum'],
-        //   'currency' => 'jpy'
-        // ));
+        Charge::create(array(
+            'customer' => $customer->id,
+            'amount' => $items['sum'],
+            'currency' => 'jpy',
+        ));
 
         $order = $this->orderRepository->create([
             'user_id' => $userId,
@@ -70,26 +73,28 @@ class CheckoutService extends BaseCartService
         ]);
 
         // 発注履歴に追加する。
-        $stocks = [];
+        $orderItems = [];
         foreach ($items['data'] as $data) {
+            $stockId = $data['stock_id'];
+
             $orderStock = $this->orderStockRepository->create([
                 'order_id' => $order->id,
-                'stock_id' => $data['stock_id'],
+                'stock_id' => $stockId,
                 'price' => $data['price'],
                 'quantity' => 1, // TODO 商品毎に個数をサマリーしたい
             ]);
 
             // 在庫を減らす
-            $stock = Stock::find($data['stock_id']);
+            $stock = $this->stockRepository->findById($stockId);
             $newQuantity = $stock->quantity - 1;
             $this->stockRepository->update(
-                $data['stock_id'],
+                $stockId,
                 [
                     'quantity' => $newQuantity,
                 ]
             );
 
-            $stocks[] = (object)[
+            $orderItems[] = [
                 'name' => $data['name'],
                 'quantity' => $orderStock->quantity,
                 'price' => $orderStock->price,
@@ -98,15 +103,12 @@ class CheckoutService extends BaseCartService
 
         $user = Auth::user();
 
-        $mailData = (object)[
-            'name' => $user->name,
-            'amount' => $items['sum'],
-            'stocks' => $stocks,
-        ];
-
-        // メール送信
         Mail::to($user->email)
-            ->send(new MailNotification('stock_complete', '商品の購入が完了しました', $mailData));
+            ->send(new CheckoutCompleteMailable(
+                $user,
+                $items['sum'],
+                $orderItems
+            ));
 
         // カートからすべての商品を削除
         $userId = Auth::id();
