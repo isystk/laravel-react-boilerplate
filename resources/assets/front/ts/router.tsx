@@ -14,8 +14,8 @@ import ShopComplete from '@/pages/complete';
 import Top from '@/pages/top';
 import Verify from '@/pages/email/verify';
 import { Url } from '@/constants/url';
-import useAppRoot from '@/hooks/useAppRoot';
-import { Session } from '@/state/auth';
+import useAppRoot from '@/states/useAppRoot';
+import { Session } from '@/states/auth';
 
 type Props = {
   session: Session;

@@ -1,6 +1,6 @@
 import MainService from '@/services/main';
 import { Api } from '@/constants/api';
-import LikeState from '@/state/like';
+import LikeState from '@/states/like';
 
 export default class LikeService {
   main: MainService;

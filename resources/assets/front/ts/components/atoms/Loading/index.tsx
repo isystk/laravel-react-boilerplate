@@ -1,5 +1,5 @@
 import styles from './styles.module.scss';
-import useAppRoot from '@/hooks/useAppRoot';
+import useAppRoot from '@/states/useAppRoot';
 import Portal from '@/components/interactions/Portal';
 
 const Loading = () => {

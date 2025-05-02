@@ -1,5 +1,5 @@
 import { createContext, useReducer, useContext, ReactNode, Dispatch } from 'react';
-import RootState from '@/state/root';
+import RootState from '@/states/root';
 
 // --- 型定義 ---
 type AppState = {

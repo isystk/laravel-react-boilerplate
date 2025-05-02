@@ -12,7 +12,7 @@ import {
   CardCvcElement,
 } from '@stripe/react-stripe-js';
 import Modal from '@/components/interactions/Modal';
-import useAppRoot from '@/hooks/useAppRoot';
+import useAppRoot from '@/states/useAppRoot';
 
 type Props = {
   isOpen: boolean;

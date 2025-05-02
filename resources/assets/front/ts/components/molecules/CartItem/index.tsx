@@ -1,7 +1,7 @@
 import styles from './styles.module.scss';
 import Image from '@/components/atoms/Image';
-import useAppRoot from '@/hooks/useAppRoot';
-import { type Cart } from '@/state/cart';
+import useAppRoot from '@/states/useAppRoot';
+import { type Cart } from '@/states/cart';
 
 export type Props = Cart & {
   key: number | string;

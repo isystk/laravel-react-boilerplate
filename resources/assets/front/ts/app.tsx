@@ -1,8 +1,8 @@
 import Router from '@/router';
 import axios from 'axios';
 import { createRoot } from 'react-dom/client';
-import { Session } from '@/state/auth';
-import { AppProvider } from '@/state/AppContext';
+import { Session } from '@/states/auth';
+import { AppProvider } from '@/states/AppContext';
 import './styles/app.scss';
 import { StrictMode, Suspense } from 'react';
 

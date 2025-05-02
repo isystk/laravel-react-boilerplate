@@ -1,4 +1,4 @@
-import useAppRoot from '@/hooks/useAppRoot';
+import useAppRoot from '@/states/useAppRoot';
 
 const CSRFToken = () => {
   const [state] = useAppRoot();

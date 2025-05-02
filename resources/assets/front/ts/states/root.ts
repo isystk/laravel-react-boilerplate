@@ -1,8 +1,8 @@
-import ShopState from '@/state/shop';
-import AuthState from '@/state/auth';
-import ConstState from '@/state/const';
-import LikeState from '@/state/like';
-import CartState from '@/state/cart';
+import ShopState from '@/states/shop';
+import AuthState from '@/states/auth';
+import ConstState from '@/states/const';
+import LikeState from '@/states/like';
+import CartState from '@/states/cart';
 
 export default class RootState {
   public isShowLoading: boolean;

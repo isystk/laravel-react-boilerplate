@@ -1,16 +1,16 @@
-import { useEffect } from 'react';
-import { useAppState, useAppDispatch } from '@/state/AppContext';
+import { useEffect, useMemo, useCallback } from 'react';
+import { useAppState, useAppDispatch } from '@/states/AppContext';
 import MainService from '@/services/main';
-import RootState from '@/state/root';
+import RootState from '@/states/root';
 
 const useAppRoot = (): [RootState | null, MainService] => {
   const { root: state } = useAppState();
   const dispatch = useAppDispatch();
 
-  const setRootState = async (root: RootState) => {
+  const setRootState = useCallback(async (root: RootState) => {
     dispatch({ type: 'SET_STATE', payload: root });
     dispatch({ type: 'TOGGLE_STATE' });
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     const init = async () => {
@@ -21,9 +21,9 @@ const useAppRoot = (): [RootState | null, MainService] => {
     if (!state) {
       init();
     }
-  }, []);
+  }, [state, setRootState]);
 
-  const service = new MainService(state, setRootState);
+  const service = useMemo(() => new MainService(state, setRootState), [state, setRootState]);
 
   return [state, service];
 };

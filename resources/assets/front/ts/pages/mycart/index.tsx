@@ -1,4 +1,4 @@
-import useAppRoot from '@/hooks/useAppRoot';
+import useAppRoot from '@/states/useAppRoot';
 import { useEffect, useState } from 'react';
 import BasicLayout from '@/components/templates/BasicLayout';
 import CartItem from '@/components/molecules/CartItem';

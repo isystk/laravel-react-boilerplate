@@ -1,6 +1,6 @@
 import MainService from '@/services/main';
 import { Api } from '@/constants/api';
-import ShopState from '@/state/shop';
+import ShopState from '@/states/shop';
 
 export default class ShopService {
   main: MainService;

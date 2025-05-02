@@ -1,7 +1,7 @@
 import CSRFToken from '@/components/atoms/CSRFToken';
 import SessionAlert from '@/components/atoms/SessionAlert';
 import BasicLayout from '@/components/templates/BasicLayout';
-import useAppRoot from '@/hooks/useAppRoot';
+import useAppRoot from '@/states/useAppRoot';
 import TextInput from '@/components/atoms/TextInput';
 
 const ResetForm = () => {

@@ -4,7 +4,7 @@ import ConstService from '@/services/const';
 import LikeService from '@/services/like';
 import CartService from '@/services/cart';
 import ContactService from '@/services/contact';
-import RootState from '@/state/root';
+import RootState from '@/states/root';
 
 export default class MainService {
   public readonly root: RootState;

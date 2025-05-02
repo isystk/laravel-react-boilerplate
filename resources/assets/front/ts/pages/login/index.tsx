@@ -1,7 +1,7 @@
 import CSRFToken from '@/components/atoms/CSRFToken';
 import { Url } from '@/constants/url';
 import BasicLayout from '@/components/templates/BasicLayout';
-import useAppRoot from '@/hooks/useAppRoot';
+import useAppRoot from '@/states/useAppRoot';
 import { Link } from 'react-router-dom';
 import TextInput from '@/components/atoms/TextInput';
 

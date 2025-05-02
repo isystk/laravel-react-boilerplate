@@ -1,5 +1,5 @@
 import MainService from '@/services/main';
-import AuthState, { Session } from '@/state/auth';
+import AuthState, { Session } from '@/states/auth';
 
 export default class AuthService {
   main: MainService;

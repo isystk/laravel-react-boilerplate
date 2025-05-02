@@ -6,7 +6,7 @@ import BasicLayout from '@/components/templates/BasicLayout';
 import Carousel from '@/components/atoms/Carousel';
 import Pagination from '@/components/atoms/Pagination';
 import StockItems from '@/components/organisms/StockItems';
-import useAppRoot from '@/hooks/useAppRoot';
+import useAppRoot from '@/states/useAppRoot';
 
 const Top = () => {
   const [state, service] = useAppRoot();

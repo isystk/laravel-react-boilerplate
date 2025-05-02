@@ -1,7 +1,7 @@
 import { Url } from '@/constants/url';
 import { Link } from 'react-router-dom';
 import BasicLayout from '@/components/templates/BasicLayout';
-import useAppRoot from '@/hooks/useAppRoot';
+import useAppRoot from '@/states/useAppRoot';
 
 const ShopComplete = () => {
   const [state] = useAppRoot();
