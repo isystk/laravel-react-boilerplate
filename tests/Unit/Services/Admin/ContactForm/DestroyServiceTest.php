@@ -2,8 +2,6 @@
 
 namespace Tests\Unit\Services\Admin\ContactForm;
 
-use App\Domain\Entities\ContactForm;
-use App\Domain\Entities\ContactFormImage;
 use App\Services\Admin\ContactForm\DestroyService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -15,9 +13,6 @@ class DestroyServiceTest extends TestCase
 
     private DestroyService $service;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -25,22 +20,12 @@ class DestroyServiceTest extends TestCase
     }
 
     /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(DestroyService::class, $this->service);
-    }
-
-    /**
      * deleteのテスト
      */
     public function testDelete(): void
     {
-        /** @var ContactForm $contactForm */
-        $contactForm = ContactForm::factory()->create();
-        /** @var ContactFormImage $contactFormImage */
-        $contactFormImage = ContactFormImage::factory()->create([
+        $contactForm = $this->createDefaultContactForm();
+        $contactFormImage = $this->createDefaultContactFormImage([
             'contact_form_id' => $contactForm->id,
         ]);
 

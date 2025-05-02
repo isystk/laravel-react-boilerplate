@@ -20,9 +20,6 @@ class StoreServiceTest extends TestCase
 
     private StoreService $service;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -30,18 +27,12 @@ class StoreServiceTest extends TestCase
     }
 
     /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(StoreService::class, $this->service);
-    }
-
-    /**
      * updateのテスト
      */
     public function testUpdate(): void
     {
+        Storage::fake();
+
         $request = new StoreRequest();
         $request['user_name'] = 'aaa';
         $request['title'] = 'タイトル1';
@@ -71,10 +62,5 @@ class StoreServiceTest extends TestCase
         $createdContactFormImage = ContactFormImage::where(['contact_form_id' => $contactForm->id]);
         $fileNames = $createdContactFormImage->pluck('file_name')->all();
         $this->assertSame(['file1.jpg', 'file2.jpg', 'file3.jpg'], $fileNames);
-
-        // テスト後にファイルを削除
-        Storage::delete('contact/file1.jpg');
-        Storage::delete('contact/file2.jpg');
-        Storage::delete('contact/file3.jpg');
     }
 }

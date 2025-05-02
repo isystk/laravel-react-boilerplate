@@ -1,17 +1,14 @@
 <?php
 
-namespace Feature\Http\Controllers\Admin;
+namespace Http\Controllers\Admin;
 
-use App\Domain\Entities\Admin;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class HomeControllerTest extends TestCase
 {
-    /**
-     * 各テストの実行後にテーブルを空にする。
-     */
+
     use RefreshDatabase;
 
     public function setUp(): void
@@ -25,8 +22,7 @@ class HomeControllerTest extends TestCase
      */
     public function testIndex(): void
     {
-        /** @var Admin $admin */
-        $admin = Admin::factory()->create([
+        $admin = $this->createDefaultAdmin([
             'name' => '管理者A',
             'role' => 'high-manager'
         ]);

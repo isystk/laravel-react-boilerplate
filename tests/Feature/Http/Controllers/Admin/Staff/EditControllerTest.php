@@ -1,17 +1,14 @@
 <?php
 
-namespace Feature\Http\Controllers\Admin\Staff;
+namespace Http\Controllers\Admin\Staff;
 
-use App\Domain\Entities\Admin;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class EditControllerTest extends TestCase
 {
-    /**
-     * 各テストの実行後にテーブルを空にする。
-     */
+
     use RefreshDatabase;
 
     public function setUp(): void
@@ -25,8 +22,7 @@ class EditControllerTest extends TestCase
      */
     public function testEdit(): void
     {
-        /** @var Admin $admin1 */
-        $admin1 = Admin::factory()->create([
+        $admin1 = $this->createDefaultAdmin([
             'name' => '管理者A',
             'role' => 'manager'
         ]);
@@ -36,8 +32,7 @@ class EditControllerTest extends TestCase
         $response = $this->get(route('admin.staff.edit', $admin1));
         $response->assertForbidden();
 
-        /** @var Admin $admin2 */
-        $admin2 = Admin::factory()->create([
+        $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
             'role' => 'high-manager'
         ]);
@@ -52,8 +47,7 @@ class EditControllerTest extends TestCase
      */
     public function testUpdate(): void
     {
-        /** @var Admin $admin1 */
-        $admin1 = Admin::factory()->create([
+        $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
             'email' => 'admin1@test.com',
             'role' => 'manager'
@@ -64,8 +58,7 @@ class EditControllerTest extends TestCase
         $response = $this->put(route('admin.staff.update', $admin1), []);
         $response->assertForbidden();
 
-        /** @var Admin $admin2 */
-        $admin2 = Admin::factory()->create([
+        $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
             'email' => 'admin2@test.com',
             'role' => 'high-manager'

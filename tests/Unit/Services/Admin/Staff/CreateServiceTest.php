@@ -16,21 +16,10 @@ class CreateServiceTest extends TestCase
 
     private CreateService $service;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
         $this->service = app(CreateService::class);
-    }
-
-    /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(CreateService::class, $this->service);
     }
 
     /**

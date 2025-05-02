@@ -2,7 +2,6 @@
 
 namespace Http\Controllers\Admin\Photo;
 
-use App\Domain\Entities\Admin;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
@@ -10,9 +9,7 @@ use Tests\TestCase;
 
 class ListControllerTest extends TestCase
 {
-    /**
-     * 各テストの実行後にテーブルを空にする。
-     */
+
     use RefreshDatabase;
 
     public function setUp(): void
@@ -28,8 +25,7 @@ class ListControllerTest extends TestCase
     {
         Storage::fake();
 
-        /** @var Admin $admin */
-        $admin = Admin::factory()->create([
+        $admin = $this->createDefaultAdmin([
             'name' => '管理者A',
             'role' => 'manager'
         ]);
@@ -56,8 +52,7 @@ class ListControllerTest extends TestCase
     {
         Storage::fake();
 
-        /** @var Admin $admin */
-        $admin = Admin::factory()->create([
+        $admin = $this->createDefaultAdmin([
             'name' => '管理者A',
             'role' => 'manager'
         ]);
@@ -71,8 +66,7 @@ class ListControllerTest extends TestCase
         $response = $this->delete(route('admin.photo.destroy'), []);
         $response->assertForbidden();
 
-        /** @var Admin $admin2 */
-        $admin2 = Admin::factory()->create([
+        $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
             'role' => 'high-manager'
         ]);

@@ -15,21 +15,10 @@ class IndexServiceTest extends TestCase
 
     private IndexService $service;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
         $this->service = app(IndexService::class);
-    }
-
-    /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(IndexService::class, $this->service);
     }
 
     /**
@@ -49,16 +38,14 @@ class IndexServiceTest extends TestCase
         $users = $this->service->searchUser($default);
         $this->assertCount(0, $users->items(), '引数がない状態でエラーにならないことを始めにテスト');
 
-        /** @var User $user1 */
-        $user1 = User::factory([
+        $user1 = $this->createDefaultUser([
             'name' => 'user1',
             'email' => 'user1@test.com',
-        ])->create();
-        /** @var User $user2 */
-        $user2 = User::factory([
+        ]);
+        $user2 = $this->createDefaultUser([
             'name' => 'user2',
             'email' => 'user2@test.com',
-        ])->create();
+        ]);
 
         $input = $default;
         $input['name'] = 'user2';

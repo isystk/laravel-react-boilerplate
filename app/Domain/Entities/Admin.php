@@ -7,6 +7,7 @@ use Database\Factories\Domain\Entities\AdminFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Enums\AdminRole;
 
 /**
  * @property int $id
@@ -55,5 +56,15 @@ class Admin extends Authenticatable
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    public function isHighManager(): bool
+    {
+        return AdminRole::HighManager->value === $this->role;
+    }
+
+    public function isManager(): bool
+    {
+        return AdminRole::Manager->value === $this->role;
+    }
 
 }
