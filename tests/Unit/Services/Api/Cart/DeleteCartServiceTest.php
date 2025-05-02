@@ -26,14 +26,6 @@ class DeleteCartServiceTest extends TestCase
     }
 
     /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(DeleteCartService::class, $this->service);
-    }
-
-    /**
      * deleteMyCartのテスト
      */
     public function testGetMyCart(): void

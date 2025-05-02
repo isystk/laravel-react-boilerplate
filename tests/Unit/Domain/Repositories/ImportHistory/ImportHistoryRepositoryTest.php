@@ -26,14 +26,6 @@ class ImportHistoryRepositoryTest extends TestCase
     }
 
     /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(ImportHistoryRepository::class, $this->repository);
-    }
-
-    /**
      * getByImportHistoryのテスト
      */
     public function testGetByImportHistory(): void

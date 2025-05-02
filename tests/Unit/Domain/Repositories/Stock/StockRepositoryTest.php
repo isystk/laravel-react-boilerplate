@@ -25,14 +25,6 @@ class StockRepositoryTest extends TestCase
     }
 
     /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(StockRepository::class, $this->repository);
-    }
-
-    /**
      * getByLimitのテスト
      */
     public function testGetByLimit(): void

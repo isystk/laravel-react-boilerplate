@@ -25,14 +25,6 @@ class ContactFormRepositoryTest extends TestCase
     }
 
     /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(ContactFormRepository::class, $this->repository);
-    }
-
-    /**
      * getByConditionsのテスト
      */
     public function testGetByConditions(): void

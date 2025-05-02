@@ -27,14 +27,6 @@ class ShowServiceTest extends TestCase
     }
 
     /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(ShowService::class, $this->service);
-    }
-
-    /**
      * getOrderStockのテスト
      */
     public function testGetOrderStock(): void

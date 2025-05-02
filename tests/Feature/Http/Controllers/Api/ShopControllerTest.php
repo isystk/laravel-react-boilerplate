@@ -1,17 +1,14 @@
 <?php
 
-namespace Feature\Http\Controllers\Api;
+namespace Http\Controllers\Api;
 
-use App\Domain\Entities\Stock;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ShopControllerTest extends TestCase
 {
-    /**
-     * 各テストの実行後にテーブルを空にする。
-     */
+
     use RefreshDatabase;
 
     public function setUp(): void
@@ -25,20 +22,13 @@ class ShopControllerTest extends TestCase
      */
     public function testIndex(): void
     {
-        /** @var Stock $stock1 */
-        $stock1 = Stock::factory(['name' => 'stock1'])->create();
-        /** @var Stock $stock2 */
-        $stock2 = Stock::factory(['name' => 'stock2'])->create();
-        /** @var Stock $stock3 */
-        $stock3 = Stock::factory(['name' => 'stock3'])->create();
-        /** @var Stock $stock4 */
-        $stock4 = Stock::factory(['name' => 'stock4'])->create();
-        /** @var Stock $stock5 */
-        $stock5 = Stock::factory(['name' => 'stock5'])->create();
-        /** @var Stock $stock6 */
-        $stock6 = Stock::factory(['name' => 'stock6'])->create();
-        /** @var Stock $stock7 */
-        $stock7 = Stock::factory(['name' => 'stock7'])->create();
+        $this->createDefaultStock(['name' => 'stock1']);
+        $stock2 = $this->createDefaultStock(['name' => 'stock2']);
+        $stock3 = $this->createDefaultStock(['name' => 'stock3']);
+        $stock4 = $this->createDefaultStock(['name' => 'stock4']);
+        $stock5 = $this->createDefaultStock(['name' => 'stock5']);
+        $stock6 = $this->createDefaultStock(['name' => 'stock6']);
+        $stock7 = $this->createDefaultStock(['name' => 'stock7']);
 
         $response = $this->get(route('api.shops'));
         $response->assertSuccessful();

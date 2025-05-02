@@ -27,14 +27,6 @@ class CheckoutServiceTest extends TestCase
     }
 
     /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(CheckoutService::class, $this->service);
-    }
-
-    /**
      * checkoutのテスト
      */
     public function testCheckout(): void

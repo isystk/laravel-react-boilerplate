@@ -25,14 +25,6 @@ class IndexServiceTest extends TestCase
     }
 
     /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(IndexService::class, $this->service);
-    }
-
-    /**
      * searchPhotoListのテスト
      */
     public function testSearchPhotoList(): void

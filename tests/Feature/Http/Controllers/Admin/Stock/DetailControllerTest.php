@@ -1,18 +1,14 @@
 <?php
 
-namespace Feature\Http\Controllers\Admin\Stock;
+namespace Http\Controllers\Admin\Stock;
 
-use App\Domain\Entities\Admin;
-use App\Domain\Entities\Stock;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class DetailControllerTest extends TestCase
 {
-    /**
-     * 各テストの実行後にテーブルを空にする。
-     */
+
     use RefreshDatabase;
 
     public function setUp(): void
@@ -26,16 +22,14 @@ class DetailControllerTest extends TestCase
      */
     public function testShow(): void
     {
-        /** @var Admin $admin1 */
-        $admin1 = Admin::factory()->create([
+        $admin1 = $this->createDefaultAdmin([
             'name' => '管理者A',
             'email' => 'admin1@test.com',
             'role' => 'high-manager'
         ]);
         $this->actingAs($admin1, 'admin');
 
-        /** @var Stock $stock */
-        $stock = Stock::factory()->create([
+        $stock = $this->createDefaultStock([
             'name' => 'aaa',
             'detail' => 'aaaの説明',
             'price' => 111,
@@ -56,15 +50,13 @@ class DetailControllerTest extends TestCase
      */
     public function testDestroy(): void
     {
-        /** @var Admin $admin1 */
-        $admin1 = Admin::factory()->create([
+        $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
             'role' => 'manager'
         ]);
         $this->actingAs($admin1, 'admin');
 
-        /** @var Stock $stock */
-        $stock = Stock::factory()->create([
+        $stock = $this->createDefaultStock([
             'name' => 'aaa',
         ]);
 
@@ -72,8 +64,7 @@ class DetailControllerTest extends TestCase
         $response = $this->delete(route('admin.stock.destroy', $stock));
         $response->assertForbidden();
 
-        /** @var Admin $admin2 */
-        $admin2 = Admin::factory()->create([
+        $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
             'role' => 'high-manager'
         ]);

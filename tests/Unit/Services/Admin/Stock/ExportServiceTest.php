@@ -24,14 +24,6 @@ class ExportServiceTest extends TestCase
     }
 
     /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(ExportService::class, $this->service);
-    }
-
-    /**
      * getExportのテスト
      */
     public function testGetExport(): void

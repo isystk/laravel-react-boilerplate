@@ -1,9 +1,7 @@
 <?php
 
-namespace Feature\Http\Controllers\Admin\User;
+namespace Http\Controllers\Admin\User;
 
-use App\Domain\Entities\Admin;
-use App\Domain\Entities\User;
 use App\Enums\AdminRole;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -11,9 +9,7 @@ use Tests\TestCase;
 
 class ListControllerTest extends TestCase
 {
-    /**
-     * 各テストの実行後にテーブルを空にする。
-     */
+
     use RefreshDatabase;
 
     public function setUp(): void
@@ -27,21 +23,20 @@ class ListControllerTest extends TestCase
      */
     public function testIndex(): void
     {
-        /** @var Admin $admin */
-        $admin = Admin::factory([
+        $admin = $this->createDefaultAdmin([
             'name' => 'admin1',
             'email' => 'admin1@test.com',
             'role' => AdminRole::Manager->value
-        ])->create();
+        ]);
         $this->actingAs($admin, 'admin');
 
-        User::factory([
+        $this->createDefaultUser([
             'name' => 'user1',
-        ])->create();
+        ]);
 
-        User::factory([
+        $this->createDefaultUser([
             'name' => 'user2',
-        ])->create();
+        ]);
 
         $response = $this->get(route('admin.user'));
         $response->assertSuccessful();

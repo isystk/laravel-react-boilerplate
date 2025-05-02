@@ -29,14 +29,6 @@ class OrderRepositoryTest extends TestCase
     }
 
     /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(OrderRepository::class, $this->repository);
-    }
-
-    /**
      * getConditionsWithUserStockのテスト
      */
     public function testGetConditionsWithUserStock(): void

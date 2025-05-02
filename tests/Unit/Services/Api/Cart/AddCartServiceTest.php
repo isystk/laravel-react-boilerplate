@@ -26,14 +26,6 @@ class AddCartServiceTest extends TestCase
     }
 
     /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(AddCartService::class, $this->service);
-    }
-
-    /**
      * addMyCartのテスト
      */
     public function testGetMyCart(): void

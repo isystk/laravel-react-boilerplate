@@ -1,19 +1,14 @@
 <?php
 
-namespace Feature\Http\Controllers\Api;
+namespace Http\Controllers\Api;
 
-use App\Domain\Entities\Cart;
-use App\Domain\Entities\Stock;
-use App\Domain\Entities\User;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class CartControllerTest extends TestCase
 {
-    /**
-     * 各テストの実行後にテーブルを空にする。
-     */
+
     use RefreshDatabase;
 
     public function setUp(): void
@@ -27,8 +22,7 @@ class CartControllerTest extends TestCase
      */
     public function testMyCart(): void
     {
-        /** @var User $user1 */
-        $user1 = User::factory()->create([
+        $user1 = $this->createDefaultUser([
             'name' => 'user1',
             'email' => 'user1@test.com'
         ]);
@@ -47,15 +41,11 @@ class CartControllerTest extends TestCase
             ]
         ]);
 
-        /** @var Stock $stock1 */
-        $stock1 = Stock::factory(['name' => 'stock1', 'price' => 111])->create();
-        /** @var Stock $stock2 */
-        $stock2 = Stock::factory(['name' => 'stock2', 'price' => 222])->create();
+        $stock1 = $this->createDefaultStock(['name' => 'stock1', 'price' => 111]);
+        $stock2 = $this->createDefaultStock(['name' => 'stock2', 'price' => 222]);
 
-        /** @var Cart $cart1 */
-        $cart1 = Cart::factory(['user_id' => $user1->id, 'stock_id' => $stock1->id])->create();
-        /** @var Cart $cart2 */
-        $cart2 = Cart::factory(['user_id' => $user1->id, 'stock_id' => $stock2->id])->create();
+        $cart1 = $this->createDefaultCart(['user_id' => $user1->id, 'stock_id' => $stock1->id]);
+        $cart2 = $this->createDefaultCart(['user_id' => $user1->id, 'stock_id' => $stock2->id]);
 
         $response = $this->post(route('api.shop.mycart'), []);
         $response->assertSuccessful();
@@ -78,21 +68,18 @@ class CartControllerTest extends TestCase
      */
     public function testAddCart(): void
     {
-        /** @var User $user1 */
-        $user1 = User::factory()->create([
+        $user1 = $this->createDefaultUser([
             'name' => 'user1',
             'email' => 'user1@test.com'
         ]);
         $this->actingAs($user1);
 
-        /** @var Stock $stock1 */
-        $stock1 = Stock::factory(['name' => 'stock1', 'price' => 111])->create();
+        $stock1 = $this->createDefaultStock(['name' => 'stock1', 'price' => 111]);
         $response = $this->post(route('api.shop.addcart'), ['stock_id' => $stock1->id]);
         $response->assertSuccessful();
         $this->assertDatabaseCount('carts', 1);
 
-        /** @var Stock $stock2 */
-        $stock2 = Stock::factory(['name' => 'stock2', 'price' => 222])->create();
+        $stock2 = $this->createDefaultStock(['name' => 'stock2', 'price' => 222]);
         $response = $this->post(route('api.shop.addcart'), ['stock_id' => $stock2->id]);
         $response->assertSuccessful();
         $this->assertDatabaseCount('carts', 2);
@@ -103,22 +90,17 @@ class CartControllerTest extends TestCase
      */
     public function testDeleteCart(): void
     {
-        /** @var User $user1 */
-        $user1 = User::factory()->create([
+        $user1 = $this->createDefaultUser([
             'name' => 'user1',
             'email' => 'user1@test.com'
         ]);
         $this->actingAs($user1);
 
-        /** @var Stock $stock1 */
-        $stock1 = Stock::factory(['name' => 'stock1', 'price' => 111])->create();
-        /** @var Stock $stock2 */
-        $stock2 = Stock::factory(['name' => 'stock2', 'price' => 222])->create();
+        $stock1 = $this->createDefaultStock(['name' => 'stock1', 'price' => 111]);
+        $stock2 = $this->createDefaultStock(['name' => 'stock2', 'price' => 222]);
 
-        /** @var Cart $cart1 */
-        $cart1 = Cart::factory(['user_id' => $user1->id, 'stock_id' => $stock1->id])->create();
-        /** @var Cart $cart2 */
-        $cart2 = Cart::factory(['user_id' => $user1->id, 'stock_id' => $stock2->id])->create();
+        $cart1 = $this->createDefaultCart(['user_id' => $user1->id, 'stock_id' => $stock1->id]);
+        $cart2 = $this->createDefaultCart(['user_id' => $user1->id, 'stock_id' => $stock2->id]);
 
         $response = $this->post(route('api.shop.delete'), ['cart_id' => $cart1->id]);
         $response->assertSuccessful();

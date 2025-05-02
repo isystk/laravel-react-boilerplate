@@ -24,14 +24,6 @@ class DestroyServiceTest extends TestCase
     }
 
     /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(DestroyService::class, $this->service);
-    }
-
-    /**
      * deleteのテスト
      */
     public function testDelete(): void

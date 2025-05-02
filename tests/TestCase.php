@@ -2,9 +2,11 @@
 
 namespace Tests;
 
+use App\Domain\Entities\Admin;
 use App\Domain\Entities\Cart;
 use App\Domain\Entities\ContactForm;
 use App\Domain\Entities\ContactFormImage;
+use App\Domain\Entities\MonthlySale;
 use App\Domain\Entities\Order;
 use App\Domain\Entities\OrderStock;
 use App\Domain\Entities\Stock;
@@ -115,6 +117,21 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
+     * Adminを作成する
+     * @param array<string, mixed> $params
+     * @return Admin
+     */
+    public function createDefaultAdmin(array $params = []): Admin
+    {
+        $items = [];
+        if (0 < count($params)) {
+            $items = array_merge($items, $params);
+        }
+        /** @var Admin */
+        return Admin::factory($items)->create();
+    }
+
+    /**
      * Stockを作成する
      * @param array<string, mixed> $params
      * @return Stock
@@ -215,7 +232,25 @@ abstract class TestCase extends BaseTestCase
         $items = [
             'contact_form_id' => $contactForm->id,
         ];
+        if (0 < count($params)) {
+            $items = array_merge($items, $params);
+        }
         /** @var ContactFormImage */
         return ContactFormImage::factory($items)->create();
+    }
+
+    /**
+     * MonthlySaleを作成する
+     * @param array<string, mixed> $params
+     * @return MonthlySale
+     */
+    public function createDefaultMonthlySale(array $params = []): MonthlySale
+    {
+        $items = [];
+        if (0 < count($params)) {
+            $items = array_merge($items, $params);
+        }
+        /** @var MonthlySale */
+        return MonthlySale::factory($items)->create();
     }
 }

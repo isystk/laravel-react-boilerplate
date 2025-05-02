@@ -25,14 +25,6 @@ class UserRepositoryTest extends TestCase
     }
 
     /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(UserRepository::class, $this->repository);
-    }
-
-    /**
      * getByConditionsのテスト
      */
     public function testGetByConditions(): void

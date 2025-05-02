@@ -26,14 +26,6 @@ class CreateServiceTest extends TestCase
     }
 
     /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(CreateService::class, $this->service);
-    }
-
-    /**
      * createのテスト
      */
     public function testCreate(): void

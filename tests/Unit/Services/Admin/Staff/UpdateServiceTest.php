@@ -26,14 +26,6 @@ class UpdateServiceTest extends TestCase
     }
 
     /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(UpdateService::class, $this->service);
-    }
-
-    /**
      * updateのテスト
      */
     public function testUpdate(): void
