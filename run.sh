@@ -53,7 +53,6 @@ case ${1} in
 
     start)
         $DOCKER_COMPOSE up -d --wait
-        $DOCKER_COMPOSE exec -d app php artisan queue:listen --timeout=0
     ;;
 
     stop)

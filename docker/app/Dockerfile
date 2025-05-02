@@ -44,6 +44,11 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV COMPOSER_HOME=/composer
 ENV PATH=$PATH:/composer/vendor/bin
 
+# MC のインストール
+RUN curl -O https://dl.min.io/client/mc/release/linux-amd64/mc
+RUN chmod +x mc
+RUN mv mc /usr/local/bin/
+
 # 作業ディレクトリ
 WORKDIR /var/www/html
 
