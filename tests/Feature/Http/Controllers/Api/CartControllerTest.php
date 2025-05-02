@@ -24,7 +24,7 @@ class CartControllerTest extends TestCase
     {
         $user1 = $this->createDefaultUser([
             'name' => 'user1',
-            'email' => 'user1@test.com'
+            'email' => 'user1@test.com',
         ]);
         $this->actingAs($user1);
 
@@ -37,8 +37,8 @@ class CartControllerTest extends TestCase
                 "data" => [],
                 "username" => $user1->email,
                 "sum" => 0,
-                "count" => 0
-            ]
+                "count" => 0,
+            ],
         ]);
 
         $stock1 = $this->createDefaultStock(['name' => 'stock1', 'price' => 111]);
@@ -58,8 +58,8 @@ class CartControllerTest extends TestCase
                 ],
                 "username" => $user1->email,
                 "sum" => 333,
-                "count" => 2
-            ]
+                "count" => 2,
+            ],
         ]);
     }
 
@@ -70,7 +70,7 @@ class CartControllerTest extends TestCase
     {
         $user1 = $this->createDefaultUser([
             'name' => 'user1',
-            'email' => 'user1@test.com'
+            'email' => 'user1@test.com',
         ]);
         $this->actingAs($user1);
 
@@ -92,7 +92,7 @@ class CartControllerTest extends TestCase
     {
         $user1 = $this->createDefaultUser([
             'name' => 'user1',
-            'email' => 'user1@test.com'
+            'email' => 'user1@test.com',
         ]);
         $this->actingAs($user1);
 

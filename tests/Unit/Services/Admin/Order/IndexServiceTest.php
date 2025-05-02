@@ -82,6 +82,5 @@ class IndexServiceTest extends TestCase
         $orderIds = collect($orders->items())->pluck('id')->all();
         $this->assertContains($order1->id, $orderIds, 'ソート指定で検索が出来ることをテスト');
         $this->assertContains($order2->id, $orderIds, 'ソート指定で検索が出来ることをテスト');
-
     }
 }

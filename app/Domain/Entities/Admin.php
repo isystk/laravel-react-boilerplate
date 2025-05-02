@@ -2,12 +2,12 @@
 
 namespace App\Domain\Entities;
 
+use App\Enums\AdminRole;
 use Carbon\Carbon;
 use Database\Factories\Domain\Entities\AdminFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Enums\AdminRole;
 
 /**
  * @property int $id

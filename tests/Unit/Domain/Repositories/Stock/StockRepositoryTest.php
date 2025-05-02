@@ -60,13 +60,13 @@ class StockRepositoryTest extends TestCase
         /** @var Stock $stock */
         $stock = $this->repository->getByConditions([
             ...$defaultConditions,
-            'name' => 'stock1'
+            'name' => 'stock1',
         ])->first();
         $this->assertSame($expectStock1->id, $stock->id, 'nameで検索が出来ることをテスト');
 
         $stocks = $this->repository->getByConditions([
             ...$defaultConditions,
-            'limit' => 1
+            'limit' => 1,
         ]);
         $this->assertSame(1, $stocks->count(), 'limitで取得件数が指定出来ることをテスト');
     }

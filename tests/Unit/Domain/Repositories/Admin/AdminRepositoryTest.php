@@ -2,8 +2,8 @@
 
 namespace Domain\Repositories\Admin;
 
-use App\Domain\Repositories\Admin\AdminRepository;
 use App\Domain\Entities\Admin;
+use App\Domain\Repositories\Admin\AdminRepository;
 use App\Enums\AdminRole;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -42,38 +42,38 @@ class AdminRepositoryTest extends TestCase
         $expectAdmin1 = $this->createDefaultAdmin([
             'name' => 'admin1',
             'email' => 'admin1@test.com',
-            'role' => AdminRole::HighManager->value
+            'role' => AdminRole::HighManager->value,
         ]);
         $expectAdmin2 = $this->createDefaultAdmin([
             'name' => 'admin2',
             'email' => 'admin2@test.com',
-            'role' => AdminRole::Manager->value
+            'role' => AdminRole::Manager->value,
         ]);
 
         /** @var Admin $admin */
         $admin = $this->repository->getByConditions([
             ...$defaultConditions,
-            'name' => 'admin1'
+            'name' => 'admin1',
         ])->first();
         $this->assertSame($expectAdmin1->id, $admin->id, 'nameで検索が出来ることをテスト');
 
         /** @var Admin $admin */
         $admin = $this->repository->getByConditions([
             ...$defaultConditions,
-            'email' => 'admin2@test.com'
+            'email' => 'admin2@test.com',
         ])->first();
         $this->assertSame($expectAdmin2->id, $admin->id, 'emailで検索が出来ることをテスト');
 
         /** @var Admin $admin */
         $admin = $this->repository->getByConditions([
             ...$defaultConditions,
-            'role' => AdminRole::HighManager->value
+            'role' => AdminRole::HighManager->value,
         ])->first();
         $this->assertSame($expectAdmin1->id, $admin->id, 'roleで検索が出来ることをテスト');
 
         $admins = $this->repository->getByConditions([
             ...$defaultConditions,
-            'limit' => 1
+            'limit' => 1,
         ]);
         $this->assertSame(1, $admins->count(), 'limitで取得件数が指定出来ることをテスト');
     }

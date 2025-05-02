@@ -19,7 +19,7 @@ class ContactFormTest extends TestCase
 
     public function test_getGender(): void
     {
-        $this->sub->gender = (bool) Gender::Male->value;
+        $this->sub->gender = (bool)Gender::Male->value;
         $result = $this->sub->getGender();
         $this->assertInstanceOf(Gender::class, $result);
         $this->assertSame(Gender::Male, $result);

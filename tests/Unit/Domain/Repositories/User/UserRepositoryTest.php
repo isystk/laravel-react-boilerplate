@@ -2,8 +2,8 @@
 
 namespace Domain\Repositories\User;
 
-use App\Domain\Repositories\User\UserRepository;
 use App\Domain\Entities\User;
+use App\Domain\Repositories\User\UserRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -42,20 +42,20 @@ class UserRepositoryTest extends TestCase
         /** @var User $user */
         $user = $this->repository->getByConditions([
             ...$defaultConditions,
-            'name' => 'user1'
+            'name' => 'user1',
         ])->first();
         $this->assertSame($expectUser1->id, $user->id, 'nameで検索が出来ることをテスト');
 
         /** @var User $user */
         $user = $this->repository->getByConditions([
             ...$defaultConditions,
-            'email' => 'user2@test.com'
+            'email' => 'user2@test.com',
         ])->first();
         $this->assertSame($expectUser2->id, $user->id, 'emailで検索が出来ることをテスト');
 
         $users = $this->repository->getByConditions([
             ...$defaultConditions,
-            'limit' => 1
+            'limit' => 1,
         ]);
         $this->assertSame(1, $users->count(), 'limitで取得件数が指定出来ることをテスト');
     }

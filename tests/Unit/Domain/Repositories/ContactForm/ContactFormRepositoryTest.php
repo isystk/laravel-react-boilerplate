@@ -42,20 +42,20 @@ class ContactFormRepositoryTest extends TestCase
         /** @var ContactForm $contactForm */
         $contactForm = $this->repository->getByConditions([
             ...$defaultConditions,
-            'user_name' => 'user1'
+            'user_name' => 'user1',
         ])->first();
         $this->assertSame($expectContactForm1->id, $contactForm->id, 'user_nameで検索が出来ることをテスト');
 
         /** @var ContactForm $contactForm */
         $contactForm = $this->repository->getByConditions([
             ...$defaultConditions,
-            'title' => 'title2'
+            'title' => 'title2',
         ])->first();
         $this->assertSame($expectContactForm2->id, $contactForm->id, 'titleで検索が出来ることをテスト');
 
         $contactForms = $this->repository->getByConditions([
             ...$defaultConditions,
-            'limit' => 1
+            'limit' => 1,
         ]);
         $this->assertSame(1, $contactForms->count(), 'limitで取得件数が指定出来ることをテスト');
     }

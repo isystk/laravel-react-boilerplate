@@ -48,8 +48,11 @@ class IndexServiceTest extends TestCase
             $result[0]['import_at'],
             '取得したがimport_at想定通りであることのテスト'
         );
-        $this->assertSame($admin->name, $result[0]['import_user_name'], '取得したimport_user_nameが想定通りであることのテスト');
-        $this->assertSame($importHistory->file_name, $result[0]['file_name'], '取得したfile_nameが想定通りであることのテスト');
-        $this->assertSame(JobStatus::Success->label(), $result[0]['status'], '取得したstatusが想定通りであることのテスト');
+        $this->assertSame($admin->name, $result[0]['import_user_name'],
+            '取得したimport_user_nameが想定通りであることのテスト');
+        $this->assertSame($importHistory->file_name, $result[0]['file_name'],
+            '取得したfile_nameが想定通りであることのテスト');
+        $this->assertSame(JobStatus::Success->label(), $result[0]['status'],
+            '取得したstatusが想定通りであることのテスト');
     }
 }

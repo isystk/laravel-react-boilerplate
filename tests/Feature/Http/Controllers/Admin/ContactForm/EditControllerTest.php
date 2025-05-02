@@ -29,7 +29,7 @@ class EditControllerTest extends TestCase
     {
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者A',
-            'role' => 'manager'
+            'role' => 'manager',
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -51,7 +51,7 @@ class EditControllerTest extends TestCase
 
         $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
-            'role' => 'high-manager'
+            'role' => 'high-manager',
         ]);
         $this->actingAs($admin2, 'admin');
 
@@ -68,7 +68,7 @@ class EditControllerTest extends TestCase
 
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者A',
-            'role' => 'manager'
+            'role' => 'manager',
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -79,9 +79,12 @@ class EditControllerTest extends TestCase
             'url' => 'https://aaa.test.com',
             'gender' => Gender::Male->value,
             'age' => Age::Over30->value,
-            'contact' => 'お問い合わせ1'
+            'contact' => 'お問い合わせ1',
         ]);
-        $contactFormImage = $this->createDefaultContactFormImage(['contact_form_id' => $contactForm->id, 'file_name' => 'image1.jpg']);
+        $contactFormImage = $this->createDefaultContactFormImage([
+            'contact_form_id' => $contactForm->id,
+            'file_name' => 'image1.jpg',
+        ]);
 
         // manager権限ではアクセスできないことのテスト
         $response = $this->put(route('admin.contact.update', $contactForm), []);
@@ -90,7 +93,7 @@ class EditControllerTest extends TestCase
         /** @var Admin $admin2 */
         $admin2 = Admin::factory()->create([
             'name' => '管理者2',
-            'role' => 'high-manager'
+            'role' => 'high-manager',
         ]);
         $this->actingAs($admin2, 'admin');
 
@@ -122,8 +125,10 @@ class EditControllerTest extends TestCase
         $this->assertDatabaseMissing('contact_form_images', ['id' => $contactFormImage->id]);
 
         // 新しい画像が登録されたことをテスト
-        $this->assertDatabaseHas('contact_form_images', ['contact_form_id' => $contactForm->id, 'file_name' => 'image2.jpg']);
-        $this->assertDatabaseHas('contact_form_images', ['contact_form_id' => $contactForm->id, 'file_name' => 'image3.jpg']);
+        $this->assertDatabaseHas('contact_form_images',
+            ['contact_form_id' => $contactForm->id, 'file_name' => 'image2.jpg']);
+        $this->assertDatabaseHas('contact_form_images',
+            ['contact_form_id' => $contactForm->id, 'file_name' => 'image3.jpg']);
     }
 
 }

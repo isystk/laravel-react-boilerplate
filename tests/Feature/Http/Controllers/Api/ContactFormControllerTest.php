@@ -28,7 +28,7 @@ class ContactFormControllerTest extends TestCase
     {
         $user1 = $this->createDefaultUser([
             'name' => 'user1',
-            'email' => 'user1@test.com'
+            'email' => 'user1@test.com',
         ]);
         $this->actingAs($user1);
 
@@ -44,8 +44,8 @@ class ContactFormControllerTest extends TestCase
                 UploadedFile::fake()->image('image1.jpg'),
                 UploadedFile::fake()->image('image2.jpg'),
                 UploadedFile::fake()->image('image3.jpg'),
-             ],
-             'caution' => 1,
+            ],
+            'caution' => 1,
         ]);
         $response->assertSuccessful();
 

@@ -24,7 +24,7 @@ class HomeControllerTest extends TestCase
     {
         $admin = $this->createDefaultAdmin([
             'name' => '管理者A',
-            'role' => 'high-manager'
+            'role' => 'high-manager',
         ]);
         $this->actingAs($admin, 'admin');
 

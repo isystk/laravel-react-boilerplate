@@ -31,8 +31,18 @@ class OrderStockRepositoryTest extends TestCase
         $stock2 = $this->createDefaultStock(['name' => 'stock2']);
 
         $order = $this->createDefaultOrder(['user_id' => $user1->id, 'created_at' => '2024-04-01']);
-        $this->createDefaultOrderStock(['order_id' => $order->id, 'stock_id' => $stock1->id, 'price' => $stock1->price, 'quantity' => 1]);
-        $this->createDefaultOrderStock(['order_id' => $order->id, 'stock_id' => $stock2->id, 'price' => $stock2->price, 'quantity' => 1]);
+        $this->createDefaultOrderStock([
+            'order_id' => $order->id,
+            'stock_id' => $stock1->id,
+            'price' => $stock1->price,
+            'quantity' => 1,
+        ]);
+        $this->createDefaultOrderStock([
+            'order_id' => $order->id,
+            'stock_id' => $stock2->id,
+            'price' => $stock2->price,
+            'quantity' => 1,
+        ]);
         $orderStocks = $this->repository->getByOrderId($order->id);
         $this->assertSame(2, $orderStocks->count());
     }

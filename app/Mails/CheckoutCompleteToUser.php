@@ -24,7 +24,7 @@ class CheckoutCompleteToUser extends Mailable
 
 
     /**
-     * @param  array<array{
+     * @param array<array{
      *     name: string,
      *     quantity: int,
      *     price: int

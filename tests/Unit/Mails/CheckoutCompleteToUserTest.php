@@ -27,7 +27,8 @@ class CheckoutCompleteToUserTest extends TestCase
 
         Mail::to($user->email)->send(new CheckoutCompleteToUser($user, $amount, $orderItems));
 
-        Mail::assertSent(CheckoutCompleteToUser::class, static function ($mail) use ($user, $amount, $orderItems) {
+        Mail::assertSent(CheckoutCompleteToUser::class, static function ($mail) use ($user, $amount, $orderItems)
+        {
             $mail->build();
 
             return $mail->hasTo($user->email)

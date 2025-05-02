@@ -53,6 +53,5 @@ class IndexServiceTest extends TestCase
         $stocks = $this->service->searchStock($input);
         $stockIds = $stocks->pluck('id')->all();
         $this->assertSame([$stock2->id, $stock1->id], $stockIds, 'ソート指定で検索が出来ることをテスト');
-
     }
 }

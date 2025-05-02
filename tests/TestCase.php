@@ -30,7 +30,7 @@ abstract class TestCase extends BaseTestCase
     protected function setPrivateMethodTest(object $target, string $methodName): ReflectionMethod
     {
         $reflection = new ReflectionClass($target);
-        $method     = $reflection->getMethod($methodName);
+        $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
 
         return $method;
@@ -46,7 +46,7 @@ abstract class TestCase extends BaseTestCase
     protected function getPrivateProperty(object $target, string $propertyName): mixed
     {
         $reflection = new ReflectionClass($target);
-        $property   = $reflection->getProperty($propertyName);
+        $property = $reflection->getProperty($propertyName);
         $property->setAccessible(true);
 
         return $property->getValue($target);

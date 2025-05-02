@@ -9,6 +9,7 @@ use Tests\TestCase;
 class ShowServiceTest extends TestCase
 {
     use RefreshDatabase;
+
     private ShowService $service;
 
     protected function setUp(): void

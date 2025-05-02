@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class ImportHistoryTest extends TestCase
 {
-     private ImportHistory $sub;
+    private ImportHistory $sub;
 
     protected function setUp(): void
     {

@@ -24,7 +24,8 @@ class VerifyEmailToUserTest extends TestCase
         Notification::assertSentTo(
             $user,
             VerifyEmailToUser::class,
-            static function ($notification, $channels) use ($user) {
+            static function ($notification, $channels) use ($user)
+            {
                 $mail = $notification->toMail($user);
                 return $mail->view['html'] === 'mails.verify_email_to_user_html'
                     && $mail->view['text'] === 'mails.verify_email_to_user_text'
@@ -32,6 +33,5 @@ class VerifyEmailToUserTest extends TestCase
                     && $mail->from[0] === config('mail.from.address');
             }
         );
-
     }
 }

@@ -50,8 +50,10 @@ class CheckoutServiceTest extends TestCase
         // 注文データが登録されたことをテスト
         $order = Order::where('user_id', $user1->id)->first();
         $this->assertDatabaseHas('orders', ['user_id' => $user1->id, 'sum_price' => 555]);
-        $this->assertDatabaseHas('order_stocks', ['order_id' => $order->id, 'stock_id' => $stock1->id, 'price' => 111, 'quantity' => 1]);
-        $this->assertDatabaseHas('order_stocks', ['order_id' => $order->id, 'stock_id' => $stock2->id, 'price' => 222, 'quantity' => 1]);
+        $this->assertDatabaseHas('order_stocks',
+            ['order_id' => $order->id, 'stock_id' => $stock1->id, 'price' => 111, 'quantity' => 1]);
+        $this->assertDatabaseHas('order_stocks',
+            ['order_id' => $order->id, 'stock_id' => $stock2->id, 'price' => 222, 'quantity' => 1]);
 
         // 商品の在庫が減っていること
         $afterStock1 = Stock::find($stock1->id);

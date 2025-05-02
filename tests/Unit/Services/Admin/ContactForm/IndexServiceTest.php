@@ -60,7 +60,7 @@ class IndexServiceTest extends TestCase
         /** @var Collection<int, ContactForm> $contactForms */
         $contactForms = $this->service->searchContactForm($input);
         $contactFormIds = $contactForms->pluck('id')->all();
-        $this->assertSame([$contactForm2->id, $contactForm1->id], $contactFormIds, 'ソート指定で検索が出来ることをテスト');
-
+        $this->assertSame([$contactForm2->id, $contactForm1->id], $contactFormIds,
+            'ソート指定で検索が出来ることをテスト');
     }
 }

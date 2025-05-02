@@ -2,7 +2,6 @@
 
 namespace App\Services\Api\Cart;
 
-use App\Domain\Entities\Stock;
 use App\Domain\Repositories\Cart\CartRepository;
 use App\Domain\Repositories\Order\OrderRepository;
 use App\Domain\Repositories\Order\OrderStockRepository;
@@ -10,9 +9,6 @@ use App\Domain\Repositories\Stock\StockRepository;
 use App\Mails\CheckoutCompleteToUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Stripe\Charge;
-use Stripe\Customer;
-use Stripe\Stripe;
 
 class CheckoutService extends BaseCartService
 {

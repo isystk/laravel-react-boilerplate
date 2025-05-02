@@ -38,6 +38,7 @@ class ShowServiceTest extends TestCase
         $contactFormImages = $this->service->getContactFormImage($contactForm1->id);
         $contactFormImageIds = $contactFormImages->pluck('id')->all();
 
-        $this->assertSame($expectContactFormImageIds, $contactFormImageIds, 'contact_form_idで検索が出来ることをテスト');
+        $this->assertSame($expectContactFormImageIds, $contactFormImageIds,
+            'contact_form_idで検索が出来ることをテスト');
     }
 }

@@ -30,7 +30,7 @@ class UpdateServiceTest extends TestCase
         $admin1 = $this->createDefaultAdmin([
             'name' => 'aaa',
             'email' => 'aaa@test.com',
-            'role' => AdminRole::Manager->value
+            'role' => AdminRole::Manager->value,
         ]);
 
         $request = new UpdateRequest();

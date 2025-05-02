@@ -27,7 +27,7 @@ class CreateNewUserTest extends TestCase
             'name' => 'user1',
             'email' => 'user1@test.com',
             'password' => 'password',
-            'password_confirmation' => 'password'
+            'password_confirmation' => 'password',
         ];
         $this->post('/register', $items)
             ->assertStatus(302);

@@ -6,8 +6,8 @@ use App\Domain\Entities\ContactForm;
 use App\Domain\Entities\ContactFormImage;
 use App\Enums\Age;
 use App\Enums\Gender;
-use App\Services\Api\ContactForm\StoreService;
 use App\Http\Requests\Api\ContactForm\StoreRequest;
+use App\Services\Api\ContactForm\StoreService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -38,13 +38,13 @@ class StoreServiceTest extends TestCase
         $request['title'] = 'タイトル1';
         $request['email'] = 'aaa@test.com';
         $request['url'] = 'https://aaa.test.com';
-        $request['gender'] =  Gender::Male->value;
+        $request['gender'] = Gender::Male->value;
         $request['age'] = Age::Over30->value;
         $request['contact'] = 'お問い合わせ1';
         $request['image_files'] = [
             UploadedFile::fake()->image('file1.jpg'),
             UploadedFile::fake()->image('file2.jpg'),
-            UploadedFile::fake()->image('file3.jpg')
+            UploadedFile::fake()->image('file3.jpg'),
         ];
         $contactForm = $this->service->save($request);
 

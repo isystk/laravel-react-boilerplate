@@ -44,8 +44,8 @@ class DateUtilTest extends TestCase
      * @param string $date
      * @testWith ["2024-03"]
      */
-    public function testToCarbonImmutableReturnsCarbonImmutableWithDefaultDayIfOnlyYearAndMonthAreProvided(string $date): void
-    {
+    public function testToCarbonImmutableReturnsCarbonImmutableWithDefaultDayIfOnlyYearAndMonthAreProvided(string $date
+    ): void {
         $carbon = DateUtil::toCarbonImmutable($date);
         $this->assertEquals('2024-03-01 00:00:00', $carbon->format('Y-m-d H:i:s'));
     }
