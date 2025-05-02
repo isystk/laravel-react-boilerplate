@@ -21,6 +21,7 @@ Options:
   mysql import <PAHT>      MySQLデータベースにdumpファイルをインポートします。
   app login                Webサーバーにログインします。
   app test                 Laravelのテストコードを実行します。
+  check git-cr             Git 管理下のテキストファイルのうち、CRLF または CR 改行を含むファイルを検出
   --version, -v     バージョンを表示します。
   --help, -h        ヘルプを表示します。
 EOF
@@ -94,6 +95,17 @@ case ${1} in
               usage
           ;;
       esac
+    ;;
+
+    check)
+        case ${2} in
+            git-cr)
+                git ls-files -z | xargs -0 file --mime-type | grep 'text/' | cut -d: -f1 | xargs -r grep -lzP '\r(\n)?'
+            ;;
+            sh-exec)
+                find . -type f -name "*.sh" ! -perm -u=x -print
+            ;;
+        esac
     ;;
 
     help|--help|-h)
