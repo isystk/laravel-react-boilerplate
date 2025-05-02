@@ -33,8 +33,8 @@ jobs:
         run: |
           ./run.sh start
 
-      - name: 90s 待機
-        run: sleep 90
+      - name: 120s 待機
+        run: sleep 120
 
       - name: PHP Unit 実行
         run: |
