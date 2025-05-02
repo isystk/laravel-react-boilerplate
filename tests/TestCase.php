@@ -3,6 +3,10 @@
 namespace Tests;
 
 use App\Domain\Entities\Cart;
+use App\Domain\Entities\ContactForm;
+use App\Domain\Entities\ContactFormImage;
+use App\Domain\Entities\Order;
+use App\Domain\Entities\OrderStock;
 use App\Domain\Entities\Stock;
 use App\Domain\Entities\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
@@ -143,5 +147,75 @@ abstract class TestCase extends BaseTestCase
         }
         /** @var Cart */
         return Cart::factory($items)->create();
+    }
+
+    /**
+     * Orderを作成する
+     * @param array<string, mixed> $params
+     * @return Order
+     */
+    public function createDefaultOrder(array $params = []): Order
+    {
+        $user = $this->createDefaultUser();
+        $items = [
+            'user_id' => $user->id,
+        ];
+        if (0 < count($params)) {
+            $items = array_merge($items, $params);
+        }
+        /** @var Order */
+        return Order::factory($items)->create();
+    }
+
+    /**
+     * OrderStockを作成する
+     * @param array<string, mixed> $params
+     * @return OrderStock
+     */
+    public function createDefaultOrderStock(array $params = []): OrderStock
+    {
+        $order = $this->createDefaultOrder();
+        $stock = $this->createDefaultStock();
+        $items = [
+            'order_id' => $order->id,
+            'stock_id' => $stock->id,
+            'price' => 1000,
+            'quantity' => 1,
+        ];
+        if (0 < count($params)) {
+            $items = array_merge($items, $params);
+        }
+        /** @var OrderStock */
+        return OrderStock::factory($items)->create();
+    }
+
+    /**
+     * ContactFormを作成する
+     * @param array<string, mixed> $params
+     * @return ContactForm
+     */
+    public function createDefaultContactForm(array $params = []): ContactForm
+    {
+        $items = [];
+        if (0 < count($params)) {
+            $items = array_merge($items, $params);
+        }
+        /** @var ContactForm */
+        return ContactForm::factory($items)->create();
+    }
+
+    /**
+     * ContactFormImageを作成する
+     * @param array<string, mixed> $params
+     * @return ContactFormImage
+     */
+    public function createDefaultContactFormImage(array $params = []): ContactFormImage
+    {
+        $contactForm = $this->createDefaultContactForm();
+        $items = [
+            'contact_form_id' => $contactForm->id,
+        ];
+        /** @var ContactFormImage */
+        return ContactFormImage::factory($items)->create();
     }
 }
