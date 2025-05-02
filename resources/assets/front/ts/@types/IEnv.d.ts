@@ -1,14 +1,13 @@
 /**
  * Env インターフェイス
  */
-export interface IEnv
-{
+export interface IEnv {
   /** アプリ名 */
-  appName: string
+  appName: string;
   /** 環境名 */
-  envName: string
+  envName: string;
   /** エンドポイント URL */
-  endpointUrl: string
+  endpointUrl: string;
   /** Stripe キー */
-  stripeKey: string
+  stripeKey: string;
 }
