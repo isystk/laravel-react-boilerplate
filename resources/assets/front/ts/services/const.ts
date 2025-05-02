@@ -1,7 +1,7 @@
 import MainService from '@/services/main';
 import { Api } from '@/constants/api';
 import _ from 'lodash';
-import ConstState from "@/stores/state/const";
+import ConstState from '@/state/const';
 
 export default class ConstService {
   main: MainService;

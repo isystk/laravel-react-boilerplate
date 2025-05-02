@@ -1,10 +1,10 @@
 import { Url } from '@/constants/url';
 import { Link } from 'react-router-dom';
 import BasicLayout from '@/components/templates/BasicLayout';
-import useAppRoot from '@/stores/useAppRoot';
+import useAppRoot from '@/hooks/useAppRoot';
 
 const ShopComplete = () => {
-  const [state, service] = useAppRoot();
+  const [state] = useAppRoot();
   if (!state) return <></>;
 
   const auth = state.auth;

@@ -1,11 +1,11 @@
 import CSRFToken from '@/components/atoms/CSRFToken';
 import SessionAlert from '@/components/atoms/SessionAlert';
 import BasicLayout from '@/components/templates/BasicLayout';
-import useAppRoot from '@/stores/useAppRoot';
+import useAppRoot from '@/hooks/useAppRoot';
 import TextInput from '@/components/atoms/TextInput';
 
 const ResetForm = () => {
-  const [state, service] = useAppRoot();
+  const [state] = useAppRoot();
   if (!state) return <></>;
 
   return (

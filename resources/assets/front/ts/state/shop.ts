@@ -1,4 +1,3 @@
-
 export interface Stock {
   id: number;
   name: string;
@@ -29,5 +28,4 @@ export default class ShopState {
   constructor() {
     this.stocks = initialState;
   }
-
 }

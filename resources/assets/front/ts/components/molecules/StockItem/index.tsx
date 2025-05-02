@@ -2,7 +2,7 @@ import styles from './styles.module.scss';
 import { useNavigate } from 'react-router-dom';
 import Image from '@/components/atoms/Image';
 import { Url } from '@/constants/url';
-import useAppRoot from '@/stores/useAppRoot';
+import useAppRoot from '@/hooks/useAppRoot';
 
 export type Props = {
   id: number;

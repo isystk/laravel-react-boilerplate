@@ -1,4 +1,3 @@
-
 export type Carts = {
   data: Cart[];
   message: string;
@@ -32,5 +31,4 @@ export default class CartState {
   constructor() {
     this.carts = initialState;
   }
-
 }

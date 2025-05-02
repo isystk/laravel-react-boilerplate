@@ -12,7 +12,7 @@ import {
   CardCvcElement,
 } from '@stripe/react-stripe-js';
 import Modal from '@/components/interactions/Modal';
-import useAppRoot from '@/stores/useAppRoot';
+import useAppRoot from '@/hooks/useAppRoot';
 
 type Props = {
   isOpen: boolean;
@@ -28,7 +28,7 @@ const PaymentModal = ({ isOpen, handleClose, amount }: Props) => {
   const stripe = useStripe();
   const elements = useElements();
 
-  const handlePayment = async ({amount, username}) => {
+  const handlePayment = async ({ amount, username }) => {
     if (!stripe || !elements) {
       return;
     }

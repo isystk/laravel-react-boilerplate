@@ -4,7 +4,7 @@ import ConstService from '@/services/const';
 import LikeService from '@/services/like';
 import CartService from '@/services/cart';
 import ContactService from '@/services/contact';
-import RootState from "@/stores/state/root";
+import RootState from '@/state/root';
 
 export default class MainService {
   public readonly root: RootState;
@@ -16,7 +16,7 @@ export default class MainService {
   public like: LikeService;
   public contact: ContactService;
 
-  constructor(root: RootState|null, setRootState: (root: RootState) => void) {
+  constructor(root: RootState | null, setRootState: (root: RootState) => void) {
     this.root = root || new RootState();
     this._setRootState = setRootState;
     this.auth = new AuthService(this);
@@ -32,11 +32,11 @@ export default class MainService {
   }
 
   public showLoading() {
-    this.root.isShowLoading = true
+    this.root.isShowLoading = true;
     this.setRootState();
   }
   public hideLoading() {
-    this.root.isShowLoading = false
+    this.root.isShowLoading = false;
     this.setRootState();
   }
 }

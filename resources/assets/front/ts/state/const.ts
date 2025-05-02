@@ -1,4 +1,3 @@
-
 export interface Consts {
   stripe_key?: Const;
   gender?: Const;
@@ -23,5 +22,4 @@ export default class ConstState {
   constructor() {
     this.data = initialState;
   }
-
 }

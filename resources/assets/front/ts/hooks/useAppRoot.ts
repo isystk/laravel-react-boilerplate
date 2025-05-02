@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { useAppState, useAppDispatch } from './appContext';
+import { useAppState, useAppDispatch } from '@/state/AppContext';
 import MainService from '@/services/main';
-import RootState from "@/stores/state/root";
+import RootState from '@/state/root';
 
-const useAppRoot = () => {
+const useAppRoot = (): [RootState | null, MainService] => {
   const { root: state } = useAppState();
   const dispatch = useAppDispatch();
 

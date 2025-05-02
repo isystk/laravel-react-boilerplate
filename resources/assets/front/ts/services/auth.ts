@@ -1,5 +1,5 @@
 import MainService from '@/services/main';
-import AuthState, {Session} from "@/stores/state/auth";
+import AuthState, { Session } from '@/state/auth';
 
 export default class AuthService {
   main: MainService;
@@ -11,16 +11,16 @@ export default class AuthService {
   }
 
   setSession(session: Session) {
-      this.auth.userId = session.id;
-      this.auth.name = session.name;
-      this.auth.email = session.email;
-      this.auth.email_verified_at = session.email_verified_at;
-      this.auth.isLogined = !!this.auth.userId;
-      this.main.setRootState();
+    this.auth.userId = session.id;
+    this.auth.name = session.name;
+    this.auth.email = session.email;
+    this.auth.email_verified_at = session.email_verified_at;
+    this.auth.isLogined = !!this.auth.userId;
+    this.main.setRootState();
   }
 
   setCSRF(csrf: string) {
-      this.auth.csrf = csrf;
-      this.main.setRootState();
+    this.auth.csrf = csrf;
+    this.main.setRootState();
   }
 }

@@ -1,10 +1,10 @@
 import SessionAlert from '@/components/atoms/SessionAlert';
 import CSRFToken from '@/components/atoms/CSRFToken';
 import BasicLayout from '@/components/templates/BasicLayout';
-import useAppRoot from '@/stores/useAppRoot';
+import useAppRoot from '@/hooks/useAppRoot';
 
 const Verify = () => {
-  const [state, service] = useAppRoot();
+  const [state] = useAppRoot();
   if (!state) return <></>;
 
   return (

@@ -1,4 +1,3 @@
-
 export interface Auth {
   auth: boolean;
   id?: number | null;

@@ -1,8 +1,8 @@
-import ShopState from '@/stores/state/shop';
-import AuthState from '@/stores/state/auth';
-import ConstState from '@/stores/state/const';
-import LikeState from '@/stores/state/like';
-import CartState from '@/stores/state/cart';
+import ShopState from '@/state/shop';
+import AuthState from '@/state/auth';
+import ConstState from '@/state/const';
+import LikeState from '@/state/like';
+import CartState from '@/state/cart';
 
 export default class RootState {
   public isShowLoading: boolean;
@@ -20,5 +20,4 @@ export default class RootState {
     this.cart = new CartState();
     this.like = new LikeState();
   }
-
 }
