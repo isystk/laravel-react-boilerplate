@@ -8,12 +8,12 @@ export type Props = Cart & {
 };
 
 const CartItem = ({ id, name, imgpath, price, detail }: Props) => {
-  const appRoot = useAppRoot();
-  if (!appRoot) return <></>;
+  const [state, service] = useAppRoot();
+  if (!state) return <></>;
 
   const handleDeleteFromCart = async () => {
-    await appRoot.cart.removeCart(id);
-    await appRoot.cart.readCarts();
+    await service.cart.removeCart(id);
+    await service.cart.readCarts();
   };
 
   return (

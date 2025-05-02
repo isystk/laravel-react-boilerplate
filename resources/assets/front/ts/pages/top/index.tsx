@@ -9,8 +9,8 @@ import StockItems from '@/components/organisms/StockItems';
 import useAppRoot from '@/stores/useAppRoot';
 
 const Top = () => {
-  const appRoot = useAppRoot();
-  if (!appRoot) return <></>;
+  const [state, service] = useAppRoot();
+  if (!state) return <></>;
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -18,13 +18,13 @@ const Top = () => {
 
   useEffect(() => {
     // 商品データを取得する
-    appRoot.shop.readStocks(pageNo);
+    service.shop.readStocks(pageNo);
 
     // お気に入りデータを取得する
-    appRoot.like.readLikesAsync();
+    service.like.readLikesAsync();
   }, [pageNo]);
 
-  const { total, current_page, data: stockData } = appRoot.shop.stocks;
+  const { total, current_page, data: stockData } = state.shop.stocks;
   const stocks = useMemo(
     () =>
       stockData.map(
@@ -32,10 +32,10 @@ const Top = () => {
           ({
             ...stock,
             price: stock.price + '円',
-            isLike: appRoot.like.data.includes(stock.id + ''),
+            isLike: state.like.data.includes(stock.id + ''),
           }) as StockItemProps,
       ),
-    [stockData, appRoot.like.data],
+    [stockData, state.like.data],
   );
 
   return (

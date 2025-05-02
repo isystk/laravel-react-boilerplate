@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import CSRFToken from '@/components/atoms/CSRFToken';
-import { KeyValue } from '@/services/const';
+import { KeyValue } from '@/stores/state/const';
 import { useNavigate } from 'react-router-dom';
 import { Url } from '@/constants/url';
 import BasicLayout from '@/components/templates/BasicLayout';
@@ -13,16 +13,16 @@ import TextArea from '@/components/atoms/TextArea';
 import ImageInput from '@/components/atoms/ImageInput';
 
 const ContactCreate = () => {
-  const appRoot = useAppRoot();
-  if (!appRoot) return <></>;
+  const [state, service] = useAppRoot();
+  if (!state) return <></>;
 
   const navigate = useNavigate();
-  const auth = appRoot.auth;
-  const consts = appRoot.const.data;
+  const auth = state.auth;
+  const consts = state.const.data;
 
   const handleSubmit = async values => {
     // 入力したお問い合わせ内容を送信する。
-    const result = await appRoot.contact.registContact(values);
+    const result = await service.contact.registContact(values);
     if (result) {
       // 完了画面を表示する
       navigate(Url.contactComplete);

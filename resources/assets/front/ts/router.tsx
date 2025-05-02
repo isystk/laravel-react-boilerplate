@@ -15,33 +15,33 @@ import Top from '@/pages/top';
 import Verify from '@/pages/email/verify';
 import { Url } from '@/constants/url';
 import useAppRoot from '@/stores/useAppRoot';
-import { Session } from '@/services/auth';
+import { Session } from '@/stores/state/auth';
 
 type Props = {
   session: Session;
 };
 
 const Router = ({ session }: Props) => {
-  const appRoot = useAppRoot();
+  const [state, service] = useAppRoot();
 
   useEffect(() => {
-    if (!appRoot) return;
+    if (!state) return;
     // セッションのセット
-    appRoot.auth.setSession(session);
+    service.auth.setSession(session);
 
     // CSRFのセット
     const token = document.head.querySelector<HTMLMetaElement>('meta[name="csrf-token"]');
     if (token) {
-      appRoot.auth.setCSRF(token.content);
+      service.auth.setCSRF(token.content);
     }
 
     (async () => {
       // 定数のセット
-      await appRoot.const.readConsts();
+      await service.const.readConsts();
     })();
-  }, [appRoot]);
+  }, [state]);
 
-  if (!appRoot) return <></>;
+  if (!state) return <></>;
 
   return (
     <BrowserRouter>

@@ -21,20 +21,20 @@ type Props = {
 };
 
 const PaymentModal = ({ isOpen, handleClose, amount }: Props) => {
-  const appRoot = useAppRoot();
-  if (!appRoot) return <></>;
+  const [state, service] = useAppRoot();
+  if (!state) return <></>;
 
   const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
 
-  const handlePayment = async values => {
+  const handlePayment = async ({amount, username}) => {
     if (!stripe || !elements) {
       return;
     }
 
     // 決算処理を行う
-    const result = await appRoot.cart.payment(stripe, elements, values);
+    const result = await service.cart.payment(stripe, elements, amount, username);
     if (result) {
       // 完了画面を表示する
       navigate(Url.payComplete);
@@ -48,7 +48,7 @@ const PaymentModal = ({ isOpen, handleClose, amount }: Props) => {
         <Formik
           initialValues={{
             amount: amount,
-            username: appRoot.auth.email,
+            username: state.auth.email,
             cardNumber: '',
             cardExp: '',
             cardCvc: '',

@@ -1,13 +1,13 @@
-import { createContext, useReducer, useContext, ReactNode } from 'react';
-import MainService from '@/services/main';
+import {createContext, useReducer, useContext, ReactNode, Dispatch} from 'react';
+import RootState from "@/stores/state/root";
 
 // --- 型定義 ---
 type AppState = {
   bool?: boolean;
-  root: MainService | null;
+  root: RootState | null;
 };
 
-type Action = { type: 'TOGGLE_STATE' } | { type: 'SET_STATE'; payload: MainService };
+type Action = { type: 'TOGGLE_STATE' } | { type: 'SET_STATE'; payload: RootState };
 
 const initialState: AppState = {
   bool: false,
@@ -28,7 +28,7 @@ function appReducer(state: AppState, action: Action): AppState {
 
 // --- Context定義 ---
 const AppStateContext = createContext<AppState | undefined>(undefined);
-const AppDispatchContext = createContext<React.Dispatch<Action> | undefined>(undefined);
+const AppDispatchContext = createContext<Dispatch<Action> | undefined>(undefined);
 
 // --- Providerコンポーネント ---
 export const AppProvider = ({ children }: { children: ReactNode }) => {

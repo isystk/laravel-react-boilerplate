@@ -1,27 +1,31 @@
 import { useEffect } from 'react';
 import { useAppState, useAppDispatch } from './appContext';
 import MainService from '@/services/main';
+import RootState from "@/stores/state/root";
 
 const useAppRoot = () => {
-  const { root } = useAppState();
+  const { root: state } = useAppState();
   const dispatch = useAppDispatch();
 
-  const _setAppRoot = async (service: MainService) => {
-    dispatch({ type: 'SET_STATE', payload: service });
+  const setRootState = async (root: RootState) => {
+    dispatch({ type: 'SET_STATE', payload: root });
     dispatch({ type: 'TOGGLE_STATE' });
   };
 
   useEffect(() => {
     const init = async () => {
-      const _appRoot = new MainService(_setAppRoot);
-      await _appRoot.setAppRoot();
+      const _root = new RootState();
+      await setRootState(_root);
     };
-    if (!root) {
+
+    if (!state) {
       init();
     }
   }, []);
 
-  return root;
+  const service = new MainService(state, setRootState);
+
+  return [state, service];
 };
 
 export default useAppRoot;

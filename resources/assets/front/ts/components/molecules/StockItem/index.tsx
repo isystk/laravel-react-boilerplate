@@ -15,26 +15,26 @@ export type Props = {
 };
 
 const StockItem = ({ id, name, imgpath, price, detail, quantity, isLike }: Props) => {
-  const appRoot = useAppRoot();
-  if (!appRoot) return <></>;
+  const [state, service] = useAppRoot();
+  if (!state) return <></>;
 
   const navigate = useNavigate();
 
   const handleLikeClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (isLike) {
-      await appRoot.like.removeLikeAsync(id);
+      await service.like.removeLikeAsync(id);
     } else {
-      await appRoot.like.addLikeAsync(id);
+      await service.like.addLikeAsync(id);
     }
   };
 
   const handleAddToCart = async () => {
-    if (!appRoot.auth.isLogined) {
+    if (!state.auth.isLogined) {
       navigate(Url.login);
       return;
     }
-    await appRoot.cart.addCart(id);
+    await service.cart.addCart(id);
     navigate(Url.myCart);
   };
 

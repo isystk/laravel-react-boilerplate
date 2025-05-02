@@ -10,15 +10,15 @@ import Env from '@/constants/env';
 const stripePromise = loadStripe(Env.stripeKey);
 
 const MyCart = () => {
-  const appRoot = useAppRoot();
-  if (!appRoot) return null;
+  const [state, service] = useAppRoot();
+  if (!state) return null;
 
-  const { name } = appRoot.auth;
-  const { carts } = appRoot.cart;
+  const { name } = state.auth;
+  const { carts } = state.cart;
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   useEffect(() => {
-    appRoot.cart.readCarts();
+    service.cart.readCarts();
   }, []);
 
   return (

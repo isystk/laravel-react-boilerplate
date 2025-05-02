@@ -5,8 +5,8 @@ import useAppRoot from '@/stores/useAppRoot';
 import TextInput from '@/components/atoms/TextInput';
 
 const RegisterForm = () => {
-  const appRoot = useAppRoot();
-  if (!appRoot) return <></>;
+  const [state, service] = useAppRoot();
+  if (!state) return <></>;
 
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');

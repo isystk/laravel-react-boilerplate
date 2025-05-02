@@ -3,10 +3,10 @@ import useAppRoot from '@/stores/useAppRoot';
 import Portal from '@/components/interactions/Portal';
 
 const Loading = () => {
-  const appRoot = useAppRoot();
-  if (!appRoot) return null;
+  const [state, service] = useAppRoot();
+  if (!state) return null;
 
-  const { isShowLoading } = appRoot;
+  const { isShowLoading } = state;
 
   return (
     <Portal>

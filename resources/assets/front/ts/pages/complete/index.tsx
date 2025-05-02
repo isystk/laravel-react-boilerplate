@@ -4,10 +4,10 @@ import BasicLayout from '@/components/templates/BasicLayout';
 import useAppRoot from '@/stores/useAppRoot';
 
 const ShopComplete = () => {
-  const appRoot = useAppRoot();
-  if (!appRoot) return <></>;
+  const [state, service] = useAppRoot();
+  if (!state) return <></>;
 
-  const auth = appRoot.auth;
+  const auth = state.auth;
 
   return (
     <BasicLayout title="商品購入完了">

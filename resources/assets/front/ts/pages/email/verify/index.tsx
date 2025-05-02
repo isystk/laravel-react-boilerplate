@@ -4,8 +4,8 @@ import BasicLayout from '@/components/templates/BasicLayout';
 import useAppRoot from '@/stores/useAppRoot';
 
 const Verify = () => {
-  const appRoot = useAppRoot();
-  if (!appRoot) return <></>;
+  const [state, service] = useAppRoot();
+  if (!state) return <></>;
 
   return (
     <BasicLayout title="メールを確認してください">

@@ -9,10 +9,10 @@ import useAppRoot from '@/stores/useAppRoot';
 import CSRFToken from '@/components/atoms/CSRFToken';
 
 const Header = () => {
-  const appRoot = useAppRoot();
-  if (!appRoot) return <></>;
+  const [state, service] = useAppRoot();
+  if (!state) return <></>;
 
-  const { isLogined, name } = appRoot.auth;
+  const { isLogined, name } = state.auth;
 
   const navigate = useNavigate();
   return (

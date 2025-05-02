@@ -7,6 +7,7 @@ export default class ContactService {
   constructor(main: MainService) {
     this.main = main;
   }
+
   async registContact(values): Promise<boolean> {
     // ローディングを表示する
     this.main.showLoading();
@@ -20,7 +21,6 @@ export default class ContactService {
         body: JSON.stringify(values),
       });
       await response.json();
-      this.main.setAppRoot();
     } catch (e) {
       alert('お問い合わせの登録に失敗しました');
       this.main.hideLoading();
