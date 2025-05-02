@@ -5,7 +5,8 @@ namespace App\Utils;
 use Carbon\CarbonImmutable;
 use Exception;
 
-class DateUtil {
+class DateUtil
+{
 
     /**
      * 日付文字列をCarbonに変換します。

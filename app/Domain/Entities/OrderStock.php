@@ -45,6 +45,7 @@ class OrderStock extends Model
     ];
 
     // 親テーブル
+
     /**
      * @return BelongsTo<Order, $this>
      */

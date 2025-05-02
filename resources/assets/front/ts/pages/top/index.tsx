@@ -1,63 +1,70 @@
-import {useEffect, useMemo} from "react";
-import { type Props as StockItemProps } from "@/components/molecules/StockItem";
-import { Url } from "@/constants/url";
-import { useLocation, useNavigate } from "react-router-dom";
-import BasicLayout from "@/components/templates/BasicLayout";
-import Carousel from "@/components/atoms/Carousel";
-import Pagination from "@/components/atoms/Pagination";
-import StockItems from "@/components/organisms/StockItems";
-import useAppRoot from "@/stores/useAppRoot";
+import { useEffect, useMemo } from 'react';
+import { type Props as StockItemProps } from '@/components/molecules/StockItem';
+import { Url } from '@/constants/url';
+import { useLocation, useNavigate } from 'react-router-dom';
+import BasicLayout from '@/components/templates/BasicLayout';
+import Carousel from '@/components/atoms/Carousel';
+import Pagination from '@/components/atoms/Pagination';
+import StockItems from '@/components/organisms/StockItems';
+import useAppRoot from '@/stores/useAppRoot';
 
 const Top = () => {
-    const appRoot = useAppRoot();
-    if (!appRoot) return <></>;
+  const appRoot = useAppRoot();
+  if (!appRoot) return <></>;
 
-    const navigate = useNavigate();
-    const location = useLocation();
-    const pageNo = Number(new URLSearchParams(location.search).get('page') || 1);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const pageNo = Number(new URLSearchParams(location.search).get('page') || 1);
 
-    useEffect(() => {
-        // 商品データを取得する
-        appRoot.shop.readStocks(pageNo);
+  useEffect(() => {
+    // 商品データを取得する
+    appRoot.shop.readStocks(pageNo);
 
-        // お気に入りデータを取得する
-        appRoot.like.readLikesAsync();
-    }, [pageNo]);
+    // お気に入りデータを取得する
+    appRoot.like.readLikesAsync();
+  }, [pageNo]);
 
-    const { total, current_page, data: stockData } = appRoot.shop.stocks;
-    const stocks = useMemo(() => stockData.map((stock) => ({
+  const { total, current_page, data: stockData } = appRoot.shop.stocks;
+  const stocks = useMemo(
+    () =>
+      stockData.map(
+        stock =>
+          ({
             ...stock,
-            price: stock.price + "円",
-            isLike: appRoot.like.data.includes(stock.id + ""),
-        } as StockItemProps))
-    ,[stockData, appRoot.like.data]);
+            price: stock.price + '円',
+            isLike: appRoot.like.data.includes(stock.id + ''),
+          }) as StockItemProps,
+      ),
+    [stockData, appRoot.like.data],
+  );
 
-    return (
-        <BasicLayout title="TOP">
-            <Carousel images={[
-                    { src: '/assets/front/image/banner_01.jpg', alt: 'Slide 1' },
-                    { src: '/assets/front/image/banner_02.jpg', alt: 'Slide 2' },
-                    { src: '/assets/front/image/banner_01.jpg', alt: 'Slide 3' },
-                    { src: '/assets/front/image/banner_02.jpg', alt: 'Slide 4' },
-                ]}
-                autoPlay={true}
-                autoPlayInterval={5000}
-            />
-            <div className="mt-5 md:mt-10">
-                <StockItems stocks={stocks} />
-                <Pagination
-                    activePage={current_page}
-                    totalItemsCount={total}
-                    itemsCountPerPage={6}
-                    pageRangeDisplayed={3}
-                    onChange={(pageNo) => {
-                        navigate(`${Url.top}?page=${pageNo}`);
-                    }}
-                    className="mt-5 md:mt-10 flex justify-center"
-                />
-            </div>
-        </BasicLayout>
-    );
+  return (
+    <BasicLayout title="TOP">
+      <Carousel
+        images={[
+          { src: '/assets/front/image/banner_01.jpg', alt: 'Slide 1' },
+          { src: '/assets/front/image/banner_02.jpg', alt: 'Slide 2' },
+          { src: '/assets/front/image/banner_01.jpg', alt: 'Slide 3' },
+          { src: '/assets/front/image/banner_02.jpg', alt: 'Slide 4' },
+        ]}
+        autoPlay={true}
+        autoPlayInterval={5000}
+      />
+      <div className="mt-5 md:mt-10">
+        <StockItems stocks={stocks} />
+        <Pagination
+          activePage={current_page}
+          totalItemsCount={total}
+          itemsCountPerPage={6}
+          pageRangeDisplayed={3}
+          onChange={pageNo => {
+            navigate(`${Url.top}?page=${pageNo}`);
+          }}
+          className="mt-5 md:mt-10 flex justify-center"
+        />
+      </div>
+    </BasicLayout>
+  );
 };
 
 export default Top;

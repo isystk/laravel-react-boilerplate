@@ -2,6 +2,7 @@
 
 namespace App\Domain\Entities;
 
+use App\Enums\JobStatus;
 use Carbon\Carbon;
 use Database\Factories\Domain\Entities\ImportHistoryFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -49,5 +50,13 @@ class ImportHistory extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    /**
+     * @return ?JobStatus
+     */
+    public function getStatus(): ?JobStatus
+    {
+        return JobStatus::get($this->status);
+    }
 
 }

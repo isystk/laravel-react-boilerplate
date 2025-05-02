@@ -1,11 +1,68 @@
+# ========================================
+# 改行コードとテキストファイルの扱い
+# ========================================
 * text=auto eol=lf
 
-*.blade.php diff=html
-*.css diff=css
-*.html diff=html
-*.md diff=markdown
-*.php diff=php
+# 明示的にバイナリファイルを除外（改行変換禁止）
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.svg binary
+*.ico binary
+*.webp binary
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary
+*.eot binary
+*.pdf binary
+*.zip binary
+*.gz binary
+*.mp4 binary
+*.mov binary
 
+# ========================================
+# 差分表示（diff）用の拡張子指定
+# ========================================
+*.php diff=php
+*.blade.php diff=html
+*.js diff=javascript
+*.jsx diff=javascript
+*.ts diff=typescript
+*.tsx diff=typescript
+*.css diff=css
+*.scss diff=css
+*.html diff=html
+*.json diff=json
+*.md diff=markdown
+*.yml diff=yaml
+*.yaml diff=yaml
+*.xml diff=xml
+*.env diff=astextplain
+*.txt diff=astextplain
+*.sh text eol=lf diff=astextplain
+
+# ========================================
+# Git archive で含めないファイル（主にCI系）
+# ========================================
+/.gitattributes export-ignore
 /.github export-ignore
-CHANGELOG.md export-ignore
-.styleci.yml export-ignore
+/.env.example export-ignore
+/.styleci.yml export-ignore
+/.editorconfig export-ignore
+/.gitignore export-ignore
+/vite.config.ts export-ignore
+/package-lock.json export-ignore
+/yarn.lock export-ignore
+/pnpm-lock.yaml export-ignore
+/.eslint* export-ignore
+/.prettier* export-ignore
+*.log export-ignore
+
+# ========================================
+# node_modules や vendor は Git 対象外だが明示除外（補足的に）
+# ========================================
+/node_modules/ export-ignore
+/vendor/ export-ignore
+

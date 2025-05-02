@@ -1,18 +1,14 @@
 <?php
 
-namespace Feature\Http\Controllers\Admin\Staff;
+namespace Http\Controllers\Admin\Staff;
 
-use App\Domain\Entities\Admin;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class CreateControllerTest extends TestCase
 {
-    /**
-     * 各テストの実行後にテーブルを空にする。
-     */
+
     use RefreshDatabase;
 
     public function setUp(): void
@@ -26,10 +22,9 @@ class CreateControllerTest extends TestCase
      */
     public function testCreate(): void
     {
-        /** @var Admin $admin1 */
-        $admin1 = Admin::factory()->create([
+        $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
-            'role' => 'manager'
+            'role' => 'manager',
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -37,10 +32,9 @@ class CreateControllerTest extends TestCase
         $response = $this->get(route('admin.staff.create'));
         $response->assertForbidden();
 
-        /** @var Admin $admin2 */
-        $admin2 = Admin::factory()->create([
+        $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
-            'role' => 'high-manager'
+            'role' => 'high-manager',
         ]);
         $this->actingAs($admin2, 'admin');
 
@@ -53,10 +47,9 @@ class CreateControllerTest extends TestCase
      */
     public function testStore(): void
     {
-        /** @var Admin $admin1 */
-        $admin1 = Admin::factory()->create([
+        $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
-            'role' => 'manager'
+            'role' => 'manager',
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -64,10 +57,9 @@ class CreateControllerTest extends TestCase
         $response = $this->post(route('admin.staff.store'), []);
         $response->assertForbidden();
 
-        /** @var Admin $admin2 */
-        $admin2 = Admin::factory()->create([
+        $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
-            'role' => 'high-manager'
+            'role' => 'high-manager',
         ]);
         $this->actingAs($admin2, 'admin');
 

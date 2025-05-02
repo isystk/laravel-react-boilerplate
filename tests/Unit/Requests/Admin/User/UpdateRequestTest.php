@@ -2,7 +2,6 @@
 
 namespace Requests\Admin\User;
 
-use App\Enums\AdminRole;
 use App\Http\Requests\Admin\User\UpdateRequest;
 use Exception;
 use Illuminate\Support\Facades\Validator;
@@ -19,11 +18,6 @@ class UpdateRequestTest extends TestCase
      */
     private array $baseRequest;
 
-
-    /**
-     * 各テストの実行前に起動する。
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
@@ -50,7 +44,7 @@ class UpdateRequestTest extends TestCase
         $requestData = [...$this->baseRequest, ...$attrs];
         $this->request->merge($requestData);
         //バリデーションルール取得
-        $rules     = $this->request->rules();
+        $rules = $this->request->rules();
         $validator = Validator::make($requestData, $rules, $this->request->messages(), $this->request->attributes());
 
         // 結果保証
@@ -73,56 +67,56 @@ class UpdateRequestTest extends TestCase
     {
         return [
             'NG : name 必須条件を満たさない' => [
-                'attrs'     => ['name' => null],
-                'expect'    => false,
+                'attrs' => ['name' => null],
+                'expect' => false,
                 'attribute' => 'name',
                 'messages' => [
-                    '氏名を入力してください。'
-                ]
+                    '氏名を入力してください。',
+                ],
             ],
             'NG : name 文字数上限を超えている' => [
-                'attrs'     => ['name' => implode("", range(1, 51))],
-                'expect'    => false,
+                'attrs' => ['name' => implode("", range(1, 51))],
+                'expect' => false,
                 'attribute' => 'name',
                 'messages' => [
-                    '氏名には50文字以下の文字列を指定してください。'
-                ]
+                    '氏名には50文字以下の文字列を指定してください。',
+                ],
             ],
             'OK : name が正常' => [
-                'attrs'     => ['name' => 'user1'],
-                'expect'    => true,
+                'attrs' => ['name' => 'user1'],
+                'expect' => true,
                 'attribute' => 'name',
-                'messages' => []
+                'messages' => [],
             ],
             'NG : email 必須条件を満たさない' => [
-                'attrs'     => ['email' => null],
-                'expect'    => false,
+                'attrs' => ['email' => null],
+                'expect' => false,
                 'attribute' => 'email',
                 'messages' => [
-                    'メールアドレスを入力してください。'
-                ]
+                    'メールアドレスを入力してください。',
+                ],
             ],
             'OK : email 文字数上限を超えている' => [
-                'attrs'     => ['email' => implode("", range(1, 56)) . '@test.com'],
-                'expect'    => false,
+                'attrs' => ['email' => implode("", range(1, 56)) . '@test.com'],
+                'expect' => false,
                 'attribute' => 'email',
                 'messages' => [
-                    'メールアドレスには64文字以下の文字列を指定してください。'
-                ]
+                    'メールアドレスには64文字以下の文字列を指定してください。',
+                ],
             ],
             'NG : email メールアドレスとして不正' => [
-                'attrs'     => ['email' => 'abcde'],
-                'expect'    => false,
+                'attrs' => ['email' => 'abcde'],
+                'expect' => false,
                 'attribute' => 'email',
                 'messages' => [
-                    'メールアドレスには正しい形式のメールアドレスを指定してください。'
-                ]
+                    'メールアドレスには正しい形式のメールアドレスを指定してください。',
+                ],
             ],
             'OK : email が正常' => [
-                'attrs'     => ['email' => 'user1@test.com'],
-                'expect'    => true,
+                'attrs' => ['email' => 'user1@test.com'],
+                'expect' => true,
                 'attribute' => 'email',
-                'messages' => []
+                'messages' => [],
             ],
         ];
     }

@@ -1,8 +1,7 @@
 <?php
 
-namespace Feature\Http\Controllers\Admin\Stock;
+namespace Http\Controllers\Admin\Stock;
 
-use App\Domain\Entities\Admin;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -11,9 +10,7 @@ use Tests\TestCase;
 
 class CreateControllerTest extends TestCase
 {
-    /**
-     * 各テストの実行後にテーブルを空にする。
-     */
+
     use RefreshDatabase;
 
     public function setUp(): void
@@ -27,10 +24,9 @@ class CreateControllerTest extends TestCase
      */
     public function testCreate(): void
     {
-        /** @var Admin $admin1 */
-        $admin1 = Admin::factory()->create([
+        $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
-            'role' => 'manager'
+            'role' => 'manager',
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -38,10 +34,9 @@ class CreateControllerTest extends TestCase
         $response = $this->get(route('admin.stock.create'));
         $response->assertForbidden();
 
-        /** @var Admin $admin2 */
-        $admin2 = Admin::factory()->create([
+        $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
-            'role' => 'high-manager'
+            'role' => 'high-manager',
         ]);
         $this->actingAs($admin2, 'admin');
 
@@ -54,10 +49,11 @@ class CreateControllerTest extends TestCase
      */
     public function testStore(): void
     {
-        /** @var Admin $admin1 */
-        $admin1 = Admin::factory()->create([
+        Storage::fake();
+
+        $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
-            'role' => 'manager'
+            'role' => 'manager',
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -65,10 +61,9 @@ class CreateControllerTest extends TestCase
         $response = $this->post(route('admin.stock.store'), []);
         $response->assertForbidden();
 
-        /** @var Admin $admin2 */
-        $admin2 = Admin::factory()->create([
+        $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
-            'role' => 'high-manager'
+            'role' => 'high-manager',
         ]);
         $this->actingAs($admin2, 'admin');
 
@@ -94,9 +89,6 @@ class CreateControllerTest extends TestCase
             'quantity' => 1,
             'imgpath' => 'image1.jpg',
         ]);
-
-        // テスト後にファイルを削除
-        Storage::delete('stock/image1.jpg');
     }
 
 }

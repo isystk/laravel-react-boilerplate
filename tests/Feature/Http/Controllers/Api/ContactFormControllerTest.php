@@ -1,8 +1,7 @@
 <?php
 
-namespace Feature\Http\Controllers\Api;
+namespace Http\Controllers\Api;
 
-use App\Domain\Entities\User;
 use App\Enums\Age;
 use App\Enums\Gender;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
@@ -13,9 +12,7 @@ use Tests\TestCase;
 
 class ContactFormControllerTest extends TestCase
 {
-    /**
-     * 各テストの実行後にテーブルを空にする。
-     */
+
     use RefreshDatabase;
 
     public function setUp(): void
@@ -29,10 +26,9 @@ class ContactFormControllerTest extends TestCase
      */
     public function testStore(): void
     {
-        /** @var User $user1 */
-        $user1 = User::factory()->create([
+        $user1 = $this->createDefaultUser([
             'name' => 'user1',
-            'email' => 'user1@test.com'
+            'email' => 'user1@test.com',
         ]);
         $this->actingAs($user1);
 
@@ -48,8 +44,8 @@ class ContactFormControllerTest extends TestCase
                 UploadedFile::fake()->image('image1.jpg'),
                 UploadedFile::fake()->image('image2.jpg'),
                 UploadedFile::fake()->image('image3.jpg'),
-             ],
-             'caution' => 1,
+            ],
+            'caution' => 1,
         ]);
         $response->assertSuccessful();
 

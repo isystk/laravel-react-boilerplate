@@ -16,9 +16,6 @@ class UpdateServiceTest extends TestCase
 
     private UpdateService $service;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -26,23 +23,14 @@ class UpdateServiceTest extends TestCase
     }
 
     /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(UpdateService::class, $this->service);
-    }
-
-    /**
      * updateのテスト
      */
     public function testUpdate(): void
     {
-        /** @var Admin $admin1 */
-        $admin1 = Admin::factory()->create([
+        $admin1 = $this->createDefaultAdmin([
             'name' => 'aaa',
             'email' => 'aaa@test.com',
-            'role' => AdminRole::Manager->value
+            'role' => AdminRole::Manager->value,
         ]);
 
         $request = new UpdateRequest();

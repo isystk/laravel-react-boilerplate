@@ -1,17 +1,14 @@
 <?php
 
-namespace Feature\Http\Controllers\Admin\Staff;
+namespace Http\Controllers\Admin\Staff;
 
-use App\Domain\Entities\Admin;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class DetailControllerTest extends TestCase
 {
-    /**
-     * 各テストの実行後にテーブルを空にする。
-     */
+
     use RefreshDatabase;
 
     public function setUp(): void
@@ -25,11 +22,10 @@ class DetailControllerTest extends TestCase
      */
     public function testShow(): void
     {
-        /** @var Admin $admin1 */
-        $admin1 = Admin::factory()->create([
+        $admin1 = $this->createDefaultAdmin([
             'name' => '管理者A',
             'email' => 'admin1@test.com',
-            'role' => 'high-manager'
+            'role' => 'high-manager',
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -45,10 +41,9 @@ class DetailControllerTest extends TestCase
      */
     public function testDestroy(): void
     {
-        /** @var Admin $admin1 */
-        $admin1 = Admin::factory()->create([
+        $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
-            'role' => 'manager'
+            'role' => 'manager',
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -56,10 +51,9 @@ class DetailControllerTest extends TestCase
         $response = $this->delete(route('admin.staff.destroy', $admin1));
         $response->assertForbidden();
 
-        /** @var Admin $admin2 */
-        $admin2 = Admin::factory()->create([
+        $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
-            'role' => 'high-manager'
+            'role' => 'high-manager',
         ]);
         $this->actingAs($admin2, 'admin');
 

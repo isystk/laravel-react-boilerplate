@@ -20,8 +20,7 @@ class BaseCartService extends BaseService
      */
     public function __construct(
         CartRepository $cartRepository,
-    )
-    {
+    ) {
         $this->cartRepository = $cartRepository;
     }
 
@@ -53,7 +52,8 @@ class BaseCartService extends BaseService
         ];
 
         $carts = $this->cartRepository->getByUserId($user->id);
-        $items['data'] = $carts->map(function ($cart) {
+        $items['data'] = $carts->map(function ($cart)
+        {
             /** @var Cart $cart */
             /** @var Stock $stock */
             $stock = $cart->stock;

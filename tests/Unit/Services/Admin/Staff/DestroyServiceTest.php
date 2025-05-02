@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Services\Admin\Staff;
 
-use App\Domain\Entities\Admin;
 use App\Services\Admin\Staff\DestroyService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -14,9 +13,6 @@ class DestroyServiceTest extends TestCase
 
     private DestroyService $service;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -24,20 +20,11 @@ class DestroyServiceTest extends TestCase
     }
 
     /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(DestroyService::class, $this->service);
-    }
-
-    /**
      * deleteのテスト
      */
     public function testDelete(): void
     {
-        /** @var Admin $admin */
-        $admin = Admin::factory()->create();
+        $admin = $this->createDefaultAdmin();
 
         $this->service->delete($admin->id);
 

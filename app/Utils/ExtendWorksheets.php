@@ -130,8 +130,7 @@ class ExtendWorksheets
         mixed $nullValue = null,
         string $startCell = 'A1',
         bool $strictNullComparison = false
-    ): static
-    {
+    ): static {
         $this->worksheets->fromArray($source, $nullValue, $startCell, $strictNullComparison);
         return $this;
     }

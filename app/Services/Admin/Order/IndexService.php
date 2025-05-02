@@ -22,8 +22,7 @@ class IndexService extends BaseService
      */
     public function __construct(
         OrderRepository $orderRepository
-    )
-    {
+    ) {
         $this->orderRepository = $orderRepository;
     }
 

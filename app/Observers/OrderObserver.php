@@ -38,7 +38,7 @@ class OrderObserver implements ShouldHandleEventsAfterCommit
      */
     public function updated(Order $order): void
     {
-        if($order->isDirty('sum_price')){
+        if ($order->isDirty('sum_price')) {
             $sumPrice = $order->sum_price;
             $yearMonth = $order->created_at->format('Ym');
             $monthlySale = MonthlySale::where('year_month', $yearMonth)->first();

@@ -42,13 +42,14 @@ abstract class BaseImport implements WithMapping, WithStartRow, WithValidation
     {
         $this->filePath = $filePath;
         $this->readerType = match (mime_content_type($filePath)) {
-            'text/plain','text/csv' => Excel::CSV,
+            'text/plain', 'text/csv' => Excel::CSV,
             'application/vnd.ms-excel' => Excel::XLS,
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => Excel::XLSX,
             default => throw new \RuntimeException('$extension is an unknown value'),
         };
         // ヘッダーを読み込んでおく
-        $lines = \Maatwebsite\Excel\Facades\Excel::toArray(new Collection(), $this->filePath, null, $this->readerType)[0];
+        $lines = \Maatwebsite\Excel\Facades\Excel::toArray(new Collection(), $this->filePath, null,
+            $this->readerType)[0];
         $this->header = array_diff(array_shift($lines), [null]);
     }
 
@@ -77,11 +78,12 @@ abstract class BaseImport implements WithMapping, WithStartRow, WithValidation
 
         $rows = $this->getSheets()[0];
         foreach ($rows as $i => $row) {
-            $validator = Validator::make($row, $this->rules(), $this->customValidationMessages(), $this->customValidationAttributes());
+            $validator = Validator::make($row, $this->rules(), $this->customValidationMessages(),
+                $this->customValidationAttributes());
             if ($validator->fails()) {
                 $messages = $validator->errors()->all();
                 foreach ($messages as $message) {
-                    $errors[] = $message . '（'.($i+$this->startRow).'行目）';
+                    $errors[] = $message . '（' . ($i + $this->startRow) . '行目）';
                 }
             }
         }
@@ -103,9 +105,11 @@ abstract class BaseImport implements WithMapping, WithStartRow, WithValidation
      * @param array<int, mixed> $row
      * @return array<string, ?string>
      */
-    protected function getRowMap(array $row): array {
-        return collect($this->header)->mapWithKeys(function ($col, $i) use($row) {
-            $key = $this->attribute[$this->trimData($col)]??null;
+    protected function getRowMap(array $row): array
+    {
+        return collect($this->header)->mapWithKeys(function ($col, $i) use ($row)
+        {
+            $key = $this->attribute[$this->trimData($col)] ?? null;
             if (!is_string($key)) {
                 return [(string)$key => (string)$row[$i]];
             }

@@ -31,7 +31,7 @@ abstract class BaseImportRequest extends FormRequest
         foreach ($files as $file) {
             $filePath = $file->path() ?: '';
             $mime = mime_content_type($filePath);
-            if (!in_array($mime, ['text/plain','text/csv'],  true)) {
+            if (!in_array($mime, ['text/plain', 'text/csv'], true)) {
                 // テキストファイル以外は何もしない
                 return;
             }
@@ -63,15 +63,16 @@ abstract class BaseImportRequest extends FormRequest
             'upload_file' => [
                 'required',
                 'file',
-                function($attribute, $value, $fail) {
+                function ($attribute, $value, $fail)
+                {
                     $fileName = $value->getClientOriginalName();
                     $fileInfo = pathinfo($fileName);
                     $fileMimeType = mime_content_type($value->path());
-                    $fileExtension = strtolower($fileInfo['extension']??'');
+                    $fileExtension = strtolower($fileInfo['extension'] ?? '');
                     $fileSize = $value->getSize();
                     $upload_max_filesize = config('const.upload_max_filesize');
                     if (is_numeric($upload_max_filesize) && (int)$upload_max_filesize < $fileSize) {
-                        $fail("ファイルには、".floor($upload_max_filesize/1000/1000)."MB以下のファイルを指定してください。");
+                        $fail("ファイルには、" . floor($upload_max_filesize / 1000 / 1000) . "MB以下のファイルを指定してください。");
                         return;
                     }
                     if (!in_array($fileExtension, $this->allowExtensions, true)) {
@@ -96,8 +97,9 @@ abstract class BaseImportRequest extends FormRequest
      */
     public function after(): array
     {
-       return [
-            function (Validator $validator) {
+        return [
+            function (Validator $validator)
+            {
                 if (0 === count($validator->errors()->messages())) {
                     // rules に記載のエラーチェックに問題がなければ、ファイルの中身をチェックする
                     $import = $this->createImporter()($this->upload_file->path());
@@ -105,11 +107,11 @@ abstract class BaseImportRequest extends FormRequest
                     $errors = $import->validate();
                     if (0 < count($errors)) {
                         foreach ($errors as $error) {
-                            $validator->errors()->add('upload_file',  $error);
+                            $validator->errors()->add('upload_file', $error);
                         }
                     }
                 }
-            }
+            },
         ];
     }
 
@@ -135,9 +137,9 @@ abstract class BaseImportRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'upload_file.required'  => 'ファイルは必須です',
-            'upload_file.*.mimes'  => 'ファイルの拡張子がエクセル形式またはCSV形式ではありません',
-            'upload_file.*.mimetypes'  => 'ファイルがエクセル形式またはCSV形式ではありません',
+            'upload_file.required' => 'ファイルは必須です',
+            'upload_file.*.mimes' => 'ファイルの拡張子がエクセル形式またはCSV形式ではありません',
+            'upload_file.*.mimetypes' => 'ファイルがエクセル形式またはCSV形式ではありません',
         ];
     }
 
@@ -145,12 +147,16 @@ abstract class BaseImportRequest extends FormRequest
      * 許容する拡張子
      * @var array|string[]
      */
-    protected array $allowExtensions = ['csv','xlsx'];
+    protected array $allowExtensions = ['csv', 'xlsx'];
 
     /**
      * 許容するファイル形式
      * @var array|string[]
      */
-    protected array $allowMimes = ['text/plain','text/csv','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+    protected array $allowMimes = [
+        'text/plain',
+        'text/csv',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    ];
 
 }

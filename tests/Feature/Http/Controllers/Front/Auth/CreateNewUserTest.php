@@ -9,9 +9,7 @@ use Tests\TestCase;
 
 class CreateNewUserTest extends TestCase
 {
-    /**
-     * 各テストの実行後にテーブルを空にする。
-     */
+
     use RefreshDatabase;
 
     public function setUp(): void
@@ -29,7 +27,7 @@ class CreateNewUserTest extends TestCase
             'name' => 'user1',
             'email' => 'user1@test.com',
             'password' => 'password',
-            'password_confirmation' => 'password'
+            'password_confirmation' => 'password',
         ];
         $this->post('/register', $items)
             ->assertStatus(302);

@@ -16,21 +16,10 @@ class IndexServiceTest extends TestCase
 
     private IndexService $service;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
         $this->service = app(IndexService::class);
-    }
-
-    /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(IndexService::class, $this->service);
     }
 
     /**
@@ -50,18 +39,16 @@ class IndexServiceTest extends TestCase
         $admins = $this->service->searchStaff($default);
         $this->assertCount(0, $admins->items(), 'データがない状態でエラーにならないことを始めにテスト');
 
-        /** @var Admin $admin1 */
-        $admin1 = Admin::factory([
+        $admin1 = $this->createDefaultAdmin([
             'name' => 'user1',
             'email' => 'user1@test.com',
-            'role' => AdminRole::HighManager->value
-        ])->create();
-        /** @var Admin $admin2 */
-        $admin2 = Admin::factory([
+            'role' => AdminRole::HighManager->value,
+        ]);
+        $admin2 = $this->createDefaultAdmin([
             'name' => 'user2',
             'email' => 'user2@test.com',
-            'role' => AdminRole::Manager->value
-        ])->create();
+            'role' => AdminRole::Manager->value,
+        ]);
 
         $input = $default;
         $input['name'] = 'user2';
@@ -89,6 +76,5 @@ class IndexServiceTest extends TestCase
         $admins = $this->service->searchStaff($input);
         $adminIds = $admins->pluck('id')->all();
         $this->assertSame([$admin2->id, $admin1->id], $adminIds, 'ソート指定で検索が出来ることをテスト');
-
     }
 }

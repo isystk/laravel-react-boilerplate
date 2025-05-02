@@ -2,8 +2,6 @@
 
 namespace Services\Admin\Staff\Import;
 
-use App\Domain\Entities\Admin;
-use App\Domain\Entities\ImportHistory;
 use App\Enums\ImportType;
 use App\Enums\JobStatus;
 use App\Services\Admin\Staff\Import\IndexService;
@@ -17,21 +15,10 @@ class IndexServiceTest extends TestCase
 
     private IndexService $service;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
         $this->service = app(IndexService::class);
-    }
-
-    /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(IndexService::class, $this->service);
     }
 
     /**
@@ -42,19 +29,17 @@ class IndexServiceTest extends TestCase
         $result = $this->service->getImportHistories();
         $this->assertSame([], $result, 'データがない状態でエラーにならないことを始めにテスト');
 
-        /** @var Admin $admin */
-        $admin = Admin::factory([
+        $admin = $this->createDefaultAdmin([
             'name' => 'admin1',
-        ])->create();
+        ]);
 
-        /** @var ImportHistory $importHistory */
-        $importHistory = ImportHistory::factory([
+        $importHistory = $this->createDefaultImportHistory([
             'type' => ImportType::Staff->value,
             'import_at' => '2024-06-01',
             'import_user_id' => $admin->id,
             'file_name' => 'test.csv',
             'status' => JobStatus::Success->value,
-        ])->create();
+        ]);
 
         $result = $this->service->getImportHistories();
         $this->assertSame($importHistory->id, $result[0]['id'], '取得したidが想定通りであることのテスト');
@@ -63,8 +48,11 @@ class IndexServiceTest extends TestCase
             $result[0]['import_at'],
             '取得したがimport_at想定通りであることのテスト'
         );
-        $this->assertSame($admin->name, $result[0]['import_user_name'], '取得したimport_user_nameが想定通りであることのテスト');
-        $this->assertSame($importHistory->file_name, $result[0]['file_name'], '取得したfile_nameが想定通りであることのテスト');
-        $this->assertSame(JobStatus::Success->label(), $result[0]['status'], '取得したstatusが想定通りであることのテスト');
+        $this->assertSame($admin->name, $result[0]['import_user_name'],
+            '取得したimport_user_nameが想定通りであることのテスト');
+        $this->assertSame($importHistory->file_name, $result[0]['file_name'],
+            '取得したfile_nameが想定通りであることのテスト');
+        $this->assertSame(JobStatus::Success->label(), $result[0]['status'],
+            '取得したstatusが想定通りであることのテスト');
     }
 }

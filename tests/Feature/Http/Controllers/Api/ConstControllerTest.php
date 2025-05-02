@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature\Http\Controllers\Api;
+namespace Http\Controllers\Api;
 
 use App\Utils\ConstUtil;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
@@ -9,9 +9,7 @@ use Tests\TestCase;
 
 class ConstControllerTest extends TestCase
 {
-    /**
-     * 各テストの実行後にテーブルを空にする。
-     */
+
     use RefreshDatabase;
 
     public function setUp(): void

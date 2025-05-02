@@ -2,6 +2,8 @@
 
 namespace App\Domain\Entities;
 
+use App\Mails\ResetPasswordToUser;
+use App\Mails\VerifyEmailToUser;
 use Carbon\Carbon;
 use Database\Factories\Domain\Entities\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -25,6 +27,7 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
+
     /** @phpstan-use HasFactory<UserFactory> */
     use HasFactory;
     use Notifiable;
@@ -63,5 +66,29 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'remember_token',
     ];
+
+    /**
+     * メール認証済みの場合にTrueを返却する
+     */
+    public function isEmailVerified(): bool
+    {
+        return !is_null($this->email_verified_at);
+    }
+
+    /**
+     * パスワードリセット時に送信するメールオブジェクトを返却する
+     */
+    public function sendPasswordResetNotification($token): void
+    {
+        $this->notify(new ResetPasswordToUser($this, $token));
+    }
+
+    /**
+     * 新規会員登録時に送信するメールオブジェクトを返却する
+     */
+    public function sendEmailVerificationNotification(): void
+    {
+        $this->notify(new VerifyEmailToUser($this));
+    }
 
 }

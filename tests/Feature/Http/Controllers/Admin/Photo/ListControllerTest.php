@@ -2,7 +2,6 @@
 
 namespace Http\Controllers\Admin\Photo;
 
-use App\Domain\Entities\Admin;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
@@ -10,9 +9,7 @@ use Tests\TestCase;
 
 class ListControllerTest extends TestCase
 {
-    /**
-     * 各テストの実行後にテーブルを空にする。
-     */
+
     use RefreshDatabase;
 
     public function setUp(): void
@@ -28,10 +25,9 @@ class ListControllerTest extends TestCase
     {
         Storage::fake();
 
-        /** @var Admin $admin */
-        $admin = Admin::factory()->create([
+        $admin = $this->createDefaultAdmin([
             'name' => '管理者A',
-            'role' => 'manager'
+            'role' => 'manager',
         ]);
         $this->actingAs($admin, 'admin');
 
@@ -56,10 +52,9 @@ class ListControllerTest extends TestCase
     {
         Storage::fake();
 
-        /** @var Admin $admin */
-        $admin = Admin::factory()->create([
+        $admin = $this->createDefaultAdmin([
             'name' => '管理者A',
-            'role' => 'manager'
+            'role' => 'manager',
         ]);
         $this->actingAs($admin, 'admin');
 
@@ -71,15 +66,14 @@ class ListControllerTest extends TestCase
         $response = $this->delete(route('admin.photo.destroy'), []);
         $response->assertForbidden();
 
-        /** @var Admin $admin2 */
-        $admin2 = Admin::factory()->create([
+        $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
-            'role' => 'high-manager'
+            'role' => 'high-manager',
         ]);
         $this->actingAs($admin2, 'admin');
 
         $redirectResponse = $this->delete(route('admin.photo.destroy'), [
-            'fileName' => 'contact\contact1.jpg'
+            'fileName' => 'contact\contact1.jpg',
         ]);
         $response = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();
@@ -87,7 +81,7 @@ class ListControllerTest extends TestCase
         $this->assertFalse(Storage::exists('contact\contact1.jpg'));
 
         $redirectResponse = $this->delete(route('admin.photo.destroy'), [
-            'fileName' => 'stock\stock1.jpg'
+            'fileName' => 'stock\stock1.jpg',
         ]);
         $response = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();

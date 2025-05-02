@@ -1,21 +1,14 @@
 <?php
 
-namespace Feature\Http\Controllers\Admin\Order;
+namespace Http\Controllers\Admin\Order;
 
-use App\Domain\Entities\Admin;
-use App\Domain\Entities\Order;
-use App\Domain\Entities\OrderStock;
-use App\Domain\Entities\Stock;
-use App\Domain\Entities\User;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class DetailControllerTest extends TestCase
 {
-    /**
-     * 各テストの実行後にテーブルを空にする。
-     */
+
     use RefreshDatabase;
 
     public function setUp(): void
@@ -29,25 +22,20 @@ class DetailControllerTest extends TestCase
      */
     public function testShow(): void
     {
-        /** @var Admin $admin */
-        $admin = Admin::factory()->create([
+        $admin = $this->createDefaultAdmin([
             'name' => '管理者A',
-            'role' => 'manager'
+            'role' => 'manager',
         ]);
         $this->actingAs($admin, 'admin');
 
-        /** @var User $user1 */
-        $user1 = User::factory(['name' => 'user1'])->create();
+        $user1 = $this->createDefaultUser(['name' => 'user1']);
 
-        /** @var Stock $stock1 */
-        $stock1 = Stock::factory(['name' => '商品1'])->create();
-        /** @var Stock $stock2 */
-        $stock2 = Stock::factory(['name' => '商品2'])->create();
+        $stock1 = $this->createDefaultStock(['name' => '商品1']);
+        $stock2 = $this->createDefaultStock(['name' => '商品2']);
 
-        /** @var Order $order1 */
-        $order1 = Order::factory(['user_id' => $user1->id, 'created_at' => '2024-05-01'])->create();
-        OrderStock::factory(['order_id' => $order1->id, 'stock_id' => $stock1->id])->create();
-        OrderStock::factory(['order_id' => $order1->id, 'stock_id' => $stock2->id])->create();
+        $order1 = $this->createDefaultOrder(['user_id' => $user1->id, 'created_at' => '2024-05-01']);
+        $this->createDefaultOrderStock(['order_id' => $order1->id, 'stock_id' => $stock1->id]);
+        $this->createDefaultOrderStock(['order_id' => $order1->id, 'stock_id' => $stock2->id]);
 
         $response = $this->get(route('admin.order.show', $order1));
         $response->assertSuccessful();

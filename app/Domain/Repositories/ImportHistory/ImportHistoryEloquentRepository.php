@@ -24,7 +24,8 @@ class ImportHistoryEloquentRepository extends BaseEloquentRepository implements 
      * @param ImportType $importType
      * @return Collection<int, ImportHistory>
      */
-    public function getByImportHistory(ImportType $importType): Collection {
+    public function getByImportHistory(ImportType $importType): Collection
+    {
         /** @var Collection<int, ImportHistory> */
         return $this->model
             ->where('type', $importType->value)
@@ -37,12 +38,13 @@ class ImportHistoryEloquentRepository extends BaseEloquentRepository implements 
      * @param ImportType $importType
      * @return bool
      */
-    public function hasProcessingByImportHistory(ImportType $importType): bool {
+    public function hasProcessingByImportHistory(ImportType $importType): bool
+    {
         return $this->model
             ->where('type', $importType->value)
             ->whereIn('status', [
                 JobStatus::Waiting->value,
-                JobStatus::Processing->value
+                JobStatus::Processing->value,
             ])
             ->exists();
     }

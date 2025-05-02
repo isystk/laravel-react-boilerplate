@@ -3,8 +3,8 @@
 namespace App\Domain\Repositories\Admin;
 
 use App\Domain\Entities\Admin;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use App\Domain\Repositories\BaseEloquentRepository;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
 class AdminEloquentRepository extends BaseEloquentRepository implements AdminRepository
@@ -56,7 +56,8 @@ class AdminEloquentRepository extends BaseEloquentRepository implements AdminRep
      * @param string $email
      * @return Admin|null
      */
-    public function getByEmail(string $email): ?Admin {
+    public function getByEmail(string $email): ?Admin
+    {
         /** @var Admin */
         return $this->model->select()
             ->where('email', $email)

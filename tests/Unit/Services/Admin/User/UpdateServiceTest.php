@@ -3,8 +3,8 @@
 namespace Tests\Unit\Services\Admin\User;
 
 use App\Domain\Entities\User;
-use App\Services\Admin\User\UpdateService;
 use App\Http\Requests\Admin\User\UpdateRequest;
+use App\Services\Admin\User\UpdateService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -15,9 +15,6 @@ class UpdateServiceTest extends TestCase
 
     private UpdateService $service;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -25,20 +22,11 @@ class UpdateServiceTest extends TestCase
     }
 
     /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(UpdateService::class, $this->service);
-    }
-
-    /**
      * updateのテスト
      */
     public function testUpdate(): void
     {
-        /** @var User $user1 */
-        $user1 = User::factory()->create([
+        $user1 = $this->createDefaultUser([
             'name' => 'aaa',
             'email' => 'aaa@test.com',
         ]);

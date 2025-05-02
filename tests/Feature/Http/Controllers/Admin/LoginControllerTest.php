@@ -1,8 +1,7 @@
 <?php
 
-namespace Feature\Http\Controllers\Admin;
+namespace Http\Controllers\Admin;
 
-use App\Domain\Entities\Admin;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
@@ -10,9 +9,7 @@ use Tests\TestCase;
 
 class LoginControllerTest extends TestCase
 {
-    /**
-     * 各テストの実行後にテーブルを空にする。
-     */
+
     use RefreshDatabase;
 
     public function setUp(): void
@@ -26,7 +23,7 @@ class LoginControllerTest extends TestCase
      */
     public function testLogin(): void
     {
-        Admin::factory()->create([
+        $this->createDefaultAdmin([
             'name' => '管理者A',
             'email' => 'aaa@test.com',
             'password' => Hash::make('password'),

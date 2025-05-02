@@ -20,8 +20,7 @@ class IndexService extends BaseService
      */
     public function __construct(
         ContactFormRepository $contactFormRepository
-    )
-    {
+    ) {
         $this->contactFormRepository = $contactFormRepository;
     }
 

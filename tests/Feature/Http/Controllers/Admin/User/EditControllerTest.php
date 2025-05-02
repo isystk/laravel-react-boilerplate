@@ -1,18 +1,14 @@
 <?php
 
-namespace Feature\Http\Controllers\Admin\User;
+namespace Http\Controllers\Admin\User;
 
-use App\Domain\Entities\Admin;
-use App\Domain\Entities\User;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class EditControllerTest extends TestCase
 {
-    /**
-     * 各テストの実行後にテーブルを空にする。
-     */
+
     use RefreshDatabase;
 
     public function setUp(): void
@@ -26,16 +22,14 @@ class EditControllerTest extends TestCase
      */
     public function testEdit(): void
     {
-        /** @var User $user1 */
-        $user1 = User::factory()->create([
+        $user1 = $this->createDefaultUser([
             'name' => 'user1',
             'email' => 'user1@test.com',
         ]);
 
-        /** @var Admin $admin1 */
-        $admin1 = Admin::factory()->create([
+        $admin1 = $this->createDefaultAdmin([
             'name' => '管理者A',
-            'role' => 'manager'
+            'role' => 'manager',
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -43,10 +37,9 @@ class EditControllerTest extends TestCase
         $response = $this->get(route('admin.user.edit', $user1));
         $response->assertForbidden();
 
-        /** @var Admin $admin2 */
-        $admin2 = Admin::factory()->create([
+        $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
-            'role' => 'high-manager'
+            'role' => 'high-manager',
         ]);
         $this->actingAs($admin2, 'admin');
 
@@ -59,16 +52,14 @@ class EditControllerTest extends TestCase
      */
     public function testUpdate(): void
     {
-        /** @var User $user1 */
-        $user1 = User::factory()->create([
+        $user1 = $this->createDefaultUser([
             'name' => 'user1',
             'email' => 'user1@test.com',
         ]);
 
-        /** @var Admin $admin1 */
-        $admin1 = Admin::factory()->create([
+        $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
-            'role' => 'manager'
+            'role' => 'manager',
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -76,10 +67,9 @@ class EditControllerTest extends TestCase
         $response = $this->put(route('admin.user.update', $user1), []);
         $response->assertForbidden();
 
-        /** @var Admin $admin2 */
-        $admin2 = Admin::factory()->create([
+        $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
-            'role' => 'high-manager'
+            'role' => 'high-manager',
         ]);
         $this->actingAs($admin2, 'admin');
 

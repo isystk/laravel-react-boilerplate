@@ -3,9 +3,9 @@
 namespace App\Domain\Repositories\Stock;
 
 use App\Domain\Entities\Stock;
+use App\Domain\Repositories\BaseRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
-use App\Domain\Repositories\BaseRepository;
 
 interface StockRepository extends BaseRepository
 {

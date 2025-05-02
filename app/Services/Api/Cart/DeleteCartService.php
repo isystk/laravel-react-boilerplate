@@ -15,8 +15,7 @@ class DeleteCartService extends BaseCartService
      */
     public function __construct(
         CartRepository $cartRepository,
-    )
-    {
+    ) {
         parent::__construct($cartRepository);
         $this->cartRepository = $cartRepository;
     }

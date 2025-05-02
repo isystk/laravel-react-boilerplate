@@ -58,7 +58,8 @@ abstract class BaseImportJobs extends BaseJobs
                 throw new RuntimeException(implode(' ', $errors));
             }
             // DB登録処理
-            DB::transaction(function () use($import) {
+            DB::transaction(function () use ($import)
+            {
                 $rows = $import->getSheets()[0]; // 先頭シートのデータを取得
                 $this->importData($rows);
             });
@@ -90,7 +91,7 @@ abstract class BaseImportJobs extends BaseJobs
         $importHistoryRepository = app(ImportHistoryRepository::class);
         $importHistoryRepository->update($this->importHistoryId, [
             'job_id' => $this->job->getJobId(),
-            'status' => $status->value
+            'status' => $status->value,
         ]);
     }
 

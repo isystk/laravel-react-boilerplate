@@ -1,10 +1,7 @@
 <?php
 
-namespace Feature\Http\Controllers\Admin\ContactForm;
+namespace Http\Controllers\Admin\ContactForm;
 
-use App\Domain\Entities\Admin;
-use App\Domain\Entities\ContactForm;
-use App\Domain\Entities\ContactFormImage;
 use App\Enums\Age;
 use App\Enums\Gender;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
@@ -13,9 +10,7 @@ use Tests\TestCase;
 
 class DetailControllerTest extends TestCase
 {
-    /**
-     * 各テストの実行後にテーブルを空にする。
-     */
+
     use RefreshDatabase;
 
     public function setUp(): void
@@ -29,15 +24,13 @@ class DetailControllerTest extends TestCase
      */
     public function testShow(): void
     {
-        /** @var Admin $admin */
-        $admin = Admin::factory()->create([
+        $admin = $this->createDefaultAdmin([
             'name' => '管理者A',
-            'role' => 'manager'
+            'role' => 'manager',
         ]);
         $this->actingAs($admin, 'admin');
 
-        /** @var ContactForm $contactForm */
-        $contactForm = ContactForm::factory([
+        $contactForm = $this->createDefaultContactForm([
             'user_name' => 'user1',
             'title' => 'title1',
             'email' => '111@test.com',
@@ -45,9 +38,9 @@ class DetailControllerTest extends TestCase
             'gender' => Gender::Female->value,
             'age' => Age::Over40->value,
             'contact' => 'お問い合わせ内容',
-        ])->create();
-        ContactFormImage::factory(['contact_form_id' => $contactForm->id, 'file_name' => 'image1.jpg'])->create();
-        ContactFormImage::factory(['contact_form_id' => $contactForm->id, 'file_name' => 'image2.jpg'])->create();
+        ]);
+        $this->createDefaultContactFormImage(['contact_form_id' => $contactForm->id, 'file_name' => 'image1.jpg']);
+        $this->createDefaultContactFormImage(['contact_form_id' => $contactForm->id, 'file_name' => 'image2.jpg']);
 
         $response = $this->get(route('admin.contact.show', $contactForm));
         $response->assertSuccessful();
@@ -67,20 +60,16 @@ class DetailControllerTest extends TestCase
      */
     public function testDestroy(): void
     {
-        /** @var ContactForm $contactForm */
-        $contactForm = ContactForm::factory([
+        $contactForm = $this->createDefaultContactForm([
             'user_name' => 'user1',
             'title' => 'title1',
-        ])->create();
-        /** @var ContactFormImage $contactFormImage1 */
-        $contactFormImage1 = ContactFormImage::factory(['contact_form_id' => $contactForm->id])->create();
-        /** @var ContactFormImage $contactFormImage2 */
-        $contactFormImage2 = ContactFormImage::factory(['contact_form_id' => $contactForm->id])->create();
+        ]);
+        $contactFormImage1 = $this->createDefaultContactFormImage(['contact_form_id' => $contactForm->id]);
+        $contactFormImage2 = $this->createDefaultContactFormImage(['contact_form_id' => $contactForm->id]);
 
-        /** @var Admin $admin1 */
-        $admin1 = Admin::factory()->create([
+        $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
-            'role' => 'manager'
+            'role' => 'manager',
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -88,10 +77,9 @@ class DetailControllerTest extends TestCase
         $response = $this->delete(route('admin.contact.destroy', $contactForm));
         $response->assertForbidden();
 
-        /** @var Admin $admin2 */
-        $admin2 = Admin::factory()->create([
+        $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
-            'role' => 'high-manager'
+            'role' => 'high-manager',
         ]);
         $this->actingAs($admin2, 'admin');
 

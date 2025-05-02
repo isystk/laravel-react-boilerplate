@@ -14,22 +14,10 @@ class ContactFormRepositoryTest extends TestCase
 
     private ContactFormRepository $repository;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
-
         $this->repository = app(ContactFormRepository::class);
-    }
-
-    /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(ContactFormRepository::class, $this->repository);
     }
 
     /**
@@ -48,28 +36,26 @@ class ContactFormRepositoryTest extends TestCase
         $stocks = $this->repository->getByConditions($defaultConditions);
         $this->assertSame(0, $stocks->count(), 'データがない状態で正常に動作することを始めにテスト');
 
-        /** @var ContactForm $expectContactForm1 */
-        $expectContactForm1 = ContactForm::factory(['user_name' => 'user1', 'title' => 'title1'])->create();
-        /** @var ContactForm $expectContactForm2 */
-        $expectContactForm2 = ContactForm::factory(['user_name' => 'user2', 'title' => 'title2'])->create();
+        $expectContactForm1 = $this->createDefaultContactForm(['user_name' => 'user1', 'title' => 'title1']);
+        $expectContactForm2 = $this->createDefaultContactForm(['user_name' => 'user2', 'title' => 'title2']);
 
         /** @var ContactForm $contactForm */
         $contactForm = $this->repository->getByConditions([
             ...$defaultConditions,
-            'user_name' => 'user1'
+            'user_name' => 'user1',
         ])->first();
         $this->assertSame($expectContactForm1->id, $contactForm->id, 'user_nameで検索が出来ることをテスト');
 
         /** @var ContactForm $contactForm */
         $contactForm = $this->repository->getByConditions([
             ...$defaultConditions,
-            'title' => 'title2'
+            'title' => 'title2',
         ])->first();
         $this->assertSame($expectContactForm2->id, $contactForm->id, 'titleで検索が出来ることをテスト');
 
         $contactForms = $this->repository->getByConditions([
             ...$defaultConditions,
-            'limit' => 1
+            'limit' => 1,
         ]);
         $this->assertSame(1, $contactForms->count(), 'limitで取得件数が指定出来ることをテスト');
     }

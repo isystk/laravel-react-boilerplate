@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-
 /**
  * @property int $id
  * @property int $stock_id
@@ -42,6 +41,7 @@ class Cart extends Model
     ];
 
     // 親テーブル
+
     /**
      * @return BelongsTo<User, $this>
      */

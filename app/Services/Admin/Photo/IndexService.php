@@ -34,7 +34,7 @@ class IndexService extends BaseService
 
     /**
      * 写真を検索します。
-     * @param  array{
+     * @param array{
      *   file_name : ?string,
      *   file_type : ?int,
      * } $conditions
@@ -66,7 +66,7 @@ class IndexService extends BaseService
                 'type' => $photoType,
                 'fileName' => $file,
             ];
-           $photos[] = $photo;
+            $photos[] = $photo;
         }
 
         return $photos;

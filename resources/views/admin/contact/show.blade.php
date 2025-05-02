@@ -1,5 +1,4 @@
 @extends('layouts.app_admin')
-
 @section('title', __('contact.Contact ID:') . $contactForm->id)
 @php
     $menu = 'user';
@@ -12,7 +11,10 @@
 
 @section('content')
     <div class="text-left mb-3">
-        <a class="btn btn-secondary" href="{{ route('admin.contact') }}">{{ __('common.Back') }}</a>
+        <a
+            class="btn btn-secondary"
+            href="{{ route('admin.contact') }}"
+        >{{ __('common.Back') }}</a>
     </div>
 
     <div class="card card-purple">
@@ -79,7 +81,10 @@
                         <div class="control-group">
                             <label class="col-sm-6 control-label">{{ __('contact.Image') }}{{ $i+1 }}</label>
                             <div class="col-sm-12">
-                                <img src="{{ asset('uploads/contact/' . $contactFormImage['file_name']) }}" width="200px" />
+                                <img
+                                    src="{{ asset('uploads/contact/' . $contactFormImage['file_name']) }}"
+                                    width="200px"
+                                />
                             </div>
                         </div>
                     </div>
@@ -100,7 +105,10 @@
                     </a>
                 </div>
             </div>
-            <div class="d-inline-block position-absolute" style="right: 30px;">
+            <div
+                class="d-inline-block position-absolute"
+                style="right: 30px;"
+            >
                 <form
                     method="POST"
                     action="{{ route('admin.contact.destroy', ['contactForm' => $contactForm ]) }}"

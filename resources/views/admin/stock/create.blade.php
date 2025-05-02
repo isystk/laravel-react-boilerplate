@@ -1,5 +1,4 @@
 @extends('layouts.app_admin')
-
 @section('title', __('stock.Stock Regist'))
 @php
     $menu = 'master';
@@ -12,11 +11,17 @@
 
 @section('content')
     <div class="text-left mb-3">
-        <a class="btn btn-secondary" href="{{ route('admin.stock') }}">{{ __('common.Back') }}</a>
+        <a
+            class="btn btn-secondary"
+            href="{{ route('admin.stock') }}"
+        >{{ __('common.Back') }}</a>
     </div>
 
     @if (session('status'))
-        <div class="alert alert-success" role="alert">
+        <div
+            class="alert alert-success"
+            role="alert"
+        >
             {{ session('status') }}
         </div>
     @endif
@@ -29,7 +34,11 @@
             </ul>
         </div>
     @endif
-    <form method="POST" enctype="multipart/form-data" action="{{ route('admin.stock.store') }}">
+    <form
+        method="POST"
+        enctype="multipart/form-data"
+        action="{{ route('admin.stock.store') }}"
+    >
         @csrf
         <div class="card card-purple">
             <div class="card-body">
@@ -91,17 +100,36 @@
                 <div class="form-group">
                     <div class="control-group">
                         <label class="col-sm-2 control-label">{{ __('stock.Image') }}</label>
-                        <div class="col-sm-2" id="drop-zone">
+                        <div
+                            class="col-sm-2"
+                            id="drop-zone"
+                        >
                             {{--
                             <p><input type="file" name="imageFile"></p>
                             <br>
                             --}}
-                            <p><input id="js-uploadImage" type="file"></p>
+                            <p>
+                                <input
+                                    id="js-uploadImage"
+                                    type="file"
+                                >
+                            </p>
                             <div id="result">
                                 @if (old('imageBase64'))
-                                    <img src="{{ old('imageBase64') }}" width="200px"/>
-                                    <input type="hidden" name="imageBase64" value="{{ old('imageBase64') }}" />
-                                    <input type="hidden" name="fileName" value="{{ old('fileName') }}" />
+                                    <img
+                                        src="{{ old('imageBase64') }}"
+                                        width="200px"
+                                    />
+                                    <input
+                                        type="hidden"
+                                        name="imageBase64"
+                                        value="{{ old('imageBase64') }}"
+                                    />
+                                    <input
+                                        type="hidden"
+                                        name="fileName"
+                                        value="{{ old('fileName') }}"
+                                    />
                                 @endif
                             </div>
                             <p class="error error-message"></p>
@@ -110,7 +138,11 @@
                 </div>
             </div>
             <div class="card-footer text-center  ">
-                <input class="btn btn-info" type="submit" value="{{ __('common.Execute') }}">
+                <input
+                    class="btn btn-info"
+                    type="submit"
+                    value="{{ __('common.Execute') }}"
+                >
             </div>
         </div>
     </form>

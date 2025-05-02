@@ -3,12 +3,10 @@
 namespace App\Services\Admin\Staff\Import;
 
 use App\Domain\Entities\Admin;
-use App\Domain\Entities\ImportHistory;
 use App\Domain\Repositories\ImportHistory\ImportHistoryRepository;
 use App\Enums\ImportType;
 use App\Enums\JobStatus;
 use App\Services\BaseService;
-use RuntimeException;
 
 class IndexService extends BaseService
 {
@@ -21,8 +19,7 @@ class IndexService extends BaseService
      */
     public function __construct(
         ImportHistoryRepository $importHistoryRepository
-    )
-    {
+    ) {
         $this->importHistoryRepository = $importHistoryRepository;
     }
 
@@ -32,11 +29,11 @@ class IndexService extends BaseService
      */
     public function getImportHistories(): array
     {
-
         // インポート履歴を取得
         $importHistories = $this->importHistoryRepository->getByImportHistory(ImportType::Staff);
 
-        $importHistories = $importHistories->map(function ($importHistory) {
+        $importHistories = $importHistories->map(function ($importHistory)
+        {
             $admin = Admin::find($importHistory->import_user_id);
 
             // インポート履歴を表示用に加工

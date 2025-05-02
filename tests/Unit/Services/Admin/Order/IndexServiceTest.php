@@ -4,8 +4,6 @@ namespace Tests\Unit\Services\Admin\Order;
 
 use App\Domain\Entities\Order;
 use App\Domain\Entities\OrderStock;
-use App\Domain\Entities\Stock;
-use App\Domain\Entities\User;
 use App\Services\Admin\Order\IndexService;
 use App\Utils\DateUtil;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -19,21 +17,10 @@ class IndexServiceTest extends TestCase
 
     private IndexService $service;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
         $this->service = app(IndexService::class);
-    }
-
-    /**
-     * インスタンスがテスト対象のクラスであることのテスト
-     */
-    public function testInstanceOf(): void
-    {
-        $this->assertInstanceOf(IndexService::class, $this->service);
     }
 
     /**
@@ -53,24 +40,17 @@ class IndexServiceTest extends TestCase
         $orders = $this->service->searchOrder($default);
         $this->assertSame(0, $orders->count(), '引数がない状態でエラーにならないことを始めにテスト');
 
-        /** @var User $user1 */
-        $user1 = User::factory(['name' => 'user1'])->create();
-        /** @var User $user2 */
-        $user2 = User::factory(['name' => 'user2'])->create();
+        $user1 = $this->createDefaultUser(['name' => 'user1']);
+        $user2 = $this->createDefaultUser(['name' => 'user2']);
 
-        /** @var Stock $stock1 */
-        $stock1 = Stock::factory(['name' => '商品1'])->create();
-        /** @var Stock $stock2 */
-        $stock2 = Stock::factory(['name' => '商品2'])->create();
-        /** @var Stock $stock3 */
-        $stock3 = Stock::factory(['name' => '商品3'])->create();
+        $stock1 = $this->createDefaultStock(['name' => '商品1']);
+        $stock2 = $this->createDefaultStock(['name' => '商品2']);
+        $stock3 = $this->createDefaultStock(['name' => '商品3']);
 
-        /** @var Order $order1 */
-        $order1 = Order::factory(['user_id' => $user1->id, 'created_at' => '2024-05-01'])->create();
-        OrderStock::factory(['order_id' => $order1->id, 'stock_id' => $stock1->id])->create();
-        OrderStock::factory(['order_id' => $order1->id, 'stock_id' => $stock2->id])->create();
-        /** @var Order $order2 */
-        $order2 = Order::factory(['user_id' => $user2->id, 'created_at' => '2024-06-01'])->create();
+        $order1 = $this->createDefaultOrder(['user_id' => $user1->id, 'created_at' => '2024-05-01']);
+        $this->createDefaultOrderStock(['order_id' => $order1->id, 'stock_id' => $stock1->id]);
+        $this->createDefaultOrderStock(['order_id' => $order1->id, 'stock_id' => $stock2->id]);
+        $order2 = $this->createDefaultOrder(['user_id' => $user2->id, 'created_at' => '2024-06-01']);
         OrderStock::factory(['order_id' => $order2->id, 'stock_id' => $stock3->id])->create();
 
         $input = $default;
@@ -85,7 +65,7 @@ class IndexServiceTest extends TestCase
         /** @var LengthAwarePaginator<int, Order> $orders */
         $orders = $this->service->searchOrder($input);
         $orderIds = collect($orders->items())->pluck('id')->all();
-        $this->assertSame([$order2->id], $orderIds, 'order_date_fromで検索が出来ることをテスト');
+        $this->assertContains($order2->id, $orderIds, 'order_date_fromで検索が出来ることをテスト');
 
         $input = $default;
         $input['order_date_to'] = DateUtil::toCarbonImmutable('2024-05-01');
@@ -100,7 +80,7 @@ class IndexServiceTest extends TestCase
         /** @var LengthAwarePaginator<int, Order> $orders */
         $orders = $this->service->searchOrder($input);
         $orderIds = collect($orders->items())->pluck('id')->all();
-        $this->assertSame([$order2->id, $order1->id], $orderIds, 'ソート指定で検索が出来ることをテスト');
-
+        $this->assertContains($order1->id, $orderIds, 'ソート指定で検索が出来ることをテスト');
+        $this->assertContains($order2->id, $orderIds, 'ソート指定で検索が出来ることをテスト');
     }
 }

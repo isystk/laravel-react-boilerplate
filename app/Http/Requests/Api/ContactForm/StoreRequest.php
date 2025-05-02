@@ -38,7 +38,7 @@ class StoreRequest extends FormRequest
             $imageFiles[] = UploadImage::convertBase64($this->imageBase64_3);
         }
         $this->merge([
-            'image_files' => collect($imageFiles)
+            'image_files' => collect($imageFiles),
         ]);
     }
 

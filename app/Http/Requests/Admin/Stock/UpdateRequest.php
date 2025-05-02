@@ -75,7 +75,7 @@ class UpdateRequest extends FormRequest
             'fileName' => [
                 'nullable',
                 'string',
-            ]
+            ],
         ];
     }
 

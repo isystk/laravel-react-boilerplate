@@ -3,7 +3,6 @@
 namespace Console\Commands;
 
 use App\Console\Commands\ExportMonthlySales;
-use App\Domain\Entities\MonthlySale;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -11,10 +10,8 @@ class ExportMonthlySalesTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @var ExportMonthlySales $sut */
     private ExportMonthlySales $sut;
 
-    /** @var string $output */
     private string $output = 'test.csv';
 
     /**
@@ -59,12 +56,11 @@ class ExportMonthlySalesTest extends TestCase
     public function testAllValues(): void
     {
         // 月別売上の作成
-        /** @var MonthlySale $m1 */
-        $m1 = MonthlySale::factory([
+        $m1 = $this->createDefaultMonthlySale([
             'year_month' => "202404",
             'order_count' => 111,
             'amount' => 54321,
-        ])->create();
+        ]);
 
         // バッチ処理の実行
         $this->runBatch('export_monthly_sales', ['output_path' => $this->output]);
@@ -84,24 +80,21 @@ class ExportMonthlySalesTest extends TestCase
     public function testSortOrder(): void
     {
         // 月別売上の作成
-        /** @var MonthlySale $m1 */
-        $m1 = MonthlySale::factory([
+        $m1 = $this->createDefaultMonthlySale([
             'year_month' => "202404",
             'order_count' => 222,
             'amount' => 54321,
-        ])->create();
-        /** @var MonthlySale $m2 */
-        $m2 = MonthlySale::factory([
+        ]);
+        $m2 = $this->createDefaultMonthlySale([
             'year_month' => "202405",
             'order_count' => 333,
             'amount' => 65432,
-        ])->create();
-        /** @var MonthlySale $m3 */
-        $m3 = MonthlySale::factory([
+        ]);
+        $m3 = $this->createDefaultMonthlySale([
             'year_month' => "202406",
             'order_count' => 111,
             'amount' => 76543,
-        ])->create();
+        ]);
 
         // バッチ処理の実行
         $this->runBatch('export_monthly_sales', ['output_path' => $this->output]);
