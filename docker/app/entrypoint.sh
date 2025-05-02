@@ -28,13 +28,13 @@ php artisan migrate:fresh --seed
 echo "🔒 Fixing permissions..."
 chmod -R 777 bootstrap/cache storage
 
-# Minio にバケットを作成
-echo "🪣 Setup Bucket for Minio..."
-mc alias set minio http://s3:9000 admin password
-mc mb minio/laraec.isystk.com
-mc anonymous set download minio/laraec.isystk.com
-# Minio に画像をアップロード
-php artisan s3upload
+## Minio にバケットを作成
+#echo "🪣 Setup Bucket for Minio..."
+#mc alias set minio http://s3:9000 admin password
+#mc mb minio/laraec.isystk.com
+#mc anonymous set download minio/laraec.isystk.com
+## Minio に画像をアップロード
+#php artisan s3upload
 
 ## Laravel キューリスナをバックグラウンドで実行
 #echo "🎧 Starting queue listener..."
