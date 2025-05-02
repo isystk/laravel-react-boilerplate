@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Domain\Entities;
+namespace Domain\Entities;
 
 use App\Domain\Entities\Admin;
 use App\Enums\AdminRole;

@@ -14,9 +14,6 @@ class CartRepositoryTest extends TestCase
 
     private CartRepository $repository;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();

@@ -15,9 +15,6 @@ class UpdateServiceTest extends TestCase
 
     private UpdateService $service;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -29,8 +26,7 @@ class UpdateServiceTest extends TestCase
      */
     public function testUpdate(): void
     {
-        /** @var User $user1 */
-        $user1 = User::factory()->create([
+        $user1 = $this->createDefaultUser([
             'name' => 'aaa',
             'email' => 'aaa@test.com',
         ]);

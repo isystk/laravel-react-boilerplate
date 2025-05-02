@@ -2,9 +2,6 @@
 
 namespace Tests\Unit\Services\Api\Cart;
 
-use App\Domain\Entities\Cart;
-use App\Domain\Entities\Stock;
-use App\Domain\Entities\User;
 use App\Services\Api\Cart\MyCartService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -16,9 +13,6 @@ class MyCartServiceTest extends TestCase
 
     private MyCartService $service;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -30,8 +24,7 @@ class MyCartServiceTest extends TestCase
      */
     public function testGetMyCart(): void
     {
-        /** @var User $user1 */
-        $user1 = User::factory()->create([
+        $user1 = $this->createDefaultUser([
             'name' => 'aaa',
             'email' => 'aaa@test.com',
         ]);
@@ -41,13 +34,11 @@ class MyCartServiceTest extends TestCase
         $result = $this->service->getMyCart();
         $this->assertCount(0, $result['data'], 'カートに追加した商品がない状態でエラーにならないことを始めにテスト');
 
-        /** @var Stock $stock1 */
-        $stock1 = Stock::factory(['name' => 'stock1', 'price' => 111])->create();
-        /** @var Stock $stock2 */
-        $stock2 = Stock::factory(['name' => 'stock2', 'price' => 222])->create();
+        $stock1 = $this->createDefaultStock(['name' => 'stock1', 'price' => 111]);
+        $stock2 = $this->createDefaultStock(['name' => 'stock2', 'price' => 222]);
 
-        Cart::factory(['user_id' => $user1->id, 'stock_id' => $stock1->id])->create();
-        Cart::factory(['user_id' => $user1->id, 'stock_id' => $stock2->id])->create();
+        $this->createDefaultCart(['user_id' => $user1->id, 'stock_id' => $stock1->id]);
+        $this->createDefaultCart(['user_id' => $user1->id, 'stock_id' => $stock2->id]);
 
         $result = $this->service->getMyCart();
         $stockIds = collect($result['data'])->pluck('stock_id')->all();

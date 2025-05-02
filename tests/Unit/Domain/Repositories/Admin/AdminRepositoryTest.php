@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Domain\Repositories\Admin;
+namespace Domain\Repositories\Admin;
 
 use App\Domain\Repositories\Admin\AdminRepository;
 use App\Domain\Entities\Admin;
@@ -15,9 +15,6 @@ class AdminRepositoryTest extends TestCase
 
     private AdminRepository $repository;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();

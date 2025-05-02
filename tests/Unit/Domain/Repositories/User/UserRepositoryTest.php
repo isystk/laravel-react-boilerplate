@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Domain\Repositories\User;
+namespace Domain\Repositories\User;
 
 use App\Domain\Repositories\User\UserRepository;
 use App\Domain\Entities\User;
@@ -14,13 +14,9 @@ class UserRepositoryTest extends TestCase
 
     private UserRepository $repository;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
-
         $this->repository = app(UserRepository::class);
     }
 
@@ -40,10 +36,8 @@ class UserRepositoryTest extends TestCase
         $users = $this->repository->getByConditions($defaultConditions);
         $this->assertSame(0, $users->count(), 'データがない状態で正常に動作することを始めにテスト');
 
-        /** @var User $expectUser1 */
-        $expectUser1 = User::factory(['name' => 'user1', 'email' => 'user1@test.com'])->create();
-        /** @var User $expectUser2 */
-        $expectUser2 = User::factory(['name' => 'user2', 'email' => 'user2@test.com'])->create();
+        $expectUser1 = $this->createDefaultUser(['name' => 'user1', 'email' => 'user1@test.com']);
+        $expectUser2 = $this->createDefaultUser(['name' => 'user2', 'email' => 'user2@test.com']);
 
         /** @var User $user */
         $user = $this->repository->getByConditions([

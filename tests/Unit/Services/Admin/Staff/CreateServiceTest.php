@@ -16,9 +16,6 @@ class CreateServiceTest extends TestCase
 
     private CreateService $service;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();

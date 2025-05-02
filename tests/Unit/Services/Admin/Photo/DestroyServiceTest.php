@@ -14,9 +14,6 @@ class DestroyServiceTest extends TestCase
 
     private DestroyService $service;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();

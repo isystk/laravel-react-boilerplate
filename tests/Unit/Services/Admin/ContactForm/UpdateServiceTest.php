@@ -2,8 +2,6 @@
 
 namespace Tests\Unit\Services\Admin\ContactForm;
 
-use App\Domain\Entities\ContactForm;
-use App\Domain\Entities\ContactFormImage;
 use App\Enums\Age;
 use App\Enums\Gender;
 use App\Services\Admin\ContactForm\UpdateService;
@@ -20,9 +18,6 @@ class UpdateServiceTest extends TestCase
 
     private UpdateService $service;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -36,8 +31,7 @@ class UpdateServiceTest extends TestCase
     {
         Storage::fake();
 
-        /** @var ContactForm $contactForm */
-        $contactForm = ContactForm::factory()->create([
+        $contactForm = $this->createDefaultContactForm([
             'user_name' => 'aaa',
             'title' => 'タイトル1',
             'email' => 'aaa@test.com',
@@ -46,8 +40,7 @@ class UpdateServiceTest extends TestCase
             'age' => Age::Over30->value,
             'contact' => 'お問い合わせ1'
         ]);
-        /** @var ContactFormImage $contactFormImage */
-        $contactFormImage = ContactFormImage::factory()->create([
+        $contactFormImage = $this->createDefaultContactFormImage([
             'contact_form_id' => $contactForm->id,
             'file_name' => 'file1.jpg'
         ]);

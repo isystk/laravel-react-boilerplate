@@ -6,6 +6,7 @@ use App\Domain\Entities\Admin;
 use App\Domain\Entities\Cart;
 use App\Domain\Entities\ContactForm;
 use App\Domain\Entities\ContactFormImage;
+use App\Domain\Entities\ImportHistory;
 use App\Domain\Entities\MonthlySale;
 use App\Domain\Entities\Order;
 use App\Domain\Entities\OrderStock;
@@ -237,6 +238,21 @@ abstract class TestCase extends BaseTestCase
         }
         /** @var ContactFormImage */
         return ContactFormImage::factory($items)->create();
+    }
+
+    /**
+     * ImportHistoryを作成する
+     * @param array<string, mixed> $params
+     * @return ImportHistory
+     */
+    public function createDefaultImportHistory(array $params = []): ImportHistory
+    {
+        $items = [];
+        if (0 < count($params)) {
+            $items = array_merge($items, $params);
+        }
+        /** @var ImportHistory */
+        return ImportHistory::factory($items)->create();
     }
 
     /**

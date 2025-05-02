@@ -14,9 +14,6 @@ class StockRepositoryTest extends TestCase
 
     private StockRepository $repository;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -32,12 +29,9 @@ class StockRepositoryTest extends TestCase
         $stocks = $this->repository->getByLimit()->items();
         $this->assertCount(0, $stocks, 'データがない状態で正常に動作することを始めにテスト');
 
-        /** @var Stock $expectStock1 */
-        $expectStock1 = Stock::factory(['name' => 'stock1'])->create();
-        /** @var Stock $expectStock2 */
-        $expectStock2 = Stock::factory(['name' => 'stock2'])->create();
-        /** @var Stock $expectStock3 */
-        $expectStock3 = Stock::factory(['name' => 'stock3'])->create();
+        $this->createDefaultStock(['name' => 'stock1']);
+        $this->createDefaultStock(['name' => 'stock2']);
+        $expectStock3 = $this->createDefaultStock(['name' => 'stock3']);
 
         /** @var array<Stock> $stocks */
         $stocks = $this->repository->getByLimit(2)->items();
@@ -60,10 +54,8 @@ class StockRepositoryTest extends TestCase
         $stocks = $this->repository->getByConditions($defaultConditions);
         $this->assertSame(0, $stocks->count(), 'データがない状態で正常に動作することを始めにテスト');
 
-        /** @var Stock $expectStock1 */
-        $expectStock1 = Stock::factory(['name' => 'stock1'])->create();
-        /** @var Stock $expectStock2 */
-        $expectStock2 = Stock::factory(['name' => 'stock2'])->create();
+        $expectStock1 = $this->createDefaultStock(['name' => 'stock1']);
+        $this->createDefaultStock(['name' => 'stock2']);
 
         /** @var Stock $stock */
         $stock = $this->repository->getByConditions([

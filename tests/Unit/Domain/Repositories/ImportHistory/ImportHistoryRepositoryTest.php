@@ -2,7 +2,6 @@
 
 namespace Domain\Repositories\ImportHistory;
 
-use App\Domain\Entities\ImportHistory;
 use App\Domain\Repositories\ImportHistory\ImportHistoryRepository;
 use App\Enums\ImportType;
 use App\Enums\JobStatus;
@@ -16,9 +15,6 @@ class ImportHistoryRepositoryTest extends TestCase
 
     private ImportHistoryRepository $repository;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -33,14 +29,12 @@ class ImportHistoryRepositoryTest extends TestCase
         $result = $this->repository->getByImportHistory(ImportType::Staff);
         $this->assertSame(0, $result->count(), 'データがない状態で正常に動作することを始めにテスト');
 
-        /** @var ImportHistory $importHistory1 */
-        $importHistory1 = ImportHistory::factory([
+        $importHistory1 = $this->createDefaultImportHistory([
             'type' => ImportType::Staff->value,
-        ])->create();
-        /** @var ImportHistory $importHistory2 */
-        $importHistory2 = ImportHistory::factory([
+        ]);
+        $importHistory2 = $this->createDefaultImportHistory([
             'type' => ImportType::Staff->value,
-        ])->create();
+        ]);
         $expected = [$importHistory1->id, $importHistory2->id];
 
         $result = $this->repository->getByImportHistory(ImportType::Staff);
@@ -56,22 +50,22 @@ class ImportHistoryRepositoryTest extends TestCase
         $result = $this->repository->hasProcessingByImportHistory(ImportType::Staff);
         $this->assertFalse($result, 'データがない状態で正常に動作することを始めにテスト');
 
-        ImportHistory::factory([
+        $this->createDefaultImportHistory([
             'type' => ImportType::Staff->value,
             'status' => JobStatus::Success->value,
-        ])->create();
+        ]);
 
         $result = $this->repository->hasProcessingByImportHistory(ImportType::Staff);
         $this->assertFalse($result, '処理中（または処理待ち）のデータが存在しない場合 → False');
 
-        ImportHistory::factory([
+        $this->createDefaultImportHistory([
             'type' => ImportType::Staff->value,
             'status' => JobStatus::Waiting->value,
-        ])->create();
-        ImportHistory::factory([
+        ]);
+        $this->createDefaultImportHistory([
             'type' => ImportType::Staff->value,
             'status' => JobStatus::Processing->value,
-        ])->create();
+        ]);
 
         $result = $this->repository->hasProcessingByImportHistory(ImportType::Staff);
         $this->assertTrue($result, '処理中（または処理待ち）のデータが存在する場合 → True');

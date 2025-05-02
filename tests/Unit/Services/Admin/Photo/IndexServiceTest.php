@@ -15,9 +15,6 @@ class IndexServiceTest extends TestCase
 
     private IndexService $service;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();

@@ -16,9 +16,6 @@ class UpdateServiceTest extends TestCase
 
     private UpdateService $service;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -30,8 +27,9 @@ class UpdateServiceTest extends TestCase
      */
     public function testUpdate(): void
     {
-        /** @var Stock $stock */
-        $stock = Stock::factory()->create([
+        Storage::fake();
+
+        $stock = $this->createDefaultStock([
             'name' => 'aaa',
             'detail' => 'aaaの説明',
             'price' => 111,
@@ -55,8 +53,5 @@ class UpdateServiceTest extends TestCase
         $this->assertEquals(222, $updatedStock->price);
         $this->assertEquals(2, $updatedStock->quantity);
         $this->assertEquals('stock2.jpg', $updatedStock->imgpath);
-
-        // テスト後にファイルを削除
-        Storage::delete('stock/stock2.jpg');
     }
 }

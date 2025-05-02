@@ -16,9 +16,6 @@ class IndexServiceTest extends TestCase
 
     private IndexService $service;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -42,18 +39,16 @@ class IndexServiceTest extends TestCase
         $admins = $this->service->searchStaff($default);
         $this->assertCount(0, $admins->items(), 'データがない状態でエラーにならないことを始めにテスト');
 
-        /** @var Admin $admin1 */
-        $admin1 = Admin::factory([
+        $admin1 = $this->createDefaultAdmin([
             'name' => 'user1',
             'email' => 'user1@test.com',
             'role' => AdminRole::HighManager->value
-        ])->create();
-        /** @var Admin $admin2 */
-        $admin2 = Admin::factory([
+        ]);
+        $admin2 = $this->createDefaultAdmin([
             'name' => 'user2',
             'email' => 'user2@test.com',
             'role' => AdminRole::Manager->value
-        ])->create();
+        ]);
 
         $input = $default;
         $input['name'] = 'user2';

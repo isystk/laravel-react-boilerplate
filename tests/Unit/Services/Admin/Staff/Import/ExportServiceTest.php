@@ -2,8 +2,6 @@
 
 namespace Services\Admin\Staff\Import;
 
-use App\Domain\Entities\Admin;
-use App\Domain\Entities\Stock;
 use App\Services\Admin\Staff\Import\ExportService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -15,9 +13,6 @@ class ExportServiceTest extends TestCase
 
     private ExportService $service;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -32,9 +27,8 @@ class ExportServiceTest extends TestCase
         $export = $this->service->getExport();
         $this->assertSame(['ID', '名前', 'メールアドレス', '権限'], $export->headings(), 'ヘッダーが正しいこと');
 
-        Admin::factory(['name' => 'admin1', 'email' => 'admin1@test.com', 'role' => 'high-manager'])->create();
-        /** @var Admin $admin2 */
-        $admin2 = Admin::factory(['name' => 'admin2', 'email' => 'admin2@test.com', 'role' => 'manager'])->create();
+        $this->createDefaultAdmin(['name' => 'admin1', 'email' => 'admin1@test.com', 'role' => 'high-manager']);
+        $admin2 = $this->createDefaultAdmin(['name' => 'admin2', 'email' => 'admin2@test.com', 'role' => 'manager']);
 
         $export = $this->service->getExport();
         $rows = $export->collection();

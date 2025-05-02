@@ -2,10 +2,6 @@
 
 namespace Domain\Repositories\Order;
 
-use App\Domain\Entities\Order;
-use App\Domain\Entities\OrderStock;
-use App\Domain\Entities\Stock;
-use App\Domain\Entities\User;
 use App\Domain\Repositories\Order\OrderRepository;
 use App\Utils\DateUtil;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -18,9 +14,6 @@ class OrderRepositoryTest extends TestCase
 
     private OrderRepository $repository;
 
-    /**
-     * 各テストの実行前に起動する。
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -45,26 +38,19 @@ class OrderRepositoryTest extends TestCase
         $result = $this->repository->getConditionsWithUserStock($defaultConditions);
         $this->assertSame(0, $result->count(), 'データがない状態で正常に動作することを始めにテスト');
 
-        /** @var User $user1 */
-        $user1 = User::factory(['name' => 'user1', 'email' => 'user1@test.com'])->create();
-        /** @var User $user2 */
-        $user2 = User::factory(['name' => 'user2', 'email' => 'user2@test.com'])->create();
+        $user1 = $this->createDefaultUser(['name' => 'user1', 'email' => 'user1@test.com']);
+        $user2 = $this->createDefaultUser(['name' => 'user2', 'email' => 'user2@test.com']);
 
-        /** @var Stock $stock1 */
-        $stock1 = Stock::factory(['name' => 'stock1'])->create();
-        /** @var Stock $stock2 */
-        $stock2 = Stock::factory(['name' => 'stock2'])->create();
+        $stock1 = $this->createDefaultStock(['name' => 'stock1']);
+        $stock2 = $this->createDefaultStock(['name' => 'stock2']);
 
-        /** @var Order $order1 */
-        $order1 = Order::factory(['user_id' => $user1->id, 'created_at' => '2024-04-01'])->create();
-        OrderStock::factory(['order_id' => $order1->id, 'stock_id' => $stock1->id, 'price' => $stock1->price, 'quantity' => 1])->create();
-        OrderStock::factory(['order_id' => $order1->id, 'stock_id' => $stock2->id, 'price' => $stock2->price, 'quantity' => 1])->create();
-        /** @var Order $order2 */
-        $order2 = Order::factory(['user_id' => $user1->id, 'created_at' => '2024-05-01'])->create();
-        OrderStock::factory(['order_id' => $order2->id, 'stock_id' => $stock2->id, 'price' => $stock2->price, 'quantity' => 1])->create();
-        /** @var Order $order3 */
-        $order3 = Order::factory(['user_id' => $user2->id, 'created_at' => '2024-06-01'])->create();
-        OrderStock::factory(['order_id' => $order3->id, 'stock_id' => $stock1->id, 'price' => $stock1->price, 'quantity' => 1])->create();
+        $order1 = $this->createDefaultOrder(['user_id' => $user1->id, 'created_at' => '2024-04-01']);
+        $this->createDefaultOrderStock(['order_id' => $order1->id, 'stock_id' => $stock1->id, 'price' => $stock1->price, 'quantity' => 1]);
+        $this->createDefaultOrderStock(['order_id' => $order1->id, 'stock_id' => $stock2->id, 'price' => $stock2->price, 'quantity' => 1]);
+        $order2 = $this->createDefaultOrder(['user_id' => $user1->id, 'created_at' => '2024-05-01']);
+        $this->createDefaultOrderStock(['order_id' => $order2->id, 'stock_id' => $stock2->id, 'price' => $stock2->price, 'quantity' => 1]);
+        $order3 = $this->createDefaultOrder(['user_id' => $user2->id, 'created_at' => '2024-06-01']);
+        $this->createDefaultOrderStock(['order_id' => $order3->id, 'stock_id' => $stock1->id, 'price' => $stock1->price, 'quantity' => 1]);
         $orders = $this->repository->getConditionsWithUserStock([
             ...$defaultConditions,
             'user_name' => $user1->name
