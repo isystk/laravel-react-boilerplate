@@ -18,6 +18,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+      - name: Set up swap space
+        run: sudo dd if=/dev/zero of=/swapfile bs=1M count=1024 && sudo mkswap /swapfile && sudo swapon /swapfile
+
       - name: プロジェクトのチェックアウト
         uses: actions/checkout@v4
 
