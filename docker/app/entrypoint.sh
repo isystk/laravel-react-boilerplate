@@ -31,7 +31,9 @@ chmod -R 777 bootstrap/cache storage
 ## Minio にバケットを作成
 echo "🪣 Setup Bucket for Minio..."
 mc alias set minio http://s3:9000 admin password
-mc mb minio/laraec.isystk.com
+if ! mc ls minio/laraec.isystk.com >/dev/null 2>&1; then
+    mc mb minio/laraec.isystk.com
+fi
 mc anonymous set download minio/laraec.isystk.com
 
 ## Laravel キューリスナをバックグラウンドで実行
