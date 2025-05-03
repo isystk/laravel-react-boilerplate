@@ -49,6 +49,10 @@ RUN curl -O https://dl.min.io/client/mc/release/linux-amd64/mc
 RUN chmod +x mc
 RUN mv mc /usr/local/bin/
 
+## vitestの実行に必要なものをインストール
+RUN npx playwright install && \
+    npx playwright install-deps
+
 # 作業ディレクトリ
 WORKDIR /var/www/html
 

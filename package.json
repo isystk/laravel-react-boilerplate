@@ -7,7 +7,7 @@
     "prettier": "prettier --write \"resources/assets/**/*.{js,jsx,ts,tsx}\"",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test": "vitest --no-watch"
+    "test": "vitest run"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.6",

@@ -20,7 +20,7 @@ Options:
   mysql export <PAHT>      MySQLデータベースのdumpファイルをエクスポートします。
   mysql import <PAHT>      MySQLデータベースにdumpファイルをインポートします。
   app login                Webサーバーにログインします。
-  app test                 Laravelのテストコードを実行します。
+  app test                 テストコードを実行します。
   check git-cr             Git 管理下のテキストファイルのうち、CRLF または CR 改行を含むファイルを検出
   check sh-exec            シェルスクリプトに実行権限が付与されていないファイルを検出
   --version, -v     バージョンを表示します。
@@ -89,10 +89,10 @@ case ${1} in
               $DOCKER_COMPOSE exec app /bin/bash
           ;;
           test)
+              $DOCKER_COMPOSE exec app npm run prettier
+              $DOCKER_COMPOSE exec app npm run test
               $DOCKER_COMPOSE exec app ./vendor/bin/phpstan analyse --memory-limit=1G
               $DOCKER_COMPOSE exec app ./vendor/bin/phpunit tests
-              $DOCKER_COMPOSE exec app npm run test
-              $DOCKER_COMPOSE exec app npm run prettier
           ;;
           *)
               usage
