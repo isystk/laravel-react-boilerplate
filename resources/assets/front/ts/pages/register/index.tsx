@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import CSRFToken from '@/components/atoms/CSRFToken';
 import BasicLayout from '@/components/templates/BasicLayout';
-import useAppRoot from '@/stores/useAppRoot';
+import useAppRoot from '@/states/useAppRoot';
 import TextInput from '@/components/atoms/TextInput';
 
 const RegisterForm = () => {
-  const appRoot = useAppRoot();
-  if (!appRoot) return <></>;
+  const [state] = useAppRoot();
+  if (!state) return <></>;
 
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');

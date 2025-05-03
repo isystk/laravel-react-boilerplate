@@ -5,14 +5,14 @@ import { Url } from '@/constants/url';
 import Image from '@/components/atoms/Image';
 import DropDown from '@/components/atoms/DropDown';
 import SideMenu from '@/components/organisms/SideMenu';
-import useAppRoot from '@/stores/useAppRoot';
+import useAppRoot from '@/states/useAppRoot';
 import CSRFToken from '@/components/atoms/CSRFToken';
 
 const Header = () => {
-  const appRoot = useAppRoot();
-  if (!appRoot) return <></>;
+  const [state] = useAppRoot();
+  if (!state) return <></>;
 
-  const { isLogined, name } = appRoot.auth;
+  const { isLogined, name } = state.auth;
 
   const navigate = useNavigate();
   return (

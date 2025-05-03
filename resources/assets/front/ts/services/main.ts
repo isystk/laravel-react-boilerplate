@@ -4,20 +4,21 @@ import ConstService from '@/services/const';
 import LikeService from '@/services/like';
 import CartService from '@/services/cart';
 import ContactService from '@/services/contact';
+import RootState from '@/states/root';
 
 export default class MainService {
-  _setAppRoot: (appRoot: MainService) => void;
-  isShowLoading: boolean;
-  auth: AuthService;
-  const: ConstService;
-  shop: ShopService;
-  cart: CartService;
-  like: LikeService;
-  contact: ContactService;
+  public readonly root: RootState;
+  private readonly _setRootState: (root: RootState) => void;
+  public auth: AuthService;
+  public const: ConstService;
+  public shop: ShopService;
+  public cart: CartService;
+  public like: LikeService;
+  public contact: ContactService;
 
-  constructor(setAppRoot: (appRoot: MainService) => void) {
-    this._setAppRoot = setAppRoot;
-    this.isShowLoading = false;
+  constructor(root: RootState | null, setRootState: (root: RootState) => void) {
+    this.root = root || new RootState();
+    this._setRootState = setRootState;
     this.auth = new AuthService(this);
     this.const = new ConstService(this);
     this.shop = new ShopService(this);
@@ -26,16 +27,16 @@ export default class MainService {
     this.contact = new ContactService(this);
   }
 
-  setAppRoot() {
-    this._setAppRoot(this);
+  public setRootState() {
+    this._setRootState(this.root);
   }
 
-  showLoading() {
-    this.isShowLoading = true;
-    this.setAppRoot();
+  public showLoading() {
+    this.root.isShowLoading = true;
+    this.setRootState();
   }
-  hideLoading() {
-    this.isShowLoading = false;
-    this.setAppRoot();
+  public hideLoading() {
+    this.root.isShowLoading = false;
+    this.setRootState();
   }
 }
