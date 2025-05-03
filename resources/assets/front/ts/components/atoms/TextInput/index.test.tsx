@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import * as stories from './index.stories'; // ← Story ファイルのパスに合わせて調整
+import * as stories from './index.stories';
 import '@testing-library/jest-dom';
 import { composeStories } from '@storybook/react';
 
