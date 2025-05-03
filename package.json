@@ -4,10 +4,11 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite --host",
+    "test": "vitest run",
+    "ts-check": "tsc --noEmit",
     "prettier": "prettier --write \"resources/assets/**/*.{js,jsx,ts,tsx}\"",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "test": "vitest run"
+    "build-storybook": "storybook build"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.6",

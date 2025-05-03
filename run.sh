@@ -90,6 +90,7 @@ case ${1} in
           ;;
           test)
               $DOCKER_COMPOSE exec app npm run prettier
+              $DOCKER_COMPOSE exec app npm run ts-check
               $DOCKER_COMPOSE exec app npm run test
               $DOCKER_COMPOSE exec app ./vendor/bin/phpstan analyse --memory-limit=1G
               $DOCKER_COMPOSE exec app ./vendor/bin/phpunit tests

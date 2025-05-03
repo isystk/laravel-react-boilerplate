@@ -1,4 +1,4 @@
-import { JSX, useState } from 'react';
+import { useState } from 'react';
 import ImageInput from './index';
 import type { Meta, StoryFn } from '@storybook/react';
 
@@ -9,7 +9,7 @@ export default {
 } as Meta<typeof ImageInput>;
 
 export const Default: StoryFn = () => {
-  const [value, setValue] = useState('');
+  const [value] = useState('');
   return <ImageInput identity="profile_picture" label="プロフィール画像" value={value} />;
 };
 
@@ -18,6 +18,6 @@ export const WithError: StoryFn = () => (
 );
 
 export const WithPreview: StoryFn = () => {
-  const [value, setValue] = useState('');
+  const [value] = useState('');
   return <ImageInput identity="profile_picture" label="プロフィール画像" value={value} />;
 };

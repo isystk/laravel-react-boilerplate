@@ -23,7 +23,6 @@ export default defineConfig({
       refresh: true,
     }),
     react(),
-    checker({typescript: true}),
   ],
   resolve: {
     alias: {
