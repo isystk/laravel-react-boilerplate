@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import styles from './styles.module.scss';
+import Image from '@/components/atoms/Image';
 
 type Props = {
   images: Array<{ src: string; alt?: string }>;
@@ -63,7 +64,7 @@ const Carousel = ({ images, className, autoPlay = false, autoPlayInterval = 3000
       >
         {images.map((image, index) => (
           <div className={styles.slide} key={index}>
-            <img src={image.src} alt={image.alt || ''} className={styles.image} />
+            <Image src={image.src} alt={image.alt || ''} className={styles.image} />
           </div>
         ))}
       </div>

@@ -1,5 +1,6 @@
 import { useEffect, useState, ChangeEvent } from 'react';
 import styles from './styles.module.scss';
+import Image from '@/components/atoms/Image';
 
 type Props = {
   identity: string;
@@ -75,6 +76,7 @@ const ImageInput = (props: Props) => {
         {props.required && <span className="ml-2 text-red-600 text-sm font-normal">必須</span>}
       </label>
       <input
+        id={props.identity}
         type="file"
         accept="image/*"
         className={`btn ${styles.formControl} ${valid.isInvalid}`}
@@ -82,15 +84,10 @@ const ImageInput = (props: Props) => {
         required={props.required}
         onChange={handleChange}
       />
-      <input
-        type="hidden"
-        id={props.identity}
-        name={props.name || props.identity}
-        value={props.value}
-      />
+      <input type="hidden" name={props.name || props.identity} value={props.value} />
       {preview && (
         <div className={styles.previewContainer}>
-          <img src={preview} alt="プレビュー" className={styles.previewImage} />
+          <Image src={preview} alt="プレビュー" className={styles.previewImage} />
         </div>
       )}
       {laravelValid.error && (
