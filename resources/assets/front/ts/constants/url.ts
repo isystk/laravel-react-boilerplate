@@ -11,7 +11,7 @@ export const Url = {
   /** 会員登録 */
   register: '/register',
   /** パスワード忘れ */
-  passwordReset: '/password/reset',
+  passwordReset: '/reset-password',
   /** メールアドレス認証 */
   emailVerify: '/email/verify',
   /** ユーザーHOME */

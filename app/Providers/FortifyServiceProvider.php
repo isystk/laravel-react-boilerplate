@@ -29,6 +29,12 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Fortify::loginView(static fn () => view('front.react'));
+        Fortify::registerView(static fn () => view('front.react'));
+        Fortify::requestPasswordResetLinkView(static fn () => view('front.react'));
+        Fortify::resetPasswordView(static fn () => view('front.react'));
+        Fortify::verifyEmailView(static fn () => view('front.react'));
+
         Fortify::createUsersUsing(CreateNewUser::class);
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);

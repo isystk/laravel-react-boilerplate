@@ -3,6 +3,7 @@ import Header from '@/components/organisms/Header';
 import Footer from '@/components/organisms/Footer';
 import Circles from '@/components/interactions/Circles';
 import Loading from '@/components/atoms/Loading';
+import FlashMessage from '@/components/atoms/FlashMessage';
 
 type Props = {
   children: ReactNode;
@@ -29,6 +30,7 @@ const BasicLayout = ({ children, title }: Readonly<Props>) => {
         <main className="content">{children}</main>
       </Circles>
       <Footer />
+      <FlashMessage />
       <Loading />
     </>
   );
