@@ -1,8 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { useState } from 'react';
 import TextInput from './index';
+import type { Meta, StoryFn } from '@storybook/react';
 
-const meta: Meta<typeof TextInput> = {
-  title: 'Form/TextInput',
+export default {
+  title: 'Components/Atoms/TextInput',
   component: TextInput,
   tags: ['autodocs'],
   args: {
@@ -13,37 +14,47 @@ const meta: Meta<typeof TextInput> = {
     autoComplete: 'email',
     className: 'mb-4',
   },
-};
-export default meta;
+} as Meta<typeof TextInput>;
 
-type Story = StoryObj<typeof TextInput>;
-
-export const Default: Story = {
-  args: {
-    value: '',
-    onChange: (e) => console.log('Change:', e.target.value),
-  },
-};
-
-export const WithError: Story = {
-  args: {
-    value: '',
-    error: '入力に誤りがあります',
-    onChange: (e) => console.log('Change:', e.target.value),
-  },
+export const Default: StoryFn = () => {
+  const [value, setValue] = useState('');
+  return (
+    <TextInput
+      identity="email"
+      controlType="text"
+      label="メールアドレス"
+      value={value}
+      onChange={e => setValue(e.target.value)}
+    />
+  );
 };
 
-export const LaravelErrorSimulated: Story = {
-  render: (args) => {
-    // Laravelエラーをモックとして注入（本番ではwindow経由）
-    if (typeof window !== 'undefined') {
-      (window as any).laravelErrors = {
-        [args.identity]: ['Laravel 側のエラーメッセージ'],
-      };
-    }
-    return <TextInput {...args} />;
-  },
-  args: {
-    value: '',
-  },
+export const WithError: StoryFn = () => (
+  <TextInput
+    identity="email"
+    controlType="text"
+    label="メールアドレス"
+    value=""
+    error="このフィールドは必須です。"
+    onChange={() => {}}
+  />
+);
+
+export const LaravelErrorSimulated: StoryFn = () => {
+  // Laravel error is picked up inside TextInput via `window.laravelErrors`
+  if (typeof window !== 'undefined') {
+    window.laravelErrors = {
+      email: ['Laravelからのエラーメッセージです。'],
+    };
+  }
+
+  return (
+    <TextInput
+      identity="email"
+      controlType="text"
+      label="メールアドレス"
+      value=""
+      onChange={() => {}}
+    />
+  );
 };

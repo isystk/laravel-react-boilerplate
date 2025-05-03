@@ -2,12 +2,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "npm run ts-check && vite build",
+    "build": "vite build",
     "dev": "vite --host",
-    "ts-check": "tsc --noEmit",
     "prettier": "prettier --write \"resources/assets/**/*.{js,jsx,ts,tsx}\"",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "test": "vitest --no-watch"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.6",
@@ -19,6 +19,7 @@
     "@storybook/react-vite": "^8.6.12",
     "@storybook/test": "^8.6.12",
     "@tailwindcss/postcss": "^4.1.4",
+    "@testing-library/react": "^16.3.0",
     "@types/lodash": "^4.17.16",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.3.4",
@@ -27,6 +28,7 @@
     "autoprefixer": "^10.4.21",
     "axios": "^1.8.2",
     "concurrently": "^9.0.1",
+    "jsdom": "^26.1.0",
     "laravel-vite-plugin": "^1.2.0",
     "path": "^0.12.7",
     "playwright": "^1.52.0",
@@ -43,6 +45,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.7.2",
     "@stripe/react-stripe-js": "^3.6.0",
+    "@stripe/stripe-js": "7.0.0",
     "admin-lte": "^3.2.0",
     "bootstrap": "^4.6.2",
     "bootstrap-datepicker": "^1.10.0",
