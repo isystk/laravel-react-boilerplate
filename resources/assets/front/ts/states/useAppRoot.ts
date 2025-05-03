@@ -7,10 +7,13 @@ const useAppRoot = (): [RootState | null, MainService] => {
   const { root: state } = useAppState();
   const dispatch = useAppDispatch();
 
-  const setRootState = useCallback(async (root: RootState) => {
-    dispatch({ type: 'SET_STATE', payload: root });
-    dispatch({ type: 'TOGGLE_STATE' });
-  }, [dispatch]);
+  const setRootState = useCallback(
+    async (root: RootState) => {
+      dispatch({ type: 'SET_STATE', payload: root });
+      dispatch({ type: 'TOGGLE_STATE' });
+    },
+    [dispatch],
+  );
 
   useEffect(() => {
     const init = async () => {

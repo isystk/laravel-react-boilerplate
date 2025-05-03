@@ -14,14 +14,14 @@ Route::prefix('admin')->group(function ()
     {
         return redirect('/admin/home');
     });
-    Route::get('login', [App\Http\Controllers\Admin\LoginController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('login', [App\Http\Controllers\Admin\LoginController::class, 'login']);
+    Route::get('login', [\App\Http\Controllers\Admin\LoginController::class, 'showLoginForm'])->name('admin.login');
+    Route::post('login', [\App\Http\Controllers\Admin\LoginController::class, 'login']);
 
     // ログイン後
     Route::group(['middleware' => 'auth:admin'], static function ()
     {
-        Route::post('logout', [App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('admin.logout');
-        Route::get('home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
+        Route::post('logout', [\App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('admin.logout');
+        Route::get('home', [\App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
 
         Route::get('passwordChange', [\App\Http\Controllers\Admin\PasswordChangeController::class, 'index'])->name('admin.passwordChange');
         Route::put('passwordChange/update', [\App\Http\Controllers\Admin\PasswordChangeController::class, 'update'])->name('admin.passwordChange.update');
@@ -91,24 +91,24 @@ Route::prefix('auth')->middleware('guest')->group(function ()
 */
 Route::prefix('api')->middleware('api')->group(function ()
 {
-    Route::get('/consts', [App\Http\Controllers\Api\ConstController::class, 'index'])->name('api.consts');
+    Route::get('/consts', [\App\Http\Controllers\Api\ConstController::class, 'index'])->name('api.consts');
     Route::resource('/likes', App\Http\Controllers\Api\LikeController::class);
-    Route::post('/likes/store', [App\Http\Controllers\Api\LikeController::class, 'store']);
-    Route::post('/likes/destroy/{id}', [App\Http\Controllers\Api\LikeController::class, 'destroy']);
-    Route::get('/shops', [App\Http\Controllers\Api\ShopController::class, 'index'])->name('api.shops');
-    Route::post('/contact/store', [App\Http\Controllers\Api\ContactFormController::class, 'store'])->name('api.contact.store');
+    Route::post('/likes/store', [\App\Http\Controllers\Api\LikeController::class, 'store']);
+    Route::post('/likes/destroy/{id}', [\App\Http\Controllers\Api\LikeController::class, 'destroy']);
+    Route::get('/shops', [\App\Http\Controllers\Api\ShopController::class, 'index'])->name('api.shops');
+    Route::post('/contact/store', [\App\Http\Controllers\Api\ContactFormController::class, 'store'])->name('api.contact.store');
 
     Route::middleware(['auth:sanctum'])->group(function ()
     {
         // ログイン後
-        Route::post('/session', function (Request $request) {
+        Route::post('/session', static function (Request $request) {
             return $request->user();
         });
-        Route::post('/mycart', [App\Http\Controllers\Api\CartController::class, 'mycart'])->name('api.shop.mycart');
-        Route::post('/addMycart', [App\Http\Controllers\Api\CartController::class, 'addMycart'])->name('api.shop.addcart');
-        Route::post('/cartdelete', [App\Http\Controllers\Api\CartController::class, 'deleteCart'])->name('api.shop.delete');
-        Route::post('/createPayment', [App\Http\Controllers\Api\CartController::class, 'createPayment'])->name('api.shop.createPayment');
-        Route::post('/checkout', [App\Http\Controllers\Api\CartController::class, 'checkout'])->name('api.shop.check');
+        Route::post('/mycart', [\App\Http\Controllers\Api\CartController::class, 'mycart'])->name('api.shop.mycart');
+        Route::post('/addMycart', [\App\Http\Controllers\Api\CartController::class, 'addMycart'])->name('api.shop.addcart');
+        Route::post('/cartdelete', [\App\Http\Controllers\Api\CartController::class, 'deleteCart'])->name('api.shop.delete');
+        Route::post('/createPayment', [\App\Http\Controllers\Api\CartController::class, 'createPayment'])->name('api.shop.createPayment');
+        Route::post('/checkout', [\App\Http\Controllers\Api\CartController::class, 'checkout'])->name('api.shop.check');
     });
 });
 
@@ -117,10 +117,4 @@ Route::prefix('api')->middleware('api')->group(function ()
 | フロント
 |--------------------------------------------------------------------------
 */
-Route::get('/', [App\Http\Controllers\Front\ReactController::class, 'index'])->name('front.react');
-Route::get('/login', [App\Http\Controllers\Front\ReactController::class, 'index'])->name('login');
-Route::get('/register', [App\Http\Controllers\Front\ReactController::class, 'index'])->name('register');
-Route::get('password/reset', [App\Http\Controllers\Front\ReactController::class, 'index'])->name('password.request');
-Route::get('password/reset/{token}', [App\Http\Controllers\Front\ReactController::class, 'index'])->name('password.reset');
-Route::get('email/verify', [App\Http\Controllers\Front\ReactController::class, 'index'])->name('verification.notice');
-Route::get('/{router}', [App\Http\Controllers\Front\ReactController::class, 'index'])->name('home');
+Route::get('/{any}', [\App\Http\Controllers\Front\ReactController::class, 'index'])->where('any', '.*')->name('react');
