@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import CSRFToken from '@/components/atoms/CSRFToken';
-import RequestToken from '@/components/atoms/RequestToken';
 import SessionAlert from '@/components/atoms/SessionAlert';
 import BasicLayout from '@/components/templates/BasicLayout';
 import useAppRoot from '@/states/useAppRoot';
 import TextInput from '@/components/atoms/TextInput';
+import { useParams } from 'react-router-dom';
 
 const ResetForm = () => {
   const [state] = useAppRoot();
   if (!state) return <></>;
 
+  const { token } = useParams<{ token: string }>();
   const [email, setEmail] = useState<string>('');
 
   const handleSetEmail = (value: string) => {
@@ -22,7 +23,7 @@ const ResetForm = () => {
         <SessionAlert target="status" />
         <form method="POST" action="/reset-password" id="login-form">
           <CSRFToken />
-          <RequestToken />
+          <input type="hidden" name="token" value={token || ''} />;
           <div className="mx-auto md:w-100">
             <TextInput
               identity="email"

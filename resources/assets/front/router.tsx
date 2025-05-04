@@ -50,7 +50,7 @@ const Router = ({ session }: Props) => {
         <Route path={Url.login} element={<LoginForm />} />
         <Route path={Url.register} element={<RegisterForm />} />
         <Route path={Url.passwordReset} element={<EMailForm />} />
-        <Route path={`${Url.passwordReset}/:id`} element={<ResetForm />} />
+        <Route path={`${Url.passwordReset}/:token`} element={<ResetForm />} />
         <Route path={Url.emailVerify} element={<Verify />} />
         <Route path={Url.contact} element={<ContactCreate />} />
         <Route path={Url.contactComplete} element={<ContactComplete />} />
