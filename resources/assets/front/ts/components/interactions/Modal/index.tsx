@@ -6,15 +6,19 @@ type Props = {
   isOpen: boolean;
   onClose: () => void;
   children: JSX.Element;
+  small?: boolean;
 };
 
-const Modal = ({ isOpen, onClose, children }: Props) => {
+const Modal = ({ isOpen, onClose, children, small }: Props) => {
   if (!isOpen) return null;
 
   return (
     <Portal>
       <div className={styles.overlay} onClick={onClose}>
-        <div className={styles.modal} onClick={e => e.stopPropagation()}>
+        <div
+          className={`${styles.modal} ${small ? styles.small : ''}`}
+          onClick={e => e.stopPropagation()}
+        >
           <button type="button" aria-label="Close" onClick={onClose} className={styles.closeButton}>
             <span aria-hidden="true">×</span>
           </button>

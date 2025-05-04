@@ -2,7 +2,7 @@ import FlashMessage from './index';
 import type { Meta, StoryFn } from '@storybook/react';
 
 export default {
-  title: 'Components/Atoms/FlashMessage',
+  title: 'Components/Interactions/FlashMessage',
   component: FlashMessage,
   tags: ['autodocs'],
 } as Meta<typeof FlashMessage>;

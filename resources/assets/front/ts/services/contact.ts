@@ -22,7 +22,7 @@ export default class ContactService {
       });
       await response.json();
     } catch (e) {
-      alert('お問い合わせの登録に失敗しました');
+      this.main.showToastMessage('お問い合わせの登録に失敗しました');
       this.main.hideLoading();
       return false;
     }

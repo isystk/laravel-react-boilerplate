@@ -2,6 +2,8 @@ import styles from './styles.module.scss';
 import Image from '@/components/atoms/Image';
 import useAppRoot from '@/states/useAppRoot';
 import { type Cart } from '@/states/cart';
+import { useState } from 'react';
+import { ToastMessage, ToastTypes } from '@/components/interactions/ToastMessage';
 
 export type Props = Cart & {
   key: number | string;
@@ -10,6 +12,8 @@ export type Props = Cart & {
 const CartItem = ({ id, name, imgpath, price, detail }: Props) => {
   const [state, service] = useAppRoot();
   if (!state) return <></>;
+
+  const [isShowDeleteConfirm, setIsShowDeleteConfirm] = useState(false);
 
   const handleDeleteFromCart = async () => {
     await service.cart.removeCart(id);
@@ -30,10 +34,24 @@ const CartItem = ({ id, name, imgpath, price, detail }: Props) => {
       <p>{detail}</p>
       <button
         className="btn btn-sm text-center mx-auto mt-auto btn-danger"
-        onClick={handleDeleteFromCart}
+        onClick={() => {
+          setIsShowDeleteConfirm(true);
+        }}
       >
         カートから削除する
       </button>
+      <ToastMessage
+        isOpen={isShowDeleteConfirm}
+        message="削除します。よろしいですか？"
+        type={ToastTypes.Confirm}
+        onConfirm={() => {
+          setIsShowDeleteConfirm(false);
+          handleDeleteFromCart();
+        }}
+        onCancel={() => {
+          setIsShowDeleteConfirm(false);
+        }}
+      />
     </div>
   );
 };

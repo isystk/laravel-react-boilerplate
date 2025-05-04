@@ -26,7 +26,7 @@ export default class CartService {
         this.cart.carts = carts;
       }
     } catch (e) {
-      alert('マイカートの取得に失敗しました');
+      this.main.showToastMessage('マイカートの取得に失敗しました');
     }
     // ローディングを非表示にする
     this.main.hideLoading();
@@ -51,7 +51,7 @@ export default class CartService {
         this.cart.carts = carts;
       }
     } catch (e) {
-      alert('マイカートの追加に失敗しました');
+      this.main.showToastMessage('マイカートの追加に失敗しました');
     }
     // ローディングを非表示にする
     this.main.hideLoading();
@@ -76,7 +76,7 @@ export default class CartService {
         this.cart.carts = carts;
       }
     } catch (e) {
-      alert('マイカートの削除に失敗しました');
+      this.main.showToastMessage('マイカートの削除に失敗しました');
     }
     // ローディングを非表示にする
     this.main.hideLoading();
@@ -122,7 +122,7 @@ export default class CartService {
         },
       });
     } catch (e) {
-      alert('決算処理に失敗しました');
+      this.main.showToastMessage('決算処理に失敗しました');
       return false;
     } finally {
       this.main.hideLoading();

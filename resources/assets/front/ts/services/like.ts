@@ -20,7 +20,7 @@ export default class LikeService {
       this.like.data = likes.data;
       this.main.setRootState();
     } catch (e) {
-      alert('お気に入りの取得に失敗しました');
+      this.main.showToastMessage('お気に入りの取得に失敗しました');
     }
     // ローディングを非表示にする
     this.main.hideLoading();
@@ -40,13 +40,13 @@ export default class LikeService {
       });
       const { result } = await response.json();
       if (result) {
-        window.alert('お気に入りに追加しました');
+        this.main.showToastMessage('お気に入りに追加しました');
         const newData: string = id + '';
         this.like.data = [newData, ...this.like.data];
       }
       this.main.setRootState();
     } catch (e) {
-      alert('お気に入りの追加に失敗しました');
+      this.main.showToastMessage('お気に入りの追加に失敗しました');
     }
     this.main.hideLoading();
   }
@@ -63,7 +63,7 @@ export default class LikeService {
       }
       this.main.setRootState();
     } catch (e) {
-      alert('お気に入りの削除に失敗しました');
+      this.main.showToastMessage('お気に入りの削除に失敗しました');
     }
     this.main.hideLoading();
   }
