@@ -22,19 +22,31 @@ npm run build || echo "Build failed: ignoring and continuing"
 
 echo "🔐 Generating app key..."
 php artisan key:generate
-echo "🧪 Running migrations and seeders..."
-php artisan migrate:fresh --seed
 
 echo "🔒 Fixing permissions..."
 chmod -R 777 bootstrap/cache storage
 
+echo "🧪 Running migrations..."
+php artisan migrate --force
+# 初回なら seeder 実行（users テーブルが空かチェック）
+echo "📊 Checking if seeding is needed..."
+if [ "$(php artisan tinker --execute "echo \App\Domain\Entities\User::count();")" = "0" ]; then
+  echo "🌱 Seeding database..."
+  php artisan db:seed --force
+else
+  echo "✅ Database seeding skipped (users already exist)"
+fi
+
 ## Minio にバケットを作成
 echo "🪣 Setup Bucket for Minio..."
 mc alias set minio http://s3:9000 admin password
+# 初回なら Minio にバケットを作成
 if ! mc ls minio/laraec.isystk.com >/dev/null 2>&1; then
     mc mb minio/laraec.isystk.com
+    mc anonymous set download minio/laraec.isystk.com
+else
+  echo "✅ Minio Setup skipped (Bucket already exist)"
 fi
-mc anonymous set download minio/laraec.isystk.com
 
 ## Laravel キューリスナをバックグラウンドで実行
 echo "🎧 Starting queue listener..."

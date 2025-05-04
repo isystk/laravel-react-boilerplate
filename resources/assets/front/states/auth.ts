@@ -1,15 +1,4 @@
-export interface Auth {
-  auth: boolean;
-  id?: number | null;
-  name: string | null;
-  email?: string;
-  remember?: string;
-  csrf?: string;
-  request?: string;
-  session?: string;
-}
-
-export type Session = {
+export type Auth = {
   created_at: string;
   email: string;
   email_verified_at: string | null;
@@ -27,7 +16,6 @@ export default class AuthState {
   email?: string;
   email_verified_at?: string | null;
   remember?: string;
-  csrf?: string;
 
   constructor() {
     this.isLogined = false;
@@ -36,6 +24,5 @@ export default class AuthState {
     this.email = '';
     this.email_verified_at = '';
     this.remember = '';
-    this.csrf = '';
   }
 }

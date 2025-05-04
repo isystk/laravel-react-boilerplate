@@ -16,6 +16,7 @@ const config: StorybookConfig = {
     options: {}
   },
   staticDirs: [
+    // TODO Storybookのコードで画像ファイルをimportしても参照できないので以下で対応している
     { from: '../resources/assets/front/assets', to: '/assets' },
   ],
 };

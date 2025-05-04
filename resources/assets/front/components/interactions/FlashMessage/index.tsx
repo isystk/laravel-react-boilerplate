@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
+import Portal from '@/components/interactions/Portal';
 
 type Props = {
   message?: string | null;
@@ -41,12 +42,14 @@ const FlashMessage = (props: Props) => {
   };
 
   return (
-    <div
-      className={`${styles.flashMessage} ${fadeOut ? styles.fadeOut : ''} ${hidden ? styles.hidden : ''}`}
-      onAnimationEnd={handleAnimationEnd}
-    >
-      {message}
-    </div>
+    <Portal>
+      <div
+        className={`${styles.flashMessage} ${fadeOut ? styles.fadeOut : ''} ${hidden ? styles.hidden : ''}`}
+        onAnimationEnd={handleAnimationEnd}
+      >
+        {message}
+      </div>
+    </Portal>
   );
 };
 
