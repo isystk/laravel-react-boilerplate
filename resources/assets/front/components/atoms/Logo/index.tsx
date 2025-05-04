@@ -3,6 +3,7 @@ import Image from '@/components/atoms/Image';
 import { Link } from 'react-router-dom';
 import { Url } from '@/constants/url';
 import Env from '@/constants/env';
+import logoImage from '@/assets/images/logo.png';
 
 export type Props = {
   hasLink?: boolean;
@@ -16,7 +17,7 @@ const LinkLogo = () => {
   return (
     <Link to={Url.top} className={`flex items-center`}>
       <Image
-        src="/assets/images/logo.png"
+        src={logoImage as string}
         width={200}
         height={60}
         alt={Env.appName}
@@ -29,7 +30,7 @@ const LinkLogo = () => {
 const NoLinkLogo = () => {
   return (
     <Image
-      src="/assets/images/logo.png"
+      src={logoImage as string}
       width={200}
       height={60}
       alt={Env.appName}

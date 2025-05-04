@@ -11,6 +11,7 @@ import SelectionInput from '@/components/atoms/SelectionInput';
 import SelectBox from '@/components/atoms/SelectBox';
 import TextArea from '@/components/atoms/TextArea';
 import ImageInput from '@/components/atoms/ImageInput';
+import noImage from '@/assets/images/no_image.png';
 
 const ContactCreate = () => {
   const [state, service] = useAppRoot();
@@ -175,6 +176,7 @@ const ContactCreate = () => {
                 setFieldValue={setFieldValue}
                 error={errors.imageBase64_1 as string}
                 className="mb-5 md:w-100"
+                noImage={noImage}
               />
               <ImageInput
                 label="画像2"
