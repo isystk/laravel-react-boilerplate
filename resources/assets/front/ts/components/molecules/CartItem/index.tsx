@@ -3,7 +3,7 @@ import Image from '@/components/atoms/Image';
 import useAppRoot from '@/states/useAppRoot';
 import { type Cart } from '@/states/cart';
 import { useState } from 'react';
-import { ToastMessage, ToastTypes } from '@/components/atoms/ToastMessage';
+import { ToastMessage, ToastTypes } from '@/components/interactions/ToastMessage';
 
 export type Props = Cart & {
   key: number | string;

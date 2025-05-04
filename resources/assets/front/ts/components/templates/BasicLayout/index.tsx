@@ -3,8 +3,8 @@ import Header from '@/components/organisms/Header';
 import Footer from '@/components/organisms/Footer';
 import Circles from '@/components/interactions/Circles';
 import Loading from '@/components/atoms/Loading';
-import FlashMessage from '@/components/atoms/FlashMessage';
-import { ToastMessage } from '@/components/atoms/ToastMessage';
+import FlashMessage from '@/components/interactions/FlashMessage';
+import { ToastMessage } from '@/components/interactions/ToastMessage';
 import useAppRoot from '@/states/useAppRoot';
 
 type Props = {
