@@ -12,6 +12,7 @@ type Props = {
   className?: string;
   error?: string;
   setFieldValue?: (field: string, value: any) => void;
+  noImage?: string;
 };
 
 type Valid = {
@@ -89,7 +90,9 @@ const ImageInput = (props: Props) => {
         {preview ? (
           <Image src={preview} alt="プレビュー" className={styles.previewImage} />
         ) : (
-          <Image src="/assets/images/no_image.png" alt="no image" className={styles.previewImage} />
+          props.noImage && (
+            <Image src={props.noImage} alt="no image" className={styles.previewImage} />
+          )
         )}
       </div>
       {laravelValid.error && (

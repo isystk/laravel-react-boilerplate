@@ -56,13 +56,13 @@ const SelectionInput = (props: Props) => {
   }, [props.error]);
 
   return (
-    <div className={props.className || ''}>
-      <label className="font-bold" htmlFor={props.identity}>
+    <fieldset className={props.className || ''}>
+      <legend className="font-bold">
         {props.label}
         {props.label && props.required && (
           <span className="ml-2 text-red-600 text-sm font-normal">必須</span>
         )}
-      </label>
+      </legend>
       <div className="space-y-2">
         {props.options.map((option, index) => {
           const id = `${props.identity}_${index}`;
@@ -97,7 +97,7 @@ const SelectionInput = (props: Props) => {
           <strong>{valid.error}</strong>
         </p>
       )}
-    </div>
+    </fieldset>
   );
 };
 

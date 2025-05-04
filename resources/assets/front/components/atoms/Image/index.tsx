@@ -7,13 +7,9 @@ type Props = {
   className?: string;
 };
 
-const Image = ({ src, alt, loading, ...props }: Props) => {
+const Image = ({ src, alt = '', loading = 'lazy', ...props }: Props) => {
   const subDirectory = import.meta.env.SUB_DIRECTORY || '';
-  return (
-    <>
-      <img src={`${subDirectory}${src}`} alt={alt || ''} loading={loading || 'lazy'} {...props} />
-    </>
-  );
+  return <img src={`${subDirectory}${src}`} alt={alt} loading={loading} {...props} />;
 };
 
 export default Image;

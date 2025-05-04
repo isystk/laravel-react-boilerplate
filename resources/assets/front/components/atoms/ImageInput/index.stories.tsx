@@ -10,7 +10,14 @@ export default {
 
 export const Default: StoryFn = () => {
   const [value] = useState('');
-  return <ImageInput identity="profile_picture" label="プロフィール画像" value={value} />;
+  return (
+    <ImageInput
+      identity="profile_picture"
+      label="プロフィール画像"
+      value={value}
+      noImage="/assets/images/no_image.png"
+    />
+  );
 };
 
 export const WithError: StoryFn = () => (
