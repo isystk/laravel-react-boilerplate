@@ -7,7 +7,7 @@ import EMailForm from '@/pages/password/reset';
 import Home from '@/pages/home';
 import LoginForm from '@/pages/login';
 import MyCart from '@/pages/mycart';
-import NotFound from '@/pages/NotFound';
+import ErrorPage from '@/components/organisms/ErrorPage';
 import RegisterForm from '@/pages/register';
 import ResetForm from '@/pages/password/reset/[id]';
 import ShopComplete from '@/pages/complete';
@@ -58,7 +58,7 @@ const Router = ({ auth }: Props) => {
         />
         {/* ★ログインユーザー専用ここまで */}
 
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<ErrorPage status={404} />} />
       </Routes>
     </BrowserRouter>
   );
