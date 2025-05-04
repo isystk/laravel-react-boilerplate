@@ -1,7 +1,6 @@
 import { useEffect, useState, ChangeEvent } from 'react';
 import styles from './styles.module.scss';
 import Image from '@/components/atoms/Image';
-import noImage from '@/assets/images/no_image.png';
 
 type Props = {
   identity: string;
@@ -90,7 +89,7 @@ const ImageInput = (props: Props) => {
         {preview ? (
           <Image src={preview} alt="プレビュー" className={styles.previewImage} />
         ) : (
-          <Image src={noImage as string} alt="no image" className={styles.previewImage} />
+          <Image src="/assets/images/no_image.png" alt="no image" className={styles.previewImage} />
         )}
       </div>
       {laravelValid.error && (

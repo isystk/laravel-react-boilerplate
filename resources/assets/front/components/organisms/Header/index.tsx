@@ -7,7 +7,6 @@ import DropDown from '@/components/atoms/DropDown';
 import SideMenu from '@/components/organisms/SideMenu';
 import useAppRoot from '@/states/useAppRoot';
 import CSRFToken from '@/components/atoms/CSRFToken';
-import cartImage from '@/assets/images/cart.png';
 
 const Header = () => {
   const [state] = useAppRoot();
@@ -66,7 +65,7 @@ const Header = () => {
             })()}
             <li>
               <Link to={Url.myCart}>
-                <Image src={cartImage as string} width={30} height={30} alt="カート" />
+                <Image src="/assets/images/cart.png" width={30} height={30} alt="カート" />
               </Link>
             </li>
             <li>

@@ -62,16 +62,11 @@ const Carousel = ({ images, className, autoPlay = false, autoPlayInterval = 3000
         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
         id="carousel-slides"
       >
-        {images.map((image, index) => {
-          console.log({
-            image
-          });
-          return (
-            <div className={styles.slide} key={index}>
-              <Image src={image.src} alt={image.alt || ''} className={styles.image} />
-            </div>
-          );
-        })}
+        {images.map((image, index) => (
+          <div className={styles.slide} key={index}>
+            <Image src={image.src} alt={image.alt || ''} className={styles.image} />
+          </div>
+        ))}
       </div>
 
       {/* Controls */}
