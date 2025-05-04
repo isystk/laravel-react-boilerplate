@@ -6,6 +6,8 @@ import CartState from '@/states/cart';
 
 export default class RootState {
   public isShowLoading: boolean;
+  public toastMessage: string | null;
+  public isShowToastMessage: boolean;
   public auth: AuthState;
   public const: ConstState;
   public shop: ShopState;
@@ -14,6 +16,8 @@ export default class RootState {
 
   constructor() {
     this.isShowLoading = false;
+    this.toastMessage = null;
+    this.isShowToastMessage = false;
     this.auth = new AuthState();
     this.const = new ConstState();
     this.shop = new ShopState();

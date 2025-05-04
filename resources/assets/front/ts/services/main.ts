@@ -39,4 +39,15 @@ export default class MainService {
     this.root.isShowLoading = false;
     this.setRootState();
   }
+
+  public showToastMessage(message) {
+    this.root.isShowToastMessage = true;
+    this.root.toastMessage = message;
+    this.setRootState();
+  }
+  public hideToastMessage() {
+    this.root.isShowToastMessage = false;
+    this.root.toastMessage = null;
+    this.setRootState();
+  }
 }
