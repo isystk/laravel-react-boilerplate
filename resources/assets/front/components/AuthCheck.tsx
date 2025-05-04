@@ -1,21 +1,21 @@
 import { Navigate } from 'react-router-dom';
 import { Url } from '@/constants/url';
-import { Session } from '@/states/auth';
+import { Auth } from '@/states/auth';
 import { ReactNode } from 'react';
 
 type Props = {
-  session: Session;
+  auth: Auth;
   component: ReactNode;
 };
 
-const AuthCheck = ({ session, component }: Props) => {
+const AuthCheck = ({ auth, component }: Props) => {
   // ログインしてなければログイン画面へとばす
-  if (!session.id) {
+  if (!auth.id) {
     return <Navigate to={Url.login} />;
   }
 
   // 新規会員登録後、メール確認が未完了の場合
-  if (!session.email_verified_at) {
+  if (!auth.email_verified_at) {
     return <Navigate to={Url.emailVerify} />;
   }
 

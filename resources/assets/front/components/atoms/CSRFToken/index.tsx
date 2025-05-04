@@ -1,11 +1,6 @@
-import useAppRoot from '@/states/useAppRoot';
-
 const CSRFToken = () => {
-  const [state] = useAppRoot();
-  if (!state) return <></>;
-
-  const { csrf } = state.auth;
-  return <input type="hidden" name="_token" defaultValue={csrf || ''} />;
+  const token = document.head.querySelector<HTMLMetaElement>('meta[name="csrf-token"]');
+  return <input type="hidden" name="_token" defaultValue={token?.content} />;
 };
 
 export default CSRFToken;

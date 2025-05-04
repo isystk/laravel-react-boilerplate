@@ -1,11 +1,15 @@
 import styles from './styles.module.scss';
 import Image from '@/components/atoms/Image';
 import useAppRoot from '@/states/useAppRoot';
-import { type Cart } from '@/states/cart';
 import { useState } from 'react';
 import { ToastMessage, ToastTypes } from '@/components/interactions/ToastMessage';
 
-export type Props = Cart & {
+export type Props = {
+  id: number;
+  name: string;
+  detail: string;
+  price: number;
+  imgpath: string;
   key: number | string;
 };
 

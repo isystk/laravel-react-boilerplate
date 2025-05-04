@@ -15,25 +15,19 @@ import Top from '@/pages/top';
 import Verify from '@/pages/email/verify';
 import { Url } from '@/constants/url';
 import useAppRoot from '@/states/useAppRoot';
-import { Session } from '@/states/auth';
+import { Auth } from '@/states/auth';
 
 type Props = {
-  session: Session;
+  auth: Auth;
 };
 
-const Router = ({ session }: Props) => {
+const Router = ({ auth }: Props) => {
   const [state, service] = useAppRoot();
 
   useEffect(() => {
     if (!state) return;
     // セッションのセット
-    service.auth.setSession(session);
-
-    // CSRFのセット
-    const token = document.head.querySelector<HTMLMetaElement>('meta[name="csrf-token"]');
-    if (token) {
-      service.auth.setCSRF(token.content);
-    }
+    service.auth.setAuth(auth);
 
     (async () => {
       // 定数のセット
@@ -56,11 +50,11 @@ const Router = ({ session }: Props) => {
         <Route path={Url.contactComplete} element={<ContactComplete />} />
 
         {/* ★ログインユーザー専用ここから */}
-        <Route path={Url.home} element={<AuthCheck session={session} component={<Home />} />} />
-        <Route path={Url.myCart} element={<AuthCheck session={session} component={<MyCart />} />} />
+        <Route path={Url.home} element={<AuthCheck auth={auth} component={<Home />} />} />
+        <Route path={Url.myCart} element={<AuthCheck auth={auth} component={<MyCart />} />} />
         <Route
           path={Url.payComplete}
-          element={<AuthCheck session={session} component={<ShopComplete />} />}
+          element={<AuthCheck auth={auth} component={<ShopComplete />} />}
         />
         {/* ★ログインユーザー専用ここまで */}
 
