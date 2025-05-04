@@ -3,7 +3,7 @@
       /* 基本オプション */
       "baseUrl": ".",
       "paths": {
-        "@/*": ["./resources/assets/front/ts/*"],
+        "@/*": ["./resources/assets/front/*"],
       },
       "target": "esnext",                      /* ECMAScriptのターゲットバージョンを指定します: 'ES3'（デフォルト）, 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018'または 'ESNEXT' */
       "module": "esnext",                      /* モジュールコード生成: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015',または 'ESNext'を指定します。targetがes3かes5ならcommonjsとなる。 */
