@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -e
+
 DOCKER_HOME=./docker
 DOCKER_COMPOSE="docker compose -f $DOCKER_HOME/docker-compose.yml"
 
@@ -20,6 +22,8 @@ Options:
   mysql export <PAHT>      MySQLデータベースのdumpファイルをエクスポートします。
   mysql import <PAHT>      MySQLデータベースにdumpファイルをインポートします。
   app login                Webサーバーにログインします。
+  app dev                  アプリを起動します。
+  app build                アプリをビルドします。
   app test                 テストコードを実行します。
   check git-cr             Git 管理下のテキストファイルのうち、CRLF または CR 改行を含むファイルを検出
   check sh-exec            シェルスクリプトに実行権限が付与されていないファイルを検出
@@ -87,6 +91,13 @@ case ${1} in
       case ${2} in
           login)
               $DOCKER_COMPOSE exec app /bin/bash
+          ;;
+          dev)
+              $DOCKER_COMPOSE exec app npm run dev
+          ;;
+          build)
+              $DOCKER_COMPOSE exec app npm run build
+              $DOCKER_COMPOSE exec app npm run build-storybook
           ;;
           test)
               $DOCKER_COMPOSE exec app npm run prettier

@@ -39,5 +39,5 @@ docker/php/logs
 # job
 storage/app/import_job
 
-
+storybook-static
 *storybook.log

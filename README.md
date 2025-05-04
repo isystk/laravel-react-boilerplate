@@ -240,6 +240,8 @@ Options:
   mysql export <PAHT>      MySQLデータベースのdumpファイルをエクスポートします。
   mysql import <PAHT>      MySQLデータベースにdumpファイルをインポートします。
   app login                Webサーバーにログインします。
+  app dev                  アプリを起動します。
+  app build                アプリをビルドします。
   app test                 テストコードを実行します。
   check git-cr             Git 管理下のテキストファイルのうち、CRLF または CR 改行を含むファイルを検出
   check sh-exec            シェルスクリプトに実行権限が付与されていないファイルを検出
@@ -322,12 +324,19 @@ Dockerを起動後に以下のURLにアクセスすると利用可能です。
 
 http://localhost:9001
 
-
 ### adminer
 データベースに接続してデータの参照や編集が可能です。
 Dockerを起動後に以下のURLにアクセスすると利用可能です。
 
 http://localhost:8888/
+
+### storybook
+Reactで作成されたコンポーネントの確認が可能です。
+Dockerを起動後に以下のURLにアクセスすると利用可能です。
+
+http://localhost:6006/
+
+![storybook](./documents/storybook.png "storybook")
 
 ## 🎨 参考
 
