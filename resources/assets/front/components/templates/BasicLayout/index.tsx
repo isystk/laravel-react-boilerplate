@@ -6,6 +6,7 @@ import Loading from '@/components/atoms/Loading';
 import FlashMessage from '@/components/interactions/FlashMessage';
 import { ToastMessage } from '@/components/interactions/ToastMessage';
 import useAppRoot from '@/states/useAppRoot';
+import { ErrorBoundary } from '@/components/interactions/ErrorBoundary';
 
 type Props = {
   children: ReactNode;
@@ -29,7 +30,7 @@ const BasicLayout = ({ children, title }: Readonly<Props>) => {
   }, []);
 
   return (
-    <>
+    <ErrorBoundary>
       <Header />
       <Circles>
         <main className="content">{children}</main>
@@ -47,7 +48,7 @@ const BasicLayout = ({ children, title }: Readonly<Props>) => {
         }}
       />
       <Loading />
-    </>
+    </ErrorBoundary>
   );
 };
 
