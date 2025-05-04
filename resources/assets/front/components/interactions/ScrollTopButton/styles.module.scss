@@ -1,0 +1,50 @@
+@use "@/assets/styles/variable" as *;
+
+.button {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 3rem;
+    height: 3rem;
+    border: none;
+    background-color: $white;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: opacity 0.2s ease-in-out;
+    z-index: 1000;
+}
+
+.buttonLabel {
+    margin: auto;
+    font-weight: bold;
+    color: $dark-gray;
+}
+
+.show {
+    animation: fadein 0.5s both;
+}
+.hide {
+    animation: fadeout 0.5s both;
+}
+
+@keyframes fadein {
+    0% {
+        opacity: 0;
+        transform: translate(0, 50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+}
+
+@keyframes fadeout {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(0, 50px);
+    }
+}

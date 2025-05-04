@@ -7,6 +7,7 @@ import FlashMessage from '@/components/interactions/FlashMessage';
 import { ToastMessage } from '@/components/interactions/ToastMessage';
 import useAppRoot from '@/states/useAppRoot';
 import { ErrorBoundary } from '@/components/interactions/ErrorBoundary';
+import ScrollTopButton from '@/components/interactions/ScrollTopButton';
 
 type Props = {
   children: ReactNode;
@@ -47,6 +48,7 @@ const BasicLayout = ({ children, title }: Readonly<Props>) => {
           service.hideToastMessage();
         }}
       />
+      <ScrollTopButton />
       <Loading />
     </ErrorBoundary>
   );
