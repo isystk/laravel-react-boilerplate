@@ -11,7 +11,7 @@ const FlashMessage = (props: Props) => {
   const [message, setMessage] = useState(props.message);
 
   useEffect(() => {
-    const laravelMessage = window.laravelSession['status'];
+    const laravelMessage = window.laravelSession?.status;
     if (!message && laravelMessage) {
       setMessage(laravelMessage);
       return;
@@ -30,7 +30,9 @@ const FlashMessage = (props: Props) => {
   if (!message) {
     return <></>;
   }
-  window.laravelSession['status'] = '';
+  if (window.laravelSession && typeof window.laravelSession === 'object') {
+    window.laravelSession['status'] = '';
+  }
 
   const handleAnimationEnd = () => {
     if (fadeOut) {

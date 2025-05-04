@@ -40,6 +40,10 @@ mc anonymous set download minio/laraec.isystk.com
 echo "🎧 Starting queue listener..."
 php artisan queue:listen --timeout=0 &
 
+## Storybook バックグラウンドで実行
+echo "📖 Starting Storybook..."
+npm run storybook > /dev/null 2>&1 &
+
 # Apache をフォアグラウンドで起動
 echo "🚀 Starting Apache..."
 exec apache2-foreground

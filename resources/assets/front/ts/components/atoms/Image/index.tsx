@@ -1,8 +1,8 @@
 type Props = {
   src: string;
   alt?: string;
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
   loading?: 'eager' | 'lazy';
   className?: string;
 };

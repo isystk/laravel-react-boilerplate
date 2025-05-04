@@ -6,19 +6,22 @@ type Props = {
 };
 
 const SessionAlert = ({ target, className }: Props) => {
-  const [message, setMessage] = useState();
+  const [message, setMessage] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    const laravelMessage = window.laravelSession[target];
+    const laravelMessage = window.laravelSession?.[target];
     if (!message && laravelMessage) {
       setMessage(laravelMessage);
     }
-  }, [message]);
+  }, []);
 
   if (!message) {
     return <></>;
   }
-  window.laravelSession[target] = '';
+
+  if (window.laravelSession && typeof window.laravelSession === 'object') {
+    window.laravelSession[target] = '';
+  }
 
   return (
     <div className={`bg-gray-100 text-center py-4 lg:px-4 ${className}`}>

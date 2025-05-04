@@ -1,6 +1,10 @@
 interface Window {
-  laravelErrors: [];
-  laravelSession: [];
+  laravelErrors: {
+    [key: string]: string[];
+  };
+  laravelSession: {
+    [key: string]: string;
+  };
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
   jQuery;
   $;

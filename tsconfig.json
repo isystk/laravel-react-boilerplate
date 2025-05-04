@@ -34,6 +34,6 @@
       "removeComments": true,                   /* コメントを出力しません。 */
       "noEmit": true,                           /* コンパイル結果の.jsファイルなどを出力しなくなる。 */
       "sourceMap": true,                        /* 対応する '.map'ファイルを生成します。 */
+  },
 
-  }
 }

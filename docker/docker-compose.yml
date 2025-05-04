@@ -10,6 +10,7 @@ services:
       - 80:80
       - 443:443
       - 5173:5173
+      - 6006:6006
     restart: always
     volumes:
       - ./app/sites-enabled:/etc/apache2/sites-enabled

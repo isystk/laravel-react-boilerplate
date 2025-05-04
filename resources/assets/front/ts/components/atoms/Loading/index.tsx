@@ -14,7 +14,9 @@ const Loading = () => {
         {isShowLoading && (
           <div className={styles.overlay}>
             <div className={styles.spinner}></div>
-            <p className={styles.message}>Loading...</p>
+            <p id="loading" className={styles.message}>
+              Loading...
+            </p>
           </div>
         )}
       </>

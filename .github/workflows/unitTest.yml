@@ -33,6 +33,6 @@ jobs:
       - name: 60s 待機
         run: sleep 60
 
-      - name: PHP Unit 実行
+      - name: テストコードの実行
         run: |
           ./run.sh app test
