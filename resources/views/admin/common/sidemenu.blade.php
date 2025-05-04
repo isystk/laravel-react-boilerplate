@@ -4,7 +4,7 @@
         class="brand-link"
     >
         <img
-            src="{{ asset('/assets/admin/image/AdminLTELogo.png') }}"
+            src="{{ Vite::asset('resources/assets/admin/images/AdminLTELogo.png') }}"
             alt="AdminSample Logo"
             class="brand-image img-circle elevation-3"
             style="opacity: .8"

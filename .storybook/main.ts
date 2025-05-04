@@ -2,8 +2,8 @@ import type { StorybookConfig } from '@storybook/react-vite';
 
 const config: StorybookConfig = {
   stories: [
-    "../resources/assets/front/ts/**/*.mdx",
-    "../resources/assets/front/ts/**/*.stories.@(js|jsx|mjs|ts|tsx)"
+    "../resources/assets/front/**/*.mdx",
+    "../resources/assets/front/**/*.stories.@(js|jsx|mjs|ts|tsx)"
   ],
   addons: [
     "@storybook/addon-essentials",
@@ -15,5 +15,8 @@ const config: StorybookConfig = {
     name: "@storybook/react-vite",
     options: {}
   },
+  staticDirs: [
+    { from: '../resources/assets/front/assets', to: '/assets' },
+  ],
 };
 export default config;

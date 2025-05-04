@@ -97,13 +97,15 @@
             @yield('content')
         </div>
     </div>
-    <footer class="main-footer">
-        <strong>Copyright &copy; 2019-2020
-            <a href="#">isystk.com</a>
-            .
-        </strong>
-        All rights reserved.
-    </footer>
+    @auth('admin')
+        <footer class="main-footer">
+            <strong>Copyright &copy; 2019-2020
+                <a href="#">isystk.com</a>
+                .
+            </strong>
+            All rights reserved.
+        </footer>
+    @endauth
 </div>
 </body>
 </html>

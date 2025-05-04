@@ -2,7 +2,6 @@ import {defineConfig} from 'vite';
 import laravel from 'laravel-vite-plugin';
 import react from '@vitejs/plugin-react';
 import path from 'path';
-import checker from 'vite-plugin-checker';
 
 export default defineConfig({
   server: {
@@ -14,7 +13,7 @@ export default defineConfig({
   plugins: [
     laravel({
       input: [
-        'resources/assets/front/ts/app.tsx',
+        'resources/assets/front/app.tsx',
         'resources/assets/admin/js/app.js',
         'resources/assets/admin/js/plugins/index.js',
         'resources/assets/admin/js/pages/common.js',
@@ -26,7 +25,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'resources/assets/front/ts')
+      '@': path.resolve(__dirname, 'resources/assets/front')
     }
   },
   test: {

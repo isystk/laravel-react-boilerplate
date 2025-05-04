@@ -27,7 +27,7 @@
     @else''@endif;
     window.laravelErrors =@php print(htmlspecialchars_decode($errors))@endphp;
 </script>
-@vite('resources/assets/front/ts/app.tsx')
+@vite('resources/assets/front/app.tsx')
 <script src="https://js.stripe.com/v3/"></script>
 </body>
 </html>

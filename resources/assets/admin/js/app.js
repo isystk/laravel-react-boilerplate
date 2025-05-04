@@ -1,3 +1,6 @@
+// すべての画像ファイルをビルド
+import.meta.glob('../images/**/*');
+
 // jQueryをグローバルに設定
 import jQuery from 'jquery';
 window.$ = window.jQuery = jQuery;
