@@ -3,22 +3,18 @@ import RootState from '@/states/root';
 
 // --- 型定義 ---
 type AppState = {
-  bool?: boolean;
   root: RootState | null;
 };
 
-type Action = { type: 'TOGGLE_STATE' } | { type: 'SET_STATE'; payload: RootState };
+type Action = { type: 'SET_STATE'; payload: RootState };
 
 const initialState: AppState = {
-  bool: false,
   root: null,
 };
 
 // --- Reducer ---
 function appReducer(state: AppState, action: Action): AppState {
   switch (action.type) {
-    case 'TOGGLE_STATE':
-      return { ...state, bool: !state.bool };
     case 'SET_STATE':
       return { ...state, root: action.payload };
     default:

@@ -21,8 +21,8 @@ type Props = {
 };
 
 const PaymentModal = ({ isOpen, handleClose, amount }: Props) => {
-  const [state, service] = useAppRoot();
-  if (!state) return <></>;
+  const { state, service } = useAppRoot();
+  if (!state || !service) return <></>;
 
   const navigate = useNavigate();
   const stripe = useStripe();
@@ -34,11 +34,9 @@ const PaymentModal = ({ isOpen, handleClose, amount }: Props) => {
     }
 
     // 決算処理を行う
-    const result = await service.cart.payment(stripe, elements, amount, username);
-    if (result) {
-      // 完了画面を表示する
-      navigate(Url.payComplete);
-    }
+    await service.cart.payment(stripe, elements, amount, username);
+    // 完了画面を表示する
+    navigate(Url.payComplete);
   };
 
   return (

@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Utils\ConstUtil;
+use App\Enums\Age;
+use App\Enums\Gender;
 use Illuminate\Http\JsonResponse;
 use Throwable;
 
@@ -16,23 +17,30 @@ class ConstController extends BaseApiController
     public function index(): JsonResponse
     {
         try {
-            $consts = ConstUtil::searchConst();
-
-            $result = [
+            $items = [];
+            foreach ([
+                'gender' => Gender::cases(),
+                'age' => Age::cases(),
+            ] as $key => $enum) {
+                $items[$key] = [];
+                foreach ($enum as $item) {
+                    $items[$key][] = [
+                        'key' => $item->value,
+                        'value' => $item->label(),
+                    ];
+                }
+            }
+            return $this->resConversionJson([
                 'result' => true,
-                'consts' => [
-                    'data' => $consts,
-                ],
-            ];
+                'data' => $items,
+            ]);
         } catch (Throwable $e) {
-            $result = [
+            return $this->resConversionJson( [
                 'result' => false,
                 'error' => [
                     'messages' => [$e->getMessage()],
                 ],
-            ];
-            return $this->resConversionJson($result, $e->getCode());
+            ], $e->getCode());
         }
-        return $this->resConversionJson($result);
     }
 }

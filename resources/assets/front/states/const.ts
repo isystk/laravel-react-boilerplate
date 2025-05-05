@@ -1,25 +1,19 @@
-export interface Consts {
-  stripe_key?: Const;
-  gender?: Const;
-  age?: Const;
-}
-
-export interface Const {
-  name: string;
-  data: KeyValue[] | string;
-}
-
 export interface KeyValue {
   key: number;
   value: string;
 }
 
-const initialState: Consts = {};
+const initialState: ConstState = {
+  gender: null,
+  age: null,
+};
 
 export default class ConstState {
-  data: Consts;
+  gender: KeyValue[] | null;
+  age: KeyValue[] | null;
 
   constructor() {
-    this.data = initialState;
+    this.gender = initialState.gender;
+    this.age = initialState.age;
   }
 }

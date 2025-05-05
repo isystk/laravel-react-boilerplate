@@ -12,7 +12,6 @@ export default class CartService {
   }
 
   async readCarts() {
-    // ローディングを表示する
     this.main.showLoading();
     try {
       const response = await fetch(Api.myCarts, {
@@ -23,18 +22,17 @@ export default class CartService {
       });
       const { result, carts } = await response.json();
       if (result) {
-        this.cart.carts = carts;
+        Object.assign(this.cart, carts);
       }
     } catch (e) {
       this.main.showToastMessage('マイカートの取得に失敗しました');
+      throw e;
+    } finally {
+      this.main.hideLoading();
     }
-    // ローディングを非表示にする
-    this.main.hideLoading();
-    this.main.setRootState();
   }
 
   async addCart(stockId: number): Promise<void> {
-    // ローディングを表示する
     this.main.showLoading();
     try {
       const response = await fetch(Api.addMyCarts, {
@@ -48,18 +46,17 @@ export default class CartService {
       });
       const { result, carts } = await response.json();
       if (result) {
-        this.cart.carts = carts;
+        Object.assign(this.cart, carts);
       }
     } catch (e) {
       this.main.showToastMessage('マイカートの追加に失敗しました');
+      throw e;
+    } finally {
+      this.main.hideLoading();
     }
-    // ローディングを非表示にする
-    this.main.hideLoading();
-    this.main.setRootState();
   }
 
   async removeCart(cartId: number): Promise<void> {
-    // ローディングを表示する
     this.main.showLoading();
     try {
       const response = await fetch(Api.removeMyCart, {
@@ -73,18 +70,17 @@ export default class CartService {
       });
       const { result, carts } = await response.json();
       if (result) {
-        this.cart.carts = carts;
+        Object.assign(this.cart, carts);
       }
     } catch (e) {
       this.main.showToastMessage('マイカートの削除に失敗しました');
+      throw e;
+    } finally {
+      this.main.hideLoading();
     }
-    // ローディングを非表示にする
-    this.main.hideLoading();
-    this.main.setRootState();
   }
 
-  async payment(stripe, elements, amount, username): Promise<boolean> {
-    // ローディングを表示する
+  async payment(stripe, elements, amount, username): Promise<void> {
     this.main.showLoading();
     try {
       //paymentIntentの作成を（ローカルサーバ経由で）リクエスト
@@ -123,11 +119,9 @@ export default class CartService {
       });
     } catch (e) {
       this.main.showToastMessage('決算処理に失敗しました');
-      return false;
+      throw e;
     } finally {
       this.main.hideLoading();
-      this.main.setRootState();
     }
-    return true;
   }
 }

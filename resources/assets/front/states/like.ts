@@ -1,7 +1,7 @@
 export default class LikeState {
-  data: string[];
+  stockIds: string[];
 
   constructor() {
-    this.data = [];
+    this.stockIds = [];
   }
 }

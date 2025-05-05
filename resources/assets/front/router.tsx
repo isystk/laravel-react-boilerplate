@@ -15,19 +15,19 @@ import Top from '@/pages/top';
 import Verify from '@/pages/email/verify';
 import { Url } from '@/constants/url';
 import useAppRoot from '@/states/useAppRoot';
-import { Auth } from '@/states/auth';
+import { type User } from '@/states/auth';
 
 type Props = {
-  auth: Auth;
+  user: User;
 };
 
-const Router = ({ auth }: Props) => {
-  const [state, service] = useAppRoot();
+const Router = ({ user }: Props) => {
+  const { state, service } = useAppRoot();
 
   useEffect(() => {
-    if (!state) return;
+    if (!state || !service) return;
     // セッションのセット
-    service.auth.setAuth(auth);
+    service.auth.setUser(user);
 
     (async () => {
       // 定数のセット
@@ -50,11 +50,11 @@ const Router = ({ auth }: Props) => {
         <Route path={Url.contactComplete} element={<ContactComplete />} />
 
         {/* ★ログインユーザー専用ここから */}
-        <Route path={Url.home} element={<AuthCheck auth={auth} component={<Home />} />} />
-        <Route path={Url.myCart} element={<AuthCheck auth={auth} component={<MyCart />} />} />
+        <Route path={Url.home} element={<AuthCheck user={user} component={<Home />} />} />
+        <Route path={Url.myCart} element={<AuthCheck user={user} component={<MyCart />} />} />
         <Route
           path={Url.payComplete}
-          element={<AuthCheck auth={auth} component={<ShopComplete />} />}
+          element={<AuthCheck user={user} component={<ShopComplete />} />}
         />
         {/* ★ログインユーザー専用ここまで */}
 

@@ -3,14 +3,13 @@ import { useAppState, useAppDispatch } from '@/states/AppContext';
 import MainService from '@/services/main';
 import RootState from '@/states/root';
 
-const useAppRoot = (): [RootState | null, MainService] => {
+const useAppRoot = (): { state: RootState | null; service: MainService | null } => {
   const { root: state } = useAppState();
   const dispatch = useAppDispatch();
 
   const setRootState = useCallback(
     async (root: RootState) => {
       dispatch({ type: 'SET_STATE', payload: root });
-      dispatch({ type: 'TOGGLE_STATE' });
     },
     [dispatch],
   );
@@ -26,9 +25,12 @@ const useAppRoot = (): [RootState | null, MainService] => {
     }
   }, [state, setRootState]);
 
-  const service = useMemo(() => new MainService(state, setRootState), [state, setRootState]);
+  const service = useMemo(() => {
+    if (!state) return null;
+    return new MainService(state, setRootState);
+  }, [state, setRootState]);
 
-  return [state, service];
+  return { state, service };
 };
 
 export default useAppRoot;

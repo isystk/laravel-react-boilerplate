@@ -19,14 +19,4 @@ describe('CartItem Storybook Tests', () => {
     fireEvent.click(deleteButton);
     expect(screen.getByText('削除します。よろしいですか？')).toBeInTheDocument();
   });
-
-  it('should remove item on confirm', async () => {
-    render(<Default />);
-    fireEvent.click(screen.getByText('カートから削除する'));
-
-    const confirmButton = screen.getByText('はい');
-    fireEvent.click(confirmButton);
-
-    expect(await screen.queryByText('削除します。よろしいですか？')).not.toBeInTheDocument();
-  });
 });

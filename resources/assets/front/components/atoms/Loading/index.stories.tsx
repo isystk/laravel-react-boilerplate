@@ -19,9 +19,9 @@ export default {
 
 export const Default: { render: () => null | JSX.Element } = {
   render: () => {
-    const [state, service] = useAppRoot();
+    const { state, service } = useAppRoot();
     useEffect(() => {
-      if (state) {
+      if (state && service) {
         service.showLoading();
       }
     }, [state, service]);

@@ -7,7 +7,7 @@ import TextInput from '@/components/atoms/TextInput';
 import { useParams } from 'react-router-dom';
 
 const ResetForm = () => {
-  const [state] = useAppRoot();
+  const { state } = useAppRoot();
   if (!state) return <></>;
 
   const { token } = useParams<{ token: string }>();

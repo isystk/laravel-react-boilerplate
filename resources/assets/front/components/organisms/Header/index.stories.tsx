@@ -3,7 +3,7 @@ import { JSX, useEffect } from 'react';
 import { AppProvider } from '@/states/AppContext';
 import useAppRoot from '@/states/useAppRoot';
 import { BrowserRouter } from 'react-router-dom';
-import { Auth } from '@/states/auth';
+import { type User } from '@/states/auth';
 
 export default {
   title: 'Components/Organisms/Header',
@@ -22,7 +22,7 @@ export default {
 
 export const Default: { render: () => null | JSX.Element } = {
   render: () => {
-    const [state] = useAppRoot();
+    const { state } = useAppRoot();
     if (!state) return null;
 
     return <Header />;
@@ -31,17 +31,19 @@ export const Default: { render: () => null | JSX.Element } = {
 
 export const Login: { render: () => null | JSX.Element } = {
   render: () => {
-    const [state, service] = useAppRoot();
+    const { state, service } = useAppRoot();
 
     useEffect(() => {
-      service.auth.setAuth({
+      if (!service) return;
+      service.auth.setUser({
         id: 1,
         name: 'ユーザー名',
         email: 'test@test.com',
         email_verified_at: '2020-01-01 00:00:00',
-      } as Auth);
-    }, []);
+      } as User);
+    }, [service]);
 
-    return <>{state && <Header />}</>;
+    if (!state || !service) return <></>;
+    return <Header />;
   },
 };

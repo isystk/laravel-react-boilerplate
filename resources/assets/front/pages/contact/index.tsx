@@ -14,20 +14,18 @@ import ImageInput from '@/components/atoms/ImageInput';
 import noImage from '@/assets/images/no_image.png';
 
 const ContactCreate = () => {
-  const [state, service] = useAppRoot();
-  if (!state) return <></>;
+  const { state, service } = useAppRoot();
+  if (!state || !service) return <></>;
 
   const navigate = useNavigate();
   const auth = state.auth;
-  const consts = state.const.data;
+  const { age, gender } = state.const;
 
   const handleSubmit = async values => {
     // 入力したお問い合わせ内容を送信する。
-    const result = await service.contact.registContact(values);
-    if (result) {
-      // 完了画面を表示する
-      navigate(Url.contactComplete);
-    }
+    await service.contact.registContact(values);
+    // 完了画面を表示する
+    navigate(Url.contactComplete);
   };
 
   const initialValues = {
@@ -103,8 +101,8 @@ const ContactCreate = () => {
                 controlType="radio"
                 selectedValue={values.gender}
                 options={(() => {
-                  if (!consts.gender) return [];
-                  const items = consts.gender.data as KeyValue[];
+                  if (!gender) return [];
+                  const items = gender as KeyValue[];
                   return items.map(({ key, value }) => ({
                     label: value,
                     value: String(key),
@@ -121,8 +119,8 @@ const ContactCreate = () => {
                 name="age"
                 selectedValue={values.age}
                 options={(() => {
-                  if (!consts.age) return [];
-                  const items = consts.age.data as KeyValue[];
+                  if (!age) return [];
+                  const items = age as KeyValue[];
                   return items.map(({ key, value }) => ({
                     label: value,
                     value: String(key),
