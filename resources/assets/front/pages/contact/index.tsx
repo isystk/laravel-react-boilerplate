@@ -19,7 +19,7 @@ const ContactCreate = () => {
 
   const navigate = useNavigate();
   const auth = state.auth;
-  const consts = state.const.data;
+  const { age, gender } = state.const;
 
   const handleSubmit = async values => {
     // 入力したお問い合わせ内容を送信する。
@@ -103,8 +103,8 @@ const ContactCreate = () => {
                 controlType="radio"
                 selectedValue={values.gender}
                 options={(() => {
-                  if (!consts.gender) return [];
-                  const items = consts.gender.data as KeyValue[];
+                  if (!gender) return [];
+                  const items = gender as KeyValue[];
                   return items.map(({ key, value }) => ({
                     label: value,
                     value: String(key),
@@ -121,8 +121,8 @@ const ContactCreate = () => {
                 name="age"
                 selectedValue={values.age}
                 options={(() => {
-                  if (!consts.age) return [];
-                  const items = consts.age.data as KeyValue[];
+                  if (!age) return [];
+                  const items = age as KeyValue[];
                   return items.map(({ key, value }) => ({
                     label: value,
                     value: String(key),

@@ -9,6 +9,22 @@ export type User = {
   updated_at: string | null;
 };
 
+export type Auth = {
+  userId?: number | null;
+  name: string | null;
+  email?: string;
+  email_verified_at?: string | null;
+  remember?: string;
+};
+
+const initialState: Auth = {
+  userId: null,
+  name: null,
+  email: '',
+  email_verified_at: '',
+  remember: '',
+};
+
 export default class AuthState {
   userId?: number | null;
   name: string | null;
@@ -17,11 +33,11 @@ export default class AuthState {
   remember?: string;
 
   constructor() {
-    this.userId = null;
-    this.name = null;
-    this.email = '';
-    this.email_verified_at = '';
-    this.remember = '';
+    this.userId = initialState.userId;
+    this.name = initialState.name;
+    this.email = initialState.email;
+    this.email_verified_at = initialState.email_verified_at;
+    this.remember = initialState.remember;
   }
 
   get isLogined(): boolean {

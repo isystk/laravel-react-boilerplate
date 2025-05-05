@@ -14,9 +14,8 @@ export default class ConstService {
 
   async readConsts() {
     const response = await fetch(Api.consts);
-    const { consts } = await response.json();
-    // APIで返却されるJSONとStoreに保存するオブジェクトのフォーマットが異なるので加工する
-    this.const.data = _.mapKeys(consts.data, 'name');
+    const { data } = await response.json();
+    Object.assign(this.const, data);
     this.main.setRootState();
   }
 }
