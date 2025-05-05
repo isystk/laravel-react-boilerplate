@@ -1,5 +1,5 @@
 import MainService from '@/services/main';
-import AuthState, { Auth } from '@/states/auth';
+import AuthState, { type User } from '@/states/auth';
 
 export default class AuthService {
   main: MainService;
@@ -10,11 +10,11 @@ export default class AuthService {
     this.auth = main.root.auth;
   }
 
-  setAuth(auth: Auth) {
-    this.auth.userId = auth.id;
-    this.auth.name = auth.name;
-    this.auth.email = auth.email;
-    this.auth.email_verified_at = auth.email_verified_at;
+  setUser(user: User) {
+    this.auth.userId = user.id;
+    this.auth.name = user.name;
+    this.auth.email = user.email;
+    this.auth.email_verified_at = user.email_verified_at;
     this.main.setRootState();
   }
 }

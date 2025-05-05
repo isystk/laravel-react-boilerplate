@@ -1,4 +1,4 @@
-export type Auth = {
+export type User = {
   created_at: string;
   email: string;
   email_verified_at: string | null;

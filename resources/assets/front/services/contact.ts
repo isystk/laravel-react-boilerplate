@@ -9,7 +9,6 @@ export default class ContactService {
   }
 
   async registContact(values): Promise<boolean> {
-
     this.main.showLoading();
     try {
       // 入力したお問い合わせ内容を送信する。

@@ -3,7 +3,7 @@ import { JSX, useEffect } from 'react';
 import { AppProvider } from '@/states/AppContext';
 import useAppRoot from '@/states/useAppRoot';
 import { BrowserRouter } from 'react-router-dom';
-import { Auth } from '@/states/auth';
+import { type User } from '@/states/auth';
 
 export default {
   title: 'Components/Organisms/Header',
@@ -35,12 +35,12 @@ export const Login: { render: () => null | JSX.Element } = {
 
     useEffect(() => {
       if (!service) return;
-      service.auth.setAuth({
+      service.auth.setUser({
         id: 1,
         name: 'ユーザー名',
         email: 'test@test.com',
         email_verified_at: '2020-01-01 00:00:00',
-      } as Auth);
+      } as User);
     }, [service]);
 
     if (!state || !service) return <></>;

@@ -12,7 +12,6 @@ export default class LikeService {
   }
 
   async readLikesAsync() {
-
     this.main.showLoading();
     try {
       const response = await fetch(Api.likes);

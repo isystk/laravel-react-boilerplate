@@ -13,7 +13,6 @@ export default class ShopService {
 
   // 商品データを取得する
   async readStocks(pageNo = 1) {
-
     this.main.showLoading();
     const { stocks } = await fetch(`${Api.shops}?page=${pageNo}`).then(res => res.json());
     this.shop.stocks = {

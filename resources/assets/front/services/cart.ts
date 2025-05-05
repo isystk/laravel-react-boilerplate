@@ -12,7 +12,6 @@ export default class CartService {
   }
 
   async readCarts() {
-
     this.main.showLoading();
     try {
       const response = await fetch(Api.myCarts, {
@@ -33,7 +32,6 @@ export default class CartService {
   }
 
   async addCart(stockId: number): Promise<void> {
-
     this.main.showLoading();
     try {
       const response = await fetch(Api.addMyCarts, {
@@ -57,7 +55,6 @@ export default class CartService {
   }
 
   async removeCart(cartId: number): Promise<void> {
-
     this.main.showLoading();
     try {
       const response = await fetch(Api.removeMyCart, {
@@ -81,7 +78,6 @@ export default class CartService {
   }
 
   async payment(stripe, elements, amount, username): Promise<boolean> {
-
     this.main.showLoading();
     try {
       //paymentIntentの作成を（ローカルサーバ経由で）リクエスト
