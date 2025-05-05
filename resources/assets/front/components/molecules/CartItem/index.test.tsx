@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, vi, expect, beforeEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import * as stories from './index.stories';
 import { composeStories } from '@storybook/react';
 import '@testing-library/jest-dom';
@@ -7,10 +7,6 @@ import '@testing-library/jest-dom';
 const { Default } = composeStories(stories);
 
 describe('CartItem Storybook Tests', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('should render product name and price', () => {
     render(<Default />);
     expect(screen.getByText('テスト商品')).toBeInTheDocument();
