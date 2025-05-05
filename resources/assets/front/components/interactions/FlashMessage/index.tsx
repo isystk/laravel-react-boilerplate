@@ -2,11 +2,17 @@ import { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 import Portal from '@/components/interactions/Portal';
 
+export const MessageTypes = {
+  Success: 'success',
+  Error: 'error',
+} as const;
+
 type Props = {
+  type?: (typeof MessageTypes)[keyof typeof MessageTypes];
   message?: string | null;
 };
 
-const FlashMessage = (props: Props) => {
+const FlashMessage = ({ type = MessageTypes.Success, ...props }: Props) => {
   const [fadeOut, setFadeOut] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [message, setMessage] = useState(props.message);
@@ -44,7 +50,12 @@ const FlashMessage = (props: Props) => {
   return (
     <Portal>
       <div
-        className={`${styles.flashMessage} ${fadeOut ? styles.fadeOut : ''} ${hidden ? styles.hidden : ''}`}
+        className={`
+          ${styles.flashMessage}
+          ${fadeOut ? styles.fadeOut : ''}
+          ${hidden ? styles.hidden : ''}
+          ${type === MessageTypes.Error ? styles.error : ''}
+        `}
         onAnimationEnd={handleAnimationEnd}
       >
         {message}

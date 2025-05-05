@@ -54,15 +54,22 @@ const ImageInput = (props: Props) => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file) return;
+    if (file) handleFile(file);
+  };
 
+  // NoImage画像が指定されている場合は、ドラック&ドロップでも画像を選択できるようにする
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files?.[0];
+    if (file) handleFile(file);
+  };
+
+  const handleFile = (file: File) => {
     const reader = new FileReader();
     reader.onloadend = () => {
       const result = reader.result as string;
       setBase64(result);
       setPreview(result);
-
-      // Formik に反映させる
       if (props.setFieldValue) {
         props.setFieldValue(props.name || props.identity, result);
       }
@@ -86,7 +93,11 @@ const ImageInput = (props: Props) => {
         onChange={handleChange}
       />
       <input type="hidden" name={props.name || props.identity} value={props.value} />
-      <div className={styles.previewContainer}>
+      <div
+        className={styles.previewContainer}
+        onDragOver={e => e.preventDefault()}
+        onDrop={handleDrop}
+      >
         {preview ? (
           <Image src={preview} alt="プレビュー" className={styles.previewImage} />
         ) : (
