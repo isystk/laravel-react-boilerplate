@@ -16,8 +16,8 @@ export default class MainService {
   public like: LikeService;
   public contact: ContactService;
 
-  constructor(root: RootState | null, setRootState: (root: RootState) => void) {
-    this.root = root || new RootState();
+  constructor(root: RootState, setRootState: (root: RootState) => void) {
+    this.root = root;
     this._setRootState = setRootState;
     this.auth = new AuthService(this);
     this.const = new ConstService(this);

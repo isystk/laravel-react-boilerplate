@@ -8,7 +8,7 @@ import { Url } from '@/constants/url';
 
 const StockItems = () => {
   const { state, service } = useAppRoot();
-  if (!state) return <></>;
+  if (!state || !service) return <></>;
 
   const navigate = useNavigate();
   const location = useLocation();

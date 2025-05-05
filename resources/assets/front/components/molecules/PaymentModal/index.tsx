@@ -22,7 +22,7 @@ type Props = {
 
 const PaymentModal = ({ isOpen, handleClose, amount }: Props) => {
   const { state, service } = useAppRoot();
-  if (!state) return <></>;
+  if (!state || !service) return <></>;
 
   const navigate = useNavigate();
   const stripe = useStripe();

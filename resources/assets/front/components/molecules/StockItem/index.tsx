@@ -17,7 +17,7 @@ export type Props = {
 
 const StockItem = ({ id, name, imgpath, price, detail, quantity, isLike }: Props) => {
   const { state, service } = useAppRoot();
-  if (!state) return <></>;
+  if (!state || !service) return <></>;
 
   const navigate = useNavigate();
 
