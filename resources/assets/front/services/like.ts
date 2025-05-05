@@ -12,17 +12,16 @@ export default class LikeService {
   }
 
   async readLikesAsync() {
-    // ローディングを表示する
+
     this.main.showLoading();
     try {
       const response = await fetch(Api.likes);
       const { likes } = await response.json();
       this.like.data = likes.data;
-      this.main.setRootState();
     } catch (e) {
       this.main.showToastMessage('お気に入りの取得に失敗しました');
     }
-    // ローディングを非表示にする
+
     this.main.hideLoading();
   }
 
@@ -44,7 +43,6 @@ export default class LikeService {
         const newData: string = id + '';
         this.like.data = [newData, ...this.like.data];
       }
-      this.main.setRootState();
     } catch (e) {
       this.main.showToastMessage('お気に入りの追加に失敗しました');
     }
@@ -61,7 +59,6 @@ export default class LikeService {
       if (result) {
         this.like.data = this.like.data.filter(n => n !== id + '');
       }
-      this.main.setRootState();
     } catch (e) {
       this.main.showToastMessage('お気に入りの削除に失敗しました');
     }

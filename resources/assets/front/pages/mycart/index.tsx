@@ -14,7 +14,7 @@ const MyCart = () => {
   if (!state || !service) return null;
 
   const { name } = state.auth;
-  const { carts } = state.cart;
+  const { data, message, count, sum } = state.cart;
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   useEffect(() => {
@@ -26,21 +26,21 @@ const MyCart = () => {
       <div className="bg-gray-100 p-6 rounded-md shadow-md">
         <h2 className="text-center font-bold text-2xl">{name}さんのカートの中身</h2>
         <div className="mt-10">
-          <p className="text-center">{carts.message}</p>
+          <p className="text-center">{message}</p>
 
-          {carts.data.length === 0 ? (
+          {data.length === 0 ? (
             <p className="text-center">カートに商品がありません。</p>
           ) : (
             <>
               <div className="flex flex-wrap">
-                {carts.data.map(cart => (
+                {data.map(cart => (
                   <CartItem key={cart.id} {...cart} />
                 ))}
               </div>
               <div className="bg-white mt-10 p-10">
                 <div className="w-50 m-auto">
-                  <p className="font-bold">合計個数：{carts.count}個</p>
-                  <p className="font-bold">合計金額：{carts.sum}円</p>
+                  <p className="font-bold">合計個数：{count}個</p>
+                  <p className="font-bold">合計金額：{sum}円</p>
                 </div>
                 <div className="w-50 m-auto text-center">
                   <button
@@ -56,7 +56,7 @@ const MyCart = () => {
                 <PaymentModal
                   isOpen={isPaymentModalOpen}
                   handleClose={() => setIsPaymentModalOpen(false)}
-                  amount={carts.sum}
+                  amount={sum}
                 />
               </Elements>
             </>

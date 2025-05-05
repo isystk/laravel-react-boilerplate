@@ -10,7 +10,6 @@ export type Auth = {
 };
 
 export default class AuthState {
-  isLogined: boolean;
   userId?: number | null;
   name: string | null;
   email?: string;
@@ -18,11 +17,14 @@ export default class AuthState {
   remember?: string;
 
   constructor() {
-    this.isLogined = false;
     this.userId = null;
     this.name = null;
     this.email = '';
     this.email_verified_at = '';
     this.remember = '';
+  }
+
+  get isLogined(): boolean {
+    return this.userId !== null;
   }
 }

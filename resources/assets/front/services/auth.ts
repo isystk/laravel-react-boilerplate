@@ -15,7 +15,6 @@ export default class AuthService {
     this.auth.name = auth.name;
     this.auth.email = auth.email;
     this.auth.email_verified_at = auth.email_verified_at;
-    this.auth.isLogined = !!this.auth.userId;
     this.main.setRootState();
   }
 }

@@ -26,9 +26,17 @@ const initialState: Carts = {
 };
 
 export default class CartState {
-  carts: Carts;
+  data: Cart[];
+  message: string;
+  username: string;
+  count: number;
+  sum: number;
 
   constructor() {
-    this.carts = initialState;
+    this.data = initialState.data;
+    this.message = initialState.message;
+    this.username = initialState.username;
+    this.count = initialState.count;
+    this.sum = initialState.sum;
   }
 }
