@@ -16,7 +16,7 @@ export default class LikeService {
     try {
       const response = await fetch(Api.likes);
       const { likes } = await response.json();
-      this.like.data = likes.data;
+      this.like.stockIds = likes.data;
     } catch (e) {
       this.main.showToastMessage('お気に入りの取得に失敗しました');
     }
@@ -40,7 +40,7 @@ export default class LikeService {
       if (result) {
         this.main.showToastMessage('お気に入りに追加しました');
         const newData: string = id + '';
-        this.like.data = [newData, ...this.like.data];
+        this.like.stockIds = [newData, ...this.like.stockIds];
       }
     } catch (e) {
       this.main.showToastMessage('お気に入りの追加に失敗しました');
@@ -56,7 +56,7 @@ export default class LikeService {
       });
       const { result } = await response.json();
       if (result) {
-        this.like.data = this.like.data.filter(n => n !== id + '');
+        this.like.stockIds = this.like.stockIds.filter(n => n !== id + '');
       }
     } catch (e) {
       this.main.showToastMessage('お気に入りの削除に失敗しました');

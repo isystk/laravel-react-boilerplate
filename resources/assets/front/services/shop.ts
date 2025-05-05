@@ -15,9 +15,7 @@ export default class ShopService {
   async readStocks(pageNo = 1) {
     this.main.showLoading();
     const { stocks } = await fetch(`${Api.shops}?page=${pageNo}`).then(res => res.json());
-    this.shop.stocks = {
-      ...stocks,
-    };
+    Object.assign(this.shop, stocks);
 
     this.main.hideLoading();
   }

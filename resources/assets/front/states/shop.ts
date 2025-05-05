@@ -10,12 +10,6 @@ export interface Stock {
   isLike: boolean;
 }
 
-type Stocks = {
-  current_page: number;
-  total: number;
-  data: Stock[];
-};
-
 const initialState = {
   current_page: 1,
   total: 0,
@@ -23,9 +17,13 @@ const initialState = {
 };
 
 export default class ShopState {
-  stocks: Stocks;
+  current_page: number;
+  total: number;
+  data: Stock[];
 
   constructor() {
-    this.stocks = initialState;
+    this.current_page = initialState.current_page;
+    this.total = initialState.total;
+    this.data = initialState.data;
   }
 }
