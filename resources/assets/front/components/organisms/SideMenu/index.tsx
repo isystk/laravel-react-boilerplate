@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styles from './styles.module.scss';
+import HamburgerButton from '@/components/atoms/HamburgerButton';
 
 type Props = {
   text: string;
@@ -13,20 +14,11 @@ const SideMenu = ({ text, items, className = '' }: Props) => {
   return (
     <>
       {/* ハンバーガーメニュー */}
-      <div className={styles.menuBtn} onClick={() => setOpen(!isOpen)}>
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+      <HamburgerButton isOpen={isOpen} onClick={setOpen} />
       {/* サイドメニュー */}
       <div className={`${styles.sideMenu} ${className} ${isOpen ? styles.open : styles.closed}`}>
         <div className={styles.menuHeader}>
           <p>{text}</p>
-          {/* バツボタン */}
-          <div className={styles.closeBtn} onClick={() => setOpen(false)}>
-            <span></span>
-            <span></span>
-          </div>
         </div>
         <nav>
           <ul className={styles.menuList}>

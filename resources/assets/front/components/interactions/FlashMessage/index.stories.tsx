@@ -1,4 +1,4 @@
-import FlashMessage from './index';
+import FlashMessage, { MessageTypes } from './index';
 import type { Meta, StoryFn } from '@storybook/react';
 
 export default {
@@ -9,6 +9,10 @@ export default {
 
 export const WithMessage: StoryFn = () => (
   <FlashMessage message="これはフラッシュメッセージです。" />
+);
+
+export const ErrorMessage: StoryFn = () => (
+  <FlashMessage message="これはエラーメッセージです。" type={MessageTypes.Error} />
 );
 
 export const LaravelSessionMessage: StoryFn = () => {
