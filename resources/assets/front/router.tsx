@@ -25,7 +25,7 @@ const Router = ({ user }: Props) => {
   const { state, service } = useAppRoot();
 
   useEffect(() => {
-    if (!state || !service) return;
+    if (!state) return;
     // セッションのセット
     service.auth.setUser(user);
 

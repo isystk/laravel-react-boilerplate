@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useCallback } from 'react';
+import { useMemo, useCallback } from 'react';
 import { useAppState, useAppDispatch } from '@/states/AppContext';
 import MainService from '@/services/main';
 import RootState from '@/states/root';
 
-const useAppRoot = (): { state: RootState | null; service: MainService | null } => {
+const useAppRoot = () => {
   const { root: state } = useAppState();
   const dispatch = useAppDispatch();
 
@@ -14,21 +14,9 @@ const useAppRoot = (): { state: RootState | null; service: MainService | null } 
     [dispatch],
   );
 
-  useEffect(() => {
-    const init = async () => {
-      const _root = new RootState();
-      await setRootState(_root);
-    };
-
-    if (!state) {
-      init();
-    }
-  }, [state, setRootState]);
-
   const service = useMemo(() => {
-    if (!state) return null;
-    return new MainService(state, setRootState);
-  }, [state, setRootState]);
+    return new MainService(setRootState);
+  }, []);
 
   return { state, service };
 };

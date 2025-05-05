@@ -15,7 +15,7 @@ import noImage from '@/assets/images/no_image.png';
 
 const ContactCreate = () => {
   const { state, service } = useAppRoot();
-  if (!state || !service) return <></>;
+  if (!state) return <></>;
 
   const navigate = useNavigate();
   const auth = state.auth;

@@ -23,7 +23,7 @@ type Stock = {
 
 const Top = () => {
   const { state, service } = useAppRoot();
-  if (!state || !service) return <></>;
+  if (!state) return <></>;
 
   const navigate = useNavigate();
   const location = useLocation();
