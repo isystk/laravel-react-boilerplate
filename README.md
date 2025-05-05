@@ -339,13 +339,16 @@ http://localhost:6006/
 
 ![storybook](./documents/storybook.png "storybook")
 
-## 🎨 参考
+## 🎨 ドキュメント
 
-| プロジェクト                                                                        | 概要                               |
-|:------------------------------------------------------------------------------|:---------------------------------|
-| [Laravel12公式ドキュメント](https://readouble.com/laravel/12.x/ja/releases.html)      | Laravel11公式ドキュメントです。             |
-| [React Hooks 全19種の解説とサンプル](https://isystk.github.io/react19-hook-study/study) | React Hooks 全19種の解説とサンプル |
-| [Tailwind CSS ドキュメント](https://v3.tailwindcss.com/docs/)                       | Tailwind CSS |
+| 種類         | リンク                                                                                |
+|:-----------|:-----------------------------------------------------------------------------------|
+| コーディング規約   | [Laravel コーディング規約](./documents/php_cording_rule.md)                                |
+| コーディング規約   | [React コーディング規約](./documents/react_cording_rule.md)                                |
+| コーディング規約   | [React コンポーネントの作成単位について](./resources/assets/front/components/README.md)                  |
+| 公式サイト      | [Laravel12公式ドキュメント](https://readouble.com/laravel/12.x/ja/releases.html)           |
+| 公式サイト      | [Tailwind CSS ドキュメント](https://v3.tailwindcss.com/docs/)                            |
+| 参考サイト      | [React Hooks 全19種の解説とサンプル](https://isystk.github.io/react19-hook-study/study) |
 
 
 ## 🎫 Licence
