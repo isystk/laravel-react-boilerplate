@@ -4,7 +4,7 @@ import BasicLayout from '@/components/templates/BasicLayout';
 import useAppRoot from '@/states/useAppRoot';
 
 const ShopComplete = () => {
-  const [state] = useAppRoot();
+  const { state } = useAppRoot();
   if (!state) return <></>;
 
   const auth = state.auth;

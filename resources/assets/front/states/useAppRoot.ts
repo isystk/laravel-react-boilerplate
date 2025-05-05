@@ -3,7 +3,7 @@ import { useAppState, useAppDispatch } from '@/states/AppContext';
 import MainService from '@/services/main';
 import RootState from '@/states/root';
 
-const useAppRoot = (): [RootState | null, MainService] => {
+const useAppRoot = (): { state: RootState | null; service: MainService } => {
   const { root: state } = useAppState();
   const dispatch = useAppDispatch();
 
@@ -28,7 +28,7 @@ const useAppRoot = (): [RootState | null, MainService] => {
 
   const service = useMemo(() => new MainService(state, setRootState), [state, setRootState]);
 
-  return [state, service];
+  return { state, service };
 };
 
 export default useAppRoot;

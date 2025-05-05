@@ -22,7 +22,7 @@ export default {
 
 export const Default: { render: () => null | JSX.Element } = {
   render: () => {
-    const [state] = useAppRoot();
+    const { state } = useAppRoot();
     if (!state) return null;
 
     return <Header />;
@@ -31,7 +31,7 @@ export const Default: { render: () => null | JSX.Element } = {
 
 export const Login: { render: () => null | JSX.Element } = {
   render: () => {
-    const [state, service] = useAppRoot();
+    const { state, service } = useAppRoot();
 
     useEffect(() => {
       service.auth.setAuth({

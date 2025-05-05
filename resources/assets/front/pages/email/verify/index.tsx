@@ -4,7 +4,7 @@ import BasicLayout from '@/components/templates/BasicLayout';
 import useAppRoot from '@/states/useAppRoot';
 
 const Verify = () => {
-  const [state] = useAppRoot();
+  const { state } = useAppRoot();
   if (!state) return <></>;
 
   return (

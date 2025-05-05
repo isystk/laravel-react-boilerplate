@@ -3,7 +3,7 @@ import useAppRoot from '@/states/useAppRoot';
 import Portal from '@/components/interactions/Portal';
 
 const Loading = () => {
-  const [state] = useAppRoot();
+  const { state } = useAppRoot();
   if (!state) return null;
 
   const { isLoading } = state;

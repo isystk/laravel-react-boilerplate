@@ -18,7 +18,7 @@ export default {
 
 export const Default: { render: () => null | JSX.Element } = {
   render: () => {
-    const [state] = useAppRoot();
+    const { state } = useAppRoot();
     if (!state) return null;
     const props = {
       id: 1,

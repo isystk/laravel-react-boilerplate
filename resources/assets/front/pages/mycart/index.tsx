@@ -10,7 +10,7 @@ import Env from '@/constants/env';
 const stripePromise = loadStripe(Env.stripeKey);
 
 const MyCart = () => {
-  const [state, service] = useAppRoot();
+  const { state, service } = useAppRoot();
   if (!state) return null;
 
   const { name } = state.auth;

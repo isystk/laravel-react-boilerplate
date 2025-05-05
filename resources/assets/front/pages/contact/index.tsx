@@ -14,7 +14,7 @@ import ImageInput from '@/components/atoms/ImageInput';
 import noImage from '@/assets/images/no_image.png';
 
 const ContactCreate = () => {
-  const [state, service] = useAppRoot();
+  const { state, service } = useAppRoot();
   if (!state) return <></>;
 
   const navigate = useNavigate();

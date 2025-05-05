@@ -14,7 +14,7 @@ export type Props = {
 };
 
 const CartItem = ({ id, name, imgpath, price, detail }: Props) => {
-  const [state, service] = useAppRoot();
+  const { state, service } = useAppRoot();
   if (!state) return <></>;
 
   const [isShowDeleteConfirm, setIsShowDeleteConfirm] = useState(false);

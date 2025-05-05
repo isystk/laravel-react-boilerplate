@@ -7,7 +7,7 @@ import useAppRoot from '@/states/useAppRoot';
 import { Url } from '@/constants/url';
 
 const StockItems = () => {
-  const [state, service] = useAppRoot();
+  const { state, service } = useAppRoot();
   if (!state) return <></>;
 
   const navigate = useNavigate();

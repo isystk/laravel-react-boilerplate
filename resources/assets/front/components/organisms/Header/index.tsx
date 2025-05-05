@@ -10,7 +10,7 @@ import CSRFToken from '@/components/atoms/CSRFToken';
 import cartImage from '@/assets/images/cart.png';
 
 const Header = () => {
-  const [state] = useAppRoot();
+  const { state } = useAppRoot();
   if (!state) return <></>;
 
   const { isLogined, name } = state.auth;

@@ -22,7 +22,7 @@ type Props = {
 };
 
 const Router = ({ auth }: Props) => {
-  const [state, service] = useAppRoot();
+  const { state, service } = useAppRoot();
 
   useEffect(() => {
     if (!state) return;

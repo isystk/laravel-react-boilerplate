@@ -21,7 +21,7 @@ export default {
 
 export const Default500: { render: () => null | JSX.Element } = {
   render: () => {
-    const [state] = useAppRoot();
+    const { state } = useAppRoot();
     if (!state) return null;
     return <ErrorPage />;
   },
@@ -29,7 +29,7 @@ export const Default500: { render: () => null | JSX.Element } = {
 
 export const NotFound404: { render: () => null | JSX.Element } = {
   render: () => {
-    const [state] = useAppRoot();
+    const { state } = useAppRoot();
     if (!state) return null;
     return <ErrorPage status={404} />;
   },
