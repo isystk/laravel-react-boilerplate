@@ -41,6 +41,6 @@ export default class AuthState {
   }
 
   get isLogined(): boolean {
-    return this.userId !== null;
+    return !!this.userId;
   }
 }
