@@ -1,4 +1,4 @@
-import ShopService from '@/services/shop';
+import StockService from '@/services/stock';
 import AuthService from '@/services/auth';
 import ConstService from '@/services/const';
 import LikeService from '@/services/like';
@@ -11,7 +11,7 @@ export default class MainService {
   private readonly _setRootState: (root: RootState) => void;
   public auth: AuthService;
   public const: ConstService;
-  public shop: ShopService;
+  public stock: StockService;
   public cart: CartService;
   public like: LikeService;
   public contact: ContactService;
@@ -21,7 +21,7 @@ export default class MainService {
     this._setRootState = setRootState;
     this.auth = new AuthService(this);
     this.const = new ConstService(this);
-    this.shop = new ShopService(this);
+    this.stock = new StockService(this);
     this.cart = new CartService(this);
     this.like = new LikeService(this);
     this.contact = new ContactService(this);

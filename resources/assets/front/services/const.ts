@@ -13,9 +13,13 @@ export default class ConstService {
   }
 
   async readConsts() {
-    const response = await fetch(Api.consts);
-    const { data } = await response.json();
-    Object.assign(this.const, data);
-    this.main.setRootState();
+    try {
+      const response = await fetch(Api.consts);
+      const { data } = await response.json();
+      Object.assign(this.const, data);
+      this.main.setRootState();
+    } catch (e) {
+      throw e;
+    }
   }
 }

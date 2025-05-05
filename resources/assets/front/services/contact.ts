@@ -8,7 +8,7 @@ export default class ContactService {
     this.main = main;
   }
 
-  async registContact(values): Promise<boolean> {
+  async registContact(values): Promise<void> {
     this.main.showLoading();
     try {
       // 入力したお問い合わせ内容を送信する。
@@ -22,10 +22,9 @@ export default class ContactService {
       await response.json();
     } catch (e) {
       this.main.showToastMessage('お問い合わせの登録に失敗しました');
+      throw e;
+    } finally {
       this.main.hideLoading();
-      return false;
     }
-    this.main.hideLoading();
-    return true;
   }
 }

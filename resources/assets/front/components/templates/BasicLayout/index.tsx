@@ -42,10 +42,10 @@ const BasicLayout = ({ children, title }: Readonly<Props>) => {
         isOpen={!!state.toastMessage}
         message={state.toastMessage || ''}
         onConfirm={() => {
-          service.hideToastMessage();
+          service?.hideToastMessage();
         }}
         onCancel={() => {
-          service.hideToastMessage();
+          service?.hideToastMessage();
         }}
       />
       <ScrollTopButton />

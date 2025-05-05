@@ -26,9 +26,10 @@ export default class CartService {
       }
     } catch (e) {
       this.main.showToastMessage('マイカートの取得に失敗しました');
+      throw e;
+    } finally {
+      this.main.hideLoading();
     }
-
-    this.main.hideLoading();
   }
 
   async addCart(stockId: number): Promise<void> {
@@ -49,9 +50,10 @@ export default class CartService {
       }
     } catch (e) {
       this.main.showToastMessage('マイカートの追加に失敗しました');
+      throw e;
+    } finally {
+      this.main.hideLoading();
     }
-
-    this.main.hideLoading();
   }
 
   async removeCart(cartId: number): Promise<void> {
@@ -72,12 +74,13 @@ export default class CartService {
       }
     } catch (e) {
       this.main.showToastMessage('マイカートの削除に失敗しました');
+      throw e;
+    } finally {
+      this.main.hideLoading();
     }
-
-    this.main.hideLoading();
   }
 
-  async payment(stripe, elements, amount, username): Promise<boolean> {
+  async payment(stripe, elements, amount, username): Promise<void> {
     this.main.showLoading();
     try {
       //paymentIntentの作成を（ローカルサーバ経由で）リクエスト
@@ -116,10 +119,9 @@ export default class CartService {
       });
     } catch (e) {
       this.main.showToastMessage('決算処理に失敗しました');
-      return false;
+      throw e;
     } finally {
       this.main.hideLoading();
     }
-    return true;
   }
 }

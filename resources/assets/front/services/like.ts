@@ -60,7 +60,9 @@ export default class LikeService {
       }
     } catch (e) {
       this.main.showToastMessage('お気に入りの削除に失敗しました');
+      throw e;
+    } finally {
+      this.main.hideLoading();
     }
-    this.main.hideLoading();
   }
 }

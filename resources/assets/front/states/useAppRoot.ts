@@ -10,7 +10,6 @@ const useAppRoot = (): { state: RootState | null; service: MainService | null } 
   const setRootState = useCallback(
     async (root: RootState) => {
       dispatch({ type: 'SET_STATE', payload: root });
-      dispatch({ type: 'TOGGLE_STATE' });
     },
     [dispatch],
   );
