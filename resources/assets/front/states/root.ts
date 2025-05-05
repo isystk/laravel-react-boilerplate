@@ -5,7 +5,7 @@ import LikeState from '@/states/like';
 import CartState from '@/states/cart';
 
 export default class RootState {
-  public isShowLoading: boolean;
+  public isLoading: boolean;
   public toastMessage: string | null;
   public auth: AuthState;
   public const: ConstState;
@@ -14,7 +14,7 @@ export default class RootState {
   public like: LikeState;
 
   constructor() {
-    this.isShowLoading = false;
+    this.isLoading = false;
     this.toastMessage = null;
     this.auth = new AuthState();
     this.const = new ConstState();

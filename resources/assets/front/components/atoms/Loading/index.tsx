@@ -6,12 +6,12 @@ const Loading = () => {
   const [state] = useAppRoot();
   if (!state) return null;
 
-  const { isShowLoading } = state;
+  const { isLoading } = state;
 
   return (
     <Portal>
       <>
-        {isShowLoading && (
+        {isLoading && (
           <div className={styles.overlay}>
             <div className={styles.spinner}></div>
             <p id="loading" className={styles.message}>

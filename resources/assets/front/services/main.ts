@@ -32,11 +32,11 @@ export default class MainService {
   }
 
   public showLoading() {
-    this.root.isShowLoading = true;
+    this.root.isLoading = true;
     this.setRootState();
   }
   public hideLoading() {
-    this.root.isShowLoading = false;
+    this.root.isLoading = false;
     this.setRootState();
   }
 
