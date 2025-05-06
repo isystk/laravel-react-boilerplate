@@ -4,7 +4,7 @@ import { createRoot } from 'react-dom/client';
 import { type User } from '@/states/auth';
 import { AppProvider } from '@/states/AppContext';
 import '@/assets/styles/app.scss';
-import { JSX, StrictMode, Suspense } from 'react';
+import { JSX, StrictMode } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 // --- アプリケーションのRootコンポーネント ---
@@ -12,9 +12,7 @@ export const AppRoot = ({ children }: { children: JSX.Element }) => {
   return (
     <StrictMode>
       <AppProvider>
-        <Suspense fallback={<p>Loading...</p>}>
-          <BrowserRouter>{children}</BrowserRouter>
-        </Suspense>
+        <BrowserRouter>{children}</BrowserRouter>
       </AppProvider>
     </StrictMode>
   );
