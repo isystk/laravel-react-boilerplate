@@ -7,13 +7,13 @@ import '@testing-library/jest-dom';
 const { Default } = composeStories(stories);
 
 describe('CartItem Storybook Tests', () => {
-  it('should render product name and price', () => {
+  it('カートアイテムが表示されること', () => {
     render(<Default />);
     expect(screen.getByText('テスト商品')).toBeInTheDocument();
     expect(screen.getByText('1000')).toBeInTheDocument();
   });
 
-  it('should open confirm toast on delete button click', () => {
+  it('カートから削除するボタンをクリックすると確認ダイアログが表示されること', () => {
     render(<Default />);
     const deleteButton = screen.getByText('カートから削除する');
     fireEvent.click(deleteButton);

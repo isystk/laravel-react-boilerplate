@@ -14,13 +14,13 @@ const SideMenu = ({ text, items, className = '' }: Props) => {
   return (
     <>
       {/* ハンバーガーメニュー */}
-      <HamburgerButton isOpen={isOpen} onClick={setOpen} />
+      <HamburgerButton isOpen={isOpen} onClick={setOpen} className="menuBtn ml-auto" />
       {/* サイドメニュー */}
       <div className={`${styles.sideMenu} ${className} ${isOpen ? styles.open : styles.closed}`}>
         <div className={styles.menuHeader}>
           <p>{text}</p>
         </div>
-        <nav>
+        <nav className={`sideMenu ${isOpen ? 'open' : ''}`}>
           <ul className={styles.menuList}>
             {items.map(({ text, onClick }, index) => (
               <li key={index}>
@@ -40,7 +40,7 @@ const SideMenu = ({ text, items, className = '' }: Props) => {
       </div>
       {/* オーバーレイ */}
       <div
-        className={`${styles.overlay} ${isOpen ? styles.visible : styles.hidden}`}
+        className={`overlay ${styles.overlay} ${isOpen ? styles.visible : styles.hidden}`}
         onClick={() => setOpen(!isOpen)}
       ></div>
     </>

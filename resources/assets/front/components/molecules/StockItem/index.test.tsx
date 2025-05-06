@@ -11,25 +11,25 @@ describe('StockItem Storybook Tests', () => {
     vi.clearAllMocks();
   });
 
-  it('should render stock item name and price', () => {
+  it('商品アイテムが表示されること', () => {
     render(<Default />);
     expect(screen.getByText('テスト商品')).toBeInTheDocument();
     expect(screen.getByText('1500')).toBeInTheDocument();
   });
 
-  it('should render "気になる" button and allow toggle', () => {
+  it('気になるボタンをクリック', () => {
     render(<Default />);
     const likeButton = screen.getByText('気になる');
     expect(likeButton).toBeInTheDocument();
     fireEvent.click(likeButton);
-    // このあとに API モック等で like 状態が変化するかを検証可能
+    // TODO このあとに API モック等で like 状態が変化するかを検証可能
   });
 
-  it('should handle add to cart button', () => {
+  it('カートに入れるボタンをクリック', () => {
     render(<Default />);
     const cartButton = screen.getByText(/カートに入れる/);
     expect(cartButton).toBeInTheDocument();
     fireEvent.click(cartButton);
-    // 遷移先URLの検証やAPI呼び出しはモック必要
+    // TODO 遷移先URLの検証やAPI呼び出しはモック必要
   });
 });

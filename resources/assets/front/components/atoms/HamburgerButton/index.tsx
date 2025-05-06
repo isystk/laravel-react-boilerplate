@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 export type Props = {
   isOpen: boolean;
   onClick: (isOpen: boolean) => void;
+  className?: string;
 };
 
 const HamburgerButton = (props: Props) => {
@@ -21,7 +22,7 @@ const HamburgerButton = (props: Props) => {
 
   return (
     <div
-      className={`${styles.menuBtn} ${isOpen ? styles.open : ''} ${isOpen ? 'open' : ''}`}
+      className={`${styles.menuBtn} ${isOpen ? styles.open : ''} ${isOpen ? 'open' : ''} ${props.className}`}
       onClick={handleClick}
     >
       <span></span>

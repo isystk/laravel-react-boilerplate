@@ -11,22 +11,29 @@ describe('PaymentModal Storybook Tests', () => {
     vi.clearAllMocks();
   });
 
-  it('should render modal title and amount', () => {
+  it('決済用のモーダルが表示されること', () => {
     render(<Default />);
     expect(screen.getByText('決済情報の入力')).toBeInTheDocument();
     expect(screen.getByText('3000円')).toBeInTheDocument();
   });
 
-  // it('should show validation errors when submitting', async () => {
+  // it('カード情報を未入力で購入するボタンをクリックするとエラーメッセージが表示されること', async () => {
+  //   vi.useFakeTimers();
   //   render(<Default />);
+  //
   //   const submitButton = screen.getByText('購入する');
   //   fireEvent.click(submitButton);
   //
-  //   // queryByText を使用してエラーメッセージが現れるのを待つ
-  //   await waitFor(() => {
-  //     expect(screen.queryByText('カード番号を入力してください')).toBeInTheDocument();
-  //     expect(screen.queryByText('有効期限を入力してください')).toBeInTheDocument();
-  //     expect(screen.queryByText('セキュリティコードを入力してください')).toBeInTheDocument();
+  //   // React state update のために時間を進める
+  //   await act(() => {
+  //     vi.advanceTimersByTime(1000);
+  //     return Promise.resolve();
   //   });
+  //
+  //   expect(screen.getByText('カード番号を入力してください')).toBeInTheDocument();
+  //   expect(screen.getByText('有効期限を入力してください')).toBeInTheDocument();
+  //   expect(screen.getByText('セキュリティコードを入力してください')).toBeInTheDocument();
+  //
+  //   vi.useRealTimers();
   // });
 });
