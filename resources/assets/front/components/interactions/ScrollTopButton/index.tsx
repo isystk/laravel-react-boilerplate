@@ -38,7 +38,7 @@ const ScrollTopButton: React.FC = () => {
     <Portal>
       <button
         onClick={scrollToTop}
-        className={`${styles.button} ${isVisible ? styles.show : styles.hide}`}
+        className={`${styles.button} ${isVisible ? styles.show : styles.hide} ${isVisible ? '' : 'hide'}`}
       >
         <span className={styles.buttonLabel}>^</span>
       </button>

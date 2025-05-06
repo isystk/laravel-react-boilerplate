@@ -7,19 +7,19 @@ import { composeStories } from '@storybook/react';
 const { Default, Small } = composeStories(stories);
 
 describe('Modal Storybook Tests', () => {
-  it('Default: should open and display modal content', () => {
+  it('モーダルが表示されること', () => {
     render(<Default />);
     fireEvent.click(screen.getByText('Open Modal'));
     expect(screen.getByText('モーダルの中身')).toBeInTheDocument();
   });
 
-  it('Small: should open and display small modal content', () => {
+  it('モーダルが表示されること(サイズ小)', () => {
     render(<Small />);
     fireEvent.click(screen.getByText('Open Small Modal'));
     expect(screen.getByText('小さなモーダル')).toBeInTheDocument();
   });
 
-  it('Default: should close modal when clicking the overlay', async () => {
+  it('オーバーレイをクリックするとモーダルが閉じること', async () => {
     render(<Default />);
 
     fireEvent.click(screen.getByText('Open Modal'));

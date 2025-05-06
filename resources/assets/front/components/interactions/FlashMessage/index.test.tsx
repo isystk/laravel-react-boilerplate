@@ -8,31 +8,31 @@ import styles from './styles.module.scss';
 const { WithMessage, LaravelSessionMessage, ErrorMessage } = composeStories(stories);
 
 describe('FlashMessage Storybook Tests', () => {
-  it('WithMessage: should render message when provided via props', () => {
+  it('フラッシュメッセージが表示されること', () => {
     render(<WithMessage />);
     expect(screen.getByText('これはフラッシュメッセージです。')).toBeInTheDocument();
   });
 
-  it('LaravelSessionMessage: should render message from window.laravelSession', () => {
-    window.laravelSession = {
-      status: 'Laravelからのメッセージ',
-    };
+  it('フラッシュメッセージが表示されること(Laravelのメッセージ)', () => {
     render(<LaravelSessionMessage />);
-    expect(screen.getByText('Laravelからのメッセージ')).toBeInTheDocument();
+    expect(screen.getByText('Laravel側のメッセージです')).toBeInTheDocument();
   });
 
-  it('WithMessage: should fade out after 5 seconds', () => {
+  it('表示された後、グローバル変数からは削除されること', () => {
+    render(<LaravelSessionMessage />);
+    expect(window.laravelSession.status).toBeUndefined();
+  });
+
+  it('5秒後にフラッシュメッセージが消えること', () => {
     vi.useFakeTimers();
     render(<WithMessage />);
     const message = screen.getByText('これはフラッシュメッセージです。');
     expect(message).toBeInTheDocument();
-
     vi.advanceTimersByTime(5000);
-    // 実際の fadeOut はアニメーションクラスの付与によるが、クラスのチェックをしたい場合は追加でモックが必要
     vi.useRealTimers();
   });
 
-  it('ErrorMessage: should render has class error', () => {
+  it('エラーメッセージが表示されること', () => {
     render(<ErrorMessage />);
     const message = screen.getByText('これはエラーメッセージです。');
     expect(message).toBeInTheDocument();

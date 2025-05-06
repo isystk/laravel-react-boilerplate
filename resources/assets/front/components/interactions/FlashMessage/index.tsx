@@ -38,7 +38,7 @@ const FlashMessage = ({ type = MessageTypes.Success, ...props }: Props) => {
     return <></>;
   }
   if (window.laravelSession && typeof window.laravelSession === 'object') {
-    window.laravelSession['status'] = '';
+    delete window.laravelSession['status'];
   }
 
   const handleAnimationEnd = () => {

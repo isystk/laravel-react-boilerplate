@@ -22,5 +22,6 @@ describe('Loading component (Storybook)', () => {
     });
 
     expect(document.querySelector('#loading')).not.toBeInTheDocument();
+    vi.useRealTimers();
   });
 });
