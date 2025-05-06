@@ -29,13 +29,14 @@ export const WithError: StoryFn = () => (
     value=""
     error="このフィールドは必須です。"
     onChange={() => {}}
+    required={true}
   />
 );
 
-export const LaravelErrorSimulated: StoryFn = () => {
+export const LaravelError: StoryFn = () => {
   if (typeof window !== 'undefined') {
     window.laravelErrors = {
-      email: ['Laravelからのエラーメッセージです。'],
+      email: ['Laravelからのエラーです'],
     };
   }
 
@@ -44,8 +45,8 @@ export const LaravelErrorSimulated: StoryFn = () => {
       identity="email"
       controlType="text"
       label="メールアドレス"
-      value=""
       onChange={() => {}}
+      required={true}
     />
   );
 };

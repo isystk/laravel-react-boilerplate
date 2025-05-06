@@ -4,7 +4,7 @@ import * as stories from './index.stories';
 import '@testing-library/jest-dom';
 import { composeStories } from '@storybook/react';
 
-const { Default, WithError, WithPreview } = composeStories(stories);
+const { Default, WithError, WithLaravelError, WithPreview } = composeStories(stories);
 
 describe('ImageInput Storybook Tests', () => {
   it('画像ファイル選択が表示されること', async () => {
@@ -16,6 +16,16 @@ describe('ImageInput Storybook Tests', () => {
   it('画像ファイルが未選択の場合にエラーメッセージが表示されること', () => {
     render(<WithError />);
     expect(screen.getByText('画像は必須です')).toBeInTheDocument();
+  });
+
+  it('画像ファイルが未選択の場合にエラーメッセージが表示されること(Laravelのエラー)', () => {
+    render(<WithLaravelError />);
+    expect(screen.getByText('Laravelからのエラーです')).toBeInTheDocument();
+  });
+
+  it('表示された後、グローバル変数からは削除されること', () => {
+    render(<WithLaravelError />);
+    expect(window.laravelErrors.message).toBeUndefined();
   });
 
   it('画像ファイルを選択するとプレビューが表示されること', async () => {
