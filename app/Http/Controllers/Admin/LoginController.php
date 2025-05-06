@@ -27,7 +27,7 @@ class LoginController extends BaseController
      * ログイン画面の初期表示
      * @return View
      */
-    public function showLoginForm(): View
+    public function index(): View
     {
         return view('admin.login');
     }
