@@ -17,5 +17,5 @@ const sampleImages = [
 export const Default: StoryFn = () => <Carousel images={sampleImages} />;
 
 export const WithAutoPlay: StoryFn = () => (
-  <Carousel images={sampleImages} autoPlay autoPlayInterval={5000} />
+  <Carousel images={sampleImages} autoPlay autoPlayInterval={1000} />
 );

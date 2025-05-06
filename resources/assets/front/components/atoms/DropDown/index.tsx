@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 
 type Props = {
   text: string;
-  items: Array<{ text: string; onClick?: () => void }>;
+  items: Array<{ text: string; onClick: () => void }>;
   className?: string;
 };
 
@@ -47,7 +47,7 @@ const DropDown = ({ text, items, className }: Props) => {
           />
         </svg>
       </button>
-      <div className={`${styles.dropdownMenu} ${isOpen ? '' : 'hidden'}`}>
+      <div className={`dropdownMenu ${styles.dropdownMenu} ${isOpen ? '' : 'hidden'}`}>
         {items.map(({ text, onClick }, index) => (
           <button
             key={index}

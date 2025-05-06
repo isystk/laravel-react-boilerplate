@@ -7,7 +7,7 @@ import '@testing-library/jest-dom';
 const { Default } = composeStories(stories);
 
 describe('CSRFToken', () => {
-  it('Default: should render a hidden input with the CSRF token', async () => {
+  it('CSRFTokenがhiddenタグのvalueに設定されること', async () => {
     const { container } = render(<Default />);
     const input = container.querySelector('input[type="hidden"][name="_token"]');
     expect(input).toBeInTheDocument();

@@ -8,42 +8,47 @@ import { act } from 'react-dom/test-utils';
 const { Default, WithAutoPlay } = composeStories(stories);
 
 describe('Carousel Storybook Tests', () => {
-  it('Default: should render all slides but only one visible at a time', () => {
+  it('カルーセルに4つの画像が設定されていて1番目の画像が表示されていること', () => {
     render(<Default />);
     const images = screen.getAllByRole('img');
     expect(images).toHaveLength(4);
-    expect(images[0]).toHaveAttribute('alt', 'Slide 1');
+    const parent = images[0].parentElement;
+    expect(parent).toHaveClass('active');
   });
 
-  it('Default: should go to next slide when next button clicked', () => {
+  it('次ページボタンをクリックすると2ページ目が表示されること', () => {
     render(<Default />);
     const nextButton = screen.getByRole('button', { name: 'Next Slide' });
     fireEvent.click(nextButton);
-    const slides = screen.getAllByRole('img');
-    expect(slides[1]).toBeInTheDocument(); // Slide 2 now visible (indirect check)
+    const images = screen.getAllByRole('img');
+    const parent = images[1].parentElement;
+    expect(parent).toHaveClass('active');
   });
 
-  it('Default: should go to previous slide when previous button clicked', () => {
+  it('前ページボタンをクリックすると4ページ目が表示されること', () => {
     render(<Default />);
     const prevButton = screen.getByRole('button', { name: 'Previous Slide' });
     fireEvent.click(prevButton);
-    const slides = screen.getAllByRole('img');
-    expect(slides[2]).toBeInTheDocument(); // Slide 3 is previous from 0
+    const images = screen.getAllByRole('img');
+    const parent = images[3].parentElement;
+    expect(parent).toHaveClass('active');
   });
 
-  it('Default: should navigate using indicators', () => {
+  it('ナビゲーションの3番目をクリックすると3ページ目が表示されること', () => {
     render(<Default />);
     const indicators = screen.getAllByRole('button', { name: /Go to slide/i });
     fireEvent.click(indicators[2]);
     const images = screen.getAllByRole('img');
-    expect(images[2]).toHaveAttribute('alt', 'Slide 3');
+    const parent = images[2].parentElement;
+    expect(parent).toHaveClass('active');
   });
 
-  it('WithAutoPlay: should automatically advance slides over time', async () => {
+  it('1秒後に自動で次ページにスライドされること', async () => {
     vi.useFakeTimers();
     render(<WithAutoPlay />);
     const images = screen.getAllByRole('img');
-    expect(images[0]).toBeInTheDocument();
+    const parent = images[0].parentElement;
+    expect(parent).toHaveClass('active');
 
     // act() で React の状態更新をトリガー
     await act(() => {
@@ -52,7 +57,9 @@ describe('Carousel Storybook Tests', () => {
     });
 
     const updatedImages = screen.getAllByRole('img');
-    expect(updatedImages[1]).toBeInTheDocument();
+    const updatedParent = updatedImages[1].parentElement;
+    expect(updatedParent).toHaveClass('active');
+    expect(parent).not.toHaveClass('active');
 
     vi.useRealTimers();
   });
