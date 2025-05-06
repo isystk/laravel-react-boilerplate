@@ -1,29 +1,19 @@
-import { describe, it, expect, afterEach } from 'vitest';
-import { render, screen, cleanup } from '@testing-library/react';
-import Portal from './index';
+import { describe, it, expect } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import * as stories from './index.stories';
+import '@testing-library/jest-dom';
+import { composeStories } from '@storybook/react';
 
-describe('Portal component', () => {
-  afterEach(() => {
-    cleanup();
+const { Default } = composeStories(stories);
+
+describe('Portal Storybook Tests', () => {
+  it('ポータル内の要素が表示されること', () => {
+    render(<Default />);
+    expect(screen.getByText('Portal内に描画されたコンテンツ')).toBeInTheDocument();
   });
 
-  it('should render children inside a portal', () => {
-    render(
-      <Portal>
-        <div>テストポータルの中身</div>
-      </Portal>,
-    );
-
-    expect(screen.getByText('テストポータルの中身')).toBeInTheDocument();
-  });
-
-  it('should attach the element to document.body', () => {
-    render(
-      <Portal>
-        <div data-testid="portal-content">内容</div>
-      </Portal>,
-    );
-
+  it('ポータル内の要素が document.body に追加されていること', () => {
+    render(<Default />);
     const portalContent = document.querySelector('[data-testid="portal-content"]');
     expect(portalContent?.parentElement).toBe(document.body.lastElementChild);
   });

@@ -18,7 +18,7 @@ export const ErrorMessage: StoryFn = () => (
 export const LaravelSessionMessage: StoryFn = () => {
   if (typeof window !== 'undefined') {
     window.laravelSession = {
-      status: 'Laravelからのメッセージ',
+      status: 'Laravel側のメッセージです',
     };
   }
 

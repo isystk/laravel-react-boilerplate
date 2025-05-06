@@ -14,6 +14,7 @@ export const Default: Story = {
   render: () => (
     <Portal>
       <div
+        data-testid="portal-content"
         style={{
           position: 'fixed',
           top: '20px',
