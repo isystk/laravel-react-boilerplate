@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import AuthCheck from '@/components/AuthCheck';
 import ContactComplete from '@/pages/contact/complete';
 import ContactCreate from '@/pages/contact';
@@ -38,29 +38,27 @@ const Router = ({ user }: Props) => {
   if (!state) return <></>;
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route index element={<Top />} />
-        <Route path={Url.login} element={<LoginForm />} />
-        <Route path={Url.register} element={<RegisterForm />} />
-        <Route path={Url.passwordReset} element={<EMailForm />} />
-        <Route path={`${Url.passwordReset}/:token`} element={<ResetForm />} />
-        <Route path={Url.emailVerify} element={<Verify />} />
-        <Route path={Url.contact} element={<ContactCreate />} />
-        <Route path={Url.contactComplete} element={<ContactComplete />} />
+    <Routes>
+      <Route index element={<Top />} />
+      <Route path={Url.login} element={<LoginForm />} />
+      <Route path={Url.register} element={<RegisterForm />} />
+      <Route path={Url.passwordReset} element={<EMailForm />} />
+      <Route path={`${Url.passwordReset}/:token`} element={<ResetForm />} />
+      <Route path={Url.emailVerify} element={<Verify />} />
+      <Route path={Url.contact} element={<ContactCreate />} />
+      <Route path={Url.contactComplete} element={<ContactComplete />} />
 
-        {/* ★ログインユーザー専用ここから */}
-        <Route path={Url.home} element={<AuthCheck user={user} component={<Home />} />} />
-        <Route path={Url.myCart} element={<AuthCheck user={user} component={<MyCart />} />} />
-        <Route
-          path={Url.payComplete}
-          element={<AuthCheck user={user} component={<ShopComplete />} />}
-        />
-        {/* ★ログインユーザー専用ここまで */}
+      {/* ★ログインユーザー専用ここから */}
+      <Route path={Url.home} element={<AuthCheck user={user} component={<Home />} />} />
+      <Route path={Url.myCart} element={<AuthCheck user={user} component={<MyCart />} />} />
+      <Route
+        path={Url.payComplete}
+        element={<AuthCheck user={user} component={<ShopComplete />} />}
+      />
+      {/* ★ログインユーザー専用ここまで */}
 
-        <Route path="*" element={<ErrorPage status={404} />} />
-      </Routes>
-    </BrowserRouter>
+      <Route path="*" element={<ErrorPage status={404} />} />
+    </Routes>
   );
 };
 

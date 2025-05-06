@@ -1,16 +1,13 @@
 import type { Preview } from '@storybook/react';
 
 import '@/assets/styles/app.scss';
-import { AppProvider } from '@/states/AppContext';
-import { BrowserRouter } from 'react-router-dom';
+import {AppRoot} from '@/app';
 
 export const decorators = [
   (Story) => (
-    <AppProvider>
-      <BrowserRouter>
-        <Story />
-      </BrowserRouter>
-    </AppProvider>
+    <AppRoot>
+      <Story />
+    </AppRoot>
   ),
 ];
 
