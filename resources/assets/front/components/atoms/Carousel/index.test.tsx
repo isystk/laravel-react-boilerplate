@@ -50,7 +50,6 @@ describe('Carousel Storybook Tests', () => {
     const parent = images[0].parentElement;
     expect(parent).toHaveClass('active');
 
-    // act() で React の状態更新をトリガー
     await act(() => {
       vi.advanceTimersByTime(1100);
       return Promise.resolve();

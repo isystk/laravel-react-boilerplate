@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import * as stories from './index.stories';
 import { composeStories } from '@storybook/react';
@@ -7,25 +7,18 @@ import '@testing-library/jest-dom';
 const { Default } = composeStories(stories);
 
 describe('HamburgerButton', () => {
-  it('should render three span elements', () => {
-    const { container } = render(<Default onClick={vi.fn()} />);
+  it('ハンバーガーメニューが表示されること', () => {
+    const { container } = render(<Default />);
     const spans = container.querySelectorAll('span');
     expect(spans.length).toBe(3);
+    const button = container.querySelector('div');
+    expect(button).not.toHaveClass('open');
   });
 
-  it('should toggle open state on click', () => {
-    const handleClick = vi.fn();
-    const { container } = render(<Default onClick={handleClick} />);
+  it('クリックするとバツボタンに変わること', () => {
+    const { container } = render(<Default />);
     const button = container.querySelector('div');
-
-    if (button) {
-      fireEvent.click(button);
-      expect(handleClick).toHaveBeenCalledWith(true);
-
-      fireEvent.click(button);
-      expect(handleClick).toHaveBeenCalledWith(false);
-    } else {
-      throw new Error('Hamburger div not found');
-    }
+    fireEvent.click(button!);
+    expect(button).toHaveClass('open');
   });
 });

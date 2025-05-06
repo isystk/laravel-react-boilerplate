@@ -19,7 +19,7 @@ beforeAll(() => {
 });
 
 describe('Image Storybook Tests', () => {
-  it('Default: should render image with correct alt and size', () => {
+  it('imgタグが設定されること', () => {
     render(<Default />);
     const img = screen.getByAltText('サンプル画像') as HTMLImageElement;
     expect(img).toBeInTheDocument();
@@ -27,13 +27,13 @@ describe('Image Storybook Tests', () => {
     expect(img).toHaveAttribute('height', '100');
   });
 
-  it('WithLazyLoading: should render with lazy loading', () => {
+  it('imgタグに loading lazy が設定されること', () => {
     render(<WithLazyLoading />);
     const img = screen.getByAltText('遅延読み込み画像') as HTMLImageElement;
     expect(img.loading).toBe('lazy');
   });
 
-  it('WithEagerLoading: should render with eager loading', () => {
+  it('imgタグに loading eager が設定されること', () => {
     render(<WithEagerLoading />);
     const img = screen.getByAltText('即時読み込み画像') as HTMLImageElement;
     expect(img.loading).toBe('eager');

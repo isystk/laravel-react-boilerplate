@@ -21,3 +21,20 @@ export const Default: { render: () => null | JSX.Element } = {
     return <Loading />;
   },
 };
+
+export const HideLoading: { render: () => null | JSX.Element } = {
+  render: () => {
+    const { state, service } = useAppRoot();
+    useEffect(() => {
+      if (state && service) {
+        service.showLoading();
+        setTimeout(() => {
+          // 1秒後に消す
+          service.hideLoading();
+        }, 1000);
+      }
+    }, [state, service]);
+    if (!state) return null;
+    return <Loading />;
+  },
+};
