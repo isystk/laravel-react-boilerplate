@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import * as stories from './index.stories';
 import { composeStories } from '@storybook/react';
 
-const { Default, DisplayAfterScroll } = composeStories(stories);
+const { Default } = composeStories(stories);
 
 describe('Default', async () => {
   it('初期の状態では非表示であること', () => {
