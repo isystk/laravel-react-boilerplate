@@ -24,10 +24,3 @@ export const Default: StoryFn = () => {
     </div>
   );
 };
-
-export const NoActions: StoryFn = () => (
-  <DropDown
-    text="クリックして開く"
-    items={[{ text: 'アクションなし1' }, { text: 'アクションなし2' }]}
-  />
-);

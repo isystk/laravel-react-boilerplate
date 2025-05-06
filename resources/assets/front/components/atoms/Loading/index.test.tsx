@@ -1,15 +1,26 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render } from '@testing-library/react';
 import * as stories from './index.stories';
-import { composeStories } from '@storybook/react'; // Storybookファイル名に合わせて変更してください
+import { composeStories } from '@storybook/react';
+import { act } from 'react-dom/test-utils'; // Storybookファイル名に合わせて変更してください
 
-const { Default } = composeStories(stories);
+const { Default, HideLoading } = composeStories(stories);
 
 describe('Loading component (Storybook)', () => {
-  it('should render the Loading component when loading is shown', () => {
+  it('ローディング表示がされること', () => {
     render(<Default />);
-
-    // 例: Loadingコンポーネント内に "Loading..." やスピナーなどが含まれていると仮定
     expect(document.querySelector('#loading')).toBeInTheDocument();
+  });
+
+  it('1秒後にローディング表示が消えること', async () => {
+    vi.useFakeTimers();
+    render(<HideLoading />);
+
+    await act(() => {
+      vi.advanceTimersByTime(1100);
+      return Promise.resolve();
+    });
+
+    expect(document.querySelector('#loading')).not.toBeInTheDocument();
   });
 });

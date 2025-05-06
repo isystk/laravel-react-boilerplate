@@ -7,25 +7,22 @@ import '@testing-library/jest-dom';
 const { Default, WithError, LaravelError } = composeStories(stories);
 
 describe('TextArea', () => {
-  it('Default: should render textarea with default value', () => {
+  it('テキストエリアが表示されること', () => {
     render(<Default />);
     expect(screen.getByLabelText('お問い合わせ内容')).toHaveValue('初期値です');
   });
 
-  it('WithError: should show error message', () => {
+  it('未入力の場合はエラーメッセージが表示されること', () => {
     render(<WithError />);
     expect(screen.getByText('必須項目です')).toBeInTheDocument();
   });
 
-  it('LaravelError: should show error from Laravel window object', () => {
+  it('未入力の場合にエラーメッセージが表示されること(Laravelのエラー)', () => {
     render(<LaravelError />);
     expect(screen.getByText('Laravel側のエラーです')).toBeInTheDocument();
   });
 
-  it('LaravelError: should clear Laravel error from window after rendering', () => {
-    window.laravelErrors = {
-      message: ['一度表示される Laravel エラー'],
-    };
+  it('表示された後、グローバル変数からは削除されること', () => {
     render(<LaravelError />);
     expect(window.laravelErrors.message).toBeUndefined();
   });

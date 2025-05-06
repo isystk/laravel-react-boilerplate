@@ -30,7 +30,7 @@ export const WithError: StoryFn = () => (
 export const WithLaravelError: StoryFn = () => {
   if (typeof window !== 'undefined') {
     window.laravelErrors = {
-      'select-box': ['Laravelからのエラーメッセージです。'],
+      'select-box': ['Laravel側のエラーです'],
     };
   }
 

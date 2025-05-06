@@ -7,25 +7,25 @@ import SessionAlert from './index';
 
 const { DefaultMessage, ResentMessage, NoMessage } = composeStories(stories);
 
-describe('SessionAlert', () => {
-  it('DefaultMessage: should display session message from window', () => {
+describe('SessionAlert Storybook Tests', () => {
+  it('セッションアラートのメッセージが表示されること', () => {
     render(<DefaultMessage />);
     expect(screen.getByText('登録が完了しました')).toBeInTheDocument();
   });
 
-  it('ResentMessage: should show static message regardless of session value', () => {
+  it('認証リンク送信のメッセージが表示されること', () => {
     render(<ResentMessage />);
     expect(
       screen.getByText('あなたのメールアドレスに新しい認証リンクが送信されました。'),
     ).toBeInTheDocument();
   });
 
-  it('NoMessage: should render nothing if no session value exists', () => {
+  it('セッションアラートがない場合は表示されないこと', () => {
     const { container } = render(<NoMessage />);
     expect(container).toBeEmptyDOMElement();
   });
 
-  it('should clear session message after rendering', () => {
+  it('表示された後、グローバル変数からは削除されること', () => {
     window.laravelSession = { success: '一度表示されるメッセージ' };
     render(<SessionAlert target="success" />);
     expect(window.laravelSession.success).toBe('');

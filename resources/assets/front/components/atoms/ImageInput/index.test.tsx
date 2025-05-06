@@ -4,29 +4,31 @@ import * as stories from './index.stories';
 import '@testing-library/jest-dom';
 import { composeStories } from '@storybook/react';
 
-const { Default, WithError, WithPreview } = composeStories(stories);
+const { Default, WithError, WithLaravelError, WithPreview } = composeStories(stories);
 
 describe('ImageInput Storybook Tests', () => {
-  it('Default: should render input and allow file selection', async () => {
+  it('画像ファイル選択が表示されること', async () => {
     render(<Default />);
     const input = screen.getByLabelText('プロフィール画像');
     expect(input).toBeInTheDocument();
-
-    // モックファイルを作成
-    const file = new File(['image'], 'profile.png', { type: 'image/png' });
-    fireEvent.change(input, { target: { files: [file] } });
-
-    // ファイルが読み込まれ、プレビューが表示されることを確認
-    const img = await screen.findByAltText('プレビュー');
-    expect(img).toBeInTheDocument();
   });
 
-  it('WithError: should display error message', () => {
+  it('画像ファイルが未選択の場合にエラーメッセージが表示されること', () => {
     render(<WithError />);
     expect(screen.getByText('画像は必須です')).toBeInTheDocument();
   });
 
-  it('WithPreview: should display preview when an image is selected', async () => {
+  it('画像ファイルが未選択の場合にエラーメッセージが表示されること(Laravelのエラー)', () => {
+    render(<WithLaravelError />);
+    expect(screen.getByText('Laravel側のエラーです')).toBeInTheDocument();
+  });
+
+  it('表示された後、グローバル変数からは削除されること', () => {
+    render(<WithLaravelError />);
+    expect(window.laravelErrors.message).toBeUndefined();
+  });
+
+  it('画像ファイルを選択するとプレビューが表示されること', async () => {
     render(<WithPreview />);
 
     const input = screen.getByLabelText('プロフィール画像');

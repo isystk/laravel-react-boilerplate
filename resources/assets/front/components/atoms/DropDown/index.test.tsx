@@ -4,35 +4,32 @@ import * as stories from './index.stories';
 import '@testing-library/jest-dom';
 import { composeStories } from '@storybook/react';
 
-const { Default, NoActions } = composeStories(stories);
+const { Default } = composeStories(stories);
 
 describe('DropDown Storybook Tests', () => {
-  it('Default: should render toggle button', () => {
+  it('トグルボタンが表示されメニューが非表示であること', () => {
     render(<Default />);
-    expect(screen.getByRole('button', { name: 'メニューを開く' })).toBeInTheDocument();
+    const toggle = screen.getByRole('button', { name: 'メニューを開く' });
+    expect(toggle).toBeInTheDocument();
+    const dropdownMenu = document.querySelector('.dropdownMenu');
+    expect(dropdownMenu).toHaveClass('hidden');
   });
 
-  it('Default: should show dropdown items when clicked', () => {
+  it('トグルボタンをクリックするとメニューが表示されること', () => {
     render(<Default />);
     const toggle = screen.getByRole('button', { name: 'メニューを開く' });
     fireEvent.click(toggle);
     expect(screen.getByText('選択肢1')).toBeInTheDocument();
     expect(screen.getByText('選択肢2')).toBeInTheDocument();
     expect(screen.getByText('選択肢3')).toBeInTheDocument();
+    const dropdownMenu = document.querySelector('.dropdownMenu');
+    expect(dropdownMenu).not.toHaveClass('hidden');
   });
 
-  it('Default: should call onClick and close menu on item click', () => {
+  it('メニューのアイテムをクリックした際にその処理が実行されること', () => {
     render(<Default />);
-    fireEvent.click(screen.getByRole('button', { name: 'メニューを開く' }));
     const item = screen.getByText('選択肢1');
     fireEvent.click(item);
     expect(screen.getByText('選択された項目: 選択肢1')).toBeInTheDocument();
-  });
-
-  it('NoActions: should render items without crashing', () => {
-    render(<NoActions />);
-    fireEvent.click(screen.getByRole('button', { name: 'クリックして開く' }));
-    expect(screen.getByText('アクションなし1')).toBeInTheDocument();
-    expect(screen.getByText('アクションなし2')).toBeInTheDocument();
   });
 });

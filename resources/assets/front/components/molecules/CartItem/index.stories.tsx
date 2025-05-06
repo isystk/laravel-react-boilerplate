@@ -1,19 +1,11 @@
 import CartItem from './index';
 import { JSX } from 'react';
-import { AppProvider } from '@/states/AppContext';
 import useAppRoot from '@/states/useAppRoot';
 
 export default {
   title: 'Components/Molecules/CartItem',
   component: CartItem,
   tags: ['autodocs'],
-  decorators: [
-    Story => (
-      <AppProvider>
-        <Story />
-      </AppProvider>
-    ),
-  ],
 };
 
 export const Default: { render: () => null | JSX.Element } = {

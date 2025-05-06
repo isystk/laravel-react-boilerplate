@@ -21,8 +21,26 @@ export const Default: StoryFn = () => {
 };
 
 export const WithError: StoryFn = () => (
-  <ImageInput identity="profile_picture" label="プロフィール画像" value="" error="画像は必須です" />
+  <ImageInput
+    identity="profile_picture"
+    label="プロフィール画像"
+    value=""
+    error="画像は必須です"
+    required={true}
+  />
 );
+
+export const WithLaravelError: StoryFn = () => {
+  if (typeof window !== 'undefined') {
+    window.laravelErrors = {
+      profile_picture: ['Laravel側のエラーです'],
+    };
+  }
+
+  return (
+    <ImageInput identity="profile_picture" label="プロフィール画像" value="" required={true} />
+  );
+};
 
 export const WithPreview: StoryFn = () => {
   const [value] = useState('');

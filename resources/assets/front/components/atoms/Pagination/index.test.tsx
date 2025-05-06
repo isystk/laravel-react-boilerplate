@@ -7,30 +7,29 @@ import '@testing-library/jest-dom';
 const { Default, FirstPage, LastPage } = composeStories(stories);
 
 describe('Pagination Storybook Tests', () => {
-  it('Default: should render correct number of page buttons', () => {
+  it('ページングボタンが表示されること', () => {
     render(<Default />);
     expect(screen.getByRole('button', { name: '3' })).toHaveAttribute('aria-current', 'page');
     expect(screen.getByRole('button', { name: '2' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '4' })).toBeInTheDocument();
   });
 
-  it('Default: should change page when a different page is clicked', () => {
+  it('ページングボタンをクリックするとアクティブなページが切り替わること', () => {
     render(<Default />);
+    expect(screen.getByRole('button', { name: '3' })).toHaveAttribute('aria-current', 'page');
     const button = screen.getByRole('button', { name: '4' });
     fireEvent.click(button);
-    // 新しいページに遷移したことを直接確認できないため、aria-current が更新されるかは確認できない
-    // ただしこの処理がユーザーの useState に依存しているため、ここでは DOM 変化が追えない
-    expect(button).toBeInTheDocument(); // クリック可能であることの確認にとどめる
+    expect(screen.getByRole('button', { name: '4' })).toHaveAttribute('aria-current', 'page');
   });
 
-  it('FirstPage: should disable Previous button', () => {
+  it('1ページ目が表示されている場合は前ページボタンが非活性になること', () => {
     const { container } = render(<FirstPage />);
     const buttons = container.querySelectorAll('button');
-    const prevButton = buttons[0]; // 最初が Prev ボタン
+    const prevButton = buttons[0];
     expect(prevButton).toBeDisabled();
   });
 
-  it('LastPage: should disable Next button', () => {
+  it('最終ページが表示されている場合は次ページボタンが非活性になること', () => {
     const { container } = render(<LastPage />);
     const buttons = container.querySelectorAll('button');
     const nextButton = buttons[buttons.length - 1]; // 最後が Next ボタン

@@ -20,7 +20,10 @@ const HamburgerButton = (props: Props) => {
   };
 
   return (
-    <div className={`${styles.menuBtn} ${isOpen ? styles.open : ''}`} onClick={handleClick}>
+    <div
+      className={`${styles.menuBtn} ${isOpen ? styles.open : ''} ${isOpen ? 'open' : ''}`}
+      onClick={handleClick}
+    >
       <span></span>
       <span></span>
       <span></span>
