@@ -11,7 +11,7 @@ const stripePromise = loadStripe(Env.stripeKey);
 
 const MyCart = () => {
   const { state, service } = useAppRoot();
-  if (!state || !service) return null;
+  if (!state) return null;
 
   const { name } = state.auth;
   const { data, message, count, sum } = state.cart;

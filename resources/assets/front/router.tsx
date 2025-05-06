@@ -11,7 +11,7 @@ import ErrorPage from '@/components/organisms/ErrorPage';
 import RegisterForm from '@/pages/register';
 import ResetForm from '@/pages/password/reset/[id]';
 import ShopComplete from '@/pages/complete';
-import Top from '@/pages/top';
+import Top from '@/pages';
 import Verify from '@/pages/email/verify';
 import { Url } from '@/constants/url';
 import useAppRoot from '@/states/useAppRoot';
@@ -25,7 +25,7 @@ const Router = ({ user }: Props) => {
   const { state, service } = useAppRoot();
 
   useEffect(() => {
-    if (!state || !service) return;
+    if (!state) return;
     // セッションのセット
     service.auth.setUser(user);
 

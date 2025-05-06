@@ -10,12 +10,9 @@ use Illuminate\Support\Facades\Route;
 */
 Route::prefix('admin')->group(function ()
 {
-    Route::get('/', static function ()
-    {
-        return redirect('/admin/home');
-    });
-    Route::get('login', [\App\Http\Controllers\Admin\LoginController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('login', [\App\Http\Controllers\Admin\LoginController::class, 'login']);
+    Route::get('/', [\App\Http\Controllers\Admin\IndexController::class, 'index'])->name('admin');
+    Route::get('login', [\App\Http\Controllers\Admin\LoginController::class, 'index'])->name('admin.login');
+    Route::post('login', [\App\Http\Controllers\Admin\LoginController::class, 'login'])->name('admin.login');
 
     // ログイン後
     Route::group(['middleware' => 'auth:admin'], static function ()

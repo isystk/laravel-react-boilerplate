@@ -25,6 +25,7 @@ export default class MainService {
     this.cart = new CartService(this);
     this.like = new LikeService(this);
     this.contact = new ContactService(this);
+    this.setRootState();
   }
 
   public setRootState() {
