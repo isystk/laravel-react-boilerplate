@@ -1,23 +1,12 @@
 import Header from './index';
 import { JSX, useEffect } from 'react';
-import { AppProvider } from '@/states/AppContext';
 import useAppRoot from '@/states/useAppRoot';
-import { BrowserRouter } from 'react-router-dom';
 import { type User } from '@/states/auth';
 
 export default {
   title: 'Components/Organisms/Header',
   component: Header,
   tags: ['autodocs'],
-  decorators: [
-    Story => (
-      <BrowserRouter>
-        <AppProvider>
-          <Story />
-        </AppProvider>
-      </BrowserRouter>
-    ),
-  ],
 };
 
 export const Default: { render: () => null | JSX.Element } = {
