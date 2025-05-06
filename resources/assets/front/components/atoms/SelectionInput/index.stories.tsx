@@ -49,7 +49,7 @@ export const WithError: StoryFn = () => (
 export const WithLaravelError: StoryFn = () => {
   if (typeof window !== 'undefined') {
     window.laravelErrors = {
-      radio: ['Laravelからのエラーです'],
+      radio: ['Laravel側のエラーです'],
     };
   }
 

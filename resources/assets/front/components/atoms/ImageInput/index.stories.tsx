@@ -33,7 +33,7 @@ export const WithError: StoryFn = () => (
 export const WithLaravelError: StoryFn = () => {
   if (typeof window !== 'undefined') {
     window.laravelErrors = {
-      profile_picture: ['Laravelからのエラーです'],
+      profile_picture: ['Laravel側のエラーです'],
     };
   }
 

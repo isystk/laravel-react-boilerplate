@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { composeStories } from '@storybook/react';
 import * as stories from './index.stories';
 import '@testing-library/jest-dom';
@@ -12,12 +12,12 @@ describe('TextInput Storybook Tests', () => {
     expect(screen.getByLabelText('メールアドレス')).toBeInTheDocument();
   });
 
-  // it('値を変更した際にonChangeイベントが発動すること', () => {
-  //   render(<Default />);
-  //   const input = screen.getByLabelText('メールアドレス') as HTMLInputElement;
-  //   fireEvent.change(input, { target: { value: 'test@example.com' } });
-  //   expect(input.value).toBe('test@example.com');
-  // });
+  it('値を変更した際にonChangeイベントが発動すること', () => {
+    render(<Default />);
+    const input = screen.getByLabelText('メールアドレス') as HTMLInputElement;
+    fireEvent.change(input, { target: { value: 'test@example.com' } });
+    expect(input.value).toBe('test@example.com');
+  });
 
   it('未入力の場合はエラーメッセージが表示されること', () => {
     render(<WithError />);

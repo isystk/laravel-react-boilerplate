@@ -36,7 +36,7 @@ export const WithError: StoryFn = () => (
 export const LaravelError: StoryFn = () => {
   if (typeof window !== 'undefined') {
     window.laravelErrors = {
-      email: ['Laravelからのエラーです'],
+      email: ['Laravel側のエラーです'],
     };
   }
 

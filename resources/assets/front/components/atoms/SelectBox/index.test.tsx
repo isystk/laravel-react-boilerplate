@@ -29,7 +29,7 @@ describe('SelectBox Storybook Tests', () => {
 
   it('未選択の場合にエラーメッセージが表示されること(Laravelのエラー)', () => {
     render(<WithLaravelError />);
-    expect(screen.getByText('Laravelからのエラーメッセージです。')).toBeInTheDocument();
+    expect(screen.getByText('Laravel側のエラーです')).toBeInTheDocument();
   });
 
   it('表示された後、グローバル変数からは削除されること', () => {
