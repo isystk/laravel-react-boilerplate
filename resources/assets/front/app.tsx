@@ -4,7 +4,21 @@ import { createRoot } from 'react-dom/client';
 import { type User } from '@/states/auth';
 import { AppProvider } from '@/states/AppContext';
 import '@/assets/styles/app.scss';
-import { StrictMode, Suspense } from 'react';
+import { JSX, StrictMode, Suspense } from 'react';
+import { BrowserRouter } from 'react-router-dom';
+
+// --- アプリケーションのRootコンポーネント ---
+export const AppRoot = ({ children }: { children: JSX.Element }) => {
+  return (
+    <StrictMode>
+      <AppProvider>
+        <Suspense fallback={<p>Loading...</p>}>
+          <BrowserRouter>{children}</BrowserRouter>
+        </Suspense>
+      </AppProvider>
+    </StrictMode>
+  );
+};
 
 const render = (user: User) => {
   const container = document.getElementById('react-root');
@@ -14,13 +28,9 @@ const render = (user: User) => {
 
   const root = createRoot(container);
   root.render(
-    <StrictMode>
-      <Suspense fallback={<p>Loading...</p>}>
-        <AppProvider>
-          <Router user={user} />
-        </AppProvider>
-      </Suspense>
-    </StrictMode>,
+    <AppRoot>
+      <Router user={user} />
+    </AppRoot>,
   );
 };
 

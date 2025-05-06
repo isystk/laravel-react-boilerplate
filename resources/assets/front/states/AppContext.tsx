@@ -1,4 +1,4 @@
-import { createContext, useReducer, useContext, ReactNode, Dispatch } from 'react';
+import { createContext, useReducer, useContext, Dispatch, JSX } from 'react';
 import RootState from '@/states/root';
 
 // --- 型定義 ---
@@ -27,9 +27,8 @@ const AppStateContext = createContext<AppState | undefined>(undefined);
 const AppDispatchContext = createContext<Dispatch<Action> | undefined>(undefined);
 
 // --- Providerコンポーネント ---
-export const AppProvider = ({ children }: { children: ReactNode }) => {
+export const AppProvider = ({ children }: { children: JSX.Element }) => {
   const [state, dispatch] = useReducer(appReducer, initialState);
-
   return (
     <AppStateContext.Provider value={state}>
       <AppDispatchContext.Provider value={dispatch}>{children}</AppDispatchContext.Provider>
