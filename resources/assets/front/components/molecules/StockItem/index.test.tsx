@@ -1,10 +1,10 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, vi, expect, beforeEach } from 'vitest';
 import * as stories from './index.stories';
 import { composeStories } from '@storybook/react';
 import '@testing-library/jest-dom';
 
-const { Default } = composeStories(stories);
+const { Default, Logined } = composeStories(stories);
 
 describe('StockItem Storybook Tests', () => {
   beforeEach(() => {
@@ -22,14 +22,19 @@ describe('StockItem Storybook Tests', () => {
     const likeButton = screen.getByText('気になる');
     expect(likeButton).toBeInTheDocument();
     fireEvent.click(likeButton);
-    // TODO このあとに API モック等で like 状態が変化するかを検証可能
+    waitFor(() => {
+      expect(screen.getByText('お気に入りに追加しました')).toBeInTheDocument();
+    });
   });
 
   it('カートに入れるボタンをクリック', () => {
-    render(<Default />);
+    render(<Logined />);
     const cartButton = screen.getByText(/カートに入れる/);
     expect(cartButton).toBeInTheDocument();
-    fireEvent.click(cartButton);
-    // TODO 遷移先URLの検証やAPI呼び出しはモック必要
+    // TODO APIの呼び出しが含まれるのでテストが難しい。
+    // fireEvent.click(cartButton);
+    // waitFor(() => {
+    //   expect(screen.getbytext('ユーザー名さんのカートの中身')).tobeinthedocument();
+    // });
   });
 });

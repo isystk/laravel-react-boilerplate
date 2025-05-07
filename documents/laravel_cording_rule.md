@@ -1,6 +1,6 @@
 # Laravel コーディング規約
 
-このプロジェクトでは、[PSR-1](https://www.php-fig.org/psr/psr-1/) および [PSR-12](https://www.php-fig.org/psr/psr-12/) に準拠したコーディング規約を採用します。加えて、Laravel におけるベストプラクティスに従います。
+このプロジェクトでは、一貫性と可読性を高めるために、Laravelを使用したアプリケーションの開発において以下のコーディング規約に従います。
 
 ---
 
@@ -10,9 +10,11 @@
 - [ファイル構成](#ファイル構成)
 - [名前空間とクラス名](#名前空間とクラス名)
 - [コーディングスタイル](#コーディングスタイル)
+- [リクエスト](#リクエスト)
 - [コントローラ](#コントローラ)
 - [サービス](#サービス)
 - [リポジトリ](#リポジトリ)
+- [エンティティ](#エンティティ)
 - [マイグレーション](#マイグレーション)
 - [ルーティング](#ルーティング)
 - [Blade テンプレート](#blade-テンプレート)
@@ -23,20 +25,20 @@
 
 ## 基本方針
 
-- PHP タグは `<?php` を使用し、**閉じタグは省略**します。
-- インデントは **スペース4つ**を使用し、タブは禁止します。
+- PHP タグは `<?php` を使用し、**閉じタグは記述しません**。
+- インデントは **スペース4つ**とし、タブは使用しません。
 - クラス名：`StudlyCase`
 - メソッド・変数名：`camelCase`
 - 定数：`UPPER_SNAKE_CASE`
-- PSR-1, PSR-12 に従った構文・命名を行います。
+- [PSR-1](https://www.php-fig.org/psr/psr-1/) および [PSR-12](https://www.php-fig.org/psr/psr-12/) に準拠します。
 
 ---
 
 ## ファイル構成
 
-- Laravel の標準的なディレクトリ構成に従います。
-- ビジネスロジックは `routes/` に直接記述せず、コントローラやサービス層に分離します。
-- ファイルの役割ごとに適切な場所（例：`Http/Controllers`, `Models` など）へ配置します。
+- Laravel 標準のディレクトリ構成に従います。
+- ビジネスロジックは `routes/` に記述せず、コントローラやサービス層へ分離します。
+- ファイルはその役割に応じて、適切なディレクトリ（例：`Http/Controllers`, `Entities` など）に配置します。
 
 ---
 
@@ -53,91 +55,133 @@ class UserController extends Controller
 }
 ```
 
-- 名前空間は App\〜 をベースに、Laravel の標準構造に従います。
-- クラス名は単数形・役割に応じた明確な名前にします。
+- 名前空間は App\〜 を基準とし、Laravel の標準構成に従います。
+- クラス名は単数形で、役割が明確に分かる名前にします。
+
+---
 
 ## コーディングスタイル
 
-- 型宣言を可能な限り使用します。
+可能な限り型宣言を使用します。
 
 ```php
 public function store(Request $request): JsonResponse
 ```
 
-- データベースのカラム名は `snake_case`、コード上の変数は `camelCase`。
-- 厳密な比較演算子 `===` / `!==` を使用します。
-- 制御構文には必ず波括弧 `{}` を使用します（1行でも省略しない）。
-- 制御構文の後にはスペースを挿入します。
+- データベースのカラム名は `snake_case`、コード上の変数は `camelCase` を用います。
+- 比較には、厳密な比較演算子 `===` / `!==` を使用します。
+- 制御構文では、1行でも必ず波括弧 `{}` を使用します（省略禁止）。
 
-```php
-if ($user->isAdmin()) {
-    // ...
-}
-```
+---
 
-## Request
+## リクエスト
 
-- バリデーションは可能な限り Request クラスで定義し、コントローラに記述しない。
-- バリデーションルールは配列形式で定義し、`string` / `integer` などの型を明示する。
-- ルールの順序は **型指定 → 条件 → DB関連** の順に統一する。
-- `nullable` と `required` は同時に使用しない。
+- バリデーションは可能な限り Request クラスに定義し、コントローラには記述しません。
+- バリデーションルールは配列形式で記述し、`string` / `integer` など型を明示します。
+- ルールの記述順は、型指定 → 条件 → DB 関連 の順とします。
+- `nullable` と `required` を同時に使用しないようにします。
 
 ```php
 public function rules(): array
 {
     $maxlength = config('const.maxlength.stocks');
     return [
-        'name' => [
-            'required',
-            'string',
-            'max:' . $maxlength['name'],
-        ],
+        'rate' => ['required', 'numeric', 'min:0', 'max:100'],
+        'user_id' => ['required', 'integer', 'exists:users,id'],
     ];
 }
 ```
 
+---
+
 ## コントローラ
 
-- コントローラは極力薄く保ち、サービスクラスへ処理を委譲します。
-- Laravel のリソースコントローラ構成（index, show, store など）に従います。
+- コントローラはできるだけ薄く保ち、処理はサービスクラスに委譲します。
+- Laravel のリソースコントローラ構成（index, show, store など）に準拠します。
 - ルートモデルバインディングを活用します。
-- トランザクションが必要な場合は、コントローラクラス内で行う。
-- コントローラーの1アクションにつき1サービスクラスを作成する
+- トランザクションはコントローラクラス内で実装します。
+- 1つのアクションにつき、1つのサービスクラスを作成します。
+- サービスクラスのインスタンス生成には app() を使用します。
 
 ```php
 public function store(StoreRequest $request): RedirectResponse
 {
     DB::beginTransaction();
     try {
-        /** @var CreateService $service */
-        $service = app(CreateService::class);
-        $service->save($request);
+        /** @var StoreService $service */
+        $service = app(StoreService::class);
+        $service->createStock($request);
         DB::commit();
     } catch (Throwable $e) {
         DB::rollBack();
         throw $e;
     }
-    return redirect(route('admin.stock'));
+    return redirect(route('stock.index'));
 }
 ```
 
+---
+
 ## サービス
 
-- ビジネスロジックに集中させます。
-- Eloquent は基本的にリポジトリ経由で利用する。
-- サービスは都度呼び出しの柔軟性を重視し、明示的に app() によるサービスロケーターを採用する。
- 
+- ビジネスロジックの記述に集中します。
+- DB へのアクセスは Eloquent を直接使用せず、リポジトリを介します。
+- リポジトリの注入には、コンストラクタインジェクションを使用します。
+
+---
+
 ## リポジトリ
 
-- 原則として1メソッド1クエリとし条件分岐や繰り返し等は記述しない。
-- メソッド名はクエリの内容に合わせる。
-- リポジトリクラスのDIは、コンストラクタインジェクションを採用する
+- リポジトリは `app/Domain/Repositories` に配置します。
+- `create`、`update`、`delete`、`getAll`、`findById` などは BaseRepository を継承して実装します。
+- 1メソッドで使用する SQL は原則1クエリとし、シンプルな構成にします。
+- 関数名は、単一レコードを返す場合は findXXX、複数の場合は getXXX とします。
+- すべての関数に、引数と戻り値の型定義を明記します。
+
+```php
+/**
+ * 指定された orderId に紐づくレコードを返却します。
+ */
+public function getByOrderId(int $orderId): Collection
+{
+    /** @var Collection<int, OrderStock> $items */
+    return $this->model
+        ->where('order_id', $orderId)
+        ->get();
+}
+```
+
+## エンティティ
+
+- エンティティは `app/Domain/Entities` に配置します。
+- リレーションは `hasOne` 及び `belongsTo` のみとし、`hasMany` はリポジトリの責務を明確にするため極力避けます。
+- 型定義は `@property` アノテーションで記述し、IDE 補完を効かせます。
+
+```php
+/**
+ * @property int $id
+ * @property string|null $name
+ * @property int|null $price
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ */
+ ```
+
+- 日付型カラムは `$casts` に `datetime` を指定し、Carbon インスタンスとして扱います。
+
+```php
+protected $casts = [
+    'import_at' => 'datetime',
+    'created_at' => 'datetime',
+    'updated_at' => 'datetime',
+];
+```
 
 ## マイグレーション
 
-- 命名規則：create_users_table, add_status_to_orders_table など。
-- 各カラムには、`comment()` を付ける。
-- `nullable()` や `default()` も積極的に活用して、意図を明確にする。
+- 命名規則：create_users_table、add_status_to_orders_table など。
+- 各カラムには `comment()` を必ず記述します。
+- `nullable()` や `default()` を積極的に活用し、意図を明示します。
 
 ```php
 $table->string('status')->comment('注文ステータス（例：pending, shipped）');
@@ -145,13 +189,12 @@ $table->string('status')->comment('注文ステータス（例：pending, shippe
 
 ## ルーティング
 
-- `Route::resource()` はルートの定義が暗黙的であり、保守性・可読性に欠けるため、明示的なルート定義をする。
+- 保守性とルートの明示性を重視するため `resource()` は使用せず、すべてのルートを明示的に定義します。
 - ネストしたルートは `Route::group()` を活用して整理します。
-- 名前付きルートを活用し、users.index や orders.show など一貫性を保ちます。
+- 名前付きルートを利用し、users.index、orders.show など一貫性を保ちます。
 
 ```php
-Route::prefix('admin')->group(function ()
-{
+Route::prefix('admin')->group(function () {
     Route::get('stock', [\App\Http\Controllers\Admin\Stock\ListController::class, 'index'])->name('admin.stock');
     Route::get('stock/create', [\App\Http\Controllers\Admin\Stock\CreateController::class, 'create'])->name('admin.stock.create');
     Route::post('stock/store', [\App\Http\Controllers\Admin\Stock\CreateController::class, 'store'])->name('admin.stock.store');
@@ -161,50 +204,44 @@ Route::prefix('admin')->group(function ()
 
 ## Blade テンプレート
 
-- `@extends`, `@section`, `@yield` を使用してレイアウトを管理します。
-- ビジネスロジックはテンプレートに記述しないようにします。
-- Blade 構文もコードと同様にスペース4つを使用してインデントします。
-
-```blade
-@if ($user->isAdmin())
-    <p>管理者としてログインしています</p>
-@endif
-```
+- `@extends`、`@section`、`@yield` を使ってレイアウトを管理します。
+- if 文などは簡易な表示制御として許容。ただしデータ加工・判断はサービスまたは ViewModel に移す。
+- インデントはスペース4つを使用し、コードと統一します。
 
 ## テスト
 
-- テストファイル名は UserControllerTest.php, OrderServiceTest.php など明確にします。
-- Laravel のテストヘルパーを積極的に活用します（actingAs, assertDatabaseHas など）。
-- テストメソッド名は動作を明確に記述します。
+- テストファイル名は UserControllerTest.php、OrderServiceTest.php のように明確にします。
+- Laravel のテストヘルパー（actingAs、assertDatabaseHas など）を積極的に活用します。
+- テストメソッド名は、動作の内容がわかるように記述します。
 
 ```php
-    public function test_更新処理(): void
-    {
-        $user = $this->createDefaultUser([
-            'name' => 'aaa',
-            'email' => 'aaa@test.com',
-        ]);
+public function test_更新処理(): void
+{
+    $user = $this->createDefaultUser([
+        'name' => 'aaa',
+        'email' => 'aaa@test.com',
+    ]);
 
-        $request = new UpdateRequest();
-        $request['name'] = 'bbb';
-        $request['email'] = 'bbb@test.com';
-        $this->service->update($user->id, $request);
+    $request = new UpdateRequest();
+    $request['name'] = 'bbb';
+    $request['email'] = 'bbb@test.com';
+    $this->service->update($user->id, $request);
 
-        $user->refresh();
-        $this->assertEquals('bbb', $user->name, '名前が変更される事');
-        $this->assertEquals('bbb@test.com', $user->email, 'メールアドレスが変更される事');
-    }
+    $user->refresh();
+    $this->assertEquals('bbb', $user->name, '名前が変更されていること');
+    $this->assertEquals('bbb@test.com', $user->email, 'メールアドレスが変更されていること');
+}
 ```
 
 ## 使用ツール
 
-- 以下のツールを導入してコーディング規約を自動でチェック・整形します。
-- PHP-CS-Fixer: PSR-12 に基づいたコード整形
-- PHPStan: 静的解析 (./vendor/bin/phpstan analyse --memory-limit=1G)
-- PHPUnit: テスト実行 (./vendor/bin/phpunit tests)
+- 以下のツールを使用して、コードの品質を自動でチェック・整形します。
+- PHPStan：静的解析（./vendor/bin/phpstan analyse --memory-limit=1G）
+- PHPUnit：テスト実行（./vendor/bin/phpunit tests）
 
 ## 備考
 
 - コードは読みやすく、保守しやすく保つことを最優先とします。
 - 複雑な構成は避け、Laravel の「シンプルで表現力豊かな構文」を尊重します。
-- 迷った場合は、Laravel公式ドキュメント を参照してください。
+- 判断に迷った場合は、Laravel 公式ドキュメントを参照してください。
+
