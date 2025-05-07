@@ -9,9 +9,10 @@
 - [基本方針](#基本方針)
 - [コードフォーマット](#コードフォーマット)
 - [命名規則](#命名規則)
-- [型定義](#型定義)
+- [型安全](#型安全)
 - [コンポーネント構成](#コンポーネント構成)
-- [PropsとState](#PropsとState)
+- [状態管理](#状態管理)
+- [Hooks](#Hooks)
 - [スタイルの管理](#スタイルの管理)
 - [テスト](#テスト)
 - [その他](#その他)
@@ -23,7 +24,7 @@
 - モダンな構文（ES6+）を使用する
 - 拡張子は、`ts` または `tsx` とする
 - テストコードが正常に動作し、ビルドが通る状態でコミットする
-- TSC による型チェック と Prettier によるフォーマッターを実施する
+- ESLint + Prettier を導入し、自動整形・静的解析を行う。
 
 ---
 
@@ -33,30 +34,51 @@
 - ステートメントの末尾にセミコロンを常に付与します。
 - 文字列にはシングルクォート（'）を統一的に利用します。
 - 配列やオブジェクトなどで最後の要素にもカンマを付けます。
-- 1行の最大文字数を100文字に制限します。
 - アロー関数の引数が1つの場合、括弧を省略します。
+- 1行の最大文字数を100文字に制限します。
+- 属性は、長い場合は改行してインデントします。
 
+```typescript jsx
+<MyComponent
+    title="タイトル"
+    description="説明文"
+    onClick={handleClick}
+/>
+```
+ 
 ---
 
 ## 命名規則
 
-| 要素             | 命名規則                                    | 例                                 |
-| -------------- |-----------------------------------------| --------------------------------- |
-| ファイル名          | パスカルケース（PascalCase）                     | `AuthCheck.tsx`                   |
-| 関数・変数名         | キャメルケース（camelCase）                      | `handleSubmit`                    |
-| カスタム Hooks     | `use` + キャメルケース                         | `useAppData`                      |
-| コンポーネント        | ディレクトリ + `/index.tsx` | `Button/index.tsx`           |
-| Storybook ファイル | ディレクトリ + `index.stories.tsx`            | `Button/index.stories.tsx`        |
-| テストファイル        | ディレクトリ + `index.test.tsx`               | `Button/index.test.tsx`           |
+| 要素             | 命名規則                                    | 例                         |
+| -------------- |-----------------------------------------|---------------------------|
+| コンポーネント        | ディレクトリ + `/index.tsx` | `Button/index.tsx`        |
+| Storybook ファイル | ディレクトリ + `index.stories.tsx`            | `Button/index.stories.tsx` |
+| テストファイル        | ディレクトリ + `index.test.tsx`               | `Button/index.test.tsx`   |
 | CSSクラス         | ディレクトリ + `index.module.scss`                    | `Button/index.module.scss` |
+| カスタム Hooks     | `use` + キャメルケース                         | `useAppData`              |
+| ファイル名          | キャメルケース（camelCase）                     | `app.ts`                  |
+| 関数・変数名         | キャメルケース（camelCase）                      | `handleSubmit`            |
 
 
 ---
 
-# 型定義
+# 型安全
 
-- 全ての関数には戻り値の型注釈を必須とする
-- 全てのPropsに対して詳細な型注釈を付加する
+- 全てのPropsに対して詳細な型注釈を付加する。
+- Props の型は type を優先する。interface は使用しない。
+- nullチェック `??` や オプショナルチェーン `?.` を活用して型安全なアクセスを行う。
+- anyの使用は原則禁止。やむを得ない場合は `// eslint-disable` を明記する。
+
+```typescript
+type Props = {
+  title: string;
+  onClick: () => void;
+};
+const Button: React.FC<Props> = ({ title, onClick }) => (
+  <button onClick={onClick}>{title}</button>
+);
+```
 
 ---
 
@@ -100,18 +122,18 @@ src/
 
 ---
 
-## PropsとState
+## 状態管理
 
-- 必要以上に状態を持たない「プレゼンテーショナルコンポーネント」を推奨
-- Props の型は interface または type で明確に定義 
-- children の扱いに注意し、型定義する
+- コンポーネント内の状態は `useState` / `useReducer` を使用する。
+- グローバルステートには Context API を使用する。
 
-```tsx
-type Props = {
-  title: string;
-  onClick?: () => void;
-  children?: React.ReactNode;
-};
+## Hooks
+
+- 独自Hooksには `use` を接頭辞として付ける。
+- Hooksは常にトップレベルで呼び出す。
+
+```typescript
+const { state, service } = useAppRoot();
 ```
 
 ---
