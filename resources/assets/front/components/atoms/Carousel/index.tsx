@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import styles from './styles.module.scss';
 import Image from '@/components/atoms/Image';
 
@@ -28,13 +28,13 @@ const Carousel = ({ images, className, autoPlay = false, autoPlayInterval = 3000
     resetAutoPlayTimer();
   };
 
-  const startAutoPlay = () => {
-    if (autoPlay) {
+  const startAutoPlay = useCallback(() => {
+    if (autoPlay && images.length > 0) {
       timerRef.current = setInterval(() => {
         setCurrentSlide(prev => (prev + 1) % images.length);
       }, autoPlayInterval);
     }
-  };
+  }, [autoPlay, autoPlayInterval, images.length]);
 
   const resetAutoPlayTimer = () => {
     if (!autoPlay) return;
@@ -52,7 +52,7 @@ const Carousel = ({ images, className, autoPlay = false, autoPlayInterval = 3000
         clearInterval(timerRef.current);
       }
     };
-  }, [autoPlay, autoPlayInterval, images.length]);
+  }, [autoPlay, autoPlayInterval, images.length, startAutoPlay]);
 
   return (
     <div className={`${styles.carouselContainer} ${className || ''}`}>

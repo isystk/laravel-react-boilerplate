@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Image from '@/components/atoms/Image';
 import { Url } from '@/constants/url';
 import useAppRoot from '@/states/useAppRoot';
+import React from 'react';
 
 export type Props = {
   id: number;
@@ -17,9 +18,9 @@ export type Props = {
 
 const StockItem = ({ id, name, imgpath, price, detail, quantity, isLike }: Props) => {
   const { state, service } = useAppRoot();
-  if (!state) return <></>;
-
   const navigate = useNavigate();
+
+  if (!state) return <></>;
 
   const handleLikeClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

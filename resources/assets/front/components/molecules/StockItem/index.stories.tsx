@@ -9,48 +9,54 @@ export default {
   tags: ['autodocs'],
 };
 
-export const Default: { render: () => null | JSX.Element } = {
+export const Default: { render: () => JSX.Element } = {
   render: () => {
-    const { state } = useAppRoot();
-    if (!state) return null;
+    const Component = () => {
+      const { state } = useAppRoot();
+      if (!state) return <></>;
 
-    const props = {
-      id: 1,
-      name: 'テスト商品',
-      imgpath: 'sample.jpg',
-      price: 1500,
-      detail: '商品の説明文が入ります。',
-      quantity: 3,
-      isLike: false,
+      const props = {
+        id: 1,
+        name: 'テスト商品',
+        imgpath: 'sample.jpg',
+        price: 1500,
+        detail: '商品の説明文が入ります。',
+        quantity: 3,
+        isLike: false,
+      };
+
+      return <StockItem {...props} />;
     };
-
-    return <StockItem {...props} />;
+    return <Component />;
   },
 };
 
-export const Logined: { render: () => null | JSX.Element } = {
+export const Logined: { render: () => JSX.Element } = {
   render: () => {
-    const { state, service } = useAppRoot();
+    const Component = () => {
+      const { state, service } = useAppRoot();
 
-    useEffect(() => {
-      service.auth.setUser({
+      useEffect(() => {
+        service.auth.setUser({
+          id: 1,
+          name: 'ユーザー名',
+          email: 'test@test.com',
+          email_verified_at: '2020-01-01 00:00:00',
+        } as User);
+      }, [service]);
+
+      const props = {
         id: 1,
-        name: 'ユーザー名',
-        email: 'test@test.com',
-        email_verified_at: '2020-01-01 00:00:00',
-      } as User);
-    }, [state]);
+        name: 'テスト商品',
+        imgpath: 'sample.jpg',
+        price: 1500,
+        detail: '商品の説明文が入ります。',
+        quantity: 3,
+        isLike: false,
+      };
 
-    const props = {
-      id: 1,
-      name: 'テスト商品',
-      imgpath: 'sample.jpg',
-      price: 1500,
-      detail: '商品の説明文が入ります。',
-      quantity: 3,
-      isLike: false,
+      return state && <StockItem {...props} />;
     };
-
-    return state && <StockItem {...props} />;
+    return <Component />;
   },
 };

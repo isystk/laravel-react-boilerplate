@@ -18,6 +18,6 @@ export default {
   ],
 } as Meta<typeof CSRFToken>;
 
-export const Default: { render: () => null | JSX.Element } = {
+export const Default: { render: () => JSX.Element } = {
   render: () => <CSRFToken />,
 };

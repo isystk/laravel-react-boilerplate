@@ -1,6 +1,5 @@
 import ErrorPage from './index';
 import { JSX } from 'react';
-import useAppRoot from '@/states/useAppRoot';
 
 export default {
   title: 'Components/Organisms/ErrorPage',
@@ -8,18 +7,10 @@ export default {
   tags: ['autodocs'],
 };
 
-export const Default500: { render: () => null | JSX.Element } = {
-  render: () => {
-    const { state } = useAppRoot();
-    if (!state) return null;
-    return <ErrorPage />;
-  },
+export const Default500: { render: () => JSX.Element } = {
+  render: () => <ErrorPage />,
 };
 
-export const NotFound404: { render: () => null | JSX.Element } = {
-  render: () => {
-    const { state } = useAppRoot();
-    if (!state) return null;
-    return <ErrorPage status={404} />;
-  },
+export const NotFound404: { render: () => JSX.Element } = {
+  render: () => <ErrorPage status={404} />,
 };

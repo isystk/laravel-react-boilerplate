@@ -7,92 +7,53 @@
 ## 目次
 
 - [基本方針](#基本方針)
-- [ファイル構成](#ファイル構成)
-- [名前空間とクラス名](#名前空間とクラス名)
+- [命名規則](#命名規則)
 - [コーディングスタイル](#コーディングスタイル)
-- [リクエスト](#リクエスト)
 - [コントローラ](#コントローラ)
 - [サービス](#サービス)
 - [リポジトリ](#リポジトリ)
 - [エンティティ](#エンティティ)
+- [フォームリクエスト](#フォームリクエスト)
 - [マイグレーション](#マイグレーション)
 - [ルーティング](#ルーティング)
 - [Blade テンプレート](#blade-テンプレート)
-- [テスト](#テスト)
+- [テストコード](#テストコード)
 - [使用ツール](#使用ツール)
 
 ---
 
 ## 基本方針
 
-- PHP タグは `<?php` を使用し、**閉じタグは記述しません**。
-- インデントは **スペース4つ**とし、タブは使用しません。
-- クラス名：`StudlyCase`
-- メソッド・変数名：`camelCase`
-- 定数：`UPPER_SNAKE_CASE`
 - [PSR-1](https://www.php-fig.org/psr/psr-1/) および [PSR-12](https://www.php-fig.org/psr/psr-12/) に準拠します。
-
----
-
-## ファイル構成
-
+- PHP タグは `<?php` を使用し、**閉じタグは記述しません**。
 - Laravel 標準のディレクトリ構成に従います。
-- ビジネスロジックは `routes/` に記述せず、コントローラやサービス層へ分離します。
-- ファイルはその役割に応じて、適切なディレクトリ（例：`Http/Controllers`, `Entities` など）に配置します。
 
 ---
 
-## 名前空間とクラス名
+## 命名規則
 
-```php
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-
-class UserController extends Controller
-{
-    //
-}
-```
-
-- 名前空間は App\〜 を基準とし、Laravel の標準構成に従います。
-- クラス名は単数形で、役割が明確に分かる名前にします。
+- クラス名は、`UpperCamelCase` で記載します。
+- 変数名・メソッド名は、`lowerCamelCase` で記載します。
+- プロパティ名は、`lower_snake_case` で記載します。
+- 定数は、`UPPER_SNAKE_CASE` で記載します。
 
 ---
 
 ## コーディングスタイル
 
-可能な限り型宣言を使用します。
-
-```php
-public function store(Request $request): JsonResponse
-```
-
-- データベースのカラム名は `snake_case`、コード上の変数は `camelCase` を用います。
-- 比較には、厳密な比較演算子 `===` / `!==` を使用します。
+- インデントは **スペース4つ**とし、タブは使用しません。
+- 可能な限り型宣言（タイプヒント、リターンヒント、 phpDoc）を使用します。
+- 厳密な比較を行う（`==`, `!=` などの曖昧な比較を使わない）
 - 制御構文では、1行でも必ず波括弧 `{}` を使用します（省略禁止）。
+- `else if` ではなく `elseif` を使用する（スペースで空けない）。
+- クラスやメソッドの `{}` は改行で独立させます。（但し、引数に改行が含まれる場合は一行で書くこと）
+- 三項演算子のネストは禁止
+- ヨーダ記法（比較の際にチェック値を左に置く）
+- 複数行配列の最後にカンマを置く
+- 配列内は改行させる
 
 ---
 
-## リクエスト
-
-- バリデーションは可能な限り Request クラスに定義し、コントローラには記述しません。
-- バリデーションルールは配列形式で記述し、`string` / `integer` など型を明示します。
-- ルールの記述順は、型指定 → 条件 → DB 関連 の順とします。
-- `nullable` と `required` を同時に使用しないようにします。
-
-```php
-public function rules(): array
-{
-    $maxlength = config('const.maxlength.stocks');
-    return [
-        'rate' => ['required', 'numeric', 'min:0', 'max:100'],
-        'user_id' => ['required', 'integer', 'exists:users,id'],
-    ];
-}
-```
-
----
 
 ## コントローラ
 
@@ -104,13 +65,19 @@ public function rules(): array
 - サービスクラスのインスタンス生成には app() を使用します。
 
 ```php
+/**
+ * 商品登録処理
+ */
 public function store(StoreRequest $request): RedirectResponse
 {
+    $dto = new StoreRequestDto($request);
+    
+    /** @var StoreService $service */
+    $service = app(StoreService::class);
+    
     DB::beginTransaction();
     try {
-        /** @var StoreService $service */
-        $service = app(StoreService::class);
-        $service->createStock($request);
+        $service->createStock($dto);
         DB::commit();
     } catch (Throwable $e) {
         DB::rollBack();
@@ -128,6 +95,31 @@ public function store(StoreRequest $request): RedirectResponse
 - DB へのアクセスは Eloquent を直接使用せず、リポジトリを介します。
 - リポジトリの注入には、コンストラクタインジェクションを使用します。
 
+```php
+<?php
+namespace App\Services\Stock;
+
+class StoreService extends BaseService
+{
+		protected StockRepository $stockRepository;
+
+    public function __construct(StockRepository $stockRepository) {
+        $this->stockRepository= $stockRepository;
+    }
+
+    /**
+     * 商品を登録します。
+     */
+    public function createStock(StoreRequestDto $dto): void
+    {
+        $items = [];
+        $items['name'] = $dto->name;
+        $items['price'] = $dto->price;
+        $this->stockRepository->store($items);
+    }
+}
+```
+
 ---
 
 ## リポジトリ
@@ -139,23 +131,35 @@ public function store(StoreRequest $request): RedirectResponse
 - すべての関数に、引数と戻り値の型定義を明記します。
 
 ```php
-/**
- * 指定された orderId に紐づくレコードを返却します。
- */
-public function getByOrderId(int $orderId): Collection
+class StockEloquentRepository extends BaseEloquentRepository implements StockRepository
 {
-    /** @var Collection<int, OrderStock> $items */
-    return $this->model
-        ->where('order_id', $orderId)
-        ->get();
+
+    protected function model(): string
+    {
+        return Stock::class;
+    }
+    
+		/**
+		 * 指定された code に紐づくレコードを返却します。
+		 */
+		public function getByCode(string $code): Collection
+		{
+		    /** @var Collection<int, Stock> */
+		    return $this->model
+		        ->where('code', $code)
+		        ->get();
+		}
 }
 ```
+
+---
 
 ## エンティティ
 
 - エンティティは `app/Domain/Entities` に配置します。
 - リレーションは `hasOne` 及び `belongsTo` のみとし、`hasMany` はリポジトリの責務を明確にするため極力避けます。
 - 型定義は `@property` アノテーションで記述し、IDE 補完を効かせます。
+- 日付型カラムは `$casts` に `datetime` を指定し、Carbon インスタンスとして扱います。
 
 ```php
 /**
@@ -165,27 +169,168 @@ public function getByOrderId(int $orderId): Collection
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
- ```
+class Stock extends Model
+{
+    /** @phpstan-use HasFactory<StockFactory> */
+    use HasFactory;
 
-- 日付型カラムは `$casts` に `datetime` を指定し、Carbon インスタンスとして扱います。
+    protected $table = 'stocks';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $fillable = [
+        'name',
+        'detail',
+        'price',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
+    /**
+     * @return BelongsTo<Office, $this>
+     */
+    public function office(): BelongsTo
+    {
+        return $this->belongsTo(Office::class);
+    }
+}
+```
+
+---
+
+## フォームリクエスト
+
+- 入力チェックは可能な限り Request クラスに定義します。
+- バリデーションルールは配列形式で記述します。
+- `string` / `integer` など型を明示します。
+- ルールの記述順は、型指定 → 条件 → DB 関連 の順とします。
+- `nullable` と `required` を同時に使用しないようにします。
 
 ```php
-protected $casts = [
-    'import_at' => 'datetime',
-    'created_at' => 'datetime',
-    'updated_at' => 'datetime',
-];
+class StoreRequest extends FormRequest
+{
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string>
+     */
+    public function rules(): array
+    {
+        return [
+            'name' => [
+                'required',
+                'string',
+            ],
+            'price' => [
+                'required',
+                'integer',
+                'min:1',
+                'max:99999',
+            ],
+            'sale_limit_at' => [
+                'required',
+                'date_format:Y/m/d',
+                'after_or_equal:today',
+            ],
+
+        ];
+    }
+
+    /**
+     * Add after hook to the validator.
+     */
+    public function withValidator(Validator $validator): void
+    {
+        /** @var Office $office */
+        $office = $this->office;
+
+        $validator->after(function ($validator) use($office) {
+            if ($office->isSalesSuspended()) {
+                $validator->errors()->add('office_id', '該当の事業所は、営業停止中の為、商品の登録ができません。');
+            }
+        });
+    }
+
+    /**
+     * @return array<string>
+     */
+    public function attributes(): array
+    {
+        return [
+            'name' => '商品名',
+            'price' => '価格',
+            'sale_limit_at' => 'セール終了日時',
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string>
+     */
+    public function messages(): array
+    {
+        return [
+            '*.after_or_equal' => ':attributeは、当日以降を指定してください。',
+        ];
+    }
+
+}
 ```
+
+---
 
 ## マイグレーション
 
 - 命名規則：create_users_table、add_status_to_orders_table など。
 - 各カラムには `comment()` を必ず記述します。
 - `nullable()` や `default()` を積極的に活用し、意図を明示します。
+- `master` 及び `develop` ブランチに反映後は修正せずに、別のマイグレーションファイルを追加します。
+- テーブル名は複数形で命名する。
 
 ```php
-$table->string('status')->comment('注文ステータス（例：pending, shipped）');
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up(): void
+    {
+        Schema::create('stocks', static function (Blueprint $table) {
+            $table->bigIncrements('id')->comment('商品ID');
+            $table->string('name', '100')->comment('商品名');
+            $table->integer('price')->default(0)->comment('価格');
+            $table->timestamps();
+        });
+        DB::statement("ALTER TABLE stocks COMMENT '商品'");
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('stocks');
+    }
+};
 ```
+
+---
 
 ## ルーティング
 
@@ -202,17 +347,22 @@ Route::prefix('admin')->group(function () {
 });
 ```
 
+---
+
 ## Blade テンプレート
 
 - `@extends`、`@section`、`@yield` を使ってレイアウトを管理します。
 - if 文などは簡易な表示制御として許容。ただしデータ加工・判断はサービスまたは ViewModel に移す。
 - インデントはスペース4つを使用し、コードと統一します。
 
-## テスト
+---
+
+## テストコード
 
 - テストファイル名は UserControllerTest.php、OrderServiceTest.php のように明確にします。
 - Laravel のテストヘルパー（actingAs、assertDatabaseHas など）を積極的に活用します。
 - テストメソッド名は、動作の内容がわかるように記述します。
+- `Storage:fake()`、`Mail::fake()` などのFacadeを積極的に利用します。
 
 ```php
 public function test_更新処理(): void
@@ -233,11 +383,16 @@ public function test_更新処理(): void
 }
 ```
 
+---
+
 ## 使用ツール
 
 - 以下のツールを使用して、コードの品質を自動でチェック・整形します。
 - PHPStan：静的解析（./vendor/bin/phpstan analyse --memory-limit=1G）
 - PHPUnit：テスト実行（./vendor/bin/phpunit tests）
+- PHP Intelephense（VSCodeの拡張機能）：コード整形（設定画面からFormat On Saveを有効にします）
+
+---
 
 ## 備考
 

@@ -9,28 +9,30 @@ export default {
   tags: ['autodocs'],
 };
 
-export const Default: { render: () => null | JSX.Element } = {
-  render: () => {
-    const { state } = useAppRoot();
-    if (!state) return null;
-
-    return <Header />;
-  },
+export const Default: { render: () => JSX.Element } = {
+  render: () => <Header />,
 };
 
-export const Login: { render: () => null | JSX.Element } = {
+export const Login: { render: () => JSX.Element } = {
   render: () => {
-    const { state, service } = useAppRoot();
+    const Component = () => {
+      const { state, service } = useAppRoot();
 
-    useEffect(() => {
-      service.auth.setUser({
-        id: 1,
-        name: 'ユーザー名',
-        email: 'test@test.com',
-        email_verified_at: '2020-01-01 00:00:00',
-      } as User);
-    }, [state]);
+      useEffect(() => {
+        service.auth.setUser({
+          id: 1,
+          name: 'ユーザー名',
+          email: 'test@test.com',
+          email_verified_at: '2020-01-01 00:00:00',
+        } as User);
+      }, [service]);
 
-    return state && <Header />;
+      if (!state) {
+        return <></>;
+      }
+
+      return <Header />;
+    };
+    return <Component />;
   },
 };

@@ -1,6 +1,5 @@
 import CartItem from './index';
 import { JSX } from 'react';
-import useAppRoot from '@/states/useAppRoot';
 
 export default {
   title: 'Components/Molecules/CartItem',
@@ -8,10 +7,8 @@ export default {
   tags: ['autodocs'],
 };
 
-export const Default: { render: () => null | JSX.Element } = {
+export const Default: { render: () => JSX.Element } = {
   render: () => {
-    const { state } = useAppRoot();
-    if (!state) return null;
     const props = {
       id: 1,
       name: 'テスト商品',

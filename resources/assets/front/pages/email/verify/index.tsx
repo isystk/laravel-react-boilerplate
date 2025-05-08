@@ -5,6 +5,7 @@ import useAppRoot from '@/states/useAppRoot';
 
 const Verify = () => {
   const { state } = useAppRoot();
+
   if (!state) return <></>;
 
   return (

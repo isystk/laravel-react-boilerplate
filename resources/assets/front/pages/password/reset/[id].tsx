@@ -8,14 +8,14 @@ import { useParams } from 'react-router-dom';
 
 const ResetForm = () => {
   const { state } = useAppRoot();
-  if (!state) return <></>;
-
   const { token } = useParams<{ token: string }>();
   const [email, setEmail] = useState<string>('');
 
   const handleSetEmail = (value: string) => {
     setEmail(value);
   };
+
+  if (!state) return <></>;
 
   return (
     <BasicLayout title="パスワード変更">

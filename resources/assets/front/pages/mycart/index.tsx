@@ -11,15 +11,15 @@ const stripePromise = loadStripe(Env.stripeKey);
 
 const MyCart = () => {
   const { state, service } = useAppRoot();
-  if (!state) return null;
-
-  const { name } = state.auth;
-  const { data, message, count, sum } = state.cart;
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   useEffect(() => {
     service.cart.readCarts();
-  }, []);
+  }, [service]);
+
+  if (!state) return <></>;
+  const { name } = state.auth;
+  const { data, message, count, sum } = state.cart;
 
   return (
     <BasicLayout title="マイカート">

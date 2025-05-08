@@ -13,7 +13,7 @@ const SessionAlert = ({ target, className }: Props) => {
     if (!message && laravelMessage) {
       setMessage(laravelMessage);
     }
-  }, []);
+  }, [target, message]);
 
   if (!message) {
     return <></>;

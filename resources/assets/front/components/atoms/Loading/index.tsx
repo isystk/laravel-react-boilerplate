@@ -4,8 +4,8 @@ import Portal from '@/components/interactions/Portal';
 
 const Loading = () => {
   const { state } = useAppRoot();
-  if (!state) return null;
 
+  if (!state) return <></>;
   const { isLoading } = state;
 
   return (
