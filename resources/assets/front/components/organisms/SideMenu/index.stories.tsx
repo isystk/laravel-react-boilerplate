@@ -10,6 +10,7 @@ export default {
   parameters: {
     viewport: {
       viewports: MINIMAL_VIEWPORTS,
+      defaultViewport: 'mobile1',
     },
   },
 };
