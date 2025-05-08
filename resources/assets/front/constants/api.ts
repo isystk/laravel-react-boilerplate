@@ -28,7 +28,7 @@ export const Api = {
   /** 商品一覧データ取得 */
   SHOPS: getBffUrl('/shops'),
   /** マイカートデータ取得 */
-  MYCARTS: getBffUrl('/mycart'),
+  MYCART: getBffUrl('/mycart'),
   /** カートに商品を追加する */
   ADD_MYCART: getBffUrl('/addMycart'),
   /** カートから商品を削除する */

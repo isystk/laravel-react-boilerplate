@@ -50,7 +50,7 @@ const Router = ({ user }: Props) => {
       <Route path={Url.HOME} element={<AuthCheck user={user} component={<Home />} />} />
       <Route path={Url.MYCART} element={<AuthCheck user={user} component={<MyCart />} />} />
       <Route
-        path={Url.PAT_COMPLETE}
+        path={Url.PAY_COMPLETE}
         element={<AuthCheck user={user} component={<ShopComplete />} />}
       />
       {/* ★ログインユーザー専用ここまで */}

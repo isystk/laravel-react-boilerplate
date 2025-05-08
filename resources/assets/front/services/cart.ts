@@ -14,7 +14,7 @@ export default class CartService {
   async readCarts() {
     this.main.showLoading();
     try {
-      const response = await fetch(Api.MYCARTS, {
+      const response = await fetch(Api.MYCART, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
