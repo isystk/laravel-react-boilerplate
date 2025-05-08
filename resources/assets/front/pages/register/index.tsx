@@ -6,10 +6,10 @@ import TextInput from '@/components/atoms/TextInput';
 
 const RegisterForm = () => {
   const { state } = useAppRoot();
-  if (!state) return <></>;
-
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
+
+  if (!state) return <></>;
   return (
     <BasicLayout title="会員登録">
       <div className="bg-white p-6 rounded-md shadow-md ">

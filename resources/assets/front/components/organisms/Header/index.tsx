@@ -11,11 +11,11 @@ import cartImage from '@/assets/images/cart.png';
 
 const Header = () => {
   const { state } = useAppRoot();
-  if (!state) return <></>;
+  const navigate = useNavigate();
 
+  if (!state) return <></>;
   const { isLogined, name } = state.auth;
 
-  const navigate = useNavigate();
   return (
     <header className={`${styles.header} shadow-sm`}>
       <nav className="flex flex-wrap items-center justify-between bg-white px-4 py-3">

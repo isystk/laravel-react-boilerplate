@@ -7,6 +7,6 @@ export default {
   tags: ['autodocs'],
 };
 
-export const Default: { render: () => null | JSX.Element } = {
+export const Default: { render: () => JSX.Element } = {
   render: () => <Footer />,
 };

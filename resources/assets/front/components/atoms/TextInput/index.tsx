@@ -37,7 +37,7 @@ const TextInput = (props: Props) => {
       });
       delete window.laravelErrors[props.identity];
     }
-  }, []);
+  }, [props.identity]);
 
   useEffect(() => {
     if (props.error) {

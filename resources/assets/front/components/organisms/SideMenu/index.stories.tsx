@@ -14,19 +14,21 @@ export default {
   },
 };
 
-export const Default: { render: () => null | JSX.Element } = {
+export const Default: { render: () => JSX.Element } = {
   render: () => {
-    const { state } = useAppRoot();
-    if (!state) return null;
-
-    return (
-      <SideMenu
-        text="メニュー"
-        items={[
-          { text: 'ホーム', onClick: () => console.log('ホーム') },
-          { text: 'プロフィール', onClick: () => console.log('プロフィール') },
-        ]}
-      />
-    );
+    const Component = () => {
+      const { state } = useAppRoot();
+      if (!state) return <></>;
+      return (
+        <SideMenu
+          text="メニュー"
+          items={[
+            { text: 'ホーム', onClick: () => console.log('ホーム') },
+            { text: 'プロフィール', onClick: () => console.log('プロフィール') },
+          ]}
+        />
+      );
+    };
+    return <Component />;
   },
 };

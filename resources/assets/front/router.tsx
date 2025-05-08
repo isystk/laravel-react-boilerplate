@@ -33,7 +33,7 @@ const Router = ({ user }: Props) => {
       // 定数のセット
       await service.const.readConsts();
     })();
-  }, [state]);
+  }, [state, service, user]);
 
   if (!state) return <></>;
 

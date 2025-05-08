@@ -100,6 +100,7 @@ case ${1} in
               $DOCKER_COMPOSE exec app npm run build-storybook
           ;;
           test)
+              $DOCKER_COMPOSE exec app npm run lint
               $DOCKER_COMPOSE exec app npm run prettier
               $DOCKER_COMPOSE exec app npm run ts-check
               $DOCKER_COMPOSE exec app npm run test

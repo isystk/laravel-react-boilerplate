@@ -6,7 +6,7 @@
     "dev": "vite --host",
     "test": "vitest run",
     "ts-check": "tsc --noEmit",
-    "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "lint": "npx eslint resources/assets/front --ext .js,.jsx,.ts,.tsx --fix",
     "prettier": "prettier --write \"resources/assets/**/*.{js,jsx,ts,tsx}\"",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"

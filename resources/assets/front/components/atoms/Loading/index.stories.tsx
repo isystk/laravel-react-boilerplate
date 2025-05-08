@@ -9,32 +9,38 @@ export default {
   tags: ['autodocs'],
 } as Meta<typeof Loading>;
 
-export const Default: { render: () => null | JSX.Element } = {
+export const Default: { render: () => JSX.Element } = {
   render: () => {
-    const { state, service } = useAppRoot();
-    useEffect(() => {
-      if (state && service) {
-        service.showLoading();
-      }
-    }, [state, service]);
-    if (!state) return null;
-    return <Loading />;
+    const Component = () => {
+      const { state, service } = useAppRoot();
+      useEffect(() => {
+        if (state) {
+          service.showLoading();
+        }
+      }, [state, service]);
+      if (!state) return <></>;
+      return <Loading />;
+    };
+    return <Component />;
   },
 };
 
-export const HideLoading: { render: () => null | JSX.Element } = {
+export const HideLoading: { render: () => JSX.Element } = {
   render: () => {
-    const { state, service } = useAppRoot();
-    useEffect(() => {
-      if (state && service) {
-        service.showLoading();
-        setTimeout(() => {
-          // 1秒後に消す
-          service.hideLoading();
-        }, 1000);
-      }
-    }, [state, service]);
-    if (!state) return null;
-    return <Loading />;
+    const Component = () => {
+      const { state, service } = useAppRoot();
+      useEffect(() => {
+        if (state) {
+          service.showLoading();
+          setTimeout(() => {
+            // 1秒後に消す
+            service.hideLoading();
+          }, 1000);
+        }
+      }, [state, service]);
+      if (!state) return <></>;
+      return <Loading />;
+    };
+    return <Component />;
   },
 };

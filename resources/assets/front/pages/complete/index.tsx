@@ -5,8 +5,8 @@ import useAppRoot from '@/states/useAppRoot';
 
 const ShopComplete = () => {
   const { state } = useAppRoot();
-  if (!state) return <></>;
 
+  if (!state) return <></>;
   const auth = state.auth;
 
   return (
