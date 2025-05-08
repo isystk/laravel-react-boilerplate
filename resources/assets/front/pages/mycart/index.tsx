@@ -7,7 +7,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import PaymentModal from '@/components/molecules/PaymentModal';
 import Env from '@/constants/env';
 
-const stripePromise = loadStripe(Env.stripeKey);
+const stripePromise = loadStripe(Env.STRIPE_KEY);
 
 const MyCart = () => {
   const { state, service } = useAppRoot();

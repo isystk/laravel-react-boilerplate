@@ -27,7 +27,7 @@ const ErrorPage = ({ status = 500 }: Props) => {
         <div className={styles.container}>
           <h1 className={styles.heading}>{title}</h1>
           <p className={styles.text}>{text}</p>
-          <Link to={Url.top} className={styles.link}>
+          <Link to={Url.TOP} className={styles.link}>
             ホームに戻る
           </Link>
         </div>

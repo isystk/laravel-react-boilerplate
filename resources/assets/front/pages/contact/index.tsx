@@ -25,7 +25,7 @@ const ContactCreate = () => {
     // 入力したお問い合わせ内容を送信する。
     await service.contact.registContact(values);
     // 完了画面を表示する
-    navigate(Url.contactComplete);
+    navigate(Url.CONTACT_COMPLETE);
   };
 
   const initialValues = {

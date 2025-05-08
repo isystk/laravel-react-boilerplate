@@ -13,7 +13,7 @@ export type Auth = {
   userId?: number | null;
   name: string | null;
   email?: string;
-  email_verified_at?: string | null;
+  emailVerifiedAt?: string | null;
   remember?: string;
 };
 
@@ -21,7 +21,7 @@ const initialState: Auth = {
   userId: null,
   name: null,
   email: '',
-  email_verified_at: '',
+  emailVerifiedAt: '',
   remember: '',
 };
 
@@ -29,14 +29,14 @@ export default class AuthState {
   userId?: number | null;
   name: string | null;
   email?: string;
-  email_verified_at?: string | null;
+  emailVerifiedAt?: string | null;
   remember?: string;
 
   constructor() {
     this.userId = initialState.userId;
     this.name = initialState.name;
     this.email = initialState.email;
-    this.email_verified_at = initialState.email_verified_at;
+    this.emailVerifiedAt = initialState.emailVerifiedAt;
     this.remember = initialState.remember;
   }
 

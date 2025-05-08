@@ -15,12 +15,12 @@ const Logo = ({ hasLink = true }: Props) => {
 
 const LinkLogo = () => {
   return (
-    <Link to={Url.top} className={`flex items-center`}>
+    <Link to={Url.TOP} className={`flex items-center`}>
       <Image
         src={logoImage as string}
         width={200}
         height={60}
-        alt={Env.appName}
+        alt={Env.APP_NAME}
         className={styles.logoImage}
       />
     </Link>
@@ -33,7 +33,7 @@ const NoLinkLogo = () => {
       src={logoImage as string}
       width={200}
       height={60}
-      alt={Env.appName}
+      alt={Env.APP_NAME}
       className={styles.logoImage}
     />
   );

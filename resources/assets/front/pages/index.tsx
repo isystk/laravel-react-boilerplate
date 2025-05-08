@@ -87,7 +87,7 @@ const Top = () => {
               itemsCountPerPage={6}
               pageRangeDisplayed={3}
               onChange={pageNo => {
-                navigate(`${Url.top}?page=${pageNo}`);
+                navigate(`${Url.TOP}?page=${pageNo}`);
               }}
               className="mt-5 md:mt-10 flex justify-center"
             />
