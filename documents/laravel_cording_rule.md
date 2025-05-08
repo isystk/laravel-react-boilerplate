@@ -9,6 +9,7 @@
 - [基本方針](#基本方針)
 - [命名規則](#命名規則)
 - [コーディングスタイル](#コーディングスタイル)
+- [アーキテクチャ](#アーキテクチャ)
 - [コントローラ](#コントローラ)
 - [サービス](#サービス)
 - [リポジトリ](#リポジトリ)
@@ -54,6 +55,40 @@
 
 ---
 
+## アーキテクチャ
+
+```mermaid
+zenuml
+    title Laravel アーキテクチャ
+    @Actor User #FFEBE6
+    @Boundary Route #ABB8C3
+    StockRequest #DDEBF7
+    StockController #0747A6
+    StockService #E3FCEF
+    StockRepository #F5F5DC
+    @Database MySQL #0747A6
+
+    @Starter(User)
+    // `GET /stock`
+    Route.call(payload) {
+        StockRequest.validate(payload) {
+            if (!valid) {
+                return Route.response("validation error")
+            }
+            stocks = StockController.get(payload) {
+                stocks = StockService.get(payload) {
+                    stocks = StockRepository.get(payload) {
+                        stocks = MySQL.query(payload)
+                    }
+                }
+            }
+            return Route.response(stocks)
+        }
+        return response
+    }
+```
+
+---
 
 ## コントローラ
 
