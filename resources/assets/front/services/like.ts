@@ -14,7 +14,7 @@ export default class LikeService {
   async readLikesAsync() {
     this.main.showLoading();
     try {
-      const response = await fetch(Api.likes);
+      const response = await fetch(Api.LIKES);
       const { likes } = await response.json();
       this.like.stockIds = likes.data;
     } catch (e) {
@@ -27,7 +27,7 @@ export default class LikeService {
   async addLikeAsync(id: number) {
     this.main.showLoading();
     try {
-      const response = await fetch(Api.likesStore, {
+      const response = await fetch(Api.LIKES_STORE, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ export default class LikeService {
   async removeLikeAsync(id: number) {
     this.main.showLoading();
     try {
-      const response = await fetch(Api.likesDestroy + '/' + id, {
+      const response = await fetch(Api.LIKES_DESTROY + '/' + id, {
         method: 'POST',
       });
       const { result } = await response.json();

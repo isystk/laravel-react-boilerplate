@@ -12,7 +12,7 @@ export default class ContactService {
     this.main.showLoading();
     try {
       // 入力したお問い合わせ内容を送信する。
-      const response = await fetch(Api.contactStore, {
+      const response = await fetch(Api.CONTACT_STORE, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

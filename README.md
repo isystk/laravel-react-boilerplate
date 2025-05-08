@@ -23,14 +23,14 @@ Laravel ＆ React.js の学習用サンプルアプリケーションです。
 
 ### 利用している技術
 
-#### ■ インフラ
+#### インフラ
 - Apache 2.4.46　・・・　WebサーバーとしてApacheを採用しました。自己証明書を設定済みなので開発環境でSSLとして動作可能です。
 - MySQL 8　・・・　DBサーバーにはMySQLを採用しました。データファイルや設定ファイル、 ログなどはコンテナの外に出して 開発時に参照出来るようにしています。
 - adminer　・・・　起動したMySQLのデータを参照・編集するためのツールです。
 - mailpit 　・・・　ダミーのSMTPサーバーです。送信したメールをブラウザで閲覧することが可能です。実際にはメールは送信されないので開発時の誤送信してしまう心配がありません。
 - Minio 　・・・　S3に完全互換性のあるオブジェクトストレージです。アップロードした画像の保存先として利用しています。
 
-#### ■ 使用しているライブラリ
+#### 使用しているライブラリ
 
 - Laravel 12
 - React 19
@@ -40,7 +40,7 @@ Laravel ＆ React.js の学習用サンプルアプリケーションです。
 
 ## 🌐 Demo
 
-#### ■ フロント画面（React）
+#### フロント画面（React）
 
 https://laraec.isystk.com/
 
@@ -94,7 +94,7 @@ graph LR
   end
 ```
 
-#### ■ 管理画面（Bootstrap）
+#### 管理画面（Bootstrap）
 
 https://laraec.isystk.com/admin/
 
@@ -110,7 +110,7 @@ https://laraec.isystk.com/admin/
 - PDFダウンロード
 - 画像アップロード
 
-#### ■ バッチ処理
+#### バッチ処理
 
 - 月別売上金額出力バッチ
 - S3商品画像アップロードバッチ
@@ -216,13 +216,61 @@ $ update-locale LANG=ja_JP.UTF8
 $ apt -y install manpages-ja manpages-ja-dev
 ```
 
-### Dockerを利用できるようにする
+### Dockerを利用する為の準備
 
 ```
 # DockerとDocker Composeをインストールする。
 $ apt install -y docker-ce docker-compose
 $ service docker start
 ```
+
+### Dockerを起動する
+
+```
+# 初期化処理（初回のみ、環境をリセットしたい場合に実行する）
+$ ./run.sh init
+
+# Dockerを起動して各サーバーを構築する
+$ ./run.sh start
+
+# サーバーが立ち上がるまで少し待ちます。(初回は5分程度)
+
+# MySQLにログインしてみる
+$ ./run.sh mysql login
+
+# Webサーバーにログインしてみる
+$ ./run.sh app login
+
+# 起動に問題がある場合は、以下のコマンドで状況を確認してみてください。
+$ ./run.sh st
+$ ./run.sh logs
+```
+
+### 動作を確認する
+```
+# Webサーバーにログインする（composer や npm などのコマンドは基本的にここで行う）
+$ ./run.sh app login
+
+# Larastan を実行してコードをチェックする
+> ./vendor/bin/phpstan analyse --memory-limit=1G
+
+# PHPUnit でテストコードを実行する
+> ./vendor/bin/phpunit tests
+
+# React のテストコードを実行する
+> npm run test
+
+# テスト用の商品画像をS3（Minio）にアップロード
+> php artisan s3upload
+```
+
+ブラウザでアクセス（フロント）
+
+https://localhost/
+
+ブラウザでアクセス（管理画面）
+
+https://localhost/admin/
 
 ## 🖊️ Docker 操作用シェルスクリプトの使い方
 
@@ -249,59 +297,12 @@ Options:
   --help, -h               ヘルプを表示します。
 ```
 
-## 💬 Dockerの起動
-
-各種デーモンを起動する
-```
-# 初期化処理（初回のみ、環境をリセットしたい場合に実行する）
-$ ./run.sh init
-
-# Dockerでローカル環境に各種デーモンを構築・起動する
-$ ./run.sh start
-
-# データベースとWebサーバーが立ち上がるまで少し待ちます。(初回は5分程度)
-
-# MySQLにログインしてみる
-$ ./run.sh mysql login
-
-# Webサーバーにログインしてみる
-$ ./run.sh app login
-
-# 起動に問題がある場合は、以下のコマンドで状況を確認してみてください。
-$ ./run.sh st
-$ ./run.sh logs
-```
-
-動作確認
-```
-# Webサーバーにログインする（composer や npm などのコマンドは基本的にここで行う）
-$ ./run.sh app login
-
-# Larastan を実行してコードをチェックする
-> ./vendor/bin/phpstan analyse --memory-limit=1G
-
-# PHPUnit でテストコードを実行する
-> ./vendor/bin/phpunit tests
-
-# Reactコンポーネントのテストコードを実行する
-> npm run test
-
-# テスト用の商品画像をS3（Minio）にアップロード
-> php artisan s3upload
-```
-
-ブラウザでアクセス（フロント）
-
-https://localhost/
-
-ブラウザでアクセス（管理画面）
-
-https://localhost/admin/
-
 サーバーを停止する場合
 ```
 $ ./run.sh stop
 ```
+
+## 🎧 利用可能なサーバー
 
 ### mailpit 
 ダミーのメールサーバーです。実際にはメールは送信されず、送信されたメールはブラウザで閲覧できます。
@@ -339,7 +340,7 @@ http://localhost:6006/
 
 ![storybook](./documents/storybook.png "storybook")
 
-## 🎨 ドキュメント
+## 📖 ドキュメント
 
 | 種類         | リンク                                                                                |
 |:-----------|:-----------------------------------------------------------------------------------|

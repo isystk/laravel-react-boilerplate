@@ -36,7 +36,7 @@ const PaymentModal = ({ isOpen, handleClose, amount }: Props) => {
     // 決算処理を行う
     await service.cart.payment(stripe, elements, amount, username);
     // 完了画面を表示する
-    navigate(Url.payComplete);
+    navigate(Url.PAT_COMPLETE);
   };
 
   return (

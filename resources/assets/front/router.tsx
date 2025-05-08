@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import AuthCheck from '@/components/AuthCheck';
+import AuthCheck from '@/components/interactions/AuthCheck';
 import ContactComplete from '@/pages/contact/complete';
 import ContactCreate from '@/pages/contact';
 import EMailForm from '@/pages/password/reset';
@@ -25,34 +25,32 @@ const Router = ({ user }: Props) => {
   const { state, service } = useAppRoot();
 
   useEffect(() => {
-    if (!state) return;
-    // セッションのセット
-    service.auth.setUser(user);
-
     (async () => {
+      // セッションのセット
+      await service.auth.setUser(user);
       // 定数のセット
       await service.const.readConsts();
     })();
-  }, [state, service, user]);
+  }, [service, user]);
 
   if (!state) return <></>;
 
   return (
     <Routes>
       <Route index element={<Top />} />
-      <Route path={Url.login} element={<LoginForm />} />
-      <Route path={Url.register} element={<RegisterForm />} />
-      <Route path={Url.passwordReset} element={<EMailForm />} />
-      <Route path={`${Url.passwordReset}/:token`} element={<ResetForm />} />
-      <Route path={Url.emailVerify} element={<Verify />} />
-      <Route path={Url.contact} element={<ContactCreate />} />
-      <Route path={Url.contactComplete} element={<ContactComplete />} />
+      <Route path={Url.LOGIN} element={<LoginForm />} />
+      <Route path={Url.REGISTER} element={<RegisterForm />} />
+      <Route path={Url.PASSWORD_RESET} element={<EMailForm />} />
+      <Route path={`${Url.PASSWORD_RESET}/:token`} element={<ResetForm />} />
+      <Route path={Url.EMAIL_VERIFY} element={<Verify />} />
+      <Route path={Url.CONTACT} element={<ContactCreate />} />
+      <Route path={Url.CONTACT_COMPLETE} element={<ContactComplete />} />
 
       {/* ★ログインユーザー専用ここから */}
-      <Route path={Url.home} element={<AuthCheck user={user} component={<Home />} />} />
-      <Route path={Url.myCart} element={<AuthCheck user={user} component={<MyCart />} />} />
+      <Route path={Url.HOME} element={<AuthCheck user={user} component={<Home />} />} />
+      <Route path={Url.MYCART} element={<AuthCheck user={user} component={<MyCart />} />} />
       <Route
-        path={Url.payComplete}
+        path={Url.PAT_COMPLETE}
         element={<AuthCheck user={user} component={<ShopComplete />} />}
       />
       {/* ★ログインユーザー専用ここまで */}

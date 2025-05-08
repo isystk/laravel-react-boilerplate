@@ -12,7 +12,7 @@ export default class StockService {
   async readStocks(pageNo = 1) {
     this.main.showLoading();
     try {
-      const { stocks } = await fetch(`${Api.shops}?page=${pageNo}`).then(res => res.json());
+      const { stocks } = await fetch(`${Api.SHOPS}?page=${pageNo}`).then(res => res.json());
       return stocks;
     } catch (e) {
       this.main.showToastMessage('商品データの取得に失敗しました');

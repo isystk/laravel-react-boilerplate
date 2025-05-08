@@ -1,25 +1,25 @@
 type EnvType = {
   /** アプリ名 */
-  appName: string;
+  APP_NAME: string;
   /** 環境名 */
-  envName: string;
+  ENV_NAME: string;
   /** エンドポイント URL */
-  endpointUrl: string;
+  ENDPOINT_URL: string;
   /** Stripe キー */
-  stripeKey: string;
+  STRIPE_KEY: string;
 };
 
 let Env = {
-  appName: 'LaraEC',
-  envName: 'local',
-  endpointUrl: 'https://localhost/api',
-  stripeKey: import.meta.env.VITE_STRIPE_KEY,
+  APP_NAME: 'LaraEC',
+  ENV_NAME: 'local',
+  ENDPOINT_URL: 'https://localhost/api',
+  STRIPE_KEY: import.meta.env.VITE_STRIPE_KEY,
 } as EnvType;
 if (import.meta.env.NODE_ENV === 'production') {
   Env = {
     ...Env,
-    envName: import.meta.env.VITE_ENV_NAME,
-    endpointUrl: import.meta.env.VITE_ENDPOINT_URL,
+    ENV_NAME: import.meta.env.VITE_ENV_NAME,
+    ENDPOINT_URL: import.meta.env.VITE_ENDPOINT_URL,
   } as EnvType;
 }
 

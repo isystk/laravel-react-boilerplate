@@ -14,7 +14,7 @@ export default class CartService {
   async readCarts() {
     this.main.showLoading();
     try {
-      const response = await fetch(Api.myCarts, {
+      const response = await fetch(Api.MYCARTS, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ export default class CartService {
   async addCart(stockId: number): Promise<void> {
     this.main.showLoading();
     try {
-      const response = await fetch(Api.addMyCarts, {
+      const response = await fetch(Api.ADD_MYCART, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export default class CartService {
   async removeCart(cartId: number): Promise<void> {
     this.main.showLoading();
     try {
-      const response = await fetch(Api.removeMyCart, {
+      const response = await fetch(Api.REMOVE_MYCART, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ export default class CartService {
     this.main.showLoading();
     try {
       //paymentIntentの作成を（ローカルサーバ経由で）リクエスト
-      const response = await fetch(Api.createPayment, {
+      const response = await fetch(Api.CREATE_PAYMENT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -111,7 +111,7 @@ export default class CartService {
         throw new Error();
       }
       // 決算処理が完了したら、注文履歴に追加してマイカートから商品を削除する。
-      await fetch(Api.checkout, {
+      await fetch(Api.CHECKOUT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
