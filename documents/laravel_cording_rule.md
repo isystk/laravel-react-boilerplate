@@ -97,6 +97,7 @@ public function store(StoreRequest $request): RedirectResponse
 
 ```php
 <?php
+
 namespace App\Services\Stock;
 
 class StoreService extends BaseService
@@ -115,7 +116,7 @@ class StoreService extends BaseService
         $items = [];
         $items['name'] = $dto->name;
         $items['price'] = $dto->price;
-        $this->stockRepository->store($items);
+        $this->stockRepository->create($items);
     }
 }
 ```
@@ -239,7 +240,8 @@ class StoreRequest extends FormRequest
                 'max:99999',
             ],
             'sale_limit_at' => [
-                'required',
+                'nullable',
+                'string',
                 'date_format:Y/m/d',
                 'after_or_equal:today',
             ],
