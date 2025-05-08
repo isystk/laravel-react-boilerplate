@@ -25,7 +25,7 @@
 ## 基本方針
 
 - [PSR-1](https://www.php-fig.org/psr/psr-1/) および [PSR-12](https://www.php-fig.org/psr/psr-12/) に準拠します。
-- PHP タグは `<?php` を使用し、**閉じタグは記述しません**。
+- PHP タグは `<?php` を使用し、閉じタグは記述しません。
 - Laravel 標準のディレクトリ構成に従います。
 
 ---
@@ -41,7 +41,7 @@
 
 ## コーディングスタイル
 
-- インデントは **スペース4つ**とし、タブは使用しません。
+- インデントは スペース4つとし、タブは使用しません。
 - 可能な限り型宣言（タイプヒント、リターンヒント、 phpDoc）を使用します。
 - 厳密な比較を行う（`==`, `!=` などの曖昧な比較を使わない）
 - 制御構文では、1行でも必ず波括弧 `{}` を使用します（省略禁止）。
@@ -101,7 +101,7 @@ namespace App\Services\Stock;
 
 class StoreService extends BaseService
 {
-		protected StockRepository $stockRepository;
+    protected StockRepository $stockRepository;
 
     public function __construct(StockRepository $stockRepository) {
         $this->stockRepository= $stockRepository;
@@ -139,16 +139,16 @@ class StockEloquentRepository extends BaseEloquentRepository implements StockRep
         return Stock::class;
     }
     
-		/**
-		 * 指定された code に紐づくレコードを返却します。
-		 */
-		public function getByCode(string $code): Collection
-		{
-		    /** @var Collection<int, Stock> */
-		    return $this->model
-		        ->where('code', $code)
-		        ->get();
-		}
+    /**
+     * 指定された code に紐づくレコードを返却します。
+     */
+    public function getByCode(string $code): Collection
+    {
+        /** @var Collection<int, Stock> */
+        return $this->model
+            ->where('code', $code)
+            ->get();
+    }
 }
 ```
 
