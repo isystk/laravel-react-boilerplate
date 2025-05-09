@@ -26,6 +26,8 @@ class ContactForm extends Model
     /** @phpstan-use HasFactory<ContactFormFactory> */
     use HasFactory;
 
+    protected $table = 'contact_forms';
+
     /**
      * The attributes that are mass assignable.
      *

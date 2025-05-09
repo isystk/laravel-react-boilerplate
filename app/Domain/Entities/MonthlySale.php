@@ -20,6 +20,8 @@ class MonthlySale extends Model
     /** @phpstan-use HasFactory<MonthlySaleFactory> */
     use HasFactory;
 
+    protected $table = 'monthly_sales';
+
     /**
      * The attributes that are mass assignable.
      *
