@@ -10,16 +10,6 @@ abstract class BaseImportRequest extends FormRequest
 {
 
     /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
-
-    /**
      * This method prepares file instante
      */
     protected function prepareForValidation(): void
@@ -121,7 +111,9 @@ abstract class BaseImportRequest extends FormRequest
     abstract protected function createImporter(): Closure;
 
     /**
-     * @return array<string, string>
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string>
      */
     public function attributes(): array
     {
@@ -131,8 +123,9 @@ abstract class BaseImportRequest extends FormRequest
     }
 
     /**
-     * 定義済みバリデーションルールのエラーメッセージ取得
-     * @return array<string, string>
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string>
      */
     public function messages(): array
     {

@@ -2,41 +2,36 @@
 
 namespace App\Http\Requests\Admin;
 
-use App\Http\Controllers\Front\Auth\PasswordValidationRules;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 class PasswordChangeUpdateRequest extends FormRequest
 {
-    use PasswordValidationRules;
-
-    /**
-     * @return array<string, mixed>
-     */
-    public function validationData(): array
-    {
-        return parent::validationData();
-    }
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, array<string>>
+     * @return array<string, array<string|Password>>
      */
     public function rules(): array
     {
         $maxlength = config('const.maxlength.admins');
         return [
             'password' => [
-                ...$this->passwordRules(),
+                'required',
+                'string',
+                Password::default(),
+                'confirmed',
                 'max:' . $maxlength['password'],
             ],
         ];
     }
 
+
     /**
-     * 項目名
+     * Get the error messages for the defined validation rules.
      *
-     * @return array<string, string>
+     * @return array<string>
      */
     public function attributes(): array
     {

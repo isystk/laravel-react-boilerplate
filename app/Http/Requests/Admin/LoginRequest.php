@@ -31,4 +31,17 @@ class LoginRequest extends FormRequest
         ];
     }
 
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string>
+     */
+    public function attributes(): array
+    {
+        return [
+            'email' => __('user.EMail'),
+            'password' => __('user.Password'),
+        ];
+    }
+
 }

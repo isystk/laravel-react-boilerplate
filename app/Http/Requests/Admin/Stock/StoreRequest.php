@@ -79,11 +79,10 @@ class StoreRequest extends FormRequest
         ];
     }
 
-
     /**
-     * 項目名
+     * Get the error messages for the defined validation rules.
      *
-     * @return array<string, string>
+     * @return array<string>
      */
     public function attributes(): array
     {

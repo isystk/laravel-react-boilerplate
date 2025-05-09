@@ -8,5 +8,6 @@ return [
     'ID' => 'ID',
     'Name' => '氏名',
     'EMail' => 'メールアドレス',
+    'Password' => 'パスワード',
 
 ];
