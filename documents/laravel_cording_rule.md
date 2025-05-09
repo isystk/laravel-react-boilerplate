@@ -57,38 +57,35 @@
 
 ## アーキテクチャ
 
-```plantuml
-@startuml
-title Laravel アーキテクチャ（戻り値付き・安定構文）
+```mermaid
+sequenceDiagram
+    title Laravel アーキテクチャ
 
-actor User
-participant Route
-participant StockRequest
-participant StockController
-participant StockService
-participant StockRepository
-database MySQL
+    participant User
+    participant Route
+    participant StockRequest
+    participant StockController
+    participant StockService
+    participant StockRepository
+    participant MySQL
 
-User -> Route : call(payload)
-Route -> StockRequest : validate(payload)
+    User->>Route: call(payload)
+    Route->>StockRequest: validate(payload)
 
-alt validation error
-    StockRequest --> Route : "validation error"
-    Route --> User : HTTP 422 / error message
-else validation OK
-    StockRequest --> StockController : get(payload)
-    StockController -> StockService : get(payload)
-    StockService -> StockRepository : get(payload)
-    StockRepository -> MySQL : query(payload)
-    MySQL --> StockRepository : stocks
-    StockRepository --> StockService : stocks
-    StockService --> StockController : stocks
-    StockController --> Route : stocks
-    Route --> User : HTTP 200 / stocks
-end
-
-@enduml
-
+    alt validation error
+        StockRequest-->>Route: "validation error"
+        Route-->>User: HTTP 422 / error message
+    else validation OK
+        StockRequest-->>StockController: get(payload)
+        StockController->>StockService: get(payload)
+        StockService->>StockRepository: get(payload)
+        StockRepository->>MySQL: query(payload)
+        MySQL-->>StockRepository: stocks
+        StockRepository-->>StockService: stocks
+        StockService-->>StockController: stocks
+        StockController-->>Route: stocks
+        Route-->>User: HTTP 200 / stocks
+    end
 ```
 
 ---
