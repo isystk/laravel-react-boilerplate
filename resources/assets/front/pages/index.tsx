@@ -57,7 +57,7 @@ const Top = () => {
           isLike: state.like.stockIds.includes(stock.id + ''),
         }) as StockItemProps,
     );
-  }, [stocks, state, state?.like.stockIds]);
+  }, [stocks, state]);
 
   if (!state) return <></>;
 

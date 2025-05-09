@@ -1,4 +1,4 @@
-@extends('layouts.app_admin')
+@extends('layouts.admin')
 @section('title', __('user.User List'))
 @php
     $menu = 'user';

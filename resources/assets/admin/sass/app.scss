@@ -1,22 +1,31 @@
 @import 'admin-lte/dist/css/adminlte.min.css';
 @import '@fortawesome/fontawesome-free/css/all.min.css';
 
+html {
+    font-size: 16px;
+}
+
 body {
-    background-color: #9e9e9e;
+    font-size: 1rem;
+    font-family: ヒラギノ角ゴ Pro W3, Hiragino Kaku Gothic Pro, メイリオ, Meiryo, sans-serif;
+    color: #333;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    background: #eaeded
 }
 
-.content-wrapper {
-    margin: auto;
-    padding: 16px 32px;
+.content {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px 0 20px;
+    min-height: calc(100vh - 272px); /* Header: 69px + Footer: 203px */
 }
 
-.no-sidemenu {
-    .content-wrapper {
-        max-width: 1200px;
-        margin: auto !important;
-    }
-    .main-footer {
-        margin: 0 !important;
+@media only screen and (min-width: 767px) {
+    .content {
+        padding: 40px 0 40px;
+        min-height: calc(100vh - 328px); /* Header: 84px + Footer: 244px */
     }
 }
 

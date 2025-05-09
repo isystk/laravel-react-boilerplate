@@ -3,98 +3,56 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BaseController;
-use Illuminate\Contracts\Auth\StatefulGuard;
-use Illuminate\Contracts\Foundation\Application;
+use App\Http\Requests\Admin\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class LoginController extends BaseController
 {
     /**
-     * Create a new controller instance.
-     */
-    public function __construct()
-    {
-        // 未ログインのユーザーのみアクセスを許可する（logout関数を除く）
-        $this->middleware('guest:admin')
-            ->except('logout');
-    }
-
-    /**
      * ログイン画面の初期表示
-     * @return View
      */
-    public function index(): View
+    public function index(): RedirectResponse|View
     {
+        if (Auth::guard('admin')->check()) {
+            // ログイン済みの場合
+
+            // ホーム画面にリダイレクト
+            return redirect(route('admin.home'));
+        }
         return view('admin.login');
     }
 
     /**
-     * ログイン画面の初期表示
-     * @return StatefulGuard
-     */
-    protected function guard(): StatefulGuard
-    {
-        return Auth::guard('admin');
-    }
-
-    /**
-     * ログイン画面のログインチェック
-     *
-     * @param Request $request
-     * @return void
-     *
-     */
-    protected function validateLogin(Request $request): void
-    {
-        $request->validate([
-            'email' => 'required|string',
-            'password' => 'required|string',
-            // reCaptchaによる認証チェックはコメントアウトしておく
-//            'g-recaptcha-response' => 'required|recaptchav3:login,0.5'
-        ]);
-    }
-
-    /**
      * ログイン画面のログイン処理
-     *
-     * @param Request $request
-     * @return Application|\Illuminate\Foundation\Application|RedirectResponse|Redirector
      */
-    public function login(Request $request): \Illuminate\Foundation\Application|Redirector|Application|RedirectResponse
+    public function login(LoginRequest $request): RedirectResponse
     {
-        // ログインチェック
-        $this->validateLogin($request);
-
         $credentials = $request->only(['email', 'password']);
-
-        if (Auth::guard('admin')->attempt($credentials)) {
-            // ログインが成功したら、ホーム画面にリダイレクトする
-            return redirect(route('admin.home'));
+        if (!Auth::guard('admin')->attempt($credentials)) {
+            // 認証に失敗した場合
+            return back()->withErrors([
+                'password' => ['認証に失敗しました'],
+            ]);
         }
+        // ログインが成功した場合
 
-        // 認証に失敗した場合は、元画面にエラーを表示する。
-        return back()->withErrors([
-            'auth' => ['認証に失敗しました'],
-        ]);
+        // ホーム画面にリダイレクト
+        return redirect(route('admin.home'));
     }
 
     /**
      * ログアウト処理
-     * @param Request $request
-     * @return RedirectResponse
      */
     public function logout(Request $request): RedirectResponse
     {
-        // ログアウト処理
         Auth::guard('admin')->logout();
         $request->session()->flush();
         $request->session()->regenerate();
 
-        // ログアウト後は、ログイン画面にリダイレクトする
+        // ログイン画面にリダイレクト
         return redirect(route('admin.login'));
     }
 }
