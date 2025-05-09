@@ -25,6 +25,8 @@ class Admin extends Authenticatable
     use HasFactory;
     use Notifiable;
 
+    protected $table = 'admins';
+
     /**
      * The attributes that are mass assignable.
      *

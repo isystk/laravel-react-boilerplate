@@ -25,6 +25,8 @@ class ImportHistory extends Model
     /** @phpstan-use HasFactory<ImportHistoryFactory> */
     use HasFactory;
 
+    protected $table = 'import_histories';
+
     /**
      * The attributes that are mass assignable.
      *

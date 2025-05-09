@@ -22,6 +22,8 @@ class OrderStock extends Model
     /** @phpstan-use HasFactory<OrderStockFactory> */
     use HasFactory;
 
+    protected $table = 'order_stocks';
+
     /**
      * The attributes that are mass assignable.
      *

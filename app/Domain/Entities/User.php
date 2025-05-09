@@ -26,11 +26,12 @@ use Laravel\Sanctum\HasApiTokens;
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens;
-
     /** @phpstan-use HasFactory<UserFactory> */
     use HasFactory;
     use Notifiable;
+    use HasApiTokens;
+
+    protected $table = 'users';
 
     /**
      * The attributes that are mass assignable.

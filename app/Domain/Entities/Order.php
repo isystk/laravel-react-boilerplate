@@ -20,6 +20,8 @@ class Order extends Model
     /** @phpstan-use HasFactory<OrderFactory> */
     use HasFactory;
 
+    protected $table = 'orders';
+
     /**
      * The attributes that are mass assignable.
      *

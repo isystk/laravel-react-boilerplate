@@ -21,6 +21,8 @@ class Stock extends Model
     /** @phpstan-use HasFactory<StockFactory> */
     use HasFactory;
 
+    protected $table = 'stocks';
+
     /**
      * The attributes that are mass assignable.
      *
