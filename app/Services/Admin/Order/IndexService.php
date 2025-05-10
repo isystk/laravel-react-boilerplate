@@ -50,11 +50,11 @@ class IndexService extends BaseService
             'limit' => $limit,
         ];
 
-        $orderDateFrom = DateUtil::toCarbonImmutable($request->order_date_from);
+        $orderDateFrom = DateUtil::toCarbon($request->order_date_from);
         if (null !== $orderDateFrom) {
             $conditions['order_date_from'] = $orderDateFrom->startOfDay();
         }
-        $orderDateTo = DateUtil::toCarbonImmutable($request->order_date_to);
+        $orderDateTo = DateUtil::toCarbon($request->order_date_to);
         if (null !== $orderDateTo) {
             $conditions['order_date_to'] = $orderDateTo->startOfDay();
         }

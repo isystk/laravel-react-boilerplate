@@ -10,14 +10,17 @@ enum PhotoType: int
     case Contact = 2;
 
     /**
-     * @return string
+     * ラベルを返却する
      */
     public function label(): string
     {
         return __('enums.PhotoType' . $this->value);
     }
 
-    public function dirName(): string
+    /**
+     * タイプを返却する
+     */
+    public function type(): string
     {
         return match ($this) {
             self::Stock => 'stock',
@@ -26,8 +29,7 @@ enum PhotoType: int
     }
 
     /**
-     * @param ?int $code
-     * @return ?PhotoType
+     * コードに紐づくEnumを返却する
      */
     public static function get(?int $code): ?PhotoType
     {
@@ -43,8 +45,7 @@ enum PhotoType: int
     }
 
     /**
-     * @param ?int $code
-     * @return string
+     * 引数の値に紐づくラベルを返却する
      */
     public static function getLabel(?int $code): string
     {
@@ -54,9 +55,12 @@ enum PhotoType: int
         return self::get($code)->label();
     }
 
-    public static function getIdByDirName(string $dirName): PhotoType
+    /**
+     * タイプに紐づくEnumを返却する
+     */
+    public static function getByType(string $type): PhotoType
     {
-        return match ($dirName) {
+        return match ($type) {
             'stock' => self::Stock,
             'contact' => self::Contact,
             default => throw new \RuntimeException('An unexpected error occurred.')

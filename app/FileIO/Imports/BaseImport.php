@@ -130,7 +130,7 @@ abstract class BaseImport implements WithMapping, WithStartRow, WithValidation
             return null;
         }
 
-        $date = DateUtil::toCarbonImmutable($col);
+        $date = DateUtil::toCarbon($col);
         if (null !== $date) {
             return $date->format($format);
         }

@@ -61,7 +61,7 @@ class StoreService extends BaseService
                 ]
             );
             //s3に画像をアップロード
-            $imageFile->storeAs(PhotoType::Contact->dirName() . '/', $fileName);
+            $imageFile->storeAs(PhotoType::Contact->type() . '/', $fileName);
         }
 
         return $contactForm;

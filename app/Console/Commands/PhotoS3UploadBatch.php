@@ -38,7 +38,7 @@ class PhotoS3UploadBatch extends Command
             $fileName = $file->getfileName();
 
             // s3に画像をアップロード
-            Storage::putFileAs(PhotoType::Stock->dirName(), $file, $fileName);
+            Storage::putFileAs(PhotoType::Stock->type(), $file, $fileName);
         }
 
         Log::info('PhotoS3UploadBatch END');
