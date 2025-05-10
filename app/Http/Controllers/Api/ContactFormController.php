@@ -13,24 +13,21 @@ class ContactFormController extends BaseApiController
 
     /**
      * お問い合わせ内容を登録します。
-     *
-     * @param StoreRequest $request
-     * @return JsonResponse
      * @throws Throwable
      */
     public function store(StoreRequest $request): JsonResponse
     {
+        /** @var StoreService $service */
+        $service = app(StoreService::class);
         DB::beginTransaction();
         try {
-            /** @var StoreService $service */
-            $service = app(StoreService::class);
             $service->save($request);
             DB::commit();
         } catch (Throwable $e) {
             DB::rollBack();
-            throw $e;
+            return $this->getErrorJsonResponse($e);
         }
-        return $this->resConversionJson([
+        return response()->json([
             'result' => true,
         ]);
     }

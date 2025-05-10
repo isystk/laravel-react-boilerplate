@@ -15,9 +15,6 @@ class DetailController extends BaseController
 
     /**
      * 顧客詳細画面の初期表示
-     *
-     * @param User $user
-     * @return View
      */
     public function show(User $user): View
     {
@@ -26,19 +23,18 @@ class DetailController extends BaseController
 
     /**
      * 顧客詳細画面の削除処理
-     *
-     * @param User $user
-     * @return RedirectResponse
      * @throws Throwable
      */
     public function destroy(User $user): RedirectResponse
     {
         // 上位管理者のみがアクセス可能
         $this->authorize('high-manager');
+
+        /** @var DestroyService $service */
+        $service = app(DestroyService::class);
+
         DB::beginTransaction();
         try {
-            /** @var DestroyService $service */
-            $service = app(DestroyService::class);
             $service->delete($user->id);
             DB::commit();
         } catch (Throwable $e) {

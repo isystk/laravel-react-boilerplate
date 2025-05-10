@@ -17,9 +17,6 @@ class EditController extends BaseController
 
     /**
      * お問い合わせ変更画面の初期表示
-     *
-     * @param ContactForm $contactForm
-     * @return View
      */
     public function edit(ContactForm $contactForm): View
     {
@@ -35,18 +32,15 @@ class EditController extends BaseController
 
     /**
      * お問い合わせ変更画面の登録処理
-     *
-     * @param UpdateRequest $request
-     * @param ContactForm $contactForm
-     * @return RedirectResponse
      * @throws Throwable
      */
     public function update(UpdateRequest $request, ContactForm $contactForm): RedirectResponse
     {
+        /** @var UpdateService $service */
+        $service = app(UpdateService::class);
+
         DB::beginTransaction();
         try {
-            /** @var UpdateService $service */
-            $service = app(UpdateService::class);
             $service->update($contactForm->id, $request);
             DB::commit();
         } catch (Throwable $e) {

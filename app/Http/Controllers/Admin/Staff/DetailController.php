@@ -16,9 +16,6 @@ class DetailController extends BaseController
 
     /**
      * スタッフ詳細画面の初期表示
-     *
-     * @param Admin $staff
-     * @return View
      */
     public function show(Admin $staff): View
     {
@@ -27,9 +24,6 @@ class DetailController extends BaseController
 
     /**
      * スタッフ詳細画面の削除処理
-     *
-     * @param Admin $staff
-     * @return RedirectResponse
      * @throws Throwable
      */
     public function destroy(Admin $staff): RedirectResponse
@@ -42,10 +36,11 @@ class DetailController extends BaseController
             return back()->withErrors($errors);
         }
 
+        /** @var DestroyService $service */
+        $service = app(DestroyService::class);
+
         DB::beginTransaction();
         try {
-            /** @var DestroyService $service */
-            $service = app(DestroyService::class);
             $service->delete($staff->id);
             DB::commit();
         } catch (Throwable $e) {

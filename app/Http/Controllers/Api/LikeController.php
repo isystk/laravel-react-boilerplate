@@ -12,79 +12,51 @@ class LikeController extends BaseApiController
 
     /**
      * お気に入りデータをJSONで返却します。
-     *
-     * @return JsonResponse
      */
     public function index(): JsonResponse
     {
+        $result = [
+            'result' => false,
+            'likes' => [],
+            'error' => [],
+        ];
         try {
-            $likes = CookieUtil::getLike();
-            $result = [
-                'result' => true,
-                'likes' => [
-                    'data' => $likes,
-                ],
-            ];
+            $configCookieKey = config('const.cookie.like.key');
+            $likes = CookieUtil::get($configCookieKey);
+            $result['result'] = true;
+            $result['likes']['data'] = $likes;
         } catch (Throwable $e) {
-            $result = [
-                'result' => false,
-                'error' => [
-                    'messages' => [$e->getMessage()],
-                ],
-            ];
-            return $this->resConversionJson($result, $e->getCode());
+            return $this->getErrorJsonResponse($e);
         }
-        return $this->resConversionJson($result);
+        return response()->json($result);
     }
 
     /**
      * お気に入りに追加します。
-     *
-     * @param Request $request
-     * @return JsonResponse
      */
     public function store(Request $request): JsonResponse
     {
         try {
             $stockId = $request->input('id');
-            CookieUtil::saveLike($stockId);
-            $result = [
-                'result' => true,
-            ];
+            $configCookie = config('const.cookie.like');
+            CookieUtil::add($configCookie['key'], $stockId, $configCookie['expire']);
         } catch (Throwable $e) {
-            $result = [
-                'result' => false,
-                'error' => [
-                    'messages' => [$e->getMessage()],
-                ],
-            ];
-            return $this->resConversionJson($result, $e->getCode());
+            return $this->getErrorJsonResponse($e);
         }
-        return $this->resConversionJson($result);
+        return response()->json(['result' => true]);
     }
 
     /**
      * お気に入りから削除します。
-     *
-     * @param string $id
-     * @return JsonResponse
      */
     public function destroy(string $id): JsonResponse
     {
         try {
-            CookieUtil::removeLike($id);
-            $result = [
-                'result' => true,
-            ];
+            $configCookieKey = config('const.cookie.like.key');
+            CookieUtil::remove($configCookieKey, $id);
         } catch (Throwable $e) {
-            $result = [
-                'result' => false,
-                'error' => [
-                    'messages' => [$e->getMessage()],
-                ],
-            ];
-            return $this->resConversionJson($result, $e->getCode());
+            return $this->getErrorJsonResponse($e);
         }
-        return $this->resConversionJson($result);
+        return response()->json(['result' => true]);
     }
 }

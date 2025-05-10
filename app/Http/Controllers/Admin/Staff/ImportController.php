@@ -24,8 +24,6 @@ class ImportController extends BaseController
 
     /**
      * スタッフ一括インポート画面の初期表示
-     *
-     * @return View
      */
     public function index(): View
     {
@@ -41,9 +39,6 @@ class ImportController extends BaseController
 
     /**
      * スタッフ一括インポート画面のエクスポート処理
-     *
-     * @param Request $request
-     * @return BinaryFileResponse
      */
     public function export(Request $request): BinaryFileResponse
     {
@@ -66,9 +61,6 @@ class ImportController extends BaseController
 
     /**
      * スタッフ一括インポート画面のインポート処理
-     *
-     * @param StoreRequest $request
-     * @return RedirectResponse
      * @throws Throwable
      */
     public function store(StoreRequest $request): RedirectResponse
@@ -81,10 +73,11 @@ class ImportController extends BaseController
         }
         $admin = $request->user();
 
+        /** @var ImportService $service */
+        $service = app(ImportService::class);
+
         DB::beginTransaction();
         try {
-            /** @var ImportService $service */
-            $service = app(ImportService::class);
             $service->createJob($request->upload_file, $admin);
             DB::commit();
         } catch (Throwable $e) {
@@ -96,9 +89,6 @@ class ImportController extends BaseController
 
     /**
      * スタッフ一括インポート画面のインポートファイルダウンロード
-     *
-     * @param string $importHistoryId
-     * @return BinaryFileResponse
      */
     public function importFile(string $importHistoryId): BinaryFileResponse
     {

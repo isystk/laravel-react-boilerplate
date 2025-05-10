@@ -6,62 +6,50 @@ use Illuminate\Support\Facades\Cookie;
 
 class CookieUtil
 {
-
-    const COKKIE_KEYNAME_LIKE = 'like';
-    const COKKIE_EXPIRES = 60 * 24; // 24時間
+    private const DEFAULT_EXPIRES_MINUTES = 60 * 24 * 365; // 365日
 
     /**
+     * クッキーから配列を取得
+     *
+     * @param string $key
      * @return array<string>
      */
-    public static function getLike(): array
+    public static function get(string $key): array
     {
-        $value = Cookie::get(self::COKKIE_KEYNAME_LIKE);
-
-        // カンマ区切りのデータを分割
-        $likes = [];
-        if ($value) {
-            $likes = explode(",", $value);
-        }
-
-        return $likes;
+        $value = Cookie::get($key);
+        return $value ? explode(',', $value) : [];
     }
 
     /**
+     * 値を追加（重複は無視）
+     *
+     * @param string $key
      * @param string $value
+     * @param int $expires
      */
-    public static function saveLike(string $value): void
+    public static function add(string $key, string $value, int $expires = self::DEFAULT_EXPIRES_MINUTES): void
     {
-        $likes = self::getLike();
-
-        if (!in_array($value, $likes)) {
-            // 配列に含まれない場合に追加
-            array_push($likes, $value);
-
-            // 配列をカンマ区切りに設定
-            $result = implode(',', $likes);
-
-            // クッキーに保存
-            Cookie::queue(self::COKKIE_KEYNAME_LIKE, $result, self::COKKIE_EXPIRES);
+        $items = self::get($key);
+        if (!in_array($value, $items, true)) {
+            $items[] = $value;
+            Cookie::queue($key, implode(',', $items), $expires);
         }
     }
 
     /**
+     * 値を削除
+     *
+     * @param string $key
      * @param string $value
+     * @param int $expires
      */
-    public static function removeLike(string $value): void
+    public static function remove(string $key, string $value, int $expires = self::DEFAULT_EXPIRES_MINUTES): void
     {
-        $likes = self::getLike();
+        $items = self::get($key);
+        $filtered = array_filter($items, fn($item) => $item !== $value);
 
-        if (in_array($value, $likes)) {
-            // 配列に含まる場合に削除
-            $key = array_search($value, $likes);
-            array_splice($likes, $key);
-
-            // 配列をカンマ区切りに設定
-            $result = implode(',', $likes);
-
-            // クッキーに保存
-            Cookie::queue(self::COKKIE_KEYNAME_LIKE, $result, self::COKKIE_EXPIRES);
+        if (count($items) !== count($filtered)) {
+            Cookie::queue($key, implode(',', $filtered), $expires);
         }
     }
 }

@@ -14,11 +14,8 @@ class ListController extends BaseController
 
     /**
      * 顧客一覧画面の初期表示
-     *
-     * @param Request $request
-     * @return Application|Factory|View
      */
-    public function index(Request $request): View|Factory|Application
+    public function index(Request $request): View
     {
         /** @var IndexService $service */
         $service = app(IndexService::class);

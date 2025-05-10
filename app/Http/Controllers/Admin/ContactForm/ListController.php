@@ -12,9 +12,6 @@ class ListController extends BaseController
 
     /**
      * お問い合わせ一覧の初期表示
-     *
-     * @param Request $request
-     * @return View
      */
     public function index(Request $request): View
     {
