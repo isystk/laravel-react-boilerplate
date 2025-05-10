@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\ContactForm;
 
+use App\Dto\Request\Admin\ContactForm\SearchConditionDto;
 use App\Http\Controllers\BaseController;
 use App\Services\Admin\ContactForm\IndexService;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class ListController extends BaseController
         /** @var IndexService $service */
         $service = app(IndexService::class);
 
-        $conditions = $service->convertConditionsFromRequest($request);
+        $conditions = new SearchConditionDto($request);
         $contactForms = $service->searchContactForm($conditions);
 
         return view('admin.contact.index', compact('contactForms', 'request'));
