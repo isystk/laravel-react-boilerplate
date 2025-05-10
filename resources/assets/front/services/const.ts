@@ -14,7 +14,7 @@ export default class ConstService {
 
   async readConsts() {
     try {
-      const response = await fetch(Api.CONSTS);
+      const response = await fetch(Api.CONST);
       const { data } = await response.json();
       Object.assign(this.const, data);
       this.main.setRootState();

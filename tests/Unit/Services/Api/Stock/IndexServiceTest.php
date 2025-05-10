@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Unit\Services\Api\Shop;
+namespace Tests\Unit\Services\Api\Stock;
 
 use App\Domain\Entities\Stock;
-use App\Services\Api\Shop\IndexService;
+use App\Services\Api\Stock\IndexService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

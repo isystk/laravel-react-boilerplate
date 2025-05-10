@@ -1,5 +1,5 @@
 export default class LikeState {
-  stockIds: string[];
+  stockIds: number[];
 
   constructor() {
     this.stockIds = [];

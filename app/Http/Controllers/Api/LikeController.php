@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Dto\Response\Api\LikeJsonDto;
 use App\Utils\CookieUtil;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -15,16 +16,11 @@ class LikeController extends BaseApiController
      */
     public function index(): JsonResponse
     {
-        $result = [
-            'result' => false,
-            'likes' => [],
-            'error' => [],
-        ];
         try {
             $configCookieKey = config('const.cookie.like.key');
-            $likes = CookieUtil::get($configCookieKey);
-            $result['result'] = true;
-            $result['likes']['data'] = $likes;
+            $stringStockIds = CookieUtil::get($configCookieKey);
+            $stockIds = array_map('intval', $stringStockIds);
+            $result = new LikeJsonDto($stockIds);
         } catch (Throwable $e) {
             return $this->getErrorJsonResponse($e);
         }

@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class ShopControllerTest extends TestCase
+class StockControllerTest extends TestCase
 {
 
     use RefreshDatabase;
@@ -30,7 +30,7 @@ class ShopControllerTest extends TestCase
         $stock6 = $this->createDefaultStock(['name' => 'stock6']);
         $stock7 = $this->createDefaultStock(['name' => 'stock7']);
 
-        $response = $this->get(route('api.shops'));
+        $response = $this->get(route('api.stock'));
         $response->assertSuccessful();
         $response->assertSeeInOrder([
             $stock7->id,

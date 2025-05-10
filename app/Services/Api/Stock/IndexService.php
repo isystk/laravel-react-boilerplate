@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Api\Shop;
+namespace App\Services\Api\Stock;
 
 use App\Domain\Entities\Stock;
 use App\Domain\Repositories\Stock\StockRepository;
