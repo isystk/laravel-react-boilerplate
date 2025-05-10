@@ -17,14 +17,6 @@ class CheckoutService extends BaseCartService
     private OrderRepository $orderRepository;
     private OrderStockRepository $orderStockRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param CartRepository $cartRepository
-     * @param StockRepository $stockRepository
-     * @param OrderRepository $orderRepository
-     * @param OrderStockRepository $orderStockRepository
-     */
     public function __construct(
         CartRepository $cartRepository,
         StockRepository $stockRepository,
@@ -40,9 +32,6 @@ class CheckoutService extends BaseCartService
 
     /**
      * 決済処理を行います。
-     * @param string|null $stripeEmail
-     * @param string|null $stripeToken
-     * @return void
      */
     public function checkout(?string $stripeEmail, ?string $stripeToken): void
     {

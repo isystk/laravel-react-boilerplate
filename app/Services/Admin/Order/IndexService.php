@@ -15,11 +15,6 @@ class IndexService extends BaseService
 {
     private OrderRepository $orderRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param OrderRepository $orderRepository
-     */
     public function __construct(
         OrderRepository $orderRepository
     ) {
@@ -28,7 +23,6 @@ class IndexService extends BaseService
 
     /**
      * リクエストパラメータから検索条件に変換します。
-     * @param Request $request
      * @return array{
      *   user_name : ?string,
      *   order_date_from : ?CarbonImmutable,

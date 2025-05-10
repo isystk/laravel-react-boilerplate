@@ -15,12 +15,6 @@ class UpdateService extends BaseService
     private ContactFormRepository $contactFormRepository;
     private ContactFormImageRepository $contactFormImageRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param ContactFormRepository $contactFormRepository
-     * @param ContactFormImageRepository $contactFormImageRepository
-     */
     public function __construct(
         ContactFormRepository $contactFormRepository,
         ContactFormImageRepository $contactFormImageRepository
@@ -31,9 +25,6 @@ class UpdateService extends BaseService
 
     /**
      * お問い合わせを更新します。
-     * @param int $contactFormId
-     * @param UpdateRequest $request
-     * @return ContactForm
      */
     public function update(int $contactFormId, UpdateRequest $request): ContactForm
     {

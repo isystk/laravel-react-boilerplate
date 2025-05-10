@@ -9,23 +9,12 @@ use Illuminate\Support\Facades\Storage;
 
 class PhotoS3UploadBatch extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 's3upload';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
+    protected $signature = 's3upload';
     protected $description = '商品画像をS3にアップロードします。';
 
     /**
      * Execute the console command.
-     *
      */
     public function handle(): void
     {

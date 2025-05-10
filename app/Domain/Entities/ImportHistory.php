@@ -53,9 +53,6 @@ class ImportHistory extends Model
         'updated_at' => 'datetime',
     ];
 
-    /**
-     * @return ?JobStatus
-     */
     public function getStatus(): ?JobStatus
     {
         return JobStatus::get($this->status);

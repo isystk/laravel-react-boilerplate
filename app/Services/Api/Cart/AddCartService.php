@@ -9,11 +9,6 @@ class AddCartService extends BaseCartService
 {
     private CartRepository $cartRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param CartRepository $cartRepository
-     */
     public function __construct(
         CartRepository $cartRepository,
     ) {
@@ -23,8 +18,6 @@ class AddCartService extends BaseCartService
 
     /**
      * カートに商品を追加します。
-     * @param int $stockId
-     * @return string
      */
     public function addMyCart(int $stockId): string
     {

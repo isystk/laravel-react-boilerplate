@@ -8,11 +8,6 @@ class DeleteCartService extends BaseCartService
 {
     private CartRepository $cartRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param CartRepository $cartRepository
-     */
     public function __construct(
         CartRepository $cartRepository,
     ) {
@@ -22,8 +17,6 @@ class DeleteCartService extends BaseCartService
 
     /**
      * カートから商品を削除します。
-     * @param int $cartId
-     * @return string
      */
     public function deleteMyCart(int $cartId): string
     {

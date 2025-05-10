@@ -12,7 +12,6 @@ class IndexService extends BaseService
 
     /**
      * リクエストパラメータから検索条件に変換します。
-     * @param Request $request
      * @return array{
      *   file_name : ?string,
      *   file_type : ?int,

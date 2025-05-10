@@ -11,11 +11,6 @@ class UpdateService extends BaseService
 {
     private UserRepository $userRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param UserRepository $userRepository
-     */
     public function __construct(
         UserRepository $userRepository
     ) {
@@ -24,9 +19,6 @@ class UpdateService extends BaseService
 
     /**
      * ユーザーを更新します。
-     * @param int $userId
-     * @param UpdateRequest $request
-     * @return User
      */
     public function update(int $userId, UpdateRequest $request): User
     {

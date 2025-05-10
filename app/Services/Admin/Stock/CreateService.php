@@ -13,11 +13,6 @@ class CreateService extends BaseService
 {
     private StockRepository $stockRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param StockRepository $stockRepository
-     */
     public function __construct(
         StockRepository $stockRepository
     ) {
@@ -26,8 +21,6 @@ class CreateService extends BaseService
 
     /**
      * 商品を登録します。
-     * @param Request $request
-     * @return Stock
      */
     public function save(Request $request): Stock
     {

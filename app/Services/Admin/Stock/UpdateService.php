@@ -13,11 +13,6 @@ class UpdateService extends BaseService
 {
     private StockRepository $stockRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param StockRepository $stockRepository
-     */
     public function __construct(
         StockRepository $stockRepository
     ) {
@@ -26,9 +21,6 @@ class UpdateService extends BaseService
 
     /**
      * 商品を更新します。
-     * @param int $stockId
-     * @param Request $request
-     * @return Stock
      */
     public function update(int $stockId, Request $request): Stock
     {

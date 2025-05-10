@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Staff;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Admin\Staff\Import\StoreRequest;
 use App\Services\Admin\Staff\Import\ExportService;
-use App\Services\Admin\Staff\Import\importFileService;
+use App\Services\Admin\Staff\Import\ImportFileService;
 use App\Services\Admin\Staff\Import\ImportService;
 use App\Services\Admin\Staff\Import\IndexService;
 use Illuminate\Contracts\View\View;
@@ -97,8 +97,8 @@ class ImportController extends BaseController
             abort(404);
         }
 
-        /** @var importFileService $service */
-        $service = app(importFileService::class);
+        /** @var ImportFileService $service */
+        $service = app(ImportFileService::class);
         [$importFilePath, $importFileName] = $service->getImportFilePath((int)$importHistoryId);
 
         return response()->download(Storage::disk('local')->path($importFilePath), $importFileName);

@@ -2,24 +2,14 @@
 
 namespace App\Console\Commands;
 
-use App\Domain\Entities\MonthlySale;
+use App\Services\Commands\ExportMonthlySalesService;
 use Illuminate\Console\Command;
-use Illuminate\Support\Collection;
 
 class ExportMonthlySales extends Command
 {
-    /**
-     * The name and signature of the console command.
-     * 例）php artisan export_poc_employees ./sample.csv
-     * @var string
-     */
+
     protected $signature = 'export_monthly_sales {output_path}';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = '月別売上金額出力バッチ';
 
     /**
@@ -65,10 +55,12 @@ class ExportMonthlySales extends Command
      */
     private function getDetail(): array
     {
-        $monthlySales = $this->getMonthlySales();
+        /**  */
+        $service = app(ExportMonthlySalesService::class);
+        // 出力対象の月別売上データを取得します。
+        $monthlySales = $service->getMonthlySales();
 
         $rows = [];
-        /** @var MonthlySale $monthlySale */
         foreach ($monthlySales as $monthlySale) {
             $row = [];
             $row[] = $monthlySale->year_month ?? ''; // 年月
@@ -77,17 +69,6 @@ class ExportMonthlySales extends Command
             $rows[] = $row;
         }
         return $rows;
-    }
-
-    /**
-     * 出力対象の月別売上データを取得します。
-     * @return Collection<int, MonthlySale>
-     */
-    private function getMonthlySales(): Collection
-    {
-        return MonthlySale::select()
-            ->orderBy('year_month', 'desc')
-            ->get();
     }
 
 }
