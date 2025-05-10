@@ -3,7 +3,7 @@
 namespace App\Dto\Response\Api;
 
 use App\Domain\Entities\Stock;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
 class StockJsonDto extends BaseJsonDto
