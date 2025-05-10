@@ -28,6 +28,7 @@ enum ImportType: int
                 return $e;
             }
         }
+
         return null;
     }
 
@@ -37,9 +38,9 @@ enum ImportType: int
     public static function getLabel(?int $code): string
     {
         if (null === $code || null === self::get($code)) {
-            return "";
+            return '';
         }
+
         return self::get($code)->label();
     }
-
 }

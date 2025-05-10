@@ -27,13 +27,12 @@ class CheckoutCompleteToUserTest extends TestCase
 
         Mail::to($user->email)->send(new CheckoutCompleteToUser($user, $amount, $orderItems));
 
-        Mail::assertSent(CheckoutCompleteToUser::class, static function ($mail) use ($user, $amount, $orderItems)
-        {
+        Mail::assertSent(CheckoutCompleteToUser::class, static function ($mail) use ($user, $amount, $orderItems) {
             $mail->build();
 
             return $mail->hasTo($user->email)
-                && $mail->view === 'mails.checkout_complete_to_user_html'
-                && $mail->textView === 'mails.checkout_complete_to_user_text'
+                && 'mails.checkout_complete_to_user_html' === $mail->view
+                && 'mails.checkout_complete_to_user_text' === $mail->textView
                 && $mail->subject === config('const.mail.subject.checkout_complete_to_user')
                 && $mail->from[0]['address'] === config('mail.from.address')
                 && $mail->viewData['user'] === $user

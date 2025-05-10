@@ -10,11 +10,10 @@ use Laravel\Socialite\Facades\Socialite;
 
 class OAuthController extends BaseController
 {
-
     /**
      * 各SNSのOAuth認証画面にリダイレクトして認証
-     * @param string $provider サービス名
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @param  string  $provider  サービス名
      */
     public function socialOAuth(string $provider): \Symfony\Component\HttpFoundation\RedirectResponse
     {
@@ -23,8 +22,8 @@ class OAuthController extends BaseController
 
     /**
      * 各サイトからのコールバック
-     * @param string $provider サービス名
-     * @return RedirectResponse
+     *
+     * @param  string  $provider  サービス名
      */
     public function handleProviderCallback(string $provider): RedirectResponse
     {

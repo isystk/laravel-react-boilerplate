@@ -11,7 +11,6 @@ use Throwable;
 
 class Handler extends ExceptionHandler
 {
-
     /**
      * A list of the inputs that are never flashed for validation exceptions.
      *
@@ -28,16 +27,13 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->reportable(function (Throwable $e)
-        {
+        $this->reportable(function (Throwable $e) {
             //
         });
     }
 
     /**
-     * @param Request $request
-     * @param AuthenticationException $exception
-     * @return RedirectResponse|JsonResponse
+     * @param  Request  $request
      */
     protected function unauthenticated($request, AuthenticationException $exception): RedirectResponse|JsonResponse
     {

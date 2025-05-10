@@ -20,7 +20,7 @@ class IndexService extends BaseService
 
     /**
      * 注文情報を検索します。
-     * @param SearchConditionDto $searchCondition
+     *
      * @return LengthAwarePaginator<int, Order>
      */
     public function searchOrder(SearchConditionDto $searchCondition): LengthAwarePaginator
@@ -33,7 +33,7 @@ class IndexService extends BaseService
             'sort_direction' => $searchCondition->sortDirection,
             'limit' => $searchCondition->limit,
         ];
+
         return $this->orderRepository->getConditionsWithUserStock($conditions);
     }
-
 }

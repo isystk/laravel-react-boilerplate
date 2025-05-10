@@ -13,7 +13,6 @@ use Throwable;
 
 class EditController extends BaseController
 {
-
     /**
      * 顧客変更画面の初期表示
      */
@@ -21,11 +20,13 @@ class EditController extends BaseController
     {
         // 上位管理者のみがアクセス可能
         $this->authorize('high-manager');
+
         return view('admin.user.edit', compact('user'));
     }
 
     /**
      * 顧客変更画面の登録処理
+     *
      * @throws Throwable
      */
     public function update(UpdateRequest $request, User $user): RedirectResponse
@@ -41,7 +42,7 @@ class EditController extends BaseController
             DB::rollBack();
             throw $e;
         }
+
         return redirect(route('admin.user'));
     }
-
 }

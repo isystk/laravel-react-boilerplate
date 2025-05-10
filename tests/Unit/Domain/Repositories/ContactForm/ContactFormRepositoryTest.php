@@ -9,7 +9,6 @@ use Tests\TestCase;
 
 class ContactFormRepositoryTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private ContactFormRepository $repository;
@@ -23,7 +22,7 @@ class ContactFormRepositoryTest extends TestCase
     /**
      * getByConditionsのテスト
      */
-    public function testGetByConditions(): void
+    public function test_get_by_conditions(): void
     {
         $defaultConditions = [
             'user_name' => null,

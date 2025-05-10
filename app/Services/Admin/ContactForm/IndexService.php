@@ -7,7 +7,6 @@ use App\Domain\Repositories\ContactForm\ContactFormRepository;
 use App\Dto\Request\Admin\ContactForm\SearchConditionDto;
 use App\Services\BaseService;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Http\Request;
 
 class IndexService extends BaseService
 {
@@ -21,7 +20,7 @@ class IndexService extends BaseService
 
     /**
      * お問い合わせを検索します。
-     * @param SearchConditionDto $searchConditionDto
+     *
      * @return LengthAwarePaginator<int, ContactForm>
      */
     public function searchContactForm(SearchConditionDto $searchConditionDto): LengthAwarePaginator
@@ -33,6 +32,7 @@ class IndexService extends BaseService
             'sort_direction' => $searchConditionDto->sortDirection,
             'limit' => $searchConditionDto->limit,
         ];
+
         return $this->contactFormRepository->getByConditions($conditions);
     }
 }

@@ -2,20 +2,18 @@
 
 namespace Tests\Unit\Services\Admin\Order;
 
-use App\Domain\Entities\Order;
 use App\Domain\Entities\OrderStock;
 use App\Dto\Request\Admin\Order\SearchConditionDto;
 use App\Services\Admin\Order\IndexService;
 use App\Utils\DateUtil;
-use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Request;
 use Tests\TestCase;
 
 class IndexServiceTest extends TestCase
 {
-
     use RefreshDatabase;
+
     private IndexService $service;
 
     protected function setUp(): void
@@ -27,7 +25,7 @@ class IndexServiceTest extends TestCase
     /**
      * searchOrderのテスト
      */
-    public function testSearchOrder(): void
+    public function test_search_order(): void
     {
         $request = new Request([
             'user_name' => null,

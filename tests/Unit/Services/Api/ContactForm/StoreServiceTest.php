@@ -15,7 +15,6 @@ use Tests\TestCase;
 
 class StoreServiceTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private StoreService $service;
@@ -29,11 +28,11 @@ class StoreServiceTest extends TestCase
     /**
      * updateのテスト
      */
-    public function testUpdate(): void
+    public function test_update(): void
     {
         Storage::fake();
 
-        $request = new StoreRequest();
+        $request = new StoreRequest;
         $request['user_name'] = 'aaa';
         $request['title'] = 'タイトル1';
         $request['email'] = 'aaa@test.com';

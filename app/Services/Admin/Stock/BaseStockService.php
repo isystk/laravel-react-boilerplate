@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class BaseStockService extends BaseService
 {
-
     /**
      * リクエストパラメータから検索条件に変換します。
+     *
      * @return array{
      *   name : ?string,
      *   sort_name : string,
@@ -34,5 +34,4 @@ class BaseStockService extends BaseService
 
         return $conditions;
     }
-
 }

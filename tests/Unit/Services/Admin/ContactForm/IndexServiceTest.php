@@ -10,7 +10,6 @@ use Tests\TestCase;
 
 class IndexServiceTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private IndexService $service;
@@ -24,7 +23,7 @@ class IndexServiceTest extends TestCase
     /**
      * searchContactFormのテスト
      */
-    public function testSearchContactForm(): void
+    public function test_search_contact_form(): void
     {
         $request = new Request([
             'user_name' => null,

@@ -31,7 +31,7 @@ class ContactFormImageSeeder extends Seeder
                 'id' => 3,
                 'contact_form_id' => 3,
                 'file_name' => '1615273024sample.jpg',
-            ]
+            ],
         ]);
     }
 }

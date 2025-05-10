@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 
 class ListController extends BaseController
 {
-
     /**
      * 顧客一覧画面の初期表示
      */
@@ -24,5 +23,4 @@ class ListController extends BaseController
 
         return view('admin.user.index', compact('users', 'request'));
     }
-
 }

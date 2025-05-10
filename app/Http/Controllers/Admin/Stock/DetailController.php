@@ -12,7 +12,6 @@ use Throwable;
 
 class DetailController extends BaseController
 {
-
     /**
      * 商品詳細画面の登録処理
      */
@@ -23,6 +22,7 @@ class DetailController extends BaseController
 
     /**
      * 商品詳細画面の削除処理
+     *
      * @throws Throwable
      */
     public function destroy(Stock $stock): RedirectResponse
@@ -41,6 +41,7 @@ class DetailController extends BaseController
             DB::rollBack();
             throw $e;
         }
+
         return redirect(route('admin.stock'));
     }
 }

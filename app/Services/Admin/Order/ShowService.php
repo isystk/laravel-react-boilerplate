@@ -19,11 +19,11 @@ class ShowService extends BaseService
 
     /**
      * 注文情報を取得します。
+     *
      * @return Collection<int, OrderStock>
      */
     public function getOrderStock(int $orderId): Collection
     {
         return $this->orderStockRepository->getByOrderId($orderId);
     }
-
 }

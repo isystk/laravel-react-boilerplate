@@ -13,7 +13,6 @@ use Throwable;
 
 class DetailController extends BaseController
 {
-
     /**
      * お問い合わせ詳細画面の初期表示
      */
@@ -28,6 +27,7 @@ class DetailController extends BaseController
 
     /**
      * お問い合わせ詳細画面の削除処理
+     *
      * @throws Throwable
      */
     public function destroy(ContactForm $contactForm): RedirectResponse
@@ -46,6 +46,7 @@ class DetailController extends BaseController
             DB::rollBack();
             throw $e;
         }
+
         return redirect(route('admin.contact'));
     }
 }

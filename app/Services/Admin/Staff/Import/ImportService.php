@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use RuntimeException;
 
-
 class ImportService extends BaseService
 {
     private ImportHistoryRepository $importHistoryRepository;
@@ -24,7 +23,6 @@ class ImportService extends BaseService
     ) {
         $this->importHistoryRepository = $importHistoryRepository;
     }
-
 
     /**
      * 管理者をインポートするJobを登録します。

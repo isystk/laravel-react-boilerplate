@@ -2,6 +2,4 @@
 
 namespace App\Services;
 
-abstract class BaseService
-{
-}
+abstract class BaseService {}

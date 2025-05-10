@@ -11,8 +11,6 @@ class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -35,6 +33,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         $maxlength = config('const.maxlength.admins');
+
         return [
             'name' => [
                 'required',
@@ -88,5 +87,4 @@ class StoreRequest extends FormRequest
             '*.Illuminate\Validation\Rules\Enum' => ':attributeの値が不正です。',
         ];
     }
-
 }

@@ -7,21 +7,15 @@ use Illuminate\Support\Collection;
 interface BaseRepository
 {
     /**
-     * @param array<string, mixed> $data
-     * @return mixed
+     * @param  array<string, mixed>  $data
      */
     public function create(array $data): mixed;
 
     /**
-     * @param int $id
-     * @param array<string, mixed> $data
-     * @return mixed
+     * @param  array<string, mixed>  $data
      */
     public function update(int $id, array $data): mixed;
 
-    /**
-     * @param int $id
-     */
     public function delete(int $id): void;
 
     /**
@@ -29,10 +23,5 @@ interface BaseRepository
      */
     public function getAll(): Collection;
 
-    /**
-     * @param int $id
-     * @return mixed
-     */
     public function findById(int $id): mixed;
-
 }

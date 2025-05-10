@@ -9,10 +9,6 @@ use Illuminate\Support\Collection;
 
 class ContactFormEloquentRepository extends BaseEloquentRepository implements ContactFormRepository
 {
-
-    /**
-     * @return string
-     */
     protected function model(): string
     {
         return ContactForm::class;
@@ -20,6 +16,7 @@ class ContactFormEloquentRepository extends BaseEloquentRepository implements Co
 
     /**
      * 検索条件からデータを取得します。
+     *
      * @param array{
      *   user_name : ?string,
      *   title : ?string,
@@ -48,8 +45,8 @@ class ContactFormEloquentRepository extends BaseEloquentRepository implements Co
             /** @var LengthAwarePaginator<int, ContactForm> */
             return $query->paginate($conditions['limit']);
         }
+
         /** @var Collection<int, ContactForm> */
         return $query->get();
     }
-
 }

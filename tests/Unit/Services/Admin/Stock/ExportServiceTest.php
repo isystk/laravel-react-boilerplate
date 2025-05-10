@@ -10,7 +10,6 @@ use Tests\TestCase;
 
 class ExportServiceTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private ExportService $service;
@@ -24,7 +23,7 @@ class ExportServiceTest extends TestCase
     /**
      * getExportのテスト
      */
-    public function testGetExport(): void
+    public function test_get_export(): void
     {
         $request = new Request([
             'name' => null,
@@ -44,8 +43,8 @@ class ExportServiceTest extends TestCase
         $export = $this->service->getExport($input);
         $rows = $export->collection();
 
-        $this->assertSame($stock2->id, $rows[0]["id"], '「ID」が正しく出力されること');
-        $this->assertSame($stock2->name, $rows[0]["name"], '「商品名」が正しく出力されること');
-        $this->assertSame($stock2->price, $rows[0]["price"], '「価格」が正しく出力されること');
+        $this->assertSame($stock2->id, $rows[0]['id'], '「ID」が正しく出力されること');
+        $this->assertSame($stock2->name, $rows[0]['name'], '「商品名」が正しく出力されること');
+        $this->assertSame($stock2->price, $rows[0]['price'], '「価格」が正しく出力されること');
     }
 }

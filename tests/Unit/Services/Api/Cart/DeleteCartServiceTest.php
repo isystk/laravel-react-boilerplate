@@ -8,7 +8,6 @@ use Tests\TestCase;
 
 class DeleteCartServiceTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private DeleteCartService $service;
@@ -22,7 +21,7 @@ class DeleteCartServiceTest extends TestCase
     /**
      * deleteMyCartのテスト
      */
-    public function testGetMyCart(): void
+    public function test_get_my_cart(): void
     {
         $user1 = $this->createDefaultUser([
             'name' => 'aaa',

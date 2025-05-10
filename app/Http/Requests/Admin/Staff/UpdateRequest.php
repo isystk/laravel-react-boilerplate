@@ -11,8 +11,6 @@ class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -37,6 +35,7 @@ class UpdateRequest extends FormRequest
         /** @var Admin $staff */
         $staff = $this->route('staff');
         $maxlength = config('const.maxlength.admins');
+
         return [
             'name' => [
                 'required',
@@ -53,8 +52,7 @@ class UpdateRequest extends FormRequest
             'role' => [
                 'required',
                 new Enum(AdminRole::class),
-                function ($attribute, $value, $fail) use ($staff)
-                {
+                function ($attribute, $value, $fail) use ($staff) {
                     if ($this->role !== $staff->role &&
                         $staff->id === auth()->user()->id) {
                         // 自分の権限は変更させない
@@ -91,5 +89,4 @@ class UpdateRequest extends FormRequest
             '*.Illuminate\Validation\Rules\Enum' => ':attributeの値が不正です。',
         ];
     }
-
 }

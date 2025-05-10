@@ -57,5 +57,4 @@ class ImportHistory extends Model
     {
         return JobStatus::get($this->status);
     }
-
 }

@@ -20,8 +20,6 @@ class ExportService extends BaseStockService
 
     /**
      * エクスポート用のオブジェクトを取得します。
-     * @param SearchConditionDto $searchConditionDto
-     * @return StockExport
      */
     public function getExport(SearchConditionDto $searchConditionDto): StockExport
     {
@@ -32,7 +30,7 @@ class ExportService extends BaseStockService
         ];
         /** @var Collection<int, Stock> $stocks */
         $stocks = $this->stockRepository->getByConditions($items);
+
         return new StockExport($stocks);
     }
-
 }

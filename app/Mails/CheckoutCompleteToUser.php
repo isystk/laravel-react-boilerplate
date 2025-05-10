@@ -12,7 +12,9 @@ class CheckoutCompleteToUser extends Mailable
     use Queueable, SerializesModels;
 
     private User $user;
+
     private int $amount;
+
     /**
      * @var array<array{
      *     name: string,
@@ -21,7 +23,6 @@ class CheckoutCompleteToUser extends Mailable
      * }>
      */
     private array $orderItems;
-
 
     /**
      * @param array<array{

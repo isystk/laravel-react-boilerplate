@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ListController extends BaseController
 {
-
     /**
      * 商品一覧画面の初期表示
      */
@@ -53,10 +52,11 @@ class ListController extends BaseController
             $rows = $export->collection();
             /** @var PDF $pdf */
             $pdf = app(PDF::class);
+
             return $pdf->loadView('admin.stock.pdf', compact('headers', 'rows'))
                 ->download('stocks.pdf');
         }
+
         return Excel::download($export, 'stocks.xlsx');
     }
-
 }

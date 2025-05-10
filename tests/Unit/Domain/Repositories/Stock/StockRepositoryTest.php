@@ -9,7 +9,6 @@ use Tests\TestCase;
 
 class StockRepositoryTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private StockRepository $repository;
@@ -24,7 +23,7 @@ class StockRepositoryTest extends TestCase
     /**
      * getByLimitのテスト
      */
-    public function testGetByLimit(): void
+    public function test_get_by_limit(): void
     {
         $stocks = $this->repository->getByLimit()->items();
         $this->assertCount(0, $stocks, 'データがない状態で正常に動作することを始めにテスト');
@@ -42,7 +41,7 @@ class StockRepositoryTest extends TestCase
     /**
      * getByConditionsのテスト
      */
-    public function testGetByConditions(): void
+    public function test_get_by_conditions(): void
     {
         $defaultConditions = [
             'name' => null,

@@ -8,7 +8,6 @@ use Tests\TestCase;
 
 class OrderStockRepositoryTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private OrderStockRepository $repository;
@@ -23,7 +22,7 @@ class OrderStockRepositoryTest extends TestCase
     /**
      * getByOrderIdのテスト
      */
-    public function testGetByOrderId(): void
+    public function test_get_by_order_id(): void
     {
         $user1 = $this->createDefaultUser(['name' => 'user1', 'email' => 'user1@test.com']);
 

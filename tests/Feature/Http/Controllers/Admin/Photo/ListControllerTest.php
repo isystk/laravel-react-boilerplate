@@ -9,10 +9,9 @@ use Tests\TestCase;
 
 class ListControllerTest extends TestCase
 {
-
     use RefreshDatabase;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->withoutMiddleware(ValidateCsrfToken::class);
@@ -21,7 +20,7 @@ class ListControllerTest extends TestCase
     /**
      * 画像一覧画面表示のテスト
      */
-    public function testIndex(): void
+    public function test_index(): void
     {
         Storage::fake();
 
@@ -48,7 +47,7 @@ class ListControllerTest extends TestCase
     /**
      * 画像一覧画面 削除のテスト
      */
-    public function testDestroy(): void
+    public function test_destroy(): void
     {
         Storage::fake();
 
@@ -88,5 +87,4 @@ class ListControllerTest extends TestCase
         // ファイルが削除されたことを確認
         $this->assertFalse(Storage::exists('stock\stock1.jpg'));
     }
-
 }

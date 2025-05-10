@@ -30,8 +30,6 @@ class AdminFactory extends Factory
 
     /**
      * Indicate that the model's email address should be unverified.
-     *
-     * @return Factory
      */
     public function unverified(): Factory
     {
@@ -40,5 +38,4 @@ class AdminFactory extends Factory
             ];
         });
     }
-
 }

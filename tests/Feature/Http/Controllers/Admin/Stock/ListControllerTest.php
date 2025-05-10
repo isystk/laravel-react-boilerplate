@@ -9,10 +9,9 @@ use Tests\TestCase;
 
 class ListControllerTest extends TestCase
 {
-
     use RefreshDatabase;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->withoutMiddleware(ValidateCsrfToken::class);
@@ -21,7 +20,7 @@ class ListControllerTest extends TestCase
     /**
      * 商品一覧画面表示のテスト
      */
-    public function testIndex(): void
+    public function test_index(): void
     {
         $this->createDefaultStock(['name' => 'stock1']);
         $this->createDefaultStock(['name' => 'stock2']);
@@ -36,5 +35,4 @@ class ListControllerTest extends TestCase
         $response->assertSuccessful();
         $response->assertSeeInOrder(['stock1', 'stock2']);
     }
-
 }

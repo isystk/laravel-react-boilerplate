@@ -26,7 +26,6 @@ use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
-
     /**
      * Register any application services.
      */
@@ -43,5 +42,4 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ImportHistoryRepository::class, ImportHistoryEloquentRepository::class);
         $this->app->bind(MonthlySaleRepository::class, MonthlySaleEloquentRepository::class);
     }
-
 }

@@ -7,12 +7,11 @@ use Illuminate\Http\Response;
 
 class CsvUtil
 {
-
     /**
      * CSVファイルの生成
-     * @param array<array<string|int>> $rows
-     * @param array<string> $headers
-     * @return string
+     *
+     * @param  array<array<string|int>>  $rows
+     * @param  array<string>  $headers
      */
     public static function make(array $rows, array $headers): string
     {
@@ -26,25 +25,27 @@ class CsvUtil
         rewind($stream);
         $csv = str_replace(PHP_EOL, "\r\n", stream_get_contents($stream));
         $csv = "\xEF\xBB\xBF" . $csv; // BOM 追加
+
         return $csv;
     }
 
     /**
      * CSVダウンロード
-     * @param array<int, array<int, mixed>> $list
-     * @param array<string> $header
-     * @param string $filename
-     * @return Response
+     *
+     * @param  array<int, array<int, mixed>>  $list
+     * @param  array<string>  $header
+     *
      * @throws BindingResolutionException
      */
     public static function download(array $list, array $header, string $filename): Response
     {
         $csv = self::make($list, $header);
 
-        $headers = array(
+        $headers = [
             'Content-Type' => 'text/csv',
             'Content-Disposition' => "attachment; filename=$filename",
-        );
+        ];
+
         return response()->make($csv, 200, $headers);
     }
 }

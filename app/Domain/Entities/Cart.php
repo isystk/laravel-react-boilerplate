@@ -59,5 +59,4 @@ class Cart extends Model
     {
         return $this->belongsTo(Stock::class);
     }
-
 }

@@ -10,13 +10,15 @@ class StockJsonDto extends BaseJsonDto
 {
     /** @var Collection<int, Stock> 商品 */
     public Collection $stocks;
+
     // 現在ページ
     public int $currentPage;
+
     // 合計ページ
     public int $total;
 
     /**
-     * @param LengthAwarePaginator<int, Stock> $stocks
+     * @param  LengthAwarePaginator<int, Stock>  $stocks
      */
     public function __construct(
         LengthAwarePaginator $stocks,
@@ -26,5 +28,4 @@ class StockJsonDto extends BaseJsonDto
         $this->currentPage = $stocks->currentPage();
         $this->total = $stocks->total();
     }
-
 }

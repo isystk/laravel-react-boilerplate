@@ -10,13 +10,13 @@ use Illuminate\Support\Collection;
 interface StockRepository extends BaseRepository
 {
     /**
-     * @param int $limit
      * @return LengthAwarePaginator<int, Stock>
      */
     public function getByLimit(int $limit = 0): LengthAwarePaginator;
 
     /**
      * 検索条件からデータを取得します。
+     *
      * @param array{
      *   name : ?string,
      *   sort_name : ?string,
@@ -26,5 +26,4 @@ interface StockRepository extends BaseRepository
      * @return Collection<int, Stock>|LengthAwarePaginator<int, Stock>
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator;
-
 }

@@ -4,7 +4,6 @@ namespace App\Enums;
 
 enum Gender: int
 {
-
     /** 男性 */
     case Male = 0;
     /** 女性 */
@@ -31,6 +30,7 @@ enum Gender: int
                 return $e;
             }
         }
+
         return null;
     }
 
@@ -40,9 +40,9 @@ enum Gender: int
     public static function getLabel(?int $code): string
     {
         if (null === $code || null === self::get($code)) {
-            return "";
+            return '';
         }
+
         return self::get($code)->label();
     }
-
 }

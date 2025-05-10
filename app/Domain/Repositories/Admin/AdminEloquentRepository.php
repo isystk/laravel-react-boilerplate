@@ -9,10 +9,6 @@ use Illuminate\Support\Collection;
 
 class AdminEloquentRepository extends BaseEloquentRepository implements AdminRepository
 {
-
-    /**
-     * @return string
-     */
     protected function model(): string
     {
         return Admin::class;
@@ -20,6 +16,7 @@ class AdminEloquentRepository extends BaseEloquentRepository implements AdminRep
 
     /**
      * 検索条件からデータを取得します。
+     *
      * @param array{
      *   name : ?string,
      *   email : ?string,
@@ -52,14 +49,13 @@ class AdminEloquentRepository extends BaseEloquentRepository implements AdminRep
             /** @var LengthAwarePaginator<int, Admin> */
             return $query->paginate($conditions['limit']);
         }
+
         /** @var Collection<int, Admin> */
         return $query->get();
     }
 
     /**
      * メールアドレスからレコードを取得します。
-     * @param string $email
-     * @return Admin|null
      */
     public function getByEmail(string $email): ?Admin
     {
@@ -71,6 +67,7 @@ class AdminEloquentRepository extends BaseEloquentRepository implements AdminRep
 
     /**
      * すべてのデータをIDの昇順で取得します。
+     *
      * @return Collection<int, Admin>
      */
     public function getAllOrderById(): Collection
@@ -80,5 +77,4 @@ class AdminEloquentRepository extends BaseEloquentRepository implements AdminRep
             ->orderBy('id', 'asc')
             ->get();
     }
-
 }

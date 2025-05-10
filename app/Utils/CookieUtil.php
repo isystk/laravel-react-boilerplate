@@ -11,21 +11,17 @@ class CookieUtil
     /**
      * クッキーから配列を取得
      *
-     * @param string $key
      * @return array<string>
      */
     public static function get(string $key): array
     {
         $value = Cookie::get($key);
+
         return $value ? explode(',', $value) : [];
     }
 
     /**
      * 値を追加（重複は無視）
-     *
-     * @param string $key
-     * @param string $value
-     * @param int $expires
      */
     public static function add(string $key, string $value, int $expires = self::DEFAULT_EXPIRES_MINUTES): void
     {
@@ -38,15 +34,11 @@ class CookieUtil
 
     /**
      * 値を削除
-     *
-     * @param string $key
-     * @param string $value
-     * @param int $expires
      */
     public static function remove(string $key, string $value, int $expires = self::DEFAULT_EXPIRES_MINUTES): void
     {
         $items = self::get($key);
-        $filtered = array_filter($items, fn($item) => $item !== $value);
+        $filtered = array_filter($items, fn ($item) => $item !== $value);
 
         if (count($items) !== count($filtered)) {
             Cookie::queue($key, implode(',', $filtered), $expires);

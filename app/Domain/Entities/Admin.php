@@ -23,6 +23,7 @@ class Admin extends Authenticatable
 {
     /** @phpstan-use HasFactory<AdminFactory> */
     use HasFactory;
+
     use Notifiable;
 
     protected $table = 'admins';
@@ -74,5 +75,4 @@ class Admin extends Authenticatable
     {
         return AdminRole::Manager->value === $this->role;
     }
-
 }

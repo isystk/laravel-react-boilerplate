@@ -12,6 +12,7 @@ interface OrderRepository extends BaseRepository
 {
     /**
      * 検索条件からデータを取得します。
+     *
      * @param array{
      *   user_name : ?string,
      *   order_date_from : ?CarbonImmutable,
@@ -23,5 +24,4 @@ interface OrderRepository extends BaseRepository
      * @return Collection<int, Order>|LengthAwarePaginator<int, Order>
      */
     public function getConditionsWithUserStock(array $conditions): Collection|LengthAwarePaginator;
-
 }

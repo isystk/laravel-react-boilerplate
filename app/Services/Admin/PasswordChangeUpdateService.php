@@ -28,5 +28,4 @@ class PasswordChangeUpdateService extends BaseService
             ]
         );
     }
-
 }

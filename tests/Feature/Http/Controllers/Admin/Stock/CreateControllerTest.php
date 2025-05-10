@@ -10,10 +10,9 @@ use Tests\TestCase;
 
 class CreateControllerTest extends TestCase
 {
-
     use RefreshDatabase;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->withoutMiddleware(ValidateCsrfToken::class);
@@ -22,7 +21,7 @@ class CreateControllerTest extends TestCase
     /**
      * 商品新規登録画面表示のテスト
      */
-    public function testCreate(): void
+    public function test_create(): void
     {
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
@@ -47,7 +46,7 @@ class CreateControllerTest extends TestCase
     /**
      * 商品新規登録画面 登録のテスト
      */
-    public function testStore(): void
+    public function test_store(): void
     {
         Storage::fake();
 
@@ -90,5 +89,4 @@ class CreateControllerTest extends TestCase
             'imgpath' => 'image1.jpg',
         ]);
     }
-
 }

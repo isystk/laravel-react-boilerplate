@@ -9,10 +9,6 @@ use Illuminate\Support\Collection;
 
 class StockEloquentRepository extends BaseEloquentRepository implements StockRepository
 {
-
-    /**
-     * @return string
-     */
     protected function model(): string
     {
         return Stock::class;
@@ -20,7 +16,7 @@ class StockEloquentRepository extends BaseEloquentRepository implements StockRep
 
     /**
      * 指定した件数のデータを最新順に取得します。
-     * @param int $limit
+     *
      * @return LengthAwarePaginator<int, Stock>
      */
     public function getByLimit(int $limit = 0): LengthAwarePaginator
@@ -33,6 +29,7 @@ class StockEloquentRepository extends BaseEloquentRepository implements StockRep
 
     /**
      * 検索条件からデータを取得します。
+     *
      * @param array{
      *   name : ?string,
      *   sort_name : ?string,
@@ -57,8 +54,8 @@ class StockEloquentRepository extends BaseEloquentRepository implements StockRep
             /** @var LengthAwarePaginator<int, Stock> */
             return $query->paginate($conditions['limit']);
         }
+
         /** @var Collection<int, Stock> */
         return $query->get();
     }
-
 }

@@ -6,7 +6,7 @@ return [
 
     'maxlength' => [
         'commons' => [
-            'date' => 10
+            'date' => 10,
         ],
         'users' => [
             'name' => 50,
@@ -35,10 +35,10 @@ return [
             'title' => 50,
             'email' => 64,
             'url' => 255,
-            'contact' => 200
+            'contact' => 200,
         ],
         'contact_form_images' => [
-         ],
+        ],
     ],
 
     'mail' => [
@@ -58,5 +58,5 @@ return [
 
     'stripe' => [
         'secret' => env('STRIPE_SECRET', ''),
-     ],
+    ],
 ];

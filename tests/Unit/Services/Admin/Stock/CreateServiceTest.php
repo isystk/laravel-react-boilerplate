@@ -11,7 +11,6 @@ use Tests\TestCase;
 
 class CreateServiceTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private CreateService $service;
@@ -25,11 +24,11 @@ class CreateServiceTest extends TestCase
     /**
      * createのテスト
      */
-    public function testCreate(): void
+    public function test_create(): void
     {
         Storage::fake();
 
-        $request = new StoreRequest();
+        $request = new StoreRequest;
         $request['name'] = 'aaa';
         $request['detail'] = 'aaaの説明';
         $request['price'] = 111;

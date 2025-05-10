@@ -12,7 +12,6 @@ use Throwable;
 
 class CreateController extends BaseController
 {
-
     /**
      * スタッフ登録画面の初期表示
      */
@@ -20,11 +19,13 @@ class CreateController extends BaseController
     {
         // 上位管理者のみがアクセス可能
         $this->authorize('high-manager');
+
         return view('admin.staff.create');
     }
 
     /**
      * スタッフ登録画面の登録処理
+     *
      * @throws Throwable
      */
     public function store(StoreRequest $request): RedirectResponse
@@ -43,5 +44,4 @@ class CreateController extends BaseController
 
         return redirect(route('admin.staff'));
     }
-
 }

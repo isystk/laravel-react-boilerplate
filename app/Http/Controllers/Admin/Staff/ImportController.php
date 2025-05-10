@@ -21,7 +21,6 @@ use Throwable;
 
 class ImportController extends BaseController
 {
-
     /**
      * スタッフ一括インポート画面の初期表示
      */
@@ -61,6 +60,7 @@ class ImportController extends BaseController
 
     /**
      * スタッフ一括インポート画面のインポート処理
+     *
      * @throws Throwable
      */
     public function store(StoreRequest $request): RedirectResponse
@@ -84,6 +84,7 @@ class ImportController extends BaseController
             DB::rollBack();
             throw $e;
         }
+
         return redirect(route('admin.staff.import'))->with('success', 'ファイルのインポートに成功しました。');
     }
 
@@ -99,7 +100,7 @@ class ImportController extends BaseController
 
         /** @var ImportFileService $service */
         $service = app(ImportFileService::class);
-        [$importFilePath, $importFileName] = $service->getImportFilePath((int)$importHistoryId);
+        [$importFilePath, $importFileName] = $service->getImportFilePath((int) $importHistoryId);
 
         return response()->download(Storage::disk('local')->path($importFilePath), $importFileName);
     }

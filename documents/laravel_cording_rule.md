@@ -43,15 +43,15 @@
 ## コーディングスタイル
 
 - インデントは スペース4つとし、タブは使用しません。
-- 可能な限り型宣言（タイプヒント、リターンヒント、 phpDoc）を使用します。
 - 厳密な比較を行う（`==`, `!=` などの曖昧な比較を使わない）
-- 制御構文では、1行でも必ず波括弧 `{}` を使用します（省略禁止）。
+- 制御構文では、1行でも必ずブロック `{}` を使用します（省略禁止）。
 - `else if` ではなく `elseif` を使用する（スペースで空けない）。
-- クラスやメソッドの `{}` は改行で独立させます。（但し、引数に改行が含まれる場合は一行で書くこと）
+- クラスやメソッドの `{}` は改行で独立させます。（但し、引数に改行が含まれる場合は一行で書く）
 - 三項演算子のネストは禁止
 - ヨーダ記法（比較の際にチェック値を左に置く）
 - 複数行配列の最後にカンマを置く
 - 配列内は改行させる
+- タイプヒント、リターンヒントで型定義を行い、難しい場合はphpDocを代用する。
 
 ---
 
@@ -402,7 +402,7 @@ Route::prefix('admin')->group(function () {
 - `Storage:fake()`、`Mail::fake()` などのFacadeを積極的に利用します。
 
 ```php
-public function test_更新処理(): void
+public function test_update(): void
 {
     $user = $this->createDefaultUser([
         'name' => 'aaa',
@@ -427,6 +427,7 @@ public function test_更新処理(): void
 - 以下のツールを使用して、コードの品質を自動でチェック・整形します。
 - PHPStan：静的解析（./vendor/bin/phpstan analyse --memory-limit=1G）
 - PHPUnit：テスト実行（./vendor/bin/phpunit tests）
+- PinT：コード整形（./vendor/bin/pint）
 - PHP Intelephense（VSCodeの拡張機能）：コード整形（設定画面からFormat On Saveを有効にします）
 
 ---

@@ -14,5 +14,4 @@ class ReactController extends BaseController
     {
         return view('front.react');
     }
-
 }

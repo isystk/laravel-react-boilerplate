@@ -53,5 +53,4 @@ class Stock extends Model
     {
         return 0 < $this->quantity;
     }
-
 }

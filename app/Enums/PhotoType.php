@@ -41,6 +41,7 @@ enum PhotoType: int
                 return $e;
             }
         }
+
         return null;
     }
 
@@ -50,8 +51,9 @@ enum PhotoType: int
     public static function getLabel(?int $code): string
     {
         if (null === $code || null === self::get($code)) {
-            return "";
+            return '';
         }
+
         return self::get($code)->label();
     }
 
@@ -66,5 +68,4 @@ enum PhotoType: int
             default => throw new \RuntimeException('An unexpected error occurred.')
         };
     }
-
 }

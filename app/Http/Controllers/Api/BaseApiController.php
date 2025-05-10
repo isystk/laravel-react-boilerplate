@@ -19,6 +19,7 @@ class BaseApiController extends BaseController
                 'messages' => [$e->getMessage()],
             ],
         ];
+
         return response()->json($items, $e->getCode());
     }
 }

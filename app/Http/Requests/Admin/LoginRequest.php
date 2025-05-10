@@ -24,10 +24,10 @@ class LoginRequest extends FormRequest
                 'string',
             ],
             // reCaptchaによる認証チェックはコメントアウトしておく
-//            'g-recaptcha-response' => [
-//                'required',
-//                'recaptchav3:login,0.5'
-//            ],
+            //            'g-recaptcha-response' => [
+            //                'required',
+            //                'recaptchav3:login,0.5'
+            //            ],
         ];
     }
 
@@ -43,5 +43,4 @@ class LoginRequest extends FormRequest
             'password' => __('user.Password'),
         ];
     }
-
 }

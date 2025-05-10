@@ -9,7 +9,6 @@ use Tests\TestCase;
 
 class AddCartServiceTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private AddCartService $service;
@@ -23,7 +22,7 @@ class AddCartServiceTest extends TestCase
     /**
      * addMyCartのテスト
      */
-    public function testGetMyCart(): void
+    public function test_get_my_cart(): void
     {
         $user1 = $this->createDefaultUser([
             'name' => 'aaa',

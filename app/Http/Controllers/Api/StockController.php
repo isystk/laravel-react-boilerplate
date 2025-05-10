@@ -9,7 +9,6 @@ use Throwable;
 
 class StockController extends BaseApiController
 {
-
     /**
      * 商品一覧のデータをJSONで返却します。
      */
@@ -23,7 +22,7 @@ class StockController extends BaseApiController
         } catch (Throwable $e) {
             return $this->getErrorJsonResponse($e);
         }
+
         return response()->json($result);
     }
-
 }

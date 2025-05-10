@@ -15,15 +15,16 @@ use Tests\TestCase;
 class StoreRequestTest extends TestCase
 {
     private StoreRequest $request;
+
     /**
      * @var array<string, int|string>
      */
     private array $baseRequest;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
-        $this->request = new StoreRequest();
+        $this->request = new StoreRequest;
         $this->baseRequest = [
             'user_name' => 'user1',
             'title' => 'titleA',
@@ -37,10 +38,11 @@ class StoreRequestTest extends TestCase
     }
 
     /**
-     * @param array<string> $attrs 変更する値の配列
-     * @param boolean $expect 期待されるバリデーション結果
-     * @param string $attribute 属性の名称
-     * @param array<string> $messages 期待されるエラーメッセージ
+     * @param  array<string>  $attrs  変更する値の配列
+     * @param  bool  $expect  期待されるバリデーション結果
+     * @param  string  $attribute  属性の名称
+     * @param  array<string>  $messages  期待されるエラーメッセージ
+     *
      * @throws Exception
      */
     #[Test]
@@ -48,9 +50,9 @@ class StoreRequestTest extends TestCase
     #[DataProvider('dataValidate')]
     public function validate(array $attrs, bool $expect, string $attribute, array $messages): void
     {
-        //リクエストデータ作成
+        // リクエストデータ作成
         $requestData = [...$this->baseRequest, ...$attrs];
-        //バリデーションルール取得
+        // バリデーションルール取得
         $rules = $this->request->rules();
         $validator = Validator::make($requestData, $rules, $this->request->messages(), $this->request->attributes());
 
@@ -68,6 +70,7 @@ class StoreRequestTest extends TestCase
 
     /**
      * バリデーションテストデータ
+     *
      * @return array<string, mixed>
      */
     public static function dataValidate(): array
@@ -82,7 +85,7 @@ class StoreRequestTest extends TestCase
                 ],
             ],
             'NG : user_name 文字数上限を超えている' => [
-                'attrs' => ['user_name' => implode("", range(1, 51))],
+                'attrs' => ['user_name' => implode('', range(1, 51))],
                 'expect' => false,
                 'attribute' => 'user_name',
                 'messages' => [
@@ -104,7 +107,7 @@ class StoreRequestTest extends TestCase
                 ],
             ],
             'NG : title 文字数上限を超えている' => [
-                'attrs' => ['title' => implode("", range(1, 51))],
+                'attrs' => ['title' => implode('', range(1, 51))],
                 'expect' => false,
                 'attribute' => 'title',
                 'messages' => [
@@ -126,7 +129,7 @@ class StoreRequestTest extends TestCase
                 ],
             ],
             'OK : email 文字数上限を超えている' => [
-                'attrs' => ['email' => implode("", range(1, 56)) . '@test.com'],
+                'attrs' => ['email' => implode('', range(1, 56)) . '@test.com'],
                 'expect' => false,
                 'attribute' => 'email',
                 'messages' => [
@@ -200,7 +203,7 @@ class StoreRequestTest extends TestCase
                 ],
             ],
             'NG : contact 文字数上限を超えている' => [
-                'attrs' => ['contact' => implode("", range(1, 201))],
+                'attrs' => ['contact' => implode('', range(1, 201))],
                 'expect' => false,
                 'attribute' => 'contact',
                 'messages' => [

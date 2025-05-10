@@ -17,7 +17,7 @@ class ExportMonthlySalesTest extends TestCase
     /**
      * 各テストの実行前に起動するメソッド
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->sut = app(ExportMonthlySales::class);
@@ -26,7 +26,7 @@ class ExportMonthlySalesTest extends TestCase
     /**
      * 各テストの実行後に起動するメソッド
      */
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
 
@@ -37,7 +37,7 @@ class ExportMonthlySalesTest extends TestCase
     /**
      * 出力データがない場合にヘッダーのみが出力されることをテスト
      */
-    public function testHeaderOutputWithoutData(): void
+    public function test_header_output_without_data(): void
     {
         // バッチ処理の実行
         $this->runBatch('export_monthly_sales', ['output_path' => $this->output]);
@@ -53,11 +53,11 @@ class ExportMonthlySalesTest extends TestCase
     /**
      * すべての値が想定通りに出力されることのテスト
      */
-    public function testAllValues(): void
+    public function test_all_values(): void
     {
         // 月別売上の作成
         $m1 = $this->createDefaultMonthlySale([
-            'year_month' => "202404",
+            'year_month' => '202404',
             'order_count' => 111,
             'amount' => 54321,
         ]);
@@ -70,28 +70,28 @@ class ExportMonthlySalesTest extends TestCase
         array_shift($rows);
 
         $this->assertSame($m1->year_month, $rows[0][0], '「年月」が正しく出力されること');
-        $this->assertSame((string)$m1->order_count, $rows[0][1], '「注文件数」が正しく出力されること');
-        $this->assertSame((string)$m1->amount, $rows[0][2], '「売上金額」が正しく出力されること');
+        $this->assertSame((string) $m1->order_count, $rows[0][1], '「注文件数」が正しく出力されること');
+        $this->assertSame((string) $m1->amount, $rows[0][2], '「売上金額」が正しく出力されること');
     }
 
     /**
      * 年月 の順で出力されることのテスト
      */
-    public function testSortOrder(): void
+    public function test_sort_order(): void
     {
         // 月別売上の作成
         $m1 = $this->createDefaultMonthlySale([
-            'year_month' => "202404",
+            'year_month' => '202404',
             'order_count' => 222,
             'amount' => 54321,
         ]);
         $m2 = $this->createDefaultMonthlySale([
-            'year_month' => "202405",
+            'year_month' => '202405',
             'order_count' => 333,
             'amount' => 65432,
         ]);
         $m3 = $this->createDefaultMonthlySale([
-            'year_month' => "202406",
+            'year_month' => '202406',
             'order_count' => 111,
             'amount' => 76543,
         ]);
@@ -115,5 +115,4 @@ class ExportMonthlySalesTest extends TestCase
         ];
         $this->assertSame($expected, $actual, '「年月」の順で出力されること');
     }
-
 }

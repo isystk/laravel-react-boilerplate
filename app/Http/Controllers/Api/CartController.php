@@ -14,7 +14,6 @@ use Throwable;
 
 class CartController extends BaseApiController
 {
-
     /**
      * マイカートのデータをJSONで返却します。
      */
@@ -31,6 +30,7 @@ class CartController extends BaseApiController
         } catch (Throwable $e) {
             return $this->getErrorJsonResponse($e);
         }
+
         return response()->json($result);
     }
 
@@ -42,10 +42,10 @@ class CartController extends BaseApiController
         /** @var AddCartService $service */
         $service = app(AddCartService::class);
         try {
-            //カートに追加の処理
+            // カートに追加の処理
             $message = $service->addMyCart($request->stock_id);
 
-            //追加後の情報を取得
+            // 追加後の情報を取得
             $carts = $service->getMyCart();
 
             $result = [
@@ -56,6 +56,7 @@ class CartController extends BaseApiController
         } catch (Throwable $e) {
             return $this->getErrorJsonResponse($e);
         }
+
         return response()->json($result);
     }
 
@@ -67,10 +68,10 @@ class CartController extends BaseApiController
         /** @var DeleteCartService $service */
         $service = app(DeleteCartService::class);
         try {
-            //カートから削除の処理
+            // カートから削除の処理
             $message = $service->deleteMyCart($request->cart_id);
 
-            //追加後の情報を取得
+            // 追加後の情報を取得
             $carts = $service->getMyCart();
 
             $result = [
@@ -81,6 +82,7 @@ class CartController extends BaseApiController
         } catch (Throwable $e) {
             return $this->getErrorJsonResponse($e);
         }
+
         return response()->json($result);
     }
 
@@ -96,11 +98,13 @@ class CartController extends BaseApiController
         } catch (Throwable $e) {
             return $this->getErrorJsonResponse($e);
         }
+
         return response()->json($result);
     }
 
     /**
      * マイカートのデータをStripeで決済処理します。
+     *
      * @throws Throwable
      */
     public function checkout(Request $request): JsonResponse
@@ -123,8 +127,10 @@ class CartController extends BaseApiController
             DB::commit();
         } catch (Throwable $e) {
             DB::rollBack();
+
             return $this->getErrorJsonResponse($e);
         }
+
         return response()->json($result);
     }
 }

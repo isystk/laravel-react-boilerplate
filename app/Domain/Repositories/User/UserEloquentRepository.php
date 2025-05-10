@@ -9,9 +9,6 @@ use Illuminate\Support\Collection;
 
 class UserEloquentRepository extends BaseEloquentRepository implements UserRepository
 {
-    /**
-     * @return string
-     */
     protected function model(): string
     {
         return User::class;
@@ -19,6 +16,7 @@ class UserEloquentRepository extends BaseEloquentRepository implements UserRepos
 
     /**
      * 検索条件からデータを取得します。
+     *
      * @param array{
      *   name : ?string,
      *   email : ?string,
@@ -47,8 +45,8 @@ class UserEloquentRepository extends BaseEloquentRepository implements UserRepos
             /** @var LengthAwarePaginator<int, User> */
             return $query->paginate($conditions['limit']);
         }
+
         /** @var Collection<int, User> */
         return $query->get();
     }
-
 }

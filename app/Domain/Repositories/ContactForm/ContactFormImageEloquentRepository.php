@@ -8,10 +8,6 @@ use Illuminate\Support\Collection;
 
 class ContactFormImageEloquentRepository extends BaseEloquentRepository implements ContactFormImageRepository
 {
-
-    /**
-     * @return string
-     */
     protected function model(): string
     {
         return ContactFormImage::class;
@@ -19,7 +15,7 @@ class ContactFormImageEloquentRepository extends BaseEloquentRepository implemen
 
     /**
      * contactFormId からデータを取得します。
-     * @param int $contactFormId
+     *
      * @return Collection<int, ContactFormImage>
      */
     public function getByContactFormId(int $contactFormId): Collection
@@ -30,5 +26,4 @@ class ContactFormImageEloquentRepository extends BaseEloquentRepository implemen
             ->orderBy('id', 'asc')
             ->get();
     }
-
 }

@@ -10,7 +10,6 @@ use Throwable;
 
 class LikeController extends BaseApiController
 {
-
     /**
      * お気に入りデータをJSONで返却します。
      */
@@ -24,6 +23,7 @@ class LikeController extends BaseApiController
         } catch (Throwable $e) {
             return $this->getErrorJsonResponse($e);
         }
+
         return response()->json($result);
     }
 
@@ -39,6 +39,7 @@ class LikeController extends BaseApiController
         } catch (Throwable $e) {
             return $this->getErrorJsonResponse($e);
         }
+
         return response()->json(['result' => true]);
     }
 
@@ -53,6 +54,7 @@ class LikeController extends BaseApiController
         } catch (Throwable $e) {
             return $this->getErrorJsonResponse($e);
         }
+
         return response()->json(['result' => true]);
     }
 }

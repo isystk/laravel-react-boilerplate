@@ -7,7 +7,6 @@ use Exception;
 
 class DateUtil
 {
-
     /**
      * 日付文字列をCarbonに変換します。
      */
@@ -35,6 +34,7 @@ class DateUtil
             // 日付文字列が日付として不正な文字列だった場合
             return null;
         }
+
         return $carbon;
     }
 }

@@ -10,9 +10,8 @@ interface ContactFormImageRepository extends BaseRepository
 {
     /**
      * contactFormId からデータを取得します。
-     * @param int $contactFormId
+     *
      * @return Collection<int, ContactFormImage>
      */
     public function getByContactFormId(int $contactFormId): Collection;
-
 }

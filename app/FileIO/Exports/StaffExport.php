@@ -9,13 +9,13 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class StaffExport implements FromCollection, WithHeadings
 {
-    /** @var Collection<int, Admin> $admins */
+    /** @var Collection<int, Admin> */
     protected Collection $admins;
 
     /**
      * コンストラクタ
      *
-     * @param Collection<int, Admin> $admins 管理者のコレクション
+     * @param  Collection<int, Admin>  $admins  管理者のコレクション
      */
     public function __construct(Collection $admins)
     {
@@ -34,8 +34,7 @@ class StaffExport implements FromCollection, WithHeadings
      */
     public function collection(): Collection
     {
-        return $this->admins->map(function ($admin)
-        {
+        return $this->admins->map(function ($admin) {
             return [
                 'id' => $admin->id,
                 'name' => $admin->name,
@@ -59,5 +58,4 @@ class StaffExport implements FromCollection, WithHeadings
             '権限',
         ];
     }
-
 }

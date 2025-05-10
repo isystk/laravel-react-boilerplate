@@ -10,7 +10,6 @@ use Tests\TestCase;
 
 class IndexServiceTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private IndexService $service;
@@ -21,7 +20,7 @@ class IndexServiceTest extends TestCase
         $this->service = app(IndexService::class);
     }
 
-    public function testSearchStock(): void
+    public function test_search_stock(): void
     {
         $request = new Request([
             'name' => null,

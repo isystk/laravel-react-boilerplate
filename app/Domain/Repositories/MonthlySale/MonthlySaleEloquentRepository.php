@@ -8,7 +8,6 @@ use Illuminate\Support\Collection;
 
 class MonthlySaleEloquentRepository extends BaseEloquentRepository implements MonthlySaleRepository
 {
-
     protected function model(): string
     {
         return MonthlySale::class;
@@ -16,6 +15,7 @@ class MonthlySaleEloquentRepository extends BaseEloquentRepository implements Mo
 
     /**
      * 年月の新しい順にすべてのレコードを返却する。
+     *
      * @return Collection<int, MonthlySale>
      */
     public function getAllOrderByYearMonthDesc(): Collection

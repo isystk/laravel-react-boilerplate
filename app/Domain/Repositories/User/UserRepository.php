@@ -11,6 +11,7 @@ interface UserRepository extends BaseRepository
 {
     /**
      * 検索条件からデータを取得します。
+     *
      * @param array{
      *   name : ?string,
      *   email : ?string,
@@ -21,5 +22,4 @@ interface UserRepository extends BaseRepository
      * @return Collection<int, User>|LengthAwarePaginator<int, User>
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator;
-
 }
