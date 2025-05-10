@@ -1,4 +1,4 @@
-@extends('layouts.app_admin')
+@extends('layouts.admin')
 @section('title', $user->name . __('common.Of Change'))
 @php
     $menu = 'user';

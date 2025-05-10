@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Staff;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Admin\Staff\Import\StoreRequest;
 use App\Services\Admin\Staff\Import\ExportService;
-use App\Services\Admin\Staff\Import\importFileService;
+use App\Services\Admin\Staff\Import\ImportFileService;
 use App\Services\Admin\Staff\Import\ImportService;
 use App\Services\Admin\Staff\Import\IndexService;
 use Illuminate\Contracts\View\View;
@@ -24,8 +24,6 @@ class ImportController extends BaseController
 
     /**
      * スタッフ一括インポート画面の初期表示
-     *
-     * @return View
      */
     public function index(): View
     {
@@ -41,9 +39,6 @@ class ImportController extends BaseController
 
     /**
      * スタッフ一括インポート画面のエクスポート処理
-     *
-     * @param Request $request
-     * @return BinaryFileResponse
      */
     public function export(Request $request): BinaryFileResponse
     {
@@ -66,9 +61,6 @@ class ImportController extends BaseController
 
     /**
      * スタッフ一括インポート画面のインポート処理
-     *
-     * @param StoreRequest $request
-     * @return RedirectResponse
      * @throws Throwable
      */
     public function store(StoreRequest $request): RedirectResponse
@@ -81,10 +73,11 @@ class ImportController extends BaseController
         }
         $admin = $request->user();
 
+        /** @var ImportService $service */
+        $service = app(ImportService::class);
+
         DB::beginTransaction();
         try {
-            /** @var ImportService $service */
-            $service = app(ImportService::class);
             $service->createJob($request->upload_file, $admin);
             DB::commit();
         } catch (Throwable $e) {
@@ -96,9 +89,6 @@ class ImportController extends BaseController
 
     /**
      * スタッフ一括インポート画面のインポートファイルダウンロード
-     *
-     * @param string $importHistoryId
-     * @return BinaryFileResponse
      */
     public function importFile(string $importHistoryId): BinaryFileResponse
     {
@@ -107,8 +97,8 @@ class ImportController extends BaseController
             abort(404);
         }
 
-        /** @var importFileService $service */
-        $service = app(importFileService::class);
+        /** @var ImportFileService $service */
+        $service = app(ImportFileService::class);
         [$importFilePath, $importFileName] = $service->getImportFilePath((int)$importHistoryId);
 
         return response()->download(Storage::disk('local')->path($importFilePath), $importFileName);

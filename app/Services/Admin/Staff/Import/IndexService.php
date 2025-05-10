@@ -12,11 +12,6 @@ class IndexService extends BaseService
 {
     private ImportHistoryRepository $importHistoryRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param ImportHistoryRepository $importHistoryRepository
-     */
     public function __construct(
         ImportHistoryRepository $importHistoryRepository
     ) {

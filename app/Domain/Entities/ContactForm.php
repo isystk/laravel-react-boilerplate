@@ -53,17 +53,11 @@ class ContactForm extends Model
         'updated_at' => 'datetime',
     ];
 
-    /**
-     * @return ?Gender
-     */
     public function getGender(): ?Gender
     {
         return Gender::get((int)$this->gender);
     }
 
-    /**
-     * @return ?Age
-     */
     public function getAge(): ?Age
     {
         return Age::get($this->age);

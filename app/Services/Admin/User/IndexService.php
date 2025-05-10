@@ -12,11 +12,6 @@ class IndexService extends BaseService
 {
     private UserRepository $userRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param UserRepository $userRepository
-     */
     public function __construct(
         UserRepository $userRepository
     ) {
@@ -25,8 +20,6 @@ class IndexService extends BaseService
 
     /**
      * リクエストパラメータから検索条件に変換します。
-     * @param Request $request
-     * @param int $limit
      * @return array{
      *   name : ?string,
      *   email : ?string,

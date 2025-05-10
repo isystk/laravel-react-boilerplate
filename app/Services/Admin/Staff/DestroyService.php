@@ -9,11 +9,6 @@ class DestroyService extends BaseService
 {
     private AdminRepository $adminRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param AdminRepository $adminRepository
-     */
     public function __construct(
         AdminRepository $adminRepository
     ) {
@@ -22,7 +17,6 @@ class DestroyService extends BaseService
 
     /**
      * 管理者を削除します。
-     * @param int $id
      */
     public function delete(int $id): void
     {

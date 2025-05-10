@@ -10,8 +10,7 @@ use Stripe\StripeClient;
 class CreatePaymentService extends BaseCartService
 {
     /**
-     * @param Request $request
-     * @return PaymentIntent
+     * Stripeで決済を行う為のPaymentIntentを作成する
      * @throws ApiErrorException
      */
     public function createPayment(Request $request): PaymentIntent

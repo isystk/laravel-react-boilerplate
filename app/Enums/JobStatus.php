@@ -14,7 +14,7 @@ enum JobStatus: int
     case Failure = 9;
 
     /**
-     * @return string
+     * ラベルを返却する
      */
     public function label(): string
     {
@@ -22,8 +22,7 @@ enum JobStatus: int
     }
 
     /**
-     * @param ?int $code
-     * @return ?JobStatus
+     * コードに紐づくEnumを返却する
      */
     public static function get(?int $code): ?JobStatus
     {
@@ -39,8 +38,7 @@ enum JobStatus: int
     }
 
     /**
-     * @param int|null $code
-     * @return string
+     * 引数の値に紐づくラベルを返却する
      */
     public static function getLabel(?int $code): string
     {

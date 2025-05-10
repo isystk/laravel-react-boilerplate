@@ -9,11 +9,6 @@ class DestroyService extends BaseService
 {
     private UserRepository $userRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param UserRepository $userRepository
-     */
     public function __construct(
         UserRepository $userRepository
     ) {
@@ -22,7 +17,6 @@ class DestroyService extends BaseService
 
     /**
      * ユーザーを削除します。
-     * @param int $id
      */
     public function delete(int $id): void
     {

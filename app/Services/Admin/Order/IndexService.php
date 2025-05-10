@@ -15,11 +15,6 @@ class IndexService extends BaseService
 {
     private OrderRepository $orderRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param OrderRepository $orderRepository
-     */
     public function __construct(
         OrderRepository $orderRepository
     ) {
@@ -28,7 +23,6 @@ class IndexService extends BaseService
 
     /**
      * リクエストパラメータから検索条件に変換します。
-     * @param Request $request
      * @return array{
      *   user_name : ?string,
      *   order_date_from : ?CarbonImmutable,
@@ -50,11 +44,11 @@ class IndexService extends BaseService
             'limit' => $limit,
         ];
 
-        $orderDateFrom = DateUtil::toCarbonImmutable($request->order_date_from);
+        $orderDateFrom = DateUtil::toCarbon($request->order_date_from);
         if (null !== $orderDateFrom) {
             $conditions['order_date_from'] = $orderDateFrom->startOfDay();
         }
-        $orderDateTo = DateUtil::toCarbonImmutable($request->order_date_to);
+        $orderDateTo = DateUtil::toCarbon($request->order_date_to);
         if (null !== $orderDateTo) {
             $conditions['order_date_to'] = $orderDateTo->startOfDay();
         }

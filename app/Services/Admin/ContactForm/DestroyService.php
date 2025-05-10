@@ -11,12 +11,6 @@ class DestroyService extends BaseService
     private ContactFormRepository $contactFormRepository;
     private ContactFormImageRepository $contactFormImageRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param ContactFormRepository $contactFormRepository
-     * @param ContactFormImageRepository $contactFormImageRepository
-     */
     public function __construct(
         ContactFormRepository $contactFormRepository,
         ContactFormImageRepository $contactFormImageRepository
@@ -27,7 +21,6 @@ class DestroyService extends BaseService
 
     /**
      * お問い合わせを削除します。
-     * @param int $contactFormId
      */
     public function delete(int $contactFormId): void
     {

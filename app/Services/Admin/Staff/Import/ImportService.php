@@ -19,11 +19,6 @@ class ImportService extends BaseService
 {
     private ImportHistoryRepository $importHistoryRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param ImportHistoryRepository $importHistoryRepository
-     */
     public function __construct(
         ImportHistoryRepository $importHistoryRepository
     ) {
@@ -33,9 +28,6 @@ class ImportService extends BaseService
 
     /**
      * 管理者をインポートするJobを登録します。
-     * @param UploadedFile $importFile
-     * @param Admin $admin
-     * @return void
      */
     public function createJob(UploadedFile $importFile, Admin $admin): void
     {

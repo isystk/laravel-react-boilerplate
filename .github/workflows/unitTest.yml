@@ -22,7 +22,7 @@ jobs:
       - name: プロジェクトのチェックアウト
         uses: actions/checkout@v4
 
-      - name: Dockerの初期化
+      - name: 初期化
         run: |
           ./run.sh init
 

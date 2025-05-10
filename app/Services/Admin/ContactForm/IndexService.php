@@ -13,11 +13,6 @@ class IndexService extends BaseService
 {
     private ContactFormRepository $contactFormRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param ContactFormRepository $contactFormRepository
-     */
     public function __construct(
         ContactFormRepository $contactFormRepository
     ) {
@@ -26,8 +21,6 @@ class IndexService extends BaseService
 
     /**
      * リクエストパラメータから検索条件に変換します。
-     * @param Request $request
-     * @param int $limit
      * @return array{
      *   user_name : ?string,
      *   title : ?string,

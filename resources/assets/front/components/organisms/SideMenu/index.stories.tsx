@@ -1,7 +1,6 @@
 import SideMenu from './index';
 import useAppRoot from '@/states/useAppRoot';
 import { JSX } from 'react';
-import { MINIMAL_VIEWPORTS } from '@storybook/addon-viewport';
 
 export default {
   title: 'Components/Organisms/SideMenu',
@@ -9,7 +8,6 @@ export default {
   tags: ['autodocs'],
   parameters: {
     viewport: {
-      viewports: MINIMAL_VIEWPORTS,
       defaultViewport: 'mobile1',
     },
   },

@@ -12,9 +12,6 @@ class ListController extends BaseController
 
     /**
      * 注文履歴一覧画面の初期表示
-     *
-     * @param Request $request
-     * @return View
      */
     public function index(Request $request): View
     {

@@ -18,7 +18,7 @@ enum Age: int
     case Over60 = 6;
 
     /**
-     * @return string
+     * ラベルを返却する
      */
     public function label(): string
     {
@@ -26,8 +26,7 @@ enum Age: int
     }
 
     /**
-     * @param ?int $code
-     * @return ?Age
+     * コードに紐づくEnumを返却する
      */
     public static function get(?int $code): ?Age
     {
@@ -43,8 +42,7 @@ enum Age: int
     }
 
     /**
-     * @param ?int $code
-     * @return string
+     * 引数の値に紐づくラベルを返却する
      */
     public static function getLabel(?int $code): string
     {

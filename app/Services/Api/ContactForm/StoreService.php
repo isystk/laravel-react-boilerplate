@@ -14,12 +14,6 @@ class StoreService extends BaseService
     private ContactFormRepository $contactFormRepository;
     private ContactFormImageRepository $contactFormImageRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param ContactFormRepository $contactFormRepository
-     * @param ContactFormImageRepository $contactFormImageRepository
-     */
     public function __construct(
         ContactFormRepository $contactFormRepository,
         ContactFormImageRepository $contactFormImageRepository
@@ -61,7 +55,7 @@ class StoreService extends BaseService
                 ]
             );
             //s3に画像をアップロード
-            $imageFile->storeAs(PhotoType::Contact->dirName() . '/', $fileName);
+            $imageFile->storeAs(PhotoType::Contact->type() . '/', $fileName);
         }
 
         return $contactForm;

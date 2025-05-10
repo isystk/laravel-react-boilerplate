@@ -49,6 +49,13 @@ return [
         ],
     ],
 
+    'cookie' => [
+        'like' => [
+            'key' => 'like',
+            'expire' => 60 * 24, // 24時間
+        ],
+    ],
+
     'stripe' => [
         'secret' => env('STRIPE_SECRET', ''),
      ],

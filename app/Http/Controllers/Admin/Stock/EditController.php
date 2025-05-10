@@ -16,9 +16,6 @@ class EditController extends BaseController
 
     /**
      * 商品変更画面の初期表示
-     *
-     * @param Stock $stock
-     * @return View
      */
     public function edit(Stock $stock): View
     {
@@ -29,18 +26,15 @@ class EditController extends BaseController
 
     /**
      * 商品変更画面の登録処理
-     *
-     * @param UpdateRequest $request
-     * @param Stock $stock
-     * @return RedirectResponse
-     * @throws Exception
+     * @throws \Throwable
      */
     public function update(UpdateRequest $request, Stock $stock): RedirectResponse
     {
+        /** @var UpdateService $service */
+        $service = app(UpdateService::class);
+
         DB::beginTransaction();
         try {
-            /** @var UpdateService $service */
-            $service = app(UpdateService::class);
             $service->update($stock->id, $request);
             DB::commit();
         } catch (Exception $e) {

@@ -1,4 +1,4 @@
-@extends('layouts.app_admin')
+@extends('layouts.admin_simple')
 @section('title', __('common.Login'))
 
 @section('content')
@@ -10,17 +10,6 @@
         {!! RecaptchaV3::field('login') !!}
         <div class="card card-purple">
             <div class="card-body">
-                <div class="form-group row">
-                    <ul>
-                        @foreach($errors->all() as $error)
-                            <li>
-                                <div class="text-danger">
-                                    {{ $error }}
-                                </div>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
                 <div class="form-group row">
                     <label
                         for="email"

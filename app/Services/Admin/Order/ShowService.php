@@ -11,11 +11,6 @@ class ShowService extends BaseService
 {
     private OrderStockRepository $orderStockRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param OrderStockRepository $orderStockRepository
-     */
     public function __construct(
         OrderStockRepository $orderStockRepository
     ) {
@@ -24,7 +19,6 @@ class ShowService extends BaseService
 
     /**
      * 注文情報を取得します。
-     * @param int $orderId
      * @return Collection<int, OrderStock>
      */
     public function getOrderStock(int $orderId): Collection

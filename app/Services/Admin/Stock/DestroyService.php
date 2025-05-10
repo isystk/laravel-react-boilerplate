@@ -9,11 +9,6 @@ class DestroyService extends BaseService
 {
     private StockRepository $stockRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param StockRepository $stockRepository
-     */
     public function __construct(
         StockRepository $stockRepository
     ) {
@@ -22,7 +17,6 @@ class DestroyService extends BaseService
 
     /**
      * 商品を削除します。
-     * @param int $id
      */
     public function delete(int $id): void
     {

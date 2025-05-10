@@ -17,9 +17,6 @@ class EditController extends BaseController
 
     /**
      * スタッフ変更画面の初期表示
-     *
-     * @param Admin $staff
-     * @return View
      */
     public function edit(Admin $staff): View
     {
@@ -31,18 +28,15 @@ class EditController extends BaseController
 
     /**
      * スタッフ変更画面の登録処理
-     *
-     * @param UpdateRequest $request
-     * @param Admin $staff
-     * @return RedirectResponse
      * @throws Throwable
      */
     public function update(UpdateRequest $request, Admin $staff): RedirectResponse
     {
+        /** @var UpdateService $service */
+        $service = app(UpdateService::class);
+
         DB::beginTransaction();
         try {
-            /** @var UpdateService $service */
-            $service = app(UpdateService::class);
             $service->update($staff->id, $request);
             DB::commit();
         } catch (Throwable $e) {

@@ -10,8 +10,6 @@ class BaseStockService extends BaseService
 
     /**
      * リクエストパラメータから検索条件に変換します。
-     * @param Request $request
-     * @param int $limit
      * @return array{
      *   name : ?string,
      *   sort_name : string,

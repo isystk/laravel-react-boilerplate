@@ -61,14 +61,14 @@ class IndexServiceTest extends TestCase
         $this->assertSame([$order2->id], $orderIds, 'user_nameで検索が出来ることをテスト');
 
         $input = $default;
-        $input['order_date_from'] = DateUtil::toCarbonImmutable('2024-06-01');
+        $input['order_date_from'] = DateUtil::toCarbon('2024-06-01');
         /** @var LengthAwarePaginator<int, Order> $orders */
         $orders = $this->service->searchOrder($input);
         $orderIds = collect($orders->items())->pluck('id')->all();
         $this->assertContains($order2->id, $orderIds, 'order_date_fromで検索が出来ることをテスト');
 
         $input = $default;
-        $input['order_date_to'] = DateUtil::toCarbonImmutable('2024-05-01');
+        $input['order_date_to'] = DateUtil::toCarbon('2024-05-01');
         /** @var LengthAwarePaginator<int, Order> $orders */
         $orders = $this->service->searchOrder($input);
         $orderIds = collect($orders->items())->pluck('id')->all();

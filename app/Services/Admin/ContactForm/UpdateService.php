@@ -15,12 +15,6 @@ class UpdateService extends BaseService
     private ContactFormRepository $contactFormRepository;
     private ContactFormImageRepository $contactFormImageRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param ContactFormRepository $contactFormRepository
-     * @param ContactFormImageRepository $contactFormImageRepository
-     */
     public function __construct(
         ContactFormRepository $contactFormRepository,
         ContactFormImageRepository $contactFormImageRepository
@@ -31,9 +25,6 @@ class UpdateService extends BaseService
 
     /**
      * お問い合わせを更新します。
-     * @param int $contactFormId
-     * @param UpdateRequest $request
-     * @return ContactForm
      */
     public function update(int $contactFormId, UpdateRequest $request): ContactForm
     {
@@ -59,7 +50,7 @@ class UpdateService extends BaseService
                 continue;
             }
             $this->contactFormImageRepository->delete($contactFormImages[$i]->id);
-            Storage::delete(PhotoType::Contact->dirName() . '/' . $contactFormImages[$i]->file_name);
+            Storage::delete(PhotoType::Contact->type() . '/' . $contactFormImages[$i]->file_name);
         }
 
         foreach ([$request->image_file_1, $request->image_file_2, $request->image_file_3] as $i => $imageFile) {
@@ -73,7 +64,7 @@ class UpdateService extends BaseService
             if (!$contactFormImage || $contactFormImage->file_name !== $newFileName) {
                 if ($contactFormImage) {
                     $this->contactFormImageRepository->delete($contactFormImage->id);
-                    Storage::delete(PhotoType::Contact->dirName() . '/' . $contactFormImage->file_name);
+                    Storage::delete(PhotoType::Contact->type() . '/' . $contactFormImage->file_name);
                 }
 
                 $this->contactFormImageRepository->create([
@@ -82,7 +73,7 @@ class UpdateService extends BaseService
                 ]);
 
                 // s3に画像をアップロード
-                $imageFile->storeAs(PhotoType::Contact->dirName() . '/', $newFileName);
+                $imageFile->storeAs(PhotoType::Contact->type() . '/', $newFileName);
             }
         }
 

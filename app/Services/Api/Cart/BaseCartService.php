@@ -13,11 +13,6 @@ class BaseCartService extends BaseService
 {
     private CartRepository $cartRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param CartRepository $cartRepository
-     */
     public function __construct(
         CartRepository $cartRepository,
     ) {

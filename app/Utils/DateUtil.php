@@ -10,10 +10,8 @@ class DateUtil
 
     /**
      * 日付文字列をCarbonに変換します。
-     * @param ?string $date
-     * @return CarbonImmutable|null
      */
-    public static function toCarbonImmutable(?string $date): ?CarbonImmutable
+    public static function toCarbon(?string $date): ?CarbonImmutable
     {
         if (null === $date || '' === $date) {
             // nullを返却する（デフォルトだと現在日時に変換される）

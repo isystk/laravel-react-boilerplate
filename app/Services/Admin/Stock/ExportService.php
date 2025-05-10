@@ -9,11 +9,6 @@ class ExportService extends BaseStockService
 {
     private StockRepository $stockRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param StockRepository $stockRepository
-     */
     public function __construct(
         StockRepository $stockRepository
     ) {
@@ -27,7 +22,6 @@ class ExportService extends BaseStockService
      *   sort_name : string,
      *   sort_direction : 'asc' | 'desc',
      * } $conditions
-     * @return StockExport
      */
     public function getExport(array $conditions): StockExport
     {

@@ -9,10 +9,11 @@ class IndexController extends BaseController
 {
 
     /**
-     * トップ画面にアクセス
+     * ルートへのアクセス
      */
     public function index(): RedirectResponse
     {
+        // ホーム画面にリダイレクト
         return redirect(route('admin.home'));
     }
 }

@@ -11,7 +11,7 @@ enum Gender: int
     case Female = 1;
 
     /**
-     * @return string
+     * ラベルを返却する
      */
     public function label(): string
     {
@@ -19,8 +19,7 @@ enum Gender: int
     }
 
     /**
-     * @param ?int $code
-     * @return ?Gender
+     * コードに紐づくEnumを返却する
      */
     public static function get(?int $code): ?Gender
     {
@@ -36,8 +35,7 @@ enum Gender: int
     }
 
     /**
-     * @param ?int $code
-     * @return string
+     * 引数の値に紐づくラベルを返却する
      */
     public static function getLabel(?int $code): string
     {

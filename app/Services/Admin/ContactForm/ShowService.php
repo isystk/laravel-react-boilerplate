@@ -11,11 +11,6 @@ class ShowService extends BaseService
 {
     private ContactFormImageRepository $contactFormImageRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param ContactFormImageRepository $contactFormImageRepository
-     */
     public function __construct(
         ContactFormImageRepository $contactFormImageRepository
     ) {
@@ -24,7 +19,6 @@ class ShowService extends BaseService
 
     /**
      * お問い合わせを取得します。
-     * @param int $contactFormId
      * @return Collection<int, ContactFormImage>
      */
     public function getContactFormImage(int $contactFormId): Collection

@@ -57,7 +57,7 @@ const Top = () => {
           isLike: state.like.stockIds.includes(stock.id + ''),
         }) as StockItemProps,
     );
-  }, [stocks, state, state?.like.stockIds]);
+  }, [stocks, state, state?.like.stockIds]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!state) return <></>;
 

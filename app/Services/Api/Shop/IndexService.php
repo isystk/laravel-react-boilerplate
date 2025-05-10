@@ -11,11 +11,6 @@ class IndexService extends BaseService
 {
     private StockRepository $stockRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param StockRepository $stockRepository
-     */
     public function __construct(
         StockRepository $stockRepository
     ) {

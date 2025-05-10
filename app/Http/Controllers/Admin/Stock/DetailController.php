@@ -15,9 +15,6 @@ class DetailController extends BaseController
 
     /**
      * 商品詳細画面の登録処理
-     *
-     * @param Stock $stock
-     * @return View
      */
     public function show(Stock $stock): View
     {
@@ -26,19 +23,18 @@ class DetailController extends BaseController
 
     /**
      * 商品詳細画面の削除処理
-     *
-     * @param Stock $stock
-     * @return RedirectResponse
      * @throws Throwable
      */
     public function destroy(Stock $stock): RedirectResponse
     {
         // 上位管理者のみがアクセス可能
         $this->authorize('high-manager');
+
+        /** @var DestroyService $service */
+        $service = app(DestroyService::class);
+
         DB::beginTransaction();
         try {
-            /** @var DestroyService $service */
-            $service = app(DestroyService::class);
             $service->delete($stock->id);
             DB::commit();
         } catch (Throwable $e) {

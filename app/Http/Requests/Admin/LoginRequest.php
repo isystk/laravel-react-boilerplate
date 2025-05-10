@@ -3,30 +3,33 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
 
-class PasswordChangeUpdateRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
-
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, array<string|Password>>
+     * @return array<string, array<string>>
      */
     public function rules(): array
     {
-        $maxlength = config('const.maxlength.admins');
         return [
+            'email' => [
+                'required',
+                'string',
+                'email',
+            ],
             'password' => [
                 'required',
                 'string',
-                Password::default(),
-                'confirmed',
-                'max:' . $maxlength['password'],
             ],
+            // reCaptchaによる認証チェックはコメントアウトしておく
+//            'g-recaptcha-response' => [
+//                'required',
+//                'recaptchav3:login,0.5'
+//            ],
         ];
     }
-
 
     /**
      * Get the error messages for the defined validation rules.
@@ -36,7 +39,8 @@ class PasswordChangeUpdateRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'password' => __('staff.Password'),
+            'email' => __('user.EMail'),
+            'password' => __('user.Password'),
         ];
     }
 

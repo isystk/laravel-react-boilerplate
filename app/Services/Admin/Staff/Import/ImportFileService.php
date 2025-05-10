@@ -9,15 +9,10 @@ use App\Services\BaseService;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class importFileService extends BaseService
+class ImportFileService extends BaseService
 {
     private ImportHistoryRepository $importHistoryRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param ImportHistoryRepository $importHistoryRepository
-     */
     public function __construct(
         ImportHistoryRepository $importHistoryRepository
     ) {
@@ -26,7 +21,6 @@ class importFileService extends BaseService
 
     /**
      * インポートしたファイルのパスを取得します。
-     * @param int $importHistoryId
      * @return array{
      *     0: string,
      *     1: string,

@@ -18,7 +18,7 @@ class DateUtilTest extends TestCase
      */
     public function testToCarbonImmutableReturnsNullIfDateIsEmpty(): void
     {
-        $this->assertNull(DateUtil::toCarbonImmutable(''));
+        $this->assertNull(DateUtil::toCarbon(''));
     }
 
     /**
@@ -26,7 +26,7 @@ class DateUtilTest extends TestCase
      */
     public function testToCarbonImmutableReturnsNullIfDateIsNull(): void
     {
-        $this->assertNull(DateUtil::toCarbonImmutable(null));
+        $this->assertNull(DateUtil::toCarbon(null));
     }
 
     /**
@@ -36,7 +36,7 @@ class DateUtilTest extends TestCase
      */
     public function testToCarbonImmutableReturnsCarbonImmutableIfValidDateStringIsProvided(string $date): void
     {
-        $this->assertInstanceOf(CarbonImmutable::class, DateUtil::toCarbonImmutable($date));
+        $this->assertInstanceOf(CarbonImmutable::class, DateUtil::toCarbon($date));
     }
 
     /**
@@ -46,7 +46,7 @@ class DateUtilTest extends TestCase
      */
     public function testToCarbonImmutableReturnsCarbonImmutableWithDefaultDayIfOnlyYearAndMonthAreProvided(string $date
     ): void {
-        $carbon = DateUtil::toCarbonImmutable($date);
+        $carbon = DateUtil::toCarbon($date);
         $this->assertEquals('2024-03-01 00:00:00', $carbon->format('Y-m-d H:i:s'));
     }
 
@@ -57,7 +57,7 @@ class DateUtilTest extends TestCase
      */
     public function testToCarbonImmutableReturnsCarbonImmutableWithDefaultTimeIfNoTimeIsProvided(string $date): void
     {
-        $carbon = DateUtil::toCarbonImmutable($date);
+        $carbon = DateUtil::toCarbon($date);
         $this->assertEquals('2024-03-24 00:00:00', $carbon->format('Y-m-d H:i:s'));
     }
 
@@ -66,7 +66,7 @@ class DateUtilTest extends TestCase
      */
     public function testToCarbonImmutableReturnsNullIfInvalidDateStringIsProvided(): void
     {
-        $this->assertNull(DateUtil::toCarbonImmutable('invalid_date'));
+        $this->assertNull(DateUtil::toCarbon('invalid_date'));
     }
 
     /**
@@ -77,8 +77,8 @@ class DateUtilTest extends TestCase
      */
     public function testToCarbonImmutableConvertsHyphenToSlashInDateString(string $dateHyphen, string $dateSlash): void
     {
-        $carbonHyphen = DateUtil::toCarbonImmutable($dateHyphen);
-        $carbonSlash = DateUtil::toCarbonImmutable($dateSlash);
+        $carbonHyphen = DateUtil::toCarbon($dateHyphen);
+        $carbonSlash = DateUtil::toCarbon($dateSlash);
         $this->assertEquals($carbonHyphen, $carbonSlash);
     }
 }

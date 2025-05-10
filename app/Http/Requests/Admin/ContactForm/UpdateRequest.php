@@ -90,9 +90,9 @@ class UpdateRequest extends FormRequest
     }
 
     /**
-     * 項目名
+     * Get the error messages for the defined validation rules.
      *
-     * @return array<string, string>
+     * @return array<string>
      */
     public function attributes(): array
     {
@@ -109,7 +109,9 @@ class UpdateRequest extends FormRequest
     }
 
     /**
-     * @return array<string, string>
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string>
      */
     public function messages(): array
     {

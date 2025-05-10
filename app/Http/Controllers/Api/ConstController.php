@@ -16,8 +16,8 @@ class ConstController extends BaseApiController
      */
     public function index(): JsonResponse
     {
+        $items = [];
         try {
-            $items = [];
             foreach ([
                 'gender' => Gender::cases(),
                 'age' => Age::cases(),
@@ -30,17 +30,12 @@ class ConstController extends BaseApiController
                     ];
                 }
             }
-            return $this->resConversionJson([
-                'result' => true,
-                'data' => $items,
-            ]);
         } catch (Throwable $e) {
-            return $this->resConversionJson( [
-                'result' => false,
-                'error' => [
-                    'messages' => [$e->getMessage()],
-                ],
-            ], $e->getCode());
+            return $this->getErrorJsonResponse($e);
         }
+        return response()->json([
+            'result' => true,
+            'data' => $items,
+        ]);
     }
 }

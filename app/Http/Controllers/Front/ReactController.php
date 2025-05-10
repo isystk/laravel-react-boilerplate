@@ -9,8 +9,6 @@ class ReactController extends BaseController
 {
     /**
      * フロントの初期表示（表示後はReactのRouterに任せる）
-     *
-     * @return View
      */
     public function index(): View
     {

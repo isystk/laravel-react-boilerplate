@@ -9,23 +9,12 @@ use Illuminate\Support\Facades\Storage;
 
 class PhotoS3UploadBatch extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 's3upload';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
+    protected $signature = 's3upload';
     protected $description = '商品画像をS3にアップロードします。';
 
     /**
      * Execute the console command.
-     *
      */
     public function handle(): void
     {
@@ -38,7 +27,7 @@ class PhotoS3UploadBatch extends Command
             $fileName = $file->getfileName();
 
             // s3に画像をアップロード
-            Storage::putFileAs(PhotoType::Stock->dirName(), $file, $fileName);
+            Storage::putFileAs(PhotoType::Stock->type(), $file, $fileName);
         }
 
         Log::info('PhotoS3UploadBatch END');

@@ -17,9 +17,6 @@ class ListController extends BaseController
 
     /**
      * 商品一覧画面の初期表示
-     *
-     * @param Request $request
-     * @return View
      */
     public function index(Request $request): View
     {
@@ -34,9 +31,6 @@ class ListController extends BaseController
 
     /**
      * 商品一覧画面のエクスポート処理
-     *
-     * @param Request $request
-     * @return Response|BinaryFileResponse
      */
     public function export(Request $request): Response|BinaryFileResponse
     {
