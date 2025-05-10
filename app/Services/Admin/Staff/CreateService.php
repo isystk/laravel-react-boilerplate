@@ -30,9 +30,9 @@ class CreateService extends BaseService
             'password' => Hash::make($request->password),
             'role' => AdminRole::Manager->value,
         ];
+
         return $this->adminRepository->create(
             $model
         );
     }
-
 }

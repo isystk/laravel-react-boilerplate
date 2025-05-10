@@ -13,8 +13,11 @@ use Illuminate\Support\Facades\Mail;
 class CheckoutService extends BaseCartService
 {
     private CartRepository $cartRepository;
+
     private StockRepository $stockRepository;
+
     private OrderRepository $orderRepository;
+
     private OrderStockRepository $orderStockRepository;
 
     public function __construct(
@@ -36,22 +39,22 @@ class CheckoutService extends BaseCartService
     public function checkout(?string $stripeEmail, ?string $stripeToken): void
     {
         // TODO Stripe との通信処理は一旦コメントアウト
-//        Stripe::setApiKey(config('const.stripe.secret'));
-//
-//        // 料金を支払う人
-//        $customer = Customer::create(array(
-//            'email' => $stripeEmail,
-//            'source' => $stripeToken,
-//        ));
+        //        Stripe::setApiKey(config('const.stripe.secret'));
+        //
+        //        // 料金を支払う人
+        //        $customer = Customer::create(array(
+        //            'email' => $stripeEmail,
+        //            'source' => $stripeToken,
+        //        ));
         $userId = Auth::id();
         $items = $this->getMyCart();
 
         // Stripe 料金の支払いを実行
-//        Charge::create(array(
-//            'customer' => $customer->id,
-//            'amount' => $items['sum'],
-//            'currency' => 'jpy',
-//        ));
+        //        Charge::create(array(
+        //            'customer' => $customer->id,
+        //            'amount' => $items['sum'],
+        //            'currency' => 'jpy',
+        //        ));
 
         $order = $this->orderRepository->create([
             'user_id' => $userId,
@@ -82,8 +85,8 @@ class CheckoutService extends BaseCartService
 
             $orderItems[] = [
                 'name' => $data['name'] ?? '',
-                'quantity' => (int)$orderStock->quantity,
-                'price' => (int)$orderStock->price,
+                'quantity' => (int) $orderStock->quantity,
+                'price' => (int) $orderStock->price,
             ];
         }
 

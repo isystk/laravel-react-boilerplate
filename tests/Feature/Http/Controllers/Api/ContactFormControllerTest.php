@@ -12,10 +12,9 @@ use Tests\TestCase;
 
 class ContactFormControllerTest extends TestCase
 {
-
     use RefreshDatabase;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->withoutMiddleware(ValidateCsrfToken::class);
@@ -24,7 +23,7 @@ class ContactFormControllerTest extends TestCase
     /**
      * お問い合わせ登録APIのテスト
      */
-    public function testStore(): void
+    public function test_store(): void
     {
         $user1 = $this->createDefaultUser([
             'name' => 'user1',
@@ -54,5 +53,4 @@ class ContactFormControllerTest extends TestCase
         Storage::delete('contact/image2.jpg');
         Storage::delete('contact/image3.jpg');
     }
-
 }

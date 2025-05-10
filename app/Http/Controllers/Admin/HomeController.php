@@ -7,7 +7,6 @@ use Illuminate\View\View;
 
 class HomeController extends BaseController
 {
-
     /**
      * ホーム画面の初期表示
      */

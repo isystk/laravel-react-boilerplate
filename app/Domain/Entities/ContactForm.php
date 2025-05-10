@@ -55,13 +55,11 @@ class ContactForm extends Model
 
     public function getGender(): ?Gender
     {
-        return Gender::get((int)$this->gender);
+        return Gender::get((int) $this->gender);
     }
 
     public function getAge(): ?Age
     {
         return Age::get($this->age);
     }
-
-
 }

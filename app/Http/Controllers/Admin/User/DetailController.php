@@ -12,7 +12,6 @@ use Throwable;
 
 class DetailController extends BaseController
 {
-
     /**
      * 顧客詳細画面の初期表示
      */
@@ -23,6 +22,7 @@ class DetailController extends BaseController
 
     /**
      * 顧客詳細画面の削除処理
+     *
      * @throws Throwable
      */
     public function destroy(User $user): RedirectResponse
@@ -41,6 +41,7 @@ class DetailController extends BaseController
             DB::rollBack();
             throw $e;
         }
+
         return redirect(route('admin.user'));
     }
 }

@@ -8,7 +8,6 @@ use Tests\TestCase;
 
 class ContactFormImageRepositoryTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private ContactFormImageRepository $repository;
@@ -23,7 +22,7 @@ class ContactFormImageRepositoryTest extends TestCase
     /**
      * getByConditionsのテスト
      */
-    public function testGetByConditions(): void
+    public function test_get_by_conditions(): void
     {
         $contactForm1 = $this->createDefaultContactForm(['user_name' => 'user1', 'title' => 'title1']);
         $contactForm2 = $this->createDefaultContactForm(['user_name' => 'user2', 'title' => 'title1']);

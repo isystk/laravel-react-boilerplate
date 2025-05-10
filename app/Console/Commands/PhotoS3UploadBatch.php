@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Storage;
 
 class PhotoS3UploadBatch extends Command
 {
-
     protected $signature = 's3upload';
+
     protected $description = '商品画像をS3にアップロードします。';
 
     /**

@@ -9,13 +9,13 @@ use Illuminate\Validation\Rules\Enum;
 class StaffImport extends BaseImport
 {
     protected array $attribute = [
-        "名前" => 'name',
-        "メールアドレス" => 'email',
-        "権限" => 'role',
+        '名前' => 'name',
+        'メールアドレス' => 'email',
+        '権限' => 'role',
     ];
 
     /**
-     * @param array<int, mixed> $row
+     * @param  array<int, mixed>  $row
      * @return array<string, ?string>
      */
     public function map($row): array
@@ -23,22 +23,18 @@ class StaffImport extends BaseImport
         // 配列データをヘッダーをキーとした連想配列に変換します
         $rowMap = $this->getRowMap($row);
 
-        $cell = static function (string $key, Closure $callback) use ($rowMap)
-        {
+        $cell = static function (string $key, Closure $callback) use ($rowMap) {
             return [$key => $callback($rowMap[$key] ?? null)];
         };
 
         return array_merge(
-            $cell('name', function ($val)
-            {
+            $cell('name', function ($val) {
                 return $this->trimData($val);
             }),
-            $cell('email', function ($val)
-            {
+            $cell('email', function ($val) {
                 return $this->trimData($val);
             }),
-            $cell('role', function ($val)
-            {
+            $cell('role', function ($val) {
                 return $this->trimData($val);
             }),
         );
@@ -50,6 +46,7 @@ class StaffImport extends BaseImport
     public function rules(): array
     {
         $maxlength = config('const.maxlength.admins');
+
         return [
             'name' => [
                 'required',
@@ -78,5 +75,4 @@ class StaffImport extends BaseImport
             '*.Illuminate\Validation\Rules\Enum' => ':attributeの値が不正です。',
         ];
     }
-
 }

@@ -8,10 +8,9 @@ use Tests\TestCase;
 
 class HomeControllerTest extends TestCase
 {
-
     use RefreshDatabase;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->withoutMiddleware(ValidateCsrfToken::class);
@@ -20,7 +19,7 @@ class HomeControllerTest extends TestCase
     /**
      * ホーム画面表示のテスト
      */
-    public function testIndex(): void
+    public function test_index(): void
     {
         $admin = $this->createDefaultAdmin([
             'name' => '管理者A',

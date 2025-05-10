@@ -9,10 +9,8 @@ use Throwable;
 
 class ConstController extends BaseApiController
 {
-
     /**
      * 定数の一覧をJSONで返却します。
-     * @return JsonResponse
      */
     public function index(): JsonResponse
     {
@@ -33,6 +31,7 @@ class ConstController extends BaseApiController
         } catch (Throwable $e) {
             return $this->getErrorJsonResponse($e);
         }
+
         return response()->json([
             'result' => true,
             'data' => $items,

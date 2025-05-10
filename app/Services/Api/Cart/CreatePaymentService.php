@@ -11,6 +11,7 @@ class CreatePaymentService extends BaseCartService
 {
     /**
      * Stripeで決済を行う為のPaymentIntentを作成する
+     *
      * @throws ApiErrorException
      */
     public function createPayment(Request $request): PaymentIntent

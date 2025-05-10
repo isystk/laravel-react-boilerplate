@@ -4,14 +4,11 @@ namespace App\Http\Controllers\Admin\Staff;
 
 use App\Http\Controllers\BaseController;
 use App\Services\Admin\Staff\IndexService;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class ListController extends BaseController
 {
-
     /**
      * スタッフ一覧画面の初期表示
      */
@@ -25,5 +22,4 @@ class ListController extends BaseController
 
         return view('admin.staff.index', compact('staffs', 'request'));
     }
-
 }

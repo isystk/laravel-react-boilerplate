@@ -11,6 +11,7 @@ interface ContactFormRepository extends BaseRepository
 {
     /**
      * 検索条件からデータを取得します。
+     *
      * @param array{
      *   user_name : ?string,
      *   title : ?string,
@@ -21,5 +22,4 @@ interface ContactFormRepository extends BaseRepository
      * @return Collection<int, ContactForm>|LengthAwarePaginator<int, ContactForm>
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator;
-
 }

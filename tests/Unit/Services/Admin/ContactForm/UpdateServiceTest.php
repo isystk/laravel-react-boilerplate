@@ -13,7 +13,6 @@ use Tests\TestCase;
 
 class UpdateServiceTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private UpdateService $service;
@@ -27,7 +26,7 @@ class UpdateServiceTest extends TestCase
     /**
      * updateのテスト
      */
-    public function testUpdate(): void
+    public function test_update(): void
     {
         Storage::fake();
 
@@ -45,7 +44,7 @@ class UpdateServiceTest extends TestCase
             'file_name' => 'file1.jpg',
         ]);
 
-        $request = new UpdateRequest();
+        $request = new UpdateRequest;
         $request['user_name'] = 'bbb';
         $request['title'] = 'タイトル2';
         $request['email'] = 'bbb@test.com';

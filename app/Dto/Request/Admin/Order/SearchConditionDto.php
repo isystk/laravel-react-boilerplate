@@ -10,16 +10,22 @@ class SearchConditionDto
 {
     // 名前
     public ?string $name;
+
     // 注文日（From）
     public ?CarbonImmutable $orderDateFrom;
+
     // 注文日（To
     public ?CarbonImmutable $orderDateTo;
+
     // ソートのカラム名
     public string $sortName;
+
     // ソートの方向
     public string $sortDirection;
+
     // ページ
     public int $page;
+
     // リミット
     public int $limit;
 
@@ -34,5 +40,4 @@ class SearchConditionDto
         $this->page = (int) $request->input('page', 1); // デフォルト: 1
         $this->limit = (int) $request->input('limit', 20); // デフォルト: 20
     }
-
 }

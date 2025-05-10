@@ -10,9 +10,8 @@ interface OrderStockRepository extends BaseRepository
 {
     /**
      * orderId からデータを取得します。
-     * @param int $orderId
+     *
      * @return Collection<int, OrderStock>
      */
     public function getByOrderId(int $orderId): Collection;
-
 }

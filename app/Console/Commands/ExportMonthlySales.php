@@ -7,7 +7,6 @@ use Illuminate\Console\Command;
 
 class ExportMonthlySales extends Command
 {
-
     protected $signature = 'export_monthly_sales {output_path}';
 
     protected $description = '月別売上金額出力バッチ';
@@ -38,6 +37,7 @@ class ExportMonthlySales extends Command
 
     /**
      * CSVファイルに出力するヘッダーを返却します。
+     *
      * @return string[]
      */
     private function getHeader(): array
@@ -51,11 +51,11 @@ class ExportMonthlySales extends Command
 
     /**
      * CSVファイルに出力する内容を返却します。
+     *
      * @return string[][]
      */
     private function getDetail(): array
     {
-        /**  */
         $service = app(ExportMonthlySalesService::class);
         // 出力対象の月別売上データを取得します。
         $monthlySales = $service->getMonthlySales();
@@ -64,11 +64,11 @@ class ExportMonthlySales extends Command
         foreach ($monthlySales as $monthlySale) {
             $row = [];
             $row[] = $monthlySale->year_month ?? ''; // 年月
-            $row[] = (string)$monthlySale->order_count; // 注文件数
-            $row[] = (string)$monthlySale->amount; // 売上金額
+            $row[] = (string) $monthlySale->order_count; // 注文件数
+            $row[] = (string) $monthlySale->amount; // 売上金額
             $rows[] = $row;
         }
+
         return $rows;
     }
-
 }

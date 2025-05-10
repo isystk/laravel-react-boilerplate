@@ -7,7 +7,6 @@ use Illuminate\Support\Collection;
 
 abstract class BaseEloquentRepository implements BaseRepository
 {
-
     protected Model $model;
 
     public function __construct()
@@ -16,8 +15,7 @@ abstract class BaseEloquentRepository implements BaseRepository
     }
 
     /**
-     * @param array<string, mixed> $data
-     * @return mixed
+     * @param  array<string, mixed>  $data
      */
     public function create(array $data): mixed
     {
@@ -25,9 +23,7 @@ abstract class BaseEloquentRepository implements BaseRepository
     }
 
     /**
-     * @param int $id
-     * @param array<string, mixed> $data
-     * @return mixed
+     * @param  array<string, mixed>  $data
      */
     public function update(int $id, array $data): mixed
     {
@@ -38,12 +34,10 @@ abstract class BaseEloquentRepository implements BaseRepository
         }
 
         $record->update($data);
+
         return $record;
     }
 
-    /**
-     * @param int $id
-     */
     public function delete(int $id): void
     {
         $record = $this->findById($id);
@@ -63,18 +57,10 @@ abstract class BaseEloquentRepository implements BaseRepository
         return $this->model->all();
     }
 
-    /**
-     * @param int $id
-     * @return mixed
-     */
     public function findById(int $id): mixed
     {
         return $this->model->find($id);
     }
 
-    /**
-     * @return string
-     */
     abstract protected function model(): string;
-
 }

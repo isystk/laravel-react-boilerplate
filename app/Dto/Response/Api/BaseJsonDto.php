@@ -12,5 +12,4 @@ class BaseJsonDto
     ) {
         $this->result = $result;
     }
-
 }

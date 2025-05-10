@@ -10,7 +10,6 @@ use Illuminate\View\View;
 
 class ListController extends BaseController
 {
-
     /**
      * お問い合わせ一覧の初期表示
      */

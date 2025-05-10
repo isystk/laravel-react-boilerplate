@@ -9,7 +9,6 @@ use Tests\TestCase;
 
 class IndexServiceTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private IndexService $service;
@@ -23,7 +22,7 @@ class IndexServiceTest extends TestCase
     /**
      * searchStockのテスト
      */
-    public function testSearchStock(): void
+    public function test_search_stock(): void
     {
         $stocks = $this->service->searchStock();
         $this->assertCount(0, $stocks->items(), '引数がない状態でエラーにならないことを始めにテスト');

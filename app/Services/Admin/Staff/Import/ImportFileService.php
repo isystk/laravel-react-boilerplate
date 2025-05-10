@@ -21,6 +21,7 @@ class ImportFileService extends BaseService
 
     /**
      * インポートしたファイルのパスを取得します。
+     *
      * @return array{
      *     0: string,
      *     1: string,
@@ -34,9 +35,9 @@ class ImportFileService extends BaseService
         $importFilePath = 'import_job/' . ImportType::Staff->value . '/' . $importHistory->save_file_name;
         if (!Storage::disk('local')->exists($importFilePath)) {
             // ファイルが存在しない場合のエラーハンドリング
-            throw new NotFoundHttpException();
+            throw new NotFoundHttpException;
         }
+
         return [$importFilePath, $importHistory->file_name];
     }
-
 }

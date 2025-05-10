@@ -8,10 +8,9 @@ use Tests\TestCase;
 
 class StockControllerTest extends TestCase
 {
-
     use RefreshDatabase;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->withoutMiddleware(ValidateCsrfToken::class);
@@ -20,7 +19,7 @@ class StockControllerTest extends TestCase
     /**
      * 商品の一覧APIの取得テスト
      */
-    public function testIndex(): void
+    public function test_index(): void
     {
         $this->createDefaultStock(['name' => 'stock1']);
         $stock2 = $this->createDefaultStock(['name' => 'stock2']);
@@ -41,5 +40,4 @@ class StockControllerTest extends TestCase
             $stock2->id,
         ]);
     }
-
 }

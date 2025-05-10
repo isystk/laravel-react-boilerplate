@@ -4,7 +4,6 @@ namespace App\Enums;
 
 enum AdminRole: string
 {
-
     /** 管理者 */
     case Manager = 'manager';
     /** 上位管理者 */
@@ -31,6 +30,7 @@ enum AdminRole: string
                 return $e;
             }
         }
+
         return null;
     }
 
@@ -40,9 +40,9 @@ enum AdminRole: string
     public static function getLabel(?string $code): string
     {
         if (null === $code || null === self::get($code)) {
-            return "";
+            return '';
         }
+
         return self::get($code)->label();
     }
-
 }

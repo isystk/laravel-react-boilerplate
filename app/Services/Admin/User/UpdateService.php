@@ -30,5 +30,4 @@ class UpdateService extends BaseService
             ]
         );
     }
-
 }

@@ -33,6 +33,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         $maxlength = config('const.maxlength.users');
+
         return [
             'name' => [
                 'required',
@@ -44,9 +45,9 @@ class UpdateRequest extends FormRequest
                 'string',
                 'email',
                 'max:' . $maxlength['email'],
-//                Rule::unique(User::class),
+                //                Rule::unique(User::class),
             ],
-//            'password' => $this->passwordRules(),
+            //            'password' => $this->passwordRules(),
         ];
     }
 
@@ -63,5 +64,4 @@ class UpdateRequest extends FormRequest
             'password' => __('user.Password'),
         ];
     }
-
 }

@@ -9,6 +9,7 @@ use App\Services\BaseService;
 class DestroyService extends BaseService
 {
     private ContactFormRepository $contactFormRepository;
+
     private ContactFormImageRepository $contactFormImageRepository;
 
     public function __construct(

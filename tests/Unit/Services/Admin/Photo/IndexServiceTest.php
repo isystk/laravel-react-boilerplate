@@ -10,7 +10,6 @@ use Tests\TestCase;
 
 class IndexServiceTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private IndexService $service;
@@ -24,7 +23,7 @@ class IndexServiceTest extends TestCase
     /**
      * searchPhotoListのテスト
      */
-    public function testSearchPhotoList(): void
+    public function test_search_photo_list(): void
     {
         Storage::fake();
 

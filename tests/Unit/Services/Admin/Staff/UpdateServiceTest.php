@@ -11,7 +11,6 @@ use Tests\TestCase;
 
 class UpdateServiceTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private UpdateService $service;
@@ -25,7 +24,7 @@ class UpdateServiceTest extends TestCase
     /**
      * updateのテスト
      */
-    public function testUpdate(): void
+    public function test_update(): void
     {
         $admin1 = $this->createDefaultAdmin([
             'name' => 'aaa',
@@ -33,7 +32,7 @@ class UpdateServiceTest extends TestCase
             'role' => AdminRole::Manager->value,
         ]);
 
-        $request = new UpdateRequest();
+        $request = new UpdateRequest;
         $request['name'] = 'bbb';
         $request['email'] = 'bbb@test.com';
         $request['role'] = AdminRole::HighManager->value;

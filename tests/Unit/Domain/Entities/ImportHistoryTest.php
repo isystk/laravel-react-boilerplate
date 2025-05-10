@@ -13,10 +13,10 @@ class ImportHistoryTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->sub = new ImportHistory();
+        $this->sub = new ImportHistory;
     }
 
-    public function test_getStatus(): void
+    public function test_get_status(): void
     {
         $this->sub->status = JobStatus::Success->value;
         $result = $this->sub->getStatus();

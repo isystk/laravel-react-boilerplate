@@ -20,7 +20,7 @@ class IndexService extends BaseService
 
     /**
      * ユーザーを検索します。
-     * @param SearchConditionDto $searchConditionDto
+     *
      * @return LengthAwarePaginator<int, User>
      */
     public function searchUser(SearchConditionDto $searchConditionDto): LengthAwarePaginator
@@ -32,7 +32,7 @@ class IndexService extends BaseService
             'sort_direction' => $searchConditionDto->sortDirection,
             'limit' => $searchConditionDto->limit,
         ];
+
         return $this->userRepository->getByConditions($items);
     }
-
 }

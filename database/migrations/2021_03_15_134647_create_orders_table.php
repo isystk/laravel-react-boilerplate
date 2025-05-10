@@ -2,8 +2,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -28,14 +28,12 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down(): void
     {
         // 外部キーを削除
         Schema::table('orders', static function (Blueprint $table) {
-             $table->dropForeign('orders_user_id_foreign');
+            $table->dropForeign('orders_user_id_foreign');
         });
         // テーブルを削除
         Schema::dropIfExists('orders');

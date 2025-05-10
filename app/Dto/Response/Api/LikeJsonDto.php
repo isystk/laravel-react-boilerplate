@@ -8,7 +8,7 @@ class LikeJsonDto extends BaseJsonDto
     public array $stockIds;
 
     /**
-     * @param array<int> $stockIds
+     * @param  array<int>  $stockIds
      */
     public function __construct(
         array $stockIds,
@@ -16,5 +16,4 @@ class LikeJsonDto extends BaseJsonDto
         parent::__construct(true);
         $this->stockIds = $stockIds;
     }
-
 }

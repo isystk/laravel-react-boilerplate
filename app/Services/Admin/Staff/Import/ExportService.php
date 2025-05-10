@@ -22,7 +22,7 @@ class ExportService extends BaseService
     public function getExport(): StaffExport
     {
         $admins = $this->adminRepository->getAllOrderById();
+
         return new StaffExport($admins);
     }
-
 }

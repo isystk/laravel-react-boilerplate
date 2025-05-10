@@ -14,18 +14,18 @@ class ContactFormTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->sub = new ContactForm();
+        $this->sub = new ContactForm;
     }
 
-    public function test_getGender(): void
+    public function test_get_gender(): void
     {
-        $this->sub->gender = (bool)Gender::Male->value;
+        $this->sub->gender = (bool) Gender::Male->value;
         $result = $this->sub->getGender();
         $this->assertInstanceOf(Gender::class, $result);
         $this->assertSame(Gender::Male, $result);
     }
 
-    public function test_getAge(): void
+    public function test_get_age(): void
     {
         $this->sub->age = Age::Over40->value;
         $result = $this->sub->getAge();

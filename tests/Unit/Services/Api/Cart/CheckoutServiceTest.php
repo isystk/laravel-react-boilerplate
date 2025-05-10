@@ -10,7 +10,6 @@ use Tests\TestCase;
 
 class CheckoutServiceTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private CheckoutService $service;
@@ -24,7 +23,7 @@ class CheckoutServiceTest extends TestCase
     /**
      * checkoutのテスト
      */
-    public function testCheckout(): void
+    public function test_checkout(): void
     {
         $user1 = $this->createDefaultUser([
             'name' => 'aaa',

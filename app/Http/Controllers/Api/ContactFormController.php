@@ -10,9 +10,9 @@ use Throwable;
 
 class ContactFormController extends BaseApiController
 {
-
     /**
      * お問い合わせ内容を登録します。
+     *
      * @throws Throwable
      */
     public function store(StoreRequest $request): JsonResponse
@@ -25,8 +25,10 @@ class ContactFormController extends BaseApiController
             DB::commit();
         } catch (Throwable $e) {
             DB::rollBack();
+
             return $this->getErrorJsonResponse($e);
         }
+
         return response()->json([
             'result' => true,
         ]);

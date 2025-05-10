@@ -46,7 +46,6 @@ class StockTableSeeder extends Seeder
             'quantity' => 99,
         ]);
 
-
         DB::table('stocks')->insert([
             'name' => '高級腕時計',
             'detail' => 'メンズ用の高級腕時計です。',

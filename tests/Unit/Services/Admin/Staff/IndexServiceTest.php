@@ -11,7 +11,6 @@ use Tests\TestCase;
 
 class IndexServiceTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private IndexService $service;
@@ -25,7 +24,7 @@ class IndexServiceTest extends TestCase
     /**
      * searchStaffのテスト
      */
-    public function testSearchStaff(): void
+    public function test_search_staff(): void
     {
         $default = [
             'name' => null,

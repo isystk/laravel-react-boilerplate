@@ -2,6 +2,4 @@
 
 namespace App\Services\Api\Cart;
 
-class MyCartService extends BaseCartService
-{
-}
+class MyCartService extends BaseCartService {}

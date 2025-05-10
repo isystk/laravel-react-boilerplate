@@ -11,7 +11,6 @@ use Tests\TestCase;
 
 class UpdateServiceTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private UpdateService $service;
@@ -25,7 +24,7 @@ class UpdateServiceTest extends TestCase
     /**
      * updateのテスト
      */
-    public function testUpdate(): void
+    public function test_update(): void
     {
         Storage::fake();
 
@@ -37,7 +36,7 @@ class UpdateServiceTest extends TestCase
             'imgpath' => 'stock1.jpg',
         ]);
 
-        $request = new UpdateRequest();
+        $request = new UpdateRequest;
         $request['name'] = 'bbb';
         $request['detail'] = 'bbbの説明';
         $request['price'] = 222;

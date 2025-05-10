@@ -38,12 +38,11 @@ class CreateService extends BaseService
         );
 
         if (null !== $fileName) {
-            //s3に画像をアップロード
+            // s3に画像をアップロード
             $tmpFile = UploadImage::convertBase64($request->imageBase64);
             $tmpFile->storeAs(PhotoType::Stock->type(), $fileName);
         }
 
         return $stock;
     }
-
 }

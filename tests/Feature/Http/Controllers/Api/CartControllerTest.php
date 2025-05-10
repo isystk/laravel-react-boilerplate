@@ -8,10 +8,9 @@ use Tests\TestCase;
 
 class CartControllerTest extends TestCase
 {
-
     use RefreshDatabase;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->withoutMiddleware(ValidateCsrfToken::class);
@@ -20,7 +19,7 @@ class CartControllerTest extends TestCase
     /**
      * マイカート 取得APIのテスト
      */
-    public function testMyCart(): void
+    public function test_my_cart(): void
     {
         $user1 = $this->createDefaultUser([
             'name' => 'user1',
@@ -32,12 +31,12 @@ class CartControllerTest extends TestCase
         $response = $this->post(route('api.mycart'), []);
         $response->assertSuccessful();
         $response->assertJson([
-            "result" => true,
-            "carts" => [
-                "data" => [],
-                "username" => $user1->email,
-                "sum" => 0,
-                "count" => 0,
+            'result' => true,
+            'carts' => [
+                'data' => [],
+                'username' => $user1->email,
+                'sum' => 0,
+                'count' => 0,
             ],
         ]);
 
@@ -50,15 +49,15 @@ class CartControllerTest extends TestCase
         $response = $this->post(route('api.mycart'), []);
         $response->assertSuccessful();
         $response->assertJson([
-            "result" => true,
-            "carts" => [
-                "data" => [
+            'result' => true,
+            'carts' => [
+                'data' => [
                     ['id' => $cart1->id, 'stock_id' => $stock1->id, 'name' => 'stock1', 'price' => 111],
                     ['id' => $cart2->id, 'stock_id' => $stock2->id, 'name' => 'stock2', 'price' => 222],
                 ],
-                "username" => $user1->email,
-                "sum" => 333,
-                "count" => 2,
+                'username' => $user1->email,
+                'sum' => 333,
+                'count' => 2,
             ],
         ]);
     }
@@ -66,7 +65,7 @@ class CartControllerTest extends TestCase
     /**
      * マイカート 追加APIのテスト
      */
-    public function testAddCart(): void
+    public function test_add_cart(): void
     {
         $user1 = $this->createDefaultUser([
             'name' => 'user1',
@@ -88,7 +87,7 @@ class CartControllerTest extends TestCase
     /**
      * マイカート 削除APIのテスト
      */
-    public function testDeleteCart(): void
+    public function test_delete_cart(): void
     {
         $user1 = $this->createDefaultUser([
             'name' => 'user1',
@@ -110,5 +109,4 @@ class CartControllerTest extends TestCase
         $response->assertSuccessful();
         $this->assertDatabaseCount('carts', 0);
     }
-
 }

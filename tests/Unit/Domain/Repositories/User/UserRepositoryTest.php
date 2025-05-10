@@ -9,7 +9,6 @@ use Tests\TestCase;
 
 class UserRepositoryTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private UserRepository $repository;
@@ -23,7 +22,7 @@ class UserRepositoryTest extends TestCase
     /**
      * getByConditionsのテスト
      */
-    public function testGetByConditions(): void
+    public function test_get_by_conditions(): void
     {
         $defaultConditions = [
             'name' => null,

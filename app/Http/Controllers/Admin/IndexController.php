@@ -7,7 +7,6 @@ use Illuminate\Http\RedirectResponse;
 
 class IndexController extends BaseController
 {
-
     /**
      * ルートへのアクセス
      */

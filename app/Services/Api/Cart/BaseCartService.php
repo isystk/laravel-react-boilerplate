@@ -21,6 +21,7 @@ class BaseCartService extends BaseService
 
     /**
      * カートに追加された商品を取得します。
+     *
      * @return array{
      *     data: array{
      *         id: int,
@@ -47,11 +48,11 @@ class BaseCartService extends BaseService
         ];
 
         $carts = $this->cartRepository->getByUserId($user->id);
-        $items['data'] = $carts->map(function ($cart)
-        {
+        $items['data'] = $carts->map(function ($cart) {
             /** @var Cart $cart */
             /** @var Stock $stock */
             $stock = $cart->stock;
+
             return [
                 'id' => $cart->id,
                 'stock_id' => $stock->id,
@@ -66,7 +67,7 @@ class BaseCartService extends BaseService
             $items['sum'] += $item['price'];
             $items['count']++;
         }
+
         return $items;
     }
-
 }

@@ -22,6 +22,7 @@ class LoginController extends BaseController
             // ホーム画面にリダイレクト
             return redirect(route('admin.home'));
         }
+
         return view('admin.login');
     }
 

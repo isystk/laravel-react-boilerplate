@@ -14,7 +14,6 @@ use Throwable;
 
 class EditController extends BaseController
 {
-
     /**
      * お問い合わせ変更画面の初期表示
      */
@@ -32,6 +31,7 @@ class EditController extends BaseController
 
     /**
      * お問い合わせ変更画面の登録処理
+     *
      * @throws Throwable
      */
     public function update(UpdateRequest $request, ContactForm $contactForm): RedirectResponse
@@ -47,6 +47,7 @@ class EditController extends BaseController
             DB::rollBack();
             throw $e;
         }
+
         return redirect(route('admin.contact'));
     }
 }

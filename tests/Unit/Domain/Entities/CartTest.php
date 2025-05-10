@@ -28,5 +28,4 @@ class CartTest extends TestCase
         $this->assertInstanceOf(Stock::class, $result);
         $this->assertSame($cart->stock->id, $result->id);
     }
-
 }

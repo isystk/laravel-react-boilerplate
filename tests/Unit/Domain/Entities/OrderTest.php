@@ -18,5 +18,4 @@ class OrderTest extends TestCase
         $this->assertInstanceOf(User::class, $result);
         $this->assertSame($cart->user->id, $result->id);
     }
-
 }

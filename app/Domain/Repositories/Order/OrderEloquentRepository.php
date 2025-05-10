@@ -10,10 +10,6 @@ use Illuminate\Support\Collection;
 
 class OrderEloquentRepository extends BaseEloquentRepository implements OrderRepository
 {
-
-    /**
-     * @return string
-     */
     protected function model(): string
     {
         return Order::class;
@@ -21,6 +17,7 @@ class OrderEloquentRepository extends BaseEloquentRepository implements OrderRep
 
     /**
      * 検索条件からデータを取得します。
+     *
      * @param array{
      *   user_name : ?string,
      *   order_date_from : ?CarbonImmutable,
@@ -59,8 +56,8 @@ class OrderEloquentRepository extends BaseEloquentRepository implements OrderRep
             /** @var LengthAwarePaginator<int, Order> */
             return $query->paginate($conditions['limit']);
         }
+
         /** @var Collection<int, Order> */
         return $query->get();
     }
-
 }

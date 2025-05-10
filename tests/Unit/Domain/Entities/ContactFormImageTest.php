@@ -10,7 +10,7 @@ class ContactFormImageTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_contactForm(): void
+    public function test_contact_form(): void
     {
         $contactFormImage = $this->createDefaultContactFormImage();
 
@@ -18,5 +18,4 @@ class ContactFormImageTest extends TestCase
         $this->assertInstanceOf(ContactForm::class, $result);
         $this->assertSame($contactFormImage->contactForm->id, $result->id);
     }
-
 }

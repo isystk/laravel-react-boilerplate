@@ -19,6 +19,7 @@ class ShowService extends BaseService
 
     /**
      * お問い合わせを取得します。
+     *
      * @return Collection<int, ContactFormImage>
      */
     public function getContactFormImage(int $contactFormId): Collection

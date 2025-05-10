@@ -27,10 +27,10 @@ class UpdateService extends BaseService
             'email' => $request->email,
             'role' => $request->role,
         ];
+
         return $this->adminRepository->update(
             $adminId,
             $model
         );
     }
-
 }

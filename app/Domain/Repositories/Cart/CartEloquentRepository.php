@@ -8,10 +8,6 @@ use Illuminate\Support\Collection;
 
 class CartEloquentRepository extends BaseEloquentRepository implements CartRepository
 {
-
-    /**
-     * @return string
-     */
     protected function model(): string
     {
         return Cart::class;
@@ -19,7 +15,7 @@ class CartEloquentRepository extends BaseEloquentRepository implements CartRepos
 
     /**
      * ユーザーIDからデータを取得します。
-     * @param int $userId
+     *
      * @return Collection<int, Cart>
      */
     public function getByUserId(int $userId): Collection
@@ -43,5 +39,4 @@ class CartEloquentRepository extends BaseEloquentRepository implements CartRepos
             ->where('user_id', $userId)
             ->delete();
     }
-
 }

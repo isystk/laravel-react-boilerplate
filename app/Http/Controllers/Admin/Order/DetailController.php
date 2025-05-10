@@ -9,7 +9,6 @@ use Illuminate\View\View;
 
 class DetailController extends BaseController
 {
-
     /**
      * 注文履歴詳細画面の初期表示
      */

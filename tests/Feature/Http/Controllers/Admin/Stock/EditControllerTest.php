@@ -10,10 +10,9 @@ use Tests\TestCase;
 
 class EditControllerTest extends TestCase
 {
-
     use RefreshDatabase;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->withoutMiddleware(ValidateCsrfToken::class);
@@ -22,7 +21,7 @@ class EditControllerTest extends TestCase
     /**
      * 商品編集画面表示のテスト
      */
-    public function testEdit(): void
+    public function test_edit(): void
     {
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者A',
@@ -51,7 +50,7 @@ class EditControllerTest extends TestCase
     /**
      * 商品編集画面 変更のテスト
      */
-    public function testUpdate(): void
+    public function test_update(): void
     {
         Storage::fake();
 
@@ -104,5 +103,4 @@ class EditControllerTest extends TestCase
             'imgpath' => 'image2.jpg',
         ]);
     }
-
 }

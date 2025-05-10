@@ -7,7 +7,6 @@ use Illuminate\Validation\Rules\Password;
 
 class PasswordChangeUpdateRequest extends FormRequest
 {
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -16,6 +15,7 @@ class PasswordChangeUpdateRequest extends FormRequest
     public function rules(): array
     {
         $maxlength = config('const.maxlength.admins');
+
         return [
             'password' => [
                 'required',
@@ -26,7 +26,6 @@ class PasswordChangeUpdateRequest extends FormRequest
             ],
         ];
     }
-
 
     /**
      * Get the error messages for the defined validation rules.
@@ -39,5 +38,4 @@ class PasswordChangeUpdateRequest extends FormRequest
             'password' => __('staff.Password'),
         ];
     }
-
 }

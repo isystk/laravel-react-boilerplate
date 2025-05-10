@@ -8,14 +8,19 @@ class SearchConditionDto
 {
     // 名前
     public ?string $userName;
+
     // タイトル
     public ?string $title;
+
     // ソートのカラム名
     public string $sortName;
+
     // ソートの方向
     public string $sortDirection;
+
     // ページ
     public int $page;
+
     // リミット
     public int $limit;
 
@@ -29,5 +34,4 @@ class SearchConditionDto
         $this->page = (int) $request->input('page', 1); // デフォルト: 1
         $this->limit = (int) $request->input('limit', 20); // デフォルト: 20
     }
-
 }

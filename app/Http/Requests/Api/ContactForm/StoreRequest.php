@@ -12,8 +12,6 @@ class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -28,13 +26,13 @@ class StoreRequest extends FormRequest
         $data = $this->all();
         $imageFiles = [];
         // imageBase64パラメータがあればUploadedFileオブジェクトに変換してimageFileパラメータに上書きする。
-        if ($this->has('imageBase64_1') && $this->imageBase64_1 !== null) {
+        if ($this->has('imageBase64_1') && null !== $this->imageBase64_1) {
             $imageFiles[] = UploadImage::convertBase64($this->imageBase64_1);
         }
-        if ($this->has('imageBase64_2') && $this->imageBase64_2 !== null) {
+        if ($this->has('imageBase64_2') && null !== $this->imageBase64_2) {
             $imageFiles[] = UploadImage::convertBase64($this->imageBase64_2);
         }
-        if ($this->has('imageBase64_3') && $this->imageBase64_3 !== null) {
+        if ($this->has('imageBase64_3') && null !== $this->imageBase64_3) {
             $imageFiles[] = UploadImage::convertBase64($this->imageBase64_3);
         }
         $this->merge([
@@ -50,6 +48,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         $maxlength = config('const.maxlength.contact_forms');
+
         return [
             'user_name' => [
                 'required',
@@ -119,5 +118,4 @@ class StoreRequest extends FormRequest
             '*.Illuminate\Validation\Rules\Enum' => ':attributeの値が不正です。',
         ];
     }
-
 }

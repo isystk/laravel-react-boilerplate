@@ -19,7 +19,7 @@ class IndexService extends BaseStockService
 
     /**
      * 商品を検索します。
-     * @param SearchConditionDto $searchConditionDto
+     *
      * @return LengthAwarePaginator<int, Stock>
      */
     public function searchStock(SearchConditionDto $searchConditionDto): LengthAwarePaginator
@@ -30,7 +30,7 @@ class IndexService extends BaseStockService
             'sort_direction' => $searchConditionDto->sortDirection,
             'limit' => $searchConditionDto->limit,
         ];
+
         return $this->stockRepository->getByConditions($items);
     }
-
 }

@@ -19,11 +19,11 @@ class ExportMonthlySalesService extends BaseService
 
     /**
      * 出力対象の月別売上データを取得します。
+     *
      * @return Collection<int, MonthlySale>
      */
     public function getMonthlySales(): Collection
     {
         return $this->monthlySaleRepository->getAllOrderByYearMonthDesc();
     }
-
 }

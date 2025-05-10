@@ -8,13 +8,12 @@ use Tests\TestCase;
 
 class Base64ImageRuleTest extends TestCase
 {
-
     /**
      * ファイルが画像でない場合、エラーとなることをテスト
      */
-    public function testNotImageFileFails(): void
+    public function test_not_image_file_fails(): void
     {
-        $rule = new Base64ImageRule();
+        $rule = new Base64ImageRule;
         $this->assertFalse($rule->passes('file', null));
         $this->assertFalse($rule->passes('file', ''));
         $this->assertFalse($rule->passes('file', 'dummy'));
@@ -23,7 +22,7 @@ class Base64ImageRuleTest extends TestCase
     /**
      * ファイルがjpegの場合をテスト
      */
-    public function testJpegFilePasses(): void
+    public function test_jpeg_file_passes(): void
     {
         $image = UploadedFile::fake()->image('test.jpg');
         $base64 = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($image->getPathname()));
@@ -38,7 +37,7 @@ class Base64ImageRuleTest extends TestCase
     /**
      * ファイルがpngの場合をテスト
      */
-    public function testPngFilePasses(): void
+    public function test_png_file_passes(): void
     {
         $image = UploadedFile::fake()->image('test.png');
         $base64 = 'data:image/png;base64,' . base64_encode(file_get_contents($image->getPathname()));
@@ -53,7 +52,7 @@ class Base64ImageRuleTest extends TestCase
     /**
      * ファイルがgifの場合をテスト
      */
-    public function testGifFilePasses(): void
+    public function test_gif_file_passes(): void
     {
         $image = imagecreatetruecolor(100, 100);
         ob_start();
@@ -66,5 +65,4 @@ class Base64ImageRuleTest extends TestCase
         $rule = new Base64ImageRule(['gif']);
         $this->assertTrue($rule->passes('image', $base64), '想定通り拡張子なのでPass');
     }
-
 }

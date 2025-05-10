@@ -20,6 +20,7 @@ class IndexService extends BaseService
 
     /**
      * 受理ファイルインポート履歴を取得します。
+     *
      * @return array<int, array<string, ?string>>
      */
     public function getImportHistories(): array
@@ -27,8 +28,7 @@ class IndexService extends BaseService
         // インポート履歴を取得
         $importHistories = $this->importHistoryRepository->getByImportHistory(ImportType::Staff);
 
-        $importHistories = $importHistories->map(function ($importHistory)
-        {
+        $importHistories = $importHistories->map(function ($importHistory) {
             $admin = Admin::find($importHistory->import_user_id);
 
             // インポート履歴を表示用に加工
@@ -40,7 +40,7 @@ class IndexService extends BaseService
                 'status' => JobStatus::getLabel($importHistory->status),
             ];
         });
+
         return $importHistories->toArray();
     }
-
 }

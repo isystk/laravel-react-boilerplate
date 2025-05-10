@@ -10,7 +10,6 @@ use Illuminate\View\View;
 
 class ListController extends BaseController
 {
-
     /**
      * 注文履歴一覧画面の初期表示
      */

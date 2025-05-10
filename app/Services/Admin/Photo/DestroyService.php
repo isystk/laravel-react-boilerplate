@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Storage;
 
 class DestroyService extends BaseService
 {
-
     /**
      * 写真を削除します。
      */

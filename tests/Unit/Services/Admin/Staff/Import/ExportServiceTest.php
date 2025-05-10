@@ -8,7 +8,6 @@ use Tests\TestCase;
 
 class ExportServiceTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private ExportService $service;
@@ -22,7 +21,7 @@ class ExportServiceTest extends TestCase
     /**
      * getExportのテスト
      */
-    public function testGetExport(): void
+    public function test_get_export(): void
     {
         $export = $this->service->getExport();
         $this->assertSame(['ID', '名前', 'メールアドレス', '権限'], $export->headings(), 'ヘッダーが正しいこと');
@@ -33,9 +32,9 @@ class ExportServiceTest extends TestCase
         $export = $this->service->getExport();
         $rows = $export->collection();
 
-        $this->assertSame($admin2->id, $rows[1]["id"], '「ID」が正しく出力されること');
-        $this->assertSame($admin2->name, $rows[1]["name"], '「名前」が正しく出力されること');
-        $this->assertSame($admin2->email, $rows[1]["email"], '「メールアドレス」が正しく出力されること');
-        $this->assertSame($admin2->role, $rows[1]["role"], '「権限」が正しく出力されること');
+        $this->assertSame($admin2->id, $rows[1]['id'], '「ID」が正しく出力されること');
+        $this->assertSame($admin2->name, $rows[1]['name'], '「名前」が正しく出力されること');
+        $this->assertSame($admin2->email, $rows[1]['email'], '「メールアドレス」が正しく出力されること');
+        $this->assertSame($admin2->role, $rows[1]['role'], '「権限」が正しく出力されること');
     }
 }

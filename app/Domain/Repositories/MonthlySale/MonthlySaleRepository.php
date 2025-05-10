@@ -8,9 +8,9 @@ use Illuminate\Support\Collection;
 
 interface MonthlySaleRepository extends BaseRepository
 {
-
     /**
      * 年月の新しい順にすべてのレコードを返却する。
+     *
      * @return Collection<int, MonthlySale>
      */
     public function getAllOrderByYearMonthDesc(): Collection;

@@ -11,7 +11,6 @@ use Illuminate\View\View;
 
 class ListController extends BaseController
 {
-
     /**
      * 画像一覧画面の初期表示
      */

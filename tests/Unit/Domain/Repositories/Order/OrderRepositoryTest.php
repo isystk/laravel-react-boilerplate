@@ -9,7 +9,6 @@ use Tests\TestCase;
 
 class OrderRepositoryTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private OrderRepository $repository;
@@ -24,7 +23,7 @@ class OrderRepositoryTest extends TestCase
     /**
      * getConditionsWithUserStockのテスト
      */
-    public function testGetConditionsWithUserStock(): void
+    public function test_get_conditions_with_user_stock(): void
     {
         $defaultConditions = [
             'user_name' => null,

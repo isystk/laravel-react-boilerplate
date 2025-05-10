@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 class UpdateService extends BaseService
 {
     private ContactFormRepository $contactFormRepository;
+
     private ContactFormImageRepository $contactFormImageRepository;
 
     public function __construct(
@@ -77,8 +78,6 @@ class UpdateService extends BaseService
             }
         }
 
-
         return $contactForm;
     }
-
 }
