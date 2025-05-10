@@ -88,11 +88,11 @@ Route::prefix('auth')->middleware('guest')->group(function ()
 */
 Route::prefix('api')->middleware('api')->group(function ()
 {
-    Route::get('/consts', [\App\Http\Controllers\Api\ConstController::class, 'index'])->name('api.consts');
-    Route::resource('/likes', App\Http\Controllers\Api\LikeController::class);
-    Route::post('/likes/store', [\App\Http\Controllers\Api\LikeController::class, 'store']);
-    Route::post('/likes/destroy/{id}', [\App\Http\Controllers\Api\LikeController::class, 'destroy']);
-    Route::get('/shops', [\App\Http\Controllers\Api\ShopController::class, 'index'])->name('api.shops');
+    Route::get('/const', [\App\Http\Controllers\Api\ConstController::class, 'index'])->name('api.const');
+    Route::resource('/like', App\Http\Controllers\Api\LikeController::class);
+    Route::post('/like/store', [\App\Http\Controllers\Api\LikeController::class, 'store']);
+    Route::post('/like/destroy/{id}', [\App\Http\Controllers\Api\LikeController::class, 'destroy']);
+    Route::get('/stock', [\App\Http\Controllers\Api\StockController::class, 'index'])->name('api.stock');
     Route::post('/contact/store', [\App\Http\Controllers\Api\ContactFormController::class, 'store'])->name('api.contact.store');
 
     Route::middleware(['auth:sanctum'])->group(function ()
@@ -101,11 +101,11 @@ Route::prefix('api')->middleware('api')->group(function ()
         Route::post('/session', static function (Request $request) {
             return $request->user();
         });
-        Route::post('/mycart', [\App\Http\Controllers\Api\CartController::class, 'mycart'])->name('api.shop.mycart');
-        Route::post('/addMycart', [\App\Http\Controllers\Api\CartController::class, 'addMycart'])->name('api.shop.addcart');
-        Route::post('/cartdelete', [\App\Http\Controllers\Api\CartController::class, 'deleteCart'])->name('api.shop.delete');
-        Route::post('/createPayment', [\App\Http\Controllers\Api\CartController::class, 'createPayment'])->name('api.shop.createPayment');
-        Route::post('/checkout', [\App\Http\Controllers\Api\CartController::class, 'checkout'])->name('api.shop.check');
+        Route::post('/mycart', [\App\Http\Controllers\Api\CartController::class, 'mycart'])->name('api.mycart');
+        Route::post('/mycart/add', [\App\Http\Controllers\Api\CartController::class, 'addMycart'])->name('api.mycart.add');
+        Route::post('/mycart/delete', [\App\Http\Controllers\Api\CartController::class, 'deleteCart'])->name('api.mycart.delete');
+        Route::post('/mycart/payment', [\App\Http\Controllers\Api\CartController::class, 'createPayment'])->name('api.mycart.payment');
+        Route::post('/mycart/checkout', [\App\Http\Controllers\Api\CartController::class, 'checkout'])->name('api.mycart.checkout');
     });
 });
 

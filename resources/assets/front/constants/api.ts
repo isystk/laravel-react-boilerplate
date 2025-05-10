@@ -13,28 +13,28 @@ export const Api = {
   /** ログアウト */
   LOGOUT: getBffUrl('/logout'),
   /** 共通定数 */
-  CONSTS: getBffUrl('/consts'),
+  CONST: getBffUrl('/const'),
 
   /** お気に入りデータ取得 */
-  LIKES: getBffUrl('/likes'),
+  LIKE: getBffUrl('/like'),
   /** お気に入り追加 */
-  LIKES_STORE: getBffUrl('/likes/store'),
+  LIKE_STORE: getBffUrl('/like/store'),
   /** お気に入り削除 */
-  LIKES_DESTROY: getBffUrl('/likes/destroy'),
+  LIKE_DESTROY: getBffUrl('/like/destroy'),
 
   /** お問い合わせ登録 */
   CONTACT_STORE: getBffUrl('/contact/store'),
 
   /** 商品一覧データ取得 */
-  SHOPS: getBffUrl('/shops'),
+  STOCK: getBffUrl('/stock'),
   /** マイカートデータ取得 */
   MYCART: getBffUrl('/mycart'),
   /** カートに商品を追加する */
-  ADD_MYCART: getBffUrl('/addMycart'),
+  MYCART_ADD: getBffUrl('/mycart/add'),
   /** カートから商品を削除する */
-  REMOVE_MYCART: getBffUrl('/cartdelete'),
+  MYCART_DELETE: getBffUrl('/mycart/delete'),
   /** Stripe用のペイメント作成 */
-  CREATE_PAYMENT: getBffUrl('/createPayment'),
+  MYCART_PAYMENT: getBffUrl('/mycart/payment'),
   /** 決算処理後の後処理 */
-  CHECKOUT: getBffUrl('/checkout'),
+  MYCART_CHECKOUT: getBffUrl('/mycart/checkout'),
 };

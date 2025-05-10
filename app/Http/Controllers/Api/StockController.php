@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Services\Api\Shop\IndexService;
+use App\Dto\Response\Api\StockJsonDto;
+use App\Services\Api\Stock\IndexService;
 use Illuminate\Http\JsonResponse;
 use Throwable;
 
-class ShopController extends BaseApiController
+class StockController extends BaseApiController
 {
 
     /**
@@ -18,18 +19,9 @@ class ShopController extends BaseApiController
         $service = app(IndexService::class);
         try {
             $stocks = $service->searchStock();
-            $result = [
-                'result' => true,
-                'stocks' => $stocks,
-            ];
+            $result = new StockJsonDto($stocks);
         } catch (Throwable $e) {
-            $result = [
-                'result' => false,
-                'error' => [
-                    'messages' => [$e->getMessage()],
-                ],
-            ];
-            return response()->json($result, $e->getCode());
+            return $this->getErrorJsonResponse($e);
         }
         return response()->json($result);
     }

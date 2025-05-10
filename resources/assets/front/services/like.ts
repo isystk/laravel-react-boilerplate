@@ -14,9 +14,9 @@ export default class LikeService {
   async readLikesAsync() {
     this.main.showLoading();
     try {
-      const response = await fetch(Api.LIKES);
-      const { likes } = await response.json();
-      this.like.stockIds = likes.data;
+      const response = await fetch(Api.LIKE);
+      const { stockIds } = await response.json();
+      this.like.stockIds = stockIds;
     } catch (e) {
       this.main.showToastMessage('お気に入りの取得に失敗しました');
     }
@@ -27,20 +27,19 @@ export default class LikeService {
   async addLikeAsync(id: number) {
     this.main.showLoading();
     try {
-      const response = await fetch(Api.LIKES_STORE, {
+      const response = await fetch(Api.LIKE_STORE, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          id: id,
+          id,
         }),
       });
       const { result } = await response.json();
       if (result) {
         this.main.showToastMessage('お気に入りに追加しました');
-        const newData: string = id + '';
-        this.like.stockIds = [newData, ...this.like.stockIds];
+        this.like.stockIds = [id, ...this.like.stockIds];
       }
     } catch (e) {
       this.main.showToastMessage('お気に入りの追加に失敗しました');
@@ -51,12 +50,12 @@ export default class LikeService {
   async removeLikeAsync(id: number) {
     this.main.showLoading();
     try {
-      const response = await fetch(Api.LIKES_DESTROY + '/' + id, {
+      const response = await fetch(Api.LIKE_DESTROY + '/' + id, {
         method: 'POST',
       });
       const { result } = await response.json();
       if (result) {
-        this.like.stockIds = this.like.stockIds.filter(n => n !== id + '');
+        this.like.stockIds = this.like.stockIds.filter(n => n !== id);
       }
     } catch (e) {
       this.main.showToastMessage('お気に入りの削除に失敗しました');

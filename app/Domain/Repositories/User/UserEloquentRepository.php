@@ -4,8 +4,8 @@ namespace App\Domain\Repositories\User;
 
 use App\Domain\Entities\User;
 use App\Domain\Repositories\BaseEloquentRepository;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class UserEloquentRepository extends BaseEloquentRepository implements UserRepository
 {
@@ -32,18 +32,23 @@ class UserEloquentRepository extends BaseEloquentRepository implements UserRepos
     {
         $query = $this->model->select();
 
-        if (null !== $conditions['name']) {
+        if (!is_null($conditions['name'] ?? null)) {
             $query->where('name', 'like', '%' . $conditions['name'] . '%');
         }
-        if (null !== $conditions['email']) {
+        if (!is_null($conditions['email'] ?? null)) {
             $query->where('email', 'like', '%' . $conditions['email'] . '%');
         }
 
-        if (null !== $conditions['sort_name']) {
+        if (!is_null($conditions['sort_name'] ?? null)) {
             $query->orderBy($conditions['sort_name'], $conditions['sort_direction'] ?? 'asc');
         }
 
-        return null !== $conditions['limit'] ? $query->paginate($conditions['limit']) : $query->get();
+        if (!is_null($conditions['limit'] ?? null)) {
+            /** @var LengthAwarePaginator<int, User> */
+            return $query->paginate($conditions['limit']);
+        }
+        /** @var Collection<int, User> */
+        return $query->get();
     }
 
 }

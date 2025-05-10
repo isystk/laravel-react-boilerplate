@@ -27,12 +27,12 @@ const Top = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const pageNo = Number(new URLSearchParams(location.search).get('page') || 1);
-  const [stocks, setStocks] = useState({
-    current_page: 1,
+  const [response, setResponse] = useState({
+    currentPage: 1,
     total: 0,
-    data: [] as Stock[],
+    stocks: [] as Stock[],
   });
-  const { total, current_page } = stocks;
+  const { total, currentPage, stocks } = response;
 
   useEffect(() => {
     // お気に入りデータを取得する
@@ -43,18 +43,18 @@ const Top = () => {
     (async () => {
       // 商品データを取得する
       const stocks = await service.stock.readStocks(pageNo);
-      setStocks(stocks);
+      setResponse(stocks);
     })();
   }, [service, pageNo]);
 
   const items = useMemo(() => {
     if (!stocks || !state) return [];
-    return stocks.data.map(
+    return stocks.map(
       stock =>
         ({
           ...stock,
           price: stock.price + '円',
-          isLike: state.like.stockIds.includes(stock.id + ''),
+          isLike: state.like.stockIds.includes(stock.id),
         }) as StockItemProps,
     );
   }, [stocks, state, state?.like.stockIds]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -82,7 +82,7 @@ const Top = () => {
               ))}
             </div>
             <Pagination
-              activePage={current_page}
+              activePage={currentPage}
               totalItemsCount={total}
               itemsCountPerPage={6}
               pageRangeDisplayed={3}

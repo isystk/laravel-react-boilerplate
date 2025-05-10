@@ -4,8 +4,8 @@ namespace App\Domain\Repositories\Admin;
 
 use App\Domain\Entities\Admin;
 use App\Domain\Repositories\BaseRepository;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 interface AdminRepository extends BaseRepository
 {

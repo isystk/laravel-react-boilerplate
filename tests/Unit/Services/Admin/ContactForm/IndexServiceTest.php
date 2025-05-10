@@ -2,10 +2,10 @@
 
 namespace Tests\Unit\Services\Admin\ContactForm;
 
-use App\Domain\Entities\ContactForm;
+use App\Dto\Request\Admin\ContactForm\SearchConditionDto;
 use App\Services\Admin\ContactForm\IndexService;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Request;
 use Tests\TestCase;
 
 class IndexServiceTest extends TestCase
@@ -26,39 +26,37 @@ class IndexServiceTest extends TestCase
      */
     public function testSearchContactForm(): void
     {
-        $default = [
+        $request = new Request([
             'user_name' => null,
             'title' => null,
             'sort_name' => 'updated_at',
             'sort_direction' => 'asc',
             'limit' => 20,
-        ];
+        ]);
+        $default = new SearchConditionDto($request);
 
-        $contactForms = $this->service->searchContactForm($default);
+        $contactForms = $this->service->searchContactForm($default)->getCollection();
         $this->assertSame(0, $contactForms->count(), '引数がない状態でエラーにならないことを始めにテスト');
 
         $contactForm1 = $this->createDefaultContactForm(['user_name' => 'user1', 'title' => 'title1']);
         $contactForm2 = $this->createDefaultContactForm(['user_name' => 'user2', 'title' => 'title2']);
 
-        $input = $default;
-        $input['user_name'] = 'user2';
-        /** @var Collection<int, ContactForm> $contactForms */
-        $contactForms = $this->service->searchContactForm($input);
+        $input = clone $default;
+        $input->userName = 'user2';
+        $contactForms = $this->service->searchContactForm($input)->getCollection();
         $contactFormIds = $contactForms->pluck('id')->all();
         $this->assertSame([$contactForm2->id], $contactFormIds, 'user_nameで検索が出来ることをテスト');
 
-        $input = $default;
-        $input['title'] = 'title2';
-        /** @var Collection<int, ContactForm> $contactForms */
-        $contactForms = $this->service->searchContactForm($input);
+        $input = clone $default;
+        $input->title = 'title2';
+        $contactForms = $this->service->searchContactForm($input)->getCollection();
         $contactFormIds = $contactForms->pluck('id')->all();
         $this->assertSame([$contactForm2->id], $contactFormIds, 'titleで検索が出来ることをテスト');
 
-        $input = $default;
-        $input['sort_name'] = 'id';
-        $input['sort_direction'] = 'desc';
-        /** @var Collection<int, ContactForm> $contactForms */
-        $contactForms = $this->service->searchContactForm($input);
+        $input = clone $default;
+        $input->sortName = 'id';
+        $input->sortDirection = 'desc';
+        $contactForms = $this->service->searchContactForm($input)->getCollection();
         $contactFormIds = $contactForms->pluck('id')->all();
         $this->assertSame([$contactForm2->id, $contactForm1->id], $contactFormIds,
             'ソート指定で検索が出来ることをテスト');

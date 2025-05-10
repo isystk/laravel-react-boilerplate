@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Order;
 
+use App\Dto\Request\Admin\Order\SearchConditionDto;
 use App\Http\Controllers\BaseController;
 use App\Services\Admin\Order\IndexService;
 use Illuminate\Http\Request;
@@ -18,8 +19,8 @@ class ListController extends BaseController
         /** @var IndexService $service */
         $service = app(IndexService::class);
 
-        $conditions = $service->convertConditionsFromRequest($request);
-        $orders = $service->searchOrder($conditions);
+        $searchCondition = new SearchConditionDto($request);
+        $orders = $service->searchOrder($searchCondition);
 
         return view('admin.order.index', compact('orders', 'request'));
     }

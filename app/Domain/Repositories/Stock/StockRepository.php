@@ -4,8 +4,8 @@ namespace App\Domain\Repositories\Stock;
 
 use App\Domain\Entities\Stock;
 use App\Domain\Repositories\BaseRepository;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 interface StockRepository extends BaseRepository
 {
@@ -21,7 +21,7 @@ interface StockRepository extends BaseRepository
      *   name : ?string,
      *   sort_name : ?string,
      *   sort_direction : 'asc' | 'desc' | null,
-     *   limit : ?int,
+     *   limit ?: ?int,
      * } $conditions
      * @return Collection<int, Stock>|LengthAwarePaginator<int, Stock>
      */

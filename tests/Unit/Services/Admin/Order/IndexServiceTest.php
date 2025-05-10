@@ -4,9 +4,11 @@ namespace Tests\Unit\Services\Admin\Order;
 
 use App\Domain\Entities\Order;
 use App\Domain\Entities\OrderStock;
+use App\Dto\Request\Admin\Order\SearchConditionDto;
 use App\Services\Admin\Order\IndexService;
 use App\Utils\DateUtil;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -14,7 +16,6 @@ class IndexServiceTest extends TestCase
 {
 
     use RefreshDatabase;
-
     private IndexService $service;
 
     protected function setUp(): void
@@ -28,14 +29,15 @@ class IndexServiceTest extends TestCase
      */
     public function testSearchOrder(): void
     {
-        $default = [
+        $request = new Request([
             'user_name' => null,
             'order_date_from' => null,
             'order_date_to' => null,
             'sort_name' => 'updated_at',
             'sort_direction' => 'asc',
             'limit' => 20,
-        ];
+        ]);
+        $default = new SearchConditionDto($request);
 
         $orders = $this->service->searchOrder($default);
         $this->assertSame(0, $orders->count(), '引数がない状態でエラーにならないことを始めにテスト');
@@ -53,33 +55,29 @@ class IndexServiceTest extends TestCase
         $order2 = $this->createDefaultOrder(['user_id' => $user2->id, 'created_at' => '2024-06-01']);
         OrderStock::factory(['order_id' => $order2->id, 'stock_id' => $stock3->id])->create();
 
-        $input = $default;
-        $input['user_name'] = 'user2';
-        /** @var LengthAwarePaginator<int, Order> $orders */
-        $orders = $this->service->searchOrder($input);
-        $orderIds = collect($orders->items())->pluck('id')->all();
+        $input = clone $default;
+        $input->name = 'user2';
+        $orders = $this->service->searchOrder($input)->getCollection();
+        $orderIds = $orders->pluck('id')->all();
         $this->assertSame([$order2->id], $orderIds, 'user_nameで検索が出来ることをテスト');
 
-        $input = $default;
-        $input['order_date_from'] = DateUtil::toCarbon('2024-06-01');
-        /** @var LengthAwarePaginator<int, Order> $orders */
-        $orders = $this->service->searchOrder($input);
-        $orderIds = collect($orders->items())->pluck('id')->all();
+        $input = clone $default;
+        $input->orderDateFrom = DateUtil::toCarbon('2024-06-01');
+        $orders = $this->service->searchOrder($input)->getCollection();
+        $orderIds = $orders->pluck('id')->all();
         $this->assertContains($order2->id, $orderIds, 'order_date_fromで検索が出来ることをテスト');
 
-        $input = $default;
-        $input['order_date_to'] = DateUtil::toCarbon('2024-05-01');
-        /** @var LengthAwarePaginator<int, Order> $orders */
-        $orders = $this->service->searchOrder($input);
-        $orderIds = collect($orders->items())->pluck('id')->all();
+        $input = clone $default;
+        $input->orderDateTo = DateUtil::toCarbon('2024-05-01');
+        $orders = $this->service->searchOrder($input)->getCollection();
+        $orderIds = $orders->pluck('id')->all();
         $this->assertSame([$order1->id], $orderIds, 'order_date_toで検索が出来ることをテスト');
 
-        $input = $default;
-        $input['sort_name'] = 'id';
-        $input['sort_direction'] = 'desc';
-        /** @var LengthAwarePaginator<int, Order> $orders */
-        $orders = $this->service->searchOrder($input);
-        $orderIds = collect($orders->items())->pluck('id')->all();
+        $input = clone $default;
+        $input->sortName = 'id';
+        $input->sortDirection = 'desc';
+        $orders = $this->service->searchOrder($input)->getCollection();
+        $orderIds = $orders->pluck('id')->all();
         $this->assertContains($order1->id, $orderIds, 'ソート指定で検索が出来ることをテスト');
         $this->assertContains($order2->id, $orderIds, 'ソート指定で検索が出来ることをテスト');
     }

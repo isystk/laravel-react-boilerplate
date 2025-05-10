@@ -5,7 +5,7 @@ namespace App\Services\Admin\Staff;
 use App\Domain\Entities\Admin;
 use App\Domain\Repositories\Admin\AdminRepository;
 use App\Services\BaseService;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 
 class IndexService extends BaseService

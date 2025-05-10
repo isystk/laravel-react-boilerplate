@@ -29,7 +29,7 @@ class CartControllerTest extends TestCase
         $this->actingAs($user1);
 
         // 商品が1つも追加されていない場合
-        $response = $this->post(route('api.shop.mycart'), []);
+        $response = $this->post(route('api.mycart'), []);
         $response->assertSuccessful();
         $response->assertJson([
             "result" => true,
@@ -47,7 +47,7 @@ class CartControllerTest extends TestCase
         $cart1 = $this->createDefaultCart(['user_id' => $user1->id, 'stock_id' => $stock1->id]);
         $cart2 = $this->createDefaultCart(['user_id' => $user1->id, 'stock_id' => $stock2->id]);
 
-        $response = $this->post(route('api.shop.mycart'), []);
+        $response = $this->post(route('api.mycart'), []);
         $response->assertSuccessful();
         $response->assertJson([
             "result" => true,
@@ -75,12 +75,12 @@ class CartControllerTest extends TestCase
         $this->actingAs($user1);
 
         $stock1 = $this->createDefaultStock(['name' => 'stock1', 'price' => 111]);
-        $response = $this->post(route('api.shop.addcart'), ['stock_id' => $stock1->id]);
+        $response = $this->post(route('api.mycart.add'), ['stock_id' => $stock1->id]);
         $response->assertSuccessful();
         $this->assertDatabaseCount('carts', 1);
 
         $stock2 = $this->createDefaultStock(['name' => 'stock2', 'price' => 222]);
-        $response = $this->post(route('api.shop.addcart'), ['stock_id' => $stock2->id]);
+        $response = $this->post(route('api.mycart.add'), ['stock_id' => $stock2->id]);
         $response->assertSuccessful();
         $this->assertDatabaseCount('carts', 2);
     }
@@ -102,11 +102,11 @@ class CartControllerTest extends TestCase
         $cart1 = $this->createDefaultCart(['user_id' => $user1->id, 'stock_id' => $stock1->id]);
         $cart2 = $this->createDefaultCart(['user_id' => $user1->id, 'stock_id' => $stock2->id]);
 
-        $response = $this->post(route('api.shop.delete'), ['cart_id' => $cart1->id]);
+        $response = $this->post(route('api.mycart.delete'), ['cart_id' => $cart1->id]);
         $response->assertSuccessful();
         $this->assertDatabaseCount('carts', 1);
 
-        $response = $this->post(route('api.shop.delete'), ['cart_id' => $cart2->id]);
+        $response = $this->post(route('api.mycart.delete'), ['cart_id' => $cart2->id]);
         $response->assertSuccessful();
         $this->assertDatabaseCount('carts', 0);
     }

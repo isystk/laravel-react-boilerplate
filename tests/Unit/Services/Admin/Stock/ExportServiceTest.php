@@ -2,8 +2,10 @@
 
 namespace Services\Admin\Stock;
 
+use App\Dto\Request\Admin\Stock\SearchConditionDto;
 use App\Services\Admin\Stock\ExportService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Request;
 use Tests\TestCase;
 
 class ExportServiceTest extends TestCase
@@ -24,11 +26,12 @@ class ExportServiceTest extends TestCase
      */
     public function testGetExport(): void
     {
-        $default = [
+        $request = new Request([
             'name' => null,
             'sort_name' => 'updated_at',
             'sort_direction' => 'asc',
-        ];
+        ]);
+        $default = new SearchConditionDto($request);
 
         $export = $this->service->getExport($default);
         $this->assertSame(['ID', '商品名', '価格'], $export->headings(), 'ヘッダーが正しいこと');
@@ -36,8 +39,8 @@ class ExportServiceTest extends TestCase
         $this->createDefaultStock(['name' => 'stock1', 'price' => 111]);
         $stock2 = $this->createDefaultStock(['name' => 'stock2', 'price' => 222]);
 
-        $input = $default;
-        $input['name'] = 'stock2';
+        $input = clone $default;
+        $input->name = 'stock2';
         $export = $this->service->getExport($input);
         $rows = $export->collection();
 
