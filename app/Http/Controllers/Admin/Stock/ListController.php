@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Stock;
 
+use App\Dto\Request\Admin\Stock\SearchConditionDto;
 use App\Http\Controllers\BaseController;
 use App\Services\Admin\Stock\ExportService;
 use App\Services\Admin\Stock\IndexService;
@@ -23,7 +24,7 @@ class ListController extends BaseController
         /** @var IndexService $service */
         $service = app(IndexService::class);
 
-        $conditions = $service->convertConditionsFromRequest($request);
+        $conditions = new SearchConditionDto($request);
         $stocks = $service->searchStock($conditions);
 
         return view('admin.stock.index', compact('stocks', 'request'));
@@ -41,7 +42,7 @@ class ListController extends BaseController
 
         /** @var ExportService $service */
         $service = app(ExportService::class);
-        $conditions = $service->convertConditionsFromRequest($request);
+        $conditions = new SearchConditionDto($request);
         $export = $service->getExport($conditions);
 
         if ('csv' === $fileType) {

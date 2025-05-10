@@ -5,8 +5,8 @@ namespace App\Services\Admin\ContactForm;
 use App\Domain\Entities\ContactForm;
 use App\Domain\Repositories\ContactForm\ContactFormRepository;
 use App\Services\BaseService;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 
 class IndexService extends BaseService

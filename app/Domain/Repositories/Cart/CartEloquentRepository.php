@@ -24,24 +24,18 @@ class CartEloquentRepository extends BaseEloquentRepository implements CartRepos
      */
     public function getByUserId(int $userId): Collection
     {
-        /** @var Collection<int, Cart> $items */
-        $items = $this->model
+        /** @var Collection<int, Cart> */
+        return $this->model
             ->with([
                 'user',
                 'stock',
             ])
-            ->where([
-                'user_id' => $userId,
-            ])
+            ->where('user_id', $userId)
             ->get();
-
-        return $items;
     }
 
     /**
      * ユーザーIDからデータを削除します。
-     * @param int $userId
-     * @return void
      */
     public function deleteByUserId(int $userId): void
     {

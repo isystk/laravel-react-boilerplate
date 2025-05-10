@@ -6,7 +6,7 @@ use App\Domain\Entities\Order;
 use App\Domain\Entities\OrderStock;
 use App\Services\Admin\Order\IndexService;
 use App\Utils\DateUtil;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

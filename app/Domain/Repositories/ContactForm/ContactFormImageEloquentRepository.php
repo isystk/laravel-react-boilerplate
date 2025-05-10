@@ -4,7 +4,7 @@ namespace App\Domain\Repositories\ContactForm;
 
 use App\Domain\Entities\ContactFormImage;
 use App\Domain\Repositories\BaseEloquentRepository;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 
 class ContactFormImageEloquentRepository extends BaseEloquentRepository implements ContactFormImageRepository
 {
@@ -24,12 +24,11 @@ class ContactFormImageEloquentRepository extends BaseEloquentRepository implemen
      */
     public function getByContactFormId(int $contactFormId): Collection
     {
-        /** @var Collection<int, ContactFormImage> $items */
-        $items = $this->model
+        /** @var Collection<int, ContactFormImage> */
+        return $this->model
             ->where('contact_form_id', $contactFormId)
             ->orderBy('id', 'asc')
             ->get();
-        return $items;
     }
 
 }

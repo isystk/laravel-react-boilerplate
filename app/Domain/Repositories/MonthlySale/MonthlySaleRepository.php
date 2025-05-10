@@ -4,7 +4,7 @@ namespace App\Domain\Repositories\MonthlySale;
 
 use App\Domain\Entities\MonthlySale;
 use App\Domain\Repositories\BaseRepository;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 
 interface MonthlySaleRepository extends BaseRepository
 {
