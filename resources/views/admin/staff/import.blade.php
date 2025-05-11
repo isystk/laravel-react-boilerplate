@@ -109,11 +109,3 @@
     </div>
 
 @endsection
-
-@section('scripts')
-    <script type="module">
-        $(function () {
-
-        });
-    </script>
-@endsection

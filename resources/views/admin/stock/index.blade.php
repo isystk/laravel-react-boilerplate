@@ -154,16 +154,5 @@
 @endsection
 
 @section('scripts')
-    <script type="module">
-        $(function () {
-            // ダウンロード
-            $('.js-download').click(function (e) {
-                e.preventDefault();
-                const form = $('#pagingForm');
-                const url = $(this).attr('href');
-                const serializedData = form.serialize();
-                window.location.href = url + '&' + serializedData;
-            });
-        });
-    </script>
+    @vite('resources/assets/admin/js/pages/stock/index.js')
 @endsection
