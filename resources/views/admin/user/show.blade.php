@@ -1,10 +1,7 @@
 @extends('layouts.admin')
 @section('title', $user->name)
-@php
-    $menu = 'user';
-    $subMenu = 'user';
-@endphp
-
+@section('mainMenu', 'user')
+@section('subMenu', 'user')
 @section('breadcrumbs')
     {{ Breadcrumbs::render('admin.user.show', $user) }}
 @endsection

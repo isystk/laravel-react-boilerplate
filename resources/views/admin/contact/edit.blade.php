@@ -1,10 +1,7 @@
 @extends('layouts.admin')
 @section('title',  __('order.Order ID:') . $contactForm->id. __('common.Of Change'))
-@php
-    $menu = 'user';
-    $subMenu = 'contact';
-@endphp
-
+@section('mainMenu', 'user')
+@section('subMenu', 'contact')
 @section('breadcrumbs')
     {{ Breadcrumbs::render('admin.contact.edit', $contactForm) }}
 @endsection

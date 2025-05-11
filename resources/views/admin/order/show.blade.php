@@ -1,10 +1,7 @@
 @extends('layouts.admin')
 @section('title', __('order.Order ID:') . $order->id)
-@php
-    $menu = 'master';
-    $subMenu = 'order';
-@endphp
-
+@section('mainMenu', 'master')
+@section('subMenu', 'order')
 @section('breadcrumbs')
     {{ Breadcrumbs::render('admin.order.show', $order) }}
 @endsection

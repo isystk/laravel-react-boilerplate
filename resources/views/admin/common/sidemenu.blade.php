@@ -19,10 +19,14 @@
                 role="menu"
                 data-accordion="false"
             >
-                <li class="nav-item has-treeview @isset($menu){{ $menu === 'master' ? 'menu-open' : '' }} - @endisset">
+                @php
+                    $mainMenu = trim($__env->yieldContent('mainMenu'));
+                    $subMenu = trim($__env->yieldContent('subMenu'));
+                @endphp
+                <li class="nav-item has-treeview {{ $mainMenu === 'master' ? 'menu-open' : '' }} ">
                     <a
                         href="#"
-                        class="nav-link @isset($menu){{ $menu === 'master' ? 'active' : '' }} - @endisset"
+                        class="nav-link {{ $mainMenu === 'master' ? 'active' : '' }} "
                     >
                         <i class="nav-icon fas fa-table"></i>
                         <p>
@@ -32,12 +36,12 @@
                     </a>
                     <ul
                         class="nav nav-treeview"
-                        style="@isset($menu){{ $menu === 'master' ? 'display:block;' : '' }} - @endisset"
+                        style="{{ $mainMenu === 'master' ? 'display:block;' : '' }} "
                     >
                         <li class="nav-item">
                             <a
                                 href="{{ url('/admin/stock') }}"
-                                class="nav-link @isset($subMenu){{ $subMenu === 'stock' ? 'active' : '' }} - @endisset"
+                                class="nav-link {{ $subMenu === 'stock' ? 'active' : '' }}"
                             >
                                 <i class="fas fa-box-open nav-icon"></i>
                                 <p>{{ __('menu.Inventories') }}</p>
@@ -46,7 +50,7 @@
                         <li class="nav-item">
                             <a
                                 href="{{ url('/admin/order') }}"
-                                class="nav-link @isset($subMenu){{ $subMenu === 'order' ? 'active' : '' }} - @endisset"
+                                class="nav-link {{ $subMenu === 'order' ? 'active' : '' }}"
                             >
                                 <i class="fas fa-cart-arrow-down nav-icon"></i>
                                 <p>{{ __('menu.Orders') }}</p>
@@ -54,10 +58,10 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item has-treeview @isset($menu){{ $menu === 'user' ? 'menu-open' : '' }} - @endisset">
+                <li class="nav-item has-treeview {{ $mainMenu === 'user' ? 'menu-open' : '' }}">
                     <a
                         href="#"
-                        class="nav-link @isset($menu){{ $menu === 'user' ? 'active' : '' }} - @endisset"
+                        class="nav-link {{ $mainMenu === 'user' ? 'active' : '' }}"
                     >
                         <i class="far fa-frown"></i>
                         <p>
@@ -67,12 +71,12 @@
                     </a>
                     <ul
                         class="nav nav-treeview"
-                        style="@isset($menu){{ $menu === 'user' ? 'display:block;' : '' }} - @endisset"
+                        style="{{ $mainMenu === 'user' ? 'display:block;' : '' }}"
                     >
                         <li class="nav-item">
                             <a
                                 href="{{ url('/admin/user') }}"
-                                class="nav-link @isset($subMenu){{ $subMenu === 'user' ? 'active' : '' }} - @endisset"
+                                class="nav-link {{ $subMenu === 'user' ? 'active' : '' }}"
                             >
                                 <i class="fa fa-layer-group nav-icon"></i>
                                 <p>{{ __('menu.Customers') }}</p>
@@ -81,7 +85,7 @@
                         <li class="nav-item">
                             <a
                                 href="{{ url('/admin/contact') }}"
-                                class="nav-link @isset($subMenu){{ $subMenu === 'contact' ? 'active' : '' }} - @endisset"
+                                class="nav-link {{ $subMenu === 'contact' ? 'active' : '' }}"
                             >
                                 <i class="far fa-comment nav-icon"></i>
                                 <p>{{ __('menu.Inquiries') }}</p>
@@ -89,10 +93,10 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item has-treeview @isset($menu){{ $menu === 'system' ? 'menu-open' : '' }} - @endisset">
+                <li class="nav-item has-treeview {{ $mainMenu === 'system' ? 'menu-open' : '' }}">
                     <a
                         href="#"
-                        class="nav-link @isset($menu){{ $menu === 'system' ? 'active' : '' }} - @endisset"
+                        class="nav-link {{ $mainMenu === 'system' ? 'active' : '' }}"
                     >
                         <i class="fa fa-cogs"></i>
                         <p>
@@ -102,12 +106,12 @@
                     </a>
                     <ul
                         class="nav nav-treeview"
-                        style="@isset($menu){{ $menu === 'system' ? 'display:block;' : '' }} - @endisset"
+                        style="{{ $mainMenu === 'system' ? 'display:block;' : '' }}"
                     >
                         <li class="nav-item">
                             <a
                                 href="{{ url('/admin/staff') }}"
-                                class="nav-link @isset($subMenu){{ $subMenu === 'staff' ? 'active' : '' }} - @endisset"
+                                class="nav-link {{ $subMenu === 'staff' ? 'active' : '' }}"
                             >
                                 <i class="fa fa-layer-group nav-icon"></i>
                                 <p>{{ __('menu.Staffs') }}</p>
@@ -116,7 +120,7 @@
                         <li class="nav-item">
                             <a
                                 href="{{ url('/admin/photo') }}"
-                                class="nav-link @isset($subMenu){{ $subMenu === 'photo' ? 'active' : '' }} - @endisset"
+                                class="nav-link {{ $subMenu === 'photo' ? 'active' : '' }}"
                             >
                                 <i class="fa fa-file-image nav-icon"></i>
                                 <p>{{ __('menu.Photos') }}</p>

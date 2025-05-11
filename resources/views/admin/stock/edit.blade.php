@@ -1,10 +1,7 @@
 @extends('layouts.admin')
 @section('title', $stock->name . __('common.Of Change'))
-@php
-    $menu = 'master';
-    $subMenu = 'stock';
-@endphp
-
+@section('mainMenu', 'master')
+@section('subMenu', 'stock')
 @section('breadcrumbs')
     {{ Breadcrumbs::render('admin.stock.edit', $stock) }}
 @endsection

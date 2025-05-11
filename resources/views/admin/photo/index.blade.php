@@ -1,10 +1,7 @@
 @extends('layouts.admin')
 @section('title', __('photo.Photo List'))
-@php
-    $menu = 'system';
-    $subMenu = 'photo';
-@endphp
-
+@section('mainMenu', 'system')
+@section('subMenu', 'photo')
 @section('breadcrumbs')
     {{ Breadcrumbs::render('admin.photo') }}
 @endsection
