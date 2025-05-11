@@ -33,8 +33,8 @@
                         <div class="col-sm-4">
                             <input
                                 type="text"
-                                name="userName"
-                                value="{{ $request->userName }}"
+                                name="user_name"
+                                value="{{ request()->user_name }}"
                                 class="form-control"
                                 maxlength="{{ config('const.maxlength.contact_forms.user_name') }}"
                             />
@@ -49,7 +49,7 @@
                             <input
                                 type="text"
                                 name="title"
-                                value="{{ $request->title }}"
+                                value="{{ request()->title }}"
                                 class="form-control"
                                 maxlength="{{ config('const.maxlength.contact_forms.title') }}"
                             />
@@ -73,12 +73,12 @@
         <input
             type="hidden"
             name="userName"
-            value="{{ $request->userName }}"
+            value="{{ request()->userName }}"
         >
         <input
             type="hidden"
             name="title"
-            value="{{ $request->title }}"
+            value="{{ request()->title }}"
         >
     </form>
     <div class="row">

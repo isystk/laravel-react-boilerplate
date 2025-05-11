@@ -34,7 +34,7 @@
                             <input
                                 type="text"
                                 name="fileName"
-                                value="{{ $request->fileName }}"
+                                value="{{ request()->fileName }}"
                                 class="form-control"
                                 maxlength="100"
                             />
@@ -54,7 +54,7 @@
                                 @foreach(App\Enums\PhotoType::cases() as $item)
                                     <option
                                         value="{{ $item->value }}"
-                                        {{ ($item->value === (int)$request->fileType) ? 'selected' : '' }}
+                                        {{ ($item->value === (int)request()->fileType) ? 'selected' : '' }}
                                     >{{ $item->label() }}</option>
                                 @endforeach
                             </select>
@@ -78,12 +78,12 @@
         <input
             type="hidden"
             name="fileName"
-            value="{{ $request->fileName }}"
+            value="{{ request()->fileName }}"
         >
         <input
             type="hidden"
             name="fileType"
-            value="{{ $request->fileType }}"
+            value="{{ request()->fileType }}"
         >
     </form>
     <div class="row">

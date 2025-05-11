@@ -34,7 +34,7 @@
                             <input
                                 type="text"
                                 name="name"
-                                value="{{ $request->name }}"
+                                value="{{ request()->name }}"
                                 class="form-control"
                                 maxlength="{{ config('const.maxlength.users.name') }}"
                             />
@@ -53,7 +53,7 @@
                                     <input
                                         type="text"
                                         name="order_date_from"
-                                        value="{{ $request->order_date_from }}"
+                                        value="{{ request()->order_date_from }}"
                                         class="form-control date-picker"
                                         maxlength="{{ config('const.maxlength.commons.date') }}"
                                     />
@@ -63,7 +63,7 @@
                                     <input
                                         type="text"
                                         name="order_date_to"
-                                        value="{{ $request->order_date_to }}"
+                                        value="{{ request()->order_date_to }}"
                                         class="form-control date-picker"
                                         maxlength="{{ config('const.maxlength.commons.date') }}"
                                     />
@@ -89,7 +89,7 @@
         <input
             type="hidden"
             name="name"
-            value="{{ $request->name }}"
+            value="{{ request()->name }}"
         >
     </form>
     <div class="row">

@@ -48,7 +48,7 @@
                             <input
                                 type="text"
                                 name="name"
-                                value="{{ $request->name }}"
+                                value="{{ request()->name }}"
                                 class="form-control"
                                 maxlength="{{ config('const.maxlength.stocks.name') }}"
                             >
@@ -72,7 +72,7 @@
         <input
             type="hidden"
             name="name"
-            value="{{ $request->name }}"
+            value="{{ request()->name }}"
         >
     </form>
     <div class="row">

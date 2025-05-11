@@ -33,7 +33,9 @@ class ImportController extends BaseController
         $service = app(IndexService::class);
         $importHistories = $service->getImportHistories();
 
-        return view('admin.staff.import', compact('importHistories'));
+        return view('admin.staff.import', compact([
+            'importHistories'
+        ]));
     }
 
     /**

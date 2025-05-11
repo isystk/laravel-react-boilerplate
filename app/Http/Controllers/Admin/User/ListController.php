@@ -21,6 +21,8 @@ class ListController extends BaseController
         $conditions = new SearchConditionDto($request);
         $users = $service->searchUser($conditions);
 
-        return view('admin.user.index', compact('users', 'request'));
+        return view('admin.user.index', compact([
+            'users',
+        ]));
     }
 }

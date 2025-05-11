@@ -26,7 +26,9 @@ class ListController extends BaseController
         $conditions = new SearchConditionDto($request);
         $stocks = $service->searchStock($conditions);
 
-        return view('admin.stock.index', compact('stocks', 'request'));
+        return view('admin.stock.index', compact([
+            'stocks',
+        ]));
     }
 
     /**
@@ -53,8 +55,11 @@ class ListController extends BaseController
             /** @var PDF $pdf */
             $pdf = app(PDF::class);
 
-            return $pdf->loadView('admin.stock.pdf', compact('headers', 'rows'))
-                ->download('stocks.pdf');
+            return $pdf->loadView('admin.stock.pdf', compact([
+                'headers',
+                'rows'
+            ]))
+            ->download('stocks.pdf');
         }
 
         return Excel::download($export, 'stocks.xlsx');

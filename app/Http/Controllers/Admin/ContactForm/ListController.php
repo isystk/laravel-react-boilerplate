@@ -21,6 +21,8 @@ class ListController extends BaseController
         $conditions = new SearchConditionDto($request);
         $contactForms = $service->searchContactForm($conditions);
 
-        return view('admin.contact.index', compact('contactForms', 'request'));
+        return view('admin.contact.index', compact([
+            'contactForms',
+        ]));
     }
 }

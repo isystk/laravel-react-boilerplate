@@ -17,7 +17,9 @@ class DetailController extends BaseController
      */
     public function show(User $user): View
     {
-        return view('admin.user.show', compact('user'));
+        return view('admin.user.show', compact([
+            'user'
+        ]));
     }
 
     /**

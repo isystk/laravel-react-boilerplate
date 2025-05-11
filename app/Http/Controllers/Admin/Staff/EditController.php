@@ -23,7 +23,9 @@ class EditController extends BaseController
         $this->authorize('high-manager');
         $staff->password = Hash::make($staff->password);
 
-        return view('admin.staff.edit', compact('staff'));
+        return view('admin.staff.edit', compact([
+            'staff'
+        ]));
     }
 
     /**

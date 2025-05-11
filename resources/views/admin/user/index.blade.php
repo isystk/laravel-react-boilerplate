@@ -35,7 +35,7 @@
                             <input
                                 type="text"
                                 name="name"
-                                value="{{ $request->name }}"
+                                value="{{ request()->name }}"
                                 class="form-control"
                                 maxlength="{{ config('const.maxlength.users.name') }}"
                             >
@@ -48,7 +48,7 @@
                         <input
                             type="email"
                             name="email"
-                            value="{{ $request->email }}"
+                            value="{{ request()->email }}"
                             class="form-control"
                             maxlength="{{ config('const.maxlength.users.email') }}"
                         >
@@ -71,12 +71,12 @@
         <input
             type="hidden"
             name="name"
-            value="{{ $request->name }}"
+            value="{{ request()->name }}"
         />
         <input
             type="hidden"
             name="email"
-            value="{{ $request->email }}"
+            value="{{ request()->email }}"
         />
     </form>
     <div class="row">
