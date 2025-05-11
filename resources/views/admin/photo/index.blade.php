@@ -1,10 +1,7 @@
 @extends('layouts.admin')
 @section('title', __('photo.Photo List'))
-@php
-    $menu = 'system';
-    $subMenu = 'photo';
-@endphp
-
+@section('mainMenu', 'system')
+@section('subMenu', 'photo')
 @section('breadcrumbs')
     {{ Breadcrumbs::render('admin.photo') }}
 @endsection
@@ -37,7 +34,7 @@
                             <input
                                 type="text"
                                 name="fileName"
-                                value="{{ $request->fileName }}"
+                                value="{{ request()->fileName }}"
                                 class="form-control"
                                 maxlength="100"
                             />
@@ -57,7 +54,7 @@
                                 @foreach(App\Enums\PhotoType::cases() as $item)
                                     <option
                                         value="{{ $item->value }}"
-                                        {{ ($item->value === (int)$request->fileType) ? 'selected' : '' }}
+                                        {{ ($item->value === (int)request()->fileType) ? 'selected' : '' }}
                                     >{{ $item->label() }}</option>
                                 @endforeach
                             </select>
@@ -81,12 +78,12 @@
         <input
             type="hidden"
             name="fileName"
-            value="{{ $request->fileName }}"
+            value="{{ request()->fileName }}"
         >
         <input
             type="hidden"
             name="fileType"
-            value="{{ $request->fileType }}"
+            value="{{ request()->fileType }}"
         >
     </form>
     <div class="row">
@@ -153,16 +150,5 @@
 @endsection
 
 @section('scripts')
-    <script type="module">
-        $(function () {
-            // 削除確認用のダイアログを表示
-            $('.js-deleteBtn').click(function (e) {
-                e.preventDefault();
-                const id = $(this).data('id');
-                if (confirm('本当に削除していいですか？')) {
-                    $('#delete_' + id.replace(/[ !"#$%&'()*+,.\/:;<=>?@\[\\\]^`{|}~]/g, '\\$&')).submit();
-                }
-            });
-        });
-    </script>
+    @vite('resources/assets/admin/js/pages/photo/index.js')
 @endsection

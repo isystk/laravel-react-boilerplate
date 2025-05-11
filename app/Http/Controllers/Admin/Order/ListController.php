@@ -21,6 +21,8 @@ class ListController extends BaseController
         $searchCondition = new SearchConditionDto($request);
         $orders = $service->searchOrder($searchCondition);
 
-        return view('admin.order.index', compact('orders', 'request'));
+        return view('admin.order.index', compact([
+            'orders',
+        ]));
     }
 }

@@ -22,7 +22,10 @@ class DetailController extends BaseController
         $service = app(ShowService::class);
         $contactFormImages = $service->getContactFormImage($contactForm->id);
 
-        return view('admin.contact.show', compact('contactForm', 'contactFormImages'));
+        return view('admin.contact.show', compact([
+            'contactForm',
+            'contactFormImages',
+        ]));
     }
 
     /**

@@ -1,10 +1,7 @@
 @extends('layouts.admin')
 @section('title', __('staff.Staff List'))
-@php
-    $menu = 'system';
-    $subMenu = 'staff';
-@endphp
-
+@section('mainMenu', 'system')
+@section('subMenu', 'staff')
 @section('breadcrumbs')
     {{ Breadcrumbs::render('admin.staff') }}
 @endsection
@@ -69,7 +66,7 @@
                             <input
                                 type="text"
                                 name="name"
-                                value="{{ $request->name }}"
+                                value="{{ request()->name }}"
                                 class="form-control"
                                 maxlength="{{ config('const.maxlength.admins.name') }}"
                             >
@@ -82,7 +79,7 @@
                         <input
                             type="email"
                             name="email"
-                            value="{{ $request->email }}"
+                            value="{{ request()->email }}"
                             class="form-control"
                             maxlength="{{ config('const.maxlength.admins.email') }}"
                         >
@@ -99,7 +96,7 @@
                             @foreach(App\Enums\AdminRole::cases() as $item)
                                 <option
                                     value="{{ $item->value }}"
-                                    {{ ($item->value === $request->role) ? 'selected' : '' }}
+                                    {{ ($item->value === request()->role) ? 'selected' : '' }}
                                 >{{ $item->label() }}</option>
                             @endforeach
                         </select>
@@ -122,17 +119,17 @@
         <input
             type="hidden"
             name="name"
-            value="{{ $request->name }}"
+            value="{{ request()->name }}"
         />
         <input
             type="hidden"
             name="email"
-            value="{{ $request->email }}"
+            value="{{ request()->email }}"
         />
         <input
             type="hidden"
             name="role"
-            value="{{ $request->role }}"
+            value="{{ request()->role }}"
         />
     </form>
     <div class="row">

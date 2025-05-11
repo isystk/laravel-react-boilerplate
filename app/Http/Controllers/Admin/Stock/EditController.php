@@ -21,7 +21,9 @@ class EditController extends BaseController
         // 上位管理者のみがアクセス可能
         $this->authorize('high-manager');
 
-        return view('admin.stock.edit', compact('stock'));
+        return view('admin.stock.edit', compact([
+            'stock',
+        ]));
     }
 
     /**

@@ -26,7 +26,10 @@ class EditController extends BaseController
         $service = app(EditService::class);
         $contactFormImages = $service->getContactFormImage($contactForm->id);
 
-        return view('admin.contact.edit', compact('contactForm', 'contactFormImages'));
+        return view('admin.contact.edit', compact([
+            'contactForm',
+            'contactFormImages',
+        ]));
     }
 
     /**

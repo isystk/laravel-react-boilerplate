@@ -20,6 +20,8 @@ class ListController extends BaseController
         $conditions = $service->convertConditionsFromRequest($request);
         $staffs = $service->searchStaff($conditions);
 
-        return view('admin.staff.index', compact('staffs', 'request'));
+        return view('admin.staff.index', compact([
+            'staffs',
+        ]));
     }
 }

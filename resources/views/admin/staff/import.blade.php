@@ -1,10 +1,7 @@
 @extends('layouts.admin')
 @section('title',  __('staff.Staff Import'))
-@php
-    $menu = 'system';
-    $subMenu = 'staff';
-@endphp
-
+@section('mainMenu', 'system')
+@section('subMenu', 'staff')
 @section('breadcrumbs')
     {{ Breadcrumbs::render('admin.staff.import') }}
 @endsection
@@ -108,12 +105,4 @@
         </div>
     </div>
 
-@endsection
-
-@section('scripts')
-    <script type="module">
-        $(function () {
-
-        });
-    </script>
 @endsection

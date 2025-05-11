@@ -18,6 +18,9 @@ class DetailController extends BaseController
         $service = app(ShowService::class);
         $orderStocks = $service->getOrderStock($order->id);
 
-        return view('admin.order.show', compact('order', 'orderStocks'));
+        return view('admin.order.show', compact([
+            'order',
+            'orderStocks',
+        ]));
     }
 }

@@ -37,11 +37,6 @@ abstract class BaseImport implements WithMapping, WithStartRow, WithValidation
      */
     protected array $attribute = [];
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct(string $filePath)
     {
         $this->filePath = $filePath;
