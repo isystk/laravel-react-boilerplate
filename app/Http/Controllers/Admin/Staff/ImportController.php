@@ -34,7 +34,7 @@ class ImportController extends BaseController
         $importHistories = $service->getImportHistories();
 
         return view('admin.staff.import', compact([
-            'importHistories'
+            'importHistories',
         ]));
     }
 

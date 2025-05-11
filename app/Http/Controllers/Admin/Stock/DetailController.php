@@ -18,7 +18,7 @@ class DetailController extends BaseController
     public function show(Stock $stock): View
     {
         return view('admin.stock.show', compact([
-            'stock'
+            'stock',
         ]));
     }
 

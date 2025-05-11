@@ -20,7 +20,7 @@ class DetailController extends BaseController
 
         return view('admin.order.show', compact([
             'order',
-            'orderStocks'
+            'orderStocks',
         ]));
     }
 }

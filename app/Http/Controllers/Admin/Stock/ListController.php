@@ -57,9 +57,9 @@ class ListController extends BaseController
 
             return $pdf->loadView('admin.stock.pdf', compact([
                 'headers',
-                'rows'
+                'rows',
             ]))
-            ->download('stocks.pdf');
+                ->download('stocks.pdf');
         }
 
         return Excel::download($export, 'stocks.xlsx');

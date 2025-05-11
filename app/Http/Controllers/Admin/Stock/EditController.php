@@ -22,7 +22,7 @@ class EditController extends BaseController
         $this->authorize('high-manager');
 
         return view('admin.stock.edit', compact([
-            'stock'
+            'stock',
         ]));
     }
 

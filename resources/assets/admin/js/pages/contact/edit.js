@@ -7,16 +7,19 @@ $(function () {
     self.imageUploader({
       dropAreaSelector: '#drop-zone',
       successCallback: function (res) {
-        result.empty()
-        .append('<img src="' + res.fileData + '" width="200px" />')
-        .append(`<input type="hidden" name="imageBase64_${i + 1}" value="` + res.fileData + '" />')
-        .append('<input type="hidden" name="fileName_${i+1}" value="' + res.fileName + '" />');
+        result
+          .empty()
+          .append('<img src="' + res.fileData + '" width="200px" />')
+          .append(
+            `<input type="hidden" name="imageBase64_${i + 1}" value="` + res.fileData + '" />',
+          )
+          .append('<input type="hidden" name="fileName_${i+1}" value="' + res.fileName + '" />');
 
         $('.error-message').empty();
       },
       errorCallback: function (res) {
         $('.error-message').text(res[0]);
-      }
+      },
     });
   });
   // 画像削除ボタン

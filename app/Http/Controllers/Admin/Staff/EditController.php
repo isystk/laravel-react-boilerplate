@@ -24,7 +24,7 @@ class EditController extends BaseController
         $staff->password = Hash::make($staff->password);
 
         return view('admin.staff.edit', compact([
-            'staff'
+            'staff',
         ]));
     }
 

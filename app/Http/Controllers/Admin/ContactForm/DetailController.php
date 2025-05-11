@@ -24,7 +24,7 @@ class DetailController extends BaseController
 
         return view('admin.contact.show', compact([
             'contactForm',
-            'contactFormImages'
+            'contactFormImages',
         ]));
     }
 

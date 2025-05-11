@@ -19,7 +19,7 @@ class DetailController extends BaseController
     public function show(Admin $staff): View
     {
         return view('admin.staff.show', compact([
-            'staff'
+            'staff',
         ]));
     }
 

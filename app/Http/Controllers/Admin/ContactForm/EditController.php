@@ -28,7 +28,7 @@ class EditController extends BaseController
 
         return view('admin.contact.edit', compact([
             'contactForm',
-            'contactFormImages'
+            'contactFormImages',
         ]));
     }
 
