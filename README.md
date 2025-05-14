@@ -36,7 +36,6 @@ Laravel ＆ React.js の学習用サンプルアプリケーションです。
 - React 19
 - Typescript
 - Adminlte 3
-- Bootstrap 4
 
 ## 🌐 Demo
 
