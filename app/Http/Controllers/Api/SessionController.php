@@ -17,13 +17,10 @@ class SessionController extends BaseApiController
         $user = $request->user();
 
         return response()->json([
-            'user' => [
-                'id' => $user->id ?? null,
-                'name' => $user->name ?? null,
-                'email' => $user->email ?? null,
-                'email_verified_at' => $user->email_verified_at ?? null,
-            ],
-            'csrf_token' => csrf_token(),
+            'id' => $user->id ?? null,
+            'name' => $user->name ?? null,
+            'email' => $user->email ?? null,
+            'email_verified_at' => $user->email_verified_at ?? null,
         ]);
     }
 }
