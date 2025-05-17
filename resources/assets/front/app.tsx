@@ -6,6 +6,7 @@ import { AppProvider } from '@/states/AppContext';
 import '@/assets/styles/app.scss';
 import { JSX, StrictMode } from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import { Api } from '@/constants/api';
 
 // --- アプリケーションのRootコンポーネント ---
 export const AppRoot = ({ children }: { children: JSX.Element }) => {
@@ -34,9 +35,8 @@ const render = (user: User) => {
 
 const init = async () => {
   const params = new URLSearchParams();
-  const url = '/api/session';
   try {
-    const { data: user } = await axios.post(url, params);
+    const { data: user } = await axios.post(Api.LOGIN_CHECK, params);
     render(user);
   } catch (e) {
     render({} as User);
