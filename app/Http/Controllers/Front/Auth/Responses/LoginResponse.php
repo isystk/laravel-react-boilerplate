@@ -14,8 +14,14 @@ class LoginResponse implements LoginResponseContract
      * @param  Request  $request
      * @return Response
      */
-    public function toResponse($request)
+    public function toResponse($request): Response
     {
-        return redirect('/home');
+        // APIリクエストの場合はJSONレスポンスにする例
+        if ($request->wantsJson()) {
+            return response()->json();
+        }
+
+        // それ以外は従来のリダイレクトなど
+        return redirect()->intended(config('fortify.home'));
     }
 }

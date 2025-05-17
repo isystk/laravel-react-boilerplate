@@ -31,7 +31,7 @@ class CartController extends BaseApiController
             return $this->getErrorJsonResponse($e);
         }
 
-        return $this->getJsonResponse($result);
+        return response()->json($result);
     }
 
     /**
@@ -57,7 +57,7 @@ class CartController extends BaseApiController
             return $this->getErrorJsonResponse($e);
         }
 
-        return $this->getJsonResponse($result);
+        return response()->json($result);
     }
 
     /**
@@ -83,7 +83,7 @@ class CartController extends BaseApiController
             return $this->getErrorJsonResponse($e);
         }
 
-        return $this->getJsonResponse($result);
+        return response()->json($result);
     }
 
     /**
@@ -99,7 +99,7 @@ class CartController extends BaseApiController
             return $this->getErrorJsonResponse($e);
         }
 
-        return $this->getJsonResponse($result);
+        return response()->json($result);
     }
 
     /**
@@ -131,6 +131,6 @@ class CartController extends BaseApiController
             return $this->getErrorJsonResponse($e);
         }
 
-        return $this->getJsonResponse($result);
+        return response()->json($result);
     }
 }

@@ -32,7 +32,7 @@ class ConstController extends BaseApiController
             return $this->getErrorJsonResponse($e);
         }
 
-        return $this->getJsonResponse([
+        return response()->json[
             'result' => true,
             'data' => $items,
         ]);

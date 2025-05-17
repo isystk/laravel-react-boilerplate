@@ -16,6 +16,6 @@ class SessionController extends BaseApiController
         /** @var User|null $user */
         $user = $request->user();
 
-        return $this->getJsonResponse($user);
+        return response()->json($user);
     }
 }
