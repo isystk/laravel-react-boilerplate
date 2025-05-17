@@ -82,6 +82,7 @@ Route::prefix('auth')->middleware('guest')->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::prefix('api')->middleware('api')->group(function () {
+    Route::post('/session', [\App\Http\Controllers\Api\SessionController::class, 'index'])->name('api.session');
     Route::get('/const', [\App\Http\Controllers\Api\ConstController::class, 'index'])->name('api.const');
     Route::resource('/like', App\Http\Controllers\Api\LikeController::class);
     Route::post('/like/store', [\App\Http\Controllers\Api\LikeController::class, 'store']);
@@ -91,7 +92,6 @@ Route::prefix('api')->middleware('api')->group(function () {
 
     Route::middleware(['auth:sanctum'])->group(function () {
         // ログイン後
-        Route::post('/session', [\App\Http\Controllers\Api\SessionController::class, 'index'])->name('api.session');
         Route::post('/mycart', [\App\Http\Controllers\Api\CartController::class, 'mycart'])->name('api.mycart');
         Route::post('/mycart/add', [\App\Http\Controllers\Api\CartController::class, 'addMycart'])->name('api.mycart.add');
         Route::post('/mycart/delete', [\App\Http\Controllers\Api\CartController::class, 'deleteCart'])->name('api.mycart.delete');
