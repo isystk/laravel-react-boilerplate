@@ -9,13 +9,21 @@ use Illuminate\Http\Request;
 class SessionController extends BaseApiController
 {
     /**
-     * ログインユーザーで返却します。
+     * ログイン情報を返却します。
      */
     public function index(Request $request): JsonResponse
     {
         /** @var User|null $user */
         $user = $request->user();
 
-        return response()->json($user);
+        return response()->json([
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'email_verified_at' => $user->email_verified_at,
+            ],
+            'csrf_token' => csrf_token(),
+        ]);
     }
 }

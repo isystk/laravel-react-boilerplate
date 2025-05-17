@@ -36,7 +36,8 @@ const init = async () => {
   const params = new URLSearchParams();
   const url = '/api/session';
   try {
-    const { data: user } = await axios.post(url, params);
+    const { data } = await axios.post(url, params);
+    const { user } = data;
     render(user);
   } catch (e) {
     render({} as User);

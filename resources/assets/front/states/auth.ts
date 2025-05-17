@@ -1,12 +1,8 @@
 export type User = {
-  created_at: string;
-  email: string;
-  email_verified_at: string | null;
   id: number;
   name: string;
-  provider_id: string | null;
-  provider_name: string | null;
-  updated_at: string | null;
+  email: string;
+  email_verified_at: string | null;
 };
 
 export type Auth = {
