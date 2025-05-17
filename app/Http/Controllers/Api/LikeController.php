@@ -24,7 +24,7 @@ class LikeController extends BaseApiController
             return $this->getErrorJsonResponse($e);
         }
 
-        return response()->json($result);
+        return $this->getJsonResponse($result);
     }
 
     /**
@@ -40,7 +40,7 @@ class LikeController extends BaseApiController
             return $this->getErrorJsonResponse($e);
         }
 
-        return response()->json(['result' => true]);
+        return $this->getJsonResponse(['result' => true]);
     }
 
     /**
@@ -55,6 +55,6 @@ class LikeController extends BaseApiController
             return $this->getErrorJsonResponse($e);
         }
 
-        return response()->json(['result' => true]);
+        return $this->getJsonResponse(['result' => true]);
     }
 }
