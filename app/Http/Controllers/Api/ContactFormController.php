@@ -29,7 +29,7 @@ class ContactFormController extends BaseApiController
             return $this->getErrorJsonResponse($e);
         }
 
-        return response()->json[
+        return response()->json([
             'result' => true,
         ]);
     }
