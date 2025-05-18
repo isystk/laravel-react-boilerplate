@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -92,9 +91,7 @@ Route::prefix('api')->middleware('api')->group(function () {
 
     Route::middleware(['auth:sanctum'])->group(function () {
         // ログイン後
-        Route::post('/session', static function (Request $request) {
-            return $request->user();
-        });
+        Route::post('/session', [\App\Http\Controllers\Api\SessionController::class, 'index'])->name('api.session');
         Route::post('/mycart', [\App\Http\Controllers\Api\CartController::class, 'mycart'])->name('api.mycart');
         Route::post('/mycart/add', [\App\Http\Controllers\Api\CartController::class, 'addMycart'])->name('api.mycart.add');
         Route::post('/mycart/delete', [\App\Http\Controllers\Api\CartController::class, 'deleteCart'])->name('api.mycart.delete');
