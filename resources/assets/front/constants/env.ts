@@ -15,7 +15,7 @@ let Env = {
   ENDPOINT_URL: 'https://localhost/api',
   STRIPE_KEY: import.meta.env.VITE_STRIPE_KEY,
 } as EnvType;
-if (import.meta.env.NODE_ENV === 'production') {
+if (import.meta.env.VITE_ENV_NAME === 'production') {
   Env = {
     ...Env,
     ENV_NAME: import.meta.env.VITE_ENV_NAME,
