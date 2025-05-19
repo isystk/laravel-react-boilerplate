@@ -1,6 +1,14 @@
 import MainService from '@/services/main';
 import { Api } from '@/constants/api';
 import CartState from '@/states/cart';
+import * as stripeJs from '@stripe/stripe-js';
+
+export type PaymentForm = {
+  stripe: stripeJs.Stripe;
+  elements: stripeJs.StripeElements;
+  amount: number;
+  username: string;
+};
 
 export default class CartService {
   main: MainService;
@@ -80,7 +88,7 @@ export default class CartService {
     }
   }
 
-  async payment(stripe, elements, amount, username): Promise<void> {
+  async payment({ stripe, elements, amount, username }: PaymentForm): Promise<void> {
     this.main.showLoading();
     try {
       //paymentIntentの作成を（ローカルサーバ経由で）リクエスト

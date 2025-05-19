@@ -14,6 +14,14 @@ import {
 import Modal from '@/components/interactions/Modal';
 import useAppRoot from '@/states/useAppRoot';
 
+type FormValues = {
+  amount: number;
+  username: string;
+  cardNumber: string;
+  cardExp: string;
+  cardCvc: string;
+};
+
 type Props = {
   isOpen: boolean;
   handleClose: () => void;
@@ -28,29 +36,32 @@ const PaymentModal = ({ isOpen, handleClose, amount }: Props) => {
   const elements = useElements();
 
   if (!state) return <></>;
-  const handlePayment = async ({ amount, username }) => {
+  const handlePayment = async (values: FormValues) => {
+    const { amount, username } = values;
     if (!stripe || !elements) {
       return;
     }
 
     // 決算処理を行う
-    await service.cart.payment(stripe, elements, amount, username);
+    await service.cart.payment({ stripe, elements, amount, username });
     // 完了画面を表示する
     navigate(Url.PAY_COMPLETE);
   };
+
+  const initialValues = {
+    amount: amount,
+    username: state.auth.email,
+    cardNumber: '',
+    cardExp: '',
+    cardCvc: '',
+  } as FormValues;
 
   return (
     <Modal isOpen={isOpen} onClose={handleClose}>
       <>
         <h2 className="text-center font-bold text-xl mb-4">決済情報の入力</h2>
         <Formik
-          initialValues={{
-            amount: amount,
-            username: state.auth.email,
-            cardNumber: '',
-            cardExp: '',
-            cardCvc: '',
-          }}
+          initialValues={initialValues}
           onSubmit={handlePayment}
           validationSchema={Yup.object().shape({
             cardNumber: Yup.string().required('カード番号を入力してください'),
