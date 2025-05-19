@@ -12,6 +12,7 @@ import SelectBox from '@/components/atoms/SelectBox';
 import TextArea from '@/components/atoms/TextArea';
 import ImageInput from '@/components/atoms/ImageInput';
 import noImage from '@/assets/images/no_image.png';
+import { ContactForm } from '@/services/contact';
 
 const ContactCreate = () => {
   const { state, service } = useAppRoot();
@@ -21,7 +22,7 @@ const ContactCreate = () => {
   const auth = state.auth;
   const { age, gender } = state.const;
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values: ContactForm) => {
     // 入力したお問い合わせ内容を送信する。
     await service.contact.registContact(values);
     // 完了画面を表示する

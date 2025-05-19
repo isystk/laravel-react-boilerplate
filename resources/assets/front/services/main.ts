@@ -41,7 +41,7 @@ export default class MainService {
     this.setRootState();
   }
 
-  public showToastMessage(message) {
+  public showToastMessage(message: string) {
     this.root.toastMessage = message;
     this.setRootState();
   }

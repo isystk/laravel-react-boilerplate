@@ -8,7 +8,7 @@ type Props = {
 };
 
 const ErrorPage = ({ status = 500 }: Props) => {
-  const errors = {
+  const errors: { [key: number]: { title: string; text: string } } = {
     404: {
       title: '404 - ページが見つかりません',
       text: 'お探しのページは存在しないか、移動されました。',
