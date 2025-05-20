@@ -23,7 +23,7 @@ return Application::configure(basePath: dirname(__DIR__))
                     return $request->expectsJson() ? null : route('admin.login');
                 }
 
-                return $request->expectsJson() ? null : route('auth');
+                return null;
             });
     })
     ->withExceptions(function (Exceptions $exceptions) {
