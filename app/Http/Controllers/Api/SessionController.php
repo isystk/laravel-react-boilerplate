@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Domain\Entities\User;
+use App\Helpers\AuthHelper;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class SessionController extends BaseApiController
 {
     /**
      * ログイン情報を返却します。
      */
-    public function index(Request $request): JsonResponse
+    public function index(): JsonResponse
     {
-        /** @var User|null $user */
-        $user = $request->user();
+        $user = AuthHelper::frontLoginedUser();
 
         return response()->json([
             'id' => $user->id ?? null,

@@ -4,10 +4,9 @@ namespace App\Services\Api\Cart;
 
 use App\Domain\Entities\Cart;
 use App\Domain\Entities\Stock;
-use App\Domain\Entities\User;
 use App\Domain\Repositories\Cart\CartRepository;
+use App\Helpers\AuthHelper;
 use App\Services\BaseService;
-use Illuminate\Support\Facades\Auth;
 
 class BaseCartService extends BaseService
 {
@@ -38,8 +37,7 @@ class BaseCartService extends BaseService
      */
     public function getMyCart(): array
     {
-        /** @var User $user */
-        $user = Auth::user();
+        $user = AuthHelper::frontLoginedUser();
         $items = [
             'data' => [],
             'username' => $user->email,
