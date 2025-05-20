@@ -6,6 +6,7 @@ use App\Domain\Repositories\Cart\CartRepository;
 use App\Domain\Repositories\Order\OrderRepository;
 use App\Domain\Repositories\Order\OrderStockRepository;
 use App\Domain\Repositories\Stock\StockRepository;
+use App\Helpers\AuthHelper;
 use App\Mails\CheckoutCompleteToUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -90,7 +91,7 @@ class CheckoutService extends BaseCartService
             ];
         }
 
-        $user = Auth::user();
+        $user = AuthHelper::frontLoginedUser();
 
         Mail::to($user->email)
             ->send(new CheckoutCompleteToUser(

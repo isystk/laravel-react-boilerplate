@@ -3,7 +3,7 @@
 namespace App\Services\Api\Cart;
 
 use App\Domain\Repositories\Cart\CartRepository;
-use Illuminate\Support\Facades\Auth;
+use App\Helpers\AuthHelper;
 
 class AddCartService extends BaseCartService
 {
@@ -21,10 +21,10 @@ class AddCartService extends BaseCartService
      */
     public function addMyCart(int $stockId): string
     {
-        $userId = Auth::id();
+        $user = AuthHelper::frontLoginedUser();
         $this->cartRepository->create([
             'stock_id' => $stockId,
-            'user_id' => $userId,
+            'user_id' => $user->id,
         ]);
 
         return 'カートに追加しました';
