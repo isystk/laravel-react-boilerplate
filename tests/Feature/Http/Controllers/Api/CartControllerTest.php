@@ -32,16 +32,15 @@ class CartControllerTest extends TestCase
         $response->assertSuccessful();
         $response->assertJson([
             'result' => true,
-            'carts' => [
-                'data' => [],
-                'username' => $user1->email,
-                'sum' => 0,
-                'count' => 0,
-            ],
+            'message' => '',
+            'stocks' => [],
+            'email' => $user1->email,
+            'sum' => 0,
+            'count' => 0,
         ]);
 
-        $stock1 = $this->createDefaultStock(['name' => 'stock1', 'price' => 111]);
-        $stock2 = $this->createDefaultStock(['name' => 'stock2', 'price' => 222]);
+        $stock1 = $this->createDefaultStock(['name' => 'stock1', 'price' => 111, 'imgpath' => 'aaa.jpg']);
+        $stock2 = $this->createDefaultStock(['name' => 'stock2', 'price' => 222, 'imgpath' => 'bbb.jpg']);
 
         $cart1 = $this->createDefaultCart(['user_id' => $user1->id, 'stock_id' => $stock1->id]);
         $cart2 = $this->createDefaultCart(['user_id' => $user1->id, 'stock_id' => $stock2->id]);
@@ -50,15 +49,14 @@ class CartControllerTest extends TestCase
         $response->assertSuccessful();
         $response->assertJson([
             'result' => true,
-            'carts' => [
-                'data' => [
-                    ['id' => $cart1->id, 'stock_id' => $stock1->id, 'name' => 'stock1', 'price' => 111],
-                    ['id' => $cart2->id, 'stock_id' => $stock2->id, 'name' => 'stock2', 'price' => 222],
-                ],
-                'username' => $user1->email,
-                'sum' => 333,
-                'count' => 2,
+            'message' => '',
+            'stocks' => [
+                ['id' => $cart1->id, 'stockId' => $stock1->id, 'name' => 'stock1', 'imageUrl' => 'http://localhost/uploads/stock/aaa.jpg', 'price' => 111],
+                ['id' => $cart2->id, 'stockId' => $stock2->id, 'name' => 'stock2', 'imageUrl' => 'http://localhost/uploads/stock/bbb.jpg', 'price' => 222],
             ],
+            'email' => $user1->email,
+            'sum' => 333,
+            'count' => 2,
         ]);
     }
 

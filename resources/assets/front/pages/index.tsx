@@ -14,11 +14,8 @@ type Stock = {
   name: string;
   detail: string;
   price: number;
-  imgpath: string;
+  imageUrl: string;
   quantity: number;
-  created_at: Date;
-  updated_at: Date;
-  isLike: boolean;
 };
 
 const Top = () => {

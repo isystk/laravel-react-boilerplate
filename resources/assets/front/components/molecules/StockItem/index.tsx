@@ -8,7 +8,7 @@ import React from 'react';
 export type Props = {
   id: number;
   name: string;
-  imgpath: string;
+  imageUrl: string;
   price: string | number;
   detail: string;
   quantity: number;
@@ -16,7 +16,7 @@ export type Props = {
   key?: number;
 };
 
-const StockItem = ({ id, name, imgpath, price, detail, quantity, isLike }: Props) => {
+const StockItem = ({ id, name, imageUrl, price, detail, quantity, isLike }: Props) => {
   const { state, service } = useAppRoot();
   const navigate = useNavigate();
 
@@ -51,13 +51,7 @@ const StockItem = ({ id, name, imgpath, price, detail, quantity, isLike }: Props
           気になる
         </button>
       </div>
-      <Image
-        src={`/uploads/stock/${imgpath}`}
-        width={276}
-        height={184}
-        alt={name}
-        className="mb-2 w-100"
-      />
+      <Image src={imageUrl} width={276} height={184} alt={name} className="mb-2 w-100" />
       <p className="font-bold">{name}</p>
       <p className="text-red-600">{price}</p>
       <p>{detail}</p>

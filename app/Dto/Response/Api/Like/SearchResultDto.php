@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Dto\Response\Api;
+namespace App\Dto\Response\Api\Like;
 
-class LikeJsonDto extends BaseJsonDto
+use App\Dto\Response\Api\BaseJsonDto;
+
+class SearchResultDto extends BaseJsonDto
 {
     /** @var array<int> 商品ID */
     public array $stockIds;

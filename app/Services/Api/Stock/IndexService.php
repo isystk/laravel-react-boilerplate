@@ -2,10 +2,10 @@
 
 namespace App\Services\Api\Stock;
 
-use App\Domain\Entities\Stock;
 use App\Domain\Repositories\Stock\StockRepository;
+use App\Dto\Response\Api\Stock\SearchResultDto;
+use App\Dto\Response\Api\Stock\StockDto;
 use App\Services\BaseService;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class IndexService extends BaseService
 {
@@ -19,11 +19,20 @@ class IndexService extends BaseService
 
     /**
      * 商品を検索します。
-     *
-     * @return LengthAwarePaginator<int, Stock>
      */
-    public function searchStock(): LengthAwarePaginator
+    public function searchStock(): SearchResultDto
     {
-        return $this->stockRepository->getByLimit(6);
+        $paginator = $this->stockRepository->getByLimit(6);
+
+        $stocks = [];
+        foreach ($paginator->getCollection() as $stock) {
+            $stocks[] = new StockDto($stock);
+        }
+
+        return new SearchResultDto(
+            $stocks,
+            $paginator->currentPage(),
+            $paginator->total()
+        );
     }
 }

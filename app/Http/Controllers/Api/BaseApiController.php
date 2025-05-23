@@ -20,6 +20,6 @@ class BaseApiController extends BaseController
             ],
         ];
 
-        return response()->json($items, $e->getCode());
+        return response()->json($items, 500);
     }
 }
