@@ -103,7 +103,6 @@ class CheckoutService extends BaseCartService
             ));
 
         // カートからすべての商品を削除
-        $userId = Auth::id();
-        $this->cartRepository->deleteByUserId($userId);
+        $this->cartRepository->deleteByUserId($user->id);
     }
 }
