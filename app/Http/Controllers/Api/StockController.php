@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Dto\Response\Api\StockJsonDto;
 use App\Services\Api\Stock\IndexService;
 use Illuminate\Http\JsonResponse;
 use Throwable;
@@ -17,8 +16,7 @@ class StockController extends BaseApiController
         /** @var IndexService $service */
         $service = app(IndexService::class);
         try {
-            $stocks = $service->searchStock();
-            $result = new StockJsonDto($stocks);
+            $result = $service->searchStock();
         } catch (Throwable $e) {
             return $this->getErrorJsonResponse($e);
         }

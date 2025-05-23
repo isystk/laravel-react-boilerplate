@@ -12,7 +12,7 @@ export const Default: { render: () => JSX.Element } = {
     const props = {
       id: 1,
       name: 'テスト商品',
-      imgpath: 'sample.jpg',
+      imageUrl: 'https://localhost/uploads/stock/makaron.jpg',
       price: 1000,
       detail: 'この商品の説明です。',
       key: 1,

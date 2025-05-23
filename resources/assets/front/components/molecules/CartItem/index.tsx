@@ -9,11 +9,11 @@ export type Props = {
   name: string;
   detail: string;
   price: number;
-  imgpath: string;
+  imageUrl: string;
   key: number | string;
 };
 
-const CartItem = ({ id, name, imgpath, price, detail }: Props) => {
+const CartItem = ({ id, name, imageUrl, price, detail }: Props) => {
   const { state, service } = useAppRoot();
 
   const [isShowDeleteConfirm, setIsShowDeleteConfirm] = useState(false);
@@ -26,13 +26,7 @@ const CartItem = ({ id, name, imgpath, price, detail }: Props) => {
 
   return (
     <div className={styles.cardItem}>
-      <Image
-        src={`/uploads/stock/${imgpath}`}
-        width={276}
-        height={184}
-        alt={name}
-        className="mb-2 w-100"
-      />
+      <Image src={imageUrl} width={276} height={184} alt={name} className="mb-2 w-100" />
       <p className="font-bold">{name}</p>
       <p className="text-red-600">{price}</p>
       <p>{detail}</p>

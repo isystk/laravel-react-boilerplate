@@ -19,7 +19,7 @@ const MyCart = () => {
 
   if (!state) return <></>;
   const { name } = state.auth;
-  const { data, message, count, sum } = state.cart;
+  const { stocks, message, count, sum } = state.cart;
 
   return (
     <BasicLayout title="マイカート">
@@ -28,13 +28,13 @@ const MyCart = () => {
         <div className="mt-10">
           <p className="text-center">{message}</p>
 
-          {data.length === 0 ? (
+          {stocks.length === 0 ? (
             <p className="text-center">カートに商品がありません。</p>
           ) : (
             <>
               <div className="flex flex-wrap">
-                {data.map(cart => (
-                  <CartItem key={cart.id} {...cart} />
+                {stocks.map(cartStock => (
+                  <CartItem key={cartStock.id} {...cartStock} />
                 ))}
               </div>
               <div className="bg-white mt-10 p-10">

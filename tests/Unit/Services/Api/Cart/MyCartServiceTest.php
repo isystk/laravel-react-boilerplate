@@ -18,9 +18,6 @@ class MyCartServiceTest extends TestCase
         $this->service = app(MyCartService::class);
     }
 
-    /**
-     * getMyCartのテスト
-     */
     public function test_get_my_cart(): void
     {
         $user1 = $this->createDefaultUser([
@@ -30,8 +27,8 @@ class MyCartServiceTest extends TestCase
         // ユーザをログイン状態にする
         $this->actingAs($user1);
 
-        $result = $this->service->getMyCart();
-        $this->assertCount(0, $result['data'], 'カートに追加した商品がない状態でエラーにならないことを始めにテスト');
+        $dto = $this->service->getMyCart();
+        $this->assertCount(0, $dto->stocks, 'カートに追加した商品がない状態でエラーにならないことを始めにテスト');
 
         $stock1 = $this->createDefaultStock(['name' => 'stock1', 'price' => 111]);
         $stock2 = $this->createDefaultStock(['name' => 'stock2', 'price' => 222]);
@@ -39,10 +36,10 @@ class MyCartServiceTest extends TestCase
         $this->createDefaultCart(['user_id' => $user1->id, 'stock_id' => $stock1->id]);
         $this->createDefaultCart(['user_id' => $user1->id, 'stock_id' => $stock2->id]);
 
-        $result = $this->service->getMyCart();
-        $stockIds = collect($result['data'])->pluck('stock_id')->all();
+        $dto = $this->service->getMyCart();
+        $stockIds = collect($dto->stocks)->pluck('stockId')->all();
         $this->assertSame([$stock1->id, $stock2->id], $stockIds, 'カートに追加した商品をテスト');
-        $this->assertSame(2, $result['count'], 'カートに追加した商品の総数をテスト');
-        $this->assertSame(333, $result['sum'], 'カートに追加した商品の総価格をテスト');
+        $this->assertSame(2, $dto->count, 'カートに追加した商品の総数をテスト');
+        $this->assertSame(333, $dto->sum, 'カートに追加した商品の総価格をテスト');
     }
 }

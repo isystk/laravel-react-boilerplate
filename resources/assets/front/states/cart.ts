@@ -1,41 +1,39 @@
 export type Carts = {
-  data: Cart[];
+  stocks: CartStock[];
   message: string;
-  username: string;
+  email: string;
   count: number;
   sum: number;
 };
 
-export type Cart = {
+export type CartStock = {
   id: number;
+  stockId: number;
   name: string;
   detail: string;
   price: number;
-  imgpath: string;
-  quantity: number;
-  created_at: Date;
-  updated_at: Date;
+  imageUrl: string;
 };
 
 const initialState: Carts = {
-  data: [],
+  stocks: [],
   message: '',
-  username: '',
+  email: '',
   count: 0,
   sum: 0,
 };
 
 export default class CartState {
-  data: Cart[];
+  stocks: CartStock[];
   message: string;
-  username: string;
+  email: string;
   count: number;
   sum: number;
 
   constructor() {
-    this.data = initialState.data;
+    this.stocks = initialState.stocks;
     this.message = initialState.message;
-    this.username = initialState.username;
+    this.email = initialState.email;
     this.count = initialState.count;
     this.sum = initialState.sum;
   }

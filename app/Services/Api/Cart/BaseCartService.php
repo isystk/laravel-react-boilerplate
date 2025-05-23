@@ -2,9 +2,11 @@
 
 namespace App\Services\Api\Cart;
 
-use App\Domain\Entities\Cart;
 use App\Domain\Entities\Stock;
+use App\Domain\Entities\User;
 use App\Domain\Repositories\Cart\CartRepository;
+use App\Dto\Response\Api\Cart\CartStockDto;
+use App\Dto\Response\Api\Cart\SearchResultDto;
 use App\Helpers\AuthHelper;
 use App\Services\BaseService;
 
@@ -20,52 +22,27 @@ class BaseCartService extends BaseService
 
     /**
      * カートに追加された商品を取得します。
-     *
-     * @return array{
-     *     data: array{
-     *         id: int,
-     *         stock_id: int,
-     *         name: string|null,
-     *         price: int|null,
-     *         quantity: int|null,
-     *         imgpath: string,
-     *     }[],
-     *     username: string,
-     *     sum: int,
-     *     count: int,
-     * }
      */
-    public function getMyCart(): array
+    public function getMyCart(): SearchResultDto
     {
+        /** @var User $user */
         $user = AuthHelper::frontLoginedUser();
-        $items = [
-            'data' => [],
-            'username' => $user->email,
-            'sum' => 0,
-            'count' => 0,
-        ];
 
         $carts = $this->cartRepository->getByUserId($user->id);
-        $items['data'] = $carts->map(function ($cart) {
-            /** @var Cart $cart */
+        $items = $carts->map(function ($cart) {
             /** @var Stock $stock */
             $stock = $cart->stock;
 
-            return [
-                'id' => $cart->id,
-                'stock_id' => $stock->id,
-                'name' => $stock->name,
-                'price' => $stock->price,
-                'quantity' => $stock->quantity,
-                'imgpath' => $stock->imgpath,
-            ];
+            return new CartStockDto($cart, $stock);
         })->all();
 
-        foreach ($items['data'] as $item) {
-            $items['sum'] += $item['price'];
-            $items['count']++;
+        $sum = 0;
+        $count = 0;
+        foreach ($items as $item) {
+            $sum += $item->price;
+            $count++;
         }
 
-        return $items;
+        return new SearchResultDto($items, $user->email, $sum, $count);
     }
 }
