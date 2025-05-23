@@ -48,7 +48,10 @@ class CheckoutService extends BaseCartService
         //            'email' => $stripeEmail,
         //            'source' => $stripeToken,
         //        ));
-        $userId = Auth::id();
+
+        /** @var User $user */
+        $user = AuthHelper::frontLoginedUser();
+
         $cart = $this->getMyCart();
 
         // Stripe 料金の支払いを実行
@@ -59,7 +62,7 @@ class CheckoutService extends BaseCartService
         //        ));
 
         $order = $this->orderRepository->create([
-            'user_id' => $userId,
+            'user_id' => $user->id,
             'sum_price' => $cart->sum,
         ]);
 
@@ -91,9 +94,6 @@ class CheckoutService extends BaseCartService
                 'price' => (int) $orderStock->price,
             ];
         }
-
-        /** @var User $user */
-        $user = AuthHelper::frontLoginedUser();
 
         Mail::to($user->email)
             ->send(new CheckoutCompleteToUser(
