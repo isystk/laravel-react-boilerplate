@@ -47,11 +47,10 @@ case ${1} in
 
     init)
         # 停止＆削除（コンテナ・イメージ・ボリューム）
+        $DOCKER_COMPOSE down --rmi all --volumes
         pushd $DOCKER_HOME
-        docker compose down --rmi all --volumes
         rm -Rf ./mysql/logs && mkdir ./mysql/logs && chmod 777 ./mysql/logs
-        rm -Rf ./apache/logs && mkdir ./apache/logs && chmod 777 ./apache/logs
-        rm -Rf ./php/logs && mkdir ./php/logs && chmod 777 ./php/logs
+        rm -Rf ./app/logs && mkdir ./app/logs && chmod 777 ./app/logs
         rm -Rf ../vendor
         rm -Rf ../node_modules
         rm -Rf ../storage/app/*
