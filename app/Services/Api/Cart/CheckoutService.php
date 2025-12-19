@@ -9,7 +9,6 @@ use App\Domain\Repositories\Order\OrderStockRepository;
 use App\Domain\Repositories\Stock\StockRepository;
 use App\Helpers\AuthHelper;
 use App\Mails\CheckoutCompleteToUser;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class CheckoutService extends BaseCartService

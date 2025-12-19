@@ -104,7 +104,7 @@ case ${1} in
               $DOCKER_COMPOSE exec app npm run ts-check
               $DOCKER_COMPOSE exec app npm run test
               $DOCKER_COMPOSE exec app ./vendor/bin/phpstan analyse --memory-limit=1G
-              $DOCKER_COMPOSE exec app ./vendor/bin/phpunit tests
+              $DOCKER_COMPOSE exec -e XDEBUG_MODE=off app ./vendor/bin/phpunit --display-phpunit-deprecations
           ;;
           *)
               usage
