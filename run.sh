@@ -2,43 +2,27 @@
 
 set -e
 
-DOCKER_HOME=./docker
-DOCKER_COMPOSE="docker compose -f $DOCKER_HOME/docker-compose.yml"
+BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DOCKER_HOME="$BASE_DIR/docker"
+COMPOSE_FILE="$DOCKER_HOME/docker-compose.yml"
+DOCKER_COMPOSE="docker compose -f $COMPOSE_FILE"
 
-function usage {
-    echo "Usage:"
+confirm() {
+    if [ "$FORCE" = true ]; then return 0; fi
+    read -r -p "${1:-Are you sure?} [y/N]: " ans
+    [[ $ans =~ ^[Yy] ]] && return 0 || return 1
+}
+
+usage() {
     awk '
-        # 親コマンドをリセット
-        /^[[:space:]]*case[[:space:]]+"\$\{1\}"[[:space:]]+in/ {
-            parent = ""
-        }
-
-        # 親コマンドを取得
-        /^[[:space:]]*(mysql|app)\)/ {
-            parent = $1
-            sub(/\)$/, "", parent)
-        }
-
-        # usage コメント行を保存
-        /^[[:space:]]*##[[:space:]]+/ {
-            desc = $0
-            sub(/^[[:space:]]*##[[:space:]]+/, "", desc)
-            next
-        }
-
-        # case ラベル行
+        /^[[:space:]]*case[[:space:]]+"\$\{1\}"[[:space:]]+in/ { parent = "" }
+        /^[[:space:]]*(mysql|app)\)/ { parent = $1; sub(/\)$/, "", parent) }
+        /^[[:space:]]*##[[:space:]]+/ { desc = $0; sub(/^[[:space:]]*##[[:space:]]+/, "", desc); next }
         /^[[:space:]]*[a-zA-Z0-9_|-]+\)/ {
             if (desc != "") {
-                cmd = $0
-                sub(/^[[:space:]]*/, "", cmd)
-                sub(/\).*/, "", cmd)
-
-                if (parent != "" && cmd != parent) {
-                    printf "  %-25s %s\n", parent " " cmd, desc
-                } else {
-                    printf "  %-25s %s\n", cmd, desc
-                }
-
+                cmd = $0; sub(/^[[:space:]]*/, "", cmd); sub(/\).*/, "", cmd)
+                if (parent != "" && cmd != parent) { printf "  %-25s %s\n", parent " " cmd, desc }
+                else { printf "  %-25s %s\n", cmd, desc }
                 desc = ""
             }
         }
@@ -58,14 +42,18 @@ case "${1}" in
 
     ## 初期化します。
     init)
-        $DOCKER_COMPOSE down --rmi all --volumes
-        pushd "$DOCKER_HOME"
-        rm -Rf ./mysql/logs && mkdir ./mysql/logs && chmod 777 ./mysql/logs
-        rm -Rf ./app/logs && mkdir ./app/logs && chmod 777 ./app/logs
-        rm -Rf ../vendor
-        rm -Rf ../node_modules
-        rm -Rf ../storage/app/*
-        popd
+        if confirm "イメージ、ボリューム、vendor、node_modules、および storage が削除されます。続行しますか？"; then
+            $DOCKER_COMPOSE down --rmi all --volumes
+            pushd "$DOCKER_HOME" >/dev/null
+            rm -rf ./mysql/logs && mkdir -p ./mysql/logs && chmod 777 ./mysql/logs
+            rm -rf ./app/logs && mkdir -p ./app/logs && chmod 777 ./app/logs
+            popd >/dev/null
+            rm -rf "$BASE_DIR/vendor" "$BASE_DIR/node_modules"
+            rm -rf "$BASE_DIR/storage/app/"*
+            echo "Initialized."
+        else
+            echo "Aborted."
+        fi
         ;;
 
     ## 起動します。
@@ -86,6 +74,11 @@ case "${1}" in
         "${0}" start
         ;;
 
+    ## tinkerを実行します。
+    tinker)
+        $DOCKER_COMPOSE exec app php artisan tinker
+        ;;
+
     mysql)
         case "${2}" in
             ## mysqlにログインします。
@@ -101,19 +94,31 @@ case "${1}" in
 
             ## mysqlのdumpファイルをエクスポートします。
             export)
+                outfile="${3:-}"
+                if [ -z "$outfile" ]; then
+                    echo "Usage: $0 mysql export <file>" >&2
+                    exit 1
+                fi
                 mysqldump --skip-column-statistics \
-                    -u root -ppassword -h 127.0.0.1 laraec > "${3}"
+                    -u root -ppassword -h 127.0.0.1 laraec > $outfile
+                echo "Exported to $outfile"
                 ;;
 
             ## mysqlにdumpファイルをインポートします。
             import)
+                infile="${3:-}"
+                if [ -z "$infile" ] || [ ! -f "$infile" ]; then
+                    echo "Usage: $0 mysql import <file>" >&2
+                    exit 1
+                fi
                 mysql -u root -ppassword -h 127.0.0.1 \
                     -e 'drop database if exists laraec;'
                 mysql -u root -ppassword -h 127.0.0.1 \
                     -e 'create database if not exists laraec;'
                 mysql -u root -ppassword -h 127.0.0.1 \
-                    --default-character-set=utf8mb4 laraec < "${3}"
+                    --default-character-set=utf8mb4 laraec < $infile
                 $DOCKER_COMPOSE restart mysql
+                echo "Imported $infile"
                 ;;
 
             *)
