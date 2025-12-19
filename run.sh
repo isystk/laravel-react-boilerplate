@@ -22,11 +22,9 @@ Options:
   mysql export <PAHT>      MySQLデータベースのdumpファイルをエクスポートします。
   mysql import <PAHT>      MySQLデータベースにdumpファイルをインポートします。
   app login                Webサーバーにログインします。
-  app dev                  アプリを起動します。
-  app build                アプリをビルドします。
+  app npm-run-dev          アプリを起動します。
+  app npm-run-build        アプリをビルドします。
   app test                 テストコードを実行します。
-  check git-cr             Git 管理下のテキストファイルのうち、CRLF または CR 改行を含むファイルを検出
-  check sh-exec            シェルスクリプトに実行権限が付与されていないファイルを検出
   --version, -v            バージョンを表示します。
   --help, -h               ヘルプを表示します。
 EOF
@@ -92,10 +90,10 @@ case ${1} in
           login)
               $DOCKER_COMPOSE exec app /bin/bash
           ;;
-          dev)
+          npm-run-dev)
               $DOCKER_COMPOSE exec app npm run dev
           ;;
-          build)
+          npm-run-build)
               $DOCKER_COMPOSE exec app npm run build
               $DOCKER_COMPOSE exec app npm run build-storybook
           ;;
@@ -112,17 +110,6 @@ case ${1} in
               usage
           ;;
       esac
-    ;;
-
-    check)
-        case ${2} in
-            git-cr)
-                git ls-files -z | xargs -0 file --mime-type | grep 'text/' | cut -d: -f1 | xargs -r grep -lzP '\r(\n)?'
-            ;;
-            sh-exec)
-                find . -type f -name "*.sh" ! -perm -u=x -print
-            ;;
-        esac
     ;;
 
     help|--help|-h)

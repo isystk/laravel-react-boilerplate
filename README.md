@@ -287,11 +287,9 @@ Options:
   mysql export <PAHT>      MySQLデータベースのdumpファイルをエクスポートします。
   mysql import <PAHT>      MySQLデータベースにdumpファイルをインポートします。
   app login                Webサーバーにログインします。
-  app dev                  アプリを起動します。
-  app build                アプリをビルドします。
+  app npm-run-dev          アプリを起動します。
+  app npm-run-build        アプリをビルドします。
   app test                 テストコードを実行します。
-  check git-cr             Git 管理下のテキストファイルのうち、CRLF または CR 改行を含むファイルを検出
-  check sh-exec            シェルスクリプトに実行権限が付与されていないファイルを検出
   --version, -v            バージョンを表示します。
   --help, -h               ヘルプを表示します。
 ```
