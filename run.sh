@@ -84,7 +84,7 @@ case "${1}" in
             ## mysqlにログインします。
             login)
                 $DOCKER_COMPOSE exec mysql bash -c \
-                    'mysql -u root -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE'
+                    'mysql -u $MYSQL_USER  -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE'
                 ;;
 
             ## マイグレーションを実行します。
@@ -94,30 +94,25 @@ case "${1}" in
 
             ## mysqlのdumpファイルをエクスポートします。
             export)
-                outfile="${3:-}"
-                if [ -z "$outfile" ]; then
-                    echo "Usage: $0 mysql export <file>" >&2
-                    exit 1
-                fi
-                mysqldump --skip-column-statistics \
-                    -u root -ppassword -h 127.0.0.1 laraec > $outfile
-                echo "Exported to $outfile"
+                TS=$(date +%Y%m%d_%H%M%S)
+                DEFAULT_FILE="local_dump_${TS}.sql"
+                outfile="${3:-$DEFAULT_FILE}"
+                $DOCKER_COMPOSE exec mysql bash -c 'mysqldump --no-tablespaces -u $MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE' > "$outfile"
+                echo "DBダンプを $outfile に出力しました"
                 ;;
 
             ## mysqlにdumpファイルをインポートします。
             import)
                 infile="${3:-}"
-                if [ -z "$infile" ] || [ ! -f "$infile" ]; then
-                    echo "Usage: $0 mysql import <file>" >&2
+                if [ -z "$infile" ]; then
+                    echo "使い方: $0 mysql import <ファイル名.sql>" >&2
                     exit 1
                 fi
-                mysql -u root -ppassword -h 127.0.0.1 \
-                    -e 'drop database if exists laraec;'
-                mysql -u root -ppassword -h 127.0.0.1 \
-                    -e 'create database if not exists laraec;'
-                mysql -u root -ppassword -h 127.0.0.1 \
-                    --default-character-set=utf8mb4 laraec < $infile
-                $DOCKER_COMPOSE restart mysql
+                if [ ! -f "$infile" ]; then
+                    echo "エラー: ファイル '$infile' が見つかりません。" >&2
+                    exit 1
+                fi
+                $DOCKER_COMPOSE exec -T mysql bash -c 'mysql -u $MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE' < "$infile"
                 echo "Imported $infile"
                 ;;
 
