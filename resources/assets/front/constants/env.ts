@@ -12,14 +12,13 @@ type EnvType = {
 let Env = {
   APP_NAME: 'LaraEC',
   ENV_NAME: 'local',
-  ENDPOINT_URL: 'https://localhost/api',
+  ENDPOINT_URL: import.meta.env.VITE_ENDPOINT_URL,
   STRIPE_KEY: import.meta.env.VITE_STRIPE_KEY,
 } as EnvType;
 if (import.meta.env.VITE_ENV_NAME === 'production') {
   Env = {
     ...Env,
     ENV_NAME: import.meta.env.VITE_ENV_NAME,
-    ENDPOINT_URL: import.meta.env.VITE_ENDPOINT_URL,
   } as EnvType;
 }
 

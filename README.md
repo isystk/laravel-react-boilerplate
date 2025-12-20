@@ -271,30 +271,6 @@ https://localhost/
 
 https://localhost/admin/
 
-## 🖊️ Docker 操作用シェルスクリプトの使い方
-
-```
-Usage:
-  run.sh [command] [<options>]
-
-Options:
-  stats|st                 Dockerコンテナの状態を表示します。
-  logs                     Dockerコンテナのログを表示します。
-  init                     Dockerコンテナ・イメージ・生成ファイルの状態を初期化します。
-  start                    すべてのDaemonを起動します。
-  stop                     すべてのDaemonを停止します。
-  mysql login              MySQLデータベースにログインします。
-  mysql export <PAHT>      MySQLデータベースのdumpファイルをエクスポートします。
-  mysql import <PAHT>      MySQLデータベースにdumpファイルをインポートします。
-  app login                Webサーバーにログインします。
-  app dev                  アプリを起動します。
-  app build                アプリをビルドします。
-  app test                 テストコードを実行します。
-  check git-cr             Git 管理下のテキストファイルのうち、CRLF または CR 改行を含むファイルを検出
-  check sh-exec            シェルスクリプトに実行権限が付与されていないファイルを検出
-  --version, -v            バージョンを表示します。
-  --help, -h               ヘルプを表示します。
-```
 
 サーバーを停止する場合
 ```
