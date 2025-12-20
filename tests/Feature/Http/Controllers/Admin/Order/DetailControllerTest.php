@@ -8,10 +8,9 @@ use Tests\TestCase;
 
 class DetailControllerTest extends TestCase
 {
-
     use RefreshDatabase;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->withoutMiddleware(ValidateCsrfToken::class);
@@ -20,7 +19,7 @@ class DetailControllerTest extends TestCase
     /**
      * 注文詳細画面表示のテスト
      */
-    public function testShow(): void
+    public function test_show(): void
     {
         $admin = $this->createDefaultAdmin([
             'name' => '管理者A',
@@ -43,5 +42,4 @@ class DetailControllerTest extends TestCase
         $response->assertSee('商品1');
         $response->assertSee('商品2');
     }
-
 }

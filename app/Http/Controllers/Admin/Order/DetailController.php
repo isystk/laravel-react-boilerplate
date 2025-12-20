@@ -9,12 +9,8 @@ use Illuminate\View\View;
 
 class DetailController extends BaseController
 {
-
     /**
      * 注文履歴詳細画面の初期表示
-     *
-     * @param Order $order
-     * @return View
      */
     public function show(Order $order): View
     {
@@ -22,6 +18,9 @@ class DetailController extends BaseController
         $service = app(ShowService::class);
         $orderStocks = $service->getOrderStock($order->id);
 
-        return view('admin.order.show', compact('order', 'orderStocks'));
+        return view('admin.order.show', compact([
+            'order',
+            'orderStocks',
+        ]));
     }
 }

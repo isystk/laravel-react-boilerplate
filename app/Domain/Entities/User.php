@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
  * @property int $id
@@ -24,13 +25,16 @@ use Laravel\Sanctum\HasApiTokens;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
     use HasApiTokens;
 
     /** @phpstan-use HasFactory<UserFactory> */
     use HasFactory;
+
     use Notifiable;
+
+    protected $table = 'users';
 
     /**
      * The attributes that are mass assignable.
@@ -91,4 +95,21 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->notify(new VerifyEmailToUser($this));
     }
 
+    /**
+     * JWTの識別子を取得する
+     */
+    public function getJWTIdentifier(): string
+    {
+        return (string) $this->getKey();
+    }
+
+    /**
+     * JWTのカスタムペイロードを取得する
+     *
+     * @return array<int, mixed>
+     */
+    public function getJWTCustomClaims(): array
+    {
+        return [];
+    }
 }

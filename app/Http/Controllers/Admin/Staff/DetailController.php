@@ -13,23 +13,19 @@ use Throwable;
 
 class DetailController extends BaseController
 {
-
     /**
      * スタッフ詳細画面の初期表示
-     *
-     * @param Admin $staff
-     * @return View
      */
     public function show(Admin $staff): View
     {
-        return view('admin.staff.show', compact('staff'));
+        return view('admin.staff.show', compact([
+            'staff',
+        ]));
     }
 
     /**
      * スタッフ詳細画面の削除処理
      *
-     * @param Admin $staff
-     * @return RedirectResponse
      * @throws Throwable
      */
     public function destroy(Admin $staff): RedirectResponse
@@ -39,19 +35,22 @@ class DetailController extends BaseController
         if (auth()->id() === $staff->id) {
             $errors = new MessageBag;
             $errors->add('errors', '自分自身を削除することはできません');
+
             return back()->withErrors($errors);
         }
 
+        /** @var DestroyService $service */
+        $service = app(DestroyService::class);
+
         DB::beginTransaction();
         try {
-            /** @var DestroyService $service */
-            $service = app(DestroyService::class);
             $service->delete($staff->id);
             DB::commit();
         } catch (Throwable $e) {
             DB::rollBack();
             throw $e;
         }
+
         return redirect(route('admin.staff'));
     }
 }

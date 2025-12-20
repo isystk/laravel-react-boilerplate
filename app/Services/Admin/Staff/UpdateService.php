@@ -11,11 +11,6 @@ class UpdateService extends BaseService
 {
     private AdminRepository $adminRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param AdminRepository $adminRepository
-     */
     public function __construct(
         AdminRepository $adminRepository
     ) {
@@ -24,9 +19,6 @@ class UpdateService extends BaseService
 
     /**
      * 管理者を更新します。
-     * @param int $adminId
-     * @param UpdateRequest $request
-     * @return Admin
      */
     public function update(int $adminId, UpdateRequest $request): Admin
     {
@@ -35,10 +27,10 @@ class UpdateService extends BaseService
             'email' => $request->email,
             'role' => $request->role,
         ];
+
         return $this->adminRepository->update(
             $adminId,
             $model
         );
     }
-
 }

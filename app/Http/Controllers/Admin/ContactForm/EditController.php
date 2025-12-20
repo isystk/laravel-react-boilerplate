@@ -14,12 +14,8 @@ use Throwable;
 
 class EditController extends BaseController
 {
-
     /**
      * お問い合わせ変更画面の初期表示
-     *
-     * @param ContactForm $contactForm
-     * @return View
      */
     public function edit(ContactForm $contactForm): View
     {
@@ -30,29 +26,31 @@ class EditController extends BaseController
         $service = app(EditService::class);
         $contactFormImages = $service->getContactFormImage($contactForm->id);
 
-        return view('admin.contact.edit', compact('contactForm', 'contactFormImages'));
+        return view('admin.contact.edit', compact([
+            'contactForm',
+            'contactFormImages',
+        ]));
     }
 
     /**
      * お問い合わせ変更画面の登録処理
      *
-     * @param UpdateRequest $request
-     * @param ContactForm $contactForm
-     * @return RedirectResponse
      * @throws Throwable
      */
     public function update(UpdateRequest $request, ContactForm $contactForm): RedirectResponse
     {
+        /** @var UpdateService $service */
+        $service = app(UpdateService::class);
+
         DB::beginTransaction();
         try {
-            /** @var UpdateService $service */
-            $service = app(UpdateService::class);
             $service->update($contactForm->id, $request);
             DB::commit();
         } catch (Throwable $e) {
             DB::rollBack();
             throw $e;
         }
+
         return redirect(route('admin.contact'));
     }
 }

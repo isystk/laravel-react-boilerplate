@@ -8,29 +8,26 @@ use Closure;
 
 class ImportStaffJobs extends BaseImportJobs
 {
-
     /**
      * Importクラスのインスタンスを返却する
-     * @return Closure
      */
     protected function createImporter(): Closure
     {
-        return static function (string $filePath)
-        {
+        return static function (string $filePath) {
             return new StaffImport($filePath);
         };
     }
 
     /**
      * スタッフを一括登録する
-     * @param array<array<string, ?string>> $rows
+     *
+     * @param  array<array<string, ?string>>  $rows
      */
     protected function importData(array $rows): void
     {
         app(StaffRegistService::class)->exec(
             $rows,
-            function ($message)
-            {
+            function ($message) {
                 $this->outputLog($message);
             }
         );

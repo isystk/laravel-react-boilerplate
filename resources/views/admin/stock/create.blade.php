@@ -1,10 +1,7 @@
-@extends('layouts.app_admin')
+@extends('layouts.admin')
 @section('title', __('stock.Stock Regist'))
-@php
-    $menu = 'master';
-    $subMenu = 'stock';
-@endphp
-
+@section('mainMenu', 'master')
+@section('subMenu', 'stock')
 @section('breadcrumbs')
     {{ Breadcrumbs::render('admin.stock.create') }}
 @endsection
@@ -149,24 +146,5 @@
 @endsection
 
 @section('scripts')
-    <script type="module">
-        $(function () {
-            // 画像ファイルアップロード
-            $('#js-uploadImage').imageUploader({
-                dropAreaSelector: '#drop-zone',
-                successCallback: function (res) {
-
-                    $('#result').empty();
-                    $('#result').append('<img src="' + res.fileData + '" width="200px" />');
-                    $('#result').append('<input type="hidden" name="imageBase64" value="' + res.fileData + '" />');
-                    $('#result').append('<input type="hidden" name="fileName" value="' + res.fileName + '" />');
-
-                    $('.error-message').empty();
-                },
-                errorCallback: function (res) {
-                    $('.error-message').text(res[0]);
-                }
-            });
-        });
-    </script>
+    @vite('resources/assets/admin/js/pages/stock/create.js')
 @endsection

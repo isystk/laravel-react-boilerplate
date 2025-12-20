@@ -9,155 +9,117 @@ use App\Services\Api\Cart\DeleteCartService;
 use App\Services\Api\Cart\MyCartService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use InvalidArgumentException;
 use Throwable;
 
 class CartController extends BaseApiController
 {
-
     /**
      * マイカートのデータをJSONで返却します。
-     * @return JsonResponse
      */
     public function myCart(): JsonResponse
     {
+        /** @var MyCartService $service */
+        $service = app(MyCartService::class);
         try {
-            /** @var MyCartService $service */
-            $service = app(MyCartService::class);
-            $carts = $service->getMyCart();
-            $result = [
-                'result' => true,
-                'carts' => $carts,
-            ];
+            $result = $service->getMyCart();
         } catch (Throwable $e) {
-            $result = [
-                'result' => false,
-                'error' => [
-                    'messages' => [$e->getMessage()],
-                ],
-            ];
-            return $this->resConversionJson($result, $e->getCode());
+            return $this->getErrorJsonResponse($e);
         }
-        return $this->resConversionJson($result);
+
+        return response()->json($result);
     }
 
     /**
      * マイカートに商品を追加します。
-     * @param Request $request
-     * @return JsonResponse
      */
     public function addMycart(Request $request): JsonResponse
     {
+        /** @var AddCartService $service */
+        $service = app(AddCartService::class);
         try {
-            /** @var AddCartService $service */
-            $service = app(AddCartService::class);
-            //カートに追加の処理
+            // カートに追加の処理
             $message = $service->addMyCart($request->stock_id);
 
-            //追加後の情報を取得
-            $carts = $service->getMyCart();
-
-            $result = [
-                'result' => true,
-                'message' => $message,
-                'carts' => $carts,
-            ];
+            // 追加後の情報を取得
+            $result = $service->getMyCart();
+            $result->message = $message;
         } catch (Throwable $e) {
-            $result = [
-                'result' => false,
-                'error' => [
-                    'messages' => [$e->getMessage()],
-                ],
-            ];
-            return $this->resConversionJson($result, $e->getCode());
+            return $this->getErrorJsonResponse($e);
         }
-        return $this->resConversionJson($result);
+
+        return response()->json($result);
     }
 
     /**
      * マイカートから商品を削除します。
-     * @param Request $request
-     * @return JsonResponse
      */
     public function deleteCart(Request $request): JsonResponse
     {
+        /** @var DeleteCartService $service */
+        $service = app(DeleteCartService::class);
         try {
-            /** @var DeleteCartService $service */
-            $service = app(DeleteCartService::class);
-            //カートから削除の処理
+            // カートから削除の処理
             $message = $service->deleteMyCart($request->cart_id);
 
-            //追加後の情報を取得
-            $carts = $service->getMyCart();
-
-            $result = [
-                'result' => true,
-                'message' => $message,
-                'carts' => $carts,
-            ];
+            // 追加後の情報を取得
+            $result = $service->getMyCart();
+            $result->message = $message;
         } catch (Throwable $e) {
-            $result = [
-                'result' => false,
-                'error' => [
-                    'messages' => [$e->getMessage()],
-                ],
-            ];
-            return $this->resConversionJson($result, $e->getCode());
+            return $this->getErrorJsonResponse($e);
         }
-        return $this->resConversionJson($result);
+
+        return response()->json($result);
     }
 
     /**
      * マイカートのデータを元にStripe決済用のPaymentを生成してJSONで返却します。
-     * @param Request $request
-     * @return JsonResponse
      */
     public function createPayment(Request $request): JsonResponse
     {
+        /** @var CreatePaymentService $service */
+        $service = app(CreatePaymentService::class);
         try {
-            /** @var CreatePaymentService $service */
-            $service = app(CreatePaymentService::class);
             $result = $service->createPayment($request);
         } catch (Throwable $e) {
-            $result = [
-                'result' => false,
-                'error' => [
-                    'messages' => [$e->getMessage()],
-                ],
-            ];
-            return $this->resConversionJson($result, $e->getCode());
+            return $this->getErrorJsonResponse($e);
         }
-        return $this->resConversionJson($result);
+
+        return response()->json($result);
     }
 
     /**
      * マイカートのデータをStripeで決済処理します。
-     * @param Request $request
-     * @return JsonResponse
+     *
+     * @throws Throwable
      */
     public function checkout(Request $request): JsonResponse
     {
+        $stripeEmail = is_string($request->stripeEmail) ? $request->stripeEmail : null;
+        $stripeToken = is_string($request->stripeToken) ? $request->stripeToken : null;
+
+        //        if (is_null($stripeEmail) || is_null($stripeToken)) {
+        //            throw new InvalidArgumentException('stripeEmail is null.');
+        //        }
+
+        /** @var CheckoutService $service */
+        $service = app(CheckoutService::class);
+        DB::beginTransaction();
         try {
-            /** @var CheckoutService $service */
-            $service = app(CheckoutService::class);
             // 支払い処理の実行
-            $service->checkout($request->stripeEmail, $request->stripeToken);
+            $service->checkout($stripeEmail, $stripeToken);
 
             // 削除後の情報を取得
-            $carts = $service->getMyCart();
+            $result = $service->getMyCart();
 
-            $result = [
-                'result' => true,
-                'carts' => $carts,
-            ];
+            DB::commit();
         } catch (Throwable $e) {
-            $result = [
-                'result' => false,
-                'error' => [
-                    'messages' => [$e->getMessage()],
-                ],
-            ];
-            return $this->resConversionJson($result, $e->getCode());
+            DB::rollBack();
+
+            return $this->getErrorJsonResponse($e);
         }
-        return $this->resConversionJson($result);
+
+        return response()->json($result);
     }
 }

@@ -13,11 +13,6 @@ class CreateService extends BaseService
 {
     private AdminRepository $adminRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param AdminRepository $adminRepository
-     */
     public function __construct(
         AdminRepository $adminRepository
     ) {
@@ -26,8 +21,6 @@ class CreateService extends BaseService
 
     /**
      * 管理者を登録します。
-     * @param StoreRequest $request
-     * @return Admin
      */
     public function save(StoreRequest $request): Admin
     {
@@ -37,9 +30,9 @@ class CreateService extends BaseService
             'password' => Hash::make($request->password),
             'role' => AdminRole::Manager->value,
         ];
+
         return $this->adminRepository->create(
             $model
         );
     }
-
 }

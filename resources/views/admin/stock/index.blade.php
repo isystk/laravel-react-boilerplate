@@ -1,10 +1,7 @@
-@extends('layouts.app_admin')
+@extends('layouts.admin')
 @section('title', __('stock.Stock List'))
-@php
-    $menu = 'master';
-    $subMenu = 'stock';
-@endphp
-
+@section('mainMenu', 'master')
+@section('subMenu', 'stock')
 @section('breadcrumbs')
     {{ Breadcrumbs::render('admin.stock') }}
 @endsection
@@ -51,7 +48,7 @@
                             <input
                                 type="text"
                                 name="name"
-                                value="{{ $request->name }}"
+                                value="{{ request()->name }}"
                                 class="form-control"
                                 maxlength="{{ config('const.maxlength.stocks.name') }}"
                             >
@@ -75,7 +72,7 @@
         <input
             type="hidden"
             name="name"
-            value="{{ $request->name }}"
+            value="{{ request()->name }}"
         >
     </form>
     <div class="row">
@@ -154,16 +151,5 @@
 @endsection
 
 @section('scripts')
-    <script type="module">
-        $(function () {
-            // ダウンロード
-            $('.js-download').click(function (e) {
-                e.preventDefault();
-                const form = $('#pagingForm');
-                const url = $(this).attr('href');
-                const serializedData = form.serialize();
-                window.location.href = url + '&' + serializedData;
-            });
-        });
-    </script>
+    @vite('resources/assets/admin/js/pages/stock/index.js')
 @endsection

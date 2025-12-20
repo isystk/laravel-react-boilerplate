@@ -4,15 +4,11 @@ namespace App\Domain\Repositories\Stock;
 
 use App\Domain\Entities\Stock;
 use App\Domain\Repositories\BaseEloquentRepository;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class StockEloquentRepository extends BaseEloquentRepository implements StockRepository
 {
-
-    /**
-     * @return string
-     */
     protected function model(): string
     {
         return Stock::class;
@@ -20,7 +16,7 @@ class StockEloquentRepository extends BaseEloquentRepository implements StockRep
 
     /**
      * 指定した件数のデータを最新順に取得します。
-     * @param int $limit
+     *
      * @return LengthAwarePaginator<int, Stock>
      */
     public function getByLimit(int $limit = 0): LengthAwarePaginator
@@ -33,11 +29,12 @@ class StockEloquentRepository extends BaseEloquentRepository implements StockRep
 
     /**
      * 検索条件からデータを取得します。
+     *
      * @param array{
      *   name : ?string,
      *   sort_name : ?string,
      *   sort_direction : 'asc' | 'desc' | null,
-     *   limit : ?int,
+     *   limit ?: ?int,
      * } $conditions
      * @return Collection<int, Stock>|LengthAwarePaginator<int, Stock>
      */
@@ -45,15 +42,20 @@ class StockEloquentRepository extends BaseEloquentRepository implements StockRep
     {
         $query = $this->model->select();
 
-        if (null !== $conditions['name']) {
+        if (!is_null($conditions['name'] ?? null)) {
             $query->where('name', 'like', '%' . $conditions['name'] . '%');
         }
 
-        if (null !== $conditions['sort_name']) {
+        if (!is_null($conditions['sort_name'] ?? null)) {
             $query->orderBy($conditions['sort_name'], $conditions['sort_direction'] ?? 'asc');
         }
 
-        return null !== $conditions['limit'] ? $query->paginate($conditions['limit']) : $query->get();
-    }
+        if (!is_null($conditions['limit'] ?? null)) {
+            /** @var LengthAwarePaginator<int, Stock> */
+            return $query->paginate($conditions['limit']);
+        }
 
+        /** @var Collection<int, Stock> */
+        return $query->get();
+    }
 }

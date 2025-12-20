@@ -12,11 +12,6 @@ class StaffRegistService extends BaseService
 {
     private AdminRepository $adminRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param AdminRepository $adminRepository
-     */
     public function __construct(
         AdminRepository $adminRepository
     ) {
@@ -25,8 +20,8 @@ class StaffRegistService extends BaseService
 
     /**
      * 管理者を登録します。
-     * @param array<array<string, ?string>> $rows
-     * @param Closure $outputLog
+     *
+     * @param  array<array<string, ?string>>  $rows
      */
     public function exec(
         array $rows,
@@ -53,5 +48,4 @@ class StaffRegistService extends BaseService
             }
         }
     }
-
 }

@@ -28,5 +28,4 @@ class OrderStockTest extends TestCase
         $this->assertInstanceOf(Stock::class, $result);
         $this->assertSame($orderStock->stock->id, $result->id);
     }
-
 }

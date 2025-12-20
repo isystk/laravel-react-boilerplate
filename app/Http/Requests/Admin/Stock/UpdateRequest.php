@@ -10,8 +10,6 @@ class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -41,6 +39,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         $maxlength = config('const.maxlength.stocks');
+
         return [
             'name' => [
                 'required',
@@ -60,13 +59,13 @@ class UpdateRequest extends FormRequest
                 'required',
                 'numeric',
             ],
-//            'imageFile' => [
-//                'nullable',
-//                'image',
-//                'mimes:jpeg,png',
-//                'max:10000',  // 10MB
-//                'dimensions:max_width=1200,max_height=1200',
-//            ],
+            //            'imageFile' => [
+            //                'nullable',
+            //                'image',
+            //                'mimes:jpeg,png',
+            //                'max:10000',  // 10MB
+            //                'dimensions:max_width=1200,max_height=1200',
+            //            ],
             'imageBase64' => [
                 'nullable',
                 new Base64ImageRule(['jpeg']),
@@ -79,11 +78,10 @@ class UpdateRequest extends FormRequest
         ];
     }
 
-
     /**
-     * 項目名
+     * Get the error messages for the defined validation rules.
      *
-     * @return array<string, string>
+     * @return array<string>
      */
     public function attributes(): array
     {
@@ -95,5 +93,4 @@ class UpdateRequest extends FormRequest
             'imageBase64' => __('stock.Image'),
         ];
     }
-
 }

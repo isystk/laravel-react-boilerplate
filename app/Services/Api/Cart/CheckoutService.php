@@ -2,29 +2,25 @@
 
 namespace App\Services\Api\Cart;
 
+use App\Domain\Entities\User;
 use App\Domain\Repositories\Cart\CartRepository;
 use App\Domain\Repositories\Order\OrderRepository;
 use App\Domain\Repositories\Order\OrderStockRepository;
 use App\Domain\Repositories\Stock\StockRepository;
+use App\Helpers\AuthHelper;
 use App\Mails\CheckoutCompleteToUser;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class CheckoutService extends BaseCartService
 {
     private CartRepository $cartRepository;
+
     private StockRepository $stockRepository;
+
     private OrderRepository $orderRepository;
+
     private OrderStockRepository $orderStockRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param CartRepository $cartRepository
-     * @param StockRepository $stockRepository
-     * @param OrderRepository $orderRepository
-     * @param OrderStockRepository $orderStockRepository
-     */
     public function __construct(
         CartRepository $cartRepository,
         StockRepository $stockRepository,
@@ -40,44 +36,44 @@ class CheckoutService extends BaseCartService
 
     /**
      * 決済処理を行います。
-     * @param string|null $stripeEmail
-     * @param string|null $stripeToken
-     * @return void
      */
     public function checkout(?string $stripeEmail, ?string $stripeToken): void
     {
         // TODO Stripe との通信処理は一旦コメントアウト
-//        Stripe::setApiKey(config('const.stripe.secret'));
-//
-//        // 料金を支払う人
-//        $customer = Customer::create(array(
-//            'email' => $stripeEmail,
-//            'source' => $stripeToken,
-//        ));
-        $userId = Auth::id();
-        $items = $this->getMyCart();
+        //        Stripe::setApiKey(config('const.stripe.secret'));
+        //
+        //        // 料金を支払う人
+        //        $customer = Customer::create(array(
+        //            'email' => $stripeEmail,
+        //            'source' => $stripeToken,
+        //        ));
+
+        /** @var User $user */
+        $user = AuthHelper::frontLoginedUser();
+
+        $cart = $this->getMyCart();
 
         // Stripe 料金の支払いを実行
-//        Charge::create(array(
-//            'customer' => $customer->id,
-//            'amount' => $items['sum'],
-//            'currency' => 'jpy',
-//        ));
+        //        Charge::create(array(
+        //            'customer' => $customer->id,
+        //            'amount' => $items['sum'],
+        //            'currency' => 'jpy',
+        //        ));
 
         $order = $this->orderRepository->create([
-            'user_id' => $userId,
-            'sum_price' => $items['sum'],
+            'user_id' => $user->id,
+            'sum_price' => $cart->sum,
         ]);
 
         // 発注履歴に追加する。
         $orderItems = [];
-        foreach ($items['data'] as $data) {
-            $stockId = $data['stock_id'];
+        foreach ($cart->stocks as $cartStock) {
+            $stockId = $cartStock->stockId;
 
             $orderStock = $this->orderStockRepository->create([
                 'order_id' => $order->id,
                 'stock_id' => $stockId,
-                'price' => $data['price'],
+                'price' => $cartStock->price,
                 'quantity' => 1, // TODO 商品毎に個数をサマリーしたい
             ]);
 
@@ -92,23 +88,20 @@ class CheckoutService extends BaseCartService
             );
 
             $orderItems[] = [
-                'name' => $data['name'] ?? '',
-                'quantity' => (int)$orderStock->quantity,
-                'price' => (int)$orderStock->price,
+                'name' => $cartStock->name,
+                'quantity' => (int) $orderStock->quantity,
+                'price' => (int) $orderStock->price,
             ];
         }
-
-        $user = Auth::user();
 
         Mail::to($user->email)
             ->send(new CheckoutCompleteToUser(
                 $user,
-                $items['sum'],
+                $cart->sum,
                 $orderItems
             ));
 
         // カートからすべての商品を削除
-        $userId = Auth::id();
-        $this->cartRepository->deleteByUserId($userId);
+        $this->cartRepository->deleteByUserId($user->id);
     }
 }

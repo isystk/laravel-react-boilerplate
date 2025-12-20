@@ -22,7 +22,7 @@ jobs:
       - name: プロジェクトのチェックアウト
         uses: actions/checkout@v4
 
-      - name: Dockerの初期化
+      - name: 初期化
         run: |
           ./run.sh init
 
@@ -33,6 +33,6 @@ jobs:
       - name: 60s 待機
         run: sleep 60
 
-      - name: PHP Unit 実行
+      - name: テストコードの実行
         run: |
           ./run.sh app test

@@ -11,11 +11,10 @@ class LoginResponse implements LoginResponseContract
     /**
      * Create an HTTP response that represents the object.
      *
-     * @param Request $request
-     * @return Response
+     * @param  Request  $request
      */
-    public function toResponse($request)
+    public function toResponse($request): Response
     {
-        return redirect('/home');
+        return redirect()->intended(config('fortify.home'));
     }
 }

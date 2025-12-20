@@ -10,7 +10,6 @@ use Tests\TestCase;
 
 class CheckoutServiceTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private CheckoutService $service;
@@ -24,7 +23,7 @@ class CheckoutServiceTest extends TestCase
     /**
      * checkoutのテスト
      */
-    public function testCheckout(): void
+    public function test_checkout(): void
     {
         $user1 = $this->createDefaultUser([
             'name' => 'aaa',
@@ -33,8 +32,8 @@ class CheckoutServiceTest extends TestCase
         // ユーザをログイン状態にする
         $this->actingAs($user1);
 
-        $result = $this->service->getMyCart();
-        $this->assertCount(0, $result['data'], 'カートに追加した商品がない状態でエラーにならないことを始めにテスト');
+        $dto = $this->service->getMyCart();
+        $this->assertCount(0, $dto->stocks, 'カートに追加した商品がない状態でエラーにならないことを始めにテスト');
 
         $stock1 = $this->createDefaultStock(['name' => 'stock1', 'price' => 111, 'quantity' => 1]);
         $stock2 = $this->createDefaultStock(['name' => 'stock2', 'price' => 222, 'quantity' => 100]);

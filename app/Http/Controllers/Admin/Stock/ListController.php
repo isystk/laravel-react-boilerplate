@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Stock;
 
+use App\Dto\Request\Admin\Stock\SearchConditionDto;
 use App\Http\Controllers\BaseController;
 use App\Services\Admin\Stock\ExportService;
 use App\Services\Admin\Stock\IndexService;
@@ -14,29 +15,24 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ListController extends BaseController
 {
-
     /**
      * 商品一覧画面の初期表示
-     *
-     * @param Request $request
-     * @return View
      */
     public function index(Request $request): View
     {
         /** @var IndexService $service */
         $service = app(IndexService::class);
 
-        $conditions = $service->convertConditionsFromRequest($request);
+        $conditions = new SearchConditionDto($request);
         $stocks = $service->searchStock($conditions);
 
-        return view('admin.stock.index', compact('stocks', 'request'));
+        return view('admin.stock.index', compact([
+            'stocks',
+        ]));
     }
 
     /**
      * 商品一覧画面のエクスポート処理
-     *
-     * @param Request $request
-     * @return Response|BinaryFileResponse
      */
     public function export(Request $request): Response|BinaryFileResponse
     {
@@ -47,7 +43,7 @@ class ListController extends BaseController
 
         /** @var ExportService $service */
         $service = app(ExportService::class);
-        $conditions = $service->convertConditionsFromRequest($request);
+        $conditions = new SearchConditionDto($request);
         $export = $service->getExport($conditions);
 
         if ('csv' === $fileType) {
@@ -58,10 +54,14 @@ class ListController extends BaseController
             $rows = $export->collection();
             /** @var PDF $pdf */
             $pdf = app(PDF::class);
-            return $pdf->loadView('admin.stock.pdf', compact('headers', 'rows'))
+
+            return $pdf->loadView('admin.stock.pdf', compact([
+                'headers',
+                'rows',
+            ]))
                 ->download('stocks.pdf');
         }
+
         return Excel::download($export, 'stocks.xlsx');
     }
-
 }

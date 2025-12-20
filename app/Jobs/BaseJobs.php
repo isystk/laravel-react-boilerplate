@@ -14,11 +14,11 @@ abstract class BaseJobs implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public int $timeout = 0; // タイムアウト秒数 (必ずretry_afterより小さい値にすること)
+
     public int $tries = 1; // 試行回数
 
     /**
      * ログファイルにメッセージを出力します
-     * @param string $message
      */
     protected function outputLog(string $message): void
     {
@@ -28,8 +28,8 @@ abstract class BaseJobs implements ShouldQueue
         if (!file_exists($dir) && !mkdir($dir, 0777, true) && !is_dir($dir)) {
             throw new RuntimeException(sprintf('Directory "%s" was not created', $dir));
         }
-        if ($fp = fopen($dir . date("Ymd") . '.log', "a+")) {
-            $now = date("Y-m-d H:i:s");
+        if ($fp = fopen($dir . date('Ymd') . '.log', 'a+')) {
+            $now = date('Y-m-d H:i:s');
             fwrite($fp, $now . ' ' . $message . "\n");
             fclose($fp);
         }

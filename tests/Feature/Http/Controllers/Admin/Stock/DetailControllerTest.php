@@ -8,10 +8,9 @@ use Tests\TestCase;
 
 class DetailControllerTest extends TestCase
 {
-
     use RefreshDatabase;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->withoutMiddleware(ValidateCsrfToken::class);
@@ -20,7 +19,7 @@ class DetailControllerTest extends TestCase
     /**
      * 商品詳細画面表示のテスト
      */
-    public function testShow(): void
+    public function test_show(): void
     {
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者A',
@@ -48,7 +47,7 @@ class DetailControllerTest extends TestCase
     /**
      * 商品詳細画面 削除のテスト
      */
-    public function testDestroy(): void
+    public function test_destroy(): void
     {
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
@@ -77,5 +76,4 @@ class DetailControllerTest extends TestCase
         // データが削除されたことをテスト
         $this->assertDatabaseMissing('stocks', ['id' => $stock->id]);
     }
-
 }

@@ -12,7 +12,7 @@ class Base64ImageRule implements Rule
     private array $allowedExtensions;
 
     /**
-     * @param array<string> $allowedExtensions
+     * @param  array<string>  $allowedExtensions
      */
     public function __construct(array $allowedExtensions = ['jpeg', 'png', 'gif'])
     {
@@ -26,17 +26,17 @@ class Base64ImageRule implements Rule
             $base64Str = substr($value, strpos($value, ',') + 1);
             $decodedImage = base64_decode($base64Str);
             $imgInfo = getimagesizefromstring($decodedImage);
-            return (
+
+            return
                 false !== $imgInfo &&
-                in_array($imgInfo[2], [IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF], true)
-            );
+                in_array($imgInfo[2], [IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF], true);
         }
+
         return false;
     }
 
     /**
      * Get the validation error message.
-     * @return string
      */
     public function message(): string
     {

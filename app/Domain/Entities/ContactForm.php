@@ -26,6 +26,8 @@ class ContactForm extends Model
     /** @phpstan-use HasFactory<ContactFormFactory> */
     use HasFactory;
 
+    protected $table = 'contact_forms';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -51,21 +53,13 @@ class ContactForm extends Model
         'updated_at' => 'datetime',
     ];
 
-    /**
-     * @return ?Gender
-     */
     public function getGender(): ?Gender
     {
-        return Gender::get((int)$this->gender);
+        return Gender::get((int) $this->gender);
     }
 
-    /**
-     * @return ?Age
-     */
     public function getAge(): ?Age
     {
         return Age::get($this->age);
     }
-
-
 }

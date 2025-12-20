@@ -25,11 +25,11 @@ class ResetPasswordToUserTest extends TestCase
         Notification::assertSentTo(
             $user,
             ResetPasswordToUser::class,
-            static function ($notification, $channels) use ($user)
-            {
+            static function ($notification, $channels) use ($user) {
                 $mail = $notification->toMail($user);
-                return $mail->view['html'] === 'mails.reset_password_to_user_html'
-                    && $mail->view['text'] === 'mails.reset_password_to_user_text'
+
+                return 'mails.reset_password_to_user_html' === $mail->view['html']
+                    && 'mails.reset_password_to_user_text' === $mail->view['text']
                     && $mail->subject === config('const.mail.subject.reset_password_to_user')
                     && $mail->from[0] === config('mail.from.address');
             }

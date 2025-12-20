@@ -10,7 +10,6 @@ use Tests\TestCase;
 
 class IndexServiceTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private IndexService $service;
@@ -24,7 +23,7 @@ class IndexServiceTest extends TestCase
     /**
      * getImportHistoriesのテスト
      */
-    public function testGetImportHistories(): void
+    public function test_get_import_histories(): void
     {
         $result = $this->service->getImportHistories();
         $this->assertSame([], $result, 'データがない状態でエラーにならないことを始めにテスト');

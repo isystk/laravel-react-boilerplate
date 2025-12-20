@@ -5,17 +5,12 @@ namespace App\Services\Admin\ContactForm;
 use App\Domain\Entities\ContactFormImage;
 use App\Domain\Repositories\ContactForm\ContactFormImageRepository;
 use App\Services\BaseService;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 
 class EditService extends BaseService
 {
     private ContactFormImageRepository $contactFormImageRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param ContactFormImageRepository $contactFormImageRepository
-     */
     public function __construct(
         ContactFormImageRepository $contactFormImageRepository
     ) {
@@ -24,7 +19,7 @@ class EditService extends BaseService
 
     /**
      * お問い合わせを取得します。
-     * @param int $contactFormId
+     *
      * @return Collection<int, ContactFormImage>
      */
     public function getContactFormImage(int $contactFormId): Collection

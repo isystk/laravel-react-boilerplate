@@ -12,8 +12,6 @@ class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -29,13 +27,13 @@ class UpdateRequest extends FormRequest
         $imageFile2 = null;
         $imageFile3 = null;
         // imageBase64パラメータがあればUploadedFileオブジェクトに変換してimageFileパラメータに上書きする。
-        if ($this->has('imageBase64_1') && $this->imageBase64_1 !== null) {
+        if ($this->has('imageBase64_1') && null !== $this->imageBase64_1) {
             $imageFile1 = UploadImage::convertBase64($this->imageBase64_1);
         }
-        if ($this->has('imageBase64_2') && $this->imageBase64_2 !== null) {
+        if ($this->has('imageBase64_2') && null !== $this->imageBase64_2) {
             $imageFile2 = UploadImage::convertBase64($this->imageBase64_2);
         }
-        if ($this->has('imageBase64_3') && $this->imageBase64_3 !== null) {
+        if ($this->has('imageBase64_3') && null !== $this->imageBase64_3) {
             $imageFile3 = UploadImage::convertBase64($this->imageBase64_3);
         }
         $this->merge([
@@ -53,6 +51,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         $maxlength = config('const.maxlength.contact_forms');
+
         return [
             'user_name' => [
                 'required',
@@ -90,9 +89,9 @@ class UpdateRequest extends FormRequest
     }
 
     /**
-     * 項目名
+     * Get the error messages for the defined validation rules.
      *
-     * @return array<string, string>
+     * @return array<string>
      */
     public function attributes(): array
     {
@@ -109,7 +108,9 @@ class UpdateRequest extends FormRequest
     }
 
     /**
-     * @return array<string, string>
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string>
      */
     public function messages(): array
     {
@@ -117,5 +118,4 @@ class UpdateRequest extends FormRequest
             '*.Illuminate\Validation\Rules\Enum' => ':attributeの値が不正です。',
         ];
     }
-
 }

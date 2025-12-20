@@ -5,18 +5,13 @@ namespace App\Services\Admin\Staff;
 use App\Domain\Entities\Admin;
 use App\Domain\Repositories\Admin\AdminRepository;
 use App\Services\BaseService;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class IndexService extends BaseService
 {
     private AdminRepository $adminRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param AdminRepository $adminRepository
-     */
     public function __construct(
         AdminRepository $adminRepository
     ) {
@@ -25,8 +20,7 @@ class IndexService extends BaseService
 
     /**
      * リクエストパラメータから検索条件に変換します。
-     * @param Request $request
-     * @param int $limit
+     *
      * @return array{
      *   name : ?string,
      *   email : ?string,
@@ -62,6 +56,7 @@ class IndexService extends BaseService
 
     /**
      * 管理者を検索します。
+     *
      * @param array{
      *   name : ?string,
      *   email : ?string,
@@ -76,5 +71,4 @@ class IndexService extends BaseService
     {
         return $this->adminRepository->getByConditions($conditions);
     }
-
 }

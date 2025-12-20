@@ -9,15 +9,10 @@ use App\Services\BaseService;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class importFileService extends BaseService
+class ImportFileService extends BaseService
 {
     private ImportHistoryRepository $importHistoryRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param ImportHistoryRepository $importHistoryRepository
-     */
     public function __construct(
         ImportHistoryRepository $importHistoryRepository
     ) {
@@ -26,7 +21,7 @@ class importFileService extends BaseService
 
     /**
      * インポートしたファイルのパスを取得します。
-     * @param int $importHistoryId
+     *
      * @return array{
      *     0: string,
      *     1: string,
@@ -40,9 +35,9 @@ class importFileService extends BaseService
         $importFilePath = 'import_job/' . ImportType::Staff->value . '/' . $importHistory->save_file_name;
         if (!Storage::disk('local')->exists($importFilePath)) {
             // ファイルが存在しない場合のエラーハンドリング
-            throw new NotFoundHttpException();
+            throw new NotFoundHttpException;
         }
+
         return [$importFilePath, $importHistory->file_name];
     }
-
 }

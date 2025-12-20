@@ -8,7 +8,6 @@ use Tests\TestCase;
 
 class DestroyServiceTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private DestroyService $service;
@@ -22,7 +21,7 @@ class DestroyServiceTest extends TestCase
     /**
      * deleteのテスト
      */
-    public function testDelete(): void
+    public function test_delete(): void
     {
         $user = $this->createDefaultUser();
         $this->service->delete($user->id);

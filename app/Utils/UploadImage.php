@@ -6,11 +6,8 @@ use Illuminate\Http\UploadedFile;
 
 class UploadImage
 {
-
     /**
      * Base64エンコードされた文字列から画像ファイルに変換します。
-     * @param string $base64
-     * @return UploadedFile
      */
     public static function convertBase64(string $base64): UploadedFile
     {

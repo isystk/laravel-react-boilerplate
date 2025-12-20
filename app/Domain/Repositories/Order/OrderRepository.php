@@ -5,13 +5,14 @@ namespace App\Domain\Repositories\Order;
 use App\Domain\Entities\Order;
 use App\Domain\Repositories\BaseRepository;
 use Carbon\CarbonImmutable;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 interface OrderRepository extends BaseRepository
 {
     /**
      * 検索条件からデータを取得します。
+     *
      * @param array{
      *   user_name : ?string,
      *   order_date_from : ?CarbonImmutable,
@@ -23,5 +24,4 @@ interface OrderRepository extends BaseRepository
      * @return Collection<int, Order>|LengthAwarePaginator<int, Order>
      */
     public function getConditionsWithUserStock(array $conditions): Collection|LengthAwarePaginator;
-
 }

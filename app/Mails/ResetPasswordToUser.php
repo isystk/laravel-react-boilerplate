@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notification;
 class ResetPasswordToUser extends Notification
 {
     private User $user;
+
     private string $token;
 
     public function __construct(
@@ -20,7 +21,6 @@ class ResetPasswordToUser extends Notification
     }
 
     /**
-     * @param object $notifiable
      * @return string[]
      */
     public function via(object $notifiable): array

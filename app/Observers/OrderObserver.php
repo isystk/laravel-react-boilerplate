@@ -2,7 +2,6 @@
 
 namespace App\Observers;
 
-
 use App\Domain\Entities\MonthlySale;
 use App\Domain\Entities\Order;
 use Illuminate\Contracts\Events\ShouldHandleEventsAfterCommit;

@@ -23,7 +23,10 @@ class Admin extends Authenticatable
 {
     /** @phpstan-use HasFactory<AdminFactory> */
     use HasFactory;
+
     use Notifiable;
+
+    protected $table = 'admins';
 
     /**
      * The attributes that are mass assignable.
@@ -57,14 +60,19 @@ class Admin extends Authenticatable
         'updated_at' => 'datetime',
     ];
 
+    /**
+     * 権限が上位管理者の場合にTrueを返却する
+     */
     public function isHighManager(): bool
     {
         return AdminRole::HighManager->value === $this->role;
     }
 
+    /**
+     * 権限が管理者の場合にTrueを返却する
+     */
     public function isManager(): bool
     {
         return AdminRole::Manager->value === $this->role;
     }
-
 }

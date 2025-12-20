@@ -13,15 +13,16 @@ use Tests\TestCase;
 class UpdateRequestTest extends TestCase
 {
     private UpdateRequest $request;
+
     /**
      * @var array<string, string>
      */
     private array $baseRequest;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
-        $this->request = new UpdateRequest();
+        $this->request = new UpdateRequest;
         $this->baseRequest = [
             'name' => 'user1',
             'email' => 'user1@test.com',
@@ -29,10 +30,11 @@ class UpdateRequestTest extends TestCase
     }
 
     /**
-     * @param array<string> $attrs 変更する値の配列
-     * @param boolean $expect 期待されるバリデーション結果
-     * @param string $attribute 属性の名称
-     * @param array<string> $messages 期待されるエラーメッセージ
+     * @param  array<string>  $attrs  変更する値の配列
+     * @param  bool  $expect  期待されるバリデーション結果
+     * @param  string  $attribute  属性の名称
+     * @param  array<string>  $messages  期待されるエラーメッセージ
+     *
      * @throws Exception
      */
     #[Test]
@@ -40,10 +42,10 @@ class UpdateRequestTest extends TestCase
     #[DataProvider('dataValidate')]
     public function validate(array $attrs, bool $expect, string $attribute, array $messages): void
     {
-        //リクエストデータ作成
+        // リクエストデータ作成
         $requestData = [...$this->baseRequest, ...$attrs];
         $this->request->merge($requestData);
-        //バリデーションルール取得
+        // バリデーションルール取得
         $rules = $this->request->rules();
         $validator = Validator::make($requestData, $rules, $this->request->messages(), $this->request->attributes());
 
@@ -61,6 +63,7 @@ class UpdateRequestTest extends TestCase
 
     /**
      * バリデーションテストデータ
+     *
      * @return array<string, mixed>
      */
     public static function dataValidate(): array
@@ -75,7 +78,7 @@ class UpdateRequestTest extends TestCase
                 ],
             ],
             'NG : name 文字数上限を超えている' => [
-                'attrs' => ['name' => implode("", range(1, 51))],
+                'attrs' => ['name' => implode('', range(1, 51))],
                 'expect' => false,
                 'attribute' => 'name',
                 'messages' => [
@@ -97,7 +100,7 @@ class UpdateRequestTest extends TestCase
                 ],
             ],
             'OK : email 文字数上限を超えている' => [
-                'attrs' => ['email' => implode("", range(1, 56)) . '@test.com'],
+                'attrs' => ['email' => implode('', range(1, 56)) . '@test.com'],
                 'expect' => false,
                 'attribute' => 'email',
                 'messages' => [

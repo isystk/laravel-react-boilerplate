@@ -7,13 +7,10 @@ use Exception;
 
 class DateUtil
 {
-
     /**
      * 日付文字列をCarbonに変換します。
-     * @param ?string $date
-     * @return CarbonImmutable|null
      */
-    public static function toCarbonImmutable(?string $date): ?CarbonImmutable
+    public static function toCarbon(?string $date): ?CarbonImmutable
     {
         if (null === $date || '' === $date) {
             // nullを返却する（デフォルトだと現在日時に変換される）
@@ -37,6 +34,7 @@ class DateUtil
             // 日付文字列が日付として不正な文字列だった場合
             return null;
         }
+
         return $carbon;
     }
 }

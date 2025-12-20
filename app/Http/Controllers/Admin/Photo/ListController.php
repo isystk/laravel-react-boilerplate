@@ -11,12 +11,8 @@ use Illuminate\View\View;
 
 class ListController extends BaseController
 {
-
     /**
      * 画像一覧画面の初期表示
-     *
-     * @param Request $request
-     * @return View
      */
     public function index(Request $request): View
     {
@@ -26,22 +22,20 @@ class ListController extends BaseController
         $conditions = $service->convertConditionsFromRequest($request);
         $photos = $service->searchPhotoList($conditions);
 
-        return view('admin.photo.index', compact('photos', 'request'));
+        return view('admin.photo.index', compact([
+            'photos',
+        ]));
     }
-
 
     /**
      * 画像一覧画面の削除処理
-     *
-     * @param Request $request
-     * @return RedirectResponse
      */
     public function destroy(Request $request): RedirectResponse
     {
         // 上位管理者のみがアクセス可能
         $this->authorize('high-manager');
 
-        $fileName = $request->fileName;
+        $fileName = (string) $request->fileName;
 
         /** @var DestroyService $service */
         $service = app(DestroyService::class);

@@ -8,10 +8,6 @@ use Illuminate\Support\Collection;
 
 class OrderStockEloquentRepository extends BaseEloquentRepository implements OrderStockRepository
 {
-
-    /**
-     * @return string
-     */
     protected function model(): string
     {
         return OrderStock::class;
@@ -19,16 +15,14 @@ class OrderStockEloquentRepository extends BaseEloquentRepository implements Ord
 
     /**
      * orderId からデータを取得します。
-     * @param int $orderId
+     *
      * @return Collection<int, OrderStock>
      */
     public function getByOrderId(int $orderId): Collection
     {
-        /** @var Collection<int, OrderStock> $items */
-        $items = $this->model
-            ->where('order_id', $orderId,)
+        /** @var Collection<int, OrderStock> */
+        return $this->model
+            ->where('order_id', $orderId)
             ->get();
-        return $items;
     }
-
 }

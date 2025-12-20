@@ -9,7 +9,6 @@ use Tests\TestCase;
 
 class CartRepositoryTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private CartRepository $repository;
@@ -24,7 +23,7 @@ class CartRepositoryTest extends TestCase
     /**
      * getByUserIdのテスト
      */
-    public function testGetByUserId(): void
+    public function test_get_by_user_id(): void
     {
         $user1 = $this->createDefaultUser(['name' => 'user1', 'email' => 'user1@test.com']);
         $user2 = $this->createDefaultUser(['name' => 'user2', 'email' => 'user2@test.com']);
@@ -48,7 +47,7 @@ class CartRepositoryTest extends TestCase
     /**
      * deleteByUserIdのテスト
      */
-    public function testDeleteByUserId(): void
+    public function test_delete_by_user_id(): void
     {
         $user1 = $this->createDefaultUser(['name' => 'user1', 'email' => 'user1@test.com']);
         $user2 = $this->createDefaultUser(['name' => 'user2', 'email' => 'user2@test.com']);

@@ -14,22 +14,17 @@ use Throwable;
 
 class PasswordChangeController extends BaseController
 {
-
     /**
      * パスワード変更画面の初期表示
-     *
-     * @return View
      */
     public function index(): View
     {
-        return view('admin.passwordChange');
+        return view('admin.password_change');
     }
 
     /**
      * スタッフ変更画面の登録処理
      *
-     * @param PasswordChangeUpdateRequest $request
-     * @return RedirectResponse
      * @throws Throwable
      */
     public function update(PasswordChangeUpdateRequest $request): RedirectResponse
@@ -54,5 +49,4 @@ class PasswordChangeController extends BaseController
 
         return redirect(route('admin.login'));
     }
-
 }

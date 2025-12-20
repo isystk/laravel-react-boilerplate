@@ -20,6 +20,8 @@ class ContactFormImage extends Model
     /** @phpstan-use HasFactory<ContactFormImageFactory> */
     use HasFactory;
 
+    protected $table = 'contact_form_images';
+
     /**
      * The attributes that are mass assignable.
      *

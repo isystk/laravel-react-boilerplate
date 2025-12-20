@@ -11,8 +11,6 @@ class UpdateRequest extends FormRequest
 
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -35,6 +33,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         $maxlength = config('const.maxlength.users');
+
         return [
             'name' => [
                 'required',
@@ -46,16 +45,16 @@ class UpdateRequest extends FormRequest
                 'string',
                 'email',
                 'max:' . $maxlength['email'],
-//                Rule::unique(User::class),
+                //                Rule::unique(User::class),
             ],
-//            'password' => $this->passwordRules(),
+            //            'password' => $this->passwordRules(),
         ];
     }
 
     /**
-     * 項目名
+     * Get the error messages for the defined validation rules.
      *
-     * @return array<string, string>
+     * @return array<string>
      */
     public function attributes(): array
     {
@@ -65,5 +64,4 @@ class UpdateRequest extends FormRequest
             'password' => __('user.Password'),
         ];
     }
-
 }

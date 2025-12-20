@@ -1,0 +1,40 @@
+.menuBtn {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 25px;
+    height: 20px;
+    cursor: pointer;
+    margin-right: 1rem;
+    position: relative;
+    z-index: 99;
+
+    span {
+        display: block;
+        height: 2px;
+        width: 100%;
+        background-color: #333;
+        transition: 0.3s ease;
+        position: relative;
+    }
+}
+
+.menuBtn.open {
+    span:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+    }
+
+    span:nth-child(2) {
+        opacity: 0;
+    }
+
+    span:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+    }
+}
+
+@media only screen and (min-width: 767px) {
+    .menuBtn {
+        display: none;
+    }
+}

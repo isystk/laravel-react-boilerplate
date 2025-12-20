@@ -8,7 +8,7 @@ enum ImportType: int
     case Staff = 1;
 
     /**
-     * @return string
+     * ラベルを返却する
      */
     public function label(): string
     {
@@ -16,8 +16,7 @@ enum ImportType: int
     }
 
     /**
-     * @param ?int $code
-     * @return ?ImportType
+     * コードに紐づくEnumを返却する
      */
     public static function get(?int $code): ?ImportType
     {
@@ -29,19 +28,19 @@ enum ImportType: int
                 return $e;
             }
         }
+
         return null;
     }
 
     /**
-     * @param int|null $code
-     * @return string
+     * 引数の値に紐づくラベルを返却する
      */
     public static function getLabel(?int $code): string
     {
         if (null === $code || null === self::get($code)) {
-            return "";
+            return '';
         }
+
         return self::get($code)->label();
     }
-
 }

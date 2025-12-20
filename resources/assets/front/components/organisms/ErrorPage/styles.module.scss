@@ -1,0 +1,22 @@
+@use "@/assets/styles/variable" as *;
+
+.container {
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.heading {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.text {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.link {
+    font-size: 16px;
+    color: #007bff;
+    text-decoration: none;
+}

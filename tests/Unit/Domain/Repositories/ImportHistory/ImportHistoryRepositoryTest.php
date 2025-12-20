@@ -10,7 +10,6 @@ use Tests\TestCase;
 
 class ImportHistoryRepositoryTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private ImportHistoryRepository $repository;
@@ -24,7 +23,7 @@ class ImportHistoryRepositoryTest extends TestCase
     /**
      * getByImportHistoryのテスト
      */
-    public function testGetByImportHistory(): void
+    public function test_get_by_import_history(): void
     {
         $result = $this->repository->getByImportHistory(ImportType::Staff);
         $this->assertSame(0, $result->count(), 'データがない状態で正常に動作することを始めにテスト');
@@ -45,7 +44,7 @@ class ImportHistoryRepositoryTest extends TestCase
     /**
      * hasProcessingByImportHistoryのテスト
      */
-    public function testHasProcessingByImportHistory(): void
+    public function test_has_processing_by_import_history(): void
     {
         $result = $this->repository->hasProcessingByImportHistory(ImportType::Staff);
         $this->assertFalse($result, 'データがない状態で正常に動作することを始めにテスト');

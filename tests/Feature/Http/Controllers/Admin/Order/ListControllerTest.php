@@ -8,10 +8,9 @@ use Tests\TestCase;
 
 class ListControllerTest extends TestCase
 {
-
     use RefreshDatabase;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->withoutMiddleware(ValidateCsrfToken::class);
@@ -20,7 +19,7 @@ class ListControllerTest extends TestCase
     /**
      * 注文一覧画面表示のテスト
      */
-    public function testIndex(): void
+    public function test_index(): void
     {
         $admin = $this->createDefaultAdmin([
             'name' => '管理者A',
@@ -44,5 +43,4 @@ class ListControllerTest extends TestCase
         $response->assertSuccessful();
         $response->assertSeeInOrder(['user1', 'user2']);
     }
-
 }

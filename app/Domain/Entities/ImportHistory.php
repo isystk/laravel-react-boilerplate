@@ -25,6 +25,8 @@ class ImportHistory extends Model
     /** @phpstan-use HasFactory<ImportHistoryFactory> */
     use HasFactory;
 
+    protected $table = 'import_histories';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -51,12 +53,8 @@ class ImportHistory extends Model
         'updated_at' => 'datetime',
     ];
 
-    /**
-     * @return ?JobStatus
-     */
     public function getStatus(): ?JobStatus
     {
         return JobStatus::get($this->status);
     }
-
 }

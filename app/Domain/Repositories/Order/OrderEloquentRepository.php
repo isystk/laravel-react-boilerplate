@@ -5,15 +5,11 @@ namespace App\Domain\Repositories\Order;
 use App\Domain\Entities\Order;
 use App\Domain\Repositories\BaseEloquentRepository;
 use Carbon\CarbonImmutable;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class OrderEloquentRepository extends BaseEloquentRepository implements OrderRepository
 {
-
-    /**
-     * @return string
-     */
     protected function model(): string
     {
         return Order::class;
@@ -21,6 +17,7 @@ class OrderEloquentRepository extends BaseEloquentRepository implements OrderRep
 
     /**
      * 検索条件からデータを取得します。
+     *
      * @param array{
      *   user_name : ?string,
      *   order_date_from : ?CarbonImmutable,
@@ -40,22 +37,27 @@ class OrderEloquentRepository extends BaseEloquentRepository implements OrderRep
             ])
             ->join('users', 'users.id', 'orders.user_id');
 
-        if (null !== $conditions['user_name']) {
+        if (!is_null($conditions['user_name'] ?? null)) {
             $query->where('users.name', 'like', '%' . $conditions['user_name'] . '%');
         }
-        if (null !== $conditions['order_date_from']) {
+        if (!is_null($conditions['order_date_from'] ?? null)) {
             $query->where('orders.created_at', '>=', $conditions['order_date_from']->format('Y-m-d'));
         }
-        if (null !== $conditions['order_date_to']) {
+        if (!is_null($conditions['order_date_to'] ?? null)) {
             $query->where('orders.created_at', '<=', $conditions['order_date_to']->format('Y-m-d'));
         }
 
-        if (null !== $conditions['sort_name']) {
+        if (!is_null($conditions['sort_name'] ?? null)) {
             $query->orderBy($conditions['sort_name'], $conditions['sort_direction'] ?? 'asc');
         }
         $query->orderBy('id', 'asc');
 
-        return null !== $conditions['limit'] ? $query->paginate($conditions['limit']) : $query->get();
-    }
+        if (!is_null($conditions['limit'] ?? null)) {
+            /** @var LengthAwarePaginator<int, Order> */
+            return $query->paginate($conditions['limit']);
+        }
 
+        /** @var Collection<int, Order> */
+        return $query->get();
+    }
 }

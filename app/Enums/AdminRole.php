@@ -4,14 +4,13 @@ namespace App\Enums;
 
 enum AdminRole: string
 {
-
     /** 管理者 */
     case Manager = 'manager';
     /** 上位管理者 */
     case HighManager = 'high-manager';
 
     /**
-     * @return string
+     * ラベルを返却する
      */
     public function label(): string
     {
@@ -19,32 +18,31 @@ enum AdminRole: string
     }
 
     /**
-     * @param ?string $role
-     * @return ?AdminRole
+     * コードに紐づくEnumを返却する
      */
-    public static function get(?string $role): ?AdminRole
+    public static function get(?string $code): ?AdminRole
     {
-        if (null === $role) {
+        if (null === $code) {
             return null;
         }
         foreach (self::cases() as $e) {
-            if ($e->value === $role) {
+            if ($e->value === $code) {
                 return $e;
             }
         }
+
         return null;
     }
 
     /**
-     * @param string|null $code
-     * @return string
+     * 引数の値に紐づくラベルを返却する
      */
     public static function getLabel(?string $code): string
     {
         if (null === $code || null === self::get($code)) {
-            return "";
+            return '';
         }
+
         return self::get($code)->label();
     }
-
 }

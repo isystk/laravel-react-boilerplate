@@ -1,10 +1,7 @@
-@extends('layouts.app_admin')
+@extends('layouts.admin')
 @section('title', $staff->name . __('common.Of Change'))
-@php
-    $menu = 'system';
-    $subMenu = 'staff';
-@endphp
-
+@section('mainMenu', 'system')
+@section('subMenu', 'staff')
 @section('breadcrumbs')
     {{ Breadcrumbs::render('admin.staff.edit', $staff) }}
 @endsection

@@ -8,10 +8,9 @@ use Tests\TestCase;
 
 class EditControllerTest extends TestCase
 {
-
     use RefreshDatabase;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->withoutMiddleware(ValidateCsrfToken::class);
@@ -20,7 +19,7 @@ class EditControllerTest extends TestCase
     /**
      * ユーザー編集画面表示のテスト
      */
-    public function testEdit(): void
+    public function test_edit(): void
     {
         $user1 = $this->createDefaultUser([
             'name' => 'user1',
@@ -50,7 +49,7 @@ class EditControllerTest extends TestCase
     /**
      * ユーザー編集画面 変更のテスト
      */
-    public function testUpdate(): void
+    public function test_update(): void
     {
         $user1 = $this->createDefaultUser([
             'name' => 'user1',
@@ -87,5 +86,4 @@ class EditControllerTest extends TestCase
             'email' => 'userA@test.com',
         ]);
     }
-
 }

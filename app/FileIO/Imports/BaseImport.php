@@ -22,22 +22,21 @@ abstract class BaseImport implements WithMapping, WithStartRow, WithValidation
     use Importable;
 
     private int $startRow = 2;
+
     protected string $filePath;
+
     protected string $readerType;
+
     /**
      * @var array<int, string>
      */
     protected array $header = [];
+
     /**
      * @var array<string, string>
      */
     protected array $attribute = [];
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct(string $filePath)
     {
         $this->filePath = $filePath;
@@ -48,7 +47,7 @@ abstract class BaseImport implements WithMapping, WithStartRow, WithValidation
             default => throw new \RuntimeException('$extension is an unknown value'),
         };
         // ヘッダーを読み込んでおく
-        $lines = \Maatwebsite\Excel\Facades\Excel::toArray(new Collection(), $this->filePath, null,
+        $lines = \Maatwebsite\Excel\Facades\Excel::toArray(new Collection, $this->filePath, null,
             $this->readerType)[0];
         $this->header = array_diff(array_shift($lines), [null]);
     }
@@ -61,9 +60,6 @@ abstract class BaseImport implements WithMapping, WithStartRow, WithValidation
         return $this->toArray($this->filePath);
     }
 
-    /**
-     * @return int
-     */
     public function startRow(): int
     {
         return $this->startRow;
@@ -93,6 +89,7 @@ abstract class BaseImport implements WithMapping, WithStartRow, WithValidation
 
     /**
      * エラーメッセージに表示する属性の名称を指定します
+     *
      * @return array<string, string>
      */
     protected function customValidationAttributes(): array
@@ -102,26 +99,24 @@ abstract class BaseImport implements WithMapping, WithStartRow, WithValidation
 
     /**
      * 配列データをヘッダーをキーとした連想配列に変換します
-     * @param array<int, mixed> $row
+     *
+     * @param  array<int, mixed>  $row
      * @return array<string, ?string>
      */
     protected function getRowMap(array $row): array
     {
-        return collect($this->header)->mapWithKeys(function ($col, $i) use ($row)
-        {
+        return collect($this->header)->mapWithKeys(function ($col, $i) use ($row) {
             $key = $this->attribute[$this->trimData($col)] ?? null;
             if (!is_string($key)) {
-                return [(string)$key => (string)$row[$i]];
+                return [(string) $key => (string) $row[$i]];
             }
-            return [$key => (string)$row[$i]];
+
+            return [$key => (string) $row[$i]];
         })->all();
     }
 
     /**
      * Excelの場合に、書式が「日付」だと値が正しく取得できないので文字列に変換します
-     * @param ?string $col
-     * @param string $format
-     * @return ?string
      */
     protected function convertDate(?string $col, string $format): ?string
     {
@@ -130,34 +125,34 @@ abstract class BaseImport implements WithMapping, WithStartRow, WithValidation
             return null;
         }
 
-        $date = DateUtil::toCarbonImmutable($col);
+        $date = DateUtil::toCarbon($col);
         if (null !== $date) {
             return $date->format($format);
         }
         if (Excel::XLS === $this->readerType || Excel::XLSX === $this->readerType) {
             // Excelの書式が「日付」の場合は、数値が渡されるため、日付文字列に変換する
             if (is_numeric($col)) {
-                return Date::excelToDateTimeObject((int)$col)->format($format);
+                return Date::excelToDateTimeObject((int) $col)->format($format);
             }
         }
+
         return $col;
     }
 
     /**
      * 前後に空白がある場合は取り除きます
-     * @param ?string $col
-     * @return ?string
      */
     protected function trimData(?string $col): ?string
     {
         if (!isset($col)) {
             return null;
         }
+
         return trim($col);
     }
 
     /**
-     * @param array<int, mixed> $row
+     * @param  array<int, mixed>  $row
      * @return array<string, ?string>
      */
     abstract public function map($row): array;
@@ -171,5 +166,4 @@ abstract class BaseImport implements WithMapping, WithStartRow, WithValidation
      * @return array<string, string>
      */
     abstract protected function customValidationMessages(): array;
-
 }

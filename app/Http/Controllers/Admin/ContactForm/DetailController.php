@@ -13,12 +13,8 @@ use Throwable;
 
 class DetailController extends BaseController
 {
-
     /**
      * お問い合わせ詳細画面の初期表示
-     *
-     * @param ContactForm $contactForm
-     * @return View
      */
     public function show(ContactForm $contactForm): View
     {
@@ -26,31 +22,34 @@ class DetailController extends BaseController
         $service = app(ShowService::class);
         $contactFormImages = $service->getContactFormImage($contactForm->id);
 
-        return view('admin.contact.show', compact('contactForm', 'contactFormImages'));
+        return view('admin.contact.show', compact([
+            'contactForm',
+            'contactFormImages',
+        ]));
     }
 
     /**
      * お問い合わせ詳細画面の削除処理
-     * Remove the specified resource from storage.
      *
-     * @param ContactForm $contactForm
-     * @return RedirectResponse
      * @throws Throwable
      */
     public function destroy(ContactForm $contactForm): RedirectResponse
     {
         // 上位管理者のみがアクセス可能
         $this->authorize('high-manager');
+
+        /** @var DestroyService $service */
+        $service = app(DestroyService::class);
+
         DB::beginTransaction();
         try {
-            /** @var DestroyService $service */
-            $service = app(DestroyService::class);
             $service->delete($contactForm->id);
             DB::commit();
         } catch (Throwable $e) {
             DB::rollBack();
             throw $e;
         }
+
         return redirect(route('admin.contact'));
     }
 }

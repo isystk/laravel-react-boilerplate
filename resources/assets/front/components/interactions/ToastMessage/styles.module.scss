@@ -1,0 +1,13 @@
+@use "@/assets/styles/variable" as *;
+
+.message {
+    font-size: 16px;
+    margin-bottom: 24px;
+    line-height: 1.4;
+}
+
+.buttonGroup {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}

@@ -9,10 +9,9 @@ use Tests\TestCase;
 
 class LoginControllerTest extends TestCase
 {
-
     use RefreshDatabase;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->withoutMiddleware(ValidateCsrfToken::class);
@@ -21,7 +20,7 @@ class LoginControllerTest extends TestCase
     /**
      * 管理者ログインのテスト
      */
-    public function testLogin(): void
+    public function test_login(): void
     {
         $this->createDefaultAdmin([
             'name' => '管理者A',

@@ -4,19 +4,14 @@ namespace App\Services\Admin\User;
 
 use App\Domain\Entities\User;
 use App\Domain\Repositories\User\UserRepository;
+use App\Dto\Request\Admin\User\SearchConditionDto;
 use App\Services\BaseService;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class IndexService extends BaseService
 {
     private UserRepository $userRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param UserRepository $userRepository
-     */
     public function __construct(
         UserRepository $userRepository
     ) {
@@ -24,52 +19,20 @@ class IndexService extends BaseService
     }
 
     /**
-     * リクエストパラメータから検索条件に変換します。
-     * @param Request $request
-     * @param int $limit
-     * @return array{
-     *   name : ?string,
-     *   email : ?string,
-     *   sort_name : string,
-     *   sort_direction : 'asc' | 'desc',
-     *   limit : int,
-     * }
-     */
-    public function convertConditionsFromRequest(Request $request, int $limit = 20): array
-    {
-        $conditions = [
-            'name' => null,
-            'email' => null,
-            'role' => null,
-            'sort_name' => $request->sort_name ?? 'updated_at',
-            'sort_direction' => $request->sort_direction ?? 'desc',
-            'limit' => $limit,
-        ];
-
-        if (null !== $request->name) {
-            $conditions['name'] = $request->name;
-        }
-        if (null !== $request->email) {
-            $conditions['email'] = $request->email;
-        }
-
-        return $conditions;
-    }
-
-    /**
      * ユーザーを検索します。
-     * @param array{
-     *   name : ?string,
-     *   email : ?string,
-     *   sort_name : string,
-     *   sort_direction : 'asc' | 'desc',
-     *   limit : int,
-     * } $conditions
+     *
      * @return LengthAwarePaginator<int, User>
      */
-    public function searchUser(array $conditions): LengthAwarePaginator
+    public function searchUser(SearchConditionDto $searchConditionDto): LengthAwarePaginator
     {
-        return $this->userRepository->getByConditions($conditions);
-    }
+        $items = [
+            'name' => $searchConditionDto->name,
+            'email' => $searchConditionDto->email,
+            'sort_name' => $searchConditionDto->sortName,
+            'sort_direction' => $searchConditionDto->sortDirection,
+            'limit' => $searchConditionDto->limit,
+        ];
 
+        return $this->userRepository->getByConditions($items);
+    }
 }

@@ -9,7 +9,6 @@ use Tests\TestCase;
 
 class OrderRepositoryTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private OrderRepository $repository;
@@ -24,7 +23,7 @@ class OrderRepositoryTest extends TestCase
     /**
      * getConditionsWithUserStockのテスト
      */
-    public function testGetConditionsWithUserStock(): void
+    public function test_get_conditions_with_user_stock(): void
     {
         $defaultConditions = [
             'user_name' => null,
@@ -80,8 +79,8 @@ class OrderRepositoryTest extends TestCase
 
         $orders = $this->repository->getConditionsWithUserStock([
             ...$defaultConditions,
-            'order_date_from' => DateUtil::toCarbonImmutable('2024-06-01 00:00:00'),
-            'order_date_to' => DateUtil::toCarbonImmutable('2024-06-01 23:59:59'),
+            'order_date_from' => DateUtil::toCarbon('2024-06-01 00:00:00'),
+            'order_date_to' => DateUtil::toCarbon('2024-06-01 23:59:59'),
         ]);
         $orderIds = $orders->pluck('id')->all();
         $this->assertSame([$order3->id], $orderIds, 'order_dateで検索が出来ることをテスト');

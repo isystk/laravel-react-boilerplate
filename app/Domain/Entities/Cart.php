@@ -20,6 +20,8 @@ class Cart extends Model
     /** @phpstan-use HasFactory<CartFactory> */
     use HasFactory;
 
+    protected $table = 'carts';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -57,5 +59,4 @@ class Cart extends Model
     {
         return $this->belongsTo(Stock::class);
     }
-
 }

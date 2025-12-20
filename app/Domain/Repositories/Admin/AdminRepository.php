@@ -4,13 +4,14 @@ namespace App\Domain\Repositories\Admin;
 
 use App\Domain\Entities\Admin;
 use App\Domain\Repositories\BaseRepository;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 interface AdminRepository extends BaseRepository
 {
     /**
      * 検索条件からデータを取得します。
+     *
      * @param array{
      *   name : ?string,
      *   email : ?string,
@@ -25,15 +26,13 @@ interface AdminRepository extends BaseRepository
 
     /**
      * メールアドレスからレコードを取得します。
-     * @param string $email
-     * @return Admin|null
      */
     public function getByEmail(string $email): ?Admin;
 
     /**
      * すべてのデータをIDの昇順で取得します。
+     *
      * @return Collection<int, Admin>
      */
     public function getAllOrderById(): Collection;
-
 }

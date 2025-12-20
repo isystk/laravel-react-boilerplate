@@ -10,11 +10,6 @@ class PasswordChangeUpdateService extends BaseService
 {
     private AdminRepository $adminRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param AdminRepository $adminRepository
-     */
     public function __construct(
         AdminRepository $adminRepository
     ) {
@@ -23,9 +18,6 @@ class PasswordChangeUpdateService extends BaseService
 
     /**
      * パスワードを変更します。
-     * @param int $adminId
-     * @param string $newPassword
-     * @return Admin
      */
     public function update(int $adminId, string $newPassword): Admin
     {
@@ -36,5 +28,4 @@ class PasswordChangeUpdateService extends BaseService
             ]
         );
     }
-
 }

@@ -9,10 +9,9 @@ use Illuminate\Support\Facades\Storage;
 
 class IndexService extends BaseService
 {
-
     /**
      * リクエストパラメータから検索条件に変換します。
-     * @param Request $request
+     *
      * @return array{
      *   file_name : ?string,
      *   file_type : ?int,
@@ -26,7 +25,7 @@ class IndexService extends BaseService
         ];
 
         if (is_string($request->fileType)) {
-            $conditions['file_type'] = (int)$request->fileType;
+            $conditions['file_type'] = (int) $request->fileType;
         }
 
         return $conditions;
@@ -34,6 +33,7 @@ class IndexService extends BaseService
 
     /**
      * 写真を検索します。
+     *
      * @param array{
      *   file_name : ?string,
      *   file_type : ?int,
@@ -53,12 +53,12 @@ class IndexService extends BaseService
             if (null !== $conditions['file_name'] && !str_contains($file, $conditions['file_name'])) {
                 continue;
             }
-            $dirName = substr($file, 0, strpos($file, '/'));
-            if (empty($dirName)) {
+            $type = substr($file, 0, strpos($file, '/'));
+            if (empty($type)) {
                 // ルート直下のファイルは何もしない
                 continue;
             }
-            $photoType = PhotoType::getIdByDirName($dirName);
+            $photoType = PhotoType::getByType($type);
             if (null !== $conditions['file_type'] && $conditions['file_type'] !== $photoType->value) {
                 continue;
             }

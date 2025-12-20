@@ -1,20 +1,18 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up(): void
     {
-        Schema::create('admins', static function (Blueprint $table) { //ここを変更
+        Schema::create('admins', static function (Blueprint $table) { // ここを変更
             $table->increments('id')->comment('管理者ID');
             $table->string('name')->comment('管理者名');
             $table->string('email', 64)->unique()->comment('メールアドレス');
@@ -27,8 +25,6 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down(): void
     {

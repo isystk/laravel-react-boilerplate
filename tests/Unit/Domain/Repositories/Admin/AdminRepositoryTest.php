@@ -10,7 +10,6 @@ use Tests\TestCase;
 
 class AdminRepositoryTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private AdminRepository $repository;
@@ -25,7 +24,7 @@ class AdminRepositoryTest extends TestCase
     /**
      * getByConditionsのテスト
      */
-    public function testGetByConditions(): void
+    public function test_get_by_conditions(): void
     {
         $defaultConditions = [
             'name' => null,
@@ -81,7 +80,7 @@ class AdminRepositoryTest extends TestCase
     /**
      * getByEmailのテスト
      */
-    public function testGetByEmail(): void
+    public function test_get_by_email(): void
     {
         $email = 'admin2@test.com';
 
@@ -102,7 +101,7 @@ class AdminRepositoryTest extends TestCase
     /**
      * getAllOrderByIdのテスト
      */
-    public function testGetAllOrderById(): void
+    public function test_get_all_order_by_id(): void
     {
         $admins = $this->repository->getAllOrderById();
         $this->assertSame(0, $admins->count(), 'データがない状態で正常に動作することを始めにテスト');

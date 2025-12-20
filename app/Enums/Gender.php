@@ -4,14 +4,13 @@ namespace App\Enums;
 
 enum Gender: int
 {
-
     /** 男性 */
     case Male = 0;
     /** 女性 */
     case Female = 1;
 
     /**
-     * @return string
+     * ラベルを返却する
      */
     public function label(): string
     {
@@ -19,8 +18,7 @@ enum Gender: int
     }
 
     /**
-     * @param ?int $code
-     * @return ?Gender
+     * コードに紐づくEnumを返却する
      */
     public static function get(?int $code): ?Gender
     {
@@ -32,19 +30,19 @@ enum Gender: int
                 return $e;
             }
         }
+
         return null;
     }
 
     /**
-     * @param ?int $code
-     * @return string
+     * 引数の値に紐づくラベルを返却する
      */
     public static function getLabel(?int $code): string
     {
         if (null === $code || null === self::get($code)) {
-            return "";
+            return '';
         }
+
         return self::get($code)->label();
     }
-
 }

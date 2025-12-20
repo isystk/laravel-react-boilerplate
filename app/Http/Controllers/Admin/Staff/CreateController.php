@@ -12,39 +12,36 @@ use Throwable;
 
 class CreateController extends BaseController
 {
-
     /**
      * スタッフ登録画面の初期表示
-     *
-     * @return View
      */
     public function create(): View
     {
         // 上位管理者のみがアクセス可能
         $this->authorize('high-manager');
+
         return view('admin.staff.create');
     }
 
     /**
      * スタッフ登録画面の登録処理
      *
-     * @param StoreRequest $request
-     * @return RedirectResponse
      * @throws Throwable
      */
     public function store(StoreRequest $request): RedirectResponse
     {
+        /** @var CreateService $service */
+        $service = app(CreateService::class);
+
         DB::beginTransaction();
         try {
-            /** @var CreateService $service */
-            $service = app(CreateService::class);
             $service->save($request);
             DB::commit();
         } catch (Throwable $e) {
             DB::rollBack();
             throw $e;
         }
+
         return redirect(route('admin.staff'));
     }
-
 }

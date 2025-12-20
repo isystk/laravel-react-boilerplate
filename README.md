@@ -23,24 +23,23 @@ Laravel ＆ React.js の学習用サンプルアプリケーションです。
 
 ### 利用している技術
 
-#### ■ インフラ
+#### インフラ
 - Apache 2.4.46　・・・　WebサーバーとしてApacheを採用しました。自己証明書を設定済みなので開発環境でSSLとして動作可能です。
 - MySQL 8　・・・　DBサーバーにはMySQLを採用しました。データファイルや設定ファイル、 ログなどはコンテナの外に出して 開発時に参照出来るようにしています。
 - adminer　・・・　起動したMySQLのデータを参照・編集するためのツールです。
 - mailpit 　・・・　ダミーのSMTPサーバーです。送信したメールをブラウザで閲覧することが可能です。実際にはメールは送信されないので開発時の誤送信してしまう心配がありません。
 - Minio 　・・・　S3に完全互換性のあるオブジェクトストレージです。アップロードした画像の保存先として利用しています。
 
-#### ■ 使用しているライブラリ
+#### 使用しているライブラリ
 
 - Laravel 12
 - React 19
 - Typescript
 - Adminlte 3
-- Bootstrap 4
 
 ## 🌐 Demo
 
-#### ■ フロント画面（React）
+#### フロント画面（React）
 
 https://laraec.isystk.com/
 
@@ -94,7 +93,7 @@ graph LR
   end
 ```
 
-#### ■ 管理画面（Bootstrap）
+#### 管理画面（Bootstrap）
 
 https://laraec.isystk.com/admin/
 
@@ -110,7 +109,7 @@ https://laraec.isystk.com/admin/
 - PDFダウンロード
 - 画像アップロード
 
-#### ■ バッチ処理
+#### バッチ処理
 
 - 月別売上金額出力バッチ
 - S3商品画像アップロードバッチ
@@ -190,7 +189,7 @@ https://laraec.isystk.com/admin/
 │   ├── Feature
 │   ├── TestCase.php
 │   └── Unit
-└── run.sh （Dockerの起動用スクリプト）
+└── run.sh （Dockerの操作用スクリプト）
 ```
 
 ## 🔧 開発環境の構築
@@ -216,7 +215,7 @@ $ update-locale LANG=ja_JP.UTF8
 $ apt -y install manpages-ja manpages-ja-dev
 ```
 
-### Dockerを利用できるようにする
+### Dockerを利用する為の準備
 
 ```
 # DockerとDocker Composeをインストールする。
@@ -224,39 +223,16 @@ $ apt install -y docker-ce docker-compose
 $ service docker start
 ```
 
-## 🖊️ Docker 操作用シェルスクリプトの使い方
+### Dockerを起動する
 
-```
-Usage:
-  run.sh [command] [<options>]
-
-Options:
-  stats|st                 Dockerコンテナの状態を表示します。
-  logs                     Dockerコンテナのログを表示します。
-  init                     Dockerコンテナ・イメージ・生成ファイルの状態を初期化します。
-  start                    すべてのDaemonを起動します。
-  stop                     すべてのDaemonを停止します。
-  mysql login              MySQLデータベースにログインします。
-  mysql export <PAHT>      MySQLデータベースのdumpファイルをエクスポートします。
-  mysql import <PAHT>      MySQLデータベースにdumpファイルをインポートします。
-  app login                Webサーバーにログインします。
-  app test                 Laravelのテストコードを実行します。
-  check git-cr             Git 管理下のテキストファイルのうち、CRLF または CR 改行を含むファイルを検出
-  --version, -v     バージョンを表示します。
-  --help, -h        ヘルプを表示します。
-```
-
-## 💬 Dockerの起動
-
-各種デーモンを起動する
 ```
 # 初期化処理（初回のみ、環境をリセットしたい場合に実行する）
 $ ./run.sh init
 
-# Dockerでローカル環境に各種デーモンを構築・起動する
+# Dockerを起動して各サーバーを構築する
 $ ./run.sh start
 
-# データベースとPHPが立ち上がるまで少し待ちます。(初回は5分程度)
+# サーバーが立ち上がるまで少し待ちます。(初回は5分程度)
 
 # MySQLにログインしてみる
 $ ./run.sh mysql login
@@ -269,19 +245,7 @@ $ ./run.sh st
 $ ./run.sh logs
 ```
 
-minioにバケットを作成して、外部アクセス可能な状態にする。
-
-[こちら](http://localhost:9001/)から以下のID/パスワードでログイン後、「laraec.isystk.com」という名前のバケットを作成します。
-作成後、Manage から Access Policy を「Public」に変更してバケット内ファイルを外部参照可能な状態に公開します。
-
-| Username | Password
-|----------|----
-| admin    | password
-
-![minio](./documents/minio.png "minio")
-
-
-動作確認
+### 動作を確認する
 ```
 # Webサーバーにログインする（composer や npm などのコマンドは基本的にここで行う）
 $ ./run.sh app login
@@ -291,6 +255,9 @@ $ ./run.sh app login
 
 # PHPUnit でテストコードを実行する
 > ./vendor/bin/phpunit tests
+
+# React のテストコードを実行する
+> npm run test
 
 # テスト用の商品画像をS3（Minio）にアップロード
 > php artisan s3upload
@@ -304,10 +271,13 @@ https://localhost/
 
 https://localhost/admin/
 
+
 サーバーを停止する場合
 ```
 $ ./run.sh stop
 ```
+
+## 🎧 利用可能なサーバー
 
 ### mailpit 
 ダミーのメールサーバーです。実際にはメールは送信されず、送信されたメールはブラウザで閲覧できます。
@@ -321,6 +291,15 @@ Dockerを起動後に以下のURLにアクセスすると利用可能です。
 
 http://localhost:9001
 
+以下のID/パスワードでログインが可能です。「laraec.isystk.com」という名前のバケットが存在します。
+Access Policy を「Public」にしているので外部から参照可能に公開されています。
+
+| Username | Password
+|----------|---------
+| admin    | password
+
+![minio](./documents/minio.png "minio")
+
 
 ### adminer
 データベースに接続してデータの参照や編集が可能です。
@@ -328,12 +307,23 @@ Dockerを起動後に以下のURLにアクセスすると利用可能です。
 
 http://localhost:8888/
 
-## 🎨 参考
+### storybook
+Reactで作成されたコンポーネントの確認が可能です。
+Dockerを起動後に以下のURLにアクセスすると利用可能です。
 
-| プロジェクト                                                                                           | 概要                               |
-|:-------------------------------------------------------------------------------------------------|:---------------------------------|
-| [Laravel12公式ドキュメント](https://readouble.com/laravel/12.x/ja/releases.html)                         | Laravel11公式ドキュメントです。             |
-| [React Hooks 全19種の解説とサンプル](https://isystk.github.io/react19-hook-study/study)                 | Laravel11以降から使い始めた人に必要そうな質問と回答一覧 |
+http://localhost:6006/
+
+![storybook](./documents/storybook.png "storybook")
+
+## 📖 ドキュメント
+
+| 種類         | リンク                                                                                |
+|:-----------|:-----------------------------------------------------------------------------------|
+| コーディング規約   | [Laravel コーディング規約](./documents/laravel_cording_rule.md)                                |
+| コーディング規約   | [React コーディング規約](./documents/react_cording_rule.md)                                |
+| 公式サイト      | [Laravel12公式ドキュメント](https://readouble.com/laravel/12.x/ja/releases.html)           |
+| 公式サイト      | [Tailwind CSS ドキュメント](https://v3.tailwindcss.com/docs/)                            |
+| 参考サイト      | [React Hooks 全19種の解説とサンプル](https://isystk.github.io/react19-hook-study/study) |
 
 
 ## 🎫 Licence

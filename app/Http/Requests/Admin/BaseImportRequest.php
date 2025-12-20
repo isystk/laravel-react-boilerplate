@@ -8,17 +8,6 @@ use Illuminate\Validation\Validator;
 
 abstract class BaseImportRequest extends FormRequest
 {
-
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     /**
      * This method prepares file instante
      */
@@ -63,24 +52,26 @@ abstract class BaseImportRequest extends FormRequest
             'upload_file' => [
                 'required',
                 'file',
-                function ($attribute, $value, $fail)
-                {
+                function ($attribute, $value, $fail) {
                     $fileName = $value->getClientOriginalName();
                     $fileInfo = pathinfo($fileName);
                     $fileMimeType = mime_content_type($value->path());
                     $fileExtension = strtolower($fileInfo['extension'] ?? '');
                     $fileSize = $value->getSize();
                     $upload_max_filesize = config('const.upload_max_filesize');
-                    if (is_numeric($upload_max_filesize) && (int)$upload_max_filesize < $fileSize) {
-                        $fail("ファイルには、" . floor($upload_max_filesize / 1000 / 1000) . "MB以下のファイルを指定してください。");
+                    if (is_numeric($upload_max_filesize) && (int) $upload_max_filesize < $fileSize) {
+                        $fail('ファイルには、' . floor($upload_max_filesize / 1000 / 1000) . 'MB以下のファイルを指定してください。');
+
                         return;
                     }
                     if (!in_array($fileExtension, $this->allowExtensions, true)) {
                         $fail($this->messages()['upload_file.*.mimes']);
+
                         return;
                     }
                     if ('application/encrypted' === $fileMimeType) {
-                        $fail("ファイルがパスワードで保護されています。パスワードを解除してください。");
+                        $fail('ファイルがパスワードで保護されています。パスワードを解除してください。');
+
                         return;
                     }
                     if (!in_array($fileMimeType, $this->allowMimes, true)) {
@@ -93,13 +84,13 @@ abstract class BaseImportRequest extends FormRequest
 
     /**
      * Get the validation after rules that apply to the request.
+     *
      * @return array<Closure>
      */
     public function after(): array
     {
         return [
-            function (Validator $validator)
-            {
+            function (Validator $validator) {
                 if (0 === count($validator->errors()->messages())) {
                     // rules に記載のエラーチェックに問題がなければ、ファイルの中身をチェックする
                     $import = $this->createImporter()($this->upload_file->path());
@@ -115,13 +106,12 @@ abstract class BaseImportRequest extends FormRequest
         ];
     }
 
-    /**
-     * @return Closure
-     */
     abstract protected function createImporter(): Closure;
 
     /**
-     * @return array<string, string>
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string>
      */
     public function attributes(): array
     {
@@ -131,8 +121,9 @@ abstract class BaseImportRequest extends FormRequest
     }
 
     /**
-     * 定義済みバリデーションルールのエラーメッセージ取得
-     * @return array<string, string>
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string>
      */
     public function messages(): array
     {
@@ -145,12 +136,14 @@ abstract class BaseImportRequest extends FormRequest
 
     /**
      * 許容する拡張子
+     *
      * @var array|string[]
      */
     protected array $allowExtensions = ['csv', 'xlsx'];
 
     /**
      * 許容するファイル形式
+     *
      * @var array|string[]
      */
     protected array $allowMimes = [
@@ -158,5 +151,4 @@ abstract class BaseImportRequest extends FormRequest
         'text/csv',
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     ];
-
 }

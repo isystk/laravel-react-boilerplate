@@ -12,14 +12,9 @@ use App\Services\BaseService;
 class StoreService extends BaseService
 {
     private ContactFormRepository $contactFormRepository;
+
     private ContactFormImageRepository $contactFormImageRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param ContactFormRepository $contactFormRepository
-     * @param ContactFormImageRepository $contactFormImageRepository
-     */
     public function __construct(
         ContactFormRepository $contactFormRepository,
         ContactFormImageRepository $contactFormImageRepository
@@ -30,8 +25,6 @@ class StoreService extends BaseService
 
     /**
      * お問い合わせを登録します。
-     * @param StoreRequest $request
-     * @return ContactForm
      */
     public function save(StoreRequest $request): ContactForm
     {
@@ -60,11 +53,10 @@ class StoreService extends BaseService
                     'file_name' => $fileName,
                 ]
             );
-            //s3に画像をアップロード
-            $imageFile->storeAs(PhotoType::Contact->dirName() . '/', $fileName);
+            // s3に画像をアップロード
+            $imageFile->storeAs(PhotoType::Contact->type() . '/', $fileName);
         }
 
         return $contactForm;
     }
-
 }

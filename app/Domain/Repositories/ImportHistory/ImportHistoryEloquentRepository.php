@@ -10,10 +10,6 @@ use Illuminate\Support\Collection;
 
 class ImportHistoryEloquentRepository extends BaseEloquentRepository implements ImportHistoryRepository
 {
-
-    /**
-     * @return string
-     */
     protected function model(): string
     {
         return ImportHistory::class;
@@ -21,7 +17,7 @@ class ImportHistoryEloquentRepository extends BaseEloquentRepository implements 
 
     /**
      * インポートタイプからデータを取得します。
-     * @param ImportType $importType
+     *
      * @return Collection<int, ImportHistory>
      */
     public function getByImportHistory(ImportType $importType): Collection
@@ -35,8 +31,6 @@ class ImportHistoryEloquentRepository extends BaseEloquentRepository implements 
 
     /**
      * 処理中（または処理待ち）のデータが存在する場合はTrueを返却します。
-     * @param ImportType $importType
-     * @return bool
      */
     public function hasProcessingByImportHistory(ImportType $importType): bool
     {
@@ -48,5 +42,4 @@ class ImportHistoryEloquentRepository extends BaseEloquentRepository implements 
             ])
             ->exists();
     }
-
 }

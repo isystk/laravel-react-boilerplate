@@ -1,10 +1,7 @@
-@extends('layouts.app_admin')
+@extends('layouts.admin')
 @section('title', __('contact.Contact ID:') . $contactForm->id)
-@php
-    $menu = 'user';
-    $subMenu = 'contact';
-@endphp
-
+@section('mainMenu', 'user')
+@section('subMenu', 'contact')
 @section('breadcrumbs')
     {{ Breadcrumbs::render('admin.contact.show', $contactForm) }}
 @endsection
@@ -133,16 +130,5 @@
 @endsection
 
 @section('scripts')
-    <script type="module">
-        $(function () {
-            // 削除確認用のダイアログを表示
-            $('.js-deleteBtn').click(function (e) {
-                e.preventDefault();
-                const id = $(this).data('id');
-                if (confirm('本当に削除していいですか？')) {
-                    $('#delete_' + id).submit();
-                }
-            });
-        });
-    </script>
+    @vite('resources/assets/admin/js/pages/contact/show.js')
 @endsection

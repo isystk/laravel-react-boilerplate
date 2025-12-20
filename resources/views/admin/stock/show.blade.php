@@ -1,10 +1,7 @@
-@extends('layouts.app_admin')
+@extends('layouts.admin')
 @section('title', $stock->name)
-@php
-    $menu = 'master';
-    $subMenu = 'stock';
-@endphp
-
+@section('mainMenu', 'master')
+@section('subMenu', 'stock')
 @section('breadcrumbs')
     {{ Breadcrumbs::render('admin.stock.show', $stock) }}
 @endsection
@@ -109,16 +106,5 @@
 @endsection
 
 @section('scripts')
-    <script type="module">
-        $(function () {
-            // 削除確認用のダイアログを表示
-            $('.js-deleteBtn').click(function (e) {
-                e.preventDefault();
-                const id = $(this).data('id');
-                if (confirm('本当に削除していいですか？')) {
-                    $('#delete_' + id).submit();
-                }
-            });
-        });
-    </script>
+    @vite('resources/assets/admin/js/pages/stock/show.js')
 @endsection

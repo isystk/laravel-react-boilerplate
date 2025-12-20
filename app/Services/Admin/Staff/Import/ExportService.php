@@ -10,11 +10,6 @@ class ExportService extends BaseService
 {
     private AdminRepository $adminRepository;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @param AdminRepository $adminRepository
-     */
     public function __construct(
         AdminRepository $adminRepository
     ) {
@@ -23,12 +18,11 @@ class ExportService extends BaseService
 
     /**
      * エクスポート用のオブジェクトを取得します。
-     * @return StaffExport
      */
     public function getExport(): StaffExport
     {
         $admins = $this->adminRepository->getAllOrderById();
+
         return new StaffExport($admins);
     }
-
 }

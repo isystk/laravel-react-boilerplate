@@ -9,7 +9,6 @@ use Tests\TestCase;
 
 class PasswordChangeUpdateServiceTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private PasswordChangeUpdateService $service;
@@ -23,7 +22,7 @@ class PasswordChangeUpdateServiceTest extends TestCase
     /**
      * updateのテスト
      */
-    public function testUpdate(): void
+    public function test_update(): void
     {
         $admin = $this->createDefaultAdmin([
             'name' => 'aaa',

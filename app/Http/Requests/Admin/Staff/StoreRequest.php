@@ -11,8 +11,6 @@ class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -35,6 +33,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         $maxlength = config('const.maxlength.admins');
+
         return [
             'name' => [
                 'required',
@@ -63,9 +62,9 @@ class StoreRequest extends FormRequest
     }
 
     /**
-     * 項目名
+     * Get the error messages for the defined validation rules.
      *
-     * @return array<string, string>
+     * @return array<string>
      */
     public function attributes(): array
     {
@@ -78,7 +77,9 @@ class StoreRequest extends FormRequest
     }
 
     /**
-     * @return array<string, string>
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string>
      */
     public function messages(): array
     {
@@ -86,5 +87,4 @@ class StoreRequest extends FormRequest
             '*.Illuminate\Validation\Rules\Enum' => ':attributeの値が不正です。',
         ];
     }
-
 }

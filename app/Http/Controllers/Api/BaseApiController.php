@@ -4,20 +4,22 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\BaseController;
 use Illuminate\Http\JsonResponse;
-use Stripe\PaymentIntent;
+use Throwable;
 
 class BaseApiController extends BaseController
 {
     /**
-     * @param array<string, mixed>|PaymentIntent $result
-     * @param int $statusCode
-     * @return JsonResponse
+     * エラー用のJSONレスポンスを返す
      */
-    protected function resConversionJson(array|PaymentIntent $result, int $statusCode = 200): JsonResponse
+    protected function getErrorJsonResponse(Throwable $e): JsonResponse
     {
-        if (empty($statusCode) || $statusCode < 100 || $statusCode >= 600) {
-            $statusCode = 500;
-        }
-        return response()->json($result, $statusCode, ['Content-Type' => 'application/json'], JSON_UNESCAPED_UNICODE);
+        $items = [
+            'result' => false,
+            'error' => [
+                'messages' => [$e->getMessage()],
+            ],
+        ];
+
+        return response()->json($items, 500);
     }
 }
