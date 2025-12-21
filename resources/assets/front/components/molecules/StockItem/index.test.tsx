@@ -21,8 +21,8 @@ describe('StockItem Storybook Tests', () => {
     render(<Default />);
     const likeButton = screen.getByText('気になる');
     expect(likeButton).toBeInTheDocument();
-    fireEvent.click(likeButton);
-    // // TODO APIの呼び出しが含まれるのでテストが難しい。
+    // TODO APIの呼び出しが含まれるのでテストが難しい。
+    // fireEvent.click(likeButton);
     // await waitFor(() => {
     //   expect(screen.getByText('お気に入りに追加しました')).toBeInTheDocument();
     // });
@@ -32,8 +32,8 @@ describe('StockItem Storybook Tests', () => {
     render(<Logined />);
     const cartButton = screen.getByText(/カートに入れる/);
     expect(cartButton).toBeInTheDocument();
-    fireEvent.click(cartButton);
     // TODO APIの呼び出しが含まれるのでテストが難しい。
+    // fireEvent.click(cartButton);
     // await waitFor(() => {
     //   expect(screen.getbytext('ユーザー名さんのカートの中身')).tobeinthedocument();
     // });
