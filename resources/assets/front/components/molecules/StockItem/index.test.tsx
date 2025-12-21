@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { describe, it, vi, expect, beforeEach } from 'vitest';
 import * as stories from './index.stories';
 import { composeStories } from '@storybook/react';
