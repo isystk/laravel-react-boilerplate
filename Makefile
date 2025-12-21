@@ -94,3 +94,14 @@ test: ## 自動テストを実行します。
 	$(DOCKER_CMD) exec app npm run test; \
 	$(DOCKER_CMD) exec app ./vendor/bin/phpstan analyse --memory-limit=1G; \
 	$(DOCKER_CMD) exec -e XDEBUG_MODE=off app ./vendor/bin/phpunit --display-phpunit-deprecations
+
+.PHONY: summarize
+summarize: ## Gitの差分をGeminiで30文字程度に要約します。
+	@DIFF=$$(git diff HEAD); \
+	if [ -z "$$DIFF" ]; then \
+		echo "要約する差分がありません。"; \
+	else \
+		echo "Geminiで変更点を要約中..."; \
+		echo "$$DIFF" | gemini -p "以下のgit diffを、日本語で30文字程度で簡潔に要約してください。1行で、文末の句読点は不要です。"; \
+	fi
+
