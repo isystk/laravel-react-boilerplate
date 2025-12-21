@@ -84,7 +84,7 @@ case "${1}" in
             ## mysqlにログインします。
             login)
                 $DOCKER_COMPOSE exec mysql bash -c \
-                    'mysql -u $MYSQL_USER  -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE'
+                    'mysql -u $MYSQL_USER  -p$MYSQL_PASSWORD $MYSQL_DATABASE'
                 ;;
 
             ## マイグレーションを実行します。

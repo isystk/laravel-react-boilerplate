@@ -50,7 +50,7 @@ tinker: ## tinkerを実行します。
 
 .PHONY: mysql-login
 mysql-login: ## mysqlにログインします。
-	$(DOCKER_CMD) exec mysql bash -c 'mysql -u $$MYSQL_USER -p$$MYSQL_ROOT_PASSWORD $$MYSQL_DATABASE'
+	$(DOCKER_CMD) exec mysql bash -c 'mysql -u $$MYSQL_USER -p$$MYSQL_PASSWORD $$MYSQL_DATABASE'
 
 .PHONY: mysql-migrate
 mysql-migrate: ## マイグレーションを実行します。
