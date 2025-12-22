@@ -5,9 +5,9 @@ namespace Domain\Entities;
 use App\Domain\Entities\ContactForm;
 use App\Enums\Age;
 use App\Enums\Gender;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class ContactFormTest extends TestCase
+class ContactFormTest extends BaseTest
 {
     private ContactForm $sub;
 

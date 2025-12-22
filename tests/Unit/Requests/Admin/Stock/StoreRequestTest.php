@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Validator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class StoreRequestTest extends TestCase
+class StoreRequestTest extends BaseTest
 {
     private StoreRequest $request;
 

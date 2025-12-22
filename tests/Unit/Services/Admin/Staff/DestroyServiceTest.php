@@ -4,9 +4,9 @@ namespace Tests\Unit\Services\Admin\Staff;
 
 use App\Services\Admin\Staff\DestroyService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class DestroyServiceTest extends TestCase
+class DestroyServiceTest extends BaseTest
 {
     use RefreshDatabase;
 

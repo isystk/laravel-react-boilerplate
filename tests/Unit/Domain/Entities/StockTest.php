@@ -3,9 +3,9 @@
 namespace Domain\Entities;
 
 use App\Domain\Entities\Stock;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class StockTest extends TestCase
+class StockTest extends BaseTest
 {
     private Stock $sub;
 

@@ -5,9 +5,9 @@ namespace Domain\Repositories\Order;
 use App\Domain\Repositories\Order\OrderRepository;
 use App\Utils\DateUtil;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class OrderRepositoryTest extends TestCase
+class OrderRepositoryTest extends BaseTest
 {
     use RefreshDatabase;
 

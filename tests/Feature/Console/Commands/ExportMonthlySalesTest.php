@@ -4,9 +4,9 @@ namespace Console\Commands;
 
 use App\Console\Commands\ExportMonthlySales;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class ExportMonthlySalesTest extends TestCase
+class ExportMonthlySalesTest extends BaseTest
 {
     use RefreshDatabase;
 

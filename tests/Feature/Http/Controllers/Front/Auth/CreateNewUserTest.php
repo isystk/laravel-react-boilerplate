@@ -5,9 +5,9 @@ namespace Http\Controllers\Front\Auth;
 use App\Domain\Entities\User;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class CreateNewUserTest extends TestCase
+class CreateNewUserTest extends BaseTest
 {
     use RefreshDatabase;
 

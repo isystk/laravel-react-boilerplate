@@ -4,9 +4,9 @@ namespace Tests\Unit\Services\Admin\ContactForm;
 
 use App\Services\Admin\ContactForm\EditService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class EditServiceTest extends TestCase
+class EditServiceTest extends BaseTest
 {
     use RefreshDatabase;
 

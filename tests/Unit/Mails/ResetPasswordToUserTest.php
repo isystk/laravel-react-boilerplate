@@ -5,9 +5,9 @@ namespace Mails;
 use App\Mails\ResetPasswordToUser;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class ResetPasswordToUserTest extends TestCase
+class ResetPasswordToUserTest extends BaseTest
 {
     use RefreshDatabase;
 

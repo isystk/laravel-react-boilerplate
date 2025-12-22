@@ -6,9 +6,9 @@ use App\Domain\Entities\Admin;
 use App\Domain\Repositories\Admin\AdminRepository;
 use App\Enums\AdminRole;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class AdminRepositoryTest extends TestCase
+class AdminRepositoryTest extends BaseTest
 {
     use RefreshDatabase;
 

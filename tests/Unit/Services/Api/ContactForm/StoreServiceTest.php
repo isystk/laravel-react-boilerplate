@@ -11,9 +11,9 @@ use App\Services\Api\ContactForm\StoreService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class StoreServiceTest extends TestCase
+class StoreServiceTest extends BaseTest
 {
     use RefreshDatabase;
 

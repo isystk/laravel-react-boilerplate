@@ -4,9 +4,9 @@ namespace Domain\Entities;
 
 use App\Domain\Entities\ImportHistory;
 use App\Enums\JobStatus;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class ImportHistoryTest extends TestCase
+class ImportHistoryTest extends BaseTest
 {
     private ImportHistory $sub;
 

@@ -5,9 +5,9 @@ namespace Domain\Entities;
 use App\Domain\Entities\Order;
 use App\Domain\Entities\Stock;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class OrderStockTest extends TestCase
+class OrderStockTest extends BaseTest
 {
     use RefreshDatabase;
 

@@ -3,10 +3,10 @@
 namespace Domain\Entities;
 
 use App\Domain\Entities\User;
-use Carbon\Carbon;
-use Tests\TestCase;
+use Illuminate\Support\Carbon;
+use Tests\BaseTest;
 
-class UserTest extends TestCase
+class UserTest extends BaseTest
 {
     private User $sub;
 

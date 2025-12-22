@@ -4,9 +4,9 @@ namespace Services\Admin\Staff\Import;
 
 use App\Services\Admin\Staff\Import\ExportService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class ExportServiceTest extends TestCase
+class ExportServiceTest extends BaseTest
 {
     use RefreshDatabase;
 

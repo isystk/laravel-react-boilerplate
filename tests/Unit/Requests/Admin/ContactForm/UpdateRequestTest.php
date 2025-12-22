@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Validator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class UpdateRequestTest extends TestCase
+class UpdateRequestTest extends BaseTest
 {
     private UpdateRequest $request;
 

@@ -7,9 +7,9 @@ use App\Enums\AdminRole;
 use App\Http\Requests\Admin\Staff\UpdateRequest;
 use App\Services\Admin\Staff\UpdateService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class UpdateServiceTest extends TestCase
+class UpdateServiceTest extends BaseTest
 {
     use RefreshDatabase;
 

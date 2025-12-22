@@ -5,9 +5,9 @@ namespace Mails;
 use App\Mails\VerifyEmailToUser;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class VerifyEmailToUserTest extends TestCase
+class VerifyEmailToUserTest extends BaseTest
 {
     use RefreshDatabase;
 

@@ -5,9 +5,9 @@ namespace Tests\Unit\Mails;
 use App\Mails\CheckoutCompleteToUser;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class CheckoutCompleteToUserTest extends TestCase
+class CheckoutCompleteToUserTest extends BaseTest
 {
     use RefreshDatabase;
 

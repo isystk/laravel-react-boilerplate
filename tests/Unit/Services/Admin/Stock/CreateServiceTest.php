@@ -7,9 +7,9 @@ use App\Http\Requests\Admin\Stock\StoreRequest;
 use App\Services\Admin\Stock\CreateService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class CreateServiceTest extends TestCase
+class CreateServiceTest extends BaseTest
 {
     use RefreshDatabase;
 

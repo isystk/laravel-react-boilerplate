@@ -5,9 +5,9 @@ namespace Http\Controllers\Admin\Photo;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class ListControllerTest extends TestCase
+class ListControllerTest extends BaseTest
 {
     use RefreshDatabase;
 

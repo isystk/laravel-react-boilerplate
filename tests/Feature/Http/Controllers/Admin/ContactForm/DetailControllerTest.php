@@ -6,9 +6,9 @@ use App\Enums\Age;
 use App\Enums\Gender;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class DetailControllerTest extends TestCase
+class DetailControllerTest extends BaseTest
 {
     use RefreshDatabase;
 

@@ -6,9 +6,9 @@ use App\Enums\ImportType;
 use App\Enums\JobStatus;
 use App\Services\Admin\Staff\Import\IndexService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class IndexServiceTest extends TestCase
+class IndexServiceTest extends BaseTest
 {
     use RefreshDatabase;
 
