@@ -37,6 +37,6 @@ class CreateServiceTest extends TestCase
         $this->assertEquals('aaa', $createdAdmin->name);
         $this->assertEquals('aaa@test.com', $createdAdmin->email);
         //        $this->assertEquals(Hash::make('password'), $createdAdmin->password); // TODO ハッシュ値が常に変わるためテストできない
-        $this->assertEquals(AdminRole::Manager->value, $createdAdmin->role);
+        $this->assertEquals(AdminRole::Manager, $createdAdmin->role);
     }
 }

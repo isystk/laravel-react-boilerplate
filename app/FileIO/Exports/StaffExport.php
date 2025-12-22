@@ -3,6 +3,7 @@
 namespace App\FileIO\Exports;
 
 use App\Domain\Entities\Admin;
+use App\Enums\AdminRole;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -29,7 +30,7 @@ class StaffExport implements FromCollection, WithHeadings
      *     id: int,
      *     name: string,
      *     email: string,
-     *     role: string
+     *     role: AdminRole
      * }> エクスポート用にフォーマットされた管理者のコレクション
      */
     public function collection(): Collection

@@ -42,6 +42,6 @@ class UpdateServiceTest extends TestCase
         $updatedAdmin = Admin::find($admin1->id);
         $this->assertEquals('bbb', $updatedAdmin->name);
         $this->assertEquals('bbb@test.com', $updatedAdmin->email);
-        $this->assertEquals(AdminRole::HighManager->value, $updatedAdmin->role);
+        $this->assertEquals(AdminRole::HighManager, $updatedAdmin->role);
     }
 }

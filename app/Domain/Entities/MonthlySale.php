@@ -2,10 +2,10 @@
 
 namespace App\Domain\Entities;
 
-use Carbon\Carbon;
 use Database\Factories\Domain\Entities\MonthlySaleFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id

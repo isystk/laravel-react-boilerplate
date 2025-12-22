@@ -155,7 +155,7 @@
                                 <th>{{ $staff->id }}</th>
                                 <td>{{ $staff->name }}</td>
                                 <td>{{ $staff->email }}</td>
-                                <td>{{ App\Enums\AdminRole::getLabel($staff->role) }}</td>
+                                <td>{{ App\Enums\AdminRole::getLabel($staff->role->value) }}</td>
                                 <td>{{ $staff->created_at }}</td>
                                 <td>
                                     <a

@@ -3,18 +3,18 @@
 namespace App\Domain\Entities;
 
 use App\Enums\AdminRole;
-use Carbon\Carbon;
 use Database\Factories\Domain\Entities\AdminFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
  * @property string $name
  * @property string $email
  * @property string $password
- * @property string $role
+ * @property AdminRole $role
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -56,6 +56,7 @@ class Admin extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
+        'role' => AdminRole::class,
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
@@ -65,7 +66,7 @@ class Admin extends Authenticatable
      */
     public function isHighManager(): bool
     {
-        return AdminRole::HighManager->value === $this->role;
+        return AdminRole::HighManager === $this->role;
     }
 
     /**
@@ -73,6 +74,6 @@ class Admin extends Authenticatable
      */
     public function isManager(): bool
     {
-        return AdminRole::Manager->value === $this->role;
+        return AdminRole::Manager === $this->role;
     }
 }

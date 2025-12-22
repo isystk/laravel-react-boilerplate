@@ -4,10 +4,10 @@ namespace App\Domain\Entities;
 
 use App\Enums\Age;
 use App\Enums\Gender;
-use Carbon\Carbon;
 use Database\Factories\Domain\Entities\ContactFormFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
