@@ -15,16 +15,18 @@ confirm() {
 
 usage() {
     awk '
-        /^[[:space:]]*case[[:space:]]+"\$\{1\}"[[:space:]]+in/ { parent = "" }
-        /^[[:space:]]*(mysql|app)\)/ { parent = $1; sub(/\)$/, "", parent) }
-        /^[[:space:]]*##[[:space:]]+/ { desc = $0; sub(/^[[:space:]]*##[[:space:]]+/, "", desc); next }
-        /^[[:space:]]*[a-zA-Z0-9_|-]+\)/ {
-            if (desc != "") {
-                cmd = $0; sub(/^[[:space:]]*/, "", cmd); sub(/\).*/, "", cmd)
-                if (parent != "" && cmd != parent) { printf "  %-25s %s\n", parent " " cmd, desc }
-                else { printf "  %-25s %s\n", cmd, desc }
-                desc = ""
-            }
+        # 親階層(mysql|app)の開始
+        /^[[:space:]]*(mysql|app)\)/ { parent = $1; sub(/\).*/, "", parent); next }
+        # 親階層の終了
+        /^[[:space:]]*esac/ { parent = "" }
+        # 説明文の保持
+        /^[[:space:]]*## / { desc = $0; sub(/.*## /, "", desc); next }
+        # コマンドの出力
+        /^[[:space:]]*[a-zA-Z0-9_|-]+\)/ && desc {
+            cmd = $1; sub(/\).*/, "", cmd)
+            full = (parent && cmd != parent && cmd !~ /help/) ? parent " " cmd : cmd
+            printf "  %-25s %s\n", full, desc
+            desc = ""
         }
     ' "$0"
 }
