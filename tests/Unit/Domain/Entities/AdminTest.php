@@ -16,7 +16,7 @@ class AdminTest extends BaseTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->sub = new Admin;
+        $this->sub = new Admin();
     }
 
     public function test_正しくキャストされる事(): void
