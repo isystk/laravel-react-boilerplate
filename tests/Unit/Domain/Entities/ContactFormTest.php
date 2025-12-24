@@ -16,7 +16,6 @@ class ContactFormTest extends BaseTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->sub = new ContactForm();
     }
 
     public function test_正しくキャストされる事(): void

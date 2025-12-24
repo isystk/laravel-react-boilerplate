@@ -11,6 +11,7 @@ use Tests\BaseTest;
 class AdminTest extends BaseTest
 {
     use RefreshDatabase;
+
     private Admin $sub;
 
     protected function setUp(): void
