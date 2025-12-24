@@ -13,8 +13,6 @@ class ContactFormTest extends BaseTest
 {
     use RefreshDatabase;
 
-    private ContactForm $sub;
-
     protected function setUp(): void
     {
         parent::setUp();
