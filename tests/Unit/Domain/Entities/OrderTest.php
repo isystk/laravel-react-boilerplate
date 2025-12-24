@@ -4,9 +4,9 @@ namespace Domain\Entities;
 
 use App\Domain\Entities\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class OrderTest extends TestCase
+class OrderTest extends BaseTest
 {
     use RefreshDatabase;
 

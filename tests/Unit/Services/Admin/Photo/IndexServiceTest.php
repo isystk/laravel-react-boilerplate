@@ -6,9 +6,9 @@ use App\Enums\PhotoType;
 use App\Services\Admin\Photo\IndexService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class IndexServiceTest extends TestCase
+class IndexServiceTest extends BaseTest
 {
     use RefreshDatabase;
 

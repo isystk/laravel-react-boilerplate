@@ -4,9 +4,9 @@ namespace Domain\Repositories\ContactForm;
 
 use App\Domain\Repositories\ContactForm\ContactFormImageRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class ContactFormImageRepositoryTest extends TestCase
+class ContactFormImageRepositoryTest extends BaseTest
 {
     use RefreshDatabase;
 

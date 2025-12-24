@@ -3,9 +3,9 @@
 namespace Http\Controllers\Front\Auth;
 
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class OAuthControllerTest extends TestCase
+class OAuthControllerTest extends BaseTest
 {
     protected function setUp(): void
     {

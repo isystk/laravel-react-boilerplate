@@ -6,9 +6,9 @@ use App\Domain\Repositories\ImportHistory\ImportHistoryRepository;
 use App\Enums\ImportType;
 use App\Enums\JobStatus;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class ImportHistoryRepositoryTest extends TestCase
+class ImportHistoryRepositoryTest extends BaseTest
 {
     use RefreshDatabase;
 

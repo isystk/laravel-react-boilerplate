@@ -11,9 +11,9 @@ use App\Services\Api\ContactForm\StoreService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class StoreServiceTest extends TestCase
+class StoreServiceTest extends BaseTest
 {
     use RefreshDatabase;
 
@@ -53,8 +53,8 @@ class StoreServiceTest extends TestCase
         $this->assertEquals('タイトル1', $updatedContactForm->title);
         $this->assertEquals('aaa@test.com', $updatedContactForm->email);
         $this->assertEquals('https://aaa.test.com', $updatedContactForm->url);
-        $this->assertEquals(Gender::Male->value, $updatedContactForm->gender);
-        $this->assertEquals(Age::Over30->value, $updatedContactForm->age);
+        $this->assertEquals(Gender::Male, $updatedContactForm->gender);
+        $this->assertEquals(Age::Over30, $updatedContactForm->age);
         $this->assertEquals('お問い合わせ1', $updatedContactForm->contact);
 
         // 新しい画像が登録されたことをテスト

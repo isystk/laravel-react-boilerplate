@@ -12,12 +12,12 @@ use App\Domain\Entities\Order;
 use App\Domain\Entities\OrderStock;
 use App\Domain\Entities\Stock;
 use App\Domain\Entities\User;
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Foundation\Testing\TestCase;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
 
-abstract class TestCase extends BaseTestCase
+abstract class BaseTest extends TestCase
 {
     /**
      * private protected 関数 をリフレクションでアクセス可能にする

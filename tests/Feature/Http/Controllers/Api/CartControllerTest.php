@@ -4,9 +4,9 @@ namespace Http\Controllers\Api;
 
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class CartControllerTest extends TestCase
+class CartControllerTest extends BaseTest
 {
     use RefreshDatabase;
 

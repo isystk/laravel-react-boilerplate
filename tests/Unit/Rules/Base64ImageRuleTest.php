@@ -4,9 +4,9 @@ namespace Rules;
 
 use App\Rules\Base64ImageRule;
 use Illuminate\Http\UploadedFile;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class Base64ImageRuleTest extends TestCase
+class Base64ImageRuleTest extends BaseTest
 {
     /**
      * ファイルが画像でない場合、エラーとなることをテスト

@@ -5,9 +5,9 @@ namespace Tests\Unit\Services\Admin\User;
 use App\Http\Requests\Admin\User\UpdateRequest;
 use App\Services\Admin\User\UpdateService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class UpdateServiceTest extends TestCase
+class UpdateServiceTest extends BaseTest
 {
     use RefreshDatabase;
 

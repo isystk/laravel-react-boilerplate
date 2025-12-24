@@ -3,6 +3,8 @@
 namespace Database\Factories\Domain\Entities;
 
 use App\Domain\Entities\ContactForm;
+use App\Enums\Age;
+use App\Enums\Gender;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ContactFormFactory extends Factory
@@ -24,8 +26,8 @@ class ContactFormFactory extends Factory
             'title' => $this->faker->realText(50),
             'email' => $this->faker->unique()->email,
             'url' => $this->faker->url,
-            'gender' => $this->faker->randomElement(['0', '1']),
-            'age' => $this->faker->numberBetween($min = 1, $max = 6),
+            'gender' => $this->faker->randomElement(Gender::cases()),
+            'age' => $this->faker->randomElement(Age::cases()),
             'contact' => $this->faker->realText(200),
         ];
     }

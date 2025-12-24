@@ -5,9 +5,9 @@ namespace Domain\Repositories\User;
 use App\Domain\Entities\User;
 use App\Domain\Repositories\User\UserRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class UserRepositoryTest extends TestCase
+class UserRepositoryTest extends BaseTest
 {
     use RefreshDatabase;
 

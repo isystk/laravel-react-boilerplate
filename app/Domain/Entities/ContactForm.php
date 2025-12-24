@@ -4,10 +4,10 @@ namespace App\Domain\Entities;
 
 use App\Enums\Age;
 use App\Enums\Gender;
-use Carbon\Carbon;
 use Database\Factories\Domain\Entities\ContactFormFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -15,8 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $title
  * @property string|null $email
  * @property string|null $url
- * @property bool $gender
- * @property int $age
+ * @property Gender $gender
+ * @property Age $age
  * @property string|null $contact
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -49,17 +49,9 @@ class ContactForm extends Model
      * @var array<string, string>
      */
     protected $casts = [
+        'gender' => Gender::class,
+        'age' => Age::class,
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
-
-    public function getGender(): ?Gender
-    {
-        return Gender::get((int) $this->gender);
-    }
-
-    public function getAge(): ?Age
-    {
-        return Age::get($this->age);
-    }
 }

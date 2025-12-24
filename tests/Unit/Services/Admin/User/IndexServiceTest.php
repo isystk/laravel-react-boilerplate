@@ -6,9 +6,9 @@ use App\Dto\Request\Admin\User\SearchConditionDto;
 use App\Services\Admin\User\IndexService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class IndexServiceTest extends TestCase
+class IndexServiceTest extends BaseTest
 {
     use RefreshDatabase;
 

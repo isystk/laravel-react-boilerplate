@@ -5,9 +5,9 @@ namespace Domain\Entities;
 use App\Domain\Entities\Stock;
 use App\Domain\Entities\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class CartTest extends TestCase
+class CartTest extends BaseTest
 {
     use RefreshDatabase;
 

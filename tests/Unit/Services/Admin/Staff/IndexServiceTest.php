@@ -7,9 +7,9 @@ use App\Enums\AdminRole;
 use App\Services\Admin\Staff\IndexService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class IndexServiceTest extends TestCase
+class IndexServiceTest extends BaseTest
 {
     use RefreshDatabase;
 

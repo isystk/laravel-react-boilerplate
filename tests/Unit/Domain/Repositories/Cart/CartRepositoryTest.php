@@ -5,9 +5,9 @@ namespace Domain\Repositories\Cart;
 use App\Domain\Entities\Cart;
 use App\Domain\Repositories\Cart\CartRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class CartRepositoryTest extends TestCase
+class CartRepositoryTest extends BaseTest
 {
     use RefreshDatabase;
 

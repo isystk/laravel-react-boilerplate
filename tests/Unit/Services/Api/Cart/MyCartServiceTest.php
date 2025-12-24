@@ -4,9 +4,9 @@ namespace Tests\Unit\Services\Api\Cart;
 
 use App\Services\Api\Cart\MyCartService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class MyCartServiceTest extends TestCase
+class MyCartServiceTest extends BaseTest
 {
     use RefreshDatabase;
 

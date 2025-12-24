@@ -4,9 +4,9 @@ namespace Http\Controllers\Admin\Staff;
 
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class CreateControllerTest extends TestCase
+class CreateControllerTest extends BaseTest
 {
     use RefreshDatabase;
 

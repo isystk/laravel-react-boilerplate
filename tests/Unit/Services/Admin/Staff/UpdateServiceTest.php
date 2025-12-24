@@ -7,9 +7,9 @@ use App\Enums\AdminRole;
 use App\Http\Requests\Admin\Staff\UpdateRequest;
 use App\Services\Admin\Staff\UpdateService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class UpdateServiceTest extends TestCase
+class UpdateServiceTest extends BaseTest
 {
     use RefreshDatabase;
 
@@ -42,6 +42,6 @@ class UpdateServiceTest extends TestCase
         $updatedAdmin = Admin::find($admin1->id);
         $this->assertEquals('bbb', $updatedAdmin->name);
         $this->assertEquals('bbb@test.com', $updatedAdmin->email);
-        $this->assertEquals(AdminRole::HighManager->value, $updatedAdmin->role);
+        $this->assertEquals(AdminRole::HighManager, $updatedAdmin->role);
     }
 }

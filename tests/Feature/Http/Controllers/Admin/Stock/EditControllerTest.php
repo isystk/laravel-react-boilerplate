@@ -6,9 +6,9 @@ use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class EditControllerTest extends TestCase
+class EditControllerTest extends BaseTest
 {
     use RefreshDatabase;
 

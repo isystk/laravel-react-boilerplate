@@ -7,9 +7,9 @@ use App\Http\Requests\Admin\Stock\UpdateRequest;
 use App\Services\Admin\Stock\UpdateService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class UpdateServiceTest extends TestCase
+class UpdateServiceTest extends BaseTest
 {
     use RefreshDatabase;
 
