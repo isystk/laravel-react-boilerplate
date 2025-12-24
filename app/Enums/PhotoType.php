@@ -29,35 +29,6 @@ enum PhotoType: int
     }
 
     /**
-     * コードに紐づくEnumを返却する
-     */
-    public static function get(?int $code): ?PhotoType
-    {
-        if (null === $code) {
-            return null;
-        }
-        foreach (self::cases() as $e) {
-            if ($e->value === $code) {
-                return $e;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * 引数の値に紐づくラベルを返却する
-     */
-    public static function getLabel(?int $code): string
-    {
-        if (null === $code || null === self::get($code)) {
-            return '';
-        }
-
-        return self::get($code)->label();
-    }
-
-    /**
      * タイプに紐づくEnumを返却する
      */
     public static function getByType(string $type): PhotoType

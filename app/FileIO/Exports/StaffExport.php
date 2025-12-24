@@ -30,7 +30,7 @@ class StaffExport implements FromCollection, WithHeadings
      *     id: int,
      *     name: string,
      *     email: string,
-     *     role: AdminRole
+     *     role: string
      * }> エクスポート用にフォーマットされた管理者のコレクション
      */
     public function collection(): Collection
@@ -40,7 +40,7 @@ class StaffExport implements FromCollection, WithHeadings
                 'id' => $admin->id,
                 'name' => $admin->name,
                 'email' => $admin->email,
-                'role' => $admin->role,
+                'role' => $admin->role->label(),
             ];
         });
     }
