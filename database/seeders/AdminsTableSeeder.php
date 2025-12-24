@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\AdminRole;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -22,7 +23,7 @@ class AdminsTableSeeder extends Seeder
                 'name' => '管理者A',
                 'email' => 'sample@sample.com',
                 'password' => Hash::make('password'),
-                'role' => 'high-manager',
+                'role' => AdminRole::HighManager->value,
             ],
         ]);
     }

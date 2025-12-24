@@ -5,10 +5,14 @@ namespace Domain\Entities;
 use App\Domain\Entities\ContactForm;
 use App\Enums\Age;
 use App\Enums\Gender;
+use Illuminate\Support\Carbon;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
 
 class ContactFormTest extends BaseTest
 {
+    use RefreshDatabase;
+
     private ContactForm $sub;
 
     protected function setUp(): void
@@ -17,19 +21,16 @@ class ContactFormTest extends BaseTest
         $this->sub = new ContactForm;
     }
 
-    public function test_get_gender(): void
+    public function test_正しくキャストされる事(): void
     {
-        $this->sub->gender = (bool) Gender::Male->value;
-        $result = $this->sub->getGender();
-        $this->assertInstanceOf(Gender::class, $result);
-        $this->assertSame(Gender::Male, $result);
-    }
+        $model = $this->createDefaultContactForm([
+            'gender' => Gender::Male->value,
+            'age' => Age::Under19->value,
+        ]);
 
-    public function test_get_age(): void
-    {
-        $this->sub->age = Age::Over40->value;
-        $result = $this->sub->getAge();
-        $this->assertInstanceOf(Age::class, $result);
-        $this->assertSame(Age::Over40, $result);
+        $this->assertInstanceOf(Gender::class, $model->gender);
+        $this->assertInstanceOf(Age::class, $model->age);
+        $this->assertInstanceOf(Carbon::class, $model->created_at);
+        $this->assertInstanceOf(Carbon::class, $model->updated_at);
     }
 }
