@@ -34,7 +34,7 @@ class StaffRegistService extends BaseService
             if ($exist) {
                 $this->adminRepository->update($admin->id, [
                     'name' => $row['name'],
-                    'role' => AdminRole::get($row['role'])?->value,
+                    'role' => AdminRole::tryFrom($row['role'])?->value,
                 ]);
                 $outputLog('Admin updated. id:[' . $admin->id . ']');
             } else {
@@ -42,7 +42,7 @@ class StaffRegistService extends BaseService
                     'name' => $row['name'],
                     'email' => $row['email'],
                     'password' => Hash::make('password'),
-                    'role' => AdminRole::get($row['role'])?->value,
+                    'role' => AdminRole::tryFrom($row['role'])?->value,
                 ]);
                 $outputLog('Admin registered. id:[' . $newAdmin->id . ']');
             }

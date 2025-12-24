@@ -14,7 +14,7 @@ use Illuminate\Support\Carbon;
  * @property int $job_id
  * @property ImportType $type
  * @property string $file_name
- * @property int $status
+ * @property JobStatus $status
  * @property int $import_user_id
  * @property Carbon|null $import_at
  * @property string $save_file_name

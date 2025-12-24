@@ -35,6 +35,6 @@ class ExportServiceTest extends BaseTest
         $this->assertSame($admin2->id, $rows[1]['id'], '「ID」が正しく出力されること');
         $this->assertSame($admin2->name, $rows[1]['name'], '「名前」が正しく出力されること');
         $this->assertSame($admin2->email, $rows[1]['email'], '「メールアドレス」が正しく出力されること');
-        $this->assertSame($admin2->role, $rows[1]['role'], '「権限」が正しく出力されること');
+        $this->assertSame($admin2->role->label(), $rows[1]['role'], '「権限」が正しく出力されること');
     }
 }

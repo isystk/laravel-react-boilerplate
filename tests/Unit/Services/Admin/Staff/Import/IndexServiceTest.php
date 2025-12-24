@@ -34,7 +34,7 @@ class IndexServiceTest extends BaseTest
 
         $importHistory = $this->createDefaultImportHistory([
             'type' => ImportType::Staff->value,
-            'import_at' => '2024-06-01',
+            'import_at' => '2024-06-01 12:34:56',
             'import_user_id' => $admin->id,
             'file_name' => 'test.csv',
             'status' => JobStatus::Success->value,
@@ -43,7 +43,7 @@ class IndexServiceTest extends BaseTest
         $result = $this->service->getImportHistories();
         $this->assertSame($importHistory->id, $result[0]['id'], '取得したidが想定通りであることのテスト');
         $this->assertSame(
-            $importHistory->import_at->format('Y/m/d H:i:s'),
+            '2024-06-01 12:34:56',
             $result[0]['import_at'],
             '取得したがimport_at想定通りであることのテスト'
         );
