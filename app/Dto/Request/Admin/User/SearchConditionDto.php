@@ -30,7 +30,7 @@ class SearchConditionDto
         $this->name = $request->input('name');
         $this->email = $request->input('email');
         $this->sortName = $request->input('sort_name', 'id'); // デフォルト: id
-        $this->sortDirection = in_array($request->input('sort_direction'), ['asc', 'desc']) ? $request->input('sort_direction') : 'asc';
+        $this->sortDirection = in_array($request->input('sort_direction'), ['asc', 'desc']) ? $request->input('sort_direction') : 'desc';
         $this->page = (int) $request->input('page', 1); // デフォルト: 1
         $this->limit = (int) $request->input('limit', 20); // デフォルト: 20
     }

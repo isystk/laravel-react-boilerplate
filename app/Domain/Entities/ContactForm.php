@@ -18,8 +18,8 @@ use Illuminate\Support\Carbon;
  * @property Gender $gender
  * @property Age $age
  * @property string|null $contact
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  */
 class ContactForm extends Model
 {

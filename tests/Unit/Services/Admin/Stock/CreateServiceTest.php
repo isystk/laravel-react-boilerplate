@@ -43,6 +43,6 @@ class CreateServiceTest extends BaseTest
         $this->assertEquals('aaaの説明', $updatedStock->detail);
         $this->assertEquals(111, $updatedStock->price);
         $this->assertEquals(1, $updatedStock->quantity);
-        $this->assertEquals('stock1.jpg', $updatedStock->imgpath);
+        $this->assertEquals('stock1.jpg', $updatedStock->image_file_name);
     }
 }

@@ -33,7 +33,7 @@ class UpdateService extends BaseService
             'quantity' => $request->input('quantity'),
         ];
         if (!empty($fileName)) {
-            $model['imgpath'] = $fileName;
+            $model['image_file_name'] = $fileName;
         }
 
         $stock = $this->stockRepository->update(

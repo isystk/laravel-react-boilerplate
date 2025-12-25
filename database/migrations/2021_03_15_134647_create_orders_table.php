@@ -14,11 +14,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('orders', static function (Blueprint $table) {
             $table->bigIncrements('id')->comment('注文ID');
             $table->unsignedBigInteger('user_id')->comment('ユーザID');
             $table->integer('sum_price')->default(0)->comment('合計金額');
-            $table->timestamps();
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
 
             // 外部キーを追加
             $table->foreign('user_id')->references('id')->on('users');

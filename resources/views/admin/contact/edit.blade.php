@@ -88,7 +88,7 @@
                                         name="gender"
                                         value="{{$e->value}}"
                                         class="form-control"
-                                        {{ $e->value == old("gender", $contactForm->gender) ? 'checked="checked"' : '' }}
+                                        {{ $e->value == old("gender", $contactForm->gender->value) ? 'checked="checked"' : '' }}
                                     />
                                     <span>{{ $e->label() }}</span>
                                 </label>
@@ -111,7 +111,7 @@
                                 @foreach (App\Enums\Age::cases() as $e)
                                     <option
                                         value="{{$e->value}}"
-                                        {{ $e->value == old("age", $contactForm->age) ? 'selected="selected"' : '' }}
+                                        {{ $e->value == old("age", $contactForm->age->value) ? 'selected="selected"' : '' }}
                                     >{{$e->label()}}</option>
                                 @endforeach
                             </select>

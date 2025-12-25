@@ -2,6 +2,7 @@
 
 namespace Http\Controllers\Admin\ContactForm;
 
+use App\Enums\AdminRole;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
@@ -23,7 +24,7 @@ class ListControllerTest extends BaseTest
     {
         $admin = $this->createDefaultAdmin([
             'name' => '管理者A',
-            'role' => 'manager',
+            'role' => AdminRole::Manager->value,
         ]);
         $this->actingAs($admin, 'admin');
 
@@ -32,6 +33,6 @@ class ListControllerTest extends BaseTest
 
         $response = $this->get(route('admin.contact'));
         $response->assertSuccessful();
-        $response->assertSeeInOrder(['title1', 'title2']);
+        $response->assertSeeInOrder(['title2', 'title1']);
     }
 }

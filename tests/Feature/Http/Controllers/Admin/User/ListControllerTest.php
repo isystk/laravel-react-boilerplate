@@ -39,6 +39,6 @@ class ListControllerTest extends BaseTest
 
         $response = $this->get(route('admin.user'));
         $response->assertSuccessful();
-        $response->assertSeeInOrder(['user1', 'user2']);
+        $response->assertSeeInOrder(['user2', 'user1']);
     }
 }

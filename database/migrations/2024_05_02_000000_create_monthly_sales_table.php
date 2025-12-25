@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('year_month', '6')->comment('年月');
             $table->integer('order_count')->default(0)->comment('注文数');
             $table->integer('amount')->default(0)->comment('売上金額');
-            $table->timestamps();
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
         });
         DB::statement("ALTER TABLE monthly_sales COMMENT '月別売上'");
     }

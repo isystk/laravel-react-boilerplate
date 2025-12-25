@@ -14,12 +14,13 @@ return new class extends Migration
     {
         Schema::create('stocks', static function (Blueprint $table) {
             $table->bigIncrements('id')->comment('商品ID');
-            $table->timestamps();
             $table->string('name', '100')->comment('商品名');
             $table->string('detail', '500')->comment('説明文');
             $table->integer('price')->default(0)->comment('価格');
-            $table->string('imgpath', '200')->comment('画像ファイル名');
+            $table->string('image_file_name', '200')->comment('画像ファイル名');
             $table->integer('quantity')->default(0)->comment('在庫数');
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
         });
         DB::statement("ALTER TABLE stocks COMMENT '商品'");
     }

@@ -31,7 +31,7 @@ class CreateService extends BaseService
             'detail' => $request->input('detail'),
             'price' => $request->input('price'),
             'quantity' => $request->input('quantity'),
-            'imgpath' => $fileName,
+            'image_file_name' => $fileName,
         ];
         $stock = $this->stockRepository->create(
             $model

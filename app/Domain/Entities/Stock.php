@@ -11,11 +11,11 @@ use Illuminate\Support\Carbon;
  * @property int $id
  * @property string $name
  * @property string $detail
- * @property string $imgpath
+ * @property string $image_file_name
  * @property int $price
  * @property int $quantity
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  */
 class Stock extends Model
 {
@@ -33,7 +33,7 @@ class Stock extends Model
         'name',
         'detail',
         'price',
-        'imgpath',
+        'image_file_name',
         'quantity',
     ];
 
@@ -60,6 +60,6 @@ class Stock extends Model
      */
     public function getImageUrl(): string
     {
-        return config('app.url') . '/uploads/stock/' . $this->imgpath;
+        return config('app.url') . '/uploads/stock/' . $this->image_file_name;
     }
 }

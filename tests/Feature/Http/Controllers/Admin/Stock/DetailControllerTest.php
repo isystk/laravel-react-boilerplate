@@ -33,7 +33,7 @@ class DetailControllerTest extends BaseTest
             'detail' => 'aaaの説明',
             'price' => 111,
             'quantity' => 1,
-            'imgpath' => 'stock1.jpg',
+            'image_file_name' => 'stock1.jpg',
         ]);
 
         $response = $this->get(route('admin.stock.show', $stock));

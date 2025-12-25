@@ -18,8 +18,8 @@ use Illuminate\Support\Carbon;
  * @property int $import_user_id
  * @property Carbon|null $import_at
  * @property string $save_file_name
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  */
 class ImportHistory extends Model
 {

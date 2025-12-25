@@ -16,8 +16,8 @@ use Illuminate\Support\Carbon;
  * @property string $password
  * @property AdminRole $role
  * @property string|null $remember_token
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  */
 class Admin extends Authenticatable
 {

@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Domain\Entities\Stock;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class StockTableSeeder extends Seeder
 {
@@ -14,131 +14,131 @@ class StockTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('stocks')->insert([
+        Stock::create([
             'name' => 'マカロン',
             'detail' => '厳選した素材で作ったマカロンです。',
             'price' => 2000,
-            'imgpath' => 'makaron.jpg',
+            'image_file_name' => 'makaron.jpg',
             'quantity' => 2,
         ]);
 
-        DB::table('stocks')->insert([
+        Stock::create([
             'name' => 'Bluetoothヘッドフォン',
             'detail' => 'ノイズキャンセリング機能搭載です。',
             'price' => 10000,
-            'imgpath' => 'headphone.jpg',
+            'image_file_name' => 'headphone.jpg',
             'quantity' => 5,
         ]);
 
-        DB::table('stocks')->insert([
+        Stock::create([
             'name' => '目覚まし時計',
             'detail' => '電波時計、オートスヌーズ機能搭載です。',
             'price' => 2000,
-            'imgpath' => 'clock.jpg',
+            'image_file_name' => 'clock.jpg',
             'quantity' => 1,
         ]);
 
-        DB::table('stocks')->insert([
+        Stock::create([
             'name' => 'ドーナツ',
             'detail' => 'カロリーオフの美味しいドーナツです。',
             'price' => 120000,
-            'imgpath' => 'donut.jpg',
+            'image_file_name' => 'donut.jpg',
             'quantity' => 99,
         ]);
 
-        DB::table('stocks')->insert([
+        Stock::create([
             'name' => '高級腕時計',
             'detail' => 'メンズ用の高級腕時計です。',
             'price' => 198000,
-            'imgpath' => 'watch.jpg',
+            'image_file_name' => 'watch.jpg',
             'quantity' => 0,
         ]);
 
-        DB::table('stocks')->insert([
+        Stock::create([
             'name' => 'カメラレンズ35mm',
             'detail' => '最新式のカメラレンズです。',
             'price' => 79800,
-            'imgpath' => 'lens.jpg',
+            'image_file_name' => 'lens.jpg',
             'quantity' => 10,
         ]);
 
-        DB::table('stocks')->insert([
+        Stock::create([
             'name' => 'シャンパン',
             'detail' => '香りと味わいのバランスが良いシャンパンです。',
             'price' => 800,
-            'imgpath' => 'shanpan.jpg',
+            'image_file_name' => 'shanpan.jpg',
             'quantity' => 0,
         ]);
 
-        DB::table('stocks')->insert([
+        Stock::create([
             'name' => 'ビール',
             'detail' => '飲みやすいビールです。',
             'price' => 200,
-            'imgpath' => 'beer.jpg',
+            'image_file_name' => 'beer.jpg',
             'quantity' => 100,
         ]);
 
-        DB::table('stocks')->insert([
+        Stock::create([
             'name' => '食パン',
             'detail' => '素材にこだわった美味しい食パンです。',
             'price' => 500,
-            'imgpath' => 'pan.jpg',
+            'image_file_name' => 'pan.jpg',
             'quantity' => 8,
         ]);
 
-        DB::table('stocks')->insert([
+        Stock::create([
             'name' => 'スニーカー',
             'detail' => '軽くて履きやすいスニーカーです。',
             'price' => 3200,
-            'imgpath' => 'sneaker.jpg',
+            'image_file_name' => 'sneaker.jpg',
             'quantity' => 3,
         ]);
 
-        DB::table('stocks')->insert([
+        Stock::create([
             'name' => 'デスクトップパソコン',
             'detail' => '最新OS搭載のデスクトップパソコンです。',
             'price' => 11200,
-            'imgpath' => 'pc.jpg',
+            'image_file_name' => 'pc.jpg',
             'quantity' => 6,
         ]);
 
-        DB::table('stocks')->insert([
+        Stock::create([
             'name' => 'アコースティックギター',
             'detail' => '初心者向けのエントリーモデルです。',
             'price' => 25600,
-            'imgpath' => 'aguiter.jpg',
+            'image_file_name' => 'aguiter.jpg',
             'quantity' => 9,
         ]);
 
-        DB::table('stocks')->insert([
+        Stock::create([
             'name' => 'エレキギター',
             'detail' => '初心者向けのエントリーモデルです。',
             'price' => 15600,
-            'imgpath' => 'eguiter.jpg',
+            'image_file_name' => 'eguiter.jpg',
             'quantity' => 0,
         ]);
 
-        DB::table('stocks')->insert([
+        Stock::create([
             'name' => '麦わら帽子',
             'detail' => '夏にぴったりな麦わら帽子です。',
             'price' => 3200,
-            'imgpath' => 'hat.jpg',
+            'image_file_name' => 'hat.jpg',
             'quantity' => 12,
         ]);
 
-        DB::table('stocks')->insert([
+        Stock::create([
             'name' => 'メガネ',
             'detail' => 'シンプルな黒縁メガネです。',
             'price' => 4200,
-            'imgpath' => 'megane.jpg',
+            'image_file_name' => 'megane.jpg',
             'quantity' => 46,
         ]);
 
-        DB::table('stocks')->insert([
+        Stock::create([
             'name' => 'ロボット掃除機',
             'detail' => '自動で掃除してくれる便利な掃除機です。',
             'price' => 84200,
-            'imgpath' => 'soujiki.jpg',
+            'image_file_name' => 'soujiki.jpg',
             'quantity' => 0,
         ]);
     }
