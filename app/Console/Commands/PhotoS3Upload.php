@@ -88,6 +88,7 @@ class PhotoS3Upload extends Command
                 chmod($storage->path($dir), 0755);
             }
             $fileName = Carbon::now()->format('Ymd') . '.log';
+            $message = Carbon::now()->toDateTimeString() . ' ' . $message;
             $storage->append($dir . '/' . $fileName, $message);
         }
     }
