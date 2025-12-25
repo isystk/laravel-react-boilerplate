@@ -2,27 +2,28 @@
 
 namespace App\Console\Commands;
 
-use App\Services\Commands\ExportMonthlySalesService;
+use App\Enums\PhotoType;
+use App\Services\Commands\PhotoS3UploadService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Console\Command\Command as CommandAlias;
 
-class ExportMonthlySales extends Command
+class PhotoS3Upload extends Command
 {
-    protected $signature = 'export_monthly_sales
-        {output_path : 出力ファイルパス}
-        {--run : このオプションを指定した場合のみ本実行を行う(未指定時はドライラン)}';
+    protected $signature = 's3upload
+        {--run : このオプションを指定した場合のみ本実行を行う(未指定時はドライラン)}
+        {--file_name= : 事業所番号(任意)}';
     protected $description = '
-        月別売上金額出力バッチ。
-        ・月別売上データを取得する。
-        ・引数で指定したパスにCSVファイルを出力する。
+        S3アップロードバッチ。
+        ・`resources/assets/stock/images` からファイルを取得する。
+        ・S3の `stock` フォルダファイルをアップロードする。
     ';
     private bool $isRealRun;
 
     public function handle(): int
     {
-        $service = app(ExportMonthlySalesService::class);
+        $service = app(PhotoS3UploadService::class);
 
         // 引数の入力チェック
         $args = array_merge($this->argument(), $this->option());
@@ -33,25 +34,38 @@ class ExportMonthlySales extends Command
         }
 
         // オプションの取得
-        $outputPath  = $this->argument('output_path');
         $this->isRealRun = $this->option('run');
+        $targetFileName  = $this->option('file_name');
 
         $this->outputLog(['処理が開始しました。pid[' . getmypid() . ']']);
 
-        [$header, $detail] = $service->getCsvData();
-
-        if ($this->isRealRun) {
-            $file = fopen($outputPath, 'wb');
-            // 先頭にBOMを追加
-            fwrite($file, "\xEF\xBB\xBF");
-            fputcsv($file, $header, ',', '"');
-            foreach ($detail as $row) {
-                fputcsv($file, $row, ',', '"');
-            }
-            fclose($file);
+        $files = Storage::files('stocks');
+        // デバッグ追加
+        if (empty($files)) {
+            $this->error("ファイルが見つかりません。検索パス: " . Storage::path('stocks'));
+            return CommandAlias::FAILURE;
         }
 
-        $this->outputLog(["出力対象の月別売上データをCSV出力しました。[{$outputPath}]"]);
+        foreach ($files as $file) {
+            $fileName = basename($file);
+
+            // file_nameが指定されている場合は、ファイル名が一致するもののみ処理を行う
+            if (!is_null($targetFileName) && $fileName !== $targetFileName) {
+                continue;
+            }
+
+            if ($this->isRealRun) {
+                // s3に画像をアップロード
+                Storage::disk('s3')->putFileAs(
+                    PhotoType::Stock->type(),
+                    Storage::path($file),
+                    $fileName
+                );
+            }
+
+            $this->outputLog(["S3にアップロードしました。file={$file}"]);
+        }
+
         $this->outputLog(['処理が終了しました。']);
         return CommandAlias::SUCCESS;
     }
@@ -68,7 +82,7 @@ class ExportMonthlySales extends Command
                 continue;
             }
             $storage = Storage::disk('log');
-            $dir = 'ExportMonthlySales';
+            $dir = 'S3upload';
             if (!$storage->exists($dir)) {
                 $storage->makeDirectory($dir);
                 chmod($storage->path($dir), 0755);

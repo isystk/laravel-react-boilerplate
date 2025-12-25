@@ -24,13 +24,16 @@ class DestroyServiceTest extends BaseTest
      */
     public function test_delete(): void
     {
+        Storage::fake('s3');
+        $storage = Storage::disk('s3');
+
         // テスト用のファイルを作成
         $filePath = 'stock\test.jpg';
-        Storage::put($filePath, '');
+        $storage->put($filePath, 'dummy');
 
         $this->service->delete($filePath);
 
         // ファイルが削除されたかを確認
-        $this->assertFileDoesNotExist(storage_path('app/' . $filePath));
+        $this->assertFalse($storage->exists($filePath));
     }
 }
