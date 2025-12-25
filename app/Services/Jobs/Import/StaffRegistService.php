@@ -32,17 +32,17 @@ class StaffRegistService extends BaseService
             $exist = null !== $admin;
 
             if ($exist) {
-                $this->adminRepository->update($admin->id, [
+                $this->adminRepository->update([
                     'name' => $row['name'],
-                    'role' => AdminRole::tryFrom($row['role'])?->value,
-                ]);
+                    'role' => AdminRole::from($row['role']),
+                ], $admin->id);
                 $outputLog('Admin updated. id:[' . $admin->id . ']');
             } else {
                 $newAdmin = $this->adminRepository->create([
                     'name' => $row['name'],
                     'email' => $row['email'],
                     'password' => Hash::make('password'),
-                    'role' => AdminRole::tryFrom($row['role'])?->value,
+                    'role' => AdminRole::from($row['role']),
                 ]);
                 $outputLog('Admin registered. id:[' . $newAdmin->id . ']');
             }

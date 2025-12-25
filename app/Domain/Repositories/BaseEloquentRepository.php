@@ -23,9 +23,10 @@ abstract class BaseEloquentRepository implements BaseRepository
     }
 
     /**
-     * @param  array<string, mixed>  $data
+     * @param array<string, mixed>  $data
+     * @param int $id
      */
-    public function update(int $id, array $data): mixed
+    public function update(array $data, int $id): mixed
     {
         $record = $this->findById($id);
 

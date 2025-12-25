@@ -80,12 +80,9 @@ class CheckoutService extends BaseCartService
             // 在庫を減らす
             $stock = $this->stockRepository->findById($stockId);
             $newQuantity = $stock->quantity - 1;
-            $this->stockRepository->update(
-                $stockId,
-                [
-                    'quantity' => $newQuantity,
-                ]
-            );
+            $this->stockRepository->update([
+                'quantity' => $newQuantity,
+            ], $stockId);
 
             $orderItems[] = [
                 'name' => $cartStock->name,

@@ -12,9 +12,10 @@ interface BaseRepository
     public function create(array $data): mixed;
 
     /**
-     * @param  array<string, mixed>  $data
+     * @param array<string, mixed>  $data
+     * @param int $id
      */
-    public function update(int $id, array $data): mixed;
+    public function update(array $data, int $id): mixed;
 
     public function delete(int $id): void;
 
