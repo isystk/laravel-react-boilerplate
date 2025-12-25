@@ -2,7 +2,7 @@
 
 namespace Services\Commands;
 
-use App\Services\Commands\PhotoS3UploadBatchService;
+use App\Services\Commands\PhotoS3UploadService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\BaseTest;
@@ -11,12 +11,12 @@ class PhotoS3UploadBatchServiceTest extends BaseTest
 {
     use RefreshDatabase;
 
-    private PhotoS3UploadBatchService $sut;
+    private PhotoS3UploadService $sut;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->sut = app(PhotoS3UploadBatchService::class);
+        $this->sut = app(PhotoS3UploadService::class);
     }
 
     public function test_validateArgs(): void

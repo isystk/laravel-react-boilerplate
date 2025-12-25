@@ -3,13 +3,13 @@
 namespace App\Console\Commands;
 
 use App\Enums\PhotoType;
-use App\Services\Commands\PhotoS3UploadBatchService;
+use App\Services\Commands\PhotoS3UploadService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Console\Command\Command as CommandAlias;
 
-class PhotoS3UploadBatch extends Command
+class PhotoS3Upload extends Command
 {
     protected $signature = 's3upload
         {--run : このオプションを指定した場合のみ本実行を行う(未指定時はドライラン)}
@@ -23,7 +23,7 @@ class PhotoS3UploadBatch extends Command
 
     public function handle(): int
     {
-        $service = app(PhotoS3UploadBatchService::class);
+        $service = app(PhotoS3UploadService::class);
 
         // 引数の入力チェック
         $args = array_merge($this->argument(), $this->option());

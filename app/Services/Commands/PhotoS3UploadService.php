@@ -5,7 +5,7 @@ namespace App\Services\Commands;
 use App\Services\BaseService;
 use Illuminate\Support\Facades\Validator;
 
-class PhotoS3UploadBatchService extends BaseService
+class PhotoS3UploadService extends BaseService
 {
     /**
      * 引数の入力チェックを行い、問題がある場合はエラーメッセージを返却する
