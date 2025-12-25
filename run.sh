@@ -47,8 +47,8 @@ case "${1}" in
         if confirm "イメージ、ボリューム、vendor、node_modules、および storage が削除されます。続行しますか？"; then
             $DOCKER_COMPOSE down --rmi all --volumes
             pushd "$DOCKER_HOME" >/dev/null
-            rm -rf ./mysql/logs && mkdir -p ./mysql/logs && chmod 777 ./mysql/logs
-            rm -rf ./app/logs && mkdir -p ./app/logs && chmod 777 ./app/logs
+            rm -rf ./mysql/logs && mkdir -p ./mysql/logs && chmod 755 ./mysql/logs
+            rm -rf ./app/logs && mkdir -p ./app/logs && chmod 755 ./app/logs
             popd >/dev/null
             rm -rf "$BASE_DIR/vendor" "$BASE_DIR/node_modules"
             echo "Initialized."
