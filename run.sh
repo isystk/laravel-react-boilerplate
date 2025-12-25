@@ -51,7 +51,6 @@ case "${1}" in
             rm -rf ./app/logs && mkdir -p ./app/logs && chmod 777 ./app/logs
             popd >/dev/null
             rm -rf "$BASE_DIR/vendor" "$BASE_DIR/node_modules"
-            rm -rf "$BASE_DIR/storage/app/"*
             echo "Initialized."
         else
             echo "Aborted."
