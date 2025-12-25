@@ -12,6 +12,6 @@ class DestroyService extends BaseService
      */
     public function delete(string $fileName): void
     {
-        Storage::delete($fileName);
+        Storage::drive('s3')->delete($fileName);
     }
 }
