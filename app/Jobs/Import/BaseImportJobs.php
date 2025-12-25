@@ -85,10 +85,10 @@ abstract class BaseImportJobs extends BaseJobs
             throw new RuntimeException('An unexpected error has occurred.');
         }
         $importHistoryRepository = app(ImportHistoryRepository::class);
-        $importHistoryRepository->update($this->importHistoryId, [
+        $importHistoryRepository->update([
             'job_id' => $this->job->getJobId(),
             'status' => $status->value,
-        ]);
+        ], $this->importHistoryId);
     }
 
     abstract protected function createImporter(): Closure;

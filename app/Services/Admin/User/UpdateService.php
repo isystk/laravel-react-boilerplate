@@ -22,12 +22,9 @@ class UpdateService extends BaseService
      */
     public function update(int $userId, UpdateRequest $request): User
     {
-        return $this->userRepository->update(
-            $userId,
-            [
-                'name' => $request->name,
-                'email' => $request->email,
-            ]
-        );
+        return $this->userRepository->update([
+            'name' => $request->name,
+            'email' => $request->email
+        ], $userId);
     }
 }

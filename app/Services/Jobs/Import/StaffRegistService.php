@@ -32,10 +32,10 @@ class StaffRegistService extends BaseService
             $exist = null !== $admin;
 
             if ($exist) {
-                $this->adminRepository->update($admin->id, [
+                $this->adminRepository->update([
                     'name' => $row['name'],
                     'role' => AdminRole::tryFrom($row['role'])?->value,
-                ]);
+                ], $admin->id);
                 $outputLog('Admin updated. id:[' . $admin->id . ']');
             } else {
                 $newAdmin = $this->adminRepository->create([

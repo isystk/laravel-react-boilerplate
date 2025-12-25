@@ -26,20 +26,17 @@ class UpdateService extends BaseService
     {
         $fileName = $request->fileName;
 
-        $model = [
+        $data = [
             'name' => $request->input('name'),
             'detail' => $request->input('detail'),
             'price' => $request->input('price'),
             'quantity' => $request->input('quantity'),
         ];
         if (!empty($fileName)) {
-            $model['image_file_name'] = $fileName;
+            $data['image_file_name'] = $fileName;
         }
 
-        $stock = $this->stockRepository->update(
-            $stockId,
-            $model
-        );
+        $stock = $this->stockRepository->update($data, $stockId);
 
         if (null !== $fileName) {
             // s3に画像をアップロード
