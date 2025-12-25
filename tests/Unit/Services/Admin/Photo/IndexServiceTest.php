@@ -36,9 +36,10 @@ class IndexServiceTest extends BaseTest
         $this->assertCount(0, $photos, '引数がない状態でエラーにならないことを始めにテスト');
 
         // テスト用のファイルを作成
-        Storage::put('contact\contact1.jpg', '');
-        Storage::put('stock\stock1.jpg', '');
-        Storage::put('stock\stock2.jpg', '');
+        $storage = Storage::disk('s3');
+        $storage->put('contact\contact1.jpg', '');
+        $storage->put('stock\stock1.jpg', '');
+        $storage->put('stock\stock2.jpg', '');
 
         $input = $default;
         $input['file_name'] = 'stock1.jpg';

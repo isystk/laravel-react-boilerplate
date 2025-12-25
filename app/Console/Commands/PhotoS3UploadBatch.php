@@ -56,7 +56,7 @@ class PhotoS3UploadBatch extends Command
 
             if ($this->isRealRun) {
                 // s3に画像をアップロード
-                Storage::drive('s3')->putFileAs(
+                Storage::disk('s3')->putFileAs(
                     PhotoType::Stock->type(),
                     Storage::path($file),
                     $fileName
@@ -81,7 +81,7 @@ class PhotoS3UploadBatch extends Command
             if (!$this->isRealRun) {
                 continue;
             }
-            $storage = Storage::drive('log');
+            $storage = Storage::disk('log');
             $dir = 'S3upload';
             if (!$storage->exists($dir)) {
                 $storage->makeDirectory($dir);
