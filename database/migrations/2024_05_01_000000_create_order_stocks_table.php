@@ -18,7 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('stock_id')->comment('商品ID');
             $table->integer('price')->default(0)->comment('価格');
             $table->integer('quantity')->default(0)->comment('個数');
-            $table->timestamps();
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
 
             // 外部キーを追加
             $table->foreign('order_id')->references('id')->on('orders');

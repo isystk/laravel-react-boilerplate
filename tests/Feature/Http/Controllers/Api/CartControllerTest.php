@@ -39,8 +39,8 @@ class CartControllerTest extends BaseTest
             'count' => 0,
         ]);
 
-        $stock1 = $this->createDefaultStock(['name' => 'stock1', 'price' => 111, 'imgpath' => 'aaa.jpg']);
-        $stock2 = $this->createDefaultStock(['name' => 'stock2', 'price' => 222, 'imgpath' => 'bbb.jpg']);
+        $stock1 = $this->createDefaultStock(['name' => 'stock1', 'price' => 111, 'image_file_name' => 'aaa.jpg']);
+        $stock2 = $this->createDefaultStock(['name' => 'stock2', 'price' => 222, 'image_file_name' => 'bbb.jpg']);
 
         $cart1 = $this->createDefaultCart(['user_id' => $user1->id, 'stock_id' => $stock1->id]);
         $cart2 = $this->createDefaultCart(['user_id' => $user1->id, 'stock_id' => $stock2->id]);

@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('email', 64)->unique()->comment('メールアドレス');
             $table->string('password')->comment('パスワード');
             $table->rememberToken();
-            $table->timestamps();
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
         });
         DB::statement("ALTER TABLE admins COMMENT '管理者'");
     }

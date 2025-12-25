@@ -12,8 +12,8 @@ use Illuminate\Support\Carbon;
  * @property int $id
  * @property int $contact_form_id
  * @property string|null $file_name
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  */
 class ContactFormImage extends Model
 {

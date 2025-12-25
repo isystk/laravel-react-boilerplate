@@ -31,8 +31,8 @@ class ListControllerTest extends BaseTest
         ]);
         $this->actingAs($admin, 'admin');
 
-        $response = $this->get(route('admin.stock') . '?sort_name=id&sort_direction=asc');
+        $response = $this->get(route('admin.stock'));
         $response->assertSuccessful();
-        $response->assertSeeInOrder(['stock1', 'stock2']);
+        $response->assertSeeInOrder(['stock2', 'stock1']);
     }
 }

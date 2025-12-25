@@ -22,8 +22,8 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property Carbon|null $email_verified_at
  * @property string|null $password
  * @property string|null $remember_token
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  */
 class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {

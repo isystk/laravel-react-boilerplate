@@ -14,8 +14,8 @@ use Illuminate\Support\Carbon;
  * @property int $stock_id
  * @property int|null $price
  * @property int|null $quantity
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  */
 class OrderStock extends Model
 {

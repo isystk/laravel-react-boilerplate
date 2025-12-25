@@ -16,7 +16,8 @@ return new class extends Migration
             $table->bigIncrements('id')->comment('お問い合わせ画像ID');
             $table->unsignedBigInteger('contact_form_id')->comment('お問い合わせID');
             $table->string('file_name', 100)->comment('ファイル名');
-            $table->timestamps();
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
 
             // 外部キー制約
             $table->foreign('contact_form_id')->references('id')->on('contact_forms');

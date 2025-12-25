@@ -33,7 +33,7 @@ class UpdateServiceTest extends BaseTest
             'detail' => 'aaaの説明',
             'price' => 111,
             'quantity' => 1,
-            'imgpath' => 'stock1.jpg',
+            'image_file_name' => 'stock1.jpg',
         ]);
 
         $request = new UpdateRequest;
@@ -51,6 +51,6 @@ class UpdateServiceTest extends BaseTest
         $this->assertEquals('bbbの説明', $updatedStock->detail);
         $this->assertEquals(222, $updatedStock->price);
         $this->assertEquals(2, $updatedStock->quantity);
-        $this->assertEquals('stock2.jpg', $updatedStock->imgpath);
+        $this->assertEquals('stock2.jpg', $updatedStock->image_file_name);
     }
 }
