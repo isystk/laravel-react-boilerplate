@@ -2,10 +2,8 @@
 
 namespace App\Services\Commands;
 
-use App\Domain\Entities\MonthlySale;
 use App\Domain\Repositories\MonthlySale\MonthlySaleRepository;
 use App\Services\BaseService;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 
 class ExportMonthlySalesService extends BaseService

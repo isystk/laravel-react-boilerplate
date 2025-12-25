@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\BaseTest;
 
-class PhotoS3UploadBatchServiceTest extends BaseTest
+class PhotoS3UploadServiceTest extends BaseTest
 {
     use RefreshDatabase;
 
