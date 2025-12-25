@@ -46,8 +46,9 @@ class IndexService extends BaseService
     public function searchPhotoList(array $conditions): array
     {
         $photos = [];
-        $stockFiles = Storage::allFiles('stock');
-        $contactFiles = Storage::allFiles('contact');
+        $storage = Storage::drive('s3');
+        $stockFiles = $storage->allFiles('stock');
+        $contactFiles = $storage->allFiles('contact');
         $files = array_merge($stockFiles, $contactFiles);
         foreach ($files as $file) {
             if (null !== $conditions['file_name'] && !str_contains($file, $conditions['file_name'])) {

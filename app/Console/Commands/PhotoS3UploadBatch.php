@@ -39,7 +39,13 @@ class PhotoS3UploadBatch extends Command
 
         $this->outputLog(['処理が開始しました。pid[' . getmypid() . ']']);
 
-        $files = Storage::drive('local')->files('stocks');
+        $files = Storage::files('stocks');
+        // デバッグ追加
+        if (empty($files)) {
+            $this->error("ファイルが見つかりません。検索パス: " . Storage::path('stocks'));
+            return CommandAlias::FAILURE;
+        }
+
         foreach ($files as $file) {
             $fileName = basename($file);
 
@@ -52,12 +58,12 @@ class PhotoS3UploadBatch extends Command
                 // s3に画像をアップロード
                 Storage::drive('s3')->putFileAs(
                     PhotoType::Stock->type(),
-                    Storage::drive('local')->path($file),
+                    Storage::path($file),
                     $fileName
                 );
             }
 
-            $this->outputLog(["S3にアップロードしました。file_name={$fileName}"]);
+            $this->outputLog(["S3にアップロードしました。file={$file}"]);
         }
 
         $this->outputLog(['処理が終了しました。']);
