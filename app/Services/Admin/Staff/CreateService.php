@@ -24,15 +24,11 @@ class CreateService extends BaseService
      */
     public function save(StoreRequest $request): Admin
     {
-        $model = [
+        return $this->adminRepository->create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => AdminRole::Manager->value,
-        ];
-
-        return $this->adminRepository->create(
-            $model
-        );
+            'role' => AdminRole::Manager,
+        ]);
     }
 }

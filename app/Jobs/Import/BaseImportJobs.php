@@ -87,7 +87,7 @@ abstract class BaseImportJobs extends BaseJobs
         $importHistoryRepository = app(ImportHistoryRepository::class);
         $importHistoryRepository->update([
             'job_id' => $this->job->getJobId(),
-            'status' => $status->value,
+            'status' => $status,
         ], $this->importHistoryId);
     }
 
