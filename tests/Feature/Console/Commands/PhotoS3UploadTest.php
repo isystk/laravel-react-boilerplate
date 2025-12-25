@@ -31,7 +31,6 @@ class PhotoS3UploadTest extends BaseTest
         $command = $this->artisan('s3upload', [
             '--run' => true,
         ]);
-        $command->run();
 
         $command->expectsOutput('ファイルが見つかりません。検索パス: ' . Storage::path('stocks'));
         $command->assertExitCode(Command::FAILURE);

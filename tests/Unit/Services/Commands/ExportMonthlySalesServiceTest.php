@@ -49,15 +49,15 @@ class ExportMonthlySalesServiceTest extends BaseTest
                 'expected' => [],
             ],
             'NG : 出力ファイルパスが未指定の場合' => [
-                'args' => [...$safeArgs, 'file_name' => Str::random(33)],
+                'args' => [...$safeArgs, 'output_path' => null],
                 'expected' => [
-                    '出力ファイルパスには32文字以下の文字列を指定してください。',
+                    '出力ファイルパスを入力してください。',
                 ],
             ],
         ];
     }
 
-    public function test_getCsvData_出力データが存在しない場合()
+    public function test_getCsvData_出力データが存在しない場合(): void
     {
         [$header, $data] = $this->sut->getCsvData();
 
@@ -67,7 +67,7 @@ class ExportMonthlySalesServiceTest extends BaseTest
         $this->assertCount(0, $data);
     }
 
-    public function test_getCsvData_出力データが存在する場合()
+    public function test_getCsvData_出力データが存在する場合(): void
     {
         $m1 = $this->createDefaultMonthlySale([
             'year_month' => '202404',
