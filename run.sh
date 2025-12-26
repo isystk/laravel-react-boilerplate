@@ -164,19 +164,6 @@ case "${1}" in
         esac
         ;;
 
-    ## Gitの差分をGeminiで30文字程度に要約します。
-    summarize)
-        # 未コミットの差分を取得
-        DIFF=$(git diff HEAD)
-        if [ -z "$DIFF" ]; then
-            echo "要約する差分がありません。"
-            exit 0
-        fi
-        echo "Geminiで変更点を要約中..."
-        # gemini cli を呼び出し
-        echo "$DIFF" | gemini -p "以下のgit diffを、日本語で30文字程度で簡潔に要約してください。1行で、文末の句読点は不要です。"
-        ;;
-
     ## ヘルプを表示します。
     help|--help|-h)
         usage

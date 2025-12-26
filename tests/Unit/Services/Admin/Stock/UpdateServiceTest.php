@@ -26,7 +26,7 @@ class UpdateServiceTest extends BaseTest
      */
     public function test_update(): void
     {
-        Storage::fake();
+        Storage::fake('s3');
 
         $stock = $this->createDefaultStock([
             'name' => 'aaa',
@@ -52,5 +52,8 @@ class UpdateServiceTest extends BaseTest
         $this->assertEquals(222, $updatedStock->price);
         $this->assertEquals(2, $updatedStock->quantity);
         $this->assertEquals('stock2.jpg', $updatedStock->image_file_name);
+
+        // ファイルが存在することをテスト
+        Storage::disk('s3')->assertExists('stock/stock2.jpg');
     }
 }

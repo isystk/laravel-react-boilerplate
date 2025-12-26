@@ -69,7 +69,7 @@ class UpdateService extends BaseService
                 ]);
 
                 // s3に画像をアップロード
-                $imageFile->storeAs(PhotoType::Contact->type() . '/', $newFileName);
+                $imageFile->storeAs(PhotoType::Contact->type() . '/', $newFileName, 's3');
             }
         }
 

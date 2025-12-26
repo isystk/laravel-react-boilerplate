@@ -26,7 +26,7 @@ class CreateServiceTest extends BaseTest
      */
     public function test_create(): void
     {
-        Storage::fake();
+        Storage::fake('s3');
 
         $request = new StoreRequest;
         $request['name'] = 'aaa';
@@ -44,5 +44,8 @@ class CreateServiceTest extends BaseTest
         $this->assertEquals(111, $updatedStock->price);
         $this->assertEquals(1, $updatedStock->quantity);
         $this->assertEquals('stock1.jpg', $updatedStock->image_file_name);
+
+        // ファイルが存在することをテスト
+        Storage::disk('s3')->assertExists('stock/stock1.jpg');
     }
 }

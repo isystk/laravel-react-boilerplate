@@ -63,7 +63,7 @@ class EditControllerTest extends BaseTest
      */
     public function test_update(): void
     {
-        Storage::fake();
+        Storage::fake('s3');
 
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者A',
