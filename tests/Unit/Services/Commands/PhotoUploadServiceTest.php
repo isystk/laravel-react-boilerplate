@@ -2,21 +2,21 @@
 
 namespace Services\Commands;
 
-use App\Services\Commands\PhotoS3UploadService;
+use App\Services\Commands\PhotoUploadService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\BaseTest;
 
-class PhotoS3UploadServiceTest extends BaseTest
+class PhotoUploadServiceTest extends BaseTest
 {
     use RefreshDatabase;
 
-    private PhotoS3UploadService $sut;
+    private PhotoUploadService $sut;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->sut = app(PhotoS3UploadService::class);
+        $this->sut = app(PhotoUploadService::class);
     }
 
     public function test_validateArgs(): void

@@ -11,7 +11,6 @@ class ExportMonthlySalesTest extends BaseTest
 {
     use RefreshDatabase;
 
-
     public function test_引数不正がある場合_エラー(): void
     {
         $command = $this->artisan('export_monthly_sales', [

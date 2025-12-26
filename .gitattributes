@@ -65,3 +65,7 @@
 /node_modules/ export-ignore
 /vendor/ export-ignore
 
+# ========================================
+# 特定ファイルの改行コード指定（Windows用）
+# ========================================
+wsl-portproxy.ps1 text eol=crlf

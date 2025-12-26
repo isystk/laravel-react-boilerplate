@@ -3,12 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Services\Commands\ExportMonthlySalesService;
-use Illuminate\Console\Command;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Console\Command\Command as CommandAlias;
 
-class ExportMonthlySales extends Command
+class ExportMonthlySales extends BaseCommand
 {
     protected $signature = 'export_monthly_sales
         {output_path : 出力ファイルパス}
@@ -18,7 +15,6 @@ class ExportMonthlySales extends Command
         ・月別売上データを取得する。
         ・引数で指定したパスにCSVファイルを出力する。
     ';
-    private bool $isRealRun;
 
     public function handle(): int
     {
@@ -54,28 +50,5 @@ class ExportMonthlySales extends Command
         $this->outputLog(["出力対象の月別売上データをCSV出力しました。[{$outputPath}]"]);
         $this->outputLog(['処理が終了しました。']);
         return CommandAlias::SUCCESS;
-    }
-
-    /**
-     * 標準出力およびログファイルへの出力
-     * @param array<string> $messages 出力メッセージの配列
-     */
-    private function outputLog(array $messages): void
-    {
-        foreach ($messages as $message) {
-            $this->info($message);
-            if (!$this->isRealRun) {
-                continue;
-            }
-            $storage = Storage::disk('log');
-            $dir = 'ExportMonthlySales';
-            if (!$storage->exists($dir)) {
-                $storage->makeDirectory($dir);
-                chmod($storage->path($dir), 0755);
-            }
-            $fileName = Carbon::now()->format('Ymd') . '.log';
-            $message = Carbon::now()->toDateTimeString() . ' ' . $message;
-            $storage->append($dir . '/' . $fileName, $message);
-        }
     }
 }

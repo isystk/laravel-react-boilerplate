@@ -8,13 +8,13 @@ use Illuminate\Support\Str;
 use Symfony\Component\Console\Command\Command;
 use Tests\BaseTest;
 
-class PhotoS3UploadTest extends BaseTest
+class PhotoUploadTest extends BaseTest
 {
     use RefreshDatabase;
 
     public function test_引数不正がある場合_エラー(): void
     {
-        $command = $this->artisan('s3upload', [
+        $command = $this->artisan('photo_upload', [
             '--file_name' => Str::random(33),
         ]);
 
@@ -28,7 +28,7 @@ class PhotoS3UploadTest extends BaseTest
     {
         Storage::fake();
 
-        $command = $this->artisan('s3upload', [
+        $command = $this->artisan('photo_upload', [
             '--run' => true,
         ]);
 
@@ -44,7 +44,7 @@ class PhotoS3UploadTest extends BaseTest
         $file = 'stocks/sample.jpg';
         $storage->put($file, 'dummy content');
 
-        $command = $this->artisan('s3upload', [
+        $command = $this->artisan('photo_upload', [
             '--run' => true,
         ]);
         $command->run();

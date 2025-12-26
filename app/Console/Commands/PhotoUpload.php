@@ -3,15 +3,13 @@
 namespace App\Console\Commands;
 
 use App\Enums\PhotoType;
-use App\Services\Commands\PhotoS3UploadService;
-use Illuminate\Console\Command;
-use Illuminate\Support\Carbon;
+use App\Services\Commands\PhotoUploadService;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Console\Command\Command as CommandAlias;
 
-class PhotoS3Upload extends Command
+class PhotoUpload extends BaseCommand
 {
-    protected $signature = 's3upload
+    protected $signature = 'photo_upload
         {--run : このオプションを指定した場合のみ本実行を行う(未指定時はドライラン)}
         {--file_name= : 事業所番号(任意)}';
     protected $description = '
@@ -19,11 +17,10 @@ class PhotoS3Upload extends Command
         ・`resources/assets/stock/images` からファイルを取得する。
         ・S3の `stock` フォルダファイルをアップロードする。
     ';
-    private bool $isRealRun;
 
     public function handle(): int
     {
-        $service = app(PhotoS3UploadService::class);
+        $service = app(PhotoUploadService::class);
 
         // 引数の入力チェック
         $args = array_merge($this->argument(), $this->option());
@@ -68,28 +65,5 @@ class PhotoS3Upload extends Command
 
         $this->outputLog(['処理が終了しました。']);
         return CommandAlias::SUCCESS;
-    }
-
-    /**
-     * 標準出力およびログファイルへの出力
-     * @param array<string> $messages 出力メッセージの配列
-     */
-    private function outputLog(array $messages): void
-    {
-        foreach ($messages as $message) {
-            $this->info($message);
-            if (!$this->isRealRun) {
-                continue;
-            }
-            $storage = Storage::disk('log');
-            $dir = 'S3upload';
-            if (!$storage->exists($dir)) {
-                $storage->makeDirectory($dir);
-                chmod($storage->path($dir), 0755);
-            }
-            $fileName = Carbon::now()->format('Ymd') . '.log';
-            $message = Carbon::now()->toDateTimeString() . ' ' . $message;
-            $storage->append($dir . '/' . $fileName, $message);
-        }
     }
 }
