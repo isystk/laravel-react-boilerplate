@@ -28,7 +28,7 @@ class UpdateServiceTest extends BaseTest
      */
     public function test_update(): void
     {
-        Storage::fake();
+        Storage::fake('s3');
 
         $contactForm = $this->createDefaultContactForm([
             'user_name' => 'aaa',
@@ -43,6 +43,7 @@ class UpdateServiceTest extends BaseTest
             'contact_form_id' => $contactForm->id,
             'file_name' => 'file1.jpg',
         ]);
+        Storage::disk('s3')->put('contact/image1.jpg', 'dummy');
 
         $request = new UpdateRequest;
         $request['user_name'] = 'bbb';
@@ -68,11 +69,15 @@ class UpdateServiceTest extends BaseTest
 
         // 元の画像が削除されたことをテスト
         $this->assertDatabaseMissing('contact_form_images', ['id' => $contactFormImage->id]);
+        // お問い合わせから画像ファイルを削除しても、S3上にファイルが残っていることを確認
+        Storage::disk('s3')->assertExists('contact/image1.jpg');
 
         // 新しい画像が登録されたことをテスト
         $this->assertDatabaseHas('contact_form_images',
             ['contact_form_id' => $contactForm->id, 'file_name' => 'image2.jpg']);
         $this->assertDatabaseHas('contact_form_images',
             ['contact_form_id' => $contactForm->id, 'file_name' => 'image3.jpg']);
+        Storage::disk('s3')->assertExists('contact/image2.jpg');
+        Storage::disk('s3')->assertExists('contact/image3.jpg');
     }
 }

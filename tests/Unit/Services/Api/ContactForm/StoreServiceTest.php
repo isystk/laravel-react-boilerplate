@@ -30,7 +30,7 @@ class StoreServiceTest extends BaseTest
      */
     public function test_update(): void
     {
-        Storage::fake();
+        Storage::fake('s3');
 
         $request = new StoreRequest;
         $request['user_name'] = 'aaa';
@@ -61,5 +61,8 @@ class StoreServiceTest extends BaseTest
         $createdContactFormImage = ContactFormImage::where(['contact_form_id' => $contactForm->id]);
         $fileNames = $createdContactFormImage->pluck('file_name')->all();
         $this->assertSame(['file1.jpg', 'file2.jpg', 'file3.jpg'], $fileNames);
+        Storage::disk('s3')->assertExists('contact/file1.jpg');
+        Storage::disk('s3')->assertExists('contact/file2.jpg');
+        Storage::disk('s3')->assertExists('contact/file3.jpg');
     }
 }
