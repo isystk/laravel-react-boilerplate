@@ -18,10 +18,11 @@ return new class extends Migration
             $table->string('title', 50)->comment('タイトル');
             $table->string('email', 64)->comment('メールアドレス');
             $table->longText('url')->comment('URL')->nullable($value = true);
-            $table->boolean('gender')->comment('性別');
+            $table->tinyInteger('gender')->comment('性別');
             $table->tinyInteger('age')->comment('年齢');
             $table->string('contact', 200)->comment('お問い合わせ内容');
-            $table->timestamps();
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
         });
         DB::statement("ALTER TABLE contact_forms COMMENT 'お問い合わせ'");
     }
@@ -31,7 +32,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('contact_forms');
     }

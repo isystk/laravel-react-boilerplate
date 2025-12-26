@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Domain\Entities\Admin;
+use App\Enums\AdminRole;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AdminsTableSeeder extends Seeder
@@ -13,17 +14,14 @@ class AdminsTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
-        //
-        DB::table('admins')->truncate();
-        DB::table('admins')->insert([
-            [
-                'name' => '管理者A',
-                'email' => 'sample@sample.com',
-                'password' => Hash::make('password'),
-                'role' => 'high-manager',
-            ],
+        Admin::truncate();
+        Admin::create([
+            'name' => '管理者A',
+            'email' => 'sample@sample.com',
+            'password' => Hash::make('password'),
+            'role' => AdminRole::HighManager->value,
         ]);
     }
 }

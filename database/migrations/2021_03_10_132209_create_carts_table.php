@@ -16,7 +16,8 @@ return new class extends Migration
             $table->bigIncrements('id')->comment('カートID');
             $table->unsignedBigInteger('stock_id')->comment('商品ID');
             $table->unsignedBigInteger('user_id')->comment('ユーザID');
-            $table->timestamps();
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
 
             // 外部キーを追加
             $table->foreign('stock_id')->references('id')->on('stocks');

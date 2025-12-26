@@ -8,9 +8,9 @@ use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class ContactFormControllerTest extends TestCase
+class ContactFormControllerTest extends BaseTest
 {
     use RefreshDatabase;
 
@@ -25,6 +25,8 @@ class ContactFormControllerTest extends TestCase
      */
     public function test_store(): void
     {
+        Storage::fake('s3');
+
         $user1 = $this->createDefaultUser([
             'name' => 'user1',
             'email' => 'user1@test.com',
@@ -39,7 +41,7 @@ class ContactFormControllerTest extends TestCase
             'gender' => Gender::Female->value,
             'age' => Age::Over40->value,
             'contact' => 'お問い合わせ1',
-            'imageFile' => [
+            'image_files' => [
                 UploadedFile::fake()->image('image1.jpg'),
                 UploadedFile::fake()->image('image2.jpg'),
                 UploadedFile::fake()->image('image3.jpg'),
@@ -48,9 +50,9 @@ class ContactFormControllerTest extends TestCase
         ]);
         $response->assertSuccessful();
 
-        // テスト後にファイルを削除
-        Storage::delete('contact/image1.jpg');
-        Storage::delete('contact/image2.jpg');
-        Storage::delete('contact/image3.jpg');
+        // ファイルが存在することをテスト
+        Storage::disk('s3')->assertExists('contact/image1.jpg');
+        Storage::disk('s3')->assertExists('contact/image2.jpg');
+        Storage::disk('s3')->assertExists('contact/image3.jpg');
     }
 }

@@ -112,7 +112,7 @@ https://laraec.isystk.com/admin/
 #### バッチ処理
 
 - 月別売上金額出力バッチ
-- S3商品画像アップロードバッチ
+- 商品画像アップロードバッチ
 
 
 ## 📦 ディレクトリ構造
@@ -260,7 +260,7 @@ $ ./run.sh app login
 > npm run test
 
 # テスト用の商品画像をS3（Minio）にアップロード
-> php artisan s3upload
+> php artisan photo_upload
 ```
 
 ブラウザでアクセス（フロント）

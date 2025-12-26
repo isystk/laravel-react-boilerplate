@@ -4,9 +4,9 @@ namespace Tests\Unit\Utils;
 
 use App\Utils\DateUtil;
 use Carbon\CarbonImmutable;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class DateUtilTest extends TestCase
+class DateUtilTest extends BaseTest
 {
     protected function setUp(): void
     {

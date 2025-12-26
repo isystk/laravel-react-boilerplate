@@ -29,7 +29,7 @@ class UpdateService extends BaseService
      */
     public function update(int $contactFormId, UpdateRequest $request): ContactForm
     {
-        $model = [
+        $contactForm = $this->contactFormRepository->update([
             'user_name' => $request->user_name,
             'title' => $request->title,
             'email' => $request->email,
@@ -37,12 +37,7 @@ class UpdateService extends BaseService
             'gender' => $request->gender,
             'age' => $request->age,
             'contact' => $request->contact,
-        ];
-
-        $contactForm = $this->contactFormRepository->update(
-            $contactFormId,
-            $model
-        );
+        ], $contactFormId);
 
         // お問い合わせ画像テーブルを登録（差分チェックして更新）
         $contactFormImages = $this->contactFormImageRepository->getByContactFormId($contactFormId);
@@ -74,7 +69,7 @@ class UpdateService extends BaseService
                 ]);
 
                 // s3に画像をアップロード
-                $imageFile->storeAs(PhotoType::Contact->type() . '/', $newFileName);
+                $imageFile->storeAs(PhotoType::Contact->type() . '/', $newFileName, 's3');
             }
         }
 

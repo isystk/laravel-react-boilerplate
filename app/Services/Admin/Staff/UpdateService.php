@@ -22,15 +22,10 @@ class UpdateService extends BaseService
      */
     public function update(int $adminId, UpdateRequest $request): Admin
     {
-        $model = [
+        return $this->adminRepository->update([
             'name' => $request->name,
             'email' => $request->email,
             'role' => $request->role,
-        ];
-
-        return $this->adminRepository->update(
-            $adminId,
-            $model
-        );
+        ], $adminId);
     }
 }

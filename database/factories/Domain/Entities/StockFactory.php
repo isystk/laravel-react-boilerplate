@@ -23,7 +23,7 @@ class StockFactory extends Factory
             'name' => $this->faker->text(100),
             'detail' => $this->faker->realText(500),
             'price' => $this->faker->numberBetween(1, 6),
-            'imgpath' => $this->faker->image('/tmp', 400, 300, null, false),
+            'image_file_name' => $this->faker->image('/tmp', 400, 300, null, false),
             'quantity' => $this->faker->numberBetween(0, 10),
         ];
     }

@@ -3,24 +3,31 @@
 namespace Domain\Entities;
 
 use App\Domain\Entities\ImportHistory;
+use App\Enums\ImportType;
 use App\Enums\JobStatus;
-use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
+use Tests\BaseTest;
 
-class ImportHistoryTest extends TestCase
+class ImportHistoryTest extends BaseTest
 {
-    private ImportHistory $sub;
+    use RefreshDatabase;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->sub = new ImportHistory;
     }
 
-    public function test_get_status(): void
+    public function test_正しくキャストされる事(): void
     {
-        $this->sub->status = JobStatus::Success->value;
-        $result = $this->sub->getStatus();
-        $this->assertInstanceOf(JobStatus::class, $result);
-        $this->assertSame(JobStatus::Success->value, $result->value);
+        $model = $this->createDefaultImportHistory([
+            'type' => ImportType::Staff->value,
+            'status' => JobStatus::Success->value,
+        ]);
+
+        $this->assertInstanceOf(ImportType::class, $model->type);
+        $this->assertInstanceOf(JobStatus::class, $model->status);
+        $this->assertInstanceOf(Carbon::class, $model->created_at);
+        $this->assertInstanceOf(Carbon::class, $model->updated_at);
     }
 }

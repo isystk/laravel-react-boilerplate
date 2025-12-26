@@ -4,9 +4,9 @@ namespace Tests\Unit\Services\Api\Stock;
 
 use App\Services\Api\Stock\IndexService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class IndexServiceTest extends TestCase
+class IndexServiceTest extends BaseTest
 {
     use RefreshDatabase;
 

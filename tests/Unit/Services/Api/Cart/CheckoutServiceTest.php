@@ -6,9 +6,9 @@ use App\Domain\Entities\Order;
 use App\Domain\Entities\Stock;
 use App\Services\Api\Cart\CheckoutService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class CheckoutServiceTest extends TestCase
+class CheckoutServiceTest extends BaseTest
 {
     use RefreshDatabase;
 

@@ -46,7 +46,7 @@
                 <div class="control-group">
                     <label class="col-sm-2 control-label">{{ __('staff.Role') }}</label>
                     <div class="col-sm-4">
-                        {{ App\Enums\AdminRole::getLabel($staff->role) }}
+                        {{ $staff->role->label() }}
                     </div>
                 </div>
             </div>

@@ -47,11 +47,10 @@ case "${1}" in
         if confirm "イメージ、ボリューム、vendor、node_modules、および storage が削除されます。続行しますか？"; then
             $DOCKER_COMPOSE down --rmi all --volumes
             pushd "$DOCKER_HOME" >/dev/null
-            rm -rf ./mysql/logs && mkdir -p ./mysql/logs && chmod 777 ./mysql/logs
-            rm -rf ./app/logs && mkdir -p ./app/logs && chmod 777 ./app/logs
+            rm -rf ./mysql/logs && mkdir -p ./mysql/logs && chmod 755 ./mysql/logs
+            rm -rf ./app/logs && mkdir -p ./app/logs && chmod 755 ./app/logs
             popd >/dev/null
             rm -rf "$BASE_DIR/vendor" "$BASE_DIR/node_modules"
-            rm -rf "$BASE_DIR/storage/app/"*
             echo "Initialized."
         else
             echo "Aborted."
@@ -163,19 +162,6 @@ case "${1}" in
                 usage
                 ;;
         esac
-        ;;
-
-    ## Gitの差分をGeminiで30文字程度に要約します。
-    summarize)
-        # 未コミットの差分を取得
-        DIFF=$(git diff HEAD)
-        if [ -z "$DIFF" ]; then
-            echo "要約する差分がありません。"
-            exit 0
-        fi
-        echo "Geminiで変更点を要約中..."
-        # gemini cli を呼び出し
-        echo "$DIFF" | gemini -p "以下のgit diffを、日本語で30文字程度で簡潔に要約してください。1行で、文末の句読点は不要です。"
         ;;
 
     ## ヘルプを表示します。

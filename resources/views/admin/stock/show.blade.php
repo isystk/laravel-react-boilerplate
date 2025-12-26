@@ -56,7 +56,7 @@
                         id="result"
                     >
                         <img
-                            src="{{ asset('/uploads/stock/'.$stock->imgpath) }}"
+                            src="{{ asset('/uploads/stock/'.$stock->image_file_name) }}"
                             alt=""
                             width="200px"
                             id="stockImage"

@@ -3,17 +3,20 @@
 namespace Domain\Entities;
 
 use App\Domain\Entities\User;
-use Carbon\Carbon;
-use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
+use Tests\BaseTest;
 
-class UserTest extends TestCase
+class UserTest extends BaseTest
 {
+    use RefreshDatabase;
+
     private User $sub;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->sub = new User;
+        $this->sub = new User();
     }
 
     public function test_is_email_verified(): void

@@ -5,9 +5,9 @@ namespace Http\Controllers\Admin\User;
 use App\Enums\AdminRole;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class ListControllerTest extends TestCase
+class ListControllerTest extends BaseTest
 {
     use RefreshDatabase;
 
@@ -39,6 +39,6 @@ class ListControllerTest extends TestCase
 
         $response = $this->get(route('admin.user'));
         $response->assertSuccessful();
-        $response->assertSeeInOrder(['user1', 'user2']);
+        $response->assertSeeInOrder(['user2', 'user1']);
     }
 }

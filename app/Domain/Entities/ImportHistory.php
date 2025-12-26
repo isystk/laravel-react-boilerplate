@@ -2,23 +2,24 @@
 
 namespace App\Domain\Entities;
 
+use App\Enums\ImportType;
 use App\Enums\JobStatus;
-use Carbon\Carbon;
 use Database\Factories\Domain\Entities\ImportHistoryFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
  * @property int $job_id
- * @property int $type
+ * @property ImportType $type
  * @property string $file_name
- * @property int $status
+ * @property JobStatus $status
  * @property int $import_user_id
  * @property Carbon|null $import_at
  * @property string $save_file_name
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  */
 class ImportHistory extends Model
 {
@@ -48,13 +49,10 @@ class ImportHistory extends Model
      * @var array<string, string>
      */
     protected $casts = [
+        'type' => ImportType::class,
+        'status' => JobStatus::class,
         'import_at' => 'datetime',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
-
-    public function getStatus(): ?JobStatus
-    {
-        return JobStatus::get($this->status);
-    }
 }

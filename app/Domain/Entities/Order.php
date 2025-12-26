@@ -2,18 +2,18 @@
 
 namespace App\Domain\Entities;
 
-use Carbon\Carbon;
 use Database\Factories\Domain\Entities\OrderFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
  * @property int $user_id
  * @property int|null $sum_price
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  */
 class Order extends Model
 {

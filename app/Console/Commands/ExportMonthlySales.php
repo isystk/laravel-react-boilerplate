@@ -3,72 +3,52 @@
 namespace App\Console\Commands;
 
 use App\Services\Commands\ExportMonthlySalesService;
-use Illuminate\Console\Command;
+use Symfony\Component\Console\Command\Command as CommandAlias;
 
-class ExportMonthlySales extends Command
+class ExportMonthlySales extends BaseCommand
 {
-    protected $signature = 'export_monthly_sales {output_path}';
+    protected $signature = 'export_monthly_sales
+        {output_path : 出力ファイルパス}
+        {--run : このオプションを指定した場合のみ本実行を行う(未指定時はドライラン)}';
+    protected $description = '
+        月別売上金額出力バッチ。
+        ・月別売上データを取得する。
+        ・引数で指定したパスにCSVファイルを出力する。
+    ';
 
-    protected $description = '月別売上金額出力バッチ';
-
-    /**
-     * Execute the console command.
-     */
-    public function handle(): void
-    {
-        $this->info('Start ExportMonthlySales. pid[' . getmypid() . ']');
-        $outputPath = $this->argument('output_path');
-
-        $header = $this->getHeader();
-        $rows = $this->getDetail();
-
-        $file = fopen($outputPath, 'wb');
-        // 先頭にBOMを追加
-        fwrite($file, "\xEF\xBB\xBF");
-        fputcsv($file, $header, ',', '"');
-        foreach ($rows as $row) {
-            fputcsv($file, $row, ',', '"');
-        }
-        fclose($file);
-
-        $this->info('Output succeeded. The number of records is ' . count($rows) . '. $outputPath');
-        $this->info('End ExportMonthlySales. pid[' . getmypid() . ']');
-    }
-
-    /**
-     * CSVファイルに出力するヘッダーを返却します。
-     *
-     * @return string[]
-     */
-    private function getHeader(): array
-    {
-        return [
-            '年月',
-            '注文件数',
-            '売上金額',
-        ];
-    }
-
-    /**
-     * CSVファイルに出力する内容を返却します。
-     *
-     * @return string[][]
-     */
-    private function getDetail(): array
+    public function handle(): int
     {
         $service = app(ExportMonthlySalesService::class);
-        // 出力対象の月別売上データを取得します。
-        $monthlySales = $service->getMonthlySales();
 
-        $rows = [];
-        foreach ($monthlySales as $monthlySale) {
-            $row = [];
-            $row[] = $monthlySale->year_month ?? ''; // 年月
-            $row[] = (string) $monthlySale->order_count; // 注文件数
-            $row[] = (string) $monthlySale->amount; // 売上金額
-            $rows[] = $row;
+        // 引数の入力チェック
+        $args = array_merge($this->argument(), $this->option());
+        $errors = $service->validateArgs($args);
+        if (0 < count($errors)) {
+            $this->error(implode("\n", $errors));
+            return CommandAlias::INVALID;
         }
 
-        return $rows;
+        // オプションの取得
+        $outputPath  = $this->argument('output_path');
+        $this->isRealRun = $this->option('run');
+
+        $this->outputLog(['処理が開始しました。pid[' . getmypid() . ']']);
+
+        [$header, $detail] = $service->getCsvData();
+
+        if ($this->isRealRun) {
+            $file = fopen($outputPath, 'wb');
+            // 先頭にBOMを追加
+            fwrite($file, "\xEF\xBB\xBF");
+            fputcsv($file, $header, ',', '"');
+            foreach ($detail as $row) {
+                fputcsv($file, $row, ',', '"');
+            }
+            fclose($file);
+        }
+
+        $this->outputLog(["出力対象の月別売上データをCSV出力しました。[{$outputPath}]"]);
+        $this->outputLog(['処理が終了しました。']);
+        return CommandAlias::SUCCESS;
     }
 }

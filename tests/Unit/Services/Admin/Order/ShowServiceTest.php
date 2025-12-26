@@ -4,9 +4,9 @@ namespace Tests\Unit\Services\Admin\Order;
 
 use App\Services\Admin\Order\ShowService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class ShowServiceTest extends TestCase
+class ShowServiceTest extends BaseTest
 {
     use RefreshDatabase;
 

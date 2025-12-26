@@ -26,25 +26,22 @@ class UpdateService extends BaseService
     {
         $fileName = $request->fileName;
 
-        $model = [
+        $data = [
             'name' => $request->input('name'),
             'detail' => $request->input('detail'),
             'price' => $request->input('price'),
             'quantity' => $request->input('quantity'),
         ];
         if (!empty($fileName)) {
-            $model['imgpath'] = $fileName;
+            $data['image_file_name'] = $fileName;
         }
 
-        $stock = $this->stockRepository->update(
-            $stockId,
-            $model
-        );
+        $stock = $this->stockRepository->update($data, $stockId);
 
         if (null !== $fileName) {
             // s3に画像をアップロード
             $tmpFile = UploadImage::convertBase64($request->imageBase64);
-            $tmpFile->storeAs(PhotoType::Stock->type(), $fileName);
+            $tmpFile->storeAs(PhotoType::Stock->type(), $fileName, 's3');
         }
 
         return $stock;

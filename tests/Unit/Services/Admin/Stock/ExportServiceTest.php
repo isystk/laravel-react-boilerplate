@@ -6,9 +6,9 @@ use App\Dto\Request\Admin\Stock\SearchConditionDto;
 use App\Services\Admin\Stock\ExportService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class ExportServiceTest extends TestCase
+class ExportServiceTest extends BaseTest
 {
     use RefreshDatabase;
 

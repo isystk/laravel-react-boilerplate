@@ -4,9 +4,9 @@ namespace Domain\Repositories\Order;
 
 use App\Domain\Repositories\Order\OrderStockRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class OrderStockRepositoryTest extends TestCase
+class OrderStockRepositoryTest extends BaseTest
 {
     use RefreshDatabase;
 

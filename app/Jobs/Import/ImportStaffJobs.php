@@ -25,7 +25,8 @@ class ImportStaffJobs extends BaseImportJobs
      */
     protected function importData(array $rows): void
     {
-        app(StaffRegistService::class)->exec(
+        $service = app(StaffRegistService::class);
+        $service->exec(
             $rows,
             function ($message) {
                 $this->outputLog($message);

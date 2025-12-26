@@ -6,9 +6,9 @@ use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class EditControllerTest extends TestCase
+class EditControllerTest extends BaseTest
 {
     use RefreshDatabase;
 
@@ -52,7 +52,7 @@ class EditControllerTest extends TestCase
      */
     public function test_update(): void
     {
-        Storage::fake();
+        Storage::fake('s3');
 
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
@@ -66,7 +66,7 @@ class EditControllerTest extends TestCase
             'detail' => 'aaaの説明',
             'price' => 111,
             'quantity' => 1,
-            'imgpath' => 'image1.jpg',
+            'image_file_name' => 'image1.jpg',
         ]);
 
         // manager権限ではアクセスできないことのテスト
@@ -100,7 +100,10 @@ class EditControllerTest extends TestCase
             'detail' => 'bbbの説明',
             'price' => 222,
             'quantity' => 2,
-            'imgpath' => 'image2.jpg',
+            'image_file_name' => 'image2.jpg',
         ]);
+
+        // ファイルが存在することをテスト
+        Storage::disk('s3')->assertExists('stock/image2.jpg');
     }
 }

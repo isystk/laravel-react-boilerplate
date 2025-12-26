@@ -12,9 +12,8 @@ class ContactFormSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
-        //
         ContactForm::factory()->count(200)->create(); // 200個のダミーデータを作成する。
     }
 }

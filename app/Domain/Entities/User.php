@@ -4,12 +4,12 @@ namespace App\Domain\Entities;
 
 use App\Mails\ResetPasswordToUser;
 use App\Mails\VerifyEmailToUser;
-use Carbon\Carbon;
 use Database\Factories\Domain\Entities\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -22,8 +22,8 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property Carbon|null $email_verified_at
  * @property string|null $password
  * @property string|null $remember_token
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  */
 class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {

@@ -5,9 +5,9 @@ namespace Domain\Repositories\ContactForm;
 use App\Domain\Entities\ContactForm;
 use App\Domain\Repositories\ContactForm\ContactFormRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class ContactFormRepositoryTest extends TestCase
+class ContactFormRepositoryTest extends BaseTest
 {
     use RefreshDatabase;
 

@@ -36,7 +36,7 @@
                 <div class="control-group">
                     <label class="col-sm-6 control-label">{{ __('contact.Gender') }}</label>
                     <div class="col-sm-12">
-                        {{ $contactForm->getGender()?->label() }}
+                        {{ $contactForm->gender->label() }}
                     </div>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                 <div class="control-group">
                     <label class="col-sm-6 control-label">{{ __('contact.Age') }}</label>
                     <div class="col-sm-12">
-                        {{ $contactForm->getAge()?->label() }}
+                        {{ $contactForm->age->label() }}
                     </div>
                 </div>
             </div>

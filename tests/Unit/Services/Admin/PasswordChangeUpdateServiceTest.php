@@ -5,9 +5,9 @@ namespace Services\Admin;
 use App\Services\Admin\PasswordChangeUpdateService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class PasswordChangeUpdateServiceTest extends TestCase
+class PasswordChangeUpdateServiceTest extends BaseTest
 {
     use RefreshDatabase;
 

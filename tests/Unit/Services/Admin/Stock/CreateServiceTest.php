@@ -7,9 +7,9 @@ use App\Http\Requests\Admin\Stock\StoreRequest;
 use App\Services\Admin\Stock\CreateService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class CreateServiceTest extends TestCase
+class CreateServiceTest extends BaseTest
 {
     use RefreshDatabase;
 
@@ -26,7 +26,7 @@ class CreateServiceTest extends TestCase
      */
     public function test_create(): void
     {
-        Storage::fake();
+        Storage::fake('s3');
 
         $request = new StoreRequest;
         $request['name'] = 'aaa';
@@ -43,6 +43,9 @@ class CreateServiceTest extends TestCase
         $this->assertEquals('aaaの説明', $updatedStock->detail);
         $this->assertEquals(111, $updatedStock->price);
         $this->assertEquals(1, $updatedStock->quantity);
-        $this->assertEquals('stock1.jpg', $updatedStock->imgpath);
+        $this->assertEquals('stock1.jpg', $updatedStock->image_file_name);
+
+        // ファイルが存在することをテスト
+        Storage::disk('s3')->assertExists('stock/stock1.jpg');
     }
 }

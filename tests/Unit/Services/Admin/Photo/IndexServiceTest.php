@@ -6,9 +6,9 @@ use App\Enums\PhotoType;
 use App\Services\Admin\Photo\IndexService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class IndexServiceTest extends TestCase
+class IndexServiceTest extends BaseTest
 {
     use RefreshDatabase;
 
@@ -25,7 +25,8 @@ class IndexServiceTest extends TestCase
      */
     public function test_search_photo_list(): void
     {
-        Storage::fake();
+        Storage::fake('s3');
+        $storage = Storage::disk('s3');
 
         $default = [
             'file_name' => null,
@@ -36,9 +37,9 @@ class IndexServiceTest extends TestCase
         $this->assertCount(0, $photos, '引数がない状態でエラーにならないことを始めにテスト');
 
         // テスト用のファイルを作成
-        Storage::put('contact\contact1.jpg', '');
-        Storage::put('stock\stock1.jpg', '');
-        Storage::put('stock\stock2.jpg', '');
+        $storage->put('contact\contact1.jpg', 'dummy');
+        $storage->put('stock\stock1.jpg', 'dummy');
+        $storage->put('stock\stock2.jpg', 'dummy');
 
         $input = $default;
         $input['file_name'] = 'stock1.jpg';

@@ -5,9 +5,9 @@ namespace Http\Controllers\Admin\Stock;
 use App\Enums\AdminRole;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class ListControllerTest extends TestCase
+class ListControllerTest extends BaseTest
 {
     use RefreshDatabase;
 
@@ -31,8 +31,8 @@ class ListControllerTest extends TestCase
         ]);
         $this->actingAs($admin, 'admin');
 
-        $response = $this->get(route('admin.stock') . '?sort_name=id&sort_direction=asc');
+        $response = $this->get(route('admin.stock'));
         $response->assertSuccessful();
-        $response->assertSeeInOrder(['stock1', 'stock2']);
+        $response->assertSeeInOrder(['stock2', 'stock1']);
     }
 }

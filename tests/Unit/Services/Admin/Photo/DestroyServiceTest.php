@@ -5,9 +5,9 @@ namespace Tests\Unit\Services\Admin\Photo;
 use App\Services\Admin\Photo\DestroyService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class DestroyServiceTest extends TestCase
+class DestroyServiceTest extends BaseTest
 {
     use RefreshDatabase;
 
@@ -24,13 +24,16 @@ class DestroyServiceTest extends TestCase
      */
     public function test_delete(): void
     {
+        Storage::fake('s3');
+        $storage = Storage::disk('s3');
+
         // テスト用のファイルを作成
         $filePath = 'stock\test.jpg';
-        Storage::put($filePath, '');
+        $storage->put($filePath, 'dummy');
 
         $this->service->delete($filePath);
 
         // ファイルが削除されたかを確認
-        $this->assertFileDoesNotExist(storage_path('app/' . $filePath));
+        $this->assertFalse($storage->exists($filePath));
     }
 }

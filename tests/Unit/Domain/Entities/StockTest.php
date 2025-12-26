@@ -3,16 +3,19 @@
 namespace Domain\Entities;
 
 use App\Domain\Entities\Stock;
-use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\BaseTest;
 
-class StockTest extends TestCase
+class StockTest extends BaseTest
 {
+    use RefreshDatabase;
+
     private Stock $sub;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->sub = new Stock;
+        $this->sub = new Stock();
     }
 
     public function test_has_quantity(): void

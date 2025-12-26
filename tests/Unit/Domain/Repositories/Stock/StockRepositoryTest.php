@@ -5,9 +5,9 @@ namespace Domain\Repositories\Stock;
 use App\Domain\Entities\Stock;
 use App\Domain\Repositories\Stock\StockRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class StockRepositoryTest extends TestCase
+class StockRepositoryTest extends BaseTest
 {
     use RefreshDatabase;
 

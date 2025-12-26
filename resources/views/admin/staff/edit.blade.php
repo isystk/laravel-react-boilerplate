@@ -90,7 +90,7 @@
                                 @foreach(App\Enums\AdminRole::cases() as $item)
                                     <option
                                         value="{{ $item->value }}"
-                                        {{ ($item->value === old('role', $staff->role)) ? 'selected' : '' }}
+                                        {{ ($item->value === old('role', $staff->role->value)) ? 'selected' : '' }}
                                     >{{ $item->label() }}</option>
                                 @endforeach
                             </select>

@@ -129,9 +129,9 @@
                                         name="fileName"
                                         value="{{ old('fileName') }}"
                                     />
-                                @elseif ($stock->imgpath)
+                                @elseif ($stock->image_file_name)
                                     <img
-                                        src="{{ asset('uploads/stock/' . $stock->imgpath) }}"
+                                        src="{{ asset('uploads/stock/' . $stock->image_file_name) }}"
                                         width="200px"
                                         id="stockImage"
                                     >

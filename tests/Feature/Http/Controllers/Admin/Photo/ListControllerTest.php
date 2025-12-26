@@ -5,9 +5,9 @@ namespace Http\Controllers\Admin\Photo;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class ListControllerTest extends TestCase
+class ListControllerTest extends BaseTest
 {
     use RefreshDatabase;
 
@@ -22,7 +22,8 @@ class ListControllerTest extends TestCase
      */
     public function test_index(): void
     {
-        Storage::fake();
+        Storage::fake('s3');
+        $storage = Storage::disk('s3');
 
         $admin = $this->createDefaultAdmin([
             'name' => '管理者A',
@@ -31,9 +32,9 @@ class ListControllerTest extends TestCase
         $this->actingAs($admin, 'admin');
 
         // テスト用のファイルを作成
-        Storage::put('contact\contact1.jpg', '');
-        Storage::put('stock\stock1.jpg', '');
-        Storage::put('stock\stock2.jpg', '');
+        $storage->put('contact\contact1.jpg', 'dummy');
+        $storage->put('stock\stock1.jpg', 'dummy');
+        $storage->put('stock\stock2.jpg', 'dummy');
 
         $response = $this->get(route('admin.photo'));
         $response->assertSuccessful();
@@ -49,7 +50,8 @@ class ListControllerTest extends TestCase
      */
     public function test_destroy(): void
     {
-        Storage::fake();
+        Storage::fake('s3');
+        $storage = Storage::disk('s3');
 
         $admin = $this->createDefaultAdmin([
             'name' => '管理者A',
@@ -58,8 +60,8 @@ class ListControllerTest extends TestCase
         $this->actingAs($admin, 'admin');
 
         // テスト用のファイルを作成
-        Storage::put('contact\contact1.jpg', '');
-        Storage::put('stock\stock1.jpg', '');
+        $storage->put('contact\contact1.jpg', 'dummy');
+        $storage->put('stock\stock1.jpg', 'dummy');
 
         // manager権限ではアクセスできないことのテスト
         $response = $this->delete(route('admin.photo.destroy'), []);
@@ -77,7 +79,7 @@ class ListControllerTest extends TestCase
         $response = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();
         // ファイルが削除されたことを確認
-        $this->assertFalse(Storage::exists('contact\contact1.jpg'));
+        $this->assertFalse($storage->exists('contact\contact1.jpg'));
 
         $redirectResponse = $this->delete(route('admin.photo.destroy'), [
             'fileName' => 'stock\stock1.jpg',
@@ -85,6 +87,6 @@ class ListControllerTest extends TestCase
         $response = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();
         // ファイルが削除されたことを確認
-        $this->assertFalse(Storage::exists('stock\stock1.jpg'));
+        $this->assertFalse($storage->exists('stock\stock1.jpg'));
     }
 }

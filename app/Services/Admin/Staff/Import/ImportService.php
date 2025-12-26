@@ -48,9 +48,9 @@ class ImportService extends BaseService
         }
         // インポート履歴の登録
         $importHistory = $this->importHistoryRepository->create([
-            'type' => ImportType::Staff->value,
+            'type' => ImportType::Staff,
             'file_name' => $importFile->getClientOriginalName(),
-            'status' => JobStatus::Waiting->value, // ステータスを「処理待ち」で登録
+            'status' => JobStatus::Waiting, // ステータスを「処理待ち」で登録
             'import_user_id' => $admin->id,
             'import_at' => time(),
             'save_file_name' => basename($filePath),

@@ -103,7 +103,7 @@ class StoreRequest extends FormRequest
             'age' => __('contact.Age'),
             'contact' => __('contact.Contact'),
             'url' => __('contact.URL'),
-            'imageFile' => __('contact.Image'),
+            'image_files' => __('contact.Image'),
         ];
     }
 

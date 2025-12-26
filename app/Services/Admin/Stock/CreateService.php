@@ -31,7 +31,7 @@ class CreateService extends BaseService
             'detail' => $request->input('detail'),
             'price' => $request->input('price'),
             'quantity' => $request->input('quantity'),
-            'imgpath' => $fileName,
+            'image_file_name' => $fileName,
         ];
         $stock = $this->stockRepository->create(
             $model
@@ -40,7 +40,7 @@ class CreateService extends BaseService
         if (null !== $fileName) {
             // s3に画像をアップロード
             $tmpFile = UploadImage::convertBase64($request->imageBase64);
-            $tmpFile->storeAs(PhotoType::Stock->type(), $fileName);
+            $tmpFile->storeAs(PhotoType::Stock->type(), $fileName, 's3');
         }
 
         return $stock;

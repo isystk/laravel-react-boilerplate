@@ -4,9 +4,9 @@ namespace Http\Controllers\Admin\Stock;
 
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\BaseTest;
 
-class DetailControllerTest extends TestCase
+class DetailControllerTest extends BaseTest
 {
     use RefreshDatabase;
 
@@ -33,7 +33,7 @@ class DetailControllerTest extends TestCase
             'detail' => 'aaaの説明',
             'price' => 111,
             'quantity' => 1,
-            'imgpath' => 'stock1.jpg',
+            'image_file_name' => 'stock1.jpg',
         ]);
 
         $response = $this->get(route('admin.stock.show', $stock));
