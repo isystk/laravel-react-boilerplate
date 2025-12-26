@@ -38,7 +38,7 @@ if [ -z "$branches" ]; then
 fi
 
 ## 3. ブランチの選択
-echo "❓ 比較対象のリモートブランチを選択してください:"
+echo "❓ 比較対象のリモートブランチの番号を入力してください:"
 if command -v fzf >/dev/null 2>&1; then
     selected_branch=$(echo "$branches" | fzf --height 40% --reverse --border --header="Select target branch")
 else
@@ -70,10 +70,10 @@ fi
 
 ## 5. 差分の取得（トークン制限対策）
 # 統計情報（どのファイルがどれだけ変わったか）
-DIFF_STAT=$(git diff --stat HEAD..origin/"$selected_branch")
+DIFF_STAT=$(git diff --stat origin/"$selected_branch"..HEAD)
 
 # 実際の差分（トークン溢れを防ぐため、空白無視・1000行制限）
-DIFF_CONTENT=$(git diff -w HEAD..origin/"$selected_branch" | head -n 1000)
+DIFF_CONTENT=$(git diff -w origin/"$selected_branch"..HEAD | head -n 1000)
 
 if [ -z "$DIFF_STAT" ]; then
     echo "✅ 差分はありません（現在のブランチは最新です）。"
