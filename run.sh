@@ -158,6 +158,12 @@ case "${1}" in
                     ./vendor/bin/phpunit --display-phpunit-deprecations
                 ;;
 
+            ## コードカバレッジレポートを出力します。
+            test:coverage)
+                $DOCKER_COMPOSE exec -e XDEBUG_MODE=coverage app \
+                    ./vendor/bin/phpunit --coverage-text --display-phpunit-deprecations
+                ;;
+
             *)
                 usage
                 ;;
