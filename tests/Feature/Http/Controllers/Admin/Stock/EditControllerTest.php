@@ -52,7 +52,7 @@ class EditControllerTest extends BaseTest
      */
     public function test_update(): void
     {
-        Storage::fake();
+        Storage::fake('s3');
 
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
@@ -102,5 +102,8 @@ class EditControllerTest extends BaseTest
             'quantity' => 2,
             'image_file_name' => 'image2.jpg',
         ]);
+
+        // ファイルが存在することをテスト
+        Storage::disk('s3')->assertExists('stock/image2.jpg');
     }
 }

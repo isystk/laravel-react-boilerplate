@@ -48,7 +48,7 @@ class CreateControllerTest extends BaseTest
      */
     public function test_store(): void
     {
-        Storage::fake();
+        Storage::fake('s3');
 
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
@@ -88,5 +88,8 @@ class CreateControllerTest extends BaseTest
             'quantity' => 1,
             'image_file_name' => 'image1.jpg',
         ]);
+
+        // ファイルが存在することをテスト
+        Storage::disk('s3')->assertExists('stock/image1.jpg');
     }
 }
