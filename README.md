@@ -125,7 +125,7 @@ graph LR
 [https://docs.microsoft.com/ja-jp/windows/wsl/install](https://docs.microsoft.com/ja-jp/windows/wsl/install)
 
 ```
-# PoswerShellからWSLを起動する
+# PowerShellからWSLを起動する
 $ wsl
 
 # 初回起動時に、ユーザ名とパスワードが聞かれます。
