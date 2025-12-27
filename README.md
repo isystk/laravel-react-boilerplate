@@ -1,7 +1,5 @@
 # 🌙 laravel-react-boilerplate
 
-====
-
 ![CI](https://github.com/isystk/laravel-react-boilerplate/actions/workflows/unitTest.yml/badge.svg)
 ![GitHub issues](https://img.shields.io/github/issues/isystk/laravel-react-boilerplate)
 ![GitHub forks](https://img.shields.io/github/forks/isystk/laravel-react-boilerplate)
