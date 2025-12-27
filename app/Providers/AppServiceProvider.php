@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(UrlGenerator $url): void
     {
         // httpでアクセスされた際に強制的にhttpsに変換する
-//        $url->forceScheme('https');
+        //        $url->forceScheme('https');
 
         // ページネーションでBootstrapを利用する
         Paginator::useBootstrap();

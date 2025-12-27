@@ -2,7 +2,6 @@
 
 namespace Domain\Entities;
 
-use App\Domain\Entities\ImportHistory;
 use App\Enums\ImportType;
 use App\Enums\JobStatus;
 use Illuminate\Foundation\Testing\RefreshDatabase;

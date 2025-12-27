@@ -9,13 +9,16 @@ use Illuminate\Support\Facades\Storage;
 class BaseCommand extends Command
 {
     protected $signature = 'basecommand';
+
     protected $description = 'base command description';
+
     /** 本実行フラグ */
     protected bool $isRealRun;
 
     /**
      * 標準出力およびログファイルへの出力
-     * @param array<string> $messages 出力メッセージの配列
+     *
+     * @param  array<string>  $messages  出力メッセージの配列
      */
     protected function outputLog(array $messages): void
     {

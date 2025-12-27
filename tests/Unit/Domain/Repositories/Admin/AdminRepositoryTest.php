@@ -13,8 +13,9 @@ class AdminRepositoryTest extends BaseTest
     use RefreshDatabase;
 
     private AdminRepository $repository;
+
     /**
-     * @var array<string, mixed> $defaultConditions
+     * @var array<string, mixed>
      */
     private array $defaultConditions;
 
@@ -31,7 +32,6 @@ class AdminRepositoryTest extends BaseTest
             'sort_direction' => null,
             'limit' => null,
         ];
-
     }
 
     public function test_getByConditions(): void
@@ -77,6 +77,7 @@ class AdminRepositoryTest extends BaseTest
         ]);
         $this->assertSame(1, $admins->count(), 'limitで取得件数が指定出来ることをテスト');
     }
+
     public function test_getByConditions_ソートと複数条件の組み合わせ(): void
     {
         // テストデータの準備

@@ -52,7 +52,7 @@ abstract class BaseImportJobs extends BaseJobs
             $import = $this->createImporter()(storage_path('app') . '/private/' . $this->filePath, $this->fileName);
             // 入力チェック
             $errors = $import->validate();
-            if (0 < count($errors)) {
+            if (count($errors) > 0) {
                 throw new RuntimeException(implode(' ', $errors));
             }
             // DB登録処理

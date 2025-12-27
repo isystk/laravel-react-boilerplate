@@ -52,7 +52,7 @@ class Stock extends Model
      */
     public function hasQuantity(): bool
     {
-        return 0 < $this->quantity;
+        return $this->quantity > 0;
     }
 
     /**

@@ -4,8 +4,8 @@ namespace Domain\Entities;
 
 use App\Domain\Entities\Admin;
 use App\Enums\AdminRole;
-use Illuminate\Support\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
 use Tests\BaseTest;
 
 class AdminTest extends BaseTest
@@ -17,7 +17,7 @@ class AdminTest extends BaseTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->sub = new Admin();
+        $this->sub = new Admin;
     }
 
     public function test_正しくキャストされる事(): void

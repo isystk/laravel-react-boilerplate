@@ -23,8 +23,7 @@ abstract class BaseEloquentRepository implements BaseRepository
     }
 
     /**
-     * @param array<string, mixed>  $data
-     * @param int $id
+     * @param  array<string, mixed>  $data
      */
     public function update(array $data, int $id): mixed
     {

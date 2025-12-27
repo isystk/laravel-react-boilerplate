@@ -78,7 +78,7 @@ class LoginControllerTest extends BaseTest
         $oldSessionId = session()->getId();
 
         $response = $this->actingAs($admin, 'admin')
-                         ->post(route('admin.logout'));
+            ->post(route('admin.logout'));
 
         $response->assertRedirect(route('admin.login'));
         $this->assertGuest('admin');

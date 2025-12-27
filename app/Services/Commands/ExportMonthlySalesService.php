@@ -18,7 +18,8 @@ class ExportMonthlySalesService extends BaseService
 
     /**
      * 引数の入力チェックを行い、問題がある場合はエラーメッセージを返却する
-     * @param array<string, mixed> $data
+     *
+     * @param  array<string, mixed>  $data
      * @return string[] エラーメッセージの配列
      */
     public function validateArgs(array $data): array
@@ -34,11 +35,13 @@ class ExportMonthlySalesService extends BaseService
             'output_path' => '出力ファイルパス',
         ];
         $validator = Validator::make($data, $rules, $messages, $attributes);
+
         return $validator->errors()->all();
     }
 
     /**
      * CSV出力データを取得します。
+     *
      * @return array{
      *     0: string[],
      *     1: string[][]

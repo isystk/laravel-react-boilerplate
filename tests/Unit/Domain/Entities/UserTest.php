@@ -19,7 +19,7 @@ class UserTest extends BaseTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->sub = new User();
+        $this->sub = new User;
     }
 
     public function test_isEmailVerified(): void

@@ -17,7 +17,8 @@ class BaseEloquentRepositoryTest extends BaseTest
     {
         parent::setUp();
 
-        $this->repository = new class extends BaseEloquentRepository {
+        $this->repository = new class extends BaseEloquentRepository
+        {
             protected function model(): string
             {
                 return User::class;

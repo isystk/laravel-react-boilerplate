@@ -15,7 +15,7 @@ class StockTest extends BaseTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->sub = new Stock();
+        $this->sub = new Stock;
     }
 
     public function test_hasQuantity(): void

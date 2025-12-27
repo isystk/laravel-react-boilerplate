@@ -10,6 +10,7 @@ class ExportMonthlySales extends BaseCommand
     protected $signature = 'export_monthly_sales
         {output_path : 出力ファイルパス}
         {--run : このオプションを指定した場合のみ本実行を行う(未指定時はドライラン)}';
+
     protected $description = '
         月別売上金額出力バッチ。
         ・月別売上データを取得する。
@@ -23,13 +24,14 @@ class ExportMonthlySales extends BaseCommand
         // 引数の入力チェック
         $args = array_merge($this->argument(), $this->option());
         $errors = $service->validateArgs($args);
-        if (0 < count($errors)) {
+        if (count($errors) > 0) {
             $this->error(implode("\n", $errors));
+
             return CommandAlias::INVALID;
         }
 
         // オプションの取得
-        $outputPath  = $this->argument('output_path');
+        $outputPath = $this->argument('output_path');
         $this->isRealRun = $this->option('run');
 
         $this->outputLog(['処理が開始しました。pid[' . getmypid() . ']']);
@@ -49,6 +51,7 @@ class ExportMonthlySales extends BaseCommand
 
         $this->outputLog(["出力対象の月別売上データをCSV出力しました。[{$outputPath}]"]);
         $this->outputLog(['処理が終了しました。']);
+
         return CommandAlias::SUCCESS;
     }
 }
