@@ -1,4 +1,5 @@
-🌙 laravel-react-boilerplate
+# 🌙 laravel-react-boilerplate
+
 ====
 
 ![CI](https://github.com/isystk/laravel-react-boilerplate/actions/workflows/unitTest.yml/badge.svg)
@@ -9,51 +10,40 @@
 
 ## 📗 プロジェクトの概要
 
-Laravel ＆ React.js の学習用サンプルアプリケーションです。
+Laravel 12 ＆ React 19 の学習用サンプルアプリケーションです。
+Dockerを利用したクリーンな開発環境を提供し、ECサイトの基本機能を網羅しています。
 
 ### 対象としている方
-- Laravelを初めて学習してみたい方
-- Dockerを利用したLaravelの開発環境を構築したい方
-- ECサイトを学習してみたい方
-- フロントと管理画面で認証を別けたい（マルチログイン）をしたい方
-- Stripeを利用した決算処理を作成してみたい方
-- ソーシャルログインを作成してみたい方
-- 画像の管理をS3などのオブジェクトストレージにしたい方
-- フロントエンドをReact.jsで作成してみたい方
+
+* Laravel / React を最新バージョンで学習したい方
+* Docker（Compose）を利用した標準的な開発環境を構築したい方
+* ECサイトの決済（Stripe）や画像管理（S3/Minio）の実装例を見たい方
+* マルチログイン認証（フロント/管理画面）を実装したい方
+* ソーシャルログイン（Google）を導入してみたい方
 
 ### 利用している技術
 
 #### インフラ
-- Apache 2.4.46　・・・　WebサーバーとしてApacheを採用しました。自己証明書を設定済みなので開発環境でSSLとして動作可能です。
-- MySQL 8　・・・　DBサーバーにはMySQLを採用しました。データファイルや設定ファイル、 ログなどはコンテナの外に出して 開発時に参照出来るようにしています。
-- adminer　・・・　起動したMySQLのデータを参照・編集するためのツールです。
-- mailpit 　・・・　ダミーのSMTPサーバーです。送信したメールをブラウザで閲覧することが可能です。実際にはメールは送信されないので開発時の誤送信してしまう心配がありません。
-- Minio 　・・・　S3に完全互換性のあるオブジェクトストレージです。アップロードした画像の保存先として利用しています。
+
+* **Apache 2.4**：自己証明書設定済み。SSL環境で動作します。
+* **MySQL 8**：データ、設定、ログは外部参照可能にマウント。
+* **Adminer**：DB管理ツール。
+* **Mailpit**：メールキャッチツール。
+* **Minio**：S3互換ストレージ。画像保存先として利用。
 
 #### 使用しているライブラリ
 
-- Laravel 12
-- React 19
-- Typescript
-- Adminlte 3
+* **Backend**: Laravel 12 / PHP 8.2+
+* **Frontend**: React 19 / TypeScript / Tailwind CSS
+* **Design**: AdminLTE 3 (管理画面) / Storybook (コンポーネント管理)
 
 ## 🌐 Demo
 
 #### フロント画面（React）
 
-https://laraec.isystk.com/
+[https://laraec.isystk.com](https://laraec.isystk.com)
 
 ![フロント画面](./documents/front.png "フロント画面")
-
-- ログイン/ログアウト
-- 会員登録
-- パスワードリマインダ
-- 商品一覧
-- カートに追加
-- 決算処理（Stripe）
-- お気に入り追加
-- お問い合わせ
-- ソーシャルログイン（Google）
 
 ```mermaid
 graph LR
@@ -93,116 +83,51 @@ graph LR
   end
 ```
 
-#### 管理画面（Bootstrap）
+#### 管理画面
 
-https://laraec.isystk.com/admin/
+[https://laraec.isystk.com/admin/](https://laraec.isystk.com/admin/)
 
 ![管理画面](./documents/admin.png "管理画面")
-
-- ログイン/ログアウト
-- 商品管理
-- 注文履歴
-- 顧客管理
-- お問い合わせ管理
-- 画像管理
-- CSVダウンロード
-- PDFダウンロード
-- 画像アップロード
 
 #### バッチ処理
 
 - 月別売上金額出力バッチ
 - 商品画像アップロードバッチ
 
-
 ## 📦 ディレクトリ構造
 
 ```
 .
-├── .circleci
-│   └── config.yml
-├── app
-│   ├── Console (バッチ)
-│   ├── Domain（ドメイン層）
-│   │   ├── Entities（エンティティ）
-│   │   └── Repositories（リポジトリー）
-│   ├── Enums (定数)
-│   ├── Exceptions (例外処理)
-│   ├── FileIO (インポート・エクスポート)
-│   ├── Http （プレゼンテーション層）
-│   ├── Jobs （Job Queue）
-│   ├── Mail （メール）
-│   ├── Observers （オブサーバー）
-│   ├── Providers（サービスプロバイダー）
-│   ├── Services（ビジネスロジック）
-│   └── Utils（共通ユーティル）
-├── bootstrap
-│   ├── app.php
-│   ├── cache
-│   └── providers.php
-├── config
-│   ├── app.php
-│   ├── auth.php
-│   ├── breadcrumbs.php
-│   ├── cache.php
-│   ├── const.php
-│   ├── database.php
-│   ├── filesystems.php
-│   ├── logging.php
-│   ├── mail.php
-│   ├── queue.php
-│   ├── services.php
-│   └── session.php
-├── database
-│   ├── factories
-│   ├── migrations
-│   └── seeders
-├── docker
-│   ├── app
-│   ├── docker-compose.yml
-│   ├── mysql
-│   └── adminer
-├── documents（ドキュメント関連）
-├── public
-│   ├── .htaccess
-│   ├── assets
-│   │   ├── admin（管理画面用のJavaScript、SASS）
-│   │   └── front（フロント画面用のTypeScript,SASS）
-│   ├── build
-│   ├── favicon.ico
-│   ├── index.php
-│   └── robots.txt
-├── resources
-│   ├── assets
-│   ├── lang
-│   └── views
-├── routes
-│   ├── breadcrumbs
-│   ├── console.php
-│   └── web.php
-├── storage
-│   ├── app
-│   ├── framework
-│   ├── logs
-│   └── test
-├── tests
-│   ├── Feature
-│   ├── TestCase.php
-│   └── Unit
-└── run.sh （Dockerの操作用スクリプト）
+├── app                 # Laravel アプリケーション (Domain層/Service層を分離)
+├── bootstrap           # フレームワーク起動設定
+├── config              # 各種設定ファイル
+├── database            # Migration / Seeder
+├── docker              # Docker設定ファイル (MySQL, Minio等)
+├── documents           # 設計書・規約ドキュメント
+├── public              # 公開ディレクトリ
+├── resources           # Bladeビュー / 言語ファイル
+│   └─── assets
+│       ├── admin       # 管理画面用(AdminLTE)
+│       └── front       # フロント画面(React)
+├── routes              # ルーティング設定
+├── storage             # ログ・キャッシュ・テスト出力
+├── tests               # PHPUnit / Featureテスト
+├── Makefile            # プロジェクト操作用コマンド集
+└── package.json        # フロントエンド依存関係
+
 ```
 
 ## 🔧 開発環境の構築
 
-※ この環境を利用する為には、事前にdocker、docker-composeが動作する状態であることが前提条件です。
-Github CodeSpace を利用する場合は、Dockerの起動から進めてください。
+事前に `docker`, `docker-compose` (または Docker Desktop) が動作する環境が必要です。
 
-### WSLのインストール（Windowsの場合）
-参考
-https://docs.microsoft.com/ja-jp/windows/wsl/install
+### Windowsの場合は、WSLを利用することを推奨します。
+[https://docs.microsoft.com/ja-jp/windows/wsl/install](https://docs.microsoft.com/ja-jp/windows/wsl/install)
 
-WSLでUbuntuを起動する
 ```
+# PoswerShellからWSLを起動する
+$ wsl
+
 # 初回起動時に、ユーザ名とパスワードが聞かれます。
 # 何も入力せずにEnterを押すとroot ユーザーで利用できるようになるので、rootユーザーとして設定します。
 
@@ -223,108 +148,64 @@ $ apt install -y docker-ce docker-compose
 $ service docker start
 ```
 
-### Dockerを起動する
+### 1. Dockerの起動
+
+プロジェクトの操作はすべて **Makefile** に集約されています。
+
+```bash
+# コマンド一覧を表示して確認
+$ make help
+
+# 初期化処理（初回のみ、または環境をフルリセットしたい場合）
+$ make init
+
+# Dockerを起動して各サーバーを構築
+$ make start
+
+# サーバーの状態を確認
+$ make ps
 
 ```
-# 初期化処理（初回のみ、環境をリセットしたい場合に実行する）
-$ ./run.sh init
 
-# Dockerを起動して各サーバーを構築する
-$ ./run.sh start
+### 2. 初期設定・動作確認
 
-# サーバーが立ち上がるまで少し待ちます。(初回は5分程度)
+```bash
+# Webサーバー(appコンテナ)にログイン
+$ make app-login
 
-# MySQLにログインしてみる
-$ ./run.sh mysql login
+# コンテナ内での操作例
+> php artisan photo_upload       # テスト用画像をMinioにアップロード
+> ./vendor/bin/phpunit           # テストの実行
 
-# Webサーバーにログインしてみる
-$ ./run.sh app login
+# コンテナに入らずに実行する場合
+$ make test                      # Lint, Static Analysis, Testing を一括実行
 
-# 起動に問題がある場合は、以下のコマンドで状況を確認してみてください。
-$ ./run.sh st
-$ ./run.sh logs
 ```
 
-### 動作を確認する
-```
-# Webサーバーにログインする（composer や npm などのコマンドは基本的にここで行う）
-$ ./run.sh app login
+### 3. ブラウザでアクセス
 
-# Larastan を実行してコードをチェックする
-> ./vendor/bin/phpstan analyse --memory-limit=1G
+* **フロント画面**: [https://localhost/](https://localhost/)
+* **管理画面**: [https://localhost/admin/](https://localhost/admin/)
 
-# PHPUnit でテストコードを実行する
-> ./vendor/bin/phpunit tests
+---
 
-# React のテストコードを実行する
-> npm run test
+## 🎧 外部ツール・サーバー
 
-# テスト用の商品画像をS3（Minio）にアップロード
-> php artisan photo_upload
-```
+Docker起動後に以下のURLで利用可能です。
 
-ブラウザでアクセス（フロント）
-
-https://localhost/
-
-ブラウザでアクセス（管理画面）
-
-https://localhost/admin/
-
-
-サーバーを停止する場合
-```
-$ ./run.sh stop
-```
-
-## 🎧 利用可能なサーバー
-
-### mailpit 
-ダミーのメールサーバーです。実際にはメールは送信されず、送信されたメールはブラウザで閲覧できます。
-Dockerを起動後に以下のURLにアクセスすると利用可能です。
-
-http://localhost:8025/
-
-### minio
-S3に準拠したダミーのオブジェクトストレージです。
-Dockerを起動後に以下のURLにアクセスすると利用可能です。
-
-http://localhost:9001
-
-以下のID/パスワードでログインが可能です。「laraec.isystk.com」という名前のバケットが存在します。
-Access Policy を「Public」にしているので外部から参照可能に公開されています。
-
-| Username | Password
-|----------|---------
-| admin    | password
-
-![minio](./documents/minio.png "minio")
-
-
-### adminer
-データベースに接続してデータの参照や編集が可能です。
-Dockerを起動後に以下のURLにアクセスすると利用可能です。
-
-http://localhost:8888/
-
-### storybook
-Reactで作成されたコンポーネントの確認が可能です。
-Dockerを起動後に以下のURLにアクセスすると利用可能です。
-
-http://localhost:6006/
-
-![storybook](./documents/storybook.png "storybook")
+| ツール | URL | 用途 |
+| --- | --- | --- |
+| **Mailpit** | http://localhost:8025/ | 送信メールの確認 |
+| **Minio** | http://localhost:9001 | S3互換ストレージ管理 (ID/PW: admin/password) |
+| **Adminer** | http://localhost:8888/ | データベースGUI管理 |
+| **Storybook** | http://localhost:6006/ | UIコンポーネントカタログ |
 
 ## 📖 ドキュメント
 
-| 種類         | リンク                                                                                |
-|:-----------|:-----------------------------------------------------------------------------------|
-| コーディング規約   | [Laravel コーディング規約](./documents/laravel_cording_rule.md)                                |
-| コーディング規約   | [React コーディング規約](./documents/react_cording_rule.md)                                |
-| 公式サイト      | [Laravel12公式ドキュメント](https://readouble.com/laravel/12.x/ja/releases.html)           |
-| 公式サイト      | [Tailwind CSS ドキュメント](https://v3.tailwindcss.com/docs/)                            |
-| 参考サイト      | [React Hooks 全19種の解説とサンプル](https://isystk.github.io/react19-hook-study/study) |
-
+| 種類 | リンク |
+| --- | --- |
+| コーディング規約 | [Laravel 規約](./documents/laravel_cording_rule.md) / [React 規約](./documents/react_cording_rule.md) |
+| 公式リファレンス | [Laravel 12](https://readouble.com/laravel/12.x/ja/releases.html) / [Tailwind CSS](https://v3.tailwindcss.com/docs/) |
 
 ## 🎫 Licence
 
