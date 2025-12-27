@@ -37,13 +37,10 @@ class UpdateRequestTest extends BaseTest
     }
 
     /**
-     * バリデーションのテスト
-     *
      * @param  array<string>  $attrs  変更する値の配列
      * @param  bool  $expect  期待されるバリデーション結果
      * @param  string  $attribute  属性の名称
      * @param  array<string>  $messages  期待されるエラーメッセージ
-     *
      * @throws Exception
      */
     #[Test]
@@ -71,8 +68,6 @@ class UpdateRequestTest extends BaseTest
     }
 
     /**
-     * バリデーションテストデータ
-     *
      * @return array<string, mixed>
      */
     public static function dataValidate(): array
@@ -232,7 +227,6 @@ class UpdateRequestTest extends BaseTest
                 'attribute' => 'url',
                 'messages' => [],
             ],
-
         ];
     }
 }

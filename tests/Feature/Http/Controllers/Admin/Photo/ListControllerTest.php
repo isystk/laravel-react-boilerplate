@@ -17,9 +17,6 @@ class ListControllerTest extends BaseTest
         $this->withoutMiddleware(ValidateCsrfToken::class);
     }
 
-    /**
-     * 画像一覧画面表示のテスト
-     */
     public function test_index(): void
     {
         Storage::fake('s3');
@@ -45,9 +42,6 @@ class ListControllerTest extends BaseTest
         ]);
     }
 
-    /**
-     * 画像一覧画面 削除のテスト
-     */
     public function test_destroy(): void
     {
         Storage::fake('s3');

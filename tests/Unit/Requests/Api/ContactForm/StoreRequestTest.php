@@ -42,7 +42,6 @@ class StoreRequestTest extends BaseTest
      * @param  bool  $expect  期待されるバリデーション結果
      * @param  string  $attribute  属性の名称
      * @param  array<string>  $messages  期待されるエラーメッセージ
-     *
      * @throws Exception
      */
     #[Test]
@@ -69,8 +68,6 @@ class StoreRequestTest extends BaseTest
     }
 
     /**
-     * バリデーションテストデータ
-     *
      * @return array<string, mixed>
      */
     public static function dataValidate(): array
@@ -244,7 +241,6 @@ class StoreRequestTest extends BaseTest
                 'attribute' => 'caution',
                 'messages' => [],
             ],
-
         ];
     }
 }

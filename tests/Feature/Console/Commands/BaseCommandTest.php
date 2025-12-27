@@ -38,7 +38,7 @@ class BaseCommandTest extends BaseTest
         Storage::disk('log')->assertMissing($path);
     }
 
-    public function test_outputLog_リアルラン(): void
+    public function test_outputLog_本実行(): void
     {
         $command = $this->createTestCommand(true);
 

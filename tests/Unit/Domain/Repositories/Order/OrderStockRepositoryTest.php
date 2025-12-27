@@ -19,10 +19,7 @@ class OrderStockRepositoryTest extends BaseTest
         $this->repository = app(OrderStockRepository::class);
     }
 
-    /**
-     * getByOrderIdのテスト
-     */
-    public function test_get_by_order_id(): void
+    public function test_getByOrderId(): void
     {
         $user1 = $this->createDefaultUser(['name' => 'user1', 'email' => 'user1@test.com']);
 

@@ -20,10 +20,7 @@ class CartRepositoryTest extends BaseTest
         $this->repository = app(CartRepository::class);
     }
 
-    /**
-     * getByUserIdのテスト
-     */
-    public function test_get_by_user_id(): void
+    public function test_getByUserId(): void
     {
         $user1 = $this->createDefaultUser(['name' => 'user1', 'email' => 'user1@test.com']);
         $user2 = $this->createDefaultUser(['name' => 'user2', 'email' => 'user2@test.com']);
@@ -44,10 +41,7 @@ class CartRepositoryTest extends BaseTest
         $this->assertSame($expectCartIds, $cartIds, '指定したユーザーのカートが取得されることをテスト');
     }
 
-    /**
-     * deleteByUserIdのテスト
-     */
-    public function test_delete_by_user_id(): void
+    public function test_deleteByUserId(): void
     {
         $user1 = $this->createDefaultUser(['name' => 'user1', 'email' => 'user1@test.com']);
         $user2 = $this->createDefaultUser(['name' => 'user2', 'email' => 'user2@test.com']);

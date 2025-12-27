@@ -19,10 +19,7 @@ class ContactFormImageRepositoryTest extends BaseTest
         $this->repository = app(ContactFormImageRepository::class);
     }
 
-    /**
-     * getByConditionsのテスト
-     */
-    public function test_get_by_conditions(): void
+    public function test_getByContactFormId(): void
     {
         $contactForm1 = $this->createDefaultContactForm(['user_name' => 'user1', 'title' => 'title1']);
         $contactForm2 = $this->createDefaultContactForm(['user_name' => 'user2', 'title' => 'title1']);

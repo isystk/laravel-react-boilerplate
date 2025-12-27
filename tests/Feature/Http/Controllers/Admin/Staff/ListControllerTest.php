@@ -17,9 +17,6 @@ class ListControllerTest extends BaseTest
         $this->withoutMiddleware(ValidateCsrfToken::class);
     }
 
-    /**
-     * スタッフ一覧画面表示のテスト
-     */
     public function test_index(): void
     {
         $this->createDefaultAdmin([

@@ -18,10 +18,7 @@ class ExportServiceTest extends BaseTest
         $this->service = app(ExportService::class);
     }
 
-    /**
-     * getExportのテスト
-     */
-    public function test_get_export(): void
+    public function test_getExport(): void
     {
         $export = $this->service->getExport();
         $this->assertSame(['ID', '名前', 'メールアドレス', '権限'], $export->headings(), 'ヘッダーが正しいこと');

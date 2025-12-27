@@ -21,9 +21,6 @@ class CreateServiceTest extends BaseTest
         $this->service = app(CreateService::class);
     }
 
-    /**
-     * createのテスト
-     */
     public function test_create(): void
     {
         Storage::fake('s3');

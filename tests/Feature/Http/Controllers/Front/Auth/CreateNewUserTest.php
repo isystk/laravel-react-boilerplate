@@ -17,9 +17,6 @@ class CreateNewUserTest extends BaseTest
         $this->withoutMiddleware(ValidateCsrfToken::class);
     }
 
-    /**
-     * ユーザー登録のテスト
-     */
     public function test_create(): void
     {
         $items = [

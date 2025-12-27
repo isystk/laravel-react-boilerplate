@@ -20,9 +20,6 @@ class ContactFormControllerTest extends BaseTest
         $this->withoutMiddleware(ValidateCsrfToken::class);
     }
 
-    /**
-     * お問い合わせ登録APIのテスト
-     */
     public function test_store(): void
     {
         Storage::fake('s3');

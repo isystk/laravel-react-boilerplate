@@ -93,3 +93,7 @@ test: ## 自動テストを実行します。
 	$(DOCKER_CMD) exec app npm run test; \
 	$(DOCKER_CMD) exec app ./vendor/bin/phpstan analyse --memory-limit=1G; \
 	$(DOCKER_CMD) exec -e XDEBUG_MODE=off app ./vendor/bin/phpunit --display-phpunit-deprecations
+
+.PHONY: test-coverage
+test-coverage: ## コードカバレッジレポートを出力します。
+	@$(DOCKER_CMD) exec -e XDEBUG_MODE=coverage app ./vendor/bin/phpunit --coverage-text --display-phpunit-deprecations

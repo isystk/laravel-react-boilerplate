@@ -21,9 +21,6 @@ class UpdateServiceTest extends BaseTest
         $this->service = app(UpdateService::class);
     }
 
-    /**
-     * updateのテスト
-     */
     public function test_update(): void
     {
         $admin1 = $this->createDefaultAdmin([

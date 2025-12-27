@@ -17,9 +17,6 @@ class ListControllerTest extends BaseTest
         $this->withoutMiddleware(ValidateCsrfToken::class);
     }
 
-    /**
-     * 商品一覧画面表示のテスト
-     */
     public function test_index(): void
     {
         $this->createDefaultStock(['name' => 'stock1']);
