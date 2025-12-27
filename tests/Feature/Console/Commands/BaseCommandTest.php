@@ -61,21 +61,24 @@ class BaseCommandTest extends BaseTest
 
     /**
      * テスト用のBaseCommandインスタンスを作成する
-     * @param bool $isRealRun 本実行フラグ
-     * @return BaseCommand
+     *
+     * @param  bool  $isRealRun  本実行フラグ
      */
     private function createTestCommand(bool $isRealRun): BaseCommand
     {
-        $command = new class extends BaseCommand {
+        $command = new class extends BaseCommand
+        {
             protected $signature = 'test:command';
+
             public bool $isRealRun;
+
             public function setIsRealRun(bool $value): void
             {
                 $this->isRealRun = $value;
             }
 
             /**
-             * @param array<int, string> $messages
+             * @param  array<int, string>  $messages
              */
             public function executeOutputLog(array $messages): void
             {
@@ -85,9 +88,10 @@ class BaseCommandTest extends BaseTest
         $command->setIsRealRun($isRealRun);
         $command->setLaravel($this->app);
         $input = new ArrayInput([]);
-        $output = new BufferedOutput();
+        $output = new BufferedOutput;
         $outputStyle = new OutputStyle($input, $output);
         $command->setOutput($outputStyle);
+
         return $command;
     }
 }

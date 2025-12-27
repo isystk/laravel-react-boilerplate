@@ -96,7 +96,7 @@ abstract class BaseImportRequest extends FormRequest
                     $import = $this->createImporter()($this->upload_file->path());
                     // ファイルの中身をチェックする
                     $errors = $import->validate();
-                    if (0 < count($errors)) {
+                    if (count($errors) > 0) {
                         foreach ($errors as $error) {
                             $validator->errors()->add('upload_file', $error);
                         }

@@ -87,7 +87,7 @@ abstract class BaseTest extends TestCase
     public function createDefaultUser(array $params = []): User
     {
         $items = [];
-        if (0 < count($params)) {
+        if (count($params) > 0) {
             $items = array_merge($items, $params);
         }
 
@@ -103,7 +103,7 @@ abstract class BaseTest extends TestCase
     public function createDefaultAdmin(array $params = []): Admin
     {
         $items = [];
-        if (0 < count($params)) {
+        if (count($params) > 0) {
             $items = array_merge($items, $params);
         }
 
@@ -119,7 +119,7 @@ abstract class BaseTest extends TestCase
     public function createDefaultStock(array $params = []): Stock
     {
         $items = [];
-        if (0 < count($params)) {
+        if (count($params) > 0) {
             $items = array_merge($items, $params);
         }
 
@@ -140,7 +140,7 @@ abstract class BaseTest extends TestCase
             'user_id' => $user->id,
             'stock_id' => $stock->id,
         ];
-        if (0 < count($params)) {
+        if (count($params) > 0) {
             $items = array_merge($items, $params);
         }
 
@@ -159,7 +159,7 @@ abstract class BaseTest extends TestCase
         $items = [
             'user_id' => $user->id,
         ];
-        if (0 < count($params)) {
+        if (count($params) > 0) {
             $items = array_merge($items, $params);
         }
 
@@ -182,7 +182,7 @@ abstract class BaseTest extends TestCase
             'price' => 1000,
             'quantity' => 1,
         ];
-        if (0 < count($params)) {
+        if (count($params) > 0) {
             $items = array_merge($items, $params);
         }
 
@@ -198,7 +198,7 @@ abstract class BaseTest extends TestCase
     public function createDefaultContactForm(array $params = []): ContactForm
     {
         $items = [];
-        if (0 < count($params)) {
+        if (count($params) > 0) {
             $items = array_merge($items, $params);
         }
 
@@ -217,7 +217,7 @@ abstract class BaseTest extends TestCase
         $items = [
             'contact_form_id' => $contactForm->id,
         ];
-        if (0 < count($params)) {
+        if (count($params) > 0) {
             $items = array_merge($items, $params);
         }
 
@@ -233,7 +233,7 @@ abstract class BaseTest extends TestCase
     public function createDefaultImportHistory(array $params = []): ImportHistory
     {
         $items = [];
-        if (0 < count($params)) {
+        if (count($params) > 0) {
             $items = array_merge($items, $params);
         }
 
@@ -249,7 +249,7 @@ abstract class BaseTest extends TestCase
     public function createDefaultMonthlySale(array $params = []): MonthlySale
     {
         $items = [];
-        if (0 < count($params)) {
+        if (count($params) > 0) {
             $items = array_merge($items, $params);
         }
 

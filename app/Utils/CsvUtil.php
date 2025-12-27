@@ -15,7 +15,7 @@ class CsvUtil
      */
     public static function make(array $rows, array $headers): string
     {
-        if (0 < count($headers)) {
+        if (count($headers) > 0) {
             array_unshift($rows, $headers);
         }
         $stream = fopen('php://temp', 'r+b');

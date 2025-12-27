@@ -80,24 +80,39 @@ npm-run-dev: ## appコンテナで開発用ビルドを実行します。
 
 .PHONY: npm-run-build
 npm-run-build: ## appコンテナでビルドを実行します。
-	$(DOCKER_CMD) exec app npm run build; $(DOCKER_CMD) exec app npm run build-storybook
+	$(DOCKER_CMD) exec app npm run build; \
+	$(DOCKER_CMD) exec app npm run build-storybook;
 
 .PHONY: prettier
 prettier: ## コードフォーマットを実行します。
-	$(DOCKER_CMD) exec app npm run prettier; $(DOCKER_CMD) exec app ./vendor/bin/pint
+	$(DOCKER_CMD) exec app npm run prettier; \
+	$(DOCKER_CMD) exec app ./vendor/bin/pint;
+
+.PHONY: check
+check: ## コードチェックを実行します。
+	$(DOCKER_CMD) exec app npm run lint; \
+	$(DOCKER_CMD) exec app npm run ts-check; \
+	$(DOCKER_CMD) exec app ./vendor/bin/phpstan analyse --memory-limit=1G;
 
 .PHONY: test
 test: ## 自動テストを実行します。
-	@$(DOCKER_CMD) exec app npm run lint; \
-	$(DOCKER_CMD) exec app npm run ts-check; \
-	$(DOCKER_CMD) exec app npm run test; \
-	$(DOCKER_CMD) exec app ./vendor/bin/phpstan analyse --memory-limit=1G; \
+	@$(DOCKER_CMD) exec app npm run test; \
 	$(DOCKER_CMD) exec -e XDEBUG_MODE=off app ./vendor/bin/phpunit --display-phpunit-deprecations
 
 .PHONY: test-coverage
 test-coverage: ## コードカバレッジレポートを出力します。
-	@$(DOCKER_CMD) exec -e XDEBUG_MODE=coverage app ./vendor/bin/phpunit --coverage-text --display-phpunit-deprecations
+	$(DOCKER_CMD) exec -e XDEBUG_MODE=coverage app ./vendor/bin/phpunit --coverage-text --display-phpunit-deprecations
+
+.PHONY: pre-commit
+pre-commit: ## コミット前にすべてのチェックを実行します。
+	@make prettier
+	@make check
+	@make test
 
 .PHONY: generate-pr
 generate-pr: ## PR用の説明文を生成します。
-	tools/generate-pr.sh
+	tools/run.sh gemini generate-pr
+
+.PHONY: review
+review: ## 変更内容をAIがレビューします。
+	tools/run.sh gemini review

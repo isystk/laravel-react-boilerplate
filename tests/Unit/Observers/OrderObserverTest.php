@@ -3,7 +3,6 @@
 namespace Tests\Unit\Observers;
 
 use App\Domain\Entities\MonthlySale;
-use App\Domain\Entities\Order;
 use App\Observers\OrderObserver;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
@@ -94,7 +93,7 @@ class OrderObserverTest extends BaseTest
     {
         $order = $this->createDefaultOrder();
 
-        $observer = new OrderObserver();
+        $observer = new OrderObserver;
         $observer->deleted($order);
         $observer->restored($order);
         $observer->forceDeleted($order);
