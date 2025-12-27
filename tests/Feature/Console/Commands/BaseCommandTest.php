@@ -22,7 +22,7 @@ class BaseCommandTest extends BaseTest
         Carbon::setTestNow('2025-01-01 10:00:00');
     }
 
-    public function test_outputLog_ドライラン(): void
+    public function test_output_log_ドライラン(): void
     {
         $command = $this->createTestCommand(false);
 
@@ -38,7 +38,7 @@ class BaseCommandTest extends BaseTest
         Storage::disk('log')->assertMissing($path);
     }
 
-    public function test_outputLog_本実行(): void
+    public function test_output_log_本実行(): void
     {
         $command = $this->createTestCommand(true);
 
@@ -61,21 +61,24 @@ class BaseCommandTest extends BaseTest
 
     /**
      * テスト用のBaseCommandインスタンスを作成する
-     * @param bool $isRealRun 本実行フラグ
-     * @return BaseCommand
+     *
+     * @param  bool  $isRealRun  本実行フラグ
      */
     private function createTestCommand(bool $isRealRun): BaseCommand
     {
-        $command = new class extends BaseCommand {
+        $command = new class extends BaseCommand
+        {
             protected $signature = 'test:command';
+
             public bool $isRealRun;
+
             public function setIsRealRun(bool $value): void
             {
                 $this->isRealRun = $value;
             }
 
             /**
-             * @param array<int, string> $messages
+             * @param  array<int, string>  $messages
              */
             public function executeOutputLog(array $messages): void
             {
@@ -85,9 +88,10 @@ class BaseCommandTest extends BaseTest
         $command->setIsRealRun($isRealRun);
         $command->setLaravel($this->app);
         $input = new ArrayInput([]);
-        $output = new BufferedOutput();
+        $output = new BufferedOutput;
         $outputStyle = new OutputStyle($input, $output);
         $command->setOutput($outputStyle);
+
         return $command;
     }
 }

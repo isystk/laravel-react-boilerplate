@@ -13,8 +13,9 @@ class AdminRepositoryTest extends BaseTest
     use RefreshDatabase;
 
     private AdminRepository $repository;
+
     /**
-     * @var array<string, mixed> $defaultConditions
+     * @var array<string, mixed>
      */
     private array $defaultConditions;
 
@@ -31,10 +32,9 @@ class AdminRepositoryTest extends BaseTest
             'sort_direction' => null,
             'limit' => null,
         ];
-
     }
 
-    public function test_getByConditions(): void
+    public function test_get_by_conditions(): void
     {
         $admins = $this->repository->getByConditions($this->defaultConditions);
         $this->assertSame(0, $admins->count(), 'データがない状態で正常に動作することを始めにテスト');
@@ -77,7 +77,8 @@ class AdminRepositoryTest extends BaseTest
         ]);
         $this->assertSame(1, $admins->count(), 'limitで取得件数が指定出来ることをテスト');
     }
-    public function test_getByConditions_ソートと複数条件の組み合わせ(): void
+
+    public function test_get_by_conditions_ソートと複数条件の組み合わせ(): void
     {
         // テストデータの準備
         $this->createDefaultAdmin(['name' => 'B-admin', 'email' => 'b@test.com', 'role' => AdminRole::Manager->value]);
@@ -111,7 +112,7 @@ class AdminRepositoryTest extends BaseTest
         $this->assertSame('A-admin', $results->first()->name);
     }
 
-    public function test_getByConditions_ソート方向未指定時にデフォルトascで動作すること(): void
+    public function test_get_by_conditions_ソート方向未指定時にデフォルトascで動作すること(): void
     {
         $this->createDefaultAdmin(['name' => 'Z-admin']);
         $this->createDefaultAdmin(['name' => 'A-admin']);
@@ -125,7 +126,7 @@ class AdminRepositoryTest extends BaseTest
         $this->assertSame('A-admin', $results->first()->name, '未指定時はascでソートされること');
     }
 
-    public function test_getByEmail(): void
+    public function test_get_by_email(): void
     {
         $email = 'admin2@test.com';
 
@@ -143,7 +144,7 @@ class AdminRepositoryTest extends BaseTest
         $this->assertSame($expectAdmin2->id, $result->id, '指定したメールアドレスのスタッフが取得できることのテスト');
     }
 
-    public function test_getAllOrderById(): void
+    public function test_get_all_order_by_id(): void
     {
         $admins = $this->repository->getAllOrderById();
         $this->assertSame(0, $admins->count(), 'データがない状態で正常に動作することを始めにテスト');

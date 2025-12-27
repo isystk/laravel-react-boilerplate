@@ -20,7 +20,7 @@ class IndexServiceTest extends BaseTest
         $this->service = app(IndexService::class);
     }
 
-    public function test_searchContactForm(): void
+    public function test_search_contact_form(): void
     {
         $request = new Request([
             'user_name' => null,

@@ -18,7 +18,7 @@ class DeleteCartServiceTest extends BaseTest
         $this->service = app(DeleteCartService::class);
     }
 
-    public function test_deleteMyCart(): void
+    public function test_delete_my_cart(): void
     {
         $user1 = $this->createDefaultUser([
             'name' => 'aaa',

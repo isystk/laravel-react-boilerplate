@@ -20,7 +20,7 @@ class ImportHistoryRepositoryTest extends BaseTest
         $this->repository = app(ImportHistoryRepository::class);
     }
 
-    public function test_getByImportHistory(): void
+    public function test_get_by_import_history(): void
     {
         $result = $this->repository->getByImportHistory(ImportType::Staff);
         $this->assertSame(0, $result->count(), 'データがない状態で正常に動作することを始めにテスト');
@@ -38,7 +38,7 @@ class ImportHistoryRepositoryTest extends BaseTest
         $this->assertSame($expected, $actual, '指定したImportTypeのデータが取得できることのテスト');
     }
 
-    public function test_hasProcessingByImportHistory(): void
+    public function test_has_processing_by_import_history(): void
     {
         $result = $this->repository->hasProcessingByImportHistory(ImportType::Staff);
         $this->assertFalse($result, 'データがない状態で正常に動作することを始めにテスト');

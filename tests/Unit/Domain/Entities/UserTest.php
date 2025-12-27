@@ -19,17 +19,17 @@ class UserTest extends BaseTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->sub = new User();
+        $this->sub = new User;
     }
 
-    public function test_isEmailVerified(): void
+    public function test_is_email_verified(): void
     {
         $this->assertFalse($this->sub->isEmailVerified(), 'メールアドレスの認証が未だの場合 → False');
         $this->sub->email_verified_at = Carbon::now();
         $this->assertTrue($this->sub->isEmailVerified(), 'メールアドレスが認証済みの場合 → True');
     }
 
-    public function test_sendPasswordResetNotification_通知が送信されること(): void
+    public function test_send_password_reset_notification_通知が送信されること(): void
     {
         Notification::fake();
         $user = $this->createDefaultUser();
@@ -46,7 +46,7 @@ class UserTest extends BaseTest
         );
     }
 
-    public function test_sendEmailVerificationNotification_通知が送信されること(): void
+    public function test_send_email_verification_notification_通知が送信されること(): void
     {
         Notification::fake();
         $user = $this->createDefaultUser();
@@ -56,14 +56,14 @@ class UserTest extends BaseTest
         Notification::assertSentTo($user, VerifyEmailToUser::class);
     }
 
-    public function test_getJWTIdentifier_キーが返却されること(): void
+    public function test_get_jwt_identifier_キーが返却されること(): void
     {
         $user = $this->createDefaultUser(['id' => 123]);
 
         $this->assertSame('123', $user->getJWTIdentifier());
     }
 
-    public function test_getJWTCustomClaims_空の配列が返却されること(): void
+    public function test_get_jwt_custom_claims_空の配列が返却されること(): void
     {
         $this->assertSame([], $this->sub->getJWTCustomClaims());
     }

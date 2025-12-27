@@ -19,7 +19,7 @@ class UserRepositoryTest extends BaseTest
         $this->repository = app(UserRepository::class);
     }
 
-    public function test_getByConditions(): void
+    public function test_get_by_conditions(): void
     {
         $defaultConditions = [
             'name' => null,

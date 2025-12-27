@@ -19,7 +19,7 @@ class PhotoUploadServiceTest extends BaseTest
         $this->sut = app(PhotoUploadService::class);
     }
 
-    public function test_validateArgs(): void
+    public function test_validate_args(): void
     {
         $testCases = $this->getValidateArgsTestCases();
         foreach ($testCases as $key => $testCase) {
@@ -33,6 +33,7 @@ class PhotoUploadServiceTest extends BaseTest
 
     /**
      * validateArgs関数のテスト用データを返却する
+     *
      * @return array<string, array{
      *     args: array<string, mixed>,
      *     expected: array<int, string>
@@ -43,6 +44,7 @@ class PhotoUploadServiceTest extends BaseTest
         $safeArgs = [
             'file_name' => null,
         ];
+
         return [
             'OK : すべての正常な場合' => [
                 'args' => $safeArgs,

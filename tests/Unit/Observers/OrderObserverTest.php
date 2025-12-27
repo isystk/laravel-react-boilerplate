@@ -3,7 +3,6 @@
 namespace Tests\Unit\Observers;
 
 use App\Domain\Entities\MonthlySale;
-use App\Domain\Entities\Order;
 use App\Observers\OrderObserver;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
@@ -13,7 +12,7 @@ class OrderObserverTest extends BaseTest
 {
     use RefreshDatabase;
 
-    public function test_created_MonthlySaleが存在しない場合は新規作成されること(): void
+    public function test_created_monthly_saleが存在しない場合は新規作成されること(): void
     {
         $createdAt = Carbon::parse('2025-01-15 10:00:00');
 
@@ -30,7 +29,7 @@ class OrderObserverTest extends BaseTest
         ]);
     }
 
-    public function test_created_MonthlySaleが存在する場合は既存レコードが更新されること(): void
+    public function test_created_monthly_saleが存在する場合は既存レコードが更新されること(): void
     {
         $yearMonth = '202501';
         MonthlySale::factory()->create([
@@ -51,7 +50,7 @@ class OrderObserverTest extends BaseTest
         ]);
     }
 
-    public function test_updated_金額が変更された場合にMonthlySaleが更新されること(): void
+    public function test_updated_金額が変更された場合に_monthly_saleが更新されること(): void
     {
         $order = $this->createDefaultOrder([
             'sum_price' => 1000,
@@ -70,7 +69,7 @@ class OrderObserverTest extends BaseTest
         ]);
     }
 
-    public function test_updated_金額以外が変更された場合はMonthlySaleは更新されないこと(): void
+    public function test_updated_金額以外が変更された場合は_monthly_saleは更新されないこと(): void
     {
         $order = $this->createDefaultOrder([
             'sum_price' => 1000,
@@ -94,7 +93,7 @@ class OrderObserverTest extends BaseTest
     {
         $order = $this->createDefaultOrder();
 
-        $observer = new OrderObserver();
+        $observer = new OrderObserver;
         $observer->deleted($order);
         $observer->restored($order);
         $observer->forceDeleted($order);

@@ -20,7 +20,7 @@ class ExportServiceTest extends BaseTest
         $this->service = app(ExportService::class);
     }
 
-    public function test_getExport(): void
+    public function test_get_export(): void
     {
         $request = new Request([
             'name' => null,

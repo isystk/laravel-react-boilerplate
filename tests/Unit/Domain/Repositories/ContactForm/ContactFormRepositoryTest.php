@@ -19,7 +19,7 @@ class ContactFormRepositoryTest extends BaseTest
         $this->repository = app(ContactFormRepository::class);
     }
 
-    public function test_getByConditions(): void
+    public function test_get_by_conditions(): void
     {
         $defaultConditions = [
             'user_name' => null,

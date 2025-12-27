@@ -17,7 +17,8 @@ class BaseEloquentRepositoryTest extends BaseTest
     {
         parent::setUp();
 
-        $this->repository = new class extends BaseEloquentRepository {
+        $this->repository = new class extends BaseEloquentRepository
+        {
             protected function model(): string
             {
                 return User::class;
@@ -75,7 +76,7 @@ class BaseEloquentRepositoryTest extends BaseTest
         $this->repository->delete(9999);
     }
 
-    public function test_getAll_全件取得できること(): void
+    public function test_get_all_全件取得できること(): void
     {
         User::factory()->count(3)->create();
 
@@ -84,7 +85,7 @@ class BaseEloquentRepositoryTest extends BaseTest
         $this->assertCount(3, $results);
     }
 
-    public function test_findById_指定したIDのレコードが取得できること(): void
+    public function test_find_by_id_指定した_i_dのレコードが取得できること(): void
     {
         $user = $this->createDefaultUser();
 
@@ -94,7 +95,7 @@ class BaseEloquentRepositoryTest extends BaseTest
         $this->assertSame($user->id, $result->id);
     }
 
-    public function test_findById_存在しない場合はnullを返すこと(): void
+    public function test_find_by_id_存在しない場合はnullを返すこと(): void
     {
         $result = $this->repository->findById(9999);
 

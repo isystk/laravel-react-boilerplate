@@ -12,6 +12,7 @@ class PhotoUpload extends BaseCommand
     protected $signature = 'photo_upload
         {--run : このオプションを指定した場合のみ本実行を行う(未指定時はドライラン)}
         {--file_name= : 事業所番号(任意)}';
+
     protected $description = '
         S3アップロードバッチ。
         ・`resources/assets/stock/images` からファイルを取得する。
@@ -27,19 +28,21 @@ class PhotoUpload extends BaseCommand
         $errors = $service->validateArgs($args);
         if (0 < count($errors)) {
             $this->error(implode("\n", $errors));
+
             return CommandAlias::INVALID;
         }
 
         // オプションの取得
         $this->isRealRun = $this->option('run');
-        $targetFileName  = $this->option('file_name');
+        $targetFileName = $this->option('file_name');
 
         $this->outputLog(['処理が開始しました。pid[' . getmypid() . ']']);
 
         $files = Storage::files('stocks');
         // デバッグ追加
         if (empty($files)) {
-            $this->error("ファイルが見つかりません。検索パス: " . Storage::path('stocks'));
+            $this->error('ファイルが見つかりません。検索パス: ' . Storage::path('stocks'));
+
             return CommandAlias::FAILURE;
         }
 
@@ -64,6 +67,7 @@ class PhotoUpload extends BaseCommand
         }
 
         $this->outputLog(['処理が終了しました。']);
+
         return CommandAlias::SUCCESS;
     }
 }

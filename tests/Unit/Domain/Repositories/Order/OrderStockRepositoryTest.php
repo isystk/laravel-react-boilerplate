@@ -19,7 +19,7 @@ class OrderStockRepositoryTest extends BaseTest
         $this->repository = app(OrderStockRepository::class);
     }
 
-    public function test_getByOrderId(): void
+    public function test_get_by_order_id(): void
     {
         $user1 = $this->createDefaultUser(['name' => 'user1', 'email' => 'user1@test.com']);
 

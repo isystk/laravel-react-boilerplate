@@ -22,7 +22,7 @@ class PasswordChangeUpdateService extends BaseService
     public function update(int $adminId, string $newPassword): Admin
     {
         return $this->adminRepository->update([
-            'password' => $newPassword
+            'password' => $newPassword,
         ], $adminId);
     }
 }

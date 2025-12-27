@@ -4,8 +4,8 @@ namespace Middleware;
 
 use App\Http\Middleware\AuthWebOrApi;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Tests\BaseTest;
 
 class AuthWebOrApiTest extends BaseTest
@@ -16,7 +16,7 @@ class AuthWebOrApiTest extends BaseTest
     {
         // 修正：Illuminate\Http\Request::create を使用
         $request = Request::create('/test', 'GET');
-        $middleware = new AuthWebOrApi();
+        $middleware = new AuthWebOrApi;
 
         Auth::shouldReceive('guard')->with('web')->andReturnSelf();
         Auth::shouldReceive('check')->once()->andReturn(true);
@@ -31,7 +31,7 @@ class AuthWebOrApiTest extends BaseTest
     public function test_handle_apiガードでログインしていればアクセス可能(): void
     {
         $request = Request::create('/test', 'GET');
-        $middleware = new AuthWebOrApi();
+        $middleware = new AuthWebOrApi;
 
         Auth::shouldReceive('guard')->with('web')->andReturnSelf();
         Auth::shouldReceive('check')->once()->andReturn(false);
@@ -48,7 +48,7 @@ class AuthWebOrApiTest extends BaseTest
     public function test_handle_未ログインの場合は401(): void
     {
         $request = Request::create('/test', 'GET');
-        $middleware = new AuthWebOrApi();
+        $middleware = new AuthWebOrApi;
 
         Auth::shouldReceive('guard')->with('web')->andReturnSelf();
         Auth::shouldReceive('check')->once()->andReturn(false);

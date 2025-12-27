@@ -18,7 +18,7 @@ class ShowServiceTest extends BaseTest
         $this->service = app(ShowService::class);
     }
 
-    public function test_getContactFormImage(): void
+    public function test_get_contact_form_image(): void
     {
         $contactForm1 = $this->createDefaultContactForm(['user_name' => 'user1', 'title' => 'title1']);
         $contactForm2 = $this->createDefaultContactForm(['user_name' => 'user2', 'title' => 'title1']);

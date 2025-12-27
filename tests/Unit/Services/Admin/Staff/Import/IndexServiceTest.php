@@ -20,7 +20,7 @@ class IndexServiceTest extends BaseTest
         $this->service = app(IndexService::class);
     }
 
-    public function test_getImportHistories(): void
+    public function test_get_import_histories(): void
     {
         $result = $this->service->getImportHistories();
         $this->assertSame([], $result, 'データがない状態でエラーにならないことを始めにテスト');

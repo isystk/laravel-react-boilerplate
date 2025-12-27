@@ -12,7 +12,7 @@ class AuthHelperTest extends BaseTest
 {
     use RefreshDatabase;
 
-    public function test_frontLoginedUser_デフォルトのガードでログインしている場合にユーザーを返すこと(): void
+    public function test_front_logined_user_デフォルトのガードでログインしている場合にユーザーを返すこと(): void
     {
         $user = $this->createDefaultUser();
         $this->actingAs($user);
@@ -23,7 +23,7 @@ class AuthHelperTest extends BaseTest
         $this->assertSame($user->id, $result->id);
     }
 
-    public function test_frontLoginedUser_APIガードでログインしている場合にユーザーを返すこと(): void
+    public function test_front_logined_user_ap_iガードでログインしている場合にユーザーを返すこと(): void
     {
         $user = $this->createDefaultUser();
 
@@ -37,7 +37,7 @@ class AuthHelperTest extends BaseTest
         $this->assertSame($user, $result);
     }
 
-    public function test_frontLoginedUser_どちらもログインしていない場合はnullを返すこと(): void
+    public function test_front_logined_user_どちらもログインしていない場合はnullを返すこと(): void
     {
         // 全てのガードでログインしていない状態
         Auth::shouldReceive('user')->once()->andReturn(null);
@@ -49,7 +49,7 @@ class AuthHelperTest extends BaseTest
         $this->assertNull($result);
     }
 
-    public function test_frontLogout_全てのガードでログアウトが呼ばれること(): void
+    public function test_front_logout_全てのガードでログアウトが呼ばれること(): void
     {
         // ログアウトメソッドがそれぞれのガードで呼ばれることを検証
         Auth::shouldReceive('logout')->once();

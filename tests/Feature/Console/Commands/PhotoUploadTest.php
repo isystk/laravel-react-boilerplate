@@ -54,7 +54,7 @@ class PhotoUploadTest extends BaseTest
         $command->assertSuccessful();
     }
 
-    public function test_ドライランの場合_S3にアップロードされないこと(): void
+    public function test_ドライランの場合_s3にアップロードされないこと(): void
     {
         Storage::fake('s3');
         Storage::fake('local'); // デフォルトがlocalの場合
@@ -87,8 +87,8 @@ class PhotoUploadTest extends BaseTest
         ]);
 
         // target.jpg のログは出るが、other.jpg のログは出ないことを確認
-        $command->expectsOutput("S3にアップロードしました。file=stocks/target.jpg");
-        $command->doesntExpectOutput("S3にアップロードしました。file=stocks/other.jpg");
+        $command->expectsOutput('S3にアップロードしました。file=stocks/target.jpg');
+        $command->doesntExpectOutput('S3にアップロードしました。file=stocks/other.jpg');
 
         $command->assertSuccessful();
     }

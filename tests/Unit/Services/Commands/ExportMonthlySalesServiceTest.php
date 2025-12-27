@@ -4,7 +4,6 @@ namespace Services\Commands;
 
 use App\Services\Commands\ExportMonthlySalesService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Str;
 use Tests\BaseTest;
 
 class ExportMonthlySalesServiceTest extends BaseTest
@@ -19,7 +18,7 @@ class ExportMonthlySalesServiceTest extends BaseTest
         $this->sut = app(ExportMonthlySalesService::class);
     }
 
-    public function test_validateArgs(): void
+    public function test_validate_args(): void
     {
         $testCases = $this->getValidateArgsTestCases();
         foreach ($testCases as $key => $testCase) {
@@ -33,6 +32,7 @@ class ExportMonthlySalesServiceTest extends BaseTest
 
     /**
      * validateArgs関数のテスト用データを返却する
+     *
      * @return array<string, array{
      *     args: array<string, mixed>,
      *     expected: array<int, string>
@@ -43,6 +43,7 @@ class ExportMonthlySalesServiceTest extends BaseTest
         $safeArgs = [
             'output_path' => '/var/www/html/storage/export/monthly_sales.csv',
         ];
+
         return [
             'OK : すべての正常な場合' => [
                 'args' => $safeArgs,
@@ -57,7 +58,7 @@ class ExportMonthlySalesServiceTest extends BaseTest
         ];
     }
 
-    public function test_getCsvData_出力データが存在しない場合(): void
+    public function test_get_csv_data_出力データが存在しない場合(): void
     {
         [$header, $data] = $this->sut->getCsvData();
 
@@ -67,7 +68,7 @@ class ExportMonthlySalesServiceTest extends BaseTest
         $this->assertCount(0, $data);
     }
 
-    public function test_getCsvData_出力データが存在する場合(): void
+    public function test_get_csv_data_出力データが存在する場合(): void
     {
         $m1 = $this->createDefaultMonthlySale([
             'year_month' => '202404',

@@ -50,14 +50,14 @@ class ExportMonthlySalesTest extends BaseTest
         $this->artisan('export_monthly_sales', [
             'output_path' => $outputPath,
         ])
-        ->expectsOutput("出力対象の月別売上データをCSV出力しました。[{$outputPath}]")
-        ->assertSuccessful();
+            ->expectsOutput("出力対象の月別売上データをCSV出力しました。[{$outputPath}]")
+            ->assertSuccessful();
 
         // ファイルが作成されていないことを確認
         Storage::assertMissing($fileName);
     }
 
-    public function test_正常ケース_データが存在する場合にCSV行が書き込まれること(): void
+    public function test_正常ケース_データが存在する場合に_cs_v行が書き込まれること(): void
     {
         Storage::fake();
         $fileName = 'test_with_data.csv';
@@ -68,7 +68,7 @@ class ExportMonthlySalesTest extends BaseTest
             $mock->shouldReceive('validateArgs')->andReturn([]);
             $mock->shouldReceive('getCsvData')->andReturn([
                 ['Header1', 'Header2'], // $header
-                [['Data1-1', 'Data1-2']] // $detail
+                [['Data1-1', 'Data1-2']], // $detail
             ]);
         });
 
@@ -76,7 +76,7 @@ class ExportMonthlySalesTest extends BaseTest
             'output_path' => $outputPath,
             '--run' => true,
         ])
-        ->assertSuccessful();
+            ->assertSuccessful();
 
         Storage::assertExists($fileName);
 

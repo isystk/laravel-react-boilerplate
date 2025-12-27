@@ -21,7 +21,7 @@ class IndexServiceTest extends BaseTest
         $this->service = app(IndexService::class);
     }
 
-    public function test_searchStaff(): void
+    public function test_search_staff(): void
     {
         $default = [
             'name' => null,

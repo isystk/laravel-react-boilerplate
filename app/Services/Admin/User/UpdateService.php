@@ -24,7 +24,7 @@ class UpdateService extends BaseService
     {
         return $this->userRepository->update([
             'name' => $request->name,
-            'email' => $request->email
+            'email' => $request->email,
         ], $userId);
     }
 }

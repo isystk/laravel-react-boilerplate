@@ -20,7 +20,7 @@ class IndexServiceTest extends BaseTest
         $this->service = app(IndexService::class);
     }
 
-    public function test_searchPhotoList(): void
+    public function test_search_photo_list(): void
     {
         Storage::fake('s3');
         $storage = Storage::disk('s3');
