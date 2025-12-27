@@ -39,7 +39,7 @@ class UserTest extends BaseTest
         Notification::assertSentTo(
             $user,
             ResetPasswordToUser::class,
-            function ($notification, $channels) use ($user) {
+            static function ($notification, $channels) {
                 // 通知オブジェクトが生成されているか、トークンが渡されているか等を検証
                 return true;
             }
