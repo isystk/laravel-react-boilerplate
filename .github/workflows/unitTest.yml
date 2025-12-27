@@ -24,15 +24,15 @@ jobs:
 
       - name: 初期化
         run: |
-          ./run.sh init
+          make init
 
       - name: Dockerの起動
         run: |
-          ./run.sh start
+          make start
 
       - name: 60s 待機
         run: sleep 60
 
       - name: テストコードの実行
         run: |
-          ./run.sh app test
+          make test
