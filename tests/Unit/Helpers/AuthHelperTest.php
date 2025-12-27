@@ -57,8 +57,7 @@ class AuthHelperTest extends BaseTest
         Auth::shouldReceive('logout')->once();
 
         AuthHelper::frontLogout();
-
-        // アサーションがないと警告が出る場合があるため、モックの検証自体を成功とみなす
+        /** @phpstan-ignore-next-line */
         $this->assertTrue(true);
     }
 }
