@@ -1,7 +1,5 @@
 # 🌙 laravel-react-boilerplate
 
-====
-
 ![CI](https://github.com/isystk/laravel-react-boilerplate/actions/workflows/unitTest.yml/badge.svg)
 ![GitHub issues](https://img.shields.io/github/issues/isystk/laravel-react-boilerplate)
 ![GitHub forks](https://img.shields.io/github/forks/isystk/laravel-react-boilerplate)
@@ -125,7 +123,7 @@ graph LR
 [https://docs.microsoft.com/ja-jp/windows/wsl/install](https://docs.microsoft.com/ja-jp/windows/wsl/install)
 
 ```
-# PoswerShellからWSLを起動する
+# PowerShellからWSLを起動する
 $ wsl
 
 # 初回起動時に、ユーザ名とパスワードが聞かれます。
