@@ -123,4 +123,35 @@ class EditControllerTest extends BaseTest
         $this->assertDatabaseHas('contact_form_images',
             ['contact_form_id' => $contactForm->id, 'file_name' => 'image3.jpg']);
     }
+
+    public function test_update_例外発生時にロールバックされ例外がスローされること(): void
+    {
+        $this->withoutExceptionHandling();
+
+        $contactForm = $this->createDefaultContactForm();
+
+        $admin = $this->createDefaultAdmin([
+            'role' => 'high-manager',
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $this->mock(\App\Services\Admin\ContactForm\UpdateService::class, function ($mock) {
+            $mock->shouldReceive('update')
+                ->once()
+                ->andThrow(new \Exception('Update Error'));
+        });
+
+        // 例外がスローされることを期待
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Update Error');
+
+        $this->put(route('admin.contact.update', $contactForm), [
+            'user_name' => 'test-update',
+            'title' => 'test-title',
+            'email' => 'test@test.com',
+            'gender' => Gender::Male->value,
+            'age' => Age::Over30->value,
+            'contact' => 'test-content',
+        ]);
+    }
 }

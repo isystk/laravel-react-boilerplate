@@ -4,6 +4,7 @@ namespace Http\Controllers\Admin\ContactForm;
 
 use App\Enums\Age;
 use App\Enums\Gender;
+use App\Services\Admin\ContactForm\DestroyService;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
@@ -84,5 +85,29 @@ class DetailControllerTest extends BaseTest
         $this->assertDatabaseMissing('contact_forms', ['id' => $contactForm->id]);
         $this->assertDatabaseMissing('contact_form_images', ['id' => $contactFormImage1->id]);
         $this->assertDatabaseMissing('contact_form_images', ['id' => $contactFormImage2->id]);
+    }
+
+    public function test_destroy_例外発生時にロールバックされ例外がスローされること(): void
+    {
+        $this->withoutExceptionHandling();
+
+        $contactForm = $this->createDefaultContactForm();
+
+        $admin = $this->createDefaultAdmin([
+            'role' => 'high-manager',
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $this->mock(DestroyService::class, function ($mock) {
+            $mock->shouldReceive('delete')
+                ->once()
+                ->andThrow(new \Exception('Database Error'));
+        });
+
+        // 例外がスローされることを期待
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Database Error');
+
+        $this->delete(route('admin.contact.destroy', $contactForm));
     }
 }
