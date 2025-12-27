@@ -14,9 +14,6 @@ class OAuthControllerTest extends BaseTest
         //        $this->providerName = 'google';
     }
 
-    /**
-     * Googleの認証画面を表示できる
-     */
     public function test_show_google_o_auth(): void
     {
         $this->markTestSkipped('認証キーを設定しないと動かないので一旦スキップ');
@@ -26,9 +23,6 @@ class OAuthControllerTest extends BaseTest
         //            ->assertStatus(200);
     }
 
-    /**
-     * Googleアカウントでユーザー登録できる
-     */
     public function test_regist_google_o_auth(): void
     {
         $this->markTestSkipped('認証キーを設定しないと動かないので一旦スキップ');

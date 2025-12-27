@@ -21,9 +21,6 @@ class CreateServiceTest extends BaseTest
         $this->service = app(CreateService::class);
     }
 
-    /**
-     * saveのテスト
-     */
     public function test_save(): void
     {
         $request = new StoreRequest;

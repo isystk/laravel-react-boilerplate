@@ -16,9 +16,6 @@ class CartControllerTest extends BaseTest
         $this->withoutMiddleware(ValidateCsrfToken::class);
     }
 
-    /**
-     * マイカート 取得APIのテスト
-     */
     public function test_my_cart(): void
     {
         $user1 = $this->createDefaultUser([
@@ -60,9 +57,6 @@ class CartControllerTest extends BaseTest
         ]);
     }
 
-    /**
-     * マイカート 追加APIのテスト
-     */
     public function test_add_cart(): void
     {
         $user1 = $this->createDefaultUser([
@@ -82,9 +76,6 @@ class CartControllerTest extends BaseTest
         $this->assertDatabaseCount('carts', 2);
     }
 
-    /**
-     * マイカート 削除APIのテスト
-     */
     public function test_delete_cart(): void
     {
         $user1 = $this->createDefaultUser([

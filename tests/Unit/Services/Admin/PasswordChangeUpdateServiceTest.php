@@ -19,9 +19,6 @@ class PasswordChangeUpdateServiceTest extends BaseTest
         $this->service = app(PasswordChangeUpdateService::class);
     }
 
-    /**
-     * updateのテスト
-     */
     public function test_update(): void
     {
         $admin = $this->createDefaultAdmin([

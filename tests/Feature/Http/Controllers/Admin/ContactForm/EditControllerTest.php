@@ -21,9 +21,6 @@ class EditControllerTest extends BaseTest
         $this->withoutMiddleware(ValidateCsrfToken::class);
     }
 
-    /**
-     * お問い合わせ編集画面表示のテスト
-     */
     public function test_edit(): void
     {
         $admin1 = $this->createDefaultAdmin([
@@ -58,9 +55,6 @@ class EditControllerTest extends BaseTest
         $response->assertSuccessful();
     }
 
-    /**
-     * お問い合わせ編集画面 変更のテスト
-     */
     public function test_update(): void
     {
         Storage::fake('s3');

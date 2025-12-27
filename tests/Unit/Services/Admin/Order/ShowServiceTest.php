@@ -18,10 +18,7 @@ class ShowServiceTest extends BaseTest
         $this->service = app(ShowService::class);
     }
 
-    /**
-     * getOrderStockのテスト
-     */
-    public function test_get_order_stock(): void
+    public function test_getOrderStock(): void
     {
         $orderImages = $this->service->getOrderStock(1);
         $this->assertSame(0, $orderImages->count(), 'データがない状態で正常に動作することを始めにテスト');

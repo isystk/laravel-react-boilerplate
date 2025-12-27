@@ -19,9 +19,6 @@ class DestroyServiceTest extends BaseTest
         $this->service = app(DestroyService::class);
     }
 
-    /**
-     * deleteのテスト
-     */
     public function test_delete(): void
     {
         Storage::fake('s3');

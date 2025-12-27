@@ -17,9 +17,6 @@ class LoginControllerTest extends BaseTest
         $this->withoutMiddleware(ValidateCsrfToken::class);
     }
 
-    /**
-     * 管理者ログインのテスト
-     */
     public function test_login(): void
     {
         $this->createDefaultAdmin([

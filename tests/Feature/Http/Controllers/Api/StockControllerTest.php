@@ -16,9 +16,6 @@ class StockControllerTest extends BaseTest
         $this->withoutMiddleware(ValidateCsrfToken::class);
     }
 
-    /**
-     * 商品の一覧APIの取得テスト
-     */
     public function test_index(): void
     {
         $this->createDefaultStock(['name' => 'stock1']);

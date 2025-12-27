@@ -16,9 +16,6 @@ class DetailControllerTest extends BaseTest
         $this->withoutMiddleware(ValidateCsrfToken::class);
     }
 
-    /**
-     * ユーザー詳細画面表示のテスト
-     */
     public function test_show(): void
     {
         $user1 = $this->createDefaultUser([
@@ -39,9 +36,6 @@ class DetailControllerTest extends BaseTest
         $response->assertSee('user1@test.com');
     }
 
-    /**
-     * ユーザー詳細画面 削除のテスト
-     */
     public function test_destroy(): void
     {
         $user1 = $this->createDefaultUser([

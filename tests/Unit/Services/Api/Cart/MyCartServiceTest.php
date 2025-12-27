@@ -18,7 +18,7 @@ class MyCartServiceTest extends BaseTest
         $this->service = app(MyCartService::class);
     }
 
-    public function test_get_my_cart(): void
+    public function test_getMyCart(): void
     {
         $user1 = $this->createDefaultUser([
             'name' => 'aaa',

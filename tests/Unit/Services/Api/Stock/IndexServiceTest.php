@@ -18,10 +18,7 @@ class IndexServiceTest extends BaseTest
         $this->service = app(IndexService::class);
     }
 
-    /**
-     * searchStockのテスト
-     */
-    public function test_search_stock(): void
+    public function test_searchStock(): void
     {
         $result = $this->service->searchStock();
         $this->assertCount(0, $result->stocks, '引数がない状態でエラーにならないことを始めにテスト');

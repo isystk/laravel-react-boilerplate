@@ -18,9 +18,6 @@ class DetailControllerTest extends BaseTest
         $this->withoutMiddleware(ValidateCsrfToken::class);
     }
 
-    /**
-     * お問い合わせ詳細画面表示のテスト
-     */
     public function test_show(): void
     {
         $admin = $this->createDefaultAdmin([
@@ -54,9 +51,6 @@ class DetailControllerTest extends BaseTest
         $response->assertSee('contact/image2.jpg');
     }
 
-    /**
-     * お問い合わせ詳細画面 削除のテスト
-     */
     public function test_destroy(): void
     {
         $contactForm = $this->createDefaultContactForm([

@@ -25,9 +25,6 @@ class StoreServiceTest extends BaseTest
         $this->service = app(StoreService::class);
     }
 
-    /**
-     * updateのテスト
-     */
     public function test_update(): void
     {
         Storage::fake('s3');

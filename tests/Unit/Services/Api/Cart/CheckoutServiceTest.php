@@ -20,9 +20,6 @@ class CheckoutServiceTest extends BaseTest
         $this->service = app(CheckoutService::class);
     }
 
-    /**
-     * checkoutのテスト
-     */
     public function test_checkout(): void
     {
         $user1 = $this->createDefaultUser([

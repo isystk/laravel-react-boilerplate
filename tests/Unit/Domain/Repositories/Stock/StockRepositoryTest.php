@@ -20,10 +20,7 @@ class StockRepositoryTest extends BaseTest
         $this->repository = app(StockRepository::class);
     }
 
-    /**
-     * getByLimitのテスト
-     */
-    public function test_get_by_limit(): void
+    public function test_getByLimit(): void
     {
         $stocks = $this->repository->getByLimit()->items();
         $this->assertCount(0, $stocks, 'データがない状態で正常に動作することを始めにテスト');
@@ -38,10 +35,7 @@ class StockRepositoryTest extends BaseTest
         $this->assertSame($expectStock3->id, $stocks[0]->id, '最新順に取得されることをテスト');
     }
 
-    /**
-     * getByConditionsのテスト
-     */
-    public function test_get_by_conditions(): void
+    public function test_getByConditions(): void
     {
         $defaultConditions = [
             'name' => null,

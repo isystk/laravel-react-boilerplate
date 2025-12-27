@@ -16,9 +16,6 @@ class CreateControllerTest extends BaseTest
         $this->withoutMiddleware(ValidateCsrfToken::class);
     }
 
-    /**
-     * スタッフ新規登録画面表示のテスト
-     */
     public function test_create(): void
     {
         $admin1 = $this->createDefaultAdmin([
@@ -41,9 +38,6 @@ class CreateControllerTest extends BaseTest
         $response->assertSuccessful();
     }
 
-    /**
-     * スタッフ新規登録画面 登録のテスト
-     */
     public function test_store(): void
     {
         $admin1 = $this->createDefaultAdmin([

@@ -20,10 +20,7 @@ class OrderRepositoryTest extends BaseTest
         $this->repository = app(OrderRepository::class);
     }
 
-    /**
-     * getConditionsWithUserStockのテスト
-     */
-    public function test_get_conditions_with_user_stock(): void
+    public function test_getConditionsWithUserStock(): void
     {
         $defaultConditions = [
             'user_name' => null,
