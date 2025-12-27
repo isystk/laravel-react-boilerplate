@@ -97,3 +97,7 @@ test: ## 自動テストを実行します。
 .PHONY: test-coverage
 test-coverage: ## コードカバレッジレポートを出力します。
 	@$(DOCKER_CMD) exec -e XDEBUG_MODE=coverage app ./vendor/bin/phpunit --coverage-text --display-phpunit-deprecations
+
+.PHONY: generate-pr
+generate-pr: ## PR用の説明文を生成します。
+	tools/generate-pr.sh
