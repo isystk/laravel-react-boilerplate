@@ -174,7 +174,7 @@ $ make ps
 $ make app-login
 
 # コンテナ内での操作例
-> php artisan photo_upload       # テスト用画像をMinioにアップロード
+> php artisan photo_upload --run # テスト用画像をMinioにアップロード
 > ./vendor/bin/phpunit           # テストの実行
 
 # コンテナに入らずに実行する場合
