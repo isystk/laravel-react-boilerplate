@@ -4,6 +4,7 @@ namespace Requests\Admin\Stock;
 
 use App\Http\Requests\Admin\Stock\StoreRequest;
 use Exception;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Validator;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -13,6 +14,8 @@ use Tests\BaseTest;
 
 class StoreRequestTest extends BaseTest
 {
+    use RefreshDatabase;
+
     private StoreRequest $request;
 
     /**

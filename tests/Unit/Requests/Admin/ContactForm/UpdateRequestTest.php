@@ -6,6 +6,7 @@ use App\Enums\Age;
 use App\Enums\Gender;
 use App\Http\Requests\Admin\ContactForm\UpdateRequest;
 use Exception;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Validator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -14,6 +15,8 @@ use Tests\BaseTest;
 
 class UpdateRequestTest extends BaseTest
 {
+    use RefreshDatabase;
+
     private UpdateRequest $request;
 
     /**

@@ -3,7 +3,7 @@
 namespace Requests\Admin\Staff;
 
 use App\Enums\AdminRole;
-use App\Http\Requests\Admin\Staff\StoreRequest;
+use App\Http\Requests\Admin\Staff\UpdateRequest;
 use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Validator;
@@ -12,11 +12,11 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\BaseTest;
 
-class StoreRequestTest extends BaseTest
+class UpdateRequestTest extends BaseTest
 {
     use RefreshDatabase;
 
-    private StoreRequest $request;
+    private UpdateRequest $request;
 
     /**
      * @var array<string, string>
@@ -26,13 +26,18 @@ class StoreRequestTest extends BaseTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->request = new StoreRequest;
-        $this->baseRequest = [
+        $this->request = new UpdateRequest;
+        $staff = $this->createDefaultAdmin([
             'name' => 'user1',
             'email' => 'user1@test.com',
             'password' => 'password',
-            'password_confirmation' => 'password',
-            'role' => AdminRole::Manager->value,
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->request->staff = $staff;
+        $this->baseRequest = [
+            'name' => $staff->name,
+            'email' => $staff->email,
+            'role' => $staff->role->value,
         ];
     }
 
@@ -124,56 +129,6 @@ class StoreRequestTest extends BaseTest
                 'attrs' => ['email' => 'user1@test.com'],
                 'expect' => true,
                 'attribute' => 'email',
-                'messages' => [],
-            ],
-            'NG : password 必須条件を満たさない' => [
-                'attrs' => ['password' => null],
-                'expect' => false,
-                'attribute' => 'password',
-                'messages' => [
-                    'パスワードを入力してください。',
-                ],
-            ],
-            'NG : password 文字数上限を超えている' => [
-                'attrs' => [
-                    'password' => implode('', range(1, 13)),
-                    'password_confirmation' => implode('', range(1, 13)),
-                ],
-                'expect' => false,
-                'attribute' => 'password',
-                'messages' => [
-                    'パスワードには12文字以下の文字列を指定してください。',
-                ],
-            ],
-            'NG : password 確認用パスワードと一致しない' => [
-                'attrs' => [
-                    'password' => 'password1',
-                    'password_confirmation' => 'password2',
-                ],
-                'expect' => false,
-                'attribute' => 'password',
-                'messages' => [
-                    'パスワードが確認用の値と一致しません。',
-                ],
-            ],
-            'NG : password パスワードには8文字未満' => [
-                'attrs' => [
-                    'password' => '1234567',
-                    'password_confirmation' => '1234567',
-                ],
-                'expect' => false,
-                'attribute' => 'password',
-                'messages' => [
-                    'パスワードには8文字以上の文字列を指定してください。',
-                ],
-            ],
-            'OK : password が正常' => [
-                'attrs' => [
-                    'password' => 'password',
-                    'password_confirmation' => 'password',
-                ],
-                'expect' => true,
-                'attribute' => 'password',
                 'messages' => [],
             ],
             'NG : role 必須条件を満たさない' => [

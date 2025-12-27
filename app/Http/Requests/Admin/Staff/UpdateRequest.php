@@ -5,10 +5,13 @@ namespace App\Http\Requests\Admin\Staff;
 use App\Domain\Entities\Admin;
 use App\Enums\AdminRole;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Validation\Rules\Enum;
 
 class UpdateRequest extends FormRequest
 {
+    use RefreshDatabase;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -33,7 +36,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         /** @var Admin $staff */
-        $staff = $this->route('staff');
+        $staff = $this->staff;
         $maxlength = config('const.maxlength.admins');
 
         return [
@@ -52,13 +55,6 @@ class UpdateRequest extends FormRequest
             'role' => [
                 'required',
                 new Enum(AdminRole::class),
-                function ($attribute, $value, $fail) use ($staff) {
-                    if ($this->role !== $staff->role &&
-                        $staff->id === auth()->user()->id) {
-                        // 自分の権限は変更させない
-                        $fail(__('validation.cannot be changed for yourself.'));
-                    }
-                },
             ],
         ];
     }
