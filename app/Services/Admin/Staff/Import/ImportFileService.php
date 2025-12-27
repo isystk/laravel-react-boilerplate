@@ -33,7 +33,7 @@ class ImportFileService extends BaseService
         $importHistory = $this->importHistoryRepository->findById($importHistoryId);
 
         $importFilePath = 'import_job/' . ImportType::Staff->value . '/' . $importHistory->save_file_name;
-        if (!Storage::disk('local')->exists($importFilePath)) {
+        if (!Storage::exists($importFilePath)) {
             // ファイルが存在しない場合のエラーハンドリング
             throw new NotFoundHttpException;
         }

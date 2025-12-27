@@ -39,7 +39,7 @@ class StaffExport implements FromCollection, WithHeadings
                 'id' => $admin->id,
                 'name' => $admin->name,
                 'email' => $admin->email,
-                'role' => $admin->role->label(),
+                'role' => $admin->role->value,
             ];
         });
     }

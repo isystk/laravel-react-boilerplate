@@ -104,6 +104,6 @@ class ImportController extends BaseController
         $service = app(ImportFileService::class);
         [$importFilePath, $importFileName] = $service->getImportFilePath((int) $importHistoryId);
 
-        return response()->download(Storage::disk('local')->path($importFilePath), $importFileName);
+        return response()->download(Storage::path($importFilePath), $importFileName);
     }
 }
