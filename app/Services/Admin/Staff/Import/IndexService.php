@@ -6,7 +6,6 @@ use App\Domain\Entities\Admin;
 use App\Domain\Entities\ImportHistory;
 use App\Domain\Repositories\ImportHistory\ImportHistoryRepository;
 use App\Enums\ImportType;
-use App\Enums\JobStatus;
 use App\Services\BaseService;
 
 class IndexService extends BaseService

@@ -4,6 +4,7 @@ namespace Requests\Admin\Stock;
 
 use App\Http\Requests\Admin\Stock\UpdateRequest;
 use Exception;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Validator;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -13,6 +14,8 @@ use Tests\BaseTest;
 
 class UpdateRequestTest extends BaseTest
 {
+    use RefreshDatabase;
+
     private UpdateRequest $request;
 
     /**
@@ -70,8 +73,6 @@ class UpdateRequestTest extends BaseTest
     }
 
     /**
-     * バリデーションテストデータ
-     *
      * @return array<string, mixed>
      */
     public static function dataValidate(): array
@@ -199,7 +200,6 @@ class UpdateRequestTest extends BaseTest
                 'attribute' => 'imageBase64',
                 'messages' => [],
             ],
-
         ];
     }
 }

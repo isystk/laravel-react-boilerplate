@@ -16,9 +16,6 @@ class DetailControllerTest extends BaseTest
         $this->withoutMiddleware(ValidateCsrfToken::class);
     }
 
-    /**
-     * 商品詳細画面表示のテスト
-     */
     public function test_show(): void
     {
         $admin1 = $this->createDefaultAdmin([
@@ -44,9 +41,6 @@ class DetailControllerTest extends BaseTest
         $response->assertSee('stock1.jpg');
     }
 
-    /**
-     * 商品詳細画面 削除のテスト
-     */
     public function test_destroy(): void
     {
         $admin1 = $this->createDefaultAdmin([

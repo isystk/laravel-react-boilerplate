@@ -36,12 +36,11 @@ class ImportService extends BaseService
         }
 
         // アップロードファイルをストレージに保存
-        $disk = 'local'; // ローカルストレージを指定
         $directory = 'import_job/' . ImportType::Staff->value;
-        if (!Storage::disk($disk)->exists($directory)) {
-            Storage::disk($disk)->makeDirectory($directory);
+        if (!Storage::exists($directory)) {
+            Storage::makeDirectory($directory);
         }
-        $filePath = $importFile->store($directory, $disk);
+        $filePath = $importFile->store($directory);
 
         if (false === $filePath) {
             throw ValidationException::withMessages(['import_file' => 'An unexpected error has occurred.']);

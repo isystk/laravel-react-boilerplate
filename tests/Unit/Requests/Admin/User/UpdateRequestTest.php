@@ -62,8 +62,6 @@ class UpdateRequestTest extends BaseTest
     }
 
     /**
-     * バリデーションテストデータ
-     *
      * @return array<string, mixed>
      */
     public static function dataValidate(): array

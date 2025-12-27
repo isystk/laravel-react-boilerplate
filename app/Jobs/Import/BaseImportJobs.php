@@ -8,6 +8,7 @@ use App\Enums\JobStatus;
 use App\Jobs\BaseJobs;
 use Closure;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use RuntimeException;
 use Throwable;
 
@@ -49,10 +50,10 @@ abstract class BaseImportJobs extends BaseJobs
             // インポート履歴のステータスを「処理中」に更新
             $this->changeStatus(JobStatus::Processing);
 
-            $import = $this->createImporter()(storage_path('app') . '/private/' . $this->filePath, $this->fileName);
+            $import = $this->createImporter()(Storage::path($this->filePath), $this->fileName);
             // 入力チェック
             $errors = $import->validate();
-            if (0 < count($errors)) {
+            if (count($errors) > 0) {
                 throw new RuntimeException(implode(' ', $errors));
             }
             // DB登録処理

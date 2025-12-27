@@ -18,9 +18,6 @@ class DestroyServiceTest extends BaseTest
         $this->service = app(DestroyService::class);
     }
 
-    /**
-     * deleteのテスト
-     */
     public function test_delete(): void
     {
         $stock = $this->createDefaultStock();

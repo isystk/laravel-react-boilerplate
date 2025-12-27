@@ -21,10 +21,7 @@ class IndexServiceTest extends BaseTest
         $this->service = app(IndexService::class);
     }
 
-    /**
-     * searchStaffのテスト
-     */
-    public function test_search_staff(): void
+    public function test_searchStaff(): void
     {
         $default = [
             'name' => null,

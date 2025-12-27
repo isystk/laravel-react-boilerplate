@@ -5,6 +5,7 @@
     "not_operator_with_successor_space": false,
     "array_syntax": { "syntax": "short" },
     "yoda_style": true,
-    "braces": true
+    "braces": true,
+    "php_unit_method_casing": false
   }
 }

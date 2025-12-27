@@ -6,6 +6,7 @@ use App\Enums\Age;
 use App\Enums\Gender;
 use App\Http\Requests\Admin\ContactForm\UpdateRequest;
 use Exception;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Validator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -14,6 +15,8 @@ use Tests\BaseTest;
 
 class UpdateRequestTest extends BaseTest
 {
+    use RefreshDatabase;
+
     private UpdateRequest $request;
 
     /**
@@ -37,8 +40,6 @@ class UpdateRequestTest extends BaseTest
     }
 
     /**
-     * バリデーションのテスト
-     *
      * @param  array<string>  $attrs  変更する値の配列
      * @param  bool  $expect  期待されるバリデーション結果
      * @param  string  $attribute  属性の名称
@@ -71,8 +72,6 @@ class UpdateRequestTest extends BaseTest
     }
 
     /**
-     * バリデーションテストデータ
-     *
      * @return array<string, mixed>
      */
     public static function dataValidate(): array
@@ -232,7 +231,6 @@ class UpdateRequestTest extends BaseTest
                 'attribute' => 'url',
                 'messages' => [],
             ],
-
         ];
     }
 }

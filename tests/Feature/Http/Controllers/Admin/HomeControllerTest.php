@@ -16,9 +16,6 @@ class HomeControllerTest extends BaseTest
         $this->withoutMiddleware(ValidateCsrfToken::class);
     }
 
-    /**
-     * ホーム画面表示のテスト
-     */
     public function test_index(): void
     {
         $admin = $this->createDefaultAdmin([

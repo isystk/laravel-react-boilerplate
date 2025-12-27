@@ -53,4 +53,43 @@ class PhotoUploadTest extends BaseTest
         $storage->assertExists($file);
         $command->assertSuccessful();
     }
+
+    public function test_ドライランの場合_S3にアップロードされないこと(): void
+    {
+        Storage::fake('s3');
+        Storage::fake('local'); // デフォルトがlocalの場合
+
+        $file = 'stocks/sample.jpg';
+        Storage::put($file, 'dummy content');
+
+        // --run オプションを指定しない
+        $command = $this->artisan('photo_upload');
+
+        $command->expectsOutput("S3にアップロードしました。file={$file}");
+        $command->assertSuccessful();
+
+        // S3にファイルが存在しないことを確認
+        Storage::disk('s3')->assertMissing('stock/sample.jpg');
+    }
+
+    public function test_file_nameが指定された時_一致しないファイルはスキップされること(): void
+    {
+        Storage::fake();
+        Storage::fake('s3');
+
+        // 2つのファイルを準備
+        Storage::put('stocks/target.jpg', 'content');
+        Storage::put('stocks/other.jpg', 'content');
+
+        $command = $this->artisan('photo_upload', [
+            '--file_name' => 'target.jpg',
+            '--run' => true,
+        ]);
+
+        // target.jpg のログは出るが、other.jpg のログは出ないことを確認
+        $command->expectsOutput('S3にアップロードしました。file=stocks/target.jpg');
+        $command->doesntExpectOutput('S3にアップロードしました。file=stocks/other.jpg');
+
+        $command->assertSuccessful();
+    }
 }

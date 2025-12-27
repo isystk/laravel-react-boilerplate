@@ -2,11 +2,10 @@
 
 namespace Domain\Entities;
 
-use App\Domain\Entities\ContactForm;
 use App\Enums\Age;
 use App\Enums\Gender;
-use Illuminate\Support\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
 use Tests\BaseTest;
 
 class ContactFormTest extends BaseTest

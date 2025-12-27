@@ -10,7 +10,7 @@ class ContactFormImageTest extends BaseTest
 {
     use RefreshDatabase;
 
-    public function test_contact_form(): void
+    public function test_contactForm(): void
     {
         $contactFormImage = $this->createDefaultContactFormImage();
 

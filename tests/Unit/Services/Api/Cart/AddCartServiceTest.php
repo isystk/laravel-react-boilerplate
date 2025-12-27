@@ -19,10 +19,7 @@ class AddCartServiceTest extends BaseTest
         $this->service = app(AddCartService::class);
     }
 
-    /**
-     * addMyCartのテスト
-     */
-    public function test_get_my_cart(): void
+    public function test_addMyCart(): void
     {
         $user1 = $this->createDefaultUser([
             'name' => 'aaa',

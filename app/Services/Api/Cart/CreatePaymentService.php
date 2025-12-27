@@ -27,7 +27,6 @@ class CreatePaymentService extends BaseCartService
             ],
         ];
 
-        // @phpstan-ignore-next-line
         return $stripe->paymentIntents->create($items);
     }
 }

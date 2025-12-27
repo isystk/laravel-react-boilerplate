@@ -5,6 +5,7 @@ namespace Requests\Admin\Staff;
 use App\Enums\AdminRole;
 use App\Http\Requests\Admin\Staff\StoreRequest;
 use Exception;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Validator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -13,6 +14,8 @@ use Tests\BaseTest;
 
 class StoreRequestTest extends BaseTest
 {
+    use RefreshDatabase;
+
     private StoreRequest $request;
 
     /**
@@ -66,8 +69,6 @@ class StoreRequestTest extends BaseTest
     }
 
     /**
-     * バリデーションテストデータ
-     *
      * @return array<string, mixed>
      */
     public static function dataValidate(): array

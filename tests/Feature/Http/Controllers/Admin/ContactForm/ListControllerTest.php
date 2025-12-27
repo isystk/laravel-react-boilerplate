@@ -17,9 +17,6 @@ class ListControllerTest extends BaseTest
         $this->withoutMiddleware(ValidateCsrfToken::class);
     }
 
-    /**
-     * お問い合わせ一覧画面表示のテスト
-     */
     public function test_index(): void
     {
         $admin = $this->createDefaultAdmin([

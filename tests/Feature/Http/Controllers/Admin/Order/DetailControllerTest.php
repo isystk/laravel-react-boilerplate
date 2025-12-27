@@ -16,9 +16,6 @@ class DetailControllerTest extends BaseTest
         $this->withoutMiddleware(ValidateCsrfToken::class);
     }
 
-    /**
-     * 注文詳細画面表示のテスト
-     */
     public function test_show(): void
     {
         $admin = $this->createDefaultAdmin([
