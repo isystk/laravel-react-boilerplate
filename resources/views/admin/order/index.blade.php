@@ -98,8 +98,8 @@
                 <div class="card-header">
                     <h3 class="card-title">{{ __('common.Search Result') }}</h3>
                 </div>
-                <div class="card-body table-responsive p-0">
-                    <table class="table table-hover text-nowrap">
+                <div class="card-body p-0">
+                    <table class="table table-hover table-responsive">
                         <thead>
                         <tr>
                             @include('admin.common.sortablelink_th', ['params' => ['id', __('order.ID')]])
@@ -113,7 +113,7 @@
                             <tr>
                                 <th>{{ $order->id }}</th>
                                 <td>{{ $order->user->name }}</td>
-                                <td>{{ $order->sum_price }}</td>
+                                <td class="text-end">{{ $order->sum_price }}</td>
                                 <td>{{ $order->created_at }}</td>
                                 <td>
                                     <a

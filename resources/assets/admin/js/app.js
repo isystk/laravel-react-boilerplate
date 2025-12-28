@@ -8,7 +8,10 @@ window.$ = window.jQuery = jQuery;
 // Bootstrap
 import * as bootstrap from 'bootstrap';
 window.bootstrap = bootstrap;
+
+// Bootstrap Datepicker
 import 'bootstrap-datepicker';
+import 'bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css';
 
 // AdminLTE
 import 'admin-lte';

@@ -92,8 +92,8 @@
                 <div class="card-header">
                     <h3 class="card-title">{{ __('common.Search Result') }}</h3>
                 </div>
-                <div class="card-body table-responsive p-0">
-                    <table class="table table-hover text-nowrap">
+                <div class="card-body p-0">
+                    <table class="table table-hover table-responsive">
                         <thead>
                         <tr>
                             <th>{{ __('photo.Type') }}</th>

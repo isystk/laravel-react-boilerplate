@@ -111,8 +111,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body table-responsive p-0">
-                    <table class="table table-hover text-nowrap">
+                <div class="card-body p-0">
+                    <table class="table table-hover table-responsive">
                         <thead>
                         <tr>
                             @include('admin.common.sortablelink_th', ['params' => ['id', __('stock.ID')]])
@@ -127,9 +127,9 @@
                         @foreach($stocks as $stock)
                             <tr>
                                 <th>{{ $stock->id }}</th>
-                                <td>{{ $stock->name }}</td>
-                                <td>{{ $stock->price }}</td>
-                                <td>{{ $stock->quantity }}</td>
+                                <td class="mw-500">{{ $stock->name }}</td>
+                                <td class="text-end">{{ $stock->price }}</td>
+                                <td class="text-end">{{ $stock->quantity }}</td>
                                 <td>{{ $stock->created_at }}</td>
                                 <td>
                                     <a

@@ -41,7 +41,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <table class="table table-hover text-nowrap">
+                <table class="table table-hover table-responsive">
                     <thead>
                     <tr>
                         <th>{{ __('order.Stock Name') }}</th>
@@ -52,9 +52,9 @@
                     <tbody>
                     @foreach($orderStocks as $orderStock)
                         <tr>
-                            <th>{{ $orderStock->stock->name }}</th>
-                            <td>{{ $orderStock->price }}</td>
-                            <td>{{ $orderStock->quantity }}</td>
+                            <th class="mw-500">{{ $orderStock->stock->name }}</th>
+                            <td class="text-end">{{ $orderStock->price }}</td>
+                            <td class="text-end">{{ $orderStock->quantity }}</td>
                         </tr>
                     @endforeach
                     </tbody>
