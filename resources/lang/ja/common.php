@@ -2,6 +2,7 @@
 
 return [
 
+    'SystemName' => 'LaraEC',
     'Login' => 'ログイン',
     'Logout' => 'ログアウト',
     'EMail' => 'メールアドレス',
