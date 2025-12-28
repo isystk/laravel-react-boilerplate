@@ -21,7 +21,7 @@
     id="app"
     class="wrapper"
 >
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <nav class="app-header navbar navbar-expand navbar-white navbar-light">
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a
@@ -33,7 +33,7 @@
                 </a>
             </li>
         </ul>
-        <div class="dropdown ml-auto">
+        <div class="dropdown ms-auto">
             <button
                 type="button"
                 id="dropdown1"
@@ -45,7 +45,7 @@
                 {{ Auth::user()->name }}
             </button>
             <div
-                class="dropdown-menu dropdown-menu-right"
+                class="dropdown-menu dropdown-menu-end"
                 aria-labelledby="dropdown1"
             >
                 <a
@@ -73,7 +73,7 @@
         </div>
     </nav>
     @include('admin.common.sidemenu')
-    <div class="content-wrapper">
+    <div class="app-main">
         <div class="content-header">
             <div class="container-fluid">
                 <div class="mb-2">
@@ -94,7 +94,7 @@
             @yield('content')
         </div>
     </div>
-    <footer class="main-footer">
+    <footer class="app-footer">
         <strong>Copyright &copy; 2019-2020
             <a href="#">isystk.com</a>
             .

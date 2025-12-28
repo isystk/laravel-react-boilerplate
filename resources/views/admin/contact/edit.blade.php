@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <div class="text-left mb-3">
+    <div class="text-start mb-3">
         <a
             class="btn btn-secondary"
             href="{{ route('admin.contact.show', ['contactForm' => $contactForm]) }}"
@@ -220,7 +220,7 @@
                                         />
                                         <button
                                             type="button"
-                                            class="btn btn-danger btn-sm ml-2 js-remove-image"
+                                            class="btn btn-danger btn-sm ms-2 js-remove-image"
                                             data-target="{{ $i }}"
                                         >
                                             {{ __('common.Delete') }}
