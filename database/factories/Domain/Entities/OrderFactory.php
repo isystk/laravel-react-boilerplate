@@ -20,7 +20,8 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'sum_price' => $this->faker->numberBetween(1, 6),
+            'user_id' => \App\Domain\Entities\User::factory(),
+            'sum_price' => $this->faker->numberBetween(1000, 100000),
         ];
     }
 
