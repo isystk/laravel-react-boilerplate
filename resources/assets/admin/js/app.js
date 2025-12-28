@@ -5,7 +5,9 @@ import.meta.glob('../images/**/*');
 import jQuery from 'jquery';
 window.$ = window.jQuery = jQuery;
 
-import 'bootstrap';
+// Bootstrap
+import * as bootstrap from 'bootstrap';
+window.bootstrap = bootstrap;
 import 'bootstrap-datepicker';
 import 'admin-lte/dist/js/adminlte.min.js';
 

@@ -22,7 +22,7 @@ import './overlay'
           `${settings.body}`,
           `
           <button type="button" class="btn ${settings.confirmClass}" id="modalConfirmBtn">${settings.confirmText}</button>
-          <button type="button" class="btn ${settings.cancelClass}" data-dismiss="modal">${settings.cancelText}</button>
+          <button type="button" class="btn ${settings.cancelClass}" data-bs-dismiss="modal">${settings.cancelText}</button>
           `,
         ]
         const modal = $.overlay({header, body, footer})

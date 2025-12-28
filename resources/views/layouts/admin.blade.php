@@ -38,7 +38,7 @@
                 type="button"
                 id="dropdown1"
                 class="btn btn-secondary dropdown-toggle"
-                data-toggle="dropdown"
+                data-bs-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
             >

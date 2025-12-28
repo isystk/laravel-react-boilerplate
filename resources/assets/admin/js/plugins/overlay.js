@@ -16,7 +16,7 @@
                   <div class="modal-header border-0">
                       <div class="m-auto">${settings.header}</div>
                       <div class="absolute right-0 top-0 mt-2 mr-2">
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                           </button>
                       </div>
@@ -36,14 +36,23 @@
       $('body').append(modalHtml);
     }
 
-    // モーダルを表示
-    this.show = () => {
-      $(`#${settings.id}`).modal('show');
+    // 既存のインスタンスを取得、なければ新規作成
+    const getModalInstance = () => {
+      const element = document.getElementById(settings.id);
+      return bootstrap.Modal.getInstance(element) || new bootstrap.Modal(element);
     };
 
-    // モーダルを閉じる
+    // モーダルを表示
+    this.show = () => {
+      getModalInstance().show();
+    };
+
+    // モーダルを非表示
     this.hide = () => {
-      $(`#${settings.id}`).modal('hide');
+      const instance = bootstrap.Modal.getInstance(document.getElementById(settings.id));
+      if (instance) {
+        instance.hide();
+      }
     };
 
     return this;

@@ -33,7 +33,7 @@
                             class="btn btn-primary dropdown-toggle btn-sm"
                             type="button"
                             id="dropdownMenu1"
-                            data-toggle="dropdown"
+                            data-bs-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="true"
                         >
