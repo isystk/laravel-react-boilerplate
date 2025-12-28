@@ -1,10 +1,13 @@
 $(function () {
   // 削除確認用のダイアログを表示
-  $('.js-deleteBtn').click(function (e) {
-    e.preventDefault();
-    const id = $(this).data('id');
-    if (confirm('本当に削除していいですか？')) {
+  $('.js-deleteBtn').confirm({
+    title: '確認',
+    body: '本当に削除していいですか？',
+    confirmText: '削除する',
+    confirmClass: 'btn-danger',
+    onConfirm: function (target) {
+      const id = $(target).data('id');
       $('#delete_' + id).submit();
-    }
+    },
   });
 });
