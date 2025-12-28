@@ -2,6 +2,7 @@
 
 return [
 
+    'SystemName' => 'LaraEC',
     'Login' => 'ログイン',
     'Logout' => 'ログアウト',
     'EMail' => 'メールアドレス',
@@ -15,6 +16,7 @@ return [
     'Search Result' => '検索結果',
     'Detail' => '詳細',
     'Operation' => '操作',
+    'Confirmation' => '確認',
     'CSV Download' => 'CSVダウンロード',
     'Excel Download' => 'Excelダウンロード',
     'PDF Download' => 'PDFダウンロード',
@@ -26,6 +28,6 @@ return [
     'Delete' => '削除する',
     'Of Change' => 'の変更',
     'Please Select' => '選択してください',
-
+    'Unselected' => '未選択',
     'Registration Date' => '登録日時',
 ];

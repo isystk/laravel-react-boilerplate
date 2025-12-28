@@ -1,5 +1,5 @@
 import './loading';
 import './inputNumber';
 import './imageUploader';
-import './overlay'
+import './overlay';
 import './confirm';

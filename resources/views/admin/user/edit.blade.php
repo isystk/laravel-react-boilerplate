@@ -24,7 +24,7 @@
     @endif
     @if ($errors->any())
         <div class="alert alert-danger">
-            <ul>
+            <ul class="m-0">
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
@@ -32,58 +32,46 @@
         </div>
     @endif
 
-    <form
-        method="POST"
-        enctype="multipart/form-data"
-        action="{{ route('admin.user.update', ['user' => $user]) }}"
-    >
-        @method('PUT')
-        @csrf
-        <div class="card card-purple">
-            <div class="card-body">
-                <div class="form-group">
-                    <div
-                        class="control-group"
-                        id="userName"
-                    >
-                        <label class="col-sm-6 control-label">{{ __('user.Name') }}</label>
-                        <div class="col-sm-12">
-                            <input
-                                type="text"
-                                name="name"
-                                value="{{ old('name', $user->name) }}"
-                                class="form-control"
-                                maxlength="{{ config('const.maxlength.users.name') }}"
-                            />
-                        </div>
-                    </div>
+    <div class="card card-purple">
+        <div class="card-body">
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+                action="{{ route('admin.user.update', ['user' => $user]) }}"
+            >
+                @method('PUT')
+                @csrf
+                <div class="mb-3">
+                    <label for="name" class="form-label">{{ __('user.Name') }}</label>
+                    <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        value="{{ old('name', $user->name) }}"
+                        class="form-control"
+                        maxlength="{{ config('const.maxlength.users.name') }}"
+                    />
                 </div>
-                <div class="form-group">
-                    <div
-                        class="control-group"
-                        id="userName"
-                    >
-                        <label class="col-sm-6 control-label">{{ __('user.EMail') }}</label>
-                        <div class="col-sm-12">
-                            <input
-                                type="text"
-                                name="email"
-                                value="{{ old('email', $user->email) }}"
-                                class="form-control"
-                                maxlength="{{ config('const.maxlength.users.email') }}"
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card-footer text-center  ">
-                <input
-                    class="btn btn-primary"
-                    type="submit"
-                    value="{{__('common.Execute')}}"
-                />
-            </div>
-        </div>
-    </form>
 
+                <div class="mb-3">
+                    <label for="email" class="form-label">{{ __('user.EMail') }}</label>
+                    <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        value="{{ old('email', $user->email) }}"
+                        class="form-control"
+                        maxlength="{{ config('const.maxlength.users.email') }}"
+                    />
+                </div>
+                <div class="card-footer text-center  ">
+                    <input
+                        class="btn btn-primary"
+                        type="submit"
+                        value="{{__('common.Execute')}}"
+                    />
+                </div>
+            </form>
+        </div>
+    </div>
 @endsection

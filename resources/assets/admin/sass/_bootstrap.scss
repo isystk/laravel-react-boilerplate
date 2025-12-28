@@ -1,5 +1,8 @@
 
-// カレンダー表示
+// Bootstrap Datepicker
+.datepicker {
+    z-index: 10000 !important;
+}
 .datepicker-days th.dow:first-child,
 .datepicker-days td:first-child {
     color: #f00;
@@ -8,12 +11,9 @@
 .datepicker-days td:last-child {
     color: #00f;
 }
-.datepicker-days thead > tr:nth-child(3) {
-    border: solid 1px #eee;
-}
 .datepicker td, th {
     text-align: center;
-    padding: 2px 8px;
+    padding: 4px 8px;
     font-size: 14px;
 }
 
@@ -71,4 +71,9 @@
     .app-sidebar {
         z-index: 1039 !important;
     }
+}
+
+// サイズ指定
+.mw-500 {
+    max-width: 500px;
 }

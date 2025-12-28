@@ -38,21 +38,17 @@
                         {{ session('status') }}
                     </div>
                 @endif
-                <div class="form-group">
-                    <div
-                        class="control-group"
-                        id="stockName"
-                    >
-                        <label class="col-sm-2 control-label">{{ __('stock.Name') }}</label>
-                        <div class="col-sm-4">
-                            <input
-                                type="text"
-                                name="name"
-                                value="{{ request()->name }}"
-                                class="form-control"
-                                maxlength="{{ config('const.maxlength.stocks.name') }}"
-                            >
-                        </div>
+                <div class="mb-3 row">
+                    <label for="search_name" class="col-sm-2 col-form-label">{{ __('stock.Name') }}</label>
+                    <div class="col-sm-4">
+                        <input
+                            type="text"
+                            name="name"
+                            id="search_name"
+                            value="{{ request()->name }}"
+                            class="form-control"
+                            maxlength="{{ config('const.maxlength.stocks.name') }}"
+                        />
                     </div>
                 </div>
             </div>
@@ -111,8 +107,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body table-responsive p-0">
-                    <table class="table table-hover text-nowrap">
+                <div class="card-body p-0">
+                    <table class="table table-hover table-responsive">
                         <thead>
                         <tr>
                             @include('admin.common.sortablelink_th', ['params' => ['id', __('stock.ID')]])
@@ -127,9 +123,9 @@
                         @foreach($stocks as $stock)
                             <tr>
                                 <th>{{ $stock->id }}</th>
-                                <td>{{ $stock->name }}</td>
-                                <td>{{ $stock->price }}</td>
-                                <td>{{ $stock->quantity }}</td>
+                                <td class="mw-500">{{ $stock->name }}</td>
+                                <td class="text-end">{{ $stock->price }}</td>
+                                <td class="text-end">{{ $stock->quantity }}</td>
                                 <td>{{ $stock->created_at }}</td>
                                 <td>
                                     <a

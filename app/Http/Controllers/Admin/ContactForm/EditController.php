@@ -51,6 +51,6 @@ class EditController extends BaseController
             throw $e;
         }
 
-        return redirect(route('admin.contact'));
+        return redirect(route('admin.contact.show', $contactForm));
     }
 }

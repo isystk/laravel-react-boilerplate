@@ -24,7 +24,7 @@
     @endif
     @if ($errors->any())
         <div class="alert alert-danger">
-            <ul>
+            <ul class="m-0">
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
@@ -41,39 +41,26 @@
         <div class="card card-purple">
             <div class="card-body">
                 <div class="form-group">
-                    <div class="form-group">
-                        <div
-                            class="control-group"
-                            id="password"
-                        >
-                            <label class="col-sm-6 control-label">{{ __('staff.Password') }}</label>
-                            <div class="col-sm-12">
-                                <input
-                                    type="password"
-                                    name="password"
-                                    value=""
-                                    class="form-control"
-                                    maxlength="{{ config('const.maxlength.staffs.password') }}"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        class="control-group"
-                        id="password"
-                    >
-                        <label class="col-sm-6 control-label">{{ __('staff.Password') }}</label>
-                        <div class="col-sm-12">
-                            <input
-                                type="password"
-                                name="password_confirmation"
-                                value=""
-                                class="form-control"
-                                maxlength="{{ config('const.maxlength.staffs.password') }}"
-                            />
-                        </div>
-                    </div>
-                </div>
+                <label for="password" class="form-label">{{ __('staff.Password') }}</label>
+                <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    value=""
+                    class="form-control"
+                    maxlength="{{ config('const.maxlength.staffs.password') }}"
+                />
+            </div>
+            <div class="form-group">
+                <label for="password_confirmation" class="form-label">{{ __('staff.Password') }} ({{ __('common.Confirmation') }})</label>
+                <input
+                    type="password"
+                    name="password_confirmation"
+                    id="password_confirmation"
+                    value=""
+                    class="form-control"
+                    maxlength="{{ config('const.maxlength.staffs.password') }}"
+                />
             </div>
             <div class="card-footer text-center  ">
                 <button
