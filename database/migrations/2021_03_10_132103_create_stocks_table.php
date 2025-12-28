@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('stocks', static function (Blueprint $table) {
             $table->bigIncrements('id')->comment('商品ID');
-            $table->string('name', '100')->comment('商品名');
+            $table->string('name', '50')->comment('商品名');
             $table->string('detail', '500')->comment('説明文');
             $table->integer('price')->default(0)->comment('価格');
             $table->string('image_file_name', '200')->comment('画像ファイル名');

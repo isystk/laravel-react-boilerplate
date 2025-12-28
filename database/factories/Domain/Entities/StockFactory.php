@@ -20,7 +20,7 @@ class StockFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->text(100),
+            'name' => $this->faker->text(50),
             'detail' => $this->faker->realText(500),
             'price' => $this->faker->numberBetween(1, 6),
             'image_file_name' => $this->faker->image('/tmp', 400, 300, null, false),
