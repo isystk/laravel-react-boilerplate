@@ -53,7 +53,7 @@
     "@fortawesome/fontawesome-free": "^6.7.2",
     "@stripe/react-stripe-js": "^3.6.0",
     "@stripe/stripe-js": "7.0.0",
-    "admin-lte": "^3.2.0",
+    "admin-lte": "^4.0.0-rc6",
     "bootstrap": "^5.3.8",
     "bootstrap-datepicker": "^1.10.0",
     "formik": "^2.4.6",

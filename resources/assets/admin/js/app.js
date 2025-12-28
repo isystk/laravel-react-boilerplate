@@ -9,7 +9,9 @@ window.$ = window.jQuery = jQuery;
 import * as bootstrap from 'bootstrap';
 window.bootstrap = bootstrap;
 import 'bootstrap-datepicker';
-import 'admin-lte/dist/js/adminlte.min.js';
+
+// AdminLTE
+import 'admin-lte';
 
 import heic2any from 'heic2any';
 window.heic2any = heic2any;
