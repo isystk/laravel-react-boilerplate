@@ -55,7 +55,7 @@
             <div class="d-inline-block">
                 <div class="mx-auto">
                     <a
-                        class="btn btn-info"
+                        class="btn btn-primary"
                         href="{{ route('admin.staff.edit', ['staff' => $staff ]) }}"
                         @cannot('high-manager')
                             disabled="disabled"

@@ -100,7 +100,7 @@
             </div>
             <div class="card-footer text-center  ">
                 <button
-                    class="btn btn-info"
+                    class="btn btn-primary"
                     type="submit"
                 >
                     {{ __('common.Execute') }}

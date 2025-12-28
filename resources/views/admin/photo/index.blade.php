@@ -65,7 +65,7 @@
             <div class="card-footer text-center">
                 <button
                     type="submit"
-                    class="btn btn-secondary"
+                    class="btn btn-primary"
                 >{{ __('common.Search') }}</button>
             </div>
         </form>

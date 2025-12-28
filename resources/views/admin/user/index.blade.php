@@ -58,7 +58,7 @@
             <div class="card-footer text-center">
                 <button
                     type="submit"
-                    class="btn btn-secondary"
+                    class="btn btn-primary"
                 >{{ __('common.Search') }}</button>
             </div>
         </form>
@@ -104,7 +104,7 @@
                                 <td>{{ $user->created_at }}</td>
                                 <td>
                                     <a
-                                        class="btn btn-info btn-sm"
+                                        class="btn btn-primary btn-sm"
                                         href="{{ route('admin.user.show', ['user'=> $user]) }}"
                                     >{{ __('common.Detail') }}</a>
                                 </td>

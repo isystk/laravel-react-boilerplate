@@ -136,7 +136,7 @@
             </div>
             <div class="card-footer text-center  ">
                 <input
-                    class="btn btn-info"
+                    class="btn btn-primary"
                     type="submit"
                     value="{{ __('common.Execute') }}"
                 >
