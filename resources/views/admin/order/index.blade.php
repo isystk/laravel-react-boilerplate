@@ -117,7 +117,7 @@
                                 <td>{{ $order->created_at }}</td>
                                 <td>
                                     <a
-                                        class="btn btn-info btn-sm"
+                                        class="btn btn-primary btn-sm"
                                         href="{{ route('admin.order.show', ['order'=> $order]) }}"
                                     >{{ __('common.Detail') }}</a>
                                 </td>

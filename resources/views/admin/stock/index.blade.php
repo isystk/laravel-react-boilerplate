@@ -80,12 +80,12 @@
             <div class="card card-purple">
                 <div class="card-header">
                     <h3 class="card-title">{{ __('common.Search Result') }}</h3>
-                    <div class="dropdown text-right">
+                    <div class="dropdown text-end">
                         <button
-                            class="btn btn-default dropdown-toggle btn-sm"
+                            class="btn btn-secondary dropdown-toggle btn-sm"
                             type="button"
                             id="dropdownMenu1"
-                            data-toggle="dropdown"
+                            data-bs-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="true"
                         >
@@ -93,7 +93,7 @@
                             <span class="caret"></span>
                         </button>
                         <div
-                            class="dropdown-menu dropdown-menu-right"
+                            class="dropdown-menu dropdown-menu-end"
                             aria-labelledby="dropdownMenu1"
                         >
                             <a
@@ -133,7 +133,7 @@
                                 <td>{{ $stock->created_at }}</td>
                                 <td>
                                     <a
-                                        class="btn btn-info btn-sm"
+                                        class="btn btn-primary btn-sm"
                                         href="{{ route('admin.stock.show', ['stock'=> $stock]) }}"
                                     >{{ __('common.Detail') }}</a>
                                 </td>

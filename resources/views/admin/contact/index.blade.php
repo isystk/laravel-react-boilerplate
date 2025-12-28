@@ -112,7 +112,7 @@
                                 <td>{{ $contactForm->created_at }}</td>
                                 <td>
                                     <a
-                                        class="btn btn-info btn-sm"
+                                        class="btn btn-primary btn-sm"
                                         href="{{ route('admin.contact.show', ['contactForm'=> $contactForm]) }}"
                                     >{{ __('common.Detail') }}</a>
                                 </td>

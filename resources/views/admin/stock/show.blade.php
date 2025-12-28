@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <div class="text-left mb-3">
+    <div class="text-start mb-3">
         <a
             class="btn btn-secondary"
             href="{{ route('admin.stock') }}"
@@ -69,7 +69,7 @@
             <div class="d-inline-block">
                 <div class="mx-auto">
                     <a
-                        class="btn btn-info"
+                        class="btn btn-primary"
                         href="{{ route('admin.stock.edit', ['stock' => $stock ]) }}"
                         @cannot('high-manager')
                             disabled="disabled"

@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <div class="text-left mb-3">
+    <div class="text-start mb-3">
         <a
             class="btn btn-secondary"
             href="{{ route('admin.stock.show', ['stock' => $stock]) }}"
@@ -144,7 +144,7 @@
             </div>
             <div class="card-footer text-center  ">
                 <input
-                    class="btn btn-info"
+                    class="btn btn-primary"
                     type="submit"
                     value="{{ __('common.Execute') }}"
                 >

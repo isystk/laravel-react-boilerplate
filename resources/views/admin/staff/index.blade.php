@@ -159,7 +159,7 @@
                                 <td>{{ $staff->created_at }}</td>
                                 <td>
                                     <a
-                                        class="btn btn-info btn-sm"
+                                        class="btn btn-primary btn-sm"
                                         href="{{ route('admin.staff.show', ['staff'=> $staff]) }}"
                                     >{{ __('common.Detail') }}</a>
                                 </td>

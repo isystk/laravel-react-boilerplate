@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-    <div class="text-left mb-3">
+    <div class="text-start mb-3">
         <a
             class="btn btn-secondary"
             href="{{ route('admin.home') }}"
@@ -77,7 +77,7 @@
             </div>
             <div class="card-footer text-center  ">
                 <button
-                    class="btn btn-info"
+                    class="btn btn-primary"
                     type="submit"
                 >
                     {{ __('common.Change') }}
