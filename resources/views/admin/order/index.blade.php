@@ -24,50 +24,46 @@
                         {{ session('status') }}
                     </div>
                 @endif
-                <div class="form-group">
-                    <div
-                        class="control-group"
-                        id="orderName"
-                    >
-                        <label class="col-sm-2 control-label">{{ __('order.User Name') }}</label>
-                        <div class="col-sm-4">
-                            <input
-                                type="text"
-                                name="name"
-                                value="{{ request()->name }}"
-                                class="form-control"
-                                maxlength="{{ config('const.maxlength.users.name') }}"
-                            />
-                        </div>
+                <div class="mb-3 row">
+                    <label for="name" class="col-sm-2 col-form-label">{{ __('order.User Name') }}</label>
+                    <div class="col-sm-4">
+                        <input
+                            type="text"
+                            name="name"
+                            id="name"
+                            value="{{ request()->name }}"
+                            class="form-control"
+                            maxlength="{{ config('const.maxlength.users.name') }}"
+                        />
                     </div>
                 </div>
-                <div class="form-group">
-                    <div
-                        class="control-group"
-                        id="orderName"
-                    >
-                        <label class="col-sm-2 control-label">{{ __('order.Order Date') }}</label>
-                        <div class="col">
-                            <div class="row">
-                                <div class="col">
-                                    <input
-                                        type="text"
-                                        name="order_date_from"
-                                        value="{{ request()->order_date_from }}"
-                                        class="form-control date-picker"
-                                        maxlength="{{ config('const.maxlength.commons.date') }}"
-                                    />
-                                </div>
-                                <span class="pt-2">～</span>
-                                <div class="col">
-                                    <input
-                                        type="text"
-                                        name="order_date_to"
-                                        value="{{ request()->order_date_to }}"
-                                        class="form-control date-picker"
-                                        maxlength="{{ config('const.maxlength.commons.date') }}"
-                                    />
-                                </div>
+
+                <div class="mb-3 row">
+                    <label for="order_date_from" class="col-sm-2 col-form-label">{{ __('order.Order Date') }}</label>
+                    <div class="col-sm-10">
+                        <div class="row align-items-center g-2">
+                            <div class="col-auto" style="width: 180px;">
+                                <input
+                                    type="text"
+                                    name="order_date_from"
+                                    id="order_date_from"
+                                    value="{{ request()->order_date_from }}"
+                                    class="form-control date-picker"
+                                    maxlength="{{ config('const.maxlength.commons.date') }}"
+                                />
+                            </div>
+                            <div class="col-auto text-center">
+                                <span>～</span>
+                            </div>
+                            <div class="col-auto" style="width: 180px;">
+                                <input
+                                    type="text"
+                                    name="order_date_to"
+                                    id="order_date_to"
+                                    value="{{ request()->order_date_to }}"
+                                    class="form-control date-picker"
+                                    maxlength="{{ config('const.maxlength.commons.date') }}"
+                                />
                             </div>
                         </div>
                     </div>

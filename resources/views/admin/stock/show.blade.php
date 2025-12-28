@@ -16,51 +16,49 @@
 
     <div class="card card-purple">
         <div class="card-body">
-            <div class="form-group">
-                <div class="control-group">
-                    <label class="col-sm-2 control-label">{{ __('stock.Name') }}</label>
-                    <div class="col-sm-4">
-                        {{ $stock -> name }}
-                    </div>
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label text-muted small">{{ __('stock.Name') }}</label>
+                <div class="col-sm-10 d-flex align-items-center">
+                    {{ $stock->name }}
                 </div>
             </div>
-            <div class="form-group">
-                <div class="control-group">
-                    <label class="col-sm-2 control-label">{{ __('stock.Detail') }}</label>
-                    <div class="col-sm-4">
-                        {{ $stock -> detail }}
-                    </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label text-muted small">{{ __('stock.Detail') }}</label>
+                <div class="col-sm-10 d-flex align-items-center">
+                    {!! nl2br(e($stock->detail)) !!}
                 </div>
             </div>
-            <div class="form-group">
-                <div class="control-group">
-                    <label class="col-sm-2 control-label">{{ __('stock.Price') }}</label>
-                    <div class="col-sm-4">
-                        {{ $stock -> price }}
-                    </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label text-muted small">{{ __('stock.Price') }}</label>
+                <div class="col-sm-10 d-flex align-items-center">
+                    {{ number_format($stock->price) }} 円
                 </div>
             </div>
-            <div class="form-group">
-                <div class="control-group">
-                    <label class="col-sm-2 control-label">{{ __('stock.Quantity') }}</label>
-                    <div class="col-sm-4">
-                        {{ $stock -> quantity }}
-                    </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label text-muted small">{{ __('stock.Quantity') }}</label>
+                <div class="col-sm-10 d-flex align-items-center">
+                    {{ number_format($stock->quantity) }} 個
                 </div>
             </div>
-            <div class="form-group">
-                <div class="control-group">
-                    <label class="col-sm-2 control-label">{{ __('stock.Image') }}</label>
-                    <div
-                        class="col-sm-4"
-                        id="result"
-                    >
-                        <img
-                            src="{{ asset('/uploads/stock/'.$stock->image_file_name) }}"
-                            alt=""
-                            width="200px"
-                            id="stockImage"
-                        />
+
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label text-muted small">{{ __('stock.Image') }}</label>
+                <div class="col-sm-10">
+                    <div id="result">
+                        @if($stock->image_file_name)
+                            <img
+                                src="{{ asset('/uploads/stock/'.$stock->image_file_name) }}"
+                                alt="{{ $stock->name }}"
+                                id="stockImage"
+                                class="img-thumbnail"
+                                style="max-width: 300px; height: auto;"
+                            />
+                        @else
+                            <span class="text-muted small">画像なし</span>
+                        @endif
                     </div>
                 </div>
             </div>

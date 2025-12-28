@@ -38,21 +38,17 @@
                         {{ session('status') }}
                     </div>
                 @endif
-                <div class="form-group">
-                    <div
-                        class="control-group"
-                        id="stockName"
-                    >
-                        <label class="col-sm-2 control-label">{{ __('stock.Name') }}</label>
-                        <div class="col-sm-4">
-                            <input
-                                type="text"
-                                name="name"
-                                value="{{ request()->name }}"
-                                class="form-control"
-                                maxlength="{{ config('const.maxlength.stocks.name') }}"
-                            >
-                        </div>
+                <div class="mb-3 row">
+                    <label for="search_name" class="col-sm-2 col-form-label">{{ __('stock.Name') }}</label>
+                    <div class="col-sm-4">
+                        <input
+                            type="text"
+                            name="name"
+                            id="search_name"
+                            value="{{ request()->name }}"
+                            class="form-control"
+                            maxlength="{{ config('const.maxlength.stocks.name') }}"
+                        />
                     </div>
                 </div>
             </div>

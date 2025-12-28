@@ -32,125 +32,123 @@
         </div>
     @endif
 
-    <form
-        method="POST"
-        enctype="multipart/form-data"
-        action="{{route('admin.stock.update', ['stock' => $stock])}}"
-    >
-        @method('PUT')
-        @csrf
-        <div class="card card-purple">
-            <div class="card-body">
+    <div class="card card-purple">
+        <div class="card-body">
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+                action="{{route('admin.stock.update', ['stock' => $stock])}}"
+            >
+                @method('PUT')
+                @csrf
                 <div class="form-group">
-                    <div class="control-group">
-                        <label class="col-sm-2 control-label">{{ __('stock.Name') }}</label>
-                        <div class="col-sm-8">
-                            <input
-                                type="text"
-                                name="name"
-                                value="{{ old('name', $stock->name) }}"
-                                class="form-control"
-                                maxlength="{{ config('const.maxlength.stocks.name') }}"
-                            />
-                        </div>
+                    <label for="name" class="col-sm-2 col-form-label">{{ __('stock.Name') }}</label>
+                    <div class="col-sm-8">
+                        <input
+                            type="text"
+                            name="name"
+                            id="name"
+                            value="{{ old('name', $stock->name) }}"
+                            class="form-control"
+                            maxlength="{{ config('const.maxlength.stocks.name') }}"
+                        />
                     </div>
                 </div>
+
                 <div class="form-group">
-                    <div class="control-group">
-                        <label class="col-sm-2 control-label">{{ __('stock.Detail') }}</label>
-                        <div class="col-sm-8">
-                            <textarea
-                                name="detail"
-                                rows="10"
-                                cols="50"
-                                class="form-control"
-                            >{{ old('detail', $stock->detail) }}</textarea>
-                        </div>
+                    <label for="detail" class="col-sm-2 col-form-label">{{ __('stock.Detail') }}</label>
+                    <div class="col-sm-8">
+                        <textarea
+                            name="detail"
+                            id="detail"
+                            rows="10"
+                            class="form-control"
+                        >{{ old('detail', $stock->detail) }}</textarea>
                     </div>
                 </div>
+
                 <div class="form-group">
-                    <div class="control-group">
-                        <label class="col-sm-2 control-label">{{ __('stock.Price') }}</label>
-                        <div class="col-sm-4">
+                    <label for="price" class="col-sm-2 col-form-label">{{ __('stock.Price') }}</label>
+                    <div class="col-sm-4">
+                        <div class="input-group">
                             <input
                                 type="number"
                                 name="price"
+                                id="price"
                                 value="{{ old('price', $stock->price) }}"
                                 class="form-control js-input-number"
                                 maxlength="{{ config('const.maxlength.stocks.price') }}"
                             />
+                            <span class="input-group-text">円</span>
                         </div>
                     </div>
                 </div>
+
                 <div class="form-group">
-                    <div class="control-group">
-                        <label class="col-sm-2 control-label">{{ __('stock.Quantity') }}</label>
-                        <div class="col-sm-4">
+                    <label for="quantity" class="col-sm-2 col-form-label">{{ __('stock.Quantity') }}</label>
+                    <div class="col-sm-4">
+                        <div class="input-group">
                             <input
                                 type="number"
                                 name="quantity"
+                                id="quantity"
                                 value="{{ old('quantity', $stock->quantity) }}"
                                 class="form-control js-input-number"
                                 maxlength="{{ config('const.maxlength.stocks.quantity') }}"
                             />
+                            <span class="input-group-text">個</span>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="control-group">
-                        <label class="col-sm-2 control-label">{{ __('stock.Image') }}</label>
-                        <div
-                            class="col-sm-2"
-                            id="drop-zone"
-                        >
-                            {{--
-                            <p><input type="file" name="imageFile"></p>
-                            <br>
-                            --}}
-                            <p>
+                    <label class="col-sm-2 control-label">{{ __('stock.Image') }}</label>
+                    <div
+                        class="col-sm-2"
+                        id="drop-zone"
+                    >
+                        <p>
+                            <input
+                                id="js-uploadImage"
+                                type="file"
+                            >
+                        </p>
+                        <div id="result">
+                            @if (old('imageBase64'))
+                                <img
+                                    src="{{ old('imageBase64') }}"
+                                    width="200px"
+                                />
                                 <input
-                                    id="js-uploadImage"
-                                    type="file"
+                                    type="hidden"
+                                    name="imageBase64"
+                                    value="{{ old('imageBase64') }}"
+                                />
+                                <input
+                                    type="hidden"
+                                    name="fileName"
+                                    value="{{ old('fileName') }}"
+                                />
+                            @elseif ($stock->image_file_name)
+                                <img
+                                    src="{{ asset('uploads/stock/' . $stock->image_file_name) }}"
+                                    width="200px"
+                                    id="stockImage"
                                 >
-                            </p>
-                            <div id="result">
-                                @if (old('imageBase64'))
-                                    <img
-                                        src="{{ old('imageBase64') }}"
-                                        width="200px"
-                                    />
-                                    <input
-                                        type="hidden"
-                                        name="imageBase64"
-                                        value="{{ old('imageBase64') }}"
-                                    />
-                                    <input
-                                        type="hidden"
-                                        name="fileName"
-                                        value="{{ old('fileName') }}"
-                                    />
-                                @elseif ($stock->image_file_name)
-                                    <img
-                                        src="{{ asset('uploads/stock/' . $stock->image_file_name) }}"
-                                        width="200px"
-                                        id="stockImage"
-                                    >
-                                @endif
-                            </div>
-                            <p class="error error-message"></p>
+                            @endif
                         </div>
+                        <p class="error error-message"></p>
                     </div>
                 </div>
-            </div>
-            <div class="card-footer text-center  ">
-                <input
-                    class="btn btn-primary"
-                    type="submit"
-                    value="{{ __('common.Execute') }}"
-                >
-            </div>
+                <div class="card-footer text-center  ">
+                    <input
+                        class="btn btn-primary"
+                        type="submit"
+                        value="{{ __('common.Execute') }}"
+                    >
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 @endsection
 
 @section('scripts')

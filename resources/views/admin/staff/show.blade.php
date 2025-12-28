@@ -26,28 +26,24 @@
 
     <div class="card card-purple">
         <div class="card-body">
-            <div class="form-group">
-                <div class="control-group">
-                    <label class="col-sm-2 control-label">{{ __('staff.Name') }}</label>
-                    <div class="col-sm-4">
-                        {{ $staff->name }}
-                    </div>
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label text-muted small">{{ __('staff.Name') }}</label>
+                <div class="col-sm-10 d-flex align-items-center">
+                    {{ $staff->name }}
                 </div>
             </div>
-            <div class="form-group">
-                <div class="control-group">
-                    <label class="col-sm-2 control-label">{{ __('staff.EMail') }}</label>
-                    <div class="col-sm-4">
-                        {{ $staff->email }}
-                    </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label text-muted small">{{ __('staff.EMail') }}</label>
+                <div class="col-sm-10 d-flex align-items-center">
+                    {{ $staff->email }}
                 </div>
             </div>
-            <div class="form-group">
-                <div class="control-group">
-                    <label class="col-sm-2 control-label">{{ __('staff.Role') }}</label>
-                    <div class="col-sm-4">
-                        {{ $staff->role->label() }}
-                    </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label text-muted small">{{ __('staff.Role') }}</label>
+                <div class="col-sm-10 d-flex align-items-center">
+                    {{ $staff->role->label() }}
                 </div>
             </div>
         </div>

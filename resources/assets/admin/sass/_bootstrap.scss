@@ -1,5 +1,8 @@
 
 // Bootstrap Datepicker
+.datepicker {
+    z-index: 10000 !important;
+}
 .datepicker-days th.dow:first-child,
 .datepicker-days td:first-child {
     color: #f00;
@@ -7,9 +10,6 @@
 .datepicker-days th.dow:last-child,
 .datepicker-days td:last-child {
     color: #00f;
-}
-.datepicker-days thead > tr:nth-child(3) {
-    border: solid 1px #eee;
 }
 .datepicker td, th {
     text-align: center;

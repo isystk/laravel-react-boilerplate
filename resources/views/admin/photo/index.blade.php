@@ -24,41 +24,38 @@
                         {{ session('status') }}
                     </div>
                 @endif
-                <div class="form-group">
-                    <div
-                        class="control-group"
-                        id="photoName"
-                    >
-                        <label class="col-sm-2 control-label">{{ __('photo.File Name') }}</label>
-                        <div class="col-sm-4">
-                            <input
-                                type="text"
-                                name="fileName"
-                                value="{{ request()->fileName }}"
-                                class="form-control"
-                                maxlength="100"
-                            />
-                        </div>
+                <div class="mb-3 row">
+                    <label for="fileName" class="col-sm-2 col-form-label">{{ __('photo.File Name') }}</label>
+                    <div class="col-sm-4">
+                        <input
+                            type="text"
+                            name="fileName"
+                            id="fileName"
+                            value="{{ request()->fileName }}"
+                            class="form-control"
+                            maxlength="100"
+                        />
                     </div>
-                    <div
-                        class="control-group mt-3"
-                        id="userName"
-                    >
-                        <label class="col-sm-2 control-label">{{ __('photo.Type') }}</label>
-                        <div class="col-sm-4">
-                            <select
-                                name="fileType"
-                                class="form-control"
-                            >
-                                <option value="">未選択</option>
-                                @foreach(App\Enums\PhotoType::cases() as $item)
-                                    <option
-                                        value="{{ $item->value }}"
-                                        {{ ($item->value === (int)request()->fileType) ? 'selected' : '' }}
-                                    >{{ $item->label() }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="fileType" class="col-sm-2 col-form-label">{{ __('photo.Type') }}</label>
+                    <div class="col-sm-4">
+                        <select
+                            name="fileType"
+                            id="fileType"
+                            class="form-select"
+                        >
+                            <option value="">{{ __('common.Unselected') ?? '未選択' }}</option>
+                            @foreach(App\Enums\PhotoType::cases() as $item)
+                                <option
+                                    value="{{ $item->value }}"
+                                    {{ ($item->value === (int)request()->fileType) ? 'selected' : '' }}
+                                >
+                                    {{ $item->label() }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
             </div>

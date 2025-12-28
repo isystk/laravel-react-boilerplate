@@ -41,133 +41,101 @@
                 @method('PUT')
                 @csrf
                 <div class="form-group">
-                    <div
-                        class="control-group"
-                        id="userName"
-                    >
-                        <label class="col-sm-6 control-label">{{ __('contact.Name') }}</label>
-                        <div class="col-sm-12">
-                            <input
-                                type="text"
-                                name="user_name"
-                                value="{{ old('user_name', $contactForm->user_name) }}"
-                                class="form-control"
-                                maxlength="{{ config('const.maxlength.contact_forms.user_name') }}"
-                            />
-                        </div>
-                    </div>
+                    <label for="user_name" class="form-label">{{ __('contact.Name') }}</label>
+                    <input
+                        type="text"
+                        name="user_name"
+                        id="user_name"
+                        value="{{ old('user_name', $contactForm->user_name) }}"
+                        class="form-control"
+                        maxlength="{{ config('const.maxlength.contact_forms.user_name') }}"
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label">{{ __('contact.EMail') }}</label>
+                    <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        value="{{ old('email', $contactForm->email) }}"
+                        class="form-control"
+                        maxlength="{{ config('const.maxlength.contact_forms.email') }}"
+                    />
                 </div>
                 <div class="form-group">
-                    <div
-                        class="control-group"
-                        id="userName"
-                    >
-                        <label class="col-sm-6 control-label">{{ __('contact.EMail') }}</label>
-                        <div class="col-sm-12">
-                            <input
-                                type="email"
-                                name="email"
-                                value="{{ old('email', $contactForm->email) }}"
-                                class="form-control"
-                                maxlength="{{ config('const.maxlength.contact_forms.email') }}"
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div
-                        class="control-group"
-                        id="userName"
-                    >
-                        <label class="col-sm-6 control-label">{{ __('contact.Gender') }}</label>
-                        <div class="col-sm-12">
-                            @foreach (App\Enums\Gender::cases() as $e)
-                                <label>
-                                    <input
-                                        type="radio"
-                                        name="gender"
-                                        value="{{$e->value}}"
-                                        class="form-control"
-                                        {{ $e->value == old("gender", $contactForm->gender->value) ? 'checked="checked"' : '' }}
-                                    />
-                                    <span>{{ $e->label() }}</span>
+                    <label class="form-label d-block">{{ __('contact.Gender') }}</label>
+                    <div class="ps-2">
+                        @foreach (App\Enums\Gender::cases() as $e)
+                            <div class="form-check form-check-inline">
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="gender"
+                                    id="gender_{{ $e->value }}"
+                                    value="{{ $e->value }}"
+                                    {{ $e->value == old("gender", $contactForm->gender->value) ? 'checked' : '' }}
+                                >
+                                <label class="form-check-label" for="gender_{{ $e->value }}">
+                                    {{ $e->label() }}
                                 </label>
-                            @endforeach
-                        </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
                 <div class="form-group">
-                    <div
-                        class="control-group"
-                        id="userName"
+                    <label for="age" class="form-label">{{ __('contact.Age') }}</label>
+                    <select
+                        name="age"
+                        id="age"
+                        class="form-select"
                     >
-                        <label class="col-sm-6 control-label">{{ __('contact.Age') }}</label>
-                        <div class="col-sm-12">
-                            <select
-                                name="age"
-                                class="form-control"
+                        <option value="">{{ __('common.Please Select') }}</option>
+                        @foreach (App\Enums\Age::cases() as $e)
+                            <option
+                                value="{{ $e->value }}"
+                                {{ $e->value == old("age", $contactForm->age->value) ? 'selected' : '' }}
                             >
-                                <option value="">{{ __('common.Please Select') }}</option>
-                                @foreach (App\Enums\Age::cases() as $e)
-                                    <option
-                                        value="{{$e->value}}"
-                                        {{ $e->value == old("age", $contactForm->age->value) ? 'selected="selected"' : '' }}
-                                    >{{$e->label()}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+                                {{ $e->label() }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
+
                 <div class="form-group">
-                    <div
-                        class="control-group"
-                        id="userName"
-                    >
-                        <label class="col-sm-6 control-label">{{ __('contact.Title') }}</label>
-                        <div class="col-sm-12">
-                            <input
-                                type="text"
-                                name="title"
-                                value="{{ old('title', $contactForm->title) }}"
-                                class="form-control"
-                                maxlength="{{ config('const.maxlength.contact_forms.title') }}"
-                            />
-                        </div>
-                    </div>
+                    <label for="title" class="form-label">{{ __('contact.Title') }}</label>
+                    <input
+                        type="text"
+                        name="title"
+                        id="title"
+                        value="{{ old('title', $contactForm->title) }}"
+                        class="form-control"
+                        maxlength="{{ config('const.maxlength.contact_forms.title') }}"
+                    />
                 </div>
+
                 <div class="form-group">
-                    <div
-                        class="control-group"
-                        id="userName"
-                    >
-                        <label class="col-sm-6 control-label">{{ __('contact.Contact') }}</label>
-                        <div class="col-sm-12">
-                            <textarea
-                                name="contact"
-                                rows="10"
-                                cols="50"
-                                class="form-control"
-                            >{{ old('contact', $contactForm->contact) }}</textarea>
-                        </div>
-                    </div>
+                    <label for="contact" class="form-label">{{ __('contact.Contact') }}</label>
+                    <textarea
+                        name="contact"
+                        id="contact"
+                        rows="10"
+                        class="form-control"
+                    >{{ old('contact', $contactForm->contact) }}</textarea>
                 </div>
+
                 <div class="form-group">
-                    <div
-                        class="control-group"
-                        id="userName"
-                    >
-                        <label class="col-sm-6 control-label">{{ __('contact.URL') }}</label>
-                        <div class="col-sm-12">
-                            <input
-                                type="url"
-                                name="url"
-                                value="{{ old('url', $contactForm->url) }}"
-                                class="form-control"
-                                maxlength="{{ config('const.maxlength.contact_forms.url') }}"
-                            />
-                        </div>
-                    </div>
+                    <label for="url" class="form-label">{{ __('contact.URL') }}</label>
+                    <input
+                        type="url"
+                        name="url"
+                        id="url"
+                        value="{{ old('url', $contactForm->url) }}"
+                        class="form-control"
+                        maxlength="{{ config('const.maxlength.contact_forms.url') }}"
+                    />
                 </div>
+
                 @for ($i = 1; $i <= 3; $i++)
                     <div class="form-group">
                         <div
