@@ -10,5 +10,4 @@ $(function () {
       $('#delete_' + id).submit();
     },
   });
-
 });
