@@ -25,33 +25,31 @@
                         {{ session('status') }}
                     </div>
                 @endif
-                <div class="form-group">
-                    <div
-                        class="control-group"
-                        id="userName"
-                    >
-                        <label class="col-sm-2 control-label">{{ __('user.Name') }}</label>
-                        <div class="col-sm-4">
-                            <input
-                                type="text"
-                                name="name"
-                                value="{{ request()->name }}"
-                                class="form-control"
-                                maxlength="{{ config('const.maxlength.users.name') }}"
-                            >
-                        </div>
+                <div class="mb-3 row">
+                    <label for="search_user_name" class="col-sm-2 col-form-label">{{ __('user.Name') }}</label>
+                    <div class="col-sm-4">
+                        <input
+                            type="text"
+                            name="name"
+                            id="search_user_name"
+                            value="{{ request()->name }}"
+                            class="form-control"
+                            maxlength="{{ config('const.maxlength.users.name') }}"
+                        />
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">{{ __('user.EMail') }}</label>
+
+                <div class="mb-3 row">
+                    <label for="search_user_email" class="col-sm-2 col-form-label">{{ __('user.EMail') }}</label>
                     <div class="col-sm-8">
                         <input
                             type="email"
                             name="email"
+                            id="search_user_email"
                             value="{{ request()->email }}"
                             class="form-control"
                             maxlength="{{ config('const.maxlength.users.email') }}"
-                        >
+                        />
                     </div>
                 </div>
             </div>
@@ -104,7 +102,7 @@
                                 <td>{{ $user->created_at }}</td>
                                 <td>
                                     <a
-                                        class="btn btn-info btn-sm"
+                                        class="btn btn-primary btn-sm"
                                         href="{{ route('admin.user.show', ['user'=> $user]) }}"
                                     >{{ __('common.Detail') }}</a>
                                 </td>

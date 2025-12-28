@@ -20,7 +20,9 @@ class OrderStockFactory extends Factory
     public function definition(): array
     {
         return [
-            'price' => $this->faker->numberBetween(1, 6),
+            'order_id' => \App\Domain\Entities\Order::factory(),
+            'stock_id' => \App\Domain\Entities\Stock::factory(),
+            'price' => $this->faker->numberBetween(1000, 100000),
             'quantity' => $this->faker->numberBetween(0, 10),
         ];
     }

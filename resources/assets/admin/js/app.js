@@ -5,9 +5,16 @@ import.meta.glob('../images/**/*');
 import jQuery from 'jquery';
 window.$ = window.jQuery = jQuery;
 
-import 'bootstrap';
+// Bootstrap
+import * as bootstrap from 'bootstrap';
+window.bootstrap = bootstrap;
+
+// Bootstrap Datepicker
 import 'bootstrap-datepicker';
-import 'admin-lte/dist/js/adminlte.min.js';
+import 'bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css';
+
+// AdminLTE
+import 'admin-lte';
 
 import heic2any from 'heic2any';
 window.heic2any = heic2any;

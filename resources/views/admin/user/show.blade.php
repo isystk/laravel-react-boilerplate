@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <div class="text-left mb-3">
+    <div class="text-start mb-3">
         <a
             class="btn btn-secondary"
             href="{{ route('admin.user') }}"
@@ -16,20 +16,17 @@
 
     <div class="card card-purple">
         <div class="card-body">
-            <div class="form-group">
-                <div class="control-group">
-                    <label class="col-sm-2 control-label">{{ __('user.Name') }}</label>
-                    <div class="col-sm-4">
-                        {{ $user -> name }}
-                    </div>
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label text-muted small">{{ __('user.Name') }}</label>
+                <div class="col-sm-10 d-flex align-items-center">
+                    {{ $user->name }}
                 </div>
             </div>
-            <div class="form-group">
-                <div class="control-group">
-                    <label class="col-sm-2 control-label">{{ __('user.EMail') }}</label>
-                    <div class="col-sm-4">
-                        {{ $user -> email }}
-                    </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label text-muted small">{{ __('user.EMail') }}</label>
+                <div class="col-sm-10 d-flex align-items-center">
+                    {{ $user->email }}
                 </div>
             </div>
         </div>
@@ -37,7 +34,7 @@
             <div class="d-inline-block">
                 <div class="mx-auto">
                     <a
-                        class="btn btn-info"
+                        class="btn btn-primary"
                         href="{{ route('admin.user.edit', ['user' => $user ]) }}"
                         @cannot('high-manager')
                             disabled="disabled"

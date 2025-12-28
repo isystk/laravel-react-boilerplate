@@ -1,0 +1,79 @@
+
+// Bootstrap Datepicker
+.datepicker {
+    z-index: 10000 !important;
+}
+.datepicker-days th.dow:first-child,
+.datepicker-days td:first-child {
+    color: #f00;
+}
+.datepicker-days th.dow:last-child,
+.datepicker-days td:last-child {
+    color: #00f;
+}
+.datepicker td, th {
+    text-align: center;
+    padding: 4px 8px;
+    font-size: 14px;
+}
+
+// テーブルソート
+.table {
+    .sortable_th {
+        position: relative;
+        cursor: pointer;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .sortable_arrow_asc {
+        position: absolute;
+        right: 8px;
+        font-weight: bold;
+    }
+    .sortable_arrow_desc {
+        position: absolute;
+        right: 1px;
+        font-weight: bold;
+    }
+    .enabled_arrow {
+        color: rgba(0, 0, 0, 1);
+    }
+    .disabled_arrow {
+        color: rgba(0, 0, 0, 0.5);
+    }
+}
+
+// フォーム
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+// カード
+.card {
+    margin-bottom: 1.5rem;
+    .card-header, .card-body {
+        border: none;
+    }
+}
+
+// モーダル
+.modal {
+    .modal-header, .modal-footer {
+        border: none;
+    }
+}
+
+// スマホ表示時のヘッダーとサイドバーの重なり順序調整
+@media (max-width: 991.98px) {
+    .app-header {
+        z-index: 1040 !important;
+    }
+    .app-sidebar {
+        z-index: 1039 !important;
+    }
+}
+
+// サイズ指定
+.mw-500 {
+    max-width: 500px;
+}

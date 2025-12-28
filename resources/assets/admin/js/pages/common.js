@@ -12,13 +12,13 @@ $(function () {
     // ロード時に localStorage の値を確認し、状態を反映
     const sidebarState = localStorage.getItem('sidebar');
     if ('collapsed' === sidebarState) {
-      $('body').addClass('sidebar-collapse');
+      $('body').addClass('sidebar-open').removeClass('sidebar-collapse');
+    } else {
+      $('body').removeClass('sidebar-open').addClass('sidebar-collapse');
     }
 
-    $('body').removeClass('invisible');
-
     // メニュー開閉ボタンがクリックされたときに状態を保存
-    $('[data-widget="pushmenu"]').on('click', function () {
+    $('[data-lte-toggle="sidebar"]').on('click', function () {
       const isCollapsed = $('body').hasClass('sidebar-collapse');
       localStorage.setItem('sidebar', isCollapsed ? 'expanded' : 'collapsed');
     });

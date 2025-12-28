@@ -2,6 +2,7 @@
 
 namespace Database\Factories\Domain\Entities;
 
+use App\Domain\Entities\ContactForm;
 use App\Domain\Entities\ContactFormImage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,6 +21,7 @@ class ContactFormImageFactory extends Factory
     public function definition(): array
     {
         return [
+            'contact_form_id' => ContactForm::factory(),
             'file_name' => $this->faker->image('/tmp', 400, 300, null, false),
         ];
     }

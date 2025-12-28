@@ -35,13 +35,13 @@ class CreateController extends BaseController
 
         DB::beginTransaction();
         try {
-            $service->save($request);
+            $stock = $service->save($request);
             DB::commit();
         } catch (Throwable $e) {
             DB::rollBack();
             throw $e;
         }
 
-        return redirect(route('admin.stock'));
+        return redirect(route('admin.stock.show', $stock));
     }
 }

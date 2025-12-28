@@ -24,36 +24,31 @@
                         {{ session('status') }}
                     </div>
                 @endif
-                <div class="form-group">
-                    <div
-                        class="control-group"
-                        id="userName"
-                    >
-                        <label class="col-sm-2 control-label">{{ __('contact.Name') }}</label>
-                        <div class="col-sm-4">
-                            <input
-                                type="text"
-                                name="user_name"
-                                value="{{ request()->user_name }}"
-                                class="form-control"
-                                maxlength="{{ config('const.maxlength.contact_forms.user_name') }}"
-                            />
-                        </div>
+                <div class="mb-3 row">
+                    <label for="user_name" class="col-sm-2 col-form-label">{{ __('contact.Name') }}</label>
+                    <div class="col-sm-4">
+                        <input
+                            type="text"
+                            name="user_name"
+                            id="user_name"
+                            value="{{ request()->user_name }}"
+                            class="form-control"
+                            maxlength="{{ config('const.maxlength.contact_forms.user_name') }}"
+                        />
                     </div>
-                    <div
-                        class="control-group mt-3"
-                        id="userName"
-                    >
-                        <label class="col-sm-2 control-label">{{ __('contact.Title') }}</label>
-                        <div class="col-sm-4">
-                            <input
-                                type="text"
-                                name="title"
-                                value="{{ request()->title }}"
-                                class="form-control"
-                                maxlength="{{ config('const.maxlength.contact_forms.title') }}"
-                            />
-                        </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="title" class="col-sm-2 col-form-label">{{ __('contact.Title') }}</label>
+                    <div class="col-sm-4">
+                        <input
+                            type="text"
+                            name="title"
+                            id="title"
+                            value="{{ request()->title }}"
+                            class="form-control"
+                            maxlength="{{ config('const.maxlength.contact_forms.title') }}"
+                        />
                     </div>
                 </div>
             </div>
@@ -87,8 +82,8 @@
                 <div class="card-header">
                     <h3 class="card-title">{{ __('common.Search Result') }}</h3>
                 </div>
-                <div class="card-body table-responsive p-0">
-                    <table class="table table-hover">
+                <div class="card-body p-0">
+                    <table class="table table-hover table-responsive">
                         <thead>
                         <tr>
                             @include('admin.common.sortablelink_th', ['params' => ['id', __('contact.ID')]])
@@ -112,7 +107,7 @@
                                 <td>{{ $contactForm->created_at }}</td>
                                 <td>
                                     <a
-                                        class="btn btn-info btn-sm"
+                                        class="btn btn-primary btn-sm"
                                         href="{{ route('admin.contact.show', ['contactForm'=> $contactForm]) }}"
                                     >{{ __('common.Detail') }}</a>
                                 </td>

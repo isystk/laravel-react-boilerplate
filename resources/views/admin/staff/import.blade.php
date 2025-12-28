@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <div class="text-left mb-3">
+    <div class="text-start mb-3">
         <a
             class="btn btn-secondary"
             href="{{ route('admin.staff') }}"
@@ -16,7 +16,7 @@
 
     @if ($errors->any())
         <div class="alert alert-danger">
-            <ul>
+            <ul class="m-0">
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
@@ -28,12 +28,12 @@
         <div class="card-body">
             <div class="row">
                 <div class="col">
-                    <div class="dropdown text-right">
+                    <div class="dropdown text-end">
                         <button
-                            class="btn btn-primary dropdown-toggle btn-sm"
+                            class="btn btn-secondary dropdown-toggle btn-sm"
                             type="button"
                             id="dropdownMenu1"
-                            data-toggle="dropdown"
+                            data-bs-toggle="dropdown"
                             aria-haspopup="true"
                             aria-expanded="true"
                         >
@@ -41,7 +41,7 @@
                             <span class="caret"></span>
                         </button>
                         <div
-                            class="dropdown-menu dropdown-menu-right"
+                            class="dropdown-menu dropdown-menu-end"
                             aria-labelledby="dropdownMenu1"
                         >
                             <a

@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <div class="text-left mb-3">
+    <div class="text-start mb-3">
         <a
             class="btn btn-secondary"
             href="{{ route('admin.contact') }}"
@@ -16,73 +16,67 @@
 
     <div class="card card-purple">
         <div class="card-body">
-            <div class="form-group">
-                <div class="control-group">
-                    <label class="col-sm-6 control-label">{{ __('contact.Name') }}</label>
-                    <div class="col-sm-12">
-                        {{ $contactForm->user_name }}
-                    </div>
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label text-muted small">{{ __('contact.Name') }}</label>
+                <div class="col-sm-10 d-flex align-items-center">
+                    {{ $contactForm->user_name }}
                 </div>
             </div>
-            <div class="form-group">
-                <div class="control-group">
-                    <label class="col-sm-6 control-label">{{ __('contact.EMail') }}</label>
-                    <div class="col-sm-12">
-                        {{ $contactForm->email }}
-                    </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label text-muted small">{{ __('contact.EMail') }}</label>
+                <div class="col-sm-10 d-flex align-items-center">
+                    {{ $contactForm->email }}
                 </div>
             </div>
-            <div class="form-group">
-                <div class="control-group">
-                    <label class="col-sm-6 control-label">{{ __('contact.Gender') }}</label>
-                    <div class="col-sm-12">
-                        {{ $contactForm->gender->label() }}
-                    </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label text-muted small">{{ __('contact.Gender') }}</label>
+                <div class="col-sm-10 d-flex align-items-center">
+                    {{ $contactForm->gender->label() }}
                 </div>
             </div>
-            <div class="form-group">
-                <div class="control-group">
-                    <label class="col-sm-6 control-label">{{ __('contact.Age') }}</label>
-                    <div class="col-sm-12">
-                        {{ $contactForm->age->label() }}
-                    </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label text-muted small">{{ __('contact.Age') }}</label>
+                <div class="col-sm-10 d-flex align-items-center">
+                    {{ $contactForm->age->label() }}
                 </div>
             </div>
-            <div class="form-group">
-                <div class="control-group">
-                    <label class="col-sm-6 control-label">{{ __('contact.Title') }}</label>
-                    <div class="col-sm-12">
-                        {{ $contactForm->title }}
-                    </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label text-muted small">{{ __('contact.Title') }}</label>
+                <div class="col-sm-10 d-flex align-items-center">
+                    {{ $contactForm->title }}
                 </div>
             </div>
-            <div class="form-group">
-                <div class="control-group">
-                    <label class="col-sm-6 control-label">{{ __('contact.Contact') }}</label>
-                    <div class="col-sm-12">
-                        {{ $contactForm->contact }}
-                    </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label text-muted small">{{ __('contact.Contact') }}</label>
+                <div class="col-sm-10 d-flex align-items-center" style="white-space: pre-wrap;">{{ $contactForm->contact }}</div>
+            </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label text-muted small">{{ __('contact.URL') }}</label>
+                <div class="col-sm-10 d-flex align-items-center">
+                    @if($contactForm->url)
+                        <a href="{{ $contactForm->url }}" target="_blank">{{ $contactForm->url }}</a>
+                    @else
+                        -
+                    @endif
                 </div>
             </div>
-            <div class="form-group">
-                <div class="control-group">
-                    <label class="col-sm-6 control-label">{{ __('contact.URL') }}</label>
-                    <div class="col-sm-12">
-                        {{ $contactForm->url }}
-                    </div>
-                </div>
-            </div>
+
             @foreach($contactFormImages as $i => $contactFormImage)
                 @if ($contactFormImage['file_name'])
-                    <div class="form-group">
-                        <div class="control-group">
-                            <label class="col-sm-6 control-label">{{ __('contact.Image') }}{{ $i+1 }}</label>
-                            <div class="col-sm-12">
-                                <img
-                                    src="{{ asset('uploads/contact/' . $contactFormImage['file_name']) }}"
-                                    width="200px"
-                                />
-                            </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 col-form-label text-muted small">{{ __('contact.Image') }}{{ $i+1 }}</label>
+                        <div class="col-sm-10 d-flex align-items-center">
+                            <img
+                                src="{{ asset('uploads/contact/' . $contactFormImage['file_name']) }}"
+                                class="img-thumbnail"
+                                style="max-width: 200px;"
+                            />
                         </div>
                     </div>
                 @endif
@@ -92,7 +86,7 @@
             <div class="d-inline-block">
                 <div class="mx-auto">
                     <a
-                        class="btn btn-info"
+                        class="btn btn-primary"
                         href="{{ route('admin.contact.edit', ['contactForm' => $contactForm ]) }}"
                         @cannot('high-manager')
                             disabled="disabled"
