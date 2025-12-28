@@ -18,7 +18,7 @@ import './overlay'
         const self = $(this);
 
         const [header, body, footer] = [
-          `<h5 class="modal-title">${settings.title}</h5>`,
+          `<h5 class="modal-title font-weight-bold">${settings.title}</h5>`,
           `${settings.body}`,
           `
           <button type="button" class="btn ${settings.confirmClass}" id="modalConfirmBtn">${settings.confirmText}</button>
