@@ -2,16 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Domain\Entities\ContactForm;
+use App\Domain\Entities\ContactFormImage;
 use Illuminate\Database\Seeder;
 
 class ContactFormSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        ContactForm::factory()->count(200)->create(); // 200個のダミーデータを作成する。
+        ContactFormImage::factory()->count(100)->create();
     }
 }
