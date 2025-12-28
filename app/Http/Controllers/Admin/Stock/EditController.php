@@ -45,6 +45,6 @@ class EditController extends BaseController
             throw $e;
         }
 
-        return redirect(route('admin.stock'));
+        return redirect(route('admin.stock.show', $stock));
     }
 }
