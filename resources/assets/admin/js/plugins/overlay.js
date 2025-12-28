@@ -16,9 +16,7 @@
                   <div class="modal-header border-0">
                       <div class="m-auto">${settings.header}</div>
                       <div class="absolute right-0 top-0 mt-2 mr-2">
-                          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                          </button>
+                          <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                   </div>
                   <div class="modal-body">
