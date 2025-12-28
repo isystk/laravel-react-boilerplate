@@ -1,8 +1,11 @@
 // AdminLTE
-@import "admin-lte/dist/css/adminlte.css";
+@use "admin-lte/dist/css/adminlte.css";
+
+// Bootstrap
+@use "bootstrap";
 
 // FontAwesome
-@import '@fortawesome/fontawesome-free/css/all.min.css';
+@use '@fortawesome/fontawesome-free/css/all.min.css';
 
 html {
     font-size: 16px;
@@ -29,52 +32,5 @@ body {
     .content {
         padding: 40px 0 40px;
         min-height: calc(100vh - 328px); /* Header: 84px + Footer: 244px */
-    }
-}
-
-// Date Picker 関連
-.datepicker-days th.dow:first-child,
-.datepicker-days td:first-child {
-    color: #f00;
-}
-
-.datepicker-days th.dow:last-child,
-.datepicker-days td:last-child {
-    color: #00f;
-}
-
-.datepicker-days thead > tr:nth-child(3) {
-    border: solid 1px #eee;
-}
-
-.datepicker td, th {
-    text-align: center;
-    padding: 2px 8px;
-    font-size: 14px;
-}
-
-// sortblelink関連
-.table {
-    .sortable_th {
-        position: relative;
-        cursor: pointer;
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-    .sortable_arrow_asc {
-        position: absolute;
-        right: 8px;
-        font-weight: bold;
-    }
-    .sortable_arrow_desc {
-        position: absolute;
-        right: 1px;
-        font-weight: bold;
-    }
-    .enabled_arrow {
-        color: rgba(0, 0, 0, 1);
-    }
-    .disabled_arrow {
-        color: rgba(0, 0, 0, 0.5);
     }
 }

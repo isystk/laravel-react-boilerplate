@@ -30,7 +30,7 @@
                 <div class="col">
                     <div class="dropdown text-end">
                         <button
-                            class="btn btn-primary dropdown-toggle btn-sm"
+                            class="btn btn-secondary dropdown-toggle btn-sm"
                             type="button"
                             id="dropdownMenu1"
                             data-bs-toggle="dropdown"

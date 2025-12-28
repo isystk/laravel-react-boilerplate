@@ -59,7 +59,7 @@
             <div class="card-footer text-center">
                 <button
                     type="submit"
-                    class="btn btn-primary"
+                    class="btn btn-secondary"
                 >{{ __('common.Search') }}</button>
             </div>
         </form>
@@ -82,7 +82,7 @@
                     <h3 class="card-title">{{ __('common.Search Result') }}</h3>
                     <div class="dropdown text-end">
                         <button
-                            class="btn btn-default dropdown-toggle btn-sm"
+                            class="btn btn-secondary dropdown-toggle btn-sm"
                             type="button"
                             id="dropdownMenu1"
                             data-bs-toggle="dropdown"
