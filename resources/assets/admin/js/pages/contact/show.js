@@ -2,7 +2,7 @@ $(function () {
   // 削除確認用のダイアログを表示
   $('.js-deleteBtn').confirm({
     title: '確認',
-    body: '本当に削除していいですか？',
+    body: '削除します。よろしいですか？',
     confirmText: '削除する',
     confirmClass: 'btn-danger',
     onConfirm: function (target) {
