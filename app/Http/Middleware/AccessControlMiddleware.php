@@ -28,7 +28,7 @@ class AccessControlMiddleware
         }
 
         // 設定がある場合のみ権限チェック（設定がないルートは誰でも通過）
-        if ($allowedRoles !== null) {
+        if (null !== $allowedRoles) {
             // ユーザーがログインしていない、または許可されたロールを持っていない場合
             if (!$user || !in_array($user->role, $allowedRoles, true)) {
                 abort(403, 'この操作を行う権限がありません。');
