@@ -11,14 +11,6 @@ use Illuminate\Validation\Rules\Enum;
 class UpdateRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return $this->user()->can('high-manager');
-    }
-
-    /**
      * This method prepares file instante
      */
     protected function prepareForValidation(): void
