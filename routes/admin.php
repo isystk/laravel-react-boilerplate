@@ -13,7 +13,7 @@ Route::prefix('admin')->group(function () {
     Route::post('login', [\App\Http\Controllers\Admin\LoginController::class, 'login'])->name('admin.login');
 
     // ログイン後
-    Route::group(['middleware' => 'auth:admin'], static function () {
+    Route::group(['middleware' => ['auth:admin', 'access_control']], static function () {
         Route::post('logout', [\App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('admin.logout');
         Route::get('home', [\App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
 
