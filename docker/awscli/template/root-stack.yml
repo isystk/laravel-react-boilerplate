@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Manage myself verification environment
+
+Parameters:
+
+  ProjectName:
+    Description: Project Name
+    Type: String
+    Default: sample
+  Environment:
+    Description: Environment
+    Type: String
+    AllowedValues:
+      - dev
+      - stg
+      - prod
+  TemplateURL:
+    Description: CFn template Backet URL
+    Type: String
+    Default: https://laraec-cfm-template.s3.ap-northeast-1.amazonaws.com/
+
+  KeyPairName:
+    Description: KeyPair Name
+    Type: String
+    Default: ""
+
+Resources:
+
+  # VPCの作成
+  VPC:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub "${TemplateURL}stacks/00-vpc.yml"
+      Parameters:
+        ProjectName: !Ref ProjectName
+        Environment: !Ref Environment
+
+  # SecurityGroupの作成
+  SG:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub "${TemplateURL}stacks/10-sg.yml"
+      Parameters:
+        ProjectName: !Ref ProjectName
+        Environment: !Ref Environment
+        VPCId: !GetAtt VPC.Outputs.VPC

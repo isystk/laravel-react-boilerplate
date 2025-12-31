@@ -115,6 +115,20 @@ pre-commit: ## コミット前にすべてのチェックを実行します。
 awscli: ## AWS CLIを実行します。
 	@$(DOCKER_CMD) exec awscli /bin/bash
 
+aws-template-sync: ## S3バケットにCfnスタックのテンプレートを同期します
+	@$(DOCKER_CMD) exec awscli aws s3 mb s3://laraec-cfm-template --region ap-northeast-1
+	@$(DOCKER_CMD) exec awscli aws s3 sync ./template s3://laraec-cfm-template --delete
+
+aws-create-vpc: ## AWSにVPC及びセキュリティグループを作成します
+	@$(DOCKER_CMD) exec awscli aws cloudformation create-stack \
+		--stack-name laraec-vpc \
+		--template-url https://s3-ap-northeast-1.amazonaws.com/laraec-cfm-template/root-stack.yml \
+		--capabilities CAPABILITY_NAMED_IAM \
+		--parameters \
+			ParameterKey=ProjectName,ParameterValue=laraec \
+			ParameterKey=Environment,ParameterValue=dev \
+			ParameterKey=KeyPairName,ParameterValue=iseyoshitaka
+
 .PHONY: generate-pr
 generate-pr: ## PR用の説明文を生成します。
 	$(TOOLS_CMD) gemini generate-pr
