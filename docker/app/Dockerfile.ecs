@@ -1,40 +1,43 @@
-# 1. ベースイメージ（既存のDockerfileと同じもの）
 FROM php:8.3-apache
 
-# 2. 必要なパッケージのインストール（開発用ツールは除外）
+# 必要なパッケージのインストール
 RUN apt-get update && apt-get install -y \
     git unzip libzip-dev zlib1g-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
-    mariadb-client tzdata curl openssl \
+    mariadb-client tzdata curl openssl nodejs npm \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install zip pdo_mysql gd
 
-# 3. タイムゾーン設定
-ENV TZ=Asia/Tokyo
-RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
-
-# 4. Apache設定（ALBでSSLを終端する場合、443や証明書の設定は不要になります）
-RUN a2enmod rewrite
-# 設定ファイルをコピー（ビルドコンテキストからの相対パスに注意）
+# Apache設定
+RUN a2enmod rewrite proxy proxy_http proxy_fcgi ssl
 COPY ./docker/app/sites-enabled /etc/apache2/sites-enabled
 COPY ./docker/app/php.ini /usr/local/etc/php/php.ini
 
-# 5. Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-ENV COMPOSER_ALLOW_SUPERUSER=1
+# 自己署名証明書の生成を追加
+RUN mkdir -p /etc/apache2/ssl && \
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+    -keyout /etc/apache2/ssl/server.key \
+    -out /etc/apache2/ssl/server.crt \
+    -subj "/C=JP/ST=Tokyo/L=Chiyoda/O=Example/CN=localhost"
 
-# 6. 作業ディレクトリ設定
 WORKDIR /var/www/html
-
-# 7. ★ソースコード全体のコピー（プロジェクトルートからコピー）
 COPY . .
 
-# 8. 依存関係のインストールと権限設定
+# Composer インストール
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN composer install --no-dev --optimize-autoloader
+
+# フロントエンドビルド
+RUN npm install && npm run build
+
+# 権限設定
 RUN chown -R www-data:www-data storage bootstrap/cache
+RUN chmod -R 775 storage bootstrap/cache
 
-# 9. エントリポイントのコピー
-COPY ./docker/app/entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
+# 不要な node_modules を消してイメージを軽量化
+RUN rm -rf node_modules
 
-ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 80
+
+# entrypointを使わず、直接Apacheを起動
+CMD ["apache2-foreground"]

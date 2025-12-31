@@ -125,20 +125,33 @@ awscli: ## AWS CLIを実行します。
 	@$(AWS_CLI_CMD) /bin/bash
 
 .PHONY: aws-build
-aws-build: ## アプリケーションのDockerイメージをビルド、タグ付け、ECRへプッシュします
+aws-build: ## AWS用のDockerイメージをビルド、タグ付け、ECRへプッシュします
 	@echo "Logging in to ECR..."
 	@$(AWS_CLI_CMD) aws ecr get-login-password --region $(AWS_REGION) | docker login --username AWS --password-stdin $(ECR_DOMAIN)
 	@echo "Building Docker image for ECS (platform: linux/amd64)..."
 	# プロジェクトルートからビルドし、docker/aws/Dockerfileを適用
-	docker build --platform linux/amd64 -t $(REPO_NAME) -f ./docker/app/Dockerfile.ecs .
+	docker build --platform linux/amd64 -t $(APP_NAME) -f ./docker/app/Dockerfile.ecs .
 	@echo "Tagging image..."
-	docker tag $(REPO_NAME):latest $(IMAGE_URI)
+	docker tag $(APP_NAME):latest $(IMAGE_URI)
 	@echo "Pushing image to ECR..."
 	docker push $(IMAGE_URI)
 	@echo "Deploy complete: $(IMAGE_URI)"
 
+.PHONY: aws-test
+aws-test: ## ビルドしたAWS用のDockerイメージをローカルで起動確認します
+	@echo "Starting local test for production image..."
+	@echo "Access: http://localhost:8080"
+	@# APP_KEYをその場で生成して渡します。
+	@# Makefile内では $ をエスケープするために $$ と記述します。
+	docker run --rm -p 8080:80 \
+		--name laraec-app-test \
+		-e APP_KEY="base64:$$(openssl rand -base64 32)" \
+		-e APP_ENV=local \
+		-e APP_DEBUG=true \
+		$(APP_NAME):latest
+
 .PHONY: aws-template-sync
-aws-template-sync: ## S3バケットにテンプレートを同期します
+aws-template-sync: ## S3バケットにCloudFormationのテンプレートを同期します
 	@if ! $(AWS_CLI_CMD) aws s3api head-bucket --bucket laraec-cfm-template 2>/dev/null; then \
 		echo "Bucket does not exist. Creating bucket..."; \
 		$(AWS_CLI_CMD) aws s3 mb s3://laraec-cfm-template --region ap-northeast-1; \
