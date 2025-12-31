@@ -8,13 +8,14 @@ Parameters:
   DBHost: { Type: String }
 
 Resources:
-  # クラスター
-  ECSCluster:
-    Type: "AWS::ECS::Cluster"
+  # ロググループの作成
+  ECSLogGroup:
+    Type: "AWS::Logs::LogGroup"
     Properties:
-      ClusterName: !Sub "${ProjectName}-${Environment}-cluster"
+      LogGroupName: !Sub "/ecs/${ProjectName}-${Environment}-log"
+      RetentionInDays: 7
 
-  # 実行ロール（CloudWatchへのログ出力などに必要）
+  # 実行ロール
   ECSTaskExecutionRole:
     Type: "AWS::IAM::Role"
     Properties:
@@ -28,7 +29,35 @@ Resources:
       ManagedPolicyArns:
         - "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 
-  # タスク定義
+  # タスクロール
+  ECSTaskRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service: "ecs-tasks.amazonaws.com"
+            Action: "sts:AssumeRole"
+      Policies:
+        - PolicyName: !Sub "${ProjectName}-${Environment}-task-policy"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: "Allow"
+                Action:
+                  - "ssmmessages:CreateControlChannel"
+                  - "ssmmessages:CreateDataChannel"
+                  - "ssmmessages:OpenControlChannel"
+                  - "ssmmessages:OpenDataChannel"
+                Resource: "*"
+
+  ECSCluster:
+    Type: "AWS::ECS::Cluster"
+    Properties:
+      ClusterName: !Sub "${ProjectName}-${Environment}-cluster"
+
   ECSTaskDefinition:
     Type: "AWS::ECS::TaskDefinition"
     Properties:
@@ -38,26 +67,34 @@ Resources:
       NetworkMode: "awsvpc"
       RequiresCompatibilities:
         - "FARGATE"
-      ExecutionRoleArn: !Ref ECSTaskExecutionRole
+      ExecutionRoleArn: !GetAtt ECSTaskExecutionRole.Arn
+      TaskRoleArn: !GetAtt ECSTaskRole.Arn
       ContainerDefinitions:
         - Name: "app"
-          Image: "php:8.2-fpm" # 実際にはビルドしたLaravelイメージのURLを指定
+          Image: !Sub "${AWS::AccountId}.dkr.ecr.ap-northeast-1.amazonaws.com/laraec-app:latest"
           PortMappings:
             - ContainerPort: 80
+          # ログ出力の設定を追加
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref ECSLogGroup
+              awslogs-region: !Ref "AWS::Region"
+              awslogs-stream-prefix: ecs
           Environment:
             - Name: "DB_HOST"
               Value: !Ref DBHost
             - Name: "DB_DATABASE"
-              Value: "laravel"
+              Value: "laraec"
             - Name: "DB_USERNAME"
               Value: "admin"
             - Name: "DB_PASSWORD"
               Value: "password123"
 
-  # サービス
   ECSService:
     Type: "AWS::ECS::Service"
     Properties:
+      EnableExecuteCommand: true
       Cluster: !Ref ECSCluster
       ServiceName: !Sub "${ProjectName}-${Environment}-service"
       TaskDefinition: !Ref ECSTaskDefinition
@@ -74,3 +111,16 @@ Resources:
 Outputs:
   ECSClusterName:
     Value: !Ref ECSCluster
+
+  ECSServiceName:
+    Value: !GetAtt ECSService.Name
+
+  # 起動中のタスク一覧画面へ直接飛ぶURL
+  ECSTaskConsoleURL:
+    Description: "URL to check the running tasks in ECS Console"
+    Value: !Sub "https://${AWS::Region}.console.aws.amazon.com/ecs/v2/clusters/${ECSCluster}/services/${ECSService.Name}/tasks?region=${AWS::Region}"
+
+  # [重要] ブラウザからアクセスするためのIPアドレスを確認する手順
+  AccessInstruction:
+    Description: "How to access the web server"
+    Value: "Go to the ECSTaskConsoleURL, click on the Task ID, and find the 'Public IP' under the Configuration tab."

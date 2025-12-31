@@ -27,7 +27,7 @@ Resources:
       EngineVersion: "8.0"
       MasterUsername: "admin"
       MasterUserPassword: "password123" # 本番ではSecrets Manager推奨
-      DBName: "laravel"
+      DBName: "laraec"
       VPCSecurityGroups:
         - !Ref SGMysql
       DBSubnetGroupName: !Ref DBSubnetGroup
