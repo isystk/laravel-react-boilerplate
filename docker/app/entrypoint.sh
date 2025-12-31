@@ -3,15 +3,6 @@ set -e  # エラーが発生した時点で終了
 
 cd /var/www/html
 
-# .env がなければコピー
-echo "📦 Checking .env file..."
-if [ ! -f .env ]; then
-  echo "📄 .env not found, copying from .env.example"
-  cp .env.example .env
-else
-  echo "✅ .env already exists"
-fi
-
 # Laravel セットアップ
 echo "🔧 Running composer install..."
 composer install

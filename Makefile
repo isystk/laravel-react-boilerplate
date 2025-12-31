@@ -25,16 +25,12 @@ help: ## ヘルプを表示します。
 	@echo "Available commands:"
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "} {printf "%-20s %s\n", $$1, $$2}'
 
-.PHONY: ps
-ps: ## Dockerコンテナの状態を表示します。
-	$(DOCKER_CMD) ps
-
-.PHONY: logs
-logs: ## Dockerコンテナのログを表示します。
-	$(DOCKER_CMD) logs -f
-
 .PHONY: init
 init: ## 初期化します。
+	@if [ ! -f .env ]; then \
+		echo "📄 .env not found, copying from .env.example" \
+		cp .env.example .env \
+	fi
 	$(DOCKER_CMD) down --rmi all --volumes --remove-orphans
 	rm -rf "$(DOCKER_HOME)/mysql/logs" && mkdir -p "$(DOCKER_HOME)/mysql/logs"
 	rm -rf "$(DOCKER_HOME)/app/logs" && mkdir -p "$(DOCKER_HOME)/app/logs"
@@ -53,6 +49,14 @@ stop: ## 停止します。
 .PHONY: restart
 restart: ## 再起動します。
 	stop start
+
+.PHONY: ps
+ps: ## Dockerコンテナの状態を表示します。
+	$(DOCKER_CMD) ps
+
+.PHONY: logs
+logs: ## Dockerコンテナのログを表示します。
+	$(DOCKER_CMD) logs -f
 
 .PHONY: tinker
 tinker: ## tinkerを実行します。
