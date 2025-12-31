@@ -4,7 +4,8 @@ SHELL := /bin/bash
 BASE_DIR := $(CURDIR)
 DOCKER_HOME := $(BASE_DIR)/docker
 COMPOSE_FILE := $(DOCKER_HOME)/docker-compose.yml
-DOCKER_CMD := docker compose -f $(COMPOSE_FILE)
+ENV_FILE := $(BASE_DIR)/.env
+DOCKER_CMD := docker compose -f $(COMPOSE_FILE) --env-file $(ENV_FILE)
 TOOLS_CMD := ~/dotfiles/tools/run.sh
 
 # デフォルトタスク
@@ -109,6 +110,10 @@ pre-commit: ## コミット前にすべてのチェックを実行します。
 	@make prettier
 	@make check
 	@make test
+
+.PHONY: awscli
+awscli: ## AWS CLIを実行します。
+	@$(DOCKER_CMD) exec awscli /bin/bash
 
 .PHONY: generate-pr
 generate-pr: ## PR用の説明文を生成します。
