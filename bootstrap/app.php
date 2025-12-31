@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\AccessControlMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -25,6 +26,11 @@ return Application::configure(basePath: dirname(__DIR__))
 
                 return null;
             });
+    })
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->alias([
+            'access_control' => AccessControlMiddleware::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

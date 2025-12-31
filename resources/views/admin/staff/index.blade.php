@@ -7,16 +7,6 @@
 @endsection
 
 @section('content')
-
-    @if (session('status'))
-        <div
-            class="alert alert-success"
-            role="alert"
-        >
-            {{ session('status') }}
-        </div>
-    @endif
-
     <div class="card">
         <div class="card-body text-center">
             <div class="btn-container d-flex justify-content-between">
@@ -57,49 +47,48 @@
                     </div>
                 @endif
                 <div class="mb-3 row">
-                <label for="name" class="col-sm-2 col-form-label">{{ __('staff.Name') }}</label>
-                <div class="col-sm-4">
-                    <input
-                        type="text"
-                        name="name"
-                        id="name"
-                        value="{{ request()->name }}"
-                        class="form-control"
-                        maxlength="{{ config('const.maxlength.admins.name') }}"
-                    />
+                    <label for="name" class="col-sm-2 col-form-label">{{ __('staff.Name') }}</label>
+                    <div class="col-sm-4">
+                        <input
+                            type="text"
+                            name="name"
+                            id="name"
+                            value="{{ request()->name }}"
+                            class="form-control"
+                            maxlength="{{ config('const.maxlength.admins.name') }}"
+                        />
+                    </div>
                 </div>
-            </div>
-
-            <div class="mb-3 row">
-                <label for="email" class="col-sm-2 col-form-label">{{ __('staff.EMail') }}</label>
-                <div class="col-sm-6">
-                    <input
-                        type="email"
-                        name="email"
-                        id="email"
-                        value="{{ request()->email }}"
-                        class="form-control"
-                        maxlength="{{ config('const.maxlength.admins.email') }}"
-                    />
+                <div class="mb-3 row">
+                    <label for="email" class="col-sm-2 col-form-label">{{ __('staff.EMail') }}</label>
+                    <div class="col-sm-4">
+                        <input
+                            type="email"
+                            name="email"
+                            id="email"
+                            value="{{ request()->email }}"
+                            class="form-control"
+                            maxlength="{{ config('const.maxlength.admins.email') }}"
+                        />
+                    </div>
                 </div>
-            </div>
-
-            <div class="mb-3 row">
-                <label for="role" class="col-sm-2 col-form-label">{{ __('staff.Role') }}</label>
-                <div class="col-sm-4">
-                    <select
-                        name="role"
-                        id="role"
-                        class="form-select"
-                    >
-                        <option value="">未選択</option>
-                        @foreach(App\Enums\AdminRole::cases() as $item)
-                            <option
-                                value="{{ $item->value }}"
-                                {{ ($item->value == request()->role) ? 'selected' : '' }}
-                            >{{ $item->label() }}</option>
-                        @endforeach
-                    </select>
+                <div class="mb-3 row">
+                    <label for="role" class="col-sm-2 col-form-label">{{ __('staff.Role') }}</label>
+                    <div class="col-sm-4">
+                        <select
+                            name="role"
+                            id="role"
+                            class="form-select"
+                        >
+                            <option value="">未選択</option>
+                            @foreach(App\Enums\AdminRole::cases() as $item)
+                                <option
+                                    value="{{ $item->value }}"
+                                    {{ ($item->value == request()->role) ? 'selected' : '' }}
+                                >{{ $item->label() }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="card-footer text-center">
