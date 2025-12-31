@@ -12,9 +12,9 @@
             <a
                 href="{{ route('admin.stock.create') }}"
                 class="btn btn-primary"
-                @cannot('high-manager')
+                @if(!Auth::user()->role->isHighManager())
                     disabled="disabled"
-                @endcan
+                @endif
             >
                 {{ __('common.Regist') }}
             </a>

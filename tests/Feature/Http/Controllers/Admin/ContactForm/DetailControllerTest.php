@@ -2,6 +2,7 @@
 
 namespace Http\Controllers\Admin\ContactForm;
 
+use App\Enums\AdminRole;
 use App\Enums\Age;
 use App\Enums\Gender;
 use App\Services\Admin\ContactForm\DestroyService;
@@ -23,7 +24,7 @@ class DetailControllerTest extends BaseTest
     {
         $admin = $this->createDefaultAdmin([
             'name' => '管理者A',
-            'role' => 'manager',
+            'role' => AdminRole::Manager,
         ]);
         $this->actingAs($admin, 'admin');
 
@@ -63,7 +64,7 @@ class DetailControllerTest extends BaseTest
 
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
-            'role' => 'manager',
+            'role' => AdminRole::Manager,
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -73,7 +74,7 @@ class DetailControllerTest extends BaseTest
 
         $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
-            'role' => 'high-manager',
+            'role' => AdminRole::HighManager,
         ]);
         $this->actingAs($admin2, 'admin');
 
@@ -94,7 +95,7 @@ class DetailControllerTest extends BaseTest
         $contactForm = $this->createDefaultContactForm();
 
         $admin = $this->createDefaultAdmin([
-            'role' => 'high-manager',
+            'role' => AdminRole::HighManager,
         ]);
         $this->actingAs($admin, 'admin');
 
