@@ -2,6 +2,7 @@
 
 namespace Http\Controllers\Admin\Order;
 
+use App\Enums\AdminRole;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
@@ -20,7 +21,7 @@ class DetailControllerTest extends BaseTest
     {
         $admin = $this->createDefaultAdmin([
             'name' => '管理者A',
-            'role' => 'manager',
+            'role' => AdminRole::Manager,
         ]);
         $this->actingAs($admin, 'admin');
 

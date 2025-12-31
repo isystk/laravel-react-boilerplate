@@ -69,9 +69,9 @@
                     <a
                         class="btn btn-primary"
                         href="{{ route('admin.stock.edit', ['stock' => $stock ]) }}"
-                        @cannot('high-manager')
+                        @if(!Auth::user()->role->isHighManager())
                             disabled="disabled"
-                        @endcan
+                        @endif
                     >
                         {{ __('common.Change') }}
                     </a>
@@ -91,9 +91,9 @@
                     <button
                         class="btn btn-danger js-deleteBtn"
                         data-id="{{ $stock->id }}"
-                        @cannot('high-manager')
+                        @if(!Auth::user()->role->isHighManager())
                             disabled="disabled"
-                        @endcan
+                        @endif
                     >
                         {{ __('common.Delete') }}
                     </button>

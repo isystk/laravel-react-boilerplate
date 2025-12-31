@@ -1,0 +1,18 @@
+<?php
+
+namespace Enums;
+
+use App\Enums\AdminRole;
+use Tests\BaseTest;
+
+class AdminRoleTest extends BaseTest
+{
+    public function test_isHighManager(): void
+    {
+        $sut = AdminRole::Manager;
+        $this->assertFalse($sut->isHighManager(), '管理者の場合 → False');
+
+        $sut = AdminRole::HighManager;
+        $this->assertTrue($sut->isHighManager(), '上位管理者の場合 → True');
+    }
+}

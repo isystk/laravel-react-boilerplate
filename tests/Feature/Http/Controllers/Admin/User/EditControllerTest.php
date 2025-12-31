@@ -2,6 +2,7 @@
 
 namespace Http\Controllers\Admin\User;
 
+use App\Enums\AdminRole;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
@@ -25,7 +26,7 @@ class EditControllerTest extends BaseTest
 
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者A',
-            'role' => 'manager',
+            'role' => AdminRole::Manager,
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -35,7 +36,7 @@ class EditControllerTest extends BaseTest
 
         $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
-            'role' => 'high-manager',
+            'role' => AdminRole::HighManager,
         ]);
         $this->actingAs($admin2, 'admin');
 
@@ -52,7 +53,7 @@ class EditControllerTest extends BaseTest
 
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
-            'role' => 'manager',
+            'role' => AdminRole::Manager,
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -62,7 +63,7 @@ class EditControllerTest extends BaseTest
 
         $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
-            'role' => 'high-manager',
+            'role' => AdminRole::HighManager,
         ]);
         $this->actingAs($admin2, 'admin');
 
