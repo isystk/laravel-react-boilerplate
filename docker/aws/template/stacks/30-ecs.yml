@@ -114,13 +114,3 @@ Outputs:
 
   ECSServiceName:
     Value: !GetAtt ECSService.Name
-
-  # 起動中のタスク一覧画面へ直接飛ぶURL
-  ECSTaskConsoleURL:
-    Description: "URL to check the running tasks in ECS Console"
-    Value: !Sub "https://${AWS::Region}.console.aws.amazon.com/ecs/v2/clusters/${ECSCluster}/services/${ECSService.Name}/tasks?region=${AWS::Region}"
-
-  # [重要] ブラウザからアクセスするためのIPアドレスを確認する手順
-  AccessInstruction:
-    Description: "How to access the web server"
-    Value: "Go to the ECSTaskConsoleURL, click on the Task ID, and find the 'Public IP' under the Configuration tab."

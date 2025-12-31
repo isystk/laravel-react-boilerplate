@@ -166,6 +166,7 @@ aws-template-sync: ## S3バケットにCloudFormationのテンプレートを同
 
 .PHONY: aws-deploy
 aws-deploy: ## アプリケーションをAWS ECSにデプロイします
+	@make aws-template-sync
 	@echo "Starting CloudFormation deployment for stack: $(APP_NAME)..."
 	@echo "Using template: $(TEMPLATE_URL)"
 	@$(AWS_CLI_CMD) aws cloudformation create-stack \

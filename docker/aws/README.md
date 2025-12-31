@@ -1,43 +1,41 @@
-# AWS ECS (Fargate) への Dockerコンテナデプロイ手順
+# AWS ECS (Fargate) デプロイガイド
 
-このドキュメントでは、LaravelアプリケーションをDocker化し、AWSのECS（Fargate）およびAurora MySQL環境へデプロイする手順を説明します。
+LaravelアプリケーションをDocker化し、AWSのECS（Fargate）およびAurora MySQL環境へデプロイするための手順書です。
 
 ## 1. 前提条件
 
-* **AWS CLI**: インストールおよびプロファイル設定済みであること
-* **Session Manager Plugin**: `aws ecs execute-command` を使用するためにローカル（またはAWS操作用コンテナ）にインストール済みであること
+デプロイを開始する前に、以下の準備が完了していることを確認してください。
+
+* **AWS CLI**: 適切なIAM権限を持つアクセスキーが設定されていること
 * **Docker**: イメージのビルドおよびローカルテストに使用
-* **CloudFormation**: インフラ構成管理に使用
+* **Make**: コマンドの簡略化に使用
+* **環境変数**: `.env` ファイルに必要な設定が記述されていること
 
 ---
 
-## 2. デプロイフロー
+## 2. デプロイ・フロー
 
-### STEP 1: ECRリポジトリの作成
+デプロイは以下の4つのフェーズで行います。
 
-イメージを格納するためのリポジトリを作成します。
+### Phase 1: Dockerイメージの準備
+
+イメージを格納するリポジトリ（ECR）を作成し、ビルドしたイメージをプッシュします。
 
 ```bash
-# AWS CLI操作用コンテナを起動
+# 1. AWS CLI操作用コンテナの起動
 make awscli
 
-# リポジトリ作成
+# 2. ECRリポジトリの作成
 aws ecr create-repository --repository-name laraec-app --region ap-northeast-1
 
-```
-
-### STEP 2: イメージのビルドとプッシュ
-
-本番用イメージをビルドし、AWSのECRへプッシュします。
-
-```bash
+# 3. 本番イメージのビルドとECRへのプッシュ
 make aws-build
 
 ```
 
-### STEP 3: ローカルでの最終動作確認
+### Phase 2: ローカルでの最終テスト
 
-本番用イメージがDB（ローカルのMySQL）と正しく通信できるかテストします。
+本番用イメージを使い、ローカル環境のDBと正常に通信できるか確認します。
 
 ```bash
 # 本番用イメージをローカルで起動
@@ -48,40 +46,48 @@ make mysql-migrate
 
 ```
 
----
+### Phase 3: AWSインフラの構築
 
-## 3. インフラ構築とデプロイ
-
-### STEP 4: CloudFormation テンプレートの同期
-
-S3バケットにテンプレートファイルをアップロードします。
+CloudFormationを使用して、VPC、Security Group、Aurora、ECSを構築します。
 
 ```bash
-make aws-template-sync
-
-```
-
-### STEP 5: AWSリソースの構築（デプロイ）
-
-VPC、Security Group、Aurora、ECSを順次構築します。
-
-```bash
+# CloudFormationによる一括デプロイ
 make aws-deploy
 
 ```
 
-> **⚠️ 手動設定**: 構築完了後、AWSコンソールのEC2サービスからセキュリティグループ `SGWeb` を開き、インバウンドルールに「マイ IP」からのポート 80 を許可する設定を追加してください。
+> [!IMPORTANT]
+> **セキュリティグループの手動設定**
+> デプロイ完了後、AWSコンソールのEC2サービスからセキュリティグループ `SGWeb` を開き、インバウンドルールに「マイ IP」からのポート **80** を許可する設定を追加してください。以下のコマンドで編集画面へ直接アクセスできます。
+
+```bash
+echo "🌐 セキュリティグループ一覧URL (ここからSGWebを探してください):"
+echo "https://${AWS_DEFAULT_REGION}.console.aws.amazon.com/ec2/v2/home?region=${AWS_DEFAULT_REGION}#SecurityGroups:"
+
+```
+
+## Phase 4: アクセス確認
+
+デプロイされたアプリケーションのパブリックIPを取得し、ブラウザでアクセスします。
+
+```bash
+CLUSTER_NAME="laraec-app-dev-cluster"; \
+SERVICE_NAME="laraec-app-dev-service"; \
+TASK_ARN=$(aws ecs list-tasks --cluster $CLUSTER_NAME --service-name $SERVICE_NAME --query 'taskArns[0]' --output text); \
+ENI_ID=$(aws ecs describe-tasks --cluster $CLUSTER_NAME --tasks $TASK_ARN --query 'tasks[0].attachments[0].details[?name==`networkInterfaceId`].value' --output text); \
+PUBLIC_IP=$(aws ec2 describe-network-interfaces --network-interface-ids $ENI_ID --query 'NetworkInterfaces[0].Association.PublicIp' --output text); \
+echo "🌐 Laravel App URL: http://$PUBLIC_IP"
+
+```
 
 ---
 
-## 4. データベースの初期化（マイグレーション）
+### Phase 5: データベースの初期化
 
-ECSコンテナが起動した後、Aurora MySQLに対してテーブルを作成します。ECS Execを使用してコンテナにログインし、コマンドを実行します。
-
-### コンテナへのログインと実行
+ECSコンテナからAurora MySQLに対してマイグレーションを実行します。
 
 ```bash
-# 1. 起動中のタスクIDを取得してログイン
+# 1. コンテナへのログイン (ECS Exec)
 CLUSTER_NAME="laraec-app-dev-cluster"; \
 SERVICE_NAME="laraec-app-dev-service"; \
 TASK_ID=$(aws ecs list-tasks --cluster $CLUSTER_NAME --service-name $SERVICE_NAME --query 'taskArns[0]' --output text | cut -d'/' -f3); \
@@ -94,16 +100,22 @@ aws ecs execute-command \
   --command "/bin/bash"
 
 # 2. コンテナ内でマイグレーションを実行
-# php artisan migrate --force
+php artisan migrate --force
+
+# 3. .envファイルのAPP_URLを更新してビルド
+sed -i "s|^APP_URL=.*|APP_URL=http://[]|g" .env
+npm run build
 
 ```
 
 ---
 
-## 5. アプリケーションの削除
+## 3. リソースの削除
 
-検証が終了し、環境をすべて削除する場合は以下のコマンドを実行します。
-※RDS等のデータも削除されるため注意してください。
+検証終了後、作成した全リソースを削除する場合は以下のコマンドを実行します。
+
+> [!CAUTION]
+> 実行するとRDS（Aurora）内のデータもすべて削除されます。
 
 ```bash
 make aws-destroy
