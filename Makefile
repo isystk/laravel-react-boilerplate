@@ -15,7 +15,7 @@ AWS_ACCOUNT_ID := 004796740041
 ECR_DOMAIN     := $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com
 APP_NAME       := laraec-app
 IMAGE_URI      := $(ECR_DOMAIN)/$(APP_NAME):latest
-TEMPLATE_URL   := https://s3.ap-northeast-1.amazonaws.com/$(APP_NAME)-cfm-template/root-stack.yml
+TEMPLATE_URL   := https://s3.ap-northeast-1.amazonaws.com/$(APP_NAME)-cfm-template/main.yml
 
 # デフォルトタスク
 .DEFAULT_GOAL := help
@@ -171,11 +171,12 @@ aws-deploy: ## アプリケーションをAWS ECSにデプロイします
 	@echo "Using template: $(TEMPLATE_URL)"
 	@$(AWS_CLI_CMD) aws cloudformation create-stack \
 		--stack-name $(APP_NAME)-stack \
-		--template-body file://docker/aws/template/root-stack.yml \
+		--template-body file://docker/aws/template/main.yml \
 		--parameters \
 			ParameterKey=ProjectName,ParameterValue=$(APP_NAME) \
 			ParameterKey=Environment,ParameterValue=dev \
 			ParameterKey=TemplateURL,ParameterValue=https://$(APP_NAME)-cfm-template.s3.ap-northeast-1.amazonaws.com/ \
+			ParameterKey=ImageTag,ParameterValue=latest \
 		--capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM \
 		--disable-rollback \
 		--region ap-northeast-1

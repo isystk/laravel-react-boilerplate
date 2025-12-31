@@ -4,8 +4,12 @@ Parameters:
   Environment: { Type: String }
   VPCId: { Type: String }
   SGWeb: { Type: String }
-  SubnetId: { Type: String }
+  SubnetId1: { Type: String }
+  SubnetId2: { Type: String }
+  TargetGroupArn: { Type: String }
+  ALBDNSName: { Type: String }
   DBHost: { Type: String }
+  ImageTag: { Type: String }
 
 Resources:
   # ロググループの作成
@@ -71,7 +75,7 @@ Resources:
       TaskRoleArn: !GetAtt ECSTaskRole.Arn
       ContainerDefinitions:
         - Name: "app"
-          Image: !Sub "${AWS::AccountId}.dkr.ecr.ap-northeast-1.amazonaws.com/laraec-app:latest"
+          Image: !Sub "${AWS::AccountId}.dkr.ecr.ap-northeast-1.amazonaws.com/laraec-app:${ImageTag}"
           PortMappings:
             - ContainerPort: 80
           # ログ出力の設定を追加
@@ -82,6 +86,8 @@ Resources:
               awslogs-region: !Ref "AWS::Region"
               awslogs-stream-prefix: ecs
           Environment:
+            - Name: "APP_URL"
+              Value: !Sub "http://${ALBDNSName}"
             - Name: "DB_HOST"
               Value: !Ref DBHost
             - Name: "DB_DATABASE"
@@ -90,6 +96,8 @@ Resources:
               Value: "admin"
             - Name: "DB_PASSWORD"
               Value: "password123"
+            - Name: "SESSION_DRIVER"
+              Value: "file"
 
   ECSService:
     Type: "AWS::ECS::Service"
@@ -106,7 +114,12 @@ Resources:
           SecurityGroups:
             - !Ref SGWeb
           Subnets:
-            - !Ref SubnetId
+            - !Ref SubnetId1
+            - !Ref SubnetId2
+      LoadBalancers:
+        - ContainerName: app
+          ContainerPort: 80
+          TargetGroupArn: !Ref TargetGroupArn
 
 Outputs:
   ECSClusterName:

@@ -56,28 +56,17 @@ make aws-deploy
 
 ```
 
-> [!IMPORTANT]
-> **セキュリティグループの手動設定**
-> デプロイ完了後、AWSコンソールのEC2サービスからセキュリティグループ `SGWeb` を開き、インバウンドルールに「マイ IP」からのポート **80** を許可する設定を追加してください。以下のコマンドで編集画面へ直接アクセスできます。
-
-```bash
-echo "🌐 セキュリティグループ一覧URL (ここからSGWebを探してください):"
-echo "https://${AWS_DEFAULT_REGION}.console.aws.amazon.com/ec2/v2/home?region=${AWS_DEFAULT_REGION}#SecurityGroups:"
-
-```
-
 ## Phase 4: アクセス確認
 
-デプロイされたアプリケーションのパブリックIPを取得し、ブラウザでアクセスします。
+ALBのパブリックIPを取得し、ブラウザでアクセスします。
 
 ```bash
-CLUSTER_NAME="laraec-app-dev-cluster"; \
-SERVICE_NAME="laraec-app-dev-service"; \
-TASK_ARN=$(aws ecs list-tasks --cluster $CLUSTER_NAME --service-name $SERVICE_NAME --query 'taskArns[0]' --output text); \
-ENI_ID=$(aws ecs describe-tasks --cluster $CLUSTER_NAME --tasks $TASK_ARN --query 'tasks[0].attachments[0].details[?name==`networkInterfaceId`].value' --output text); \
-PUBLIC_IP=$(aws ec2 describe-network-interfaces --network-interface-ids $ENI_ID --query 'NetworkInterfaces[0].Association.PublicIp' --output text); \
-echo "🌐 Laravel App URL: http://$PUBLIC_IP"
-
+ALB_NAME="laraec-app-dev-alb"; \
+ALB_URL=$(aws elbv2 describe-load-balancers \
+  --names $ALB_NAME \
+  --query "LoadBalancers[0].DNSName" \
+  --output text); \
+echo "🌐 Laravel App URL: http://$ALB_URL"
 ```
 
 ---
@@ -102,10 +91,23 @@ aws ecs execute-command \
 # 2. コンテナ内でマイグレーションを実行
 php artisan migrate --force
 
-# 3. .envファイルのAPP_URLを更新してビルド
-sed -i "s|^APP_URL=.*|APP_URL=http://[]|g" .env
-npm run build
+```
 
+---
+
+### ECSサービスの更新
+
+イメージを格納するリポジトリ（ECR）を作成し、ビルドしたイメージをプッシュします。
+
+```bash
+# 1. AWS CLI操作用コンテナの起動
+make awscli
+
+# クラスター名とサービス名を指定して実行
+aws ecs update-service \
+  --cluster laraec-app-dev-cluster \
+  --service laraec-app-dev-service \
+  --force-new-deployment
 ```
 
 ---
