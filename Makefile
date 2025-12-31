@@ -141,10 +141,9 @@ aws-build: ## AWS用のDockerイメージをビルド、タグ付け、ECRへプ
 aws-test: ## ビルドしたAWS用のDockerイメージをローカルで起動確認します
 	@echo "Starting local test for production image..."
 	@echo "Access: http://localhost:8080"
-	@# APP_KEYをその場で生成して渡します。
-	@# Makefile内では $ をエスケープするために $$ と記述します。
 	docker run --rm -p 8080:80 \
 		--name laraec-app-test \
+		--network docker_default \
 		-e APP_KEY="base64:$$(openssl rand -base64 32)" \
 		-e APP_ENV=local \
 		-e APP_DEBUG=true \
