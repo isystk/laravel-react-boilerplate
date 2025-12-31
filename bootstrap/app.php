@@ -18,14 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
             ->trustProxies(at: '*')
             ->validateCsrfTokens(except: [
                 'api/*',
-            ])
-            ->redirectGuestsTo(function (Request $request) {
-                if (request()->routeIs('admin.*')) {
-                    return $request->expectsJson() ? null : route('admin.login');
-                }
-
-                return null;
-            });
+            ]);
     })
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
