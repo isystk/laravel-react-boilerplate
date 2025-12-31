@@ -13,8 +13,9 @@ AWS_CLI_CMD := $(DOCKER_CMD) exec aws
 AWS_REGION     := ap-northeast-1
 AWS_ACCOUNT_ID := 004796740041
 ECR_DOMAIN     := $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com
-REPO_NAME      := laraec-app
-IMAGE_URI      := $(ECR_DOMAIN)/$(REPO_NAME):latest
+APP_NAME       := laraec-app
+IMAGE_URI      := $(ECR_DOMAIN)/$(APP_NAME):latest
+TEMPLATE_URL   := https://s3.ap-northeast-1.amazonaws.com/laraec-cfm-template/root-stack.yml
 
 # デフォルトタスク
 .DEFAULT_GOAL := help
@@ -123,27 +124,6 @@ pre-commit: ## コミット前にすべてのチェックを実行します。
 awscli: ## AWS CLIを実行します。
 	@$(AWS_CLI_CMD) /bin/bash
 
-.PHONY: aws-template-sync
-aws-template-sync: ## S3バケットにテンプレートを同期します
-	@if ! $(AWS_CLI_CMD) aws s3api head-bucket --bucket laraec-cfm-template 2>/dev/null; then \
-		echo "Bucket does not exist. Creating bucket..."; \
-		$(AWS_CLI_CMD) aws s3 mb s3://laraec-cfm-template --region ap-northeast-1; \
-	fi
-	@echo "Syncing CloudFormation templates to S3 (./docker/aws/template -> s3://laraec-cfm-template)..."
-	@$(AWS_CLI_CMD) aws s3 sync ./docker/aws/template s3://laraec-cfm-template --delete
-	@echo "S3 sync completed successfully."
-
-.PHONY: aws-create-vpc
-aws-create-vpc: ## AWSにVPC及びセキュリティグループを作成します
-	@$(AWS_CLI_CMD) aws cloudformation create-stack \
-		--stack-name laraec-vpc \
-		--template-url https://s3-ap-northeast-1.amazonaws.com/laraec-cfm-template/root-stack.yml \
-		--capabilities CAPABILITY_NAMED_IAM \
-		--parameters \
-			ParameterKey=ProjectName,ParameterValue=laraec \
-			ParameterKey=Environment,ParameterValue=dev \
-			ParameterKey=KeyPairName,ParameterValue=iseyoshitaka
-
 .PHONY: aws-build
 aws-build: ## アプリケーションのDockerイメージをビルド、タグ付け、ECRへプッシュします
 	@echo "Logging in to ECR..."
@@ -157,16 +137,39 @@ aws-build: ## アプリケーションのDockerイメージをビルド、タグ
 	docker push $(IMAGE_URI)
 	@echo "Deploy complete: $(IMAGE_URI)"
 
+.PHONY: aws-template-sync
+aws-template-sync: ## S3バケットにテンプレートを同期します
+	@if ! $(AWS_CLI_CMD) aws s3api head-bucket --bucket laraec-cfm-template 2>/dev/null; then \
+		echo "Bucket does not exist. Creating bucket..."; \
+		$(AWS_CLI_CMD) aws s3 mb s3://laraec-cfm-template --region ap-northeast-1; \
+	fi
+	@echo "Syncing CloudFormation templates to S3 (./docker/aws/template -> s3://laraec-cfm-template)..."
+	@$(AWS_CLI_CMD) aws s3 sync ./docker/aws/template s3://laraec-cfm-template --delete
+	@echo "S3 sync completed successfully."
+
 .PHONY: aws-deploy
 aws-deploy: ## アプリケーションをAWS ECSにデプロイします
-	@$(AWS_CLI_CMD) aws cloudformation create-stack \
-		--stack-name laraec-vpc \
-		--template-url https://s3-ap-northeast-1.amazonaws.com/laraec-cfm-template/root-stack.yml \
+	@echo "Starting CloudFormation deployment for stack: $(APP_NAME)..."
+	@echo "Using template: $(TEMPLATE_URL)"
+	@$(AWS_CLI_CMD) aws cloudformation deploy \
+		--stack-name $(APP_NAME) \
+		--template-file ./docker/aws/template/root-stack.yml \
 		--capabilities CAPABILITY_NAMED_IAM \
-		--parameters \
-			ParameterKey=ProjectName,ParameterValue=laraec \
-			ParameterKey=Environment,ParameterValue=dev \
-			ParameterKey=KeyPairName,ParameterValue=iseyoshitaka
+		--parameter-overrides \
+			ProjectName=$(APP_NAME) \
+			Environment=dev \
+			KeyPairName=iseyoshitaka
+	@echo "Deployment process finished. Please check the AWS Console for status."
+
+.PHONY: aws-destroy
+aws-destroy: ## AWS上のスタックを削除します
+	@echo "!!! WARNING !!! This will delete the entire stack: $(APP_NAME)"
+	@echo -n "Are you sure you want to proceed? [y/N]: " && read ans && [ $${ans:-N} = y ]
+	@echo "Deleting CloudFormation stack: $(APP_NAME)..."
+	@$(AWS_CLI_CMD) aws cloudformation delete-stack --stack-name $(APP_NAME)
+	@echo "Deletion request submitted. Waiting for stack to be deleted..."
+	@$(AWS_CLI_CMD) aws cloudformation wait stack-delete-complete --stack-name $(APP_NAME)
+	@echo "Stack '$(APP_NAME)' has been successfully deleted."
 
 .PHONY: generate-pr
 generate-pr: ## PR用の説明文を生成します。
