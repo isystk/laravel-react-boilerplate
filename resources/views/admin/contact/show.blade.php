@@ -88,9 +88,9 @@
                     <a
                         class="btn btn-primary"
                         href="{{ route('admin.contact.edit', ['contactForm' => $contactForm ]) }}"
-                        @cannot('high-manager')
+                        @if(!Auth::user()->role->isHighManager())
                             disabled="disabled"
-                        @endcan
+                        @endif
                     >
                         {{ __('common.Change') }}
                     </a>
@@ -111,9 +111,9 @@
                         href="#"
                         class="btn btn-danger js-deleteBtn"
                         data-id="{{ $contactForm->id }}"
-                        @cannot('high-manager')
+                        @if(!Auth::user()->role->isHighManager())
                             disabled="disabled"
-                        @endcan
+                        @endif
                     >
                         {{ __('common.Delete') }}
                     </button>

@@ -2,6 +2,7 @@
 
 namespace Http\Controllers\Admin\Stock;
 
+use App\Enums\AdminRole;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
@@ -21,7 +22,7 @@ class DetailControllerTest extends BaseTest
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者A',
             'email' => 'admin1@test.com',
-            'role' => 'high-manager',
+            'role' => AdminRole::HighManager,
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -45,7 +46,7 @@ class DetailControllerTest extends BaseTest
     {
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
-            'role' => 'manager',
+            'role' => AdminRole::Manager,
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -59,7 +60,7 @@ class DetailControllerTest extends BaseTest
 
         $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
-            'role' => 'high-manager',
+            'role' => AdminRole::HighManager,
         ]);
         $this->actingAs($admin2, 'admin');
 

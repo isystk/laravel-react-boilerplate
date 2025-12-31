@@ -65,16 +65,16 @@
                                 <input
                                     type="file"
                                     name="upload_file"
-                                    @cannot('high-manager')
+                                    @if(!Auth::user()->role->isHighManager())
                                         disabled="disabled"
-                                    @endcan
+                                    @endif
                                 >
                             </div>
                             <button
                                 class="btn btn-primary"
-                                @cannot('high-manager')
+                                @if(!Auth::user()->role->isHighManager())
                                     disabled="disabled"
-                                @endcan
+                                @endif
                             >{{ __('common.Execute') }}</button>
                         </form>
                     </div>

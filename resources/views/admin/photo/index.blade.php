@@ -114,9 +114,9 @@
                                     <button
                                         class="btn btn-danger btn-sm js-deleteBtn"
                                         data-id="{{ $photo['fileName'] }}"
-                                        @cannot('high-manager')
+                                        @if(!Auth::user()->role->isHighManager())
                                             disabled="disabled"
-                                        @endcan
+                                        @endif
                                     >削除する
                                     </button>
                                     <form

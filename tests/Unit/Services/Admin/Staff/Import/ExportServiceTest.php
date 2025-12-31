@@ -2,6 +2,7 @@
 
 namespace Services\Admin\Staff\Import;
 
+use App\Enums\AdminRole;
 use App\Services\Admin\Staff\Import\ExportService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
@@ -23,8 +24,8 @@ class ExportServiceTest extends BaseTest
         $export = $this->service->getExport();
         $this->assertSame(['ID', '名前', 'メールアドレス', '権限'], $export->headings(), 'ヘッダーが正しいこと');
 
-        $this->createDefaultAdmin(['name' => 'admin1', 'email' => 'admin1@test.com', 'role' => 'high-manager']);
-        $admin2 = $this->createDefaultAdmin(['name' => 'admin2', 'email' => 'admin2@test.com', 'role' => 'manager']);
+        $this->createDefaultAdmin(['name' => 'admin1', 'email' => 'admin1@test.com', 'role' => AdminRole::HighManager]);
+        $admin2 = $this->createDefaultAdmin(['name' => 'admin2', 'email' => 'admin2@test.com', 'role' => AdminRole::Manager]);
 
         $export = $this->service->getExport();
         $rows = $export->collection();
