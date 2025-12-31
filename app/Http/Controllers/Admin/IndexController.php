@@ -16,6 +16,7 @@ class IndexController extends BaseController
             // ログイン画面にリダイレクト
             return redirect(route('admin.login'));
         }
+
         // ホーム画面にリダイレクト
         return redirect(route('admin.home'));
     }
