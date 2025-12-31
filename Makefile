@@ -15,7 +15,7 @@ AWS_ACCOUNT_ID := 004796740041
 ECR_DOMAIN     := $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com
 APP_NAME       := laraec-app
 IMAGE_URI      := $(ECR_DOMAIN)/$(APP_NAME):latest
-TEMPLATE_URL   := https://s3.ap-northeast-1.amazonaws.com/laraec-cfm-template/root-stack.yml
+TEMPLATE_URL   := https://s3.ap-northeast-1.amazonaws.com/$(APP_NAME)-cfm-template/root-stack.yml
 
 # デフォルトタスク
 .DEFAULT_GOAL := help
@@ -146,7 +146,7 @@ aws-test: ## ビルドしたAWS用のDockerイメージをローカルで起動�
 	@echo "Starting local test for production image..."
 	@echo "Access: http://localhost:8080"
 	docker run --rm -p 8080:80 \
-		--name laraec-app-test \
+		--name $(APP_NAME)-test \
 		--network docker_default \
 		-e APP_KEY="base64:$$(openssl rand -base64 32)" \
 		-e APP_ENV=local \
@@ -156,37 +156,39 @@ aws-test: ## ビルドしたAWS用のDockerイメージをローカルで起動�
 
 .PHONY: aws-template-sync
 aws-template-sync: ## S3バケットにCloudFormationのテンプレートを同期します
-	@if ! $(AWS_CLI_CMD) aws s3api head-bucket --bucket laraec-cfm-template 2>/dev/null; then \
+	@if ! $(AWS_CLI_CMD) aws s3api head-bucket --bucket $(APP_NAME)-cfm-template 2>/dev/null; then \
 		echo "Bucket does not exist. Creating bucket..."; \
-		$(AWS_CLI_CMD) aws s3 mb s3://laraec-cfm-template --region ap-northeast-1; \
+		$(AWS_CLI_CMD) aws s3 mb s3://$(APP_NAME)-cfm-template --region ap-northeast-1; \
 	fi
-	@echo "Syncing CloudFormation templates to S3 (./docker/aws/template -> s3://laraec-cfm-template)..."
-	@$(AWS_CLI_CMD) aws s3 sync ./docker/aws/template s3://laraec-cfm-template --delete
+	@echo "Syncing CloudFormation templates to S3 (./docker/aws/template -> s3://$(APP_NAME)-cfm-template)..."
+	@$(AWS_CLI_CMD) aws s3 sync ./docker/aws/template s3://$(APP_NAME)-cfm-template --delete
 	@echo "S3 sync completed successfully."
 
 .PHONY: aws-deploy
 aws-deploy: ## アプリケーションをAWS ECSにデプロイします
 	@echo "Starting CloudFormation deployment for stack: $(APP_NAME)..."
 	@echo "Using template: $(TEMPLATE_URL)"
-	@$(AWS_CLI_CMD) aws cloudformation deploy \
-		--stack-name $(APP_NAME) \
-		--template-file ./docker/aws/template/root-stack.yml \
-		--capabilities CAPABILITY_NAMED_IAM \
-		--parameter-overrides \
-			ProjectName=$(APP_NAME) \
-			Environment=dev \
-			KeyPairName=iseyoshitaka
+	@$(AWS_CLI_CMD) aws cloudformation create-stack \
+		--stack-name $(APP_NAME)-stack \
+		--template-body file://docker/aws/template/root-stack.yml \
+		--parameters \
+			ParameterKey=ProjectName,ParameterValue=$(APP_NAME) \
+			ParameterKey=Environment,ParameterValue=dev \
+			ParameterKey=TemplateURL,ParameterValue=https://$(APP_NAME)-cfm-template.s3.ap-northeast-1.amazonaws.com/ \
+		--capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM \
+		--disable-rollback \
+		--region ap-northeast-1
 	@echo "Deployment process finished. Please check the AWS Console for status."
 
 .PHONY: aws-destroy
 aws-destroy: ## AWS上のスタックを削除します
-	@echo "!!! WARNING !!! This will delete the entire stack: $(APP_NAME)"
+	@echo "!!! WARNING !!! This will delete the entire stack: $(APP_NAME)-stack"
 	@echo -n "Are you sure you want to proceed? [y/N]: " && read ans && [ $${ans:-N} = y ]
-	@echo "Deleting CloudFormation stack: $(APP_NAME)..."
-	@$(AWS_CLI_CMD) aws cloudformation delete-stack --stack-name $(APP_NAME)
+	@echo "Deleting CloudFormation stack: $(APP_NAME)-stack..."
+	@$(AWS_CLI_CMD) aws cloudformation delete-stack --stack-name $(APP_NAME)-stack
 	@echo "Deletion request submitted. Waiting for stack to be deleted..."
-	@$(AWS_CLI_CMD) aws cloudformation wait stack-delete-complete --stack-name $(APP_NAME)
-	@echo "Stack '$(APP_NAME)' has been successfully deleted."
+	@$(AWS_CLI_CMD) aws cloudformation wait stack-delete-complete --stack-name $(APP_NAME)-stack
+	@echo "Stack '$(APP_NAME)-stack' has been successfully deleted."
 
 .PHONY: generate-pr
 generate-pr: ## PR用の説明文を生成します。

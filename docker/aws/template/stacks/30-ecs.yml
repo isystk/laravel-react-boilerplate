@@ -1,133 +1,76 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: ECS Fargate Service for Laravel App
-
 Parameters:
-  ProjectName:
-    Type: String
-    Default: sample
-  Environment:
-    Type: String
-    AllowedValues: [dev, stg, prod]
-    Default: dev
-  ImageUri:
-    Type: String
-    Description: ECR Image URI (e.g. 123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/laravel-app:latest)
+  ProjectName: { Type: String }
+  Environment: { Type: String }
+  VPCId: { Type: String }
+  SGWeb: { Type: String }
+  SubnetId: { Type: String }
+  DBHost: { Type: String }
 
 Resources:
-  # ECS Cluster
+  # クラスター
   ECSCluster:
-    Type: AWS::ECS::Cluster
+    Type: "AWS::ECS::Cluster"
     Properties:
       ClusterName: !Sub "${ProjectName}-${Environment}-cluster"
 
-  # CloudWatch Logs
-  LogGroup:
-    Type: AWS::Logs::LogGroup
-    Properties:
-      LogGroupName: !Sub "/ecs/${ProjectName}/${Environment}/laravel-app"
-      RetentionInDays: 7
-
-  # ECS Task Execution Role (ECRからのプルやログ出力用)
+  # 実行ロール（CloudWatchへのログ出力などに必要）
   ECSTaskExecutionRole:
-    Type: AWS::IAM::Role
+    Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
-          - Effect: Allow
+          - Effect: "Allow"
             Principal:
-              Service: [ecs-tasks.amazonaws.com]
-            Action: ['sts:AssumeRole']
+              Service: "ecs-tasks.amazonaws.com"
+            Action: "sts:AssumeRole"
       ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+        - "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 
-  # ALB (Application Load Balancer)
-  ApplicationLoadBalancer:
-    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
-    Properties:
-      Name: !Sub "${ProjectName}-${Environment}-alb"
-      Scheme: internet-facing
-      LoadBalancerAttributes:
-        - Key: idle_timeout.timeout_seconds
-          Value: '60'
-      SecurityGroups:
-        - Fn::ImportValue: !Sub "Export-${ProjectName}-${Environment}-SGALB"
-      Subnets:
-        - Fn::ImportValue: !Sub "Export-${ProjectName}-${Environment}-PublicSubnet1A"
-        - Fn::ImportValue: !Sub "Export-${ProjectName}-${Environment}-PublicSubnet1C"
-
-  # ALB Target Group
-  ALBTargetGroup:
-    Type: AWS::ElasticLoadBalancingV2::TargetGroup
-    Properties:
-      Name: !Sub "${ProjectName}-${Environment}-tg"
-      VpcId:
-        Fn::ImportValue: !Sub "Export-${ProjectName}-${Environment}-VPC"
-      Port: 80
-      Protocol: HTTP
-      TargetType: ip
-      HealthCheckPath: /index.php # Laravelのヘルスチェック用パス
-      Matcher:
-        HttpCode: '200'
-
-  # ALB Listener
-  ALBListener:
-    Type: AWS::ElasticLoadBalancingV2::Listener
-    Properties:
-      DefaultActions:
-        - TargetGroupArn: !Ref ALBTargetGroup
-          Type: forward
-      LoadBalancerArn: !Ref ApplicationLoadBalancer
-      Port: 80
-      Protocol: HTTP
-
-  # ECS Task Definition
-  TaskDefinition:
-    Type: AWS::ECS::TaskDefinition
+  # タスク定義
+  ECSTaskDefinition:
+    Type: "AWS::ECS::TaskDefinition"
     Properties:
       Family: !Sub "${ProjectName}-${Environment}-task"
-      Cpu: '256'
-      Memory: '512'
-      NetworkMode: awsvpc
-      RequiresCompatibilities: [FARGATE]
-      ExecutionRoleArn: !GetAtt ECSTaskExecutionRole.Arn
+      Cpu: "256"
+      Memory: "512"
+      NetworkMode: "awsvpc"
+      RequiresCompatibilities:
+        - "FARGATE"
+      ExecutionRoleArn: !Ref ECSTaskExecutionRole
       ContainerDefinitions:
-        - Name: laravel-app
-          Image: !Ref ImageUri
+        - Name: "app"
+          Image: "php:8.2-fpm" # 実際にはビルドしたLaravelイメージのURLを指定
           PortMappings:
             - ContainerPort: 80
-          LogConfiguration:
-            LogDriver: awslogs
-            Options:
-              awslogs-group: !Ref LogGroup
-              awslogs-region: !Ref "AWS::Region"
-              awslogs-stream-prefix: ecs
+          Environment:
+            - Name: "DB_HOST"
+              Value: !Ref DBHost
+            - Name: "DB_DATABASE"
+              Value: "laravel"
+            - Name: "DB_USERNAME"
+              Value: "admin"
+            - Name: "DB_PASSWORD"
+              Value: "password123"
 
-  # ECS Service
+  # サービス
   ECSService:
-    Type: AWS::ECS::Service
-    DependsOn: ALBListener
+    Type: "AWS::ECS::Service"
     Properties:
       Cluster: !Ref ECSCluster
       ServiceName: !Sub "${ProjectName}-${Environment}-service"
-      LaunchType: FARGATE
+      TaskDefinition: !Ref ECSTaskDefinition
+      LaunchType: "FARGATE"
       DesiredCount: 1
-      TaskDefinition: !Ref TaskDefinition
       NetworkConfiguration:
         AwsvpcConfiguration:
-          # LaravelはPublic Subnetに配置（簡易化のため。本来はPrivate推奨）
-          AssignPublicIp: ENABLED
+          AssignPublicIp: "ENABLED"
           SecurityGroups:
-            - Fn::ImportValue: !Sub "Export-${ProjectName}-${Environment}-SGWeb"
+            - !Ref SGWeb
           Subnets:
-            - Fn::ImportValue: !Sub "Export-${ProjectName}-${Environment}-PublicSubnet1A"
-            - Fn::ImportValue: !Sub "Export-${ProjectName}-${Environment}-PublicSubnet1C"
-      LoadBalancers:
-        - ContainerName: laravel-app
-          ContainerPort: 80
-          TargetGroupArn: !Ref ALBTargetGroup
+            - !Ref SubnetId
 
 Outputs:
-  ALBDnsName:
-    Description: URL to access the application
-    Value: !GetAtt ApplicationLoadBalancer.DNSName
+  ECSClusterName:
+    Value: !Ref ECSCluster

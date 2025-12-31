@@ -1,102 +1,34 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description:
-  Security Group create
-
-# ------------------------------------------------------------#
-# 入力パラメータ
-# ------------------------------------------------------------#
 Parameters:
-
-  ProjectName:
-    Description: Project Name
-    Type: String
-    Default: sample
-  Environment:
-    Description: Environment
-    Type: String
-    AllowedValues:
-      - dev
-      - stg
-      - prod
-  VPCId:
-    Type: String
-    Default: ""
+  ProjectName: { Type: String }
+  Environment: { Type: String }
+  VPCId: { Type: String }
 
 Resources:
-
-  # セキュリティグループ（管理用）
-  SGManaged:
-    Type: "AWS::EC2::SecurityGroup"
-    Properties:
-      VpcId: !Sub "${VPCId}"
-      GroupName: !Sub "${ProjectName}-${Environment}-sg-managed"
-      GroupDescription: "-"
-      Tags:
-        - Key: "Name"
-          Value: !Sub "${ProjectName}-${Environment}-sg-managed"
-      SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: 22
-          ToPort: 22
-          CidrIp: "0.0.0.0/0"
-
-  # セキュリティグループ（web用）
+  # Web用：直接HTTP(80)を許可
   SGWeb:
     Type: "AWS::EC2::SecurityGroup"
     Properties:
-      VpcId: !Sub "${VPCId}"
-      GroupName: !Sub "${ProjectName}-${Environment}-sg-web"
-      GroupDescription: "-"
-      Tags:
-        - Key: "Name"
-          Value: !Sub "${ProjectName}-${Environment}-sg-web"
-
-  # セキュリティグループ（ALB用）
-  SGALB:
-    Type: "AWS::EC2::SecurityGroup"
-    Properties:
-      VpcId: !Sub "${VPCId}"
-      GroupName: !Sub "${ProjectName}-${Environment}-sg-alb"
-      GroupDescription: "-"
-      Tags:
-        - Key: "Name"
-          Value: !Sub "${ProjectName}-${Environment}-sg-alb"
+      VpcId: !Ref VPCId
+      GroupDescription: "Allow HTTP"
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 80
           ToPort: 80
           CidrIp: "0.0.0.0/0"
-        - IpProtocol: tcp
-          FromPort: 443
-          ToPort: 443
-          CidrIp: "0.0.0.0/0"
-  SGWebIngress:
-    Type: "AWS::EC2::SecurityGroupIngress"
+
+  # DB用：Webからのみ許可
+  SGMysql:
+    Type: "AWS::EC2::SecurityGroup"
     Properties:
-      IpProtocol: tcp
-      FromPort: 80
-      ToPort: 80
-      SourceSecurityGroupId: !GetAtt SGALB.GroupId
-      GroupId: !Ref SGWeb
+      VpcId: !Ref VPCId
+      GroupDescription: "Allow MySQL from Web"
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 3306
+          ToPort: 3306
+          SourceSecurityGroupId: !Ref SGWeb
 
-# ------------------------------------------------------------#
-# Outputパラメータ
-# ------------------------------------------------------------#
 Outputs:
-  SGManaged:
-    Description: The ID of SGManaged
-    Value: !GetAtt [ SGManaged, GroupId ]
-    Export:
-      Name: !Join ["-", [Export, !Ref ProjectName, !Ref Environment, SGManaged]]
-
-  SGWeb:
-    Description: The ID of SGWeb
-    Value: !GetAtt [ SGWeb, GroupId ]
-    Export:
-      Name: !Join ["-", [Export, !Ref ProjectName, !Ref Environment, SGWeb]]
-
-  SGALB:
-    Description: The ID of SGALB
-    Value: !GetAtt [ SGALB, GroupId ]
-    Export:
-      Name: !Join ["-", [Export, !Ref ProjectName, !Ref Environment, SGALB]]
+  SGWeb: { Value: !Ref SGWeb }
+  SGMysql: { Value: !Ref SGMysql }

@@ -1,32 +1,18 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: Manage myself verification environment
+Description: Simple Laravel ECS Environment
 
 Parameters:
-
   ProjectName:
-    Description: Project Name
     Type: String
     Default: sample
   Environment:
-    Description: Environment
     Type: String
-    AllowedValues:
-      - dev
-      - stg
-      - prod
+    Default: dev
   TemplateURL:
-    Description: CFn template Backet URL
     Type: String
-    Default: https://laraec-cfm-template.s3.ap-northeast-1.amazonaws.com/
-
-  KeyPairName:
-    Description: KeyPair Name
-    Type: String
-    Default: ""
+    Default: https://YOUR-BUCKET-NAME.s3.ap-northeast-1.amazonaws.com/
 
 Resources:
-
-  # VPCの作成
   VPC:
     Type: AWS::CloudFormation::Stack
     Properties:
@@ -35,7 +21,6 @@ Resources:
         ProjectName: !Ref ProjectName
         Environment: !Ref Environment
 
-  # SecurityGroupの作成
   SG:
     Type: AWS::CloudFormation::Stack
     Properties:
@@ -44,3 +29,27 @@ Resources:
         ProjectName: !Ref ProjectName
         Environment: !Ref Environment
         VPCId: !GetAtt VPC.Outputs.VPC
+
+  DB:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub "${TemplateURL}stacks/20-db.yml"
+      Parameters:
+        ProjectName: !Ref ProjectName
+        Environment: !Ref Environment
+        VPCId: !GetAtt VPC.Outputs.VPC
+        SGMysql: !GetAtt SG.Outputs.SGMysql
+        SubnetId1: !GetAtt VPC.Outputs.PublicSubnet1
+        SubnetId2: !GetAtt VPC.Outputs.PublicSubnet2
+
+  ECS:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub "${TemplateURL}stacks/30-ecs.yml"
+      Parameters:
+        ProjectName: !Ref ProjectName
+        Environment: !Ref Environment
+        VPCId: !GetAtt VPC.Outputs.VPC
+        SGWeb: !GetAtt SG.Outputs.SGWeb
+        SubnetId: !GetAtt VPC.Outputs.PublicSubnet1
+        DBHost: !GetAtt DB.Outputs.DBEndpoint

@@ -1,0 +1,40 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Parameters:
+  ProjectName: { Type: String }
+  Environment: { Type: String }
+  VPCId: { Type: String }
+  SGMysql: { Type: String }
+  SubnetId1: { Type: String }
+  SubnetId2: { Type: String }
+
+Resources:
+  DBSubnetGroup:
+    Type: "AWS::RDS::DBSubnetGroup"
+    Properties:
+      DBSubnetGroupDescription: "DB Subnet Group"
+      SubnetIds:
+        - !Ref SubnetId1
+        - !Ref SubnetId2
+
+  RDSInstance:
+    Type: "AWS::RDS::DBInstance"
+    Properties:
+      DBInstanceIdentifier: !Sub "${ProjectName}-${Environment}-db"
+      AllocatedStorage: 20
+      StorageType: "gp2"
+      DBInstanceClass: "db.t3.micro"
+      Engine: "mysql"
+      EngineVersion: "8.0"
+      MasterUsername: "admin"
+      MasterUserPassword: "password123" # 本番ではSecrets Manager推奨
+      DBName: "laravel"
+      VPCSecurityGroups:
+        - !Ref SGMysql
+      DBSubnetGroupName: !Ref DBSubnetGroup
+      PubliclyAccessible: false
+      MultiAZ: false
+      DeleteAutomatedBackups: true
+
+Outputs:
+  DBEndpoint:
+    Value: !GetAtt RDSInstance.Endpoint.Address
