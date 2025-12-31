@@ -1,12 +1,20 @@
 SHELL := /bin/bash
 .SHELLFLAGS := -eu -o pipefail -c
 
+# 変数定義
 BASE_DIR := $(CURDIR)
 DOCKER_HOME := $(BASE_DIR)/docker
 COMPOSE_FILE := $(DOCKER_HOME)/docker-compose.yml
 ENV_FILE := $(BASE_DIR)/.env
 DOCKER_CMD := docker compose -f $(COMPOSE_FILE) --env-file $(ENV_FILE)
 TOOLS_CMD := ~/dotfiles/tools/run.sh
+AWS_CLI_CMD := $(DOCKER_CMD) exec aws
+# AWS関連設定
+AWS_REGION     := ap-northeast-1
+AWS_ACCOUNT_ID := 004796740041
+ECR_DOMAIN     := $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com
+REPO_NAME      := laraec-app
+IMAGE_URI      := $(ECR_DOMAIN)/$(REPO_NAME):latest
 
 # デフォルトタスク
 .DEFAULT_GOAL := help
@@ -113,14 +121,45 @@ pre-commit: ## コミット前にすべてのチェックを実行します。
 
 .PHONY: awscli
 awscli: ## AWS CLIを実行します。
-	@$(DOCKER_CMD) exec awscli /bin/bash
+	@$(AWS_CLI_CMD) /bin/bash
 
-aws-template-sync: ## S3バケットにCfnスタックのテンプレートを同期します
-	@$(DOCKER_CMD) exec awscli aws s3 mb s3://laraec-cfm-template --region ap-northeast-1
-	@$(DOCKER_CMD) exec awscli aws s3 sync ./template s3://laraec-cfm-template --delete
+.PHONY: aws-template-sync
+aws-template-sync: ## S3バケットにテンプレートを同期します
+	@if ! $(AWS_CLI_CMD) aws s3api head-bucket --bucket laraec-cfm-template 2>/dev/null; then \
+		echo "Bucket does not exist. Creating bucket..."; \
+		$(AWS_CLI_CMD) aws s3 mb s3://laraec-cfm-template --region ap-northeast-1; \
+	fi
+	@echo "Syncing CloudFormation templates to S3 (./docker/aws/template -> s3://laraec-cfm-template)..."
+	@$(AWS_CLI_CMD) aws s3 sync ./docker/aws/template s3://laraec-cfm-template --delete
+	@echo "S3 sync completed successfully."
 
+.PHONY: aws-create-vpc
 aws-create-vpc: ## AWSにVPC及びセキュリティグループを作成します
-	@$(DOCKER_CMD) exec awscli aws cloudformation create-stack \
+	@$(AWS_CLI_CMD) aws cloudformation create-stack \
+		--stack-name laraec-vpc \
+		--template-url https://s3-ap-northeast-1.amazonaws.com/laraec-cfm-template/root-stack.yml \
+		--capabilities CAPABILITY_NAMED_IAM \
+		--parameters \
+			ParameterKey=ProjectName,ParameterValue=laraec \
+			ParameterKey=Environment,ParameterValue=dev \
+			ParameterKey=KeyPairName,ParameterValue=iseyoshitaka
+
+.PHONY: aws-build
+aws-build: ## アプリケーションのDockerイメージをビルド、タグ付け、ECRへプッシュします
+	@echo "Logging in to ECR..."
+	@$(AWS_CLI_CMD) aws ecr get-login-password --region $(AWS_REGION) | docker login --username AWS --password-stdin $(ECR_DOMAIN)
+	@echo "Building Docker image for ECS (platform: linux/amd64)..."
+	# プロジェクトルートからビルドし、docker/aws/Dockerfileを適用
+	docker build --platform linux/amd64 -t $(REPO_NAME) -f ./docker/app/Dockerfile.ecs .
+	@echo "Tagging image..."
+	docker tag $(REPO_NAME):latest $(IMAGE_URI)
+	@echo "Pushing image to ECR..."
+	docker push $(IMAGE_URI)
+	@echo "Deploy complete: $(IMAGE_URI)"
+
+.PHONY: aws-deploy
+aws-deploy: ## アプリケーションをAWS ECSにデプロイします
+	@$(AWS_CLI_CMD) aws cloudformation create-stack \
 		--stack-name laraec-vpc \
 		--template-url https://s3-ap-northeast-1.amazonaws.com/laraec-cfm-template/root-stack.yml \
 		--capabilities CAPABILITY_NAMED_IAM \

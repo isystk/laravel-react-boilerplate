@@ -70,10 +70,10 @@ services:
     volumes:
       - laraec-s3-store:/data
 
-  awscli:
-    container_name: laraec-awscli
+  aws:
+    container_name: laraec-aws
     build:
-      context: ./awscli
+      context: ./aws
       dockerfile: Dockerfile
     tty: true
     environment:
@@ -82,7 +82,7 @@ services:
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
     volumes:
-      - ./awscli:/aws
+      - ..:/aws
     working_dir: /aws
 
 volumes:
