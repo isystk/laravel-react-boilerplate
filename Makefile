@@ -147,6 +147,7 @@ aws-test: ## ビルドしたAWS用のDockerイメージをローカルで起動�
 		-e APP_KEY="base64:$$(openssl rand -base64 32)" \
 		-e APP_ENV=local \
 		-e APP_DEBUG=true \
+		-e APP_URL="http://localhost:8080" \
 		$(APP_NAME):latest
 
 .PHONY: aws-template-sync
