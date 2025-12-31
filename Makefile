@@ -28,8 +28,8 @@ help: ## ヘルプを表示します。
 .PHONY: init
 init: ## 初期化します。
 	@if [ ! -f .env ]; then \
-		echo "📄 .env not found, copying from .env.example" \
-		cp .env.example .env \
+		echo "📄 .env not found, copying from .env.example"; \
+		cp .env.example .env; \
 	fi
 	$(DOCKER_CMD) down --rmi all --volumes --remove-orphans
 	rm -rf "$(DOCKER_HOME)/mysql/logs" && mkdir -p "$(DOCKER_HOME)/mysql/logs"
