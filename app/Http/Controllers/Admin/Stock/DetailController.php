@@ -29,9 +29,6 @@ class DetailController extends BaseController
      */
     public function destroy(Stock $stock): RedirectResponse
     {
-        // 上位管理者のみがアクセス可能
-        $this->authorize('high-manager');
-
         /** @var DestroyService $service */
         $service = app(DestroyService::class);
 

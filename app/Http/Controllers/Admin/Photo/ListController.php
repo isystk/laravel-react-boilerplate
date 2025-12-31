@@ -32,9 +32,6 @@ class ListController extends BaseController
      */
     public function destroy(Request $request): RedirectResponse
     {
-        // 上位管理者のみがアクセス可能
-        $this->authorize('high-manager');
-
         $fileName = (string) $request->fileName;
 
         /** @var DestroyService $service */

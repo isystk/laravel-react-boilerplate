@@ -17,9 +17,6 @@ class CreateController extends BaseController
      */
     public function create(): View
     {
-        // 上位管理者のみがアクセス可能
-        $this->authorize('high-manager');
-
         return view('admin.staff.create');
     }
 

@@ -2,6 +2,7 @@
 
 namespace Http\Controllers\Admin\Staff;
 
+use App\Enums\AdminRole;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
@@ -20,7 +21,7 @@ class CreateControllerTest extends BaseTest
     {
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
-            'role' => 'manager',
+            'role' => AdminRole::Manager,
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -30,7 +31,7 @@ class CreateControllerTest extends BaseTest
 
         $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
-            'role' => 'high-manager',
+            'role' => AdminRole::HighManager,
         ]);
         $this->actingAs($admin2, 'admin');
 
@@ -42,7 +43,7 @@ class CreateControllerTest extends BaseTest
     {
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
-            'role' => 'manager',
+            'role' => AdminRole::Manager,
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -52,7 +53,7 @@ class CreateControllerTest extends BaseTest
 
         $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
-            'role' => 'high-manager',
+            'role' => AdminRole::HighManager,
         ]);
         $this->actingAs($admin2, 'admin');
 
@@ -61,7 +62,7 @@ class CreateControllerTest extends BaseTest
             'email' => 'admin3@test.com',
             'password' => 'password',
             'password_confirmation' => 'password',
-            'role' => 'manager',
+            'role' => AdminRole::Manager->value,
         ]);
         $response = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();
@@ -71,7 +72,7 @@ class CreateControllerTest extends BaseTest
             'name' => '管理者3',
             'email' => 'admin3@test.com',
             //            'password' => Hash::make('password'),
-            'role' => 'manager',
+            'role' => AdminRole::Manager,
         ]);
     }
 }

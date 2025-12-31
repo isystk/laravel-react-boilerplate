@@ -3,6 +3,7 @@
 namespace Http\Controllers\Admin\ContactForm;
 
 use App\Domain\Entities\Admin;
+use App\Enums\AdminRole;
 use App\Enums\Age;
 use App\Enums\Gender;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
@@ -25,7 +26,7 @@ class EditControllerTest extends BaseTest
     {
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者A',
-            'role' => 'manager',
+            'role' => AdminRole::Manager,
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -47,7 +48,7 @@ class EditControllerTest extends BaseTest
 
         $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
-            'role' => 'high-manager',
+            'role' => AdminRole::HighManager,
         ]);
         $this->actingAs($admin2, 'admin');
 
@@ -61,7 +62,7 @@ class EditControllerTest extends BaseTest
 
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者A',
-            'role' => 'manager',
+            'role' => AdminRole::Manager,
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -86,7 +87,7 @@ class EditControllerTest extends BaseTest
         /** @var Admin $admin2 */
         $admin2 = Admin::factory()->create([
             'name' => '管理者2',
-            'role' => 'high-manager',
+            'role' => AdminRole::HighManager,
         ]);
         $this->actingAs($admin2, 'admin');
 
@@ -131,7 +132,7 @@ class EditControllerTest extends BaseTest
         $contactForm = $this->createDefaultContactForm();
 
         $admin = $this->createDefaultAdmin([
-            'role' => 'high-manager',
+            'role' => AdminRole::HighManager,
         ]);
         $this->actingAs($admin, 'admin');
 

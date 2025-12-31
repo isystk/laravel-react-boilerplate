@@ -16,4 +16,12 @@ enum AdminRole: string
     {
         return __('enums.AdminRole' . $this->value);
     }
+
+    /**
+     * 上位管理者の場合にTrueを返却する
+     */
+    public function isHighManager(): bool
+    {
+        return self::HighManager === $this;
+    }
 }

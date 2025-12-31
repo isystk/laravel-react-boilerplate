@@ -18,9 +18,6 @@ class EditController extends BaseController
      */
     public function edit(User $user): View
     {
-        // 上位管理者のみがアクセス可能
-        $this->authorize('high-manager');
-
         return view('admin.user.edit', compact([
             'user',
         ]));

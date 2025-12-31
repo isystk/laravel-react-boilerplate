@@ -12,6 +12,11 @@ class IndexController extends BaseController
      */
     public function index(): RedirectResponse
     {
+        if (auth('admin')->guest()) {
+            // ログイン画面にリダイレクト
+            return redirect(route('admin.login'));
+        }
+
         // ホーム画面にリダイレクト
         return redirect(route('admin.home'));
     }

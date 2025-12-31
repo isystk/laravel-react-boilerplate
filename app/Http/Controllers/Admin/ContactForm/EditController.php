@@ -19,9 +19,6 @@ class EditController extends BaseController
      */
     public function edit(ContactForm $contactForm): View
     {
-        // 上位管理者のみがアクセス可能
-        $this->authorize('high-manager');
-
         /** @var EditService $service */
         $service = app(EditService::class);
         $contactFormImages = $service->getContactFormImage($contactForm->id);

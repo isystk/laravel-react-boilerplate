@@ -26,9 +26,6 @@ class ImportController extends BaseController
      */
     public function index(): View
     {
-        // 上位管理者のみがアクセス可能
-        $this->authorize('high-manager');
-
         /** @var IndexService $service */
         $service = app(IndexService::class);
         $importHistories = $service->getImportHistories();
@@ -43,9 +40,6 @@ class ImportController extends BaseController
      */
     public function export(Request $request): BinaryFileResponse
     {
-        // 上位管理者のみがアクセス可能
-        $this->authorize('high-manager');
-
         $fileType = $request->file_type;
         if (!in_array($fileType, ['csv', 'xlsx'])) {
             abort(400);
@@ -67,9 +61,6 @@ class ImportController extends BaseController
      */
     public function store(StoreRequest $request): RedirectResponse
     {
-        // 上位管理者のみがアクセス可能
-        $this->authorize('high-manager');
-
         if (!$request->upload_file instanceof UploadedFile) {
             throw ValidationException::withMessages(['import_file' => 'An unexpected error has occurred.']);
         }

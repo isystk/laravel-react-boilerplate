@@ -13,7 +13,9 @@
                 <a
                     href="{{ route('admin.staff.create') }}"
                     class="btn btn-primary m-auto"
-                    @cannot('high-manager') disabled="disabled" @endcan
+                    @if(!Auth::user()->role->isHighManager())
+                        disabled="disabled"
+                    @endif
                 >
                     {{ __('common.Regist') }}
                 </a>
@@ -21,7 +23,9 @@
                     href="{{ route('admin.staff.import') }}"
                     class="btn btn-primary position-absolute"
                     style="right: 20px"
-                    @cannot('high-manager') disabled="disabled" @endcan
+                    @if(!Auth::user()->role->isHighManager())
+                        disabled="disabled"
+                    @endif
                 >
                     {{ __('common.Import') }}
                 </a>
