@@ -13,10 +13,8 @@ services:
       - 6006:6006
     restart: always
     volumes:
-      - ./app/sites-enabled:/etc/apache2/sites-enabled
       - ./app/logs/apache:/var/log/apache2
       - ./app/logs/php:/var/log/php
-      - ./app/php.ini:/usr/local/etc/php/php.ini
       - ..:/var/www/html
     environment:
       - TZ=Asia/Tokyo

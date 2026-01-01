@@ -20,9 +20,22 @@ Resources:
       BucketName: !Sub "${ProjectName}-${Environment}-images-${AWS::AccountId}"
       PublicAccessBlockConfiguration:
         BlockPublicAcls: true
-        BlockPublicPolicy: true
+        BlockPublicPolicy: false
         IgnorePublicAcls: true
-        RestrictPublicBuckets: true
+        RestrictPublicBuckets: false
+
+  # バケットポリシーの作成（オブジェクトの読み取りを許可）
+  ImageBucketPolicy:
+    Type: "AWS::S3::BucketPolicy"
+    Properties:
+      Bucket: !Ref ImageBucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal: "*"
+            Action: "s3:GetObject"
+            Resource: !Sub "arn:aws:s3:::${ImageBucket}/*"
 
   # ロググループの作成
   ECSLogGroup:

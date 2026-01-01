@@ -56,11 +56,15 @@ class PhotoUpload extends BaseCommand
 
             if ($this->isRealRun) {
                 // s3に画像をアップロード
-                Storage::disk('s3')->putFileAs(
+                $result = Storage::disk('s3')->putFileAs(
                     PhotoType::Stock->type(),
                     Storage::path($file),
                     $fileName
                 );
+                if ($result === false) {
+                    $this->outputLog(["S3アップロードに失敗しました。file={$file}"]);
+                    continue;
+                }
             }
 
             $this->outputLog(["S3にアップロードしました。file={$file}"]);
