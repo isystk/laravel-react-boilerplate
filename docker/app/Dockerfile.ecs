@@ -39,8 +39,7 @@ RUN chown -R www-data:www-data storage bootstrap/cache
 RUN chmod -R 775 storage bootstrap/cache
 
 # 不要な node_modules を消してイメージを軽量化
-# もし本番環境用にするなら、以下を有効化
-#RUN rm -rf node_modules
+RUN rm -rf node_modules
 
 EXPOSE 80
 

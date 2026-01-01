@@ -150,8 +150,11 @@ aws-test: ## ビルドしたAWS用のDockerイメージをローカルで起動�
 		-e APP_URL="http://localhost:8080" \
 		$(APP_NAME):latest & \
 	sleep 5; \
+	echo "--- Preparing Playwright Browsers ---"; \
+	# ブラウザの実行に必要な依存ライブラリとChromiumをインストール
+	docker exec $(APP_NAME)-test npx playwright install --with-deps chromium; \
 	echo "--- Running Tests ---"; \
-	docker exec $(APP_NAME)-test npm run test; \
+	docker exec $(APP_NAME)-test npx vitest run; \
 	docker exec $(APP_NAME)-test ./vendor/bin/phpunit --display-phpunit-deprecations; \
 	echo "--- Tests Finished ---"; \
 	echo "Access: http://localhost:8080"; \
