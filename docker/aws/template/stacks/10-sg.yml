@@ -1,0 +1,34 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Parameters:
+  ProjectName: { Type: String }
+  Environment: { Type: String }
+  VPCId: { Type: String }
+
+Resources:
+  # Web用：直接HTTP(80)を許可
+  SGWeb:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      VpcId: !Ref VPCId
+      GroupDescription: "Allow HTTP"
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: "0.0.0.0/0"
+
+  # DB用：Webからのみ許可
+  SGMysql:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      VpcId: !Ref VPCId
+      GroupDescription: "Allow MySQL from Web"
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 3306
+          ToPort: 3306
+          SourceSecurityGroupId: !Ref SGWeb
+
+Outputs:
+  SGWeb: { Value: !Ref SGWeb }
+  SGMysql: { Value: !Ref SGMysql }

@@ -1,0 +1,51 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Parameters:
+  ProjectName: { Type: String }
+  Environment: { Type: String }
+  VPCId: { Type: String }
+  SGWeb: { Type: String }
+  SubnetId1: { Type: String }
+  SubnetId2: { Type: String }
+
+Resources:
+  # ALB本体
+  ALB:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Name: !Sub "${ProjectName}-${Environment}-alb"
+      Subnets:
+        - !Ref SubnetId1
+        - !Ref SubnetId2
+      SecurityGroups:
+        - !Ref SGWeb
+      Scheme: internet-facing
+
+  # ターゲットグループ（ECSのコンテナへ流す設定）
+  TargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Name: !Sub "${ProjectName}-${Environment}-tg"
+      VpcId: !Ref VPCId
+      Protocol: HTTP
+      Port: 80
+      TargetType: ip
+      HealthCheckPath: /
+      HealthCheckIntervalSeconds: 30
+
+  # リスナー（80番ポートで受け取った通信をターゲットグループへ）
+  Listener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      LoadBalancerArn: !Ref ALB
+      Protocol: HTTP
+      Port: 80
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref TargetGroup
+
+Outputs:
+  ALBDNSName:
+    Value: !GetAtt ALB.DNSName
+  TargetGroupArn:
+    Value: !Ref TargetGroup

@@ -1,0 +1,40 @@
+FROM php:8.3-apache
+
+# 必要なパッケージのインストール
+RUN apt-get update && apt-get install -y \
+    git unzip libzip-dev zlib1g-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
+    mariadb-client tzdata curl nodejs npm \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install zip pdo_mysql gd
+
+# Apache設定
+RUN a2enmod rewrite proxy proxy_http proxy_fcgi ssl
+# 既存の設定を消してから自分の設定をコピー
+RUN rm -f /etc/apache2/sites-enabled/*
+COPY ./docker/app/sites-enabled/ecs-default.conf /etc/apache2/sites-enabled/ecs-default.conf
+COPY ./docker/app/php.ini /usr/local/etc/php/php.ini
+
+WORKDIR /var/www/html
+COPY . .
+
+# Composer インストール
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+ENV COMPOSER_ALLOW_SUPERUSER=1
+RUN composer install --optimize-autoloader
+# もし本番環境用にするなら、以下を有効化
+#RUN composer install --no-dev --optimize-autoloader
+
+# フロントエンドビルド
+RUN npm install && npm run build
+
+# 権限設定
+RUN chown -R www-data:www-data storage bootstrap/cache
+RUN chmod -R 775 storage bootstrap/cache
+
+# 不要な node_modules を消してイメージを軽量化
+RUN rm -rf node_modules
+
+EXPOSE 80
+
+# entrypointを使わず、直接Apacheを起動
+CMD ["apache2-foreground"]

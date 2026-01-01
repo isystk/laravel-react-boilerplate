@@ -1,0 +1,71 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Simple Laravel ECS Environment
+
+Parameters:
+  ProjectName:
+    Type: String
+  Environment:
+    Type: String
+  TemplateURL:
+    Type: String
+  ImageTag:
+    Type: String
+    Default: latest
+
+Resources:
+  VPC:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub "${TemplateURL}stacks/00-vpc.yml"
+      Parameters:
+        ProjectName: !Ref ProjectName
+        Environment: !Ref Environment
+
+  SG:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub "${TemplateURL}stacks/10-sg.yml"
+      Parameters:
+        ProjectName: !Ref ProjectName
+        Environment: !Ref Environment
+        VPCId: !GetAtt VPC.Outputs.VPC
+
+  ALB:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub "${TemplateURL}stacks/20-alb.yml"
+      Parameters:
+        ProjectName: !Ref ProjectName
+        Environment: !Ref Environment
+        VPCId: !GetAtt VPC.Outputs.VPC
+        SGWeb: !GetAtt SG.Outputs.SGWeb
+        SubnetId1: !GetAtt VPC.Outputs.PublicSubnet1
+        SubnetId2: !GetAtt VPC.Outputs.PublicSubnet2
+
+  DB:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub "${TemplateURL}stacks/30-db.yml"
+      Parameters:
+        ProjectName: !Ref ProjectName
+        Environment: !Ref Environment
+        VPCId: !GetAtt VPC.Outputs.VPC
+        SGMysql: !GetAtt SG.Outputs.SGMysql
+        SubnetId1: !GetAtt VPC.Outputs.PublicSubnet1
+        SubnetId2: !GetAtt VPC.Outputs.PublicSubnet2
+
+  ECS:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub "${TemplateURL}stacks/40-ecs.yml"
+      Parameters:
+        ProjectName: !Ref ProjectName
+        Environment: !Ref Environment
+        VPCId: !GetAtt VPC.Outputs.VPC
+        SGWeb: !GetAtt SG.Outputs.SGWeb
+        SubnetId1: !GetAtt VPC.Outputs.PublicSubnet1
+        SubnetId2: !GetAtt VPC.Outputs.PublicSubnet2
+        TargetGroupArn: !GetAtt ALB.Outputs.TargetGroupArn
+        ALBDNSName: !GetAtt ALB.Outputs.ALBDNSName
+        DBHost: !GetAtt DB.Outputs.DBEndpoint
+        ImageTag: !Ref ImageTag
