@@ -13,10 +13,8 @@ services:
       - 6006:6006
     restart: always
     volumes:
-      - ./app/sites-enabled:/etc/apache2/sites-enabled
       - ./app/logs/apache:/var/log/apache2
       - ./app/logs/php:/var/log/php
-      - ./app/php.ini:/usr/local/etc/php/php.ini
       - ..:/var/www/html
     environment:
       - TZ=Asia/Tokyo
@@ -69,6 +67,21 @@ services:
     command: [ "--compat", "server", "/data", "--console-address", ":9001" ]
     volumes:
       - laraec-s3-store:/data
+
+  aws:
+    container_name: laraec-aws
+    build:
+      context: ./aws
+      dockerfile: Dockerfile
+    tty: true
+    environment:
+      AWS_DEFAULT_REGION: ap-northeast-1
+      AWS_DEFAULT_OUTPUT: json
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+    volumes:
+      - ..:/aws
+    working_dir: /aws
 
 volumes:
   laraec-db-store:

@@ -187,6 +187,12 @@ $ make test                      # Lint, Static Analysis, Testing を一括実�
 
 ---
 
+## 🚀 本番環境へのデプロイ
+
+[WS ECS (Fargate) デプロイガイド](docker/aws/README.md) をご覧ください。
+
+----
+
 ## 🎧 外部ツール・サーバー
 
 Docker起動後に以下のURLで利用可能です。

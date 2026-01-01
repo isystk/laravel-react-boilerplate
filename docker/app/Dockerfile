@@ -25,8 +25,12 @@ RUN apt-get update && apt-get install -y \
 ENV TZ=Asia/Tokyo
 RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
-# Apache モジュール有効化
-RUN a2enmod rewrite ssl proxy proxy_fcgi proxy_http
+# Apache設定
+RUN a2enmod rewrite proxy proxy_http proxy_fcgi ssl
+# 既存の設定を消してから自分の設定をコピー
+RUN rm -f /etc/apache2/sites-enabled/*
+COPY ./sites-enabled/local-default.conf /etc/apache2/sites-enabled/local-default.conf
+COPY ./php.ini /usr/local/etc/php/php.ini
 
 # 自己署名証明書を生成
 RUN mkdir -p /etc/apache2/ssl && \

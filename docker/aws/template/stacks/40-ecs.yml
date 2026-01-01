@@ -1,0 +1,173 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Parameters:
+  ProjectName: { Type: String }
+  Environment: { Type: String }
+  VPCId: { Type: String }
+  SGWeb: { Type: String }
+  SubnetId1: { Type: String }
+  SubnetId2: { Type: String }
+  TargetGroupArn: { Type: String }
+  ALBDNSName: { Type: String }
+  DBHost: { Type: String }
+  ImageTag: { Type: String }
+
+Resources:
+  # S3バケットの作成
+  ImageBucket:
+    Type: "AWS::S3::Bucket"
+    Properties:
+      # バケット名は世界で一意である必要があるため、アカウントIDを含めます
+      BucketName: !Sub "${ProjectName}-${Environment}-images-${AWS::AccountId}"
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: false
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: false
+
+  # バケットポリシーの作成（オブジェクトの読み取りを許可）
+  ImageBucketPolicy:
+    Type: "AWS::S3::BucketPolicy"
+    Properties:
+      Bucket: !Ref ImageBucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal: "*"
+            Action: "s3:GetObject"
+            Resource: !Sub "arn:aws:s3:::${ImageBucket}/*"
+
+  # ロググループの作成
+  ECSLogGroup:
+    Type: "AWS::Logs::LogGroup"
+    Properties:
+      LogGroupName: !Sub "/ecs/${ProjectName}-${Environment}-log"
+      RetentionInDays: 7
+
+  # 実行ロール
+  ECSTaskExecutionRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service: "ecs-tasks.amazonaws.com"
+            Action: "sts:AssumeRole"
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+
+  # タスクロール
+  ECSTaskRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service: "ecs-tasks.amazonaws.com"
+            Action: "sts:AssumeRole"
+      Policies:
+        - PolicyName: !Sub "${ProjectName}-${Environment}-task-policy"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: "Allow"
+                Action:
+                  - "ssmmessages:CreateControlChannel"
+                  - "ssmmessages:CreateDataChannel"
+                  - "ssmmessages:OpenControlChannel"
+                  - "ssmmessages:OpenDataChannel"
+                Resource: "*"
+              # --- S3操作権限を追加 ---
+              - Effect: "Allow"
+                Action:
+                  - "s3:PutObject"
+                  - "s3:GetObject"
+                  - "s3:DeleteObject"
+                  - "s3:ListBucket"
+                Resource:
+                  - !GetAtt ImageBucket.Arn
+                  - !Sub "${ImageBucket.Arn}/*"
+
+  ECSCluster:
+    Type: "AWS::ECS::Cluster"
+    Properties:
+      ClusterName: !Sub "${ProjectName}-${Environment}-cluster"
+
+  ECSTaskDefinition:
+    Type: "AWS::ECS::TaskDefinition"
+    Properties:
+      Family: !Sub "${ProjectName}-${Environment}-task"
+      Cpu: "256"
+      Memory: "512"
+      NetworkMode: "awsvpc"
+      RequiresCompatibilities:
+        - "FARGATE"
+      ExecutionRoleArn: !GetAtt ECSTaskExecutionRole.Arn
+      TaskRoleArn: !GetAtt ECSTaskRole.Arn
+      ContainerDefinitions:
+        - Name: "app"
+          Image: !Sub "${AWS::AccountId}.dkr.ecr.ap-northeast-1.amazonaws.com/laraec-app:${ImageTag}"
+          PortMappings:
+            - ContainerPort: 80
+          # ログ出力の設定を追加
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref ECSLogGroup
+              awslogs-region: !Ref "AWS::Region"
+              awslogs-stream-prefix: ecs
+          Environment:
+            - Name: "APP_URL"
+              Value: !Sub "http://${ALBDNSName}"
+            - Name: "DB_HOST"
+              Value: !Ref DBHost
+            - Name: "DB_DATABASE"
+              Value: "laraec"
+            - Name: "DB_USERNAME"
+              Value: "admin"
+            - Name: "DB_PASSWORD"
+              Value: "password123"
+            - Name: "AWS_BUCKET"
+              Value: !Ref ImageBucket
+            - Name: "AWS_DEFAULT_REGION"
+              Value: !Ref "AWS::Region"
+            # S3を利用する場合、AWS_ENDPOINT は空（未指定）
+            - Name: "AWS_ENDPOINT"
+              Value: ""
+            - Name: "AWS_USE_PATH_STYLE_ENDPOINT"
+              Value: "false"
+
+  ECSService:
+    Type: "AWS::ECS::Service"
+    Properties:
+      EnableExecuteCommand: true
+      Cluster: !Ref ECSCluster
+      ServiceName: !Sub "${ProjectName}-${Environment}-service"
+      TaskDefinition: !Ref ECSTaskDefinition
+      LaunchType: "FARGATE"
+      DesiredCount: 1
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: "ENABLED"
+          SecurityGroups:
+            - !Ref SGWeb
+          Subnets:
+            - !Ref SubnetId1
+            - !Ref SubnetId2
+      LoadBalancers:
+        - ContainerName: app
+          ContainerPort: 80
+          TargetGroupArn: !Ref TargetGroupArn
+
+Outputs:
+  ECSClusterName:
+    Value: !Ref ECSCluster
+  ECSServiceName:
+    Value: !GetAtt ECSService.Name
+  # 作成されたバケット名を確認用に出力
+  S3BucketName:
+    Value: !Ref ImageBucket
