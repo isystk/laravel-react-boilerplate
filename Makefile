@@ -7,7 +7,7 @@ DOCKER_HOME := $(BASE_DIR)/docker
 COMPOSE_FILE := $(DOCKER_HOME)/docker-compose.yml
 ENV_FILE := $(BASE_DIR)/.env
 DOCKER_CMD := docker compose -f $(COMPOSE_FILE) --env-file $(ENV_FILE)
-TOOLS_CMD := ~/dotfiles/tools/run.sh
+RUN_CMD := ~/dotfiles/scripts/run.sh
 AWS_CLI_CMD := $(DOCKER_CMD) exec aws
 # AWS関連設定
 AWS_REGION     := ap-northeast-1
@@ -207,9 +207,9 @@ aws-destroy: ## AWS上のスタックを削除します
 
 .PHONY: generate-pr
 generate-pr: ## PR用の説明文を生成します。
-	$(TOOLS_CMD) gemini generate-pr
+	$(RUN_CMD) generate-pr
 
 .PHONY: review
 review: ## 変更内容をAIがレビューします。
-	$(TOOLS_CMD) gemini review
+	$(RUN_CMD) review
 
