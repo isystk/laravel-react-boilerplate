@@ -142,17 +142,21 @@ aws-build: ## AWS用のDockerイメージをビルド、タグ付け、ECRへプ
 	@echo "Deploy complete: $(IMAGE_URI)"
 
 .PHONY: aws-test
-aws-test: ## ビルドしたAWS用のDockerイメージをローカルで起動確認します
+aws-test: ## ビルドしたAWS用のDockerイメージをローカルで起動確認とテストを実行します
 	@echo "Starting local test for production image..."
-	@echo "Access: http://localhost:8080"
 	docker run --rm -p 8080:80 \
 		--name $(APP_NAME)-test \
 		--network docker_default \
-		-e APP_KEY="base64:$$(openssl rand -base64 32)" \
-		-e APP_ENV=local \
-		-e APP_DEBUG=true \
 		-e APP_URL="http://localhost:8080" \
-		$(APP_NAME):latest
+		$(APP_NAME):latest & \
+	sleep 5; \
+	echo "--- Running Tests ---"; \
+	docker exec $(APP_NAME)-test npm run test; \
+	docker exec $(APP_NAME)-test ./vendor/bin/phpunit --display-phpunit-deprecations; \
+	echo "--- Tests Finished ---"; \
+	echo "Access: http://localhost:8080"; \
+	echo "The container is still running. Press Ctrl+C to stop."; \
+	wait
 
 .PHONY: aws-template-sync
 aws-template-sync: ## S3バケットにCloudFormationのテンプレートを同期します

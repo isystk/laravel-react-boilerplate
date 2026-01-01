@@ -11,6 +11,8 @@ RUN apt-get update && apt-get install -y \
     curl \
     jq \
     unzip \
+    less \
+    vim \
     && rm -rf /var/lib/apt/lists/*
 
 # session-manager-plugin のインストール

@@ -1,123 +1,118 @@
+
 # AWS ECS (Fargate) デプロイガイド
 
-LaravelアプリケーションをDocker化し、AWSのECS（Fargate）およびAurora MySQL環境へデプロイするための手順書です。
+LaravelアプリケーションをDocker化し、AWS（ECS Fargate / Aurora MySQL）環境へデプロイ・運用するための手順書です。
 
 ## 1. 前提条件
 
-デプロイを開始する前に、以下の準備が完了していることを確認してください。
-
-* **AWS CLI**: 適切なIAM権限を持つアクセスキーが設定されていること
-* **Docker**: イメージのビルドおよびローカルテストに使用
-* **Make**: コマンドの簡略化に使用
-* **環境変数**: `.env` ファイルに必要な設定が記述されていること
+* **AWS 認証情報**: `.env` ファイルに適切な権限を持つアクセスキーが設定されていること
+* **Docker**: `docker` 及び `docker-compose` がインストールされていること
+* **Make**: コマンド実行の簡略化に使用
 
 ---
 
 ## 2. デプロイ・フロー
 
-デプロイは以下の4つのフェーズで行います。
-
 ### Phase 1: Dockerイメージの準備
 
-イメージを格納するリポジトリ（ECR）を作成し、ビルドしたイメージをプッシュします。
+ECRリポジトリを作成し、本番用イメージをプッシュします。
 
 ```bash
-# 1. AWS CLI操作用コンテナの起動
+# 1. ECRリポジトリの作成（初回のみ）
 make awscli
-
-# 2. ECRリポジトリの作成
+# (コンテナ内)
 aws ecr create-repository --repository-name laraec-app --region ap-northeast-1
+exit
 
-# 3. 本番イメージのビルドとECRへのプッシュ
+# 2. 本番イメージのビルドとプッシュ
 make aws-build
 
-```
-
-### Phase 2: ローカルでの最終テスト
-
-本番用イメージを使い、ローカル環境のDBと正常に通信できるか確認します。
-
-```bash
-# 本番用イメージをローカルで起動
+# 3. 本番イメージの動作テスト（ローカル）
+# ※ コンテナ内のアプリケーションは、ローカルの docker-compose で起動したネットワーク上で動作します。
+# ※ 本番用イメージで正しく Apache が起動し、DB接続エラーが出ないかを確認するための工程です。
 make aws-test
 
-# 必要に応じてDBマイグレーションを実行
-make mysql-migrate
-
 ```
 
-### Phase 3: AWSインフラの構築
+### Phase 2: インフラ構築 (CloudFormation)
 
-CloudFormationを使用して、VPC、Security Group、Aurora、ECSを構築します。
+VPC、ALB、Aurora、ECSの一連のリソースを構築します。
 
 ```bash
-# CloudFormationによる一括デプロイ
+# スタックの作成・展開
 make aws-deploy
 
 ```
 
-## Phase 4: アクセス確認
+### Phase 3: データベースの初期化
 
-ALBのパブリックIPを取得し、ブラウザでアクセスします。
-
-```bash
-ALB_NAME="laraec-app-dev-alb"; \
-ALB_URL=$(aws elbv2 describe-load-balancers \
-  --names $ALB_NAME \
-  --query "LoadBalancers[0].DNSName" \
-  --output text); \
-echo "🌐 Laravel App URL: http://$ALB_URL"
-```
-
----
-
-### Phase 5: データベースの初期化
-
-ECSコンテナからAurora MySQLに対してマイグレーションを実行します。
+ECS Execを使用して、AWS上で稼働しているコンテナ内でマイグレーション等を実行します。
 
 ```bash
-# 1. コンテナへのログイン (ECS Exec)
+# 1. AWS操作用コンテナへ
+make awscli
+
+# 2. (コンテナ内) 実行中のタスクIDを取得してECSコンテナに潜入
 CLUSTER_NAME="laraec-app-dev-cluster"; \
 SERVICE_NAME="laraec-app-dev-service"; \
 TASK_ID=$(aws ecs list-tasks --cluster $CLUSTER_NAME --service-name $SERVICE_NAME --query 'taskArns[0]' --output text | cut -d'/' -f3); \
-echo "🚀 Entering container ($TASK_ID)..."; \
-aws ecs execute-command \
-  --cluster $CLUSTER_NAME \
-  --task $TASK_ID \
-  --container app \
-  --interactive \
-  --command "/bin/bash"
+aws ecs execute-command --cluster $CLUSTER_NAME --task $TASK_ID --container app --interactive --command "/bin/bash"
 
-# 2. コンテナ内でマイグレーションを実行
+# 3. (ECSコンテナ内) マイグレーションとデータ投入
 php artisan migrate --force
+php artisan db:seed --force
 
 ```
 
 ---
 
-### ECSサービスの更新
+## 3. アプリケーションの更新
 
-イメージを格納するリポジトリ（ECR）を作成し、ビルドしたイメージをプッシュします。
+コード修正を行い、ECRへ最新イメージをプッシュした後は、以下の手順でサービスを更新します。
 
 ```bash
-# 1. AWS CLI操作用コンテナの起動
+# 1. 最新イメージのビルドとプッシュ
+make aws-build
+
+# 2. AWS操作用コンテナへ
 make awscli
 
-# クラスター名とサービス名を指定して実行
+# 3. (コンテナ内) サービスの強制更新と待機
 aws ecs update-service \
   --cluster laraec-app-dev-cluster \
   --service laraec-app-dev-service \
   --force-new-deployment
+
+aws ecs wait services-stable \
+  --cluster laraec-app-dev-cluster \
+  --services laraec-app-dev-service
+
 ```
 
 ---
 
-## 3. リソースの削除
+---
 
-検証終了後、作成した全リソースを削除する場合は以下のコマンドを実行します。
+## 4. コスト目安 (月額)
+
+最小構成での推定コストです（1ドル=150円換算）。
+
+| サービス | スペック | 月額目安 | 備考 |
+| --- | --- | --- | --- |
+| **ECS Fargate** | 0.25 vCPU / 0.5 GB | 約$15 | 1タスク常時起動 |
+| **Aurora MySQL** | db.t3.small | 約$50 | 最小クラス |
+| **NAT Gateway** | 1基 | 約$33 | **固定費の主要因** |
+| **その他** | Logs, Transfer | 約$2 | 利用量による |
+| **合計** |  | **約$100 (約15,000円)** |  |
+
+---
+
+## 5. リソースの削除
+
+検証終了後は、余計な課金を防ぐためにスタックを削除してください。
 
 > [!CAUTION]
-> 実行するとRDS（Aurora）内のデータもすべて削除されます。
+> DB内のデータもすべて削除されます。
 
 ```bash
 make aws-destroy

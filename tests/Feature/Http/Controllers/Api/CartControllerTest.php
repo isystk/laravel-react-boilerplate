@@ -48,8 +48,8 @@ class CartControllerTest extends BaseTest
             'result' => true,
             'message' => '',
             'stocks' => [
-                ['id' => $cart1->id, 'stockId' => $stock1->id, 'name' => 'stock1', 'imageUrl' => 'http://localhost/uploads/stock/aaa.jpg', 'price' => 111],
-                ['id' => $cart2->id, 'stockId' => $stock2->id, 'name' => 'stock2', 'imageUrl' => 'http://localhost/uploads/stock/bbb.jpg', 'price' => 222],
+                ['id' => $cart1->id, 'stockId' => $stock1->id, 'name' => 'stock1', 'imageUrl' => config('app.url') . '/uploads/stock/aaa.jpg', 'price' => 111],
+                ['id' => $cart2->id, 'stockId' => $stock2->id, 'name' => 'stock2', 'imageUrl' => config('app.url') . '/uploads/stock/bbb.jpg', 'price' => 222],
             ],
             'email' => $user1->email,
             'sum' => 333,
