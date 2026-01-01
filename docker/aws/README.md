@@ -62,6 +62,18 @@ aws ecs execute-command --cluster $CLUSTER_NAME --task $TASK_ID --container app 
 php artisan migrate --force
 php artisan db:seed --force
 
+# 4. (ECSコンテナ内) 動作確認用の画像をS3にアップロード
+php artisan photo_upload --run
+exit
+
+# 4. (コンテナ内) ALBのパブリックIPを取得し、ブラウザでアクセスします。
+ALB_NAME="laraec-app-dev-alb"; \
+ALB_URL=$(aws elbv2 describe-load-balancers \
+  --names $ALB_NAME \
+  --query "LoadBalancers[0].DNSName" \
+  --output text); \
+echo "🌐 Laravel App URL: http://$ALB_URL"
+
 ```
 
 ---

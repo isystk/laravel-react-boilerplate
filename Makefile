@@ -193,6 +193,12 @@ aws-deploy: ## アプリケーションをAWS ECSにデプロイします
 aws-destroy: ## AWS上のスタックを削除します
 	@echo "!!! WARNING !!! This will delete the entire stack: $(APP_NAME)-stack"
 	@echo -n "Are you sure you want to proceed? [y/N]: " && read ans && [ $${ans:-N} = y ]
+	@# S3バケット名を取得
+	@BUCKET_NAME=$$(aws s3 ls | awk '{print $$3}' | grep "^$(APP_NAME)-.*-images-" | head -n 1); \
+	if [ -n "$$BUCKET_NAME" ]; then \
+		echo "🧹 Emptying S3 bucket: $$BUCKET_NAME..."; \
+		aws s3 rm s3://$$BUCKET_NAME --recursive; \
+	fi
 	@echo "Deleting CloudFormation stack: $(APP_NAME)-stack..."
 	@$(AWS_CLI_CMD) aws cloudformation delete-stack --stack-name $(APP_NAME)-stack
 	@echo "Deletion request submitted. Waiting for stack to be deleted..."

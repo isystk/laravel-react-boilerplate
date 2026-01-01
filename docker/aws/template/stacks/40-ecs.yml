@@ -12,6 +12,18 @@ Parameters:
   ImageTag: { Type: String }
 
 Resources:
+  # S3バケットの作成
+  ImageBucket:
+    Type: "AWS::S3::Bucket"
+    Properties:
+      # バケット名は世界で一意である必要があるため、アカウントIDを含めます
+      BucketName: !Sub "${ProjectName}-${Environment}-images-${AWS::AccountId}"
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
   # ロググループの作成
   ECSLogGroup:
     Type: "AWS::Logs::LogGroup"
@@ -56,6 +68,16 @@ Resources:
                   - "ssmmessages:OpenControlChannel"
                   - "ssmmessages:OpenDataChannel"
                 Resource: "*"
+              # --- S3操作権限を追加 ---
+              - Effect: "Allow"
+                Action:
+                  - "s3:PutObject"
+                  - "s3:GetObject"
+                  - "s3:DeleteObject"
+                  - "s3:ListBucket"
+                Resource:
+                  - !GetAtt ImageBucket.Arn
+                  - !Sub "${ImageBucket.Arn}/*"
 
   ECSCluster:
     Type: "AWS::ECS::Cluster"
@@ -96,8 +118,15 @@ Resources:
               Value: "admin"
             - Name: "DB_PASSWORD"
               Value: "password123"
-            - Name: "SESSION_DRIVER"
-              Value: "file"
+            - Name: "AWS_BUCKET"
+              Value: !Ref ImageBucket
+            - Name: "AWS_DEFAULT_REGION"
+              Value: !Ref "AWS::Region"
+            # S3を利用する場合、AWS_ENDPOINT は空（未指定）
+            - Name: "AWS_ENDPOINT"
+              Value: ""
+            - Name: "AWS_USE_PATH_STYLE_ENDPOINT"
+              Value: "false"
 
   ECSService:
     Type: "AWS::ECS::Service"
@@ -124,6 +153,8 @@ Resources:
 Outputs:
   ECSClusterName:
     Value: !Ref ECSCluster
-
   ECSServiceName:
     Value: !GetAtt ECSService.Name
+  # 作成されたバケット名を確認用に出力
+  S3BucketName:
+    Value: !Ref ImageBucket
