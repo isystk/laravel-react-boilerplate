@@ -203,12 +203,3 @@ aws-destroy: ## AWS上のスタックを削除します
 	@echo "Deletion request submitted. Waiting for stack to be deleted..."
 	@$(AWS_CLI_CMD) aws cloudformation wait stack-delete-complete --stack-name $(APP_NAME)-stack
 	@echo "Stack '$(APP_NAME)-stack' has been successfully deleted."
-
-.PHONY: generate-pr
-generate-pr: ## PR用の説明文を生成します。
-	run generate-pr
-
-.PHONY: review
-review: ## 変更内容をAIがレビューします。
-	run review
-
