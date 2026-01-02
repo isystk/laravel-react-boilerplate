@@ -7,7 +7,6 @@ DOCKER_HOME := $(BASE_DIR)/docker
 COMPOSE_FILE := $(DOCKER_HOME)/docker-compose.yml
 ENV_FILE := $(BASE_DIR)/.env
 DOCKER_CMD := docker compose -f $(COMPOSE_FILE) --env-file $(ENV_FILE)
-TOOLS_CMD := ~/dotfiles/tools/run.sh
 AWS_CLI_CMD := $(DOCKER_CMD) exec aws
 # AWS関連設定
 AWS_REGION     := ap-northeast-1
@@ -204,12 +203,3 @@ aws-destroy: ## AWS上のスタックを削除します
 	@echo "Deletion request submitted. Waiting for stack to be deleted..."
 	@$(AWS_CLI_CMD) aws cloudformation wait stack-delete-complete --stack-name $(APP_NAME)-stack
 	@echo "Stack '$(APP_NAME)-stack' has been successfully deleted."
-
-.PHONY: generate-pr
-generate-pr: ## PR用の説明文を生成します。
-	$(TOOLS_CMD) gemini generate-pr
-
-.PHONY: review
-review: ## 変更内容をAIがレビューします。
-	$(TOOLS_CMD) gemini review
-
