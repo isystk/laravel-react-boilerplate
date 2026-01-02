@@ -182,14 +182,14 @@ $ make test                      # Lint, Static Analysis, Testing を一括実�
 
 ### 3. ブラウザでアクセス
 
-* **フロント画面**: [https://localhost/](https://localhost/)
-* **管理画面**: [https://localhost/admin/](https://localhost/admin/)
+* **フロント画面**: [http://localhost/](http://localhost/)
+* **管理画面**: [http://localhost/admin/](http://localhost/admin/)
 
 ---
 
 ## 🚀 本番環境へのデプロイ
 
-[WS ECS (Fargate) デプロイガイド](docker/aws/README.md) をご覧ください。
+[AWS ECS (Fargate) デプロイガイド](docker/aws/README.md) をご覧ください。
 
 ----
 
