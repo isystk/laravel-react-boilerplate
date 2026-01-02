@@ -61,28 +61,40 @@ logs: ## Dockerコンテナのログを表示します。
 tinker: ## tinkerを実行します。
 	$(DOCKER_CMD) exec app php artisan tinker
 
-.PHONY: mysql-login
-mysql-login: ## mysqlにログインします。
+.PHONY: db-login
+db-login: ## DBにログインします。
 	$(DOCKER_CMD) exec mysql bash -c 'mysql -u $$MYSQL_USER -p$$MYSQL_PASSWORD $$MYSQL_DATABASE'
 
-.PHONY: mysql-migrate
-mysql-migrate: ## マイグレーションを実行します。
+.PHONY: db-migrate
+db-migrate: ## マイグレーションを実行します。
 	$(DOCKER_CMD) exec app php artisan migrate
 
-.PHONY: mysql-export
-mysql-export: ## mysqlのdumpファイルをエクスポートします。
+.PHONY: db-export
+db-export: ## DBのdumpファイルをエクスポートします。
+	@mkdir -p dump
 	@TS=$$(date +%Y%m%d_%H%M%S) && \
-	FILE=local_dump_$$TS.sql && \
+	FILE=dump/local_dump_$$TS.sql && \
 	$(DOCKER_CMD) exec mysql bash -c 'mysqldump --no-tablespaces -u $$MYSQL_USER -p$$MYSQL_PASSWORD $$MYSQL_DATABASE' > $$FILE && \
 	echo "DBダンプを $$FILE に出力しました"
 
-.PHONY: mysql-import
-mysql-import: ## mysqlにdumpファイルをインポートします。
-	@if [ -z "$(DUMPFILE)" ]; then \
-		echo "使い方: make mysql-import DUMPFILE=ファイル名.sql"; \
+.PHONY: db-import
+db-import: ## DBにdumpファイルをインポートします。
+	@echo "インポートするファイルを選択してください:"
+	@FILES=$$(ls dump/*.sql 2>/dev/null); \
+	if [ -z "$$FILES" ]; then \
+		echo "dump/ ディレクトリに .sql ファイルが見つかりません。"; \
 		exit 1; \
-	fi
-	$(DOCKER_CMD) exec -T mysql bash -c 'mysql -u $$MYSQL_USER -p$$MYSQL_PASSWORD $$MYSQL_DATABASE' < $(DUMPFILE)
+	fi; \
+	select FILE in $$FILES; do \
+		if [ -n "$$FILE" ]; then \
+			echo "$$FILE をインポートしています..."; \
+			$(DOCKER_CMD) exec -T mysql bash -c 'mysql -u $$MYSQL_USER -p$$MYSQL_PASSWORD $$MYSQL_DATABASE' < $$FILE; \
+			echo "インポートが完了しました。"; \
+			break; \
+		else \
+			echo "無効な選択です。番号を入力してください。"; \
+		fi; \
+	done
 
 .PHONY: app-login
 app-login: ## appコンテナに入ります。
