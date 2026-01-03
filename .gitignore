@@ -30,6 +30,7 @@ yarn-error.log
 # mysql
 docker/mysql/logs
 !docker/mysql/logs/.gitkeep
+dump/*
 
 docker/apache/logs
 !docker/apache/logs/.gitkeep
