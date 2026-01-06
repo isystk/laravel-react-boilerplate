@@ -1,4 +1,5 @@
 SHELL := /bin/bash
+UTILS_SH := /root/dotfiles/scripts/utils.sh
 .SHELLFLAGS := -eu -o pipefail -c
 
 # 変数定義
@@ -6,6 +7,7 @@ BASE_DIR := $(CURDIR)
 DOCKER_HOME := $(BASE_DIR)/docker
 COMPOSE_FILE := $(DOCKER_HOME)/docker-compose.yml
 ENV_FILE := $(BASE_DIR)/.env
+DUMP_DIR := $(BASE_DIR)/dump
 DOCKER_CMD := docker compose -f $(COMPOSE_FILE) --env-file $(ENV_FILE)
 AWS_CLI_CMD := $(DOCKER_CMD) exec aws
 # AWS関連設定
@@ -47,12 +49,12 @@ init: ## 初期化します。
 	rm -rf "$(BASE_DIR)/vendor"
 	rm -rf "$(BASE_DIR)/node_modules"
 
-.PHONY: start
-start: ## 起動します。
+.PHONY: up
+up: ## 起動します。
 	$(DOCKER_CMD) up -d --wait
 
-.PHONY: stop
-stop: ## 停止します。
+.PHONY: down
+down: ## 停止します。
 	@pushd "$(DOCKER_HOME)" >/dev/null; docker compose down; popd >/dev/null
 
 .PHONY: restart
@@ -77,22 +79,21 @@ db-export: ## DBのdumpファイルをエクスポートします。
 
 .PHONY: db-import
 db-import: ## DBにdumpファイルをインポートします。
-	@echo "インポートするファイルを選択してください:"
-	@FILES=$$(ls dump/*.sql 2>/dev/null); \
-	if [ -z "$$FILES" ]; then \
-		echo "dump/ ディレクトリに .sql ファイルが見つかりません。"; \
+	@echo "インポートファイルの準備中..."
+	@FILES_LIST=$$(ls $(DUMP_DIR)/*.sql 2>/dev/null); \
+	if [ -z "$$FILES_LIST" ]; then \
+		echo "❌ $(DUMP_DIR) ディレクトリに .sql ファイルが見つかりません。"; \
 		exit 1; \
 	fi; \
-	select FILE in $$FILES; do \
-		if [ -n "$$FILE" ]; then \
-			echo "$$FILE をインポートしています..."; \
-			$(DOCKER_CMD) exec -T mysql bash -c 'mysql -u $$MYSQL_USER -p$$MYSQL_PASSWORD $$MYSQL_DATABASE' < $$FILE; \
-			echo "インポートが完了しました。"; \
-			break; \
-		else \
-			echo "無効な選択です。番号を入力してください。"; \
-		fi; \
-	done
+	source $(UTILS_SH); \
+	SELECTED=$$(select_from_list "$$FILES_LIST" "📂 インポートするファイルを選択してください"); \
+	if [ -z "$$SELECTED" ]; then \
+		echo "🚫 キャンセルされました。"; \
+		exit 1; \
+	fi; \
+	echo "🚀 $$SELECTED をインポートしています..."; \
+	$(DOCKER_CMD) exec -T mysql bash -c 'mysql -u $$MYSQL_USER -p$$MYSQL_PASSWORD $$MYSQL_DATABASE' < "$$SELECTED"; \
+	echo "✅ インポートが完了しました。"
 
 .PHONY: app-login
 app-login: ## appコンテナに入ります。

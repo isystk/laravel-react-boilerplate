@@ -28,7 +28,7 @@ jobs:
 
       - name: Dockerの起動
         run: |
-          make start
+          make up
 
       - name: 60s 待機
         run: sleep 60
