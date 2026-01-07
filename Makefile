@@ -95,8 +95,8 @@ db-import: ## DBにdumpファイルをインポートします。
 	$(DOCKER_CMD) exec -T mysql bash -c 'mysql -u $$MYSQL_USER -p$$MYSQL_PASSWORD $$MYSQL_DATABASE' < "$$SELECTED"; \
 	echo "✅ インポートが完了しました。"
 
-.PHONY: app-login
-app-login: ## appコンテナに入ります。
+.PHONY: app
+app: ## appコンテナに入ります。
 	$(DOCKER_CMD) exec app /bin/bash
 
 .PHONY: npm-run-dev
@@ -108,8 +108,8 @@ npm-run-build: ## appコンテナでビルドを実行します。
 	$(DOCKER_CMD) exec app npm run build; \
 	$(DOCKER_CMD) exec app npm run build-storybook;
 
-.PHONY: prettier
-prettier: ## コードフォーマットを実行します。
+.PHONY: format
+format: ## コードフォーマットを実行します。
 	$(DOCKER_CMD) exec app npm run prettier; \
 	$(DOCKER_CMD) exec app ./vendor/bin/pint;
 
@@ -118,6 +118,65 @@ check: ## コードチェックを実行します。
 	$(DOCKER_CMD) exec app npm run lint; \
 	$(DOCKER_CMD) exec app npm run ts-check; \
 	$(DOCKER_CMD) exec app ./vendor/bin/phpstan analyse --memory-limit=1G;
+
+.PHONY: check-staged
+check-staged: ## ステージング済みのファイルをチェック
+	@$(MAKE) _run-check-flow DIFF_MODE="staged" FILTER_MODE="d"
+
+# 共通実行フロー
+_run-check-flow:
+	@SELECTED_BRANCH=""; \
+	if [ "$(DIFF_MODE)" = "remote" ]; then \
+		git fetch --prune > /dev/null; \
+		BRANCH_LIST=$$(git branch -r | sed 's/^[[:space:]]*origin\///' | grep -v "HEAD ->"); \
+		source $(UTILS_SH); \
+		SELECTED_BRANCH=$$(select_from_list "$$BRANCH_LIST" "🌿 比較対象のリモートブランチを選択してください"); \
+		if [ -z "$$SELECTED_BRANCH" ]; then echo "🚫 キャンセルされました。"; exit 1; fi; \
+		DIFF_FILES=$$(git diff --name-only --diff-filter=$(FILTER_MODE) origin/$$SELECTED_BRANCH...HEAD -- '*.php'); \
+	else \
+		DIFF_FILES=$$(git diff --name-only --cached --diff-filter=$(FILTER_MODE) -- '*.php'); \
+	fi; \
+	\
+	if [ -z "$$DIFF_FILES" ]; then \
+		echo "✨ 対象ファイルは見つかりませんでした。(Mode: $(DIFF_MODE) / Filter: $(FILTER_MODE))"; \
+		exit 0; \
+	fi; \
+	\
+	PHP_FILES=$$(echo "$$DIFF_FILES" | grep -v '\.blade\.php$$' | xargs -r ls -d 2>/dev/null | tr '\n' ' ' || true); \
+	BLADE_FILES=$$(echo "$$DIFF_FILES" | grep '\.blade\.php$$' | xargs -r ls -d 2>/dev/null | tr '\n' ' ' || true); \
+	CLEAN_PHP_FILES=$$(echo $$PHP_FILES | xargs); \
+	CLEAN_BLADE_FILES=$$(echo $$BLADE_FILES | xargs); \
+	\
+	if [ -n "$$CLEAN_PHP_FILES" ]; then \
+		echo "📝 PHPファイル実行中 (Rector, Pint):"; \
+		$(DOCKER_CMD) exec app ./vendor/bin/rector process $$CLEAN_PHP_FILES; \
+		$(DOCKER_CMD) exec app ./vendor/bin/pint $$CLEAN_PHP_FILES; \
+	fi; \
+#	if [ -n "$$CLEAN_BLADE_FILES" ]; then \
+#		echo "🎨 Bladeファイル実行中 (blade-formatter):"; \
+#		npx -y blade-formatter --write $$CLEAN_BLADE_FILES; \
+#	fi; \
+	if [ -n "$$CLEAN_PHP_FILES" ]; then \
+		echo "🚚 オートロードの整合性を確認中..."; \
+		FULL_WARNINGS=$$( $(DOCKER_CMD) exec app composer dump-autoload 2>&1 | grep "does not comply" || true ); \
+		if [ -n "$$FULL_WARNINGS" ]; then \
+			HAS_ERROR=0; \
+			for f in $$CLEAN_PHP_FILES; do \
+				if echo "$$FULL_WARNINGS" | grep -q "$$f"; then \
+					echo "❌ 修正対象ファイルに PSR-4 違反があります: $$f"; \
+					HAS_ERROR=1; \
+				fi; \
+			done; \
+			if [ $$HAS_ERROR -eq 1 ]; then \
+				echo "--------------------------------------------------"; \
+				echo "$$FULL_WARNINGS" | grep -E "$$(echo $$CLEAN_PHP_FILES | tr ' ' '|')"; \
+				echo "--------------------------------------------------"; \
+				exit 1; \
+			fi; \
+		fi; \
+	fi; \
+	echo "✅ 完了しました。"; \
+	if [ "$(DIFF_MODE)" = "staged" ]; then echo "⚠️  注意: 修正された場合は再度 'git add' が必要です。"; fi
 
 .PHONY: test
 test: ## 自動テストを実行します。
@@ -130,7 +189,7 @@ test-coverage: ## コードカバレッジレポートを出力します。
 
 .PHONY: pre-commit
 pre-commit: ## コミット前にすべてのチェックを実行します。
-	@make prettier
+	@make format
 	@make check
 	@make test
 

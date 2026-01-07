@@ -21,6 +21,7 @@
         "tymon/jwt-auth": "^2.2"
     },
     "require-dev": {
+        "driftingly/rector-laravel": "^2.1",
         "fakerphp/faker": "^1.23",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.22",
@@ -29,7 +30,8 @@
         "nunomaduro/collision": "^8.6",
         "nunomaduro/larastan": "^3.3",
         "phpstan/phpstan": "^2.1",
-        "phpunit/phpunit": "^11.5.3"
+        "phpunit/phpunit": "^11.5.3",
+        "rector/rector": "^2.3"
     },
     "autoload": {
         "psr-4": {
