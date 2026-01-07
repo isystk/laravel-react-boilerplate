@@ -149,7 +149,7 @@ _run-check-flow:
 	\
 	if [ -n "$$CLEAN_PHP_FILES" ]; then \
 		echo "📝 PHPファイル実行中 (Rector, Pint):"; \
-		$(DOCKER_CMD) exec app ./vendor/bin/rector process $$CLEAN_PHP_FILES; \
+		$(DOCKER_CMD) exec app ./vendor/bin/rector process $$CLEAN_PHP_FILES --clear-cache; \
 		$(DOCKER_CMD) exec app ./vendor/bin/pint $$CLEAN_PHP_FILES; \
 	fi; \
 #	if [ -n "$$CLEAN_BLADE_FILES" ]; then \
