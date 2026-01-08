@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use Rector\Set\ValueObject\SetList;
 use RectorLaravel\Set\LaravelLevelSetList;
 use RectorLaravel\Set\LaravelSetList;
-use Rector\Set\ValueObject\SetList;
 
 return RectorConfig::configure()
     // 1. リファクタリング対象のディレクトリを指定

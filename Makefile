@@ -99,6 +99,10 @@ db-import: ## DBにdumpファイルをインポートします。
 app: ## appコンテナに入ります。
 	$(DOCKER_CMD) exec app /bin/bash
 
+.PHONY: artisan
+artisan: ## AppコンテナでArtisanコマンドを実行します。(使い方: make artisan -- "photo_upload --run")
+	 ${DOCKER_CMD} exec app php artisan $(filter-out $@,$(MAKECMDGOALS))
+
 .PHONY: npm-run-dev
 npm-run-dev: ## appコンテナで開発用ビルドを実行します。
 	$(DOCKER_CMD) exec app npm run dev
@@ -111,37 +115,33 @@ npm-run-build: ## appコンテナでビルドを実行します。
 .PHONY: format
 format: ## コードフォーマットを実行します。
 	$(DOCKER_CMD) exec app npm run prettier; \
+	$(DOCKER_CMD) exec -T app ./vendor/bin/rector process --clear-cache; \
 	$(DOCKER_CMD) exec app ./vendor/bin/pint;
 
-.PHONY: check
-check: ## コードチェックを実行します。
-	$(DOCKER_CMD) exec app npm run lint; \
-	$(DOCKER_CMD) exec app npm run ts-check; \
-	$(DOCKER_CMD) exec app ./vendor/bin/phpstan analyse --memory-limit=1G;
+.PHONY: format-staged
+format-php-staged: ## ステージング済みのファイルをチェック
+	@$(MAKE) _run-format-php-flow DIFF_MODE="staged" FILTER_MODE="d"
 
-.PHONY: check-staged
-check-staged: ## ステージング済みのファイルをチェック
-	@$(MAKE) _run-check-flow DIFF_MODE="staged" FILTER_MODE="d"
+.PHONY: format-selected
+format-selected: ## 選択したローカルブランチとの差分ファイルをチェック
+	@$(MAKE) _run-format-php-flow DIFF_MODE="local" FILTER_MODE="d"
 
 # 共通実行フロー
-_run-check-flow:
+_run-format-php-flow:
 	@SELECTED_BRANCH=""; \
-	if [ "$(DIFF_MODE)" = "remote" ]; then \
-		git fetch --prune > /dev/null; \
-		BRANCH_LIST=$$(git branch -r | sed 's/^[[:space:]]*origin\///' | grep -v "HEAD ->"); \
+	if [ "$(DIFF_MODE)" = "local" ]; then \
+		BRANCH_LIST=$$(git branch --format='%(refname:short)' | grep -v "HEAD"); \
 		source $(UTILS_SH); \
-		SELECTED_BRANCH=$$(select_from_list "$$BRANCH_LIST" "🌿 比較対象のリモートブランチを選択してください"); \
+		SELECTED_BRANCH=$$(select_from_list "$$BRANCH_LIST" "🌿 比較対象のローカルブランチを選択してください"); \
 		if [ -z "$$SELECTED_BRANCH" ]; then echo "🚫 キャンセルされました。"; exit 1; fi; \
-		DIFF_FILES=$$(git diff --name-only --diff-filter=$(FILTER_MODE) origin/$$SELECTED_BRANCH...HEAD -- '*.php'); \
+		DIFF_FILES=$$(git diff --name-only --diff-filter=$(FILTER_MODE) $$SELECTED_BRANCH...HEAD -- '*.php'); \
 	else \
 		DIFF_FILES=$$(git diff --name-only --cached --diff-filter=$(FILTER_MODE) -- '*.php'); \
 	fi; \
-	\
 	if [ -z "$$DIFF_FILES" ]; then \
 		echo "✨ 対象ファイルは見つかりませんでした。(Mode: $(DIFF_MODE) / Filter: $(FILTER_MODE))"; \
 		exit 0; \
 	fi; \
-	\
 	PHP_FILES=$$(echo "$$DIFF_FILES" | grep -v '\.blade\.php$$' | xargs -r ls -d 2>/dev/null | tr '\n' ' ' || true); \
 	BLADE_FILES=$$(echo "$$DIFF_FILES" | grep '\.blade\.php$$' | xargs -r ls -d 2>/dev/null | tr '\n' ' ' || true); \
 	CLEAN_PHP_FILES=$$(echo $$PHP_FILES | xargs); \
@@ -149,8 +149,8 @@ _run-check-flow:
 	\
 	if [ -n "$$CLEAN_PHP_FILES" ]; then \
 		echo "📝 PHPファイル実行中 (Rector, Pint):"; \
-		$(DOCKER_CMD) exec app ./vendor/bin/rector process $$CLEAN_PHP_FILES --clear-cache; \
-		$(DOCKER_CMD) exec app ./vendor/bin/pint $$CLEAN_PHP_FILES; \
+		$(DOCKER_CMD) exec -T app ./vendor/bin/rector process $$CLEAN_PHP_FILES --clear-cache; \
+		$(DOCKER_CMD) exec -T app ./vendor/bin/pint $$CLEAN_PHP_FILES; \
 	fi; \
 #	if [ -n "$$CLEAN_BLADE_FILES" ]; then \
 #		echo "🎨 Bladeファイル実行中 (blade-formatter):"; \
@@ -158,7 +158,7 @@ _run-check-flow:
 #	fi; \
 	if [ -n "$$CLEAN_PHP_FILES" ]; then \
 		echo "🚚 オートロードの整合性を確認中..."; \
-		FULL_WARNINGS=$$( $(DOCKER_CMD) exec app composer dump-autoload 2>&1 | grep "does not comply" || true ); \
+		FULL_WARNINGS=$$( $(DOCKER_CMD) exec -T app composer dump-autoload 2>&1 | grep "does not comply" || true ); \
 		if [ -n "$$FULL_WARNINGS" ]; then \
 			HAS_ERROR=0; \
 			for f in $$CLEAN_PHP_FILES; do \
@@ -176,12 +176,41 @@ _run-check-flow:
 		fi; \
 	fi; \
 	echo "✅ 完了しました。"; \
-	if [ "$(DIFF_MODE)" = "staged" ]; then echo "⚠️  注意: 修正された場合は再度 'git add' が必要です。"; fi
+	if [ "$(DIFF_MODE)" = "staged" ]; then echo "⚠️  注意: 修正された場合は再度 'git add' が必要です。"; fi
 
 .PHONY: test
 test: ## 自動テストを実行します。
 	@$(DOCKER_CMD) exec app npm run test; \
 	$(DOCKER_CMD) exec -e XDEBUG_MODE=off app ./vendor/bin/phpunit --display-phpunit-deprecations
+
+.PHONY: test-staged
+test-staged: ## ステージング済みのファイルに対応するテストを実行します
+	@echo "🔍 ステージングされたファイルからテスト対象を抽出中..."
+	@set -e; \
+	APP_DIFF=$$(git diff --name-only --cached --diff-filter=d -- 'app/'); \
+	TEST_DIFF=$$(git diff --name-only --cached --diff-filter=d -- 'tests/'); \
+	FINAL_TEST_FILES=""; \
+	for file in $$APP_DIFF; do \
+		if echo "$$file" | grep -q ".php$$"; then \
+			class_name=$$(basename "$$file" .php); \
+			target_test=$$(find tests -name "$${class_name}Test.php" -print -quit); \
+			if [ -n "$$target_test" ]; then \
+				FINAL_TEST_FILES="$$FINAL_TEST_FILES $$target_test"; \
+			fi; \
+		fi; \
+	done; \
+	for test_file in $$TEST_DIFF; do \
+		if echo "$$test_file" | grep -q "Test.php$$"; then \
+			FINAL_TEST_FILES="$$FINAL_TEST_FILES $$test_file"; \
+		fi; \
+	done; \
+	CLEAN_TEST_FILES=$$(echo $$FINAL_TEST_FILES | tr ' ' '\n' | sort -u | xargs); \
+	if [ -z "$$CLEAN_TEST_FILES" ]; then \
+		echo "✨ 実行可能なテストファイルが見つかりませんでした。"; \
+	else \
+		echo "🚀 テスト実行中: $$CLEAN_TEST_FILES"; \
+		$(DOCKER_CMD) exec -e XDEBUG_MODE=off app ./vendor/bin/phpunit --display-phpunit-deprecations $$CLEAN_TEST_FILES; \
+	fi
 
 .PHONY: test-coverage
 test-coverage: ## コードカバレッジレポートを出力します。
