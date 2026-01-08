@@ -93,6 +93,7 @@ npm-run-build: ## appコンテナでビルドを実行します。
 format: ## コードフォーマットを実行します。
 	$(DOCKER_CMD) exec app npm run prettier; \
 #	$(DOCKER_CMD) exec -T app ./vendor/bin/rector process --clear-cache; \
+#	$(DOCKER_CMD) exec -T app npx -y blade-formatter --write resources/views/**/*.blade.php; \
 	$(DOCKER_CMD) exec app ./vendor/bin/pint;
 
 .PHONY: format-staged
@@ -129,10 +130,10 @@ _run-format-php-flow:
 		$(DOCKER_CMD) exec -T app ./vendor/bin/rector process $$CLEAN_PHP_FILES --clear-cache; \
 		$(DOCKER_CMD) exec -T app ./vendor/bin/pint $$CLEAN_PHP_FILES; \
 	fi; \
-#	if [ -n "$$CLEAN_BLADE_FILES" ]; then \
-#		echo "🎨 Bladeファイル実行中 (blade-formatter):"; \
-#		npx -y blade-formatter --write $$CLEAN_BLADE_FILES; \
-#	fi; \
+	if [ -n "$$CLEAN_BLADE_FILES" ]; then \
+		echo "🎨 Bladeファイル実行中 (blade-formatter):"; \
+		npx -y blade-formatter --write $$CLEAN_BLADE_FILES; \
+	fi; \
 	if [ -n "$$CLEAN_PHP_FILES" ]; then \
 		echo "🚚 オートロードの整合性を確認中..."; \
 		FULL_WARNINGS=$$( $(DOCKER_CMD) exec -T app composer dump-autoload 2>&1 | grep "does not comply" || true ); \
