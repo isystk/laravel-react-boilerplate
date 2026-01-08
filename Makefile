@@ -90,11 +90,16 @@ npm-run-build: ## appコンテナでビルドを実行します。
 	$(DOCKER_CMD) exec app npm run build-storybook;
 
 .PHONY: format
-format: ## コードフォーマットを実行します。
+format: ## コードチェックとフォーマットを実行します。
+	# リファクタリング・静的解析・型チェック \
+	$(DOCKER_CMD) exec app npm run lint; \
+	$(DOCKER_CMD) exec app npm run ts-check; \
+	$(DOCKER_CMD) exec app ./vendor/bin/phpstan analyse --memory-limit=1G; \
+	$(DOCKER_CMD) exec -T app ./vendor/bin/rector process --clear-cache; \
+	# コードフォーマット \
 	$(DOCKER_CMD) exec app npm run prettier; \
-#	$(DOCKER_CMD) exec -T app ./vendor/bin/rector process --clear-cache; \
-#	$(DOCKER_CMD) exec -T app npx -y blade-formatter --write resources/views/**/*.blade.php; \
-	$(DOCKER_CMD) exec app ./vendor/bin/pint;
+	$(DOCKER_CMD) exec app ./vendor/bin/pint; \
+	$(DOCKER_CMD) exec -T app npx -y blade-formatter --write resources/views/**/*.blade.php;
 
 .PHONY: format-staged
 format-php-staged: ## ステージング済みのファイルをチェック
