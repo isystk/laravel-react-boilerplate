@@ -9,11 +9,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
- * @property int $id
- * @property int $contact_form_id
+ * @property int         $id
+ * @property int         $contact_form_id
  * @property string|null $file_name
- * @property Carbon $created_at
- * @property Carbon $updated_at
+ * @property Carbon      $created_at
+ * @property Carbon      $updated_at
  */
 class ContactFormImage extends Model
 {
@@ -32,16 +32,6 @@ class ContactFormImage extends Model
         'file_name',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
-
     // 親テーブル
 
     /**
@@ -50,5 +40,18 @@ class ContactFormImage extends Model
     public function contactForm(): BelongsTo
     {
         return $this->belongsTo(ContactForm::class);
+    }
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
     }
 }

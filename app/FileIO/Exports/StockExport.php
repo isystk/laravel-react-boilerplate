@@ -9,18 +9,12 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class StockExport implements FromCollection, WithHeadings
 {
-    /** @var Collection<int, Stock> */
-    protected Collection $stocks;
-
     /**
      * コンストラクタ
      *
-     * @param  Collection<int, Stock>  $stocks  商品のコレクション
+     * @param Collection<int, Stock> $stocks 商品のコレクション
      */
-    public function __construct(Collection $stocks)
-    {
-        $this->stocks = $stocks;
-    }
+    public function __construct(protected Collection $stocks) {}
 
     /**
      * 商品のデータをコレクションとして返します。
@@ -33,13 +27,11 @@ class StockExport implements FromCollection, WithHeadings
      */
     public function collection(): Collection
     {
-        return $this->stocks->map(function (Stock $stock) {
-            return [
-                'id' => $stock->id,
-                'name' => $stock->name,
-                'price' => $stock->price,
-            ];
-        });
+        return $this->stocks->map(fn (Stock $stock) => [
+            'id'    => $stock->id,
+            'name'  => $stock->name,
+            'price' => $stock->price,
+        ]);
     }
 
     /**

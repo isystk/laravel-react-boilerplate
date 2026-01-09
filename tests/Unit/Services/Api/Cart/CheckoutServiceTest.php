@@ -1,6 +1,6 @@
 <?php
 
-namespace Services\Api\Cart;
+namespace Tests\Unit\Services\Api\Cart;
 
 use App\Domain\Entities\Order;
 use App\Domain\Entities\Stock;
@@ -23,7 +23,7 @@ class CheckoutServiceTest extends BaseTest
     public function test_checkout(): void
     {
         $user1 = $this->createDefaultUser([
-            'name' => 'aaa',
+            'name'  => 'aaa',
             'email' => 'aaa@test.com',
         ]);
         // ユーザをログイン状態にする

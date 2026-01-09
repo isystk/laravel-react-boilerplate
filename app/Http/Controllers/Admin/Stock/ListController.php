@@ -24,7 +24,7 @@ class ListController extends BaseController
         $service = app(IndexService::class);
 
         $conditions = new SearchConditionDto($request);
-        $stocks = $service->searchStock($conditions);
+        $stocks     = $service->searchStock($conditions);
 
         return view('admin.stock.index', compact([
             'stocks',
@@ -42,16 +42,16 @@ class ListController extends BaseController
         }
 
         /** @var ExportService $service */
-        $service = app(ExportService::class);
+        $service    = app(ExportService::class);
         $conditions = new SearchConditionDto($request);
-        $export = $service->getExport($conditions);
+        $export     = $service->getExport($conditions);
 
-        if ('csv' === $fileType) {
+        if ($fileType === 'csv') {
             return Excel::download($export, 'stocks.csv', \Maatwebsite\Excel\Excel::CSV);
         }
-        if ('pdf' === $fileType) {
+        if ($fileType === 'pdf') {
             $headers = $export->headings();
-            $rows = $export->collection();
+            $rows    = $export->collection();
             /** @var PDF $pdf */
             $pdf = app(PDF::class);
 

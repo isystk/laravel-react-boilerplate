@@ -22,12 +22,12 @@ class UpdateServiceTest extends BaseTest
     public function test_update(): void
     {
         $user = $this->createDefaultUser([
-            'name' => 'aaa',
+            'name'  => 'aaa',
             'email' => 'aaa@test.com',
         ]);
 
-        $request = new UpdateRequest;
-        $request['name'] = 'bbb';
+        $request          = new UpdateRequest;
+        $request['name']  = 'bbb';
         $request['email'] = 'bbb@test.com';
         $this->service->update($user->id, $request);
 

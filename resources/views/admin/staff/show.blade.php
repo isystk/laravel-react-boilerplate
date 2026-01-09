@@ -8,10 +8,8 @@
 
 @section('content')
     <div class="text-start mb-3">
-        <a
-            class="btn btn-secondary"
-            href="{{ route('admin.staff') }}"
-        >{{ __('common.Back') }}</a>
+        <a class="btn btn-secondary"
+           href="{{ route('admin.staff') }}">{{ __('common.Back') }}</a>
     </div>
 
     @if ($errors->any())
@@ -50,35 +48,23 @@
         <div class="card-footer text-center position-relative">
             <div class="d-inline-block">
                 <div class="mx-auto">
-                    <a
-                        class="btn btn-primary"
-                        href="{{ route('admin.staff.edit', ['staff' => $staff ]) }}"
-                        @if(!Auth::user()->role->isHighManager())
-                            disabled="disabled"
-                        @endif
-                    >
+                    <a class="btn btn-primary"
+                       href="{{ route('admin.staff.edit', ['staff' => $staff]) }}"
+                       @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>
                         {{ __('common.Change') }}
                     </a>
                 </div>
             </div>
-            <div
-                class="d-inline-block position-absolute"
-                style="right: 30px;"
-            >
-                <form
-                    method="POST"
-                    action="{{ route('admin.staff.destroy', ['staff' => $staff ]) }}"
-                    id="delete_{{ $staff->id }}"
-                >
+            <div class="d-inline-block position-absolute"
+                 style="right: 30px;">
+                <form method="POST"
+                      action="{{ route('admin.staff.destroy', ['staff' => $staff]) }}"
+                      id="delete_{{ $staff->id }}">
                     @method('DELETE')
                     @csrf
-                    <button
-                        class="btn btn-danger js-deleteBtn"
-                        data-id="{{ $staff->id }}"
-                        @if(!Auth::user()->role->isHighManager())
-                            disabled="disabled"
-                        @endif
-                    >{{ __('common.Delete') }}</button>
+                    <button class="btn btn-danger js-deleteBtn"
+                            data-id="{{ $staff->id }}"
+                            @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>{{ __('common.Delete') }}</button>
                 </form>
             </div>
         </div>

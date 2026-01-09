@@ -10,13 +10,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class IndexService extends BaseService
 {
-    private OrderRepository $orderRepository;
-
-    public function __construct(
-        OrderRepository $orderRepository
-    ) {
-        $this->orderRepository = $orderRepository;
-    }
+    public function __construct(private readonly OrderRepository $orderRepository) {}
 
     /**
      * 注文情報を検索します。
@@ -26,12 +20,12 @@ class IndexService extends BaseService
     public function searchOrder(SearchConditionDto $searchCondition): LengthAwarePaginator
     {
         $conditions = [
-            'user_name' => $searchCondition->name,
+            'user_name'       => $searchCondition->name,
             'order_date_from' => $searchCondition->orderDateFrom,
-            'order_date_to' => $searchCondition->orderDateTo,
-            'sort_name' => $searchCondition->sortName,
-            'sort_direction' => $searchCondition->sortDirection,
-            'limit' => $searchCondition->limit,
+            'order_date_to'   => $searchCondition->orderDateTo,
+            'sort_name'       => $searchCondition->sortName,
+            'sort_direction'  => $searchCondition->sortDirection,
+            'limit'           => $searchCondition->limit,
         ];
 
         return $this->orderRepository->getConditionsWithUserStock($conditions);

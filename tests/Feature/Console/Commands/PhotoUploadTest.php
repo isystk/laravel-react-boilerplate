@@ -1,6 +1,6 @@
 <?php
 
-namespace Console\Commands;
+namespace Tests\Feature\Console\Commands;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
@@ -83,7 +83,7 @@ class PhotoUploadTest extends BaseTest
 
         $command = $this->artisan('photo_upload', [
             '--file_name' => 'target.jpg',
-            '--run' => true,
+            '--run'       => true,
         ]);
 
         // target.jpg のログは出るが、other.jpg のログは出ないことを確認

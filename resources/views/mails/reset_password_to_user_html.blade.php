@@ -9,7 +9,8 @@
         以下のボタンをクリックして、新しいパスワードを設定してください。</p>
 
     <p style="text-align: center;">
-        <a href="{{ $resetUrl }}" class="button">パスワードをリセットする</a>
+        <a href="{{ $resetUrl }}"
+           class="button">パスワードをリセットする</a>
     </p>
 
     <p>このリンクは、一定時間が経過すると無効になります。</p>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Repositories\Order;
+namespace Tests\Unit\Domain\Repositories\Order;
 
 use App\Domain\Repositories\Order\OrderStockRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -30,13 +30,13 @@ class OrderStockRepositoryTest extends BaseTest
         $this->createDefaultOrderStock([
             'order_id' => $order->id,
             'stock_id' => $stock1->id,
-            'price' => $stock1->price,
+            'price'    => $stock1->price,
             'quantity' => 1,
         ]);
         $this->createDefaultOrderStock([
             'order_id' => $order->id,
             'stock_id' => $stock2->id,
-            'price' => $stock2->price,
+            'price'    => $stock2->price,
             'quantity' => 1,
         ]);
         $orderStocks = $this->repository->getByOrderId($order->id);

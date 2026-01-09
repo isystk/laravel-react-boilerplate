@@ -28,7 +28,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         /** @var Admin $staff */
-        $staff = $this->staff;
+        $staff     = $this->staff;
         $maxlength = config('const.maxlength.admins');
 
         return [
@@ -59,10 +59,10 @@ class UpdateRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => __('staff.Name'),
-            'email' => __('staff.EMail'),
+            'name'     => __('staff.Name'),
+            'email'    => __('staff.EMail'),
             'password' => __('staff.Password'),
-            'role' => __('staff.Role'),
+            'role'     => __('staff.Role'),
         ];
     }
 

@@ -10,14 +10,14 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 
 /**
- * @property int $id
- * @property string $name
- * @property string $email
- * @property string $password
- * @property AdminRole $role
+ * @property int         $id
+ * @property string      $name
+ * @property string      $email
+ * @property string      $password
+ * @property AdminRole   $role
  * @property string|null $remember_token
- * @property Carbon $created_at
- * @property Carbon $updated_at
+ * @property Carbon      $created_at
+ * @property Carbon      $updated_at
  */
 class Admin extends Authenticatable
 {
@@ -51,22 +51,11 @@ class Admin extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'role' => AdminRole::class,
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
-
-    /**
      * 権限が上位管理者の場合にTrueを返却する
      */
     public function isHighManager(): bool
     {
-        return AdminRole::HighManager === $this->role;
+        return $this->role === AdminRole::HighManager;
     }
 
     /**
@@ -74,6 +63,20 @@ class Admin extends Authenticatable
      */
     public function isManager(): bool
     {
-        return AdminRole::Manager === $this->role;
+        return $this->role === AdminRole::Manager;
+    }
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'role'       => AdminRole::class,
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
     }
 }

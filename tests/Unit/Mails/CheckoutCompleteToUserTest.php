@@ -16,10 +16,10 @@ class CheckoutCompleteToUserTest extends BaseTest
         Mail::fake();
 
         $user = $this->createDefaultUser([
-            'name' => 'テストユーザー',
+            'name'  => 'テストユーザー',
             'email' => 'test@example.com',
         ]);
-        $amount = 1500;
+        $amount     = 1500;
         $orderItems = [
             ['name' => '商品A', 'quantity' => 1, 'price' => 1000],
             ['name' => '商品B', 'quantity' => 1, 'price' => 500],
@@ -31,8 +31,8 @@ class CheckoutCompleteToUserTest extends BaseTest
             $mail->build();
 
             return $mail->hasTo($user->email)
-                && 'mails.checkout_complete_to_user_html' === $mail->view
-                && 'mails.checkout_complete_to_user_text' === $mail->textView
+                && $mail->view === 'mails.checkout_complete_to_user_html'
+                && $mail->textView === 'mails.checkout_complete_to_user_text'
                 && $mail->subject === config('const.mail.subject.checkout_complete_to_user')
                 && $mail->from[0]['address'] === config('mail.from.address')
                 && $mail->viewData['user'] === $user

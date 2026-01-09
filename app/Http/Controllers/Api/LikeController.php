@@ -17,9 +17,9 @@ class LikeController extends BaseApiController
     {
         try {
             $configCookieKey = config('const.cookie.like.key');
-            $stringStockIds = CookieUtil::get($configCookieKey);
-            $stockIds = array_map('intval', $stringStockIds);
-            $result = new SearchResultDto($stockIds);
+            $stringStockIds  = CookieUtil::get($configCookieKey);
+            $stockIds        = array_map(intval(...), $stringStockIds);
+            $result          = new SearchResultDto($stockIds);
         } catch (Throwable $e) {
             return $this->getErrorJsonResponse($e);
         }
@@ -33,7 +33,7 @@ class LikeController extends BaseApiController
     public function store(Request $request): JsonResponse
     {
         try {
-            $stockId = $request->input('id');
+            $stockId      = $request->input('id');
             $configCookie = config('const.cookie.like');
             CookieUtil::add($configCookie['key'], $stockId, $configCookie['expire']);
         } catch (Throwable $e) {

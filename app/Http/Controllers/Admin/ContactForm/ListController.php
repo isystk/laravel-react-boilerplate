@@ -18,7 +18,7 @@ class ListController extends BaseController
         /** @var IndexService $service */
         $service = app(IndexService::class);
 
-        $conditions = new SearchConditionDto($request);
+        $conditions   = new SearchConditionDto($request);
         $contactForms = $service->searchContactForm($conditions);
 
         return view('admin.contact.index', compact([

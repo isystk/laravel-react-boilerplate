@@ -26,10 +26,10 @@ class CartStockDto
         Cart $cart,
         Stock $stock,
     ) {
-        $this->id = $cart->id;
-        $this->stockId = $stock->id;
-        $this->name = $stock->name;
+        $this->id       = $cart->id;
+        $this->stockId  = $stock->id;
+        $this->name     = $stock->name;
         $this->imageUrl = $stock->getImageUrl();
-        $this->price = $stock->price;
+        $this->price    = $stock->price;
     }
 }

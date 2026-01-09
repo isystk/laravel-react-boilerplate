@@ -15,15 +15,16 @@ class ConstController extends BaseApiController
     public function index(): JsonResponse
     {
         $items = [];
+
         try {
             foreach ([
                 'gender' => Gender::cases(),
-                'age' => Age::cases(),
+                'age'    => Age::cases(),
             ] as $key => $enum) {
                 $items[$key] = [];
                 foreach ($enum as $item) {
                     $items[$key][] = [
-                        'key' => $item->value,
+                        'key'   => $item->value,
                         'value' => $item->label(),
                     ];
                 }
@@ -34,7 +35,7 @@ class ConstController extends BaseApiController
 
         return response()->json([
             'result' => true,
-            'data' => $items,
+            'data'   => $items,
         ]);
     }
 }

@@ -51,8 +51,8 @@ class UpdateRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => __('user.Name'),
-            'email' => __('user.EMail'),
+            'name'     => __('user.Name'),
+            'email'    => __('user.EMail'),
             'password' => __('user.Password'),
         ];
     }

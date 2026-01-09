@@ -19,7 +19,7 @@ class DetailController extends BaseController
     public function show(ContactForm $contactForm): View
     {
         /** @var ShowService $service */
-        $service = app(ShowService::class);
+        $service           = app(ShowService::class);
         $contactFormImages = $service->getContactFormImage($contactForm->id);
 
         return view('admin.contact.show', compact([
@@ -39,11 +39,13 @@ class DetailController extends BaseController
         $service = app(DestroyService::class);
 
         DB::beginTransaction();
+
         try {
             $service->delete($contactForm->id);
             DB::commit();
         } catch (Throwable $e) {
             DB::rollBack();
+
             throw $e;
         }
 

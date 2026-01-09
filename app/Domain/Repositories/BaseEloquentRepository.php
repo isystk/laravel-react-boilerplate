@@ -15,7 +15,7 @@ abstract class BaseEloquentRepository implements BaseRepository
     }
 
     /**
-     * @param  array<string, mixed>  $data
+     * @param array<string, mixed> $data
      */
     public function create(array $data): mixed
     {
@@ -23,13 +23,13 @@ abstract class BaseEloquentRepository implements BaseRepository
     }
 
     /**
-     * @param  array<string, mixed>  $data
+     * @param array<string, mixed> $data
      */
     public function update(array $data, int $id): mixed
     {
         $record = $this->findById($id);
 
-        if (null === $record) {
+        if ($record === null) {
             throw new \RuntimeException('An unexpected error occurred.');
         }
 
@@ -42,7 +42,7 @@ abstract class BaseEloquentRepository implements BaseRepository
     {
         $record = $this->findById($id);
 
-        if (null === $record) {
+        if ($record === null) {
             throw new \RuntimeException('An unexpected error occurred.');
         }
 

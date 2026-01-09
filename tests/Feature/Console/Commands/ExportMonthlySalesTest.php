@@ -1,6 +1,6 @@
 <?php
 
-namespace Console\Commands;
+namespace Tests\Feature\Console\Commands;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
@@ -26,12 +26,12 @@ class ExportMonthlySalesTest extends BaseTest
     public function test_正常ケース(): void
     {
         Storage::fake();
-        $fileName = 'test_monthly_sales.csv';
+        $fileName   = 'test_monthly_sales.csv';
         $outputPath = Storage::path($fileName);
 
         $command = $this->artisan('export_monthly_sales', [
             'output_path' => $outputPath,
-            '--run' => true,
+            '--run'       => true,
         ]);
         $command->run();
 
@@ -43,7 +43,7 @@ class ExportMonthlySalesTest extends BaseTest
     public function test_正常ケース_ドライランの場合_ファイルが出力されないこと(): void
     {
         Storage::fake();
-        $fileName = 'dry_run_sales.csv';
+        $fileName   = 'dry_run_sales.csv';
         $outputPath = Storage::path($fileName);
 
         // --run オプションを指定しない
@@ -60,7 +60,7 @@ class ExportMonthlySalesTest extends BaseTest
     public function test_正常ケース_データが存在する場合にCSV行が書き込まれること(): void
     {
         Storage::fake();
-        $fileName = 'test_with_data.csv';
+        $fileName   = 'test_with_data.csv';
         $outputPath = Storage::path($fileName);
 
         // Serviceをモックして、必ずデータ（$detail）がある状態にする
@@ -74,7 +74,7 @@ class ExportMonthlySalesTest extends BaseTest
 
         $this->artisan('export_monthly_sales', [
             'output_path' => $outputPath,
-            '--run' => true,
+            '--run'       => true,
         ])
             ->assertSuccessful();
 

@@ -1,4 +1,3 @@
-
 <div class="footer">
     <hr>
     Laraec カスタマーサポート<br>

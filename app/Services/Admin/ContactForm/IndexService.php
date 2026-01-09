@@ -10,13 +10,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class IndexService extends BaseService
 {
-    private ContactFormRepository $contactFormRepository;
-
-    public function __construct(
-        ContactFormRepository $contactFormRepository
-    ) {
-        $this->contactFormRepository = $contactFormRepository;
-    }
+    public function __construct(private readonly ContactFormRepository $contactFormRepository) {}
 
     /**
      * お問い合わせを検索します。
@@ -26,11 +20,11 @@ class IndexService extends BaseService
     public function searchContactForm(SearchConditionDto $searchConditionDto): LengthAwarePaginator
     {
         $conditions = [
-            'user_name' => $searchConditionDto->userName,
-            'title' => $searchConditionDto->title,
-            'sort_name' => $searchConditionDto->sortName,
+            'user_name'      => $searchConditionDto->userName,
+            'title'          => $searchConditionDto->title,
+            'sort_name'      => $searchConditionDto->sortName,
             'sort_direction' => $searchConditionDto->sortDirection,
-            'limit' => $searchConditionDto->limit,
+            'limit'          => $searchConditionDto->limit,
         ];
 
         return $this->contactFormRepository->getByConditions($conditions);

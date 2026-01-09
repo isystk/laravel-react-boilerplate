@@ -29,14 +29,14 @@ class StoreServiceTest extends BaseTest
     {
         Storage::fake('s3');
 
-        $request = new StoreRequest;
-        $request['user_name'] = 'aaa';
-        $request['title'] = 'タイトル1';
-        $request['email'] = 'aaa@test.com';
-        $request['url'] = 'https://aaa.test.com';
-        $request['gender'] = Gender::Male->value;
-        $request['age'] = Age::Over30->value;
-        $request['contact'] = 'お問い合わせ1';
+        $request                = new StoreRequest;
+        $request['user_name']   = 'aaa';
+        $request['title']       = 'タイトル1';
+        $request['email']       = 'aaa@test.com';
+        $request['url']         = 'https://aaa.test.com';
+        $request['gender']      = Gender::Male->value;
+        $request['age']         = Age::Over30->value;
+        $request['contact']     = 'お問い合わせ1';
         $request['image_files'] = [
             UploadedFile::fake()->image('file1.jpg'),
             UploadedFile::fake()->image('file2.jpg'),
@@ -56,7 +56,7 @@ class StoreServiceTest extends BaseTest
 
         // 新しい画像が登録されたことをテスト
         $createdContactFormImage = ContactFormImage::where(['contact_form_id' => $contactForm->id]);
-        $fileNames = $createdContactFormImage->pluck('file_name')->all();
+        $fileNames               = $createdContactFormImage->pluck('file_name')->all();
         $this->assertSame(['file1.jpg', 'file2.jpg', 'file3.jpg'], $fileNames);
         Storage::disk('s3')->assertExists('contact/file1.jpg');
         Storage::disk('s3')->assertExists('contact/file2.jpg');

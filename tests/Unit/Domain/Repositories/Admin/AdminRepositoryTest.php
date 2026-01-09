@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Repositories\Admin;
+namespace Tests\Unit\Domain\Repositories\Admin;
 
 use App\Domain\Entities\Admin;
 use App\Domain\Repositories\Admin\AdminRepository;
@@ -23,14 +23,14 @@ class AdminRepositoryTest extends BaseTest
     {
         parent::setUp();
 
-        $this->repository = app(AdminRepository::class);
+        $this->repository        = app(AdminRepository::class);
         $this->defaultConditions = [
-            'name' => null,
-            'email' => null,
-            'role' => null,
-            'sort_name' => null,
+            'name'           => null,
+            'email'          => null,
+            'role'           => null,
+            'sort_name'      => null,
             'sort_direction' => null,
-            'limit' => null,
+            'limit'          => null,
         ];
     }
 
@@ -40,14 +40,14 @@ class AdminRepositoryTest extends BaseTest
         $this->assertSame(0, $admins->count(), 'データがない状態で正常に動作することを始めにテスト');
 
         $expectAdmin1 = $this->createDefaultAdmin([
-            'name' => 'admin1',
+            'name'  => 'admin1',
             'email' => 'admin1@test.com',
-            'role' => AdminRole::HighManager->value,
+            'role'  => AdminRole::HighManager->value,
         ]);
         $expectAdmin2 = $this->createDefaultAdmin([
-            'name' => 'admin2',
+            'name'  => 'admin2',
             'email' => 'admin2@test.com',
-            'role' => AdminRole::Manager->value,
+            'role'  => AdminRole::Manager->value,
         ]);
 
         /** @var Admin $admin */
@@ -88,7 +88,7 @@ class AdminRepositoryTest extends BaseTest
         // 1. ソート（名前の昇順）のテスト
         $results = $this->repository->getByConditions([
             ...$this->defaultConditions,
-            'sort_name' => 'name',
+            'sort_name'      => 'name',
             'sort_direction' => 'asc',
         ]);
         $this->assertSame('A-admin', $results->values()[0]->name);
@@ -97,7 +97,7 @@ class AdminRepositoryTest extends BaseTest
         // 2. ソート（名前の降順）のテスト
         $results = $this->repository->getByConditions([
             ...$this->defaultConditions,
-            'sort_name' => 'name',
+            'sort_name'      => 'name',
             'sort_direction' => 'desc',
         ]);
         $this->assertSame('C-admin', $results->values()[0]->name);
@@ -119,7 +119,7 @@ class AdminRepositoryTest extends BaseTest
 
         $results = $this->repository->getByConditions([
             ...$this->defaultConditions,
-            'sort_name' => 'name',
+            'sort_name'      => 'name',
             'sort_direction' => null, // sort_directionをあえて渡さない
         ]);
 

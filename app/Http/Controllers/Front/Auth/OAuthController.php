@@ -13,7 +13,7 @@ class OAuthController extends BaseController
     /**
      * 各SNSのOAuth認証画面にリダイレクトして認証
      *
-     * @param  string  $provider  サービス名
+     * @param string $provider サービス名
      */
     public function socialOAuth(string $provider): \Symfony\Component\HttpFoundation\RedirectResponse
     {
@@ -23,13 +23,13 @@ class OAuthController extends BaseController
     /**
      * 各サイトからのコールバック
      *
-     * @param  string  $provider  サービス名
+     * @param string $provider サービス名
      */
     public function handleProviderCallback(string $provider): RedirectResponse
     {
         // @phpstan-ignore-next-line
         $socialUser = Socialite::driver($provider)->stateless()->user();
-        $user = User::firstOrNew(['email' => $socialUser->getEmail()]); // TODO Eloquantで検索
+        $user       = User::firstOrNew(['email' => $socialUser->getEmail()]); // TODO Eloquantで検索
 
         // すでに会員になっている場合の処理を書く
         // そのままログインさせてもいいかもしれない
@@ -37,8 +37,8 @@ class OAuthController extends BaseController
             abort(403);
         }
 
-        $user->name = $socialUser->getName();
-        $user->provider_id = $socialUser->getId();
+        $user->name          = $socialUser->getName();
+        $user->provider_id   = $socialUser->getId();
         $user->provider_name = $provider;
         $user->save();
 

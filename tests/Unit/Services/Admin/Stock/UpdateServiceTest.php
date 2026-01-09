@@ -26,19 +26,19 @@ class UpdateServiceTest extends BaseTest
         Storage::fake('s3');
 
         $stock = $this->createDefaultStock([
-            'name' => 'aaa',
-            'detail' => 'aaaの説明',
-            'price' => 111,
-            'quantity' => 1,
+            'name'            => 'aaa',
+            'detail'          => 'aaaの説明',
+            'price'           => 111,
+            'quantity'        => 1,
             'image_file_name' => 'stock1.jpg',
         ]);
 
-        $request = new UpdateRequest;
-        $request['name'] = 'bbb';
-        $request['detail'] = 'bbbの説明';
-        $request['price'] = 222;
-        $request['quantity'] = 2;
-        $request['fileName'] = 'stock2.jpg';
+        $request                = new UpdateRequest;
+        $request['name']        = 'bbb';
+        $request['detail']      = 'bbbの説明';
+        $request['price']       = 222;
+        $request['quantity']    = 2;
+        $request['fileName']    = 'stock2.jpg';
         $request['imageBase64'] = 'data:image/jpeg;base64,xxxx';
         $this->service->update($stock->id, $request);
 

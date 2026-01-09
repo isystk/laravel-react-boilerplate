@@ -5,6 +5,9 @@ namespace Database\Factories\Domain\Entities;
 use App\Domain\Entities\Stock;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Domain\Entities\Stock>
+ */
 class StockFactory extends Factory
 {
     /**
@@ -20,11 +23,11 @@ class StockFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->text(50),
-            'detail' => $this->faker->realText(500),
-            'price' => $this->faker->numberBetween(1, 6),
-            'image_file_name' => $this->faker->image('/tmp', 400, 300, null, false),
-            'quantity' => $this->faker->numberBetween(0, 10),
+            'name'            => fake()->text(50),
+            'detail'          => fake()->realText(500),
+            'price'           => fake()->numberBetween(1, 6),
+            'image_file_name' => fake()->image('/tmp', 400, 300, null, false),
+            'quantity'        => fake()->numberBetween(0, 10),
         ];
     }
 
@@ -33,9 +36,7 @@ class StockFactory extends Factory
      */
     public function unverified(): Factory
     {
-        return $this->state(function (array $attributes) {
-            return [
-            ];
-        });
+        return $this->state(fn (array $attributes) => [
+        ]);
     }
 }

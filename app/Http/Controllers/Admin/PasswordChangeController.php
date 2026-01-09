@@ -33,12 +33,14 @@ class PasswordChangeController extends BaseController
 
         // トランザクション開始
         DB::beginTransaction();
+
         try {
             $service = app(PasswordChangeUpdateService::class);
             $service->update($request->user()->id, $newPassword);
             DB::commit();
         } catch (Throwable $e) {
             DB::rollBack();
+
             throw $e;
         }
 

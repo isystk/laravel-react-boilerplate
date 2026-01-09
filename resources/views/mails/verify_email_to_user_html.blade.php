@@ -9,7 +9,8 @@
         ご登録を完了するには、以下のボタンをクリックしてメールアドレスの確認をお願いします。</p>
 
     <p style="text-align: center;">
-        <a href="{{ $verifyUrl }}" class="button">メールアドレスを確認する</a>
+        <a href="{{ $verifyUrl }}"
+           class="button">メールアドレスを確認する</a>
     </p>
 
     <p>このリンクは {{ config('auth.passwords.users.expire') }} 分間のみ有効です。</p>

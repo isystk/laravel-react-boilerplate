@@ -5,6 +5,9 @@ namespace Database\Factories\Domain\Entities;
 use App\Domain\Entities\OrderStock;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Domain\Entities\OrderStock>
+ */
 class OrderStockFactory extends Factory
 {
     /**
@@ -22,8 +25,8 @@ class OrderStockFactory extends Factory
         return [
             'order_id' => \App\Domain\Entities\Order::factory(),
             'stock_id' => \App\Domain\Entities\Stock::factory(),
-            'price' => $this->faker->numberBetween(1000, 100000),
-            'quantity' => $this->faker->numberBetween(0, 10),
+            'price'    => fake()->numberBetween(1000, 100000),
+            'quantity' => fake()->numberBetween(0, 10),
         ];
     }
 
@@ -32,9 +35,7 @@ class OrderStockFactory extends Factory
      */
     public function unverified(): Factory
     {
-        return $this->state(function (array $attributes) {
-            return [
-            ];
-        });
+        return $this->state(fn (array $attributes) => [
+        ]);
     }
 }

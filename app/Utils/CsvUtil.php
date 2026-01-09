@@ -10,8 +10,8 @@ class CsvUtil
     /**
      * CSVファイルの生成
      *
-     * @param  array<array<string|int>>  $rows
-     * @param  array<string>  $headers
+     * @param array<array<string|int>> $rows
+     * @param array<string>            $headers
      */
     public static function make(array $rows, array $headers): string
     {
@@ -32,8 +32,8 @@ class CsvUtil
     /**
      * CSVダウンロード
      *
-     * @param  array<int, array<int, mixed>>  $list
-     * @param  array<string>  $header
+     * @param array<int, array<int, mixed>> $list
+     * @param array<string>                 $header
      *
      * @throws BindingResolutionException
      */
@@ -42,7 +42,7 @@ class CsvUtil
         $csv = self::make($list, $header);
 
         $headers = [
-            'Content-Type' => 'text/csv',
+            'Content-Type'        => 'text/csv',
             'Content-Disposition' => "attachment; filename=$filename",
         ];
 

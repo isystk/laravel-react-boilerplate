@@ -27,8 +27,7 @@ abstract class BaseTest extends TestCase
     protected function setPrivateMethodTest(object $target, string $methodName): ReflectionMethod
     {
         $reflection = new ReflectionClass($target);
-        $method = $reflection->getMethod($methodName);
-        $method->setAccessible(true);
+        $method     = $reflection->getMethod($methodName);
 
         return $method;
     }
@@ -41,8 +40,7 @@ abstract class BaseTest extends TestCase
     protected function getPrivateProperty(object $target, string $propertyName): mixed
     {
         $reflection = new ReflectionClass($target);
-        $property = $reflection->getProperty($propertyName);
-        $property->setAccessible(true);
+        $property   = $reflection->getProperty($propertyName);
 
         return $property->getValue($target);
     }
@@ -54,9 +52,9 @@ abstract class BaseTest extends TestCase
      */
     protected function readCsv(string $path): array
     {
-        $rows = [];
+        $rows    = [];
         $csvFile = fopen($path, 'rb');
-        if (false === $csvFile) {
+        if ($csvFile === false) {
             return $rows;
         }
 
@@ -82,7 +80,7 @@ abstract class BaseTest extends TestCase
     /**
      * Userを作成する
      *
-     * @param  array<string, mixed>  $params
+     * @param array<string, mixed> $params
      */
     public function createDefaultUser(array $params = []): User
     {
@@ -98,7 +96,7 @@ abstract class BaseTest extends TestCase
     /**
      * Adminを作成する
      *
-     * @param  array<string, mixed>  $params
+     * @param array<string, mixed> $params
      */
     public function createDefaultAdmin(array $params = []): Admin
     {
@@ -114,7 +112,7 @@ abstract class BaseTest extends TestCase
     /**
      * Stockを作成する
      *
-     * @param  array<string, mixed>  $params
+     * @param array<string, mixed> $params
      */
     public function createDefaultStock(array $params = []): Stock
     {
@@ -130,14 +128,14 @@ abstract class BaseTest extends TestCase
     /**
      * Cartを作成する
      *
-     * @param  array<string, mixed>  $params
+     * @param array<string, mixed> $params
      */
     public function createDefaultCart(array $params = []): Cart
     {
-        $user = $this->createDefaultUser();
+        $user  = $this->createDefaultUser();
         $stock = $this->createDefaultStock();
         $items = [
-            'user_id' => $user->id,
+            'user_id'  => $user->id,
             'stock_id' => $stock->id,
         ];
         if (count($params) > 0) {
@@ -151,11 +149,11 @@ abstract class BaseTest extends TestCase
     /**
      * Orderを作成する
      *
-     * @param  array<string, mixed>  $params
+     * @param array<string, mixed> $params
      */
     public function createDefaultOrder(array $params = []): Order
     {
-        $user = $this->createDefaultUser();
+        $user  = $this->createDefaultUser();
         $items = [
             'user_id' => $user->id,
         ];
@@ -170,7 +168,7 @@ abstract class BaseTest extends TestCase
     /**
      * OrderStockを作成する
      *
-     * @param  array<string, mixed>  $params
+     * @param array<string, mixed> $params
      */
     public function createDefaultOrderStock(array $params = []): OrderStock
     {
@@ -179,7 +177,7 @@ abstract class BaseTest extends TestCase
         $items = [
             'order_id' => $order->id,
             'stock_id' => $stock->id,
-            'price' => 1000,
+            'price'    => 1000,
             'quantity' => 1,
         ];
         if (count($params) > 0) {
@@ -193,7 +191,7 @@ abstract class BaseTest extends TestCase
     /**
      * ContactFormを作成する
      *
-     * @param  array<string, mixed>  $params
+     * @param array<string, mixed> $params
      */
     public function createDefaultContactForm(array $params = []): ContactForm
     {
@@ -209,12 +207,12 @@ abstract class BaseTest extends TestCase
     /**
      * ContactFormImageを作成する
      *
-     * @param  array<string, mixed>  $params
+     * @param array<string, mixed> $params
      */
     public function createDefaultContactFormImage(array $params = []): ContactFormImage
     {
         $contactForm = $this->createDefaultContactForm();
-        $items = [
+        $items       = [
             'contact_form_id' => $contactForm->id,
         ];
         if (count($params) > 0) {
@@ -228,7 +226,7 @@ abstract class BaseTest extends TestCase
     /**
      * ImportHistoryを作成する
      *
-     * @param  array<string, mixed>  $params
+     * @param array<string, mixed> $params
      */
     public function createDefaultImportHistory(array $params = []): ImportHistory
     {
@@ -244,7 +242,7 @@ abstract class BaseTest extends TestCase
     /**
      * MonthlySaleを作成する
      *
-     * @param  array<string, mixed>  $params
+     * @param array<string, mixed> $params
      */
     public function createDefaultMonthlySale(array $params = []): MonthlySale
     {

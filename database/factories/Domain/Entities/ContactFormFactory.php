@@ -7,6 +7,9 @@ use App\Enums\Age;
 use App\Enums\Gender;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Domain\Entities\ContactForm>
+ */
 class ContactFormFactory extends Factory
 {
     /**
@@ -22,13 +25,13 @@ class ContactFormFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_name' => $this->faker->text(20),
-            'title' => $this->faker->realText(50),
-            'email' => $this->faker->unique()->email,
-            'url' => $this->faker->url,
-            'gender' => $this->faker->randomElement(Gender::cases()),
-            'age' => $this->faker->randomElement(Age::cases()),
-            'contact' => $this->faker->realText(200),
+            'user_name' => fake()->text(20),
+            'title'     => fake()->realText(50),
+            'email'     => fake()->unique()->email,
+            'url'       => fake()->url,
+            'gender'    => fake()->randomElement(Gender::cases()),
+            'age'       => fake()->randomElement(Age::cases()),
+            'contact'   => fake()->realText(200),
         ];
     }
 
@@ -37,9 +40,7 @@ class ContactFormFactory extends Factory
      */
     public function unverified(): Factory
     {
-        return $this->state(function (array $attributes) {
-            return [
-            ];
-        });
+        return $this->state(fn (array $attributes) => [
+        ]);
     }
 }

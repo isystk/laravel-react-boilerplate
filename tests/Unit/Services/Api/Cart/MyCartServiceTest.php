@@ -21,7 +21,7 @@ class MyCartServiceTest extends BaseTest
     public function test_getMyCart(): void
     {
         $user1 = $this->createDefaultUser([
-            'name' => 'aaa',
+            'name'  => 'aaa',
             'email' => 'aaa@test.com',
         ]);
         // ユーザをログイン状態にする
@@ -36,7 +36,7 @@ class MyCartServiceTest extends BaseTest
         $this->createDefaultCart(['user_id' => $user1->id, 'stock_id' => $stock1->id]);
         $this->createDefaultCart(['user_id' => $user1->id, 'stock_id' => $stock2->id]);
 
-        $dto = $this->service->getMyCart();
+        $dto      = $this->service->getMyCart();
         $stockIds = collect($dto->stocks)->pluck('stockId')->all();
         $this->assertSame([$stock1->id, $stock2->id], $stockIds, 'カートに追加した商品をテスト');
         $this->assertSame(2, $dto->count, 'カートに追加した商品の総数をテスト');

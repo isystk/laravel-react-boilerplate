@@ -22,6 +22,7 @@ class CartController extends BaseApiController
     {
         /** @var MyCartService $service */
         $service = app(MyCartService::class);
+
         try {
             $result = $service->getMyCart();
         } catch (Throwable $e) {
@@ -38,12 +39,13 @@ class CartController extends BaseApiController
     {
         /** @var AddCartService $service */
         $service = app(AddCartService::class);
+
         try {
             // カートに追加の処理
             $message = $service->addMyCart($request->stock_id);
 
             // 追加後の情報を取得
-            $result = $service->getMyCart();
+            $result          = $service->getMyCart();
             $result->message = $message;
         } catch (Throwable $e) {
             return $this->getErrorJsonResponse($e);
@@ -59,12 +61,13 @@ class CartController extends BaseApiController
     {
         /** @var DeleteCartService $service */
         $service = app(DeleteCartService::class);
+
         try {
             // カートから削除の処理
             $message = $service->deleteMyCart($request->cart_id);
 
             // 追加後の情報を取得
-            $result = $service->getMyCart();
+            $result          = $service->getMyCart();
             $result->message = $message;
         } catch (Throwable $e) {
             return $this->getErrorJsonResponse($e);
@@ -80,6 +83,7 @@ class CartController extends BaseApiController
     {
         /** @var CreatePaymentService $service */
         $service = app(CreatePaymentService::class);
+
         try {
             $result = $service->createPayment($request);
         } catch (Throwable $e) {
@@ -106,6 +110,7 @@ class CartController extends BaseApiController
         /** @var CheckoutService $service */
         $service = app(CheckoutService::class);
         DB::beginTransaction();
+
         try {
             // 支払い処理の実行
             $service->checkout($stripeEmail, $stripeToken);

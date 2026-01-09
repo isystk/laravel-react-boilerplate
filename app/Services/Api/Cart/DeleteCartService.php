@@ -6,7 +6,7 @@ use App\Domain\Repositories\Cart\CartRepository;
 
 class DeleteCartService extends BaseCartService
 {
-    private CartRepository $cartRepository;
+    private readonly CartRepository $cartRepository;
 
     public function __construct(
         CartRepository $cartRepository,

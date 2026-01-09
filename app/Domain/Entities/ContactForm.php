@@ -10,16 +10,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
- * @property int $id
+ * @property int         $id
  * @property string|null $user_name
  * @property string|null $title
  * @property string|null $email
  * @property string|null $url
- * @property Gender $gender
- * @property Age $age
+ * @property Gender      $gender
+ * @property Age         $age
  * @property string|null $contact
- * @property Carbon $created_at
- * @property Carbon $updated_at
+ * @property Carbon      $created_at
+ * @property Carbon      $updated_at
  */
 class ContactForm extends Model
 {
@@ -46,12 +46,15 @@ class ContactForm extends Model
     /**
      * The attributes that should be cast.
      *
-     * @var array<string, string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'gender' => Gender::class,
-        'age' => Age::class,
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'gender'     => Gender::class,
+            'age'        => Age::class,
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
+    }
 }

@@ -10,13 +10,7 @@ use Illuminate\Support\Facades\URL;
 
 class VerifyEmailToUser extends BaseVerifyEmail
 {
-    private User $user;
-
-    public function __construct(
-        User $user,
-    ) {
-        $this->user = $user;
-    }
+    public function __construct(private readonly User $user) {}
 
     public function toMail($notifiable): MailMessage
     {
@@ -26,11 +20,11 @@ class VerifyEmailToUser extends BaseVerifyEmail
             ->from(config('mail.from.address'))
             ->subject(config('const.mail.subject.verify_email_to_user'))
             ->view('mails.verify_email_to_user_html', [
-                'user' => $this->user,
+                'user'      => $this->user,
                 'verifyUrl' => $verificationUrl,
             ])
             ->text('mails.verify_email_to_user_text', [
-                'user' => $this->user,
+                'user'      => $this->user,
                 'verifyUrl' => $verificationUrl,
             ]);
     }
@@ -40,7 +34,7 @@ class VerifyEmailToUser extends BaseVerifyEmail
         return URL::temporarySignedRoute(
             'verification.verify',
             Carbon::now()->addMinutes(config('auth.verification.expire', 60)),
-            ['id' => $notifiable->getKey(), 'hash' => sha1($notifiable->getEmailForVerification())]
+            ['id' => $notifiable->getKey(), 'hash' => sha1((string) $notifiable->getEmailForVerification())]
         );
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Repositories\ContactForm;
+namespace Tests\Unit\Domain\Repositories\ContactForm;
 
 use App\Domain\Entities\ContactForm;
 use App\Domain\Repositories\ContactForm\ContactFormRepository;
@@ -22,11 +22,11 @@ class ContactFormRepositoryTest extends BaseTest
     public function test_getByConditions(): void
     {
         $defaultConditions = [
-            'user_name' => null,
-            'title' => null,
-            'sort_name' => null,
+            'user_name'      => null,
+            'title'          => null,
+            'sort_name'      => null,
             'sort_direction' => null,
-            'limit' => null,
+            'limit'          => null,
         ];
 
         $stocks = $this->repository->getByConditions($defaultConditions);

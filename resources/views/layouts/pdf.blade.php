@@ -1,67 +1,69 @@
 <!doctype html>
 <html>
-<head>
-    <meta
-        http-equiv="Content-Type"
-        content="text/html; charset=utf-8"
-    />
-    <title>PDF</title>
-    <style>
-        @font-face {
-            font-family: ipag;
-            font-style: normal;
-            font-weight: normal;
-            src: url("{{ storage_path('fonts/IPAfont00303/ipag.ttf') }}") format('truetype');
-        }
 
-        @font-face {
-            font-family: ipag;
-            font-style: bold;
-            font-weight: bold;
-            src: url("{{ storage_path('fonts/IPAfont00303/ipag.ttf') }}") format('truetype');
-        }
+    <head>
+        <meta http-equiv="Content-Type"
+              content="text/html; charset=utf-8" />
+        <title>PDF</title>
+        <style>
+            @font-face {
+                font-family: ipag;
+                font-style: normal;
+                font-weight: normal;
+                src: url("{{ storage_path('fonts/IPAfont00303/ipag.ttf') }}") format('truetype');
+            }
 
-        body {
-            font-family: ipag !important;
-        }
+            @font-face {
+                font-family: ipag;
+                font-style: bold;
+                font-weight: bold;
+                src: url("{{ storage_path('fonts/IPAfont00303/ipag.ttf') }}") format('truetype');
+            }
 
-        table th, table td {
-            padding: 10px 0;
-            text-align: center;
-        }
+            body {
+                font-family: ipag !important;
+            }
 
-        table th {
-            background-color: #17a2b8;
-        }
+            table th,
+            table td {
+                padding: 10px 0;
+                text-align: center;
+            }
 
-        table tr:nth-child(odd) {
-            background-color: #eee;
-        }
+            table th {
+                background-color: #17a2b8;
+            }
 
-        thead {
-            display: table-header-group;
-        }
+            table tr:nth-child(odd) {
+                background-color: #eee;
+            }
 
-        tfoot {
-            display: table-row-group;
-        }
+            thead {
+                display: table-header-group;
+            }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+            tfoot {
+                display: table-row-group;
+            }
 
-        th {
-            word-break: break-all;
-            word-wrap: break-word;
-        }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
 
-        tr {
-            page-break-inside: avoid;
-        }
-    </style>
-</head>
-<body>
-@yield('content')
-</body>
+            th {
+                word-break: break-all;
+                word-wrap: break-word;
+            }
+
+            tr {
+                page-break-inside: avoid;
+            }
+        </style>
+    </head>
+
+    <body>
+        @yield('content')
+    </body>
+
 </html>

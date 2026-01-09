@@ -8,17 +8,7 @@ use Illuminate\Notifications\Notification;
 
 class ResetPasswordToUser extends Notification
 {
-    private User $user;
-
-    private string $token;
-
-    public function __construct(
-        User $user,
-        string $token
-    ) {
-        $this->user = $user;
-        $this->token = $token;
-    }
+    public function __construct(private readonly User $user, private readonly string $token) {}
 
     /**
      * @return string[]
@@ -39,11 +29,11 @@ class ResetPasswordToUser extends Notification
             ->from(config('mail.from.address'))
             ->subject(config('const.mail.subject.reset_password_to_user'))
             ->view('mails.reset_password_to_user_html', [
-                'user' => $this->user,
+                'user'     => $this->user,
                 'resetUrl' => $resetUrl,
             ])
             ->text('mails.reset_password_to_user_text', [
-                'user' => $this->user,
+                'user'     => $this->user,
                 'resetUrl' => $resetUrl,
             ]);
     }

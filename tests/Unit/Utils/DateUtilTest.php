@@ -55,7 +55,7 @@ class DateUtilTest extends BaseTest
     public function test_toCarbon_ハイフンが含まれる日付文字列が提供された場合toCarbonImmutableがスラッシュでの日付変換を行うこと(string $dateHyphen, string $dateSlash): void
     {
         $carbonHyphen = DateUtil::toCarbon($dateHyphen);
-        $carbonSlash = DateUtil::toCarbon($dateSlash);
+        $carbonSlash  = DateUtil::toCarbon($dateSlash);
         $this->assertEquals($carbonHyphen, $carbonSlash);
     }
 

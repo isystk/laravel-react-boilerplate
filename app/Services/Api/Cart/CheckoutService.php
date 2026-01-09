@@ -13,25 +13,16 @@ use Illuminate\Support\Facades\Mail;
 
 class CheckoutService extends BaseCartService
 {
-    private CartRepository $cartRepository;
-
-    private StockRepository $stockRepository;
-
-    private OrderRepository $orderRepository;
-
-    private OrderStockRepository $orderStockRepository;
+    private readonly CartRepository $cartRepository;
 
     public function __construct(
         CartRepository $cartRepository,
-        StockRepository $stockRepository,
-        OrderRepository $orderRepository,
-        OrderStockRepository $orderStockRepository,
+        private readonly StockRepository $stockRepository,
+        private readonly OrderRepository $orderRepository,
+        private readonly OrderStockRepository $orderStockRepository,
     ) {
         parent::__construct($cartRepository);
         $this->cartRepository = $cartRepository;
-        $this->stockRepository = $stockRepository;
-        $this->orderRepository = $orderRepository;
-        $this->orderStockRepository = $orderStockRepository;
     }
 
     /**
@@ -61,7 +52,7 @@ class CheckoutService extends BaseCartService
         //        ));
 
         $order = $this->orderRepository->create([
-            'user_id' => $user->id,
+            'user_id'   => $user->id,
             'sum_price' => $cart->sum,
         ]);
 
@@ -73,21 +64,21 @@ class CheckoutService extends BaseCartService
             $orderStock = $this->orderStockRepository->create([
                 'order_id' => $order->id,
                 'stock_id' => $stockId,
-                'price' => $cartStock->price,
+                'price'    => $cartStock->price,
                 'quantity' => 1, // TODO 商品毎に個数をサマリーしたい
             ]);
 
             // 在庫を減らす
-            $stock = $this->stockRepository->findById($stockId);
+            $stock       = $this->stockRepository->findById($stockId);
             $newQuantity = $stock->quantity - 1;
             $this->stockRepository->update([
                 'quantity' => $newQuantity,
             ], $stockId);
 
             $orderItems[] = [
-                'name' => $cartStock->name,
+                'name'     => $cartStock->name,
                 'quantity' => (int) $orderStock->quantity,
-                'price' => (int) $orderStock->price,
+                'price'    => (int) $orderStock->price,
             ];
         }
 

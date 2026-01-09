@@ -8,19 +8,13 @@ use Illuminate\Support\Facades\Validator;
 
 class ExportMonthlySalesService extends BaseService
 {
-    private MonthlySaleRepository $monthlySaleRepository;
-
-    public function __construct(
-        MonthlySaleRepository $monthlySaleRepository
-    ) {
-        $this->monthlySaleRepository = $monthlySaleRepository;
-    }
+    public function __construct(private readonly MonthlySaleRepository $monthlySaleRepository) {}
 
     /**
      * 引数の入力チェックを行い、問題がある場合はエラーメッセージを返却する
      *
-     * @param  array<string, mixed>  $data
-     * @return string[] エラーメッセージの配列
+     * @param  array<string, mixed> $data
+     * @return string[]             エラーメッセージの配列
      */
     public function validateArgs(array $data): array
     {
@@ -30,7 +24,7 @@ class ExportMonthlySalesService extends BaseService
                 'string',
             ],
         ];
-        $messages = [];
+        $messages   = [];
         $attributes = [
             'output_path' => '出力ファイルパス',
         ];
@@ -81,10 +75,10 @@ class ExportMonthlySalesService extends BaseService
 
         $rows = [];
         foreach ($monthlySales as $monthlySale) {
-            $row = [];
-            $row[] = $monthlySale->year_month ?? ''; // 年月
-            $row[] = (string) $monthlySale->order_count; // 注文件数
-            $row[] = (string) $monthlySale->amount; // 売上金額
+            $row    = [];
+            $row[]  = $monthlySale->year_month ?? ''; // 年月
+            $row[]  = (string) $monthlySale->order_count; // 注文件数
+            $row[]  = (string) $monthlySale->amount; // 売上金額
             $rows[] = $row;
         }
 

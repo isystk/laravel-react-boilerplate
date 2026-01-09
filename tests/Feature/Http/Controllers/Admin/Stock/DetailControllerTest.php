@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\Controllers\Admin\Stock;
+namespace Tests\Feature\Http\Controllers\Admin\Stock;
 
 use App\Enums\AdminRole;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
@@ -20,17 +20,17 @@ class DetailControllerTest extends BaseTest
     public function test_show(): void
     {
         $admin1 = $this->createDefaultAdmin([
-            'name' => '管理者A',
+            'name'  => '管理者A',
             'email' => 'admin1@test.com',
-            'role' => AdminRole::HighManager,
+            'role'  => AdminRole::HighManager,
         ]);
         $this->actingAs($admin1, 'admin');
 
         $stock = $this->createDefaultStock([
-            'name' => 'aaa',
-            'detail' => 'aaaの説明',
-            'price' => 111,
-            'quantity' => 1,
+            'name'            => 'aaa',
+            'detail'          => 'aaaの説明',
+            'price'           => 111,
+            'quantity'        => 1,
             'image_file_name' => 'stock1.jpg',
         ]);
 
@@ -65,7 +65,7 @@ class DetailControllerTest extends BaseTest
         $this->actingAs($admin2, 'admin');
 
         $redirectResponse = $this->delete(route('admin.stock.destroy', $stock));
-        $response = $this->get($redirectResponse->headers->get('Location'));
+        $response         = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();
 
         // データが削除されたことをテスト

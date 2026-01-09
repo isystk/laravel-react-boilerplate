@@ -18,14 +18,14 @@ class OrderObserverTest extends BaseTest
 
         // Orderを作成（Observerが発火）
         $this->createDefaultOrder([
-            'sum_price' => 1000,
+            'sum_price'  => 1000,
             'created_at' => $createdAt,
         ]);
 
         $this->assertDatabaseHas('monthly_sales', [
-            'year_month' => '202501',
+            'year_month'  => '202501',
             'order_count' => 1,
-            'amount' => 1000,
+            'amount'      => 1000,
         ]);
     }
 
@@ -33,27 +33,27 @@ class OrderObserverTest extends BaseTest
     {
         $yearMonth = '202501';
         MonthlySale::factory()->create([
-            'year_month' => $yearMonth,
+            'year_month'  => $yearMonth,
             'order_count' => 5,
-            'amount' => 5000,
+            'amount'      => 5000,
         ]);
 
         $this->createDefaultOrder([
-            'sum_price' => 2000,
+            'sum_price'  => 2000,
             'created_at' => Carbon::parse('2025-01-20'),
         ]);
 
         $this->assertDatabaseHas('monthly_sales', [
-            'year_month' => $yearMonth,
+            'year_month'  => $yearMonth,
             'order_count' => 6,
-            'amount' => 7000,
+            'amount'      => 7000,
         ]);
     }
 
     public function test_updated_金額が変更された場合にMonthlySaleが更新されること(): void
     {
         $order = $this->createDefaultOrder([
-            'sum_price' => 1000,
+            'sum_price'  => 1000,
             'created_at' => Carbon::parse('2025-02-01'),
         ]);
 
@@ -63,16 +63,16 @@ class OrderObserverTest extends BaseTest
 
         // 既存の1000に加えて、新たに3000が加算されるロジック（※仕様通りの検証）
         $this->assertDatabaseHas('monthly_sales', [
-            'year_month' => '202502',
+            'year_month'  => '202502',
             'order_count' => 2,
-            'amount' => 4000,
+            'amount'      => 4000,
         ]);
     }
 
     public function test_updated_金額以外が変更された場合はMonthlySaleは更新されないこと(): void
     {
         $order = $this->createDefaultOrder([
-            'sum_price' => 1000,
+            'sum_price'  => 1000,
             'created_at' => Carbon::parse('2025-02-01'),
         ]);
 

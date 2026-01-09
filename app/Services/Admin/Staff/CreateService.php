@@ -11,13 +11,7 @@ use Illuminate\Support\Facades\Hash;
 
 class CreateService extends BaseService
 {
-    private AdminRepository $adminRepository;
-
-    public function __construct(
-        AdminRepository $adminRepository
-    ) {
-        $this->adminRepository = $adminRepository;
-    }
+    public function __construct(private readonly AdminRepository $adminRepository) {}
 
     /**
      * 管理者を登録します。
@@ -25,10 +19,10 @@ class CreateService extends BaseService
     public function save(StoreRequest $request): Admin
     {
         return $this->adminRepository->create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'name'     => $request->name,
+            'email'    => $request->email,
             'password' => Hash::make($request->password),
-            'role' => AdminRole::Manager,
+            'role'     => AdminRole::Manager,
         ]);
     }
 }

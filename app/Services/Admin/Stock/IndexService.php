@@ -9,13 +9,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class IndexService extends BaseStockService
 {
-    private StockRepository $stockRepository;
-
-    public function __construct(
-        StockRepository $stockRepository
-    ) {
-        $this->stockRepository = $stockRepository;
-    }
+    public function __construct(private readonly StockRepository $stockRepository) {}
 
     /**
      * 商品を検索します。
@@ -25,10 +19,10 @@ class IndexService extends BaseStockService
     public function searchStock(SearchConditionDto $searchConditionDto): LengthAwarePaginator
     {
         $items = [
-            'name' => $searchConditionDto->name,
-            'sort_name' => $searchConditionDto->sortName,
+            'name'           => $searchConditionDto->name,
+            'sort_name'      => $searchConditionDto->sortName,
             'sort_direction' => $searchConditionDto->sortDirection,
-            'limit' => $searchConditionDto->limit,
+            'limit'          => $searchConditionDto->limit,
         ];
 
         return $this->stockRepository->getByConditions($items);

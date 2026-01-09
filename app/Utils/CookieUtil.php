@@ -37,7 +37,7 @@ class CookieUtil
      */
     public static function remove(string $key, string $value, int $expires = self::DEFAULT_EXPIRES_MINUTES): void
     {
-        $items = self::get($key);
+        $items    = self::get($key);
         $filtered = array_filter($items, fn ($item) => $item !== $value);
 
         if (count($items) !== count($filtered)) {

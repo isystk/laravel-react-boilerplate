@@ -20,7 +20,7 @@ class EditController extends BaseController
     public function edit(ContactForm $contactForm): View
     {
         /** @var EditService $service */
-        $service = app(EditService::class);
+        $service           = app(EditService::class);
         $contactFormImages = $service->getContactFormImage($contactForm->id);
 
         return view('admin.contact.edit', compact([
@@ -40,11 +40,13 @@ class EditController extends BaseController
         $service = app(UpdateService::class);
 
         DB::beginTransaction();
+
         try {
             $service->update($contactForm->id, $request);
             DB::commit();
         } catch (Throwable $e) {
             DB::rollBack();
+
             throw $e;
         }
 

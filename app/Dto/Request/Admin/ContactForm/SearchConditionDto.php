@@ -27,11 +27,11 @@ class SearchConditionDto
     public function __construct(
         Request $request
     ) {
-        $this->userName = $request->input('user_name');
-        $this->title = $request->input('title');
-        $this->sortName = $request->input('sort_name', 'id'); // デフォルト: id
+        $this->userName      = $request->input('user_name');
+        $this->title         = $request->input('title');
+        $this->sortName      = $request->input('sort_name', 'id'); // デフォルト: id
         $this->sortDirection = in_array($request->input('sort_direction'), ['asc', 'desc']) ? $request->input('sort_direction') : 'desc';
-        $this->page = (int) $request->input('page', 1); // デフォルト: 1
-        $this->limit = (int) $request->input('limit', 20); // デフォルト: 20
+        $this->page          = (int) $request->input('page', 1); // デフォルト: 1
+        $this->limit         = (int) $request->input('limit', 20); // デフォルト: 20
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\Controllers\Api;
+namespace Tests\Feature\Http\Controllers\Api;
 
 use App\Enums\Age;
 use App\Enums\Gender;
@@ -25,19 +25,19 @@ class ContactFormControllerTest extends BaseTest
         Storage::fake('s3');
 
         $user1 = $this->createDefaultUser([
-            'name' => 'user1',
+            'name'  => 'user1',
             'email' => 'user1@test.com',
         ]);
         $this->actingAs($user1);
 
         $response = $this->post(route('api.contact.store'), [
-            'user_name' => $user1->name,
-            'email' => $user1->email,
-            'title' => 'タイトル1',
-            'url' => 'https://aaa.test.com',
-            'gender' => Gender::Female->value,
-            'age' => Age::Over40->value,
-            'contact' => 'お問い合わせ1',
+            'user_name'   => $user1->name,
+            'email'       => $user1->email,
+            'title'       => 'タイトル1',
+            'url'         => 'https://aaa.test.com',
+            'gender'      => Gender::Female->value,
+            'age'         => Age::Over40->value,
+            'contact'     => 'お問い合わせ1',
             'image_files' => [
                 UploadedFile::fake()->image('image1.jpg'),
                 UploadedFile::fake()->image('image2.jpg'),

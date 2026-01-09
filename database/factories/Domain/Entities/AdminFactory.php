@@ -6,6 +6,9 @@ use App\Domain\Entities\Admin;
 use App\Enums\AdminRole;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Domain\Entities\Admin>
+ */
 class AdminFactory extends Factory
 {
     /**
@@ -23,10 +26,10 @@ class AdminFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
+            'name'     => fake()->name(),
+            'email'    => fake()->unique()->safeEmail(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'role' => $this->faker->randomElement(AdminRole::cases()),
+            'role'     => fake()->randomElement(AdminRole::cases()),
         ];
     }
 
@@ -35,9 +38,7 @@ class AdminFactory extends Factory
      */
     public function unverified(): Factory
     {
-        return $this->state(function (array $attributes) {
-            return [
-            ];
-        });
+        return $this->state(fn (array $attributes) => [
+        ]);
     }
 }

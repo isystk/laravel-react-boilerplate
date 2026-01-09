@@ -11,19 +11,6 @@ class CheckoutCompleteToUser extends Mailable
 {
     use Queueable, SerializesModels;
 
-    private User $user;
-
-    private int $amount;
-
-    /**
-     * @var array<array{
-     *     name: string,
-     *     quantity: int,
-     *     price: int
-     * }>
-     */
-    private array $orderItems;
-
     /**
      * @param array<array{
      *     name: string,
@@ -31,15 +18,7 @@ class CheckoutCompleteToUser extends Mailable
      *     price: int
      * }> $orderItems
      */
-    public function __construct(
-        User $user,
-        int $amount,
-        array $orderItems
-    ) {
-        $this->user = $user;
-        $this->amount = $amount;
-        $this->orderItems = $orderItems;
-    }
+    public function __construct(private User $user, private int $amount, private array $orderItems) {}
 
     /**
      * Build the message.
@@ -54,8 +33,8 @@ class CheckoutCompleteToUser extends Mailable
             ->view('mails.checkout_complete_to_user_html')
             ->text('mails.checkout_complete_to_user_text')
             ->with([
-                'user' => $this->user,
-                'amount' => $this->amount,
+                'user'       => $this->user,
+                'amount'     => $this->amount,
                 'orderItems' => $this->orderItems,
             ]);
     }

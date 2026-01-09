@@ -37,11 +37,13 @@ class EditController extends BaseController
         $service = app(UpdateService::class);
 
         DB::beginTransaction();
+
         try {
             $service->update($staff->id, $request);
             DB::commit();
         } catch (Throwable $e) {
             DB::rollBack();
+
             throw $e;
         }
 

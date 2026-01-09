@@ -19,7 +19,7 @@ class ListController extends BaseController
         $service = app(IndexService::class);
 
         $searchCondition = new SearchConditionDto($request);
-        $orders = $service->searchOrder($searchCondition);
+        $orders          = $service->searchOrder($searchCondition);
 
         return view('admin.order.index', compact([
             'orders',
