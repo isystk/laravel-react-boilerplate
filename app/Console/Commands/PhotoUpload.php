@@ -32,7 +32,6 @@ class PhotoUpload extends BaseCommand
             return CommandAlias::INVALID;
         }
 
-
         // オプションの取得
         $this->isRealRun = $this->option('run');
         $targetFileName  = $this->option('file_name');
