@@ -90,7 +90,7 @@ case $COMMAND in
         fi
 
         echo "🚀 実行: $TEST_FILES"
-        $DOCKER_CMD exec -e XDEBUG_MODE=off app ./vendor/bin/phpunit $TEST_FILES
+        $DOCKER_CMD exec -e XDEBUG_MODE=off app php -d memory_limit=1G ./vendor/bin/phpunit $TEST_FILES
         ;;
 
     *)

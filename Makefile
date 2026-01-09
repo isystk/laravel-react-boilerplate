@@ -120,7 +120,7 @@ format-staged: ## ステージング済みのファイルのコード自動整�
 .PHONY: test
 test: ## すべてのテスト実行
 	@$(DOCKER_CMD) exec app npm run test; \
-	$(DOCKER_CMD) exec -e XDEBUG_MODE=off app ./vendor/bin/phpunit --display-phpunit-deprecations
+	$(DOCKER_CMD) exec -e XDEBUG_MODE=off app php -d memory_limit=1G ./vendor/bin/phpunit --display-phpunit-deprecations
 
 .PHONY: test-branch
 test-branch: ## 選択したブランチとローカル差分のテスト実行
@@ -132,7 +132,7 @@ test-staged: ## ステージング済みファイルのテスト実行
 
 .PHONY: test-coverage
 test-coverage: ## コードカバレッジレポートを出力します。
-	$(DOCKER_CMD) exec -e XDEBUG_MODE=coverage app ./vendor/bin/phpunit --coverage-text --display-phpunit-deprecations
+	$(DOCKER_CMD) exec -e XDEBUG_MODE=coverage app php -d memory_limit=1G ./vendor/bin/phpunit --coverage-text --display-phpunit-deprecations
 
 .PHONY: pre-commit
 pre-commit: ## コミット前にすべてのチェックを実行します。
