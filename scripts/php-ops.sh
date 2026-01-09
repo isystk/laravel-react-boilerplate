@@ -2,7 +2,7 @@
 set -e
 
 COMMAND=$1
-DIFF_MODE=$2 # local or staged
+DIFF_MODE=$2 # branch or staged
 
 # スクリプトの場所を基準にルートディレクトリを特定
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
@@ -21,12 +21,12 @@ get_diff_files() {
     local filter="d"
     shift 1
     local patterns=("$@")
-
-    if [ "$mode" = "local" ]; then
-        local branch_list=$(git branch --format='%(refname:short)' | grep -v "HEAD")
+    if [ "$mode" = "branch" ]; then
+        local branch_list=$(git branch -a --format='%(refname:short)' | grep -v "HEAD")
         source "$UTILS_SH"
-        local selected_branch=$(select_from_list "$branch_list" "🌿 比較対象のローカルブランチを選択してください")
+        local selected_branch=$(select_from_list "$branch_list" "🌿 比較対象のブランチを選択してください")
         [ -z "$selected_branch" ] && { echo "🚫 キャンセルされました。"; exit 1; }
+        # 選択されたブランチと現在のHEADの差分をとる
         git diff --name-only --diff-filter=$filter "$selected_branch...HEAD" -- "${patterns[@]}"
     else
         git diff --name-only --cached --diff-filter=$filter -- "${patterns[@]}"

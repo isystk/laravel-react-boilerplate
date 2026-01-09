@@ -102,9 +102,9 @@ format: ## すべてのコード自動整形
 	$(DOCKER_CMD) exec app ./vendor/bin/pint; \
 	$(DOCKER_CMD) exec -T app npx -y blade-formatter --write resources/views/**/*.blade.php;
 
-.PHONY: format-local
-format-local: ## 選択したブランチとローカル差分のコード自動整形
-	@bash $(PHP_OPS_SH) format local
+.PHONY: format-branch
+format-branch: ## 選択したブランチとローカル差分のコード自動整形
+	@bash $(PHP_OPS_SH) format branch
 
 .PHONY: format-staged
 format-staged: ## ステージング済みのファイルのコード自動整形
@@ -115,9 +115,9 @@ test: ## すべてのテスト実行
 	@$(DOCKER_CMD) exec app npm run test; \
 	$(DOCKER_CMD) exec -e XDEBUG_MODE=off app ./vendor/bin/phpunit --display-phpunit-deprecations
 
-.PHONY: test-local
-test-local: ## 選択したブランチとローカル差分のテスト実行
-	@bash $(PHP_OPS_SH) test local
+.PHONY: test-branch
+test-branch: ## 選択したブランチとローカル差分のテスト実行
+	@bash $(PHP_OPS_SH) test branch
 
 .PHONY: test-staged
 test-staged: ## ステージング済みファイルのテスト実行
