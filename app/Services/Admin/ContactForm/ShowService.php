@@ -9,13 +9,7 @@ use Illuminate\Support\Collection;
 
 class ShowService extends BaseService
 {
-    private ContactFormImageRepository $contactFormImageRepository;
-
-    public function __construct(
-        ContactFormImageRepository $contactFormImageRepository
-    ) {
-        $this->contactFormImageRepository = $contactFormImageRepository;
-    }
+    public function __construct(private readonly ContactFormImageRepository $contactFormImageRepository) {}
 
     /**
      * お問い合わせを取得します。

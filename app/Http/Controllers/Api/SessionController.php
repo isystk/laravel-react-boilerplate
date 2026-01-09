@@ -15,9 +15,9 @@ class SessionController extends BaseApiController
         $user = AuthHelper::frontLoginedUser();
 
         return response()->json([
-            'id' => $user->id ?? null,
-            'name' => $user->name ?? null,
-            'email' => $user->email ?? null,
+            'id'                => $user->id ?? null,
+            'name'              => $user->name ?? null,
+            'email'             => $user->email ?? null,
             'email_verified_at' => $user->email_verified_at ?? null,
         ]);
     }

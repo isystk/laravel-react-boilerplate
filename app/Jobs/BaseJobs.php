@@ -22,8 +22,8 @@ abstract class BaseJobs implements ShouldQueue
      */
     protected function outputLog(string $message): void
     {
-        $jobName = class_basename(get_class($this));
-        $dir = base_path() . '/storage/logs/' . $jobName . '/';
+        $jobName = class_basename(static::class);
+        $dir     = base_path() . '/storage/logs/' . $jobName . '/';
         // ディレクトリが無ければ作成する
         if (!file_exists($dir) && !mkdir($dir, 0777, true) && !is_dir($dir)) {
             throw new RuntimeException(sprintf('Directory "%s" was not created', $dir));

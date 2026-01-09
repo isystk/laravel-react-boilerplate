@@ -8,10 +8,8 @@
 
 @section('content')
     <div class="text-start mb-3">
-        <a
-            class="btn btn-secondary"
-            href="{{ route('admin.stock') }}"
-        >{{ __('common.Back') }}</a>
+        <a class="btn btn-secondary"
+           href="{{ route('admin.stock') }}">{{ __('common.Back') }}</a>
     </div>
 
     <div class="card card-purple">
@@ -48,14 +46,12 @@
                 <label class="col-sm-2 col-form-label text-muted small">{{ __('stock.Image') }}</label>
                 <div class="col-sm-10">
                     <div id="result">
-                        @if($stock->image_file_name)
-                            <img
-                                src="{{ asset('/uploads/stock/'.$stock->image_file_name) }}"
-                                alt="{{ $stock->name }}"
-                                id="stockImage"
-                                class="img-thumbnail"
-                                style="max-width: 300px; height: auto;"
-                            />
+                        @if ($stock->image_file_name)
+                            <img src="{{ asset('/uploads/stock/' . $stock->image_file_name) }}"
+                                 alt="{{ $stock->name }}"
+                                 id="stockImage"
+                                 class="img-thumbnail"
+                                 style="max-width: 300px; height: auto;" />
                         @else
                             <span class="text-muted small">画像なし</span>
                         @endif
@@ -66,35 +62,23 @@
         <div class="card-footer text-center position-relative">
             <div class="d-inline-block">
                 <div class="mx-auto">
-                    <a
-                        class="btn btn-primary"
-                        href="{{ route('admin.stock.edit', ['stock' => $stock ]) }}"
-                        @if(!Auth::user()->role->isHighManager())
-                            disabled="disabled"
-                        @endif
-                    >
+                    <a class="btn btn-primary"
+                       href="{{ route('admin.stock.edit', ['stock' => $stock]) }}"
+                       @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>
                         {{ __('common.Change') }}
                     </a>
                 </div>
             </div>
-            <div
-                class="d-inline-block position-absolute"
-                style="right: 30px;"
-            >
-                <form
-                    method="POST"
-                    action="{{ route('admin.stock.destroy', ['stock' => $stock ]) }}"
-                    id="delete_{{ $stock->id }}"
-                >
+            <div class="d-inline-block position-absolute"
+                 style="right: 30px;">
+                <form method="POST"
+                      action="{{ route('admin.stock.destroy', ['stock' => $stock]) }}"
+                      id="delete_{{ $stock->id }}">
                     @method('DELETE')
                     @csrf
-                    <button
-                        class="btn btn-danger js-deleteBtn"
-                        data-id="{{ $stock->id }}"
-                        @if(!Auth::user()->role->isHighManager())
-                            disabled="disabled"
-                        @endif
-                    >
+                    <button class="btn btn-danger js-deleteBtn"
+                            data-id="{{ $stock->id }}"
+                            @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>
                         {{ __('common.Delete') }}
                     </button>
                 </form>

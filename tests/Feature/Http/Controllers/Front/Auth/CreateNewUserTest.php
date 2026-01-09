@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\Controllers\Front\Auth;
+namespace Tests\Feature\Http\Controllers\Front\Auth;
 
 use App\Domain\Entities\User;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
@@ -20,9 +20,9 @@ class CreateNewUserTest extends BaseTest
     public function test_create(): void
     {
         $items = [
-            'name' => 'user1',
-            'email' => 'user1@test.com',
-            'password' => 'password',
+            'name'                  => 'user1',
+            'email'                 => 'user1@test.com',
+            'password'              => 'password',
             'password_confirmation' => 'password',
         ];
         $this->post('/register', $items)

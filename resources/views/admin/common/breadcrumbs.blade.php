@@ -13,7 +13,7 @@
                                     if (!empty($breadcrumb->privilege)) {
                                         $prefix = $breadcrumb->privilege . '.';
                                     }
-                                    $url = route( $prefix . $breadcrumb->url, $params );
+                                    $url = route($prefix . $breadcrumb->url, $params);
                                 }
                             @endphp
                             @if (!empty($url))

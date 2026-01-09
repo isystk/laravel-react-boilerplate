@@ -18,7 +18,7 @@ class BaseCommand extends Command
     /**
      * 標準出力およびログファイルへの出力
      *
-     * @param  array<string>  $messages  出力メッセージの配列
+     * @param array<string> $messages 出力メッセージの配列
      */
     protected function outputLog(array $messages): void
     {
@@ -36,7 +36,7 @@ class BaseCommand extends Command
                 chmod($storage->path($dir), 0755);
             }
             $fileName = Carbon::now()->format('Ymd') . '.log';
-            $message = Carbon::now()->toDateTimeString() . ' ' . $message;
+            $message  = Carbon::now()->toDateTimeString() . ' ' . $message;
             $storage->append($dir . '/' . $fileName, $message);
         }
     }

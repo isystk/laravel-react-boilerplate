@@ -7,13 +7,7 @@ use App\Services\BaseService;
 
 class DestroyService extends BaseService
 {
-    private StockRepository $stockRepository;
-
-    public function __construct(
-        StockRepository $stockRepository
-    ) {
-        $this->stockRepository = $stockRepository;
-    }
+    public function __construct(private readonly StockRepository $stockRepository) {}
 
     /**
      * 商品を削除します。

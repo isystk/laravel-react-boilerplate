@@ -25,12 +25,12 @@ class IndexServiceTest extends BaseTest
     public function test_searchOrder(): void
     {
         $request = new Request([
-            'user_name' => null,
+            'user_name'       => null,
             'order_date_from' => null,
-            'order_date_to' => null,
-            'sort_name' => 'updated_at',
-            'sort_direction' => 'asc',
-            'limit' => 20,
+            'order_date_to'   => null,
+            'sort_name'       => 'updated_at',
+            'sort_direction'  => 'asc',
+            'limit'           => 20,
         ]);
         $default = new SearchConditionDto($request);
 
@@ -50,29 +50,29 @@ class IndexServiceTest extends BaseTest
         $order2 = $this->createDefaultOrder(['user_id' => $user2->id, 'created_at' => '2024-06-01']);
         OrderStock::factory(['order_id' => $order2->id, 'stock_id' => $stock3->id])->create();
 
-        $input = clone $default;
+        $input       = clone $default;
         $input->name = 'user2';
-        $orders = $this->service->searchOrder($input)->getCollection();
-        $orderIds = $orders->pluck('id')->all();
+        $orders      = $this->service->searchOrder($input)->getCollection();
+        $orderIds    = $orders->pluck('id')->all();
         $this->assertSame([$order2->id], $orderIds, 'user_nameで検索が出来ることをテスト');
 
-        $input = clone $default;
+        $input                = clone $default;
         $input->orderDateFrom = DateUtil::toCarbon('2024-06-01');
-        $orders = $this->service->searchOrder($input)->getCollection();
-        $orderIds = $orders->pluck('id')->all();
+        $orders               = $this->service->searchOrder($input)->getCollection();
+        $orderIds             = $orders->pluck('id')->all();
         $this->assertContains($order2->id, $orderIds, 'order_date_fromで検索が出来ることをテスト');
 
-        $input = clone $default;
+        $input              = clone $default;
         $input->orderDateTo = DateUtil::toCarbon('2024-05-01');
-        $orders = $this->service->searchOrder($input)->getCollection();
-        $orderIds = $orders->pluck('id')->all();
+        $orders             = $this->service->searchOrder($input)->getCollection();
+        $orderIds           = $orders->pluck('id')->all();
         $this->assertSame([$order1->id], $orderIds, 'order_date_toで検索が出来ることをテスト');
 
-        $input = clone $default;
-        $input->sortName = 'id';
+        $input                = clone $default;
+        $input->sortName      = 'id';
         $input->sortDirection = 'desc';
-        $orders = $this->service->searchOrder($input)->getCollection();
-        $orderIds = $orders->pluck('id')->all();
+        $orders               = $this->service->searchOrder($input)->getCollection();
+        $orderIds             = $orders->pluck('id')->all();
         $this->assertContains($order1->id, $orderIds, 'ソート指定で検索が出来ることをテスト');
         $this->assertContains($order2->id, $orderIds, 'ソート指定で検索が出来ることをテスト');
     }

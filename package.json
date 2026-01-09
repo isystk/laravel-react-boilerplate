@@ -9,7 +9,8 @@
     "lint": "npx eslint resources/assets/front --ext .js,.jsx,.ts,.tsx --fix",
     "prettier": "prettier --write \"resources/assets/**/*.{js,jsx,ts,tsx}\"",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "blade-formatter": "blade-formatter -w resources/views/**/*.blade.php"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.6",
@@ -31,6 +32,7 @@
     "@vitest/coverage-v8": "^3.1.2",
     "autoprefixer": "^10.4.21",
     "axios": "^1.8.2",
+    "blade-formatter": "^1.44.2",
     "concurrently": "^9.0.1",
     "eslint": "^9.26.0",
     "eslint-plugin-react": "^7.37.5",

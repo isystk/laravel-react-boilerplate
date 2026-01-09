@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Entities;
+namespace Tests\Unit\Domain\Entities;
 
 use App\Domain\Entities\User;
 use App\Mails\ResetPasswordToUser;
@@ -39,10 +39,10 @@ class UserTest extends BaseTest
         Notification::assertSentTo(
             $user,
             ResetPasswordToUser::class,
-            static function ($notification, $channels) {
-                // 通知オブジェクトが生成されているか、トークンが渡されているか等を検証
-                return true;
-            }
+
+            // 通知オブジェクトが生成されているか、トークンが渡されているか等を検証
+
+            static fn ($notification, $channels) => true
         );
     }
 

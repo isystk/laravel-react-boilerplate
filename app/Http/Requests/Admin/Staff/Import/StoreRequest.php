@@ -9,8 +9,6 @@ class StoreRequest extends BaseImportRequest
 {
     protected function createImporter(): \Closure
     {
-        return static function (string $filePath) {
-            return new StaffImport($filePath);
-        };
+        return static fn (string $filePath) => new StaffImport($filePath);
     }
 }

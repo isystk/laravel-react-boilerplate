@@ -10,13 +10,7 @@ use Illuminate\Support\Collection;
 
 class ExportService extends BaseStockService
 {
-    private StockRepository $stockRepository;
-
-    public function __construct(
-        StockRepository $stockRepository
-    ) {
-        $this->stockRepository = $stockRepository;
-    }
+    public function __construct(private readonly StockRepository $stockRepository) {}
 
     /**
      * エクスポート用のオブジェクトを取得します。
@@ -24,8 +18,8 @@ class ExportService extends BaseStockService
     public function getExport(SearchConditionDto $searchConditionDto): StockExport
     {
         $items = [
-            'name' => $searchConditionDto->name,
-            'sort_name' => $searchConditionDto->sortName,
+            'name'           => $searchConditionDto->name,
+            'sort_name'      => $searchConditionDto->sortName,
             'sort_direction' => $searchConditionDto->sortDirection,
         ];
         /** @var Collection<int, Stock> $stocks */

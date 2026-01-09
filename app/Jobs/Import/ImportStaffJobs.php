@@ -13,15 +13,13 @@ class ImportStaffJobs extends BaseImportJobs
      */
     protected function createImporter(): Closure
     {
-        return static function (string $filePath) {
-            return new StaffImport($filePath);
-        };
+        return static fn (string $filePath) => new StaffImport($filePath);
     }
 
     /**
      * スタッフを一括登録する
      *
-     * @param  array<array<string, ?string>>  $rows
+     * @param array<array<string, ?string>> $rows
      */
     protected function importData(array $rows): void
     {

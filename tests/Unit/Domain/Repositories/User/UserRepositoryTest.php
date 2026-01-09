@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Repositories\User;
+namespace Tests\Unit\Domain\Repositories\User;
 
 use App\Domain\Entities\User;
 use App\Domain\Repositories\User\UserRepository;
@@ -22,11 +22,11 @@ class UserRepositoryTest extends BaseTest
     public function test_getByConditions(): void
     {
         $defaultConditions = [
-            'name' => null,
-            'email' => null,
-            'sort_name' => null,
+            'name'           => null,
+            'email'          => null,
+            'sort_name'      => null,
             'sort_direction' => null,
-            'limit' => null,
+            'limit'          => null,
         ];
 
         $users = $this->repository->getByConditions($defaultConditions);

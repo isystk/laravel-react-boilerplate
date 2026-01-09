@@ -9,11 +9,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
- * @property int $id
- * @property int $user_id
+ * @property int      $id
+ * @property int      $user_id
  * @property int|null $sum_price
- * @property Carbon $created_at
- * @property Carbon $updated_at
+ * @property Carbon   $created_at
+ * @property Carbon   $updated_at
  */
 class Order extends Model
 {
@@ -32,16 +32,6 @@ class Order extends Model
         'sum_price',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
-
     // 親テーブル
 
     /**
@@ -50,5 +40,18 @@ class Order extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
     }
 }

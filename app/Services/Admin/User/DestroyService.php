@@ -7,13 +7,7 @@ use App\Services\BaseService;
 
 class DestroyService extends BaseService
 {
-    private UserRepository $userRepository;
-
-    public function __construct(
-        UserRepository $userRepository
-    ) {
-        $this->userRepository = $userRepository;
-    }
+    public function __construct(private readonly UserRepository $userRepository) {}
 
     /**
      * ユーザーを削除します。

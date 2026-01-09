@@ -38,16 +38,16 @@ class IndexServiceTest extends BaseTest
         $storage->put('stock\stock1.jpg', 'dummy');
         $storage->put('stock\stock2.jpg', 'dummy');
 
-        $input = $default;
+        $input              = $default;
         $input['file_name'] = 'stock1.jpg';
-        $photos = $this->service->searchPhotoList($input);
-        $fileNames = collect($photos)->pluck('fileName')->all();
+        $photos             = $this->service->searchPhotoList($input);
+        $fileNames          = collect($photos)->pluck('fileName')->all();
         $this->assertSame(['stock/stock1.jpg'], $fileNames, 'file_nameで検索が出来ることをテスト');
 
-        $input = $default;
+        $input              = $default;
         $input['file_type'] = PhotoType::Stock->value;
-        $photos = $this->service->searchPhotoList($input);
-        $fileNames = collect($photos)->pluck('fileName')->all();
+        $photos             = $this->service->searchPhotoList($input);
+        $fileNames          = collect($photos)->pluck('fileName')->all();
         $this->assertSame(['stock/stock1.jpg', 'stock/stock2.jpg'], $fileNames, 'file_nameで検索が出来ることをテスト');
     }
 }

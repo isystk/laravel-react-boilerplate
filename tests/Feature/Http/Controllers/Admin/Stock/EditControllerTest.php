@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\Controllers\Admin\Stock;
+namespace Tests\Feature\Http\Controllers\Admin\Stock;
 
 use App\Enums\AdminRole;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
@@ -50,17 +50,17 @@ class EditControllerTest extends BaseTest
         Storage::fake('s3');
 
         $admin1 = $this->createDefaultAdmin([
-            'name' => '管理者1',
+            'name'  => '管理者1',
             'email' => 'admin1@test.com',
-            'role' => AdminRole::Manager,
+            'role'  => AdminRole::Manager,
         ]);
         $this->actingAs($admin1, 'admin');
 
         $stock = $this->createDefaultStock([
-            'name' => 'aaa',
-            'detail' => 'aaaの説明',
-            'price' => 111,
-            'quantity' => 1,
+            'name'            => 'aaa',
+            'detail'          => 'aaaの説明',
+            'price'           => 111,
+            'quantity'        => 1,
             'image_file_name' => 'image1.jpg',
         ]);
 
@@ -69,21 +69,21 @@ class EditControllerTest extends BaseTest
         $response->assertForbidden();
 
         $admin2 = $this->createDefaultAdmin([
-            'name' => '管理者2',
+            'name'  => '管理者2',
             'email' => 'admin2@test.com',
-            'role' => AdminRole::HighManager,
+            'role'  => AdminRole::HighManager,
         ]);
         $this->actingAs($admin2, 'admin');
 
-        $image2 = UploadedFile::fake()->image('image2.jpg');
-        $base64String = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($image2->path()));
+        $image2           = UploadedFile::fake()->image('image2.jpg');
+        $base64String     = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($image2->path()));
         $redirectResponse = $this->put(route('admin.stock.update', $stock), [
-            'name' => 'bbb',
-            'detail' => 'bbbの説明',
-            'price' => 222,
-            'quantity' => 2,
-            'imageFile' => $image2,
-            'fileName' => 'image2.jpg',
+            'name'        => 'bbb',
+            'detail'      => 'bbbの説明',
+            'price'       => 222,
+            'quantity'    => 2,
+            'imageFile'   => $image2,
+            'fileName'    => 'image2.jpg',
             'imageBase64' => $base64String,
         ]);
         $response = $this->get($redirectResponse->headers->get('Location'));
@@ -91,10 +91,10 @@ class EditControllerTest extends BaseTest
 
         // データが更新されたことをテスト
         $this->assertDatabaseHas('stocks', [
-            'name' => 'bbb',
-            'detail' => 'bbbの説明',
-            'price' => 222,
-            'quantity' => 2,
+            'name'            => 'bbb',
+            'detail'          => 'bbbの説明',
+            'price'           => 222,
+            'quantity'        => 2,
             'image_file_name' => 'image2.jpg',
         ]);
 

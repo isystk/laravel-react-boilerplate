@@ -9,13 +9,7 @@ use App\Services\BaseService;
 
 class UpdateService extends BaseService
 {
-    private UserRepository $userRepository;
-
-    public function __construct(
-        UserRepository $userRepository
-    ) {
-        $this->userRepository = $userRepository;
-    }
+    public function __construct(private readonly UserRepository $userRepository) {}
 
     /**
      * ユーザーを更新します。
@@ -23,7 +17,7 @@ class UpdateService extends BaseService
     public function update(int $userId, UpdateRequest $request): User
     {
         return $this->userRepository->update([
-            'name' => $request->name,
+            'name'  => $request->name,
             'email' => $request->email,
         ], $userId);
     }

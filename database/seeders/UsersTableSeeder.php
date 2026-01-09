@@ -12,9 +12,9 @@ class UsersTableSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => 'テスト1',
-            'email' => 'test1@test.com',
-            'password' => Hash::make('password'),
+            'name'              => 'テスト1',
+            'email'             => 'test1@test.com',
+            'password'          => Hash::make('password'),
             'email_verified_at' => Carbon::now(),
         ]);
 

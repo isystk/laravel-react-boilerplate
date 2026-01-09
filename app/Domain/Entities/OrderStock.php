@@ -9,13 +9,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
- * @property int $id
- * @property int $order_id
- * @property int $stock_id
+ * @property int      $id
+ * @property int      $order_id
+ * @property int      $stock_id
  * @property int|null $price
  * @property int|null $quantity
- * @property Carbon $created_at
- * @property Carbon $updated_at
+ * @property Carbon   $created_at
+ * @property Carbon   $updated_at
  */
 class OrderStock extends Model
 {
@@ -36,16 +36,6 @@ class OrderStock extends Model
         'quantity',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
-
     // 親テーブル
 
     /**
@@ -62,5 +52,18 @@ class OrderStock extends Model
     public function stock(): BelongsTo
     {
         return $this->belongsTo(Stock::class);
+    }
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
     }
 }

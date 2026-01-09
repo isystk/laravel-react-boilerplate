@@ -24,10 +24,10 @@ class StockDto
     public function __construct(
         Stock $stock
     ) {
-        $this->id = $stock->id;
-        $this->name = $stock->name;
+        $this->id       = $stock->id;
+        $this->name     = $stock->name;
         $this->imageUrl = $stock->getImageUrl();
-        $this->price = $stock->price;
+        $this->price    = $stock->price;
         $this->quantity = $stock->quantity;
     }
 }

@@ -10,8 +10,8 @@ class PhotoUploadService extends BaseService
     /**
      * 引数の入力チェックを行い、問題がある場合はエラーメッセージを返却する
      *
-     * @param  array<string, mixed>  $data
-     * @return string[] エラーメッセージの配列
+     * @param  array<string, mixed> $data
+     * @return string[]             エラーメッセージの配列
      */
     public function validateArgs(array $data): array
     {
@@ -22,7 +22,7 @@ class PhotoUploadService extends BaseService
                 'max:32',
             ],
         ];
-        $messages = [];
+        $messages   = [];
         $attributes = [
             'file_name' => 'ファイル名(--file_name)',
         ];

@@ -1,6 +1,6 @@
 <?php
 
-namespace Services\Admin;
+namespace Tests\Unit\Services\Admin;
 
 use App\Services\Admin\PasswordChangeUpdateService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -22,8 +22,8 @@ class PasswordChangeUpdateServiceTest extends BaseTest
     public function test_update(): void
     {
         $admin = $this->createDefaultAdmin([
-            'name' => 'aaa',
-            'email' => 'aaa@test.com',
+            'name'     => 'aaa',
+            'email'    => 'aaa@test.com',
             'password' => Hash::make('password'),
         ]);
 

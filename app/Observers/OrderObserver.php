@@ -13,21 +13,21 @@ class OrderObserver implements ShouldHandleEventsAfterCommit
      */
     public function created(Order $order): void
     {
-        $sumPrice = $order->sum_price;
-        $yearMonth = $order->created_at->format('Ym');
+        $sumPrice    = $order->sum_price;
+        $yearMonth   = $order->created_at->format('Ym');
         $monthlySale = MonthlySale::where('year_month', $yearMonth)->first();
-        if (null === $monthlySale) {
+        if ($monthlySale === null) {
             MonthlySale::create([
-                'year_month' => $yearMonth,
+                'year_month'  => $yearMonth,
                 'order_count' => 1,
-                'amount' => $sumPrice,
+                'amount'      => $sumPrice,
             ]);
         } else {
             MonthlySale::where('id', $monthlySale->id)
                 ->update([
-                    'year_month' => $yearMonth,
+                    'year_month'  => $yearMonth,
                     'order_count' => $monthlySale->order_count + 1,
-                    'amount' => $monthlySale->amount + $sumPrice,
+                    'amount'      => $monthlySale->amount + $sumPrice,
                 ]);
         }
     }
@@ -38,21 +38,21 @@ class OrderObserver implements ShouldHandleEventsAfterCommit
     public function updated(Order $order): void
     {
         if ($order->isDirty('sum_price')) {
-            $sumPrice = $order->sum_price;
-            $yearMonth = $order->created_at->format('Ym');
+            $sumPrice    = $order->sum_price;
+            $yearMonth   = $order->created_at->format('Ym');
             $monthlySale = MonthlySale::where('year_month', $yearMonth)->first();
-            if (null === $monthlySale) {
+            if ($monthlySale === null) {
                 MonthlySale::create([
-                    'year_month' => $yearMonth,
+                    'year_month'  => $yearMonth,
                     'order_count' => 1,
-                    'amount' => $sumPrice,
+                    'amount'      => $sumPrice,
                 ]);
             } else {
                 MonthlySale::where('id', $monthlySale->id)
                     ->update([
-                        'year_month' => $yearMonth,
+                        'year_month'  => $yearMonth,
                         'order_count' => $monthlySale->order_count + 1,
-                        'amount' => $monthlySale->amount + $sumPrice,
+                        'amount'      => $monthlySale->amount + $sumPrice,
                     ]);
             }
         }

@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
- * @property int $id
- * @property string $year_month
+ * @property int      $id
+ * @property string   $year_month
  * @property int|null $order_count
  * @property int|null $amount
- * @property Carbon $created_at
- * @property Carbon $updated_at
+ * @property Carbon   $created_at
+ * @property Carbon   $updated_at
  */
 class MonthlySale extends Model
 {
@@ -36,10 +36,13 @@ class MonthlySale extends Model
     /**
      * The attributes that should be cast.
      *
-     * @var array<string, string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
+    }
 }

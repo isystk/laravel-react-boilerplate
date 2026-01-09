@@ -6,6 +6,9 @@ use App\Domain\Entities\ContactForm;
 use App\Domain\Entities\ContactFormImage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Domain\Entities\ContactFormImage>
+ */
 class ContactFormImageFactory extends Factory
 {
     /**
@@ -22,7 +25,7 @@ class ContactFormImageFactory extends Factory
     {
         return [
             'contact_form_id' => ContactForm::factory(),
-            'file_name' => $this->faker->image('/tmp', 400, 300, null, false),
+            'file_name'       => fake()->image('/tmp', 400, 300, null, false),
         ];
     }
 
@@ -31,9 +34,7 @@ class ContactFormImageFactory extends Factory
      */
     public function unverified(): Factory
     {
-        return $this->state(function (array $attributes) {
-            return [
-            ];
-        });
+        return $this->state(fn (array $attributes) => [
+        ]);
     }
 }

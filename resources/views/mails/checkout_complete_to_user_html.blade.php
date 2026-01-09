@@ -10,8 +10,8 @@
 
     <div class="section-title">■ ご注文情報</div>
     <div class="order-detail">
-        {{--        ご注文番号：#{{ $order->id }}<br>--}}
-        {{--        ご注文日時：{{ $order->created_at->format('Y年m月d日 H:i') }}--}}
+        {{--        ご注文番号：#{{ $order->id }}<br> --}}
+        {{--        ご注文日時：{{ $order->created_at->format('Y年m月d日 H:i') }} --}}
         ご請求金額：¥{{ number_format($amount) }}
     </div>
 

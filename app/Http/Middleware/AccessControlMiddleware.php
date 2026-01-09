@@ -16,7 +16,7 @@ class AccessControlMiddleware
         }
 
         $config = config('access_control.permissions');
-        $user = $request->user();
+        $user   = $request->user();
 
         // 完全一致、またはワイルドカードでマッチする設定を探す
         $allowedRoles = null;
@@ -28,7 +28,7 @@ class AccessControlMiddleware
         }
 
         // 設定がある場合のみ権限チェック（設定がないルートは誰でも通過）
-        if (null !== $allowedRoles) {
+        if ($allowedRoles !== null) {
             // ユーザーがログインしていない、または許可されたロールを持っていない場合
             if (!$user || !in_array($user->role, $allowedRoles, true)) {
                 abort(403, 'この操作を行う権限がありません。');

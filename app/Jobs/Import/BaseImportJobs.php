@@ -17,24 +17,10 @@ use Throwable;
  */
 abstract class BaseImportJobs extends BaseJobs
 {
-    protected Admin $admin;
-
-    protected string $filePath;
-
-    protected string $fileName;
-
-    protected int $importHistoryId;
-
     /**
      * Create a new job instance.
      */
-    public function __construct(Admin $admin, string $filePath, string $fileName, int $importHistoryId)
-    {
-        $this->admin = $admin;
-        $this->filePath = $filePath;
-        $this->fileName = $fileName;
-        $this->importHistoryId = $importHistoryId;
-    }
+    public function __construct(protected Admin $admin, protected string $filePath, protected string $fileName, protected int $importHistoryId) {}
 
     /**
      * Execute the job.
@@ -43,7 +29,8 @@ abstract class BaseImportJobs extends BaseJobs
      */
     public function handle(): void
     {
-        $jobName = class_basename(get_class($this));
+        $jobName = class_basename(static::class);
+
         try {
             $this->outputLog($jobName . ' start. admin:[' . $this->admin['name'] . '] file:[' . $this->fileName . ']');
 
@@ -82,7 +69,7 @@ abstract class BaseImportJobs extends BaseJobs
      */
     private function changeStatus(JobStatus $status): void
     {
-        if (null === $this->job) {
+        if ($this->job === null) {
             throw new RuntimeException('An unexpected error has occurred.');
         }
         $importHistoryRepository = app(ImportHistoryRepository::class);
@@ -97,7 +84,7 @@ abstract class BaseImportJobs extends BaseJobs
     /**
      * インポート処理を実行します。
      *
-     * @param  array<array<string, ?string>>  $rows
+     * @param array<array<string, ?string>> $rows
      */
     abstract protected function importData(array $rows): void;
 }

@@ -9,33 +9,33 @@ return [
             'date' => 10,
         ],
         'users' => [
-            'name' => 50,
-            'email' => 64,
+            'name'     => 50,
+            'email'    => 64,
             'password' => 12,
         ],
         'admins' => [
-            'name' => 50,
-            'email' => 64,
+            'name'     => 50,
+            'email'    => 64,
             'password' => 12,
         ],
         'stocks' => [
-            'name' => 50,
-            'detail' => 500,
-            'price' => 10,
+            'name'     => 50,
+            'detail'   => 500,
+            'price'    => 10,
             'quantity' => 10,
         ],
         'carts' => [
         ],
         'orders' => [
-            'price' => 10,
+            'price'    => 10,
             'quantity' => 10,
         ],
         'contact_forms' => [
             'user_name' => 50,
-            'title' => 50,
-            'email' => 64,
-            'url' => 255,
-            'contact' => 200,
+            'title'     => 50,
+            'email'     => 64,
+            'url'       => 255,
+            'contact'   => 200,
         ],
         'contact_form_images' => [
         ],
@@ -43,15 +43,15 @@ return [
 
     'mail' => [
         'subject' => [
-            'reset_password_to_user' => '【Laraec】パスワードリセットのご案内',
-            'verify_email_to_user' => '【Laraec】メールアドレス確認のお願い',
+            'reset_password_to_user'    => '【Laraec】パスワードリセットのご案内',
+            'verify_email_to_user'      => '【Laraec】メールアドレス確認のお願い',
             'checkout_complete_to_user' => '【Laraec】ご購入ありがとうございます',
         ],
     ],
 
     'cookie' => [
         'like' => [
-            'key' => 'like',
+            'key'    => 'like',
             'expire' => 60 * 24, // 24時間
         ],
     ],

@@ -15,6 +15,7 @@ class StockController extends BaseApiController
     {
         /** @var IndexService $service */
         $service = app(IndexService::class);
+
         try {
             $result = $service->searchStock();
         } catch (Throwable $e) {

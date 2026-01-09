@@ -10,16 +10,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
- * @property int $id
- * @property int $job_id
- * @property ImportType $type
- * @property string $file_name
- * @property JobStatus $status
- * @property int $import_user_id
+ * @property int         $id
+ * @property int         $job_id
+ * @property ImportType  $type
+ * @property string      $file_name
+ * @property JobStatus   $status
+ * @property int         $import_user_id
  * @property Carbon|null $import_at
- * @property string $save_file_name
- * @property Carbon $created_at
- * @property Carbon $updated_at
+ * @property string      $save_file_name
+ * @property Carbon      $created_at
+ * @property Carbon      $updated_at
  */
 class ImportHistory extends Model
 {
@@ -46,13 +46,16 @@ class ImportHistory extends Model
     /**
      * The attributes that should be cast.
      *
-     * @var array<string, string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'type' => ImportType::class,
-        'status' => JobStatus::class,
-        'import_at' => 'datetime',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'type'       => ImportType::class,
+            'status'     => JobStatus::class,
+            'import_at'  => 'datetime',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
+    }
 }

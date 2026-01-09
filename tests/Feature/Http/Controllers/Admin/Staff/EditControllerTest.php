@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\Controllers\Admin\Staff;
+namespace Tests\Feature\Http\Controllers\Admin\Staff;
 
 use App\Enums\AdminRole;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
@@ -42,9 +42,9 @@ class EditControllerTest extends BaseTest
     public function test_update(): void
     {
         $admin1 = $this->createDefaultAdmin([
-            'name' => '管理者1',
+            'name'  => '管理者1',
             'email' => 'admin1@test.com',
-            'role' => AdminRole::Manager,
+            'role'  => AdminRole::Manager,
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -53,26 +53,26 @@ class EditControllerTest extends BaseTest
         $response->assertForbidden();
 
         $admin2 = $this->createDefaultAdmin([
-            'name' => '管理者2',
+            'name'  => '管理者2',
             'email' => 'admin2@test.com',
-            'role' => AdminRole::HighManager,
+            'role'  => AdminRole::HighManager,
         ]);
         $this->actingAs($admin2, 'admin');
 
         $redirectResponse = $this->put(route('admin.staff.update', $admin1), [
-            'name' => '管理者A',
+            'name'  => '管理者A',
             'email' => 'adminA@test.com',
-            'role' => AdminRole::HighManager->value,
+            'role'  => AdminRole::HighManager->value,
         ]);
         $response = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();
 
         // データが更新されたことをテスト
         $this->assertDatabaseHas('admins', [
-            'id' => $admin1->id,
-            'name' => '管理者A',
+            'id'    => $admin1->id,
+            'name'  => '管理者A',
             'email' => 'adminA@test.com',
-            'role' => AdminRole::HighManager,
+            'role'  => AdminRole::HighManager,
         ]);
     }
 }

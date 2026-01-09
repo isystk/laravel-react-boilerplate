@@ -11,17 +11,7 @@ use App\Services\BaseService;
 
 class StoreService extends BaseService
 {
-    private ContactFormRepository $contactFormRepository;
-
-    private ContactFormImageRepository $contactFormImageRepository;
-
-    public function __construct(
-        ContactFormRepository $contactFormRepository,
-        ContactFormImageRepository $contactFormImageRepository
-    ) {
-        $this->contactFormRepository = $contactFormRepository;
-        $this->contactFormImageRepository = $contactFormImageRepository;
-    }
+    public function __construct(private readonly ContactFormRepository $contactFormRepository, private readonly ContactFormImageRepository $contactFormImageRepository) {}
 
     /**
      * お問い合わせを登録します。
@@ -30,12 +20,12 @@ class StoreService extends BaseService
     {
         $model = [
             'user_name' => $request->user_name,
-            'title' => $request->title,
-            'email' => $request->email,
-            'url' => $request->url,
-            'gender' => $request->gender,
-            'age' => $request->age,
-            'contact' => $request->contact,
+            'title'     => $request->title,
+            'email'     => $request->email,
+            'url'       => $request->url,
+            'gender'    => $request->gender,
+            'age'       => $request->age,
+            'contact'   => $request->contact,
         ];
 
         $contactForm = $this->contactFormRepository->create(
@@ -50,7 +40,7 @@ class StoreService extends BaseService
             $this->contactFormImageRepository->create(
                 [
                     'contact_form_id' => $contactFormId,
-                    'file_name' => $fileName,
+                    'file_name'       => $fileName,
                 ]
             );
             // s3に画像をアップロード

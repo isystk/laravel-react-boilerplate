@@ -27,7 +27,7 @@ class ImportController extends BaseController
     public function index(): View
     {
         /** @var IndexService $service */
-        $service = app(IndexService::class);
+        $service         = app(IndexService::class);
         $importHistories = $service->getImportHistories();
 
         return view('admin.staff.import', compact([
@@ -47,9 +47,9 @@ class ImportController extends BaseController
 
         /** @var ExportService $service */
         $service = app(ExportService::class);
-        $export = $service->getExport();
+        $export  = $service->getExport();
 
-        return ('csv' === $fileType) ?
+        return ($fileType === 'csv') ?
             Excel::download($export, 'staff.csv', \Maatwebsite\Excel\Excel::CSV) :
             Excel::download($export, 'staff.xlsx');
     }
@@ -70,11 +70,13 @@ class ImportController extends BaseController
         $service = app(ImportService::class);
 
         DB::beginTransaction();
+
         try {
             $service->createJob($request->upload_file, $admin);
             DB::commit();
         } catch (Throwable $e) {
             DB::rollBack();
+
             throw $e;
         }
 
@@ -92,7 +94,7 @@ class ImportController extends BaseController
         }
 
         /** @var ImportFileService $service */
-        $service = app(ImportFileService::class);
+        $service                           = app(ImportFileService::class);
         [$importFilePath, $importFileName] = $service->getImportFilePath((int) $importHistoryId);
 
         return response()->download(Storage::path($importFilePath), $importFileName);

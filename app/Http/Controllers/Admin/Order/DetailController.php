@@ -15,7 +15,7 @@ class DetailController extends BaseController
     public function show(Order $order): View
     {
         /** @var ShowService $service */
-        $service = app(ShowService::class);
+        $service     = app(ShowService::class);
         $orderStocks = $service->getOrderStock($order->id);
 
         return view('admin.order.show', compact([

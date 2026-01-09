@@ -9,13 +9,7 @@ use App\Services\BaseService;
 
 class UpdateService extends BaseService
 {
-    private AdminRepository $adminRepository;
-
-    public function __construct(
-        AdminRepository $adminRepository
-    ) {
-        $this->adminRepository = $adminRepository;
-    }
+    public function __construct(private readonly AdminRepository $adminRepository) {}
 
     /**
      * 管理者を更新します。
@@ -23,9 +17,9 @@ class UpdateService extends BaseService
     public function update(int $adminId, UpdateRequest $request): Admin
     {
         return $this->adminRepository->update([
-            'name' => $request->name,
+            'name'  => $request->name,
             'email' => $request->email,
-            'role' => $request->role,
+            'role'  => $request->role,
         ], $adminId);
     }
 }

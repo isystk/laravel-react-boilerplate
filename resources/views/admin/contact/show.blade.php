@@ -8,10 +8,8 @@
 
 @section('content')
     <div class="text-start mb-3">
-        <a
-            class="btn btn-secondary"
-            href="{{ route('admin.contact') }}"
-        >{{ __('common.Back') }}</a>
+        <a class="btn btn-secondary"
+           href="{{ route('admin.contact') }}">{{ __('common.Back') }}</a>
     </div>
 
     <div class="card card-purple">
@@ -53,30 +51,31 @@
 
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label text-muted small">{{ __('contact.Contact') }}</label>
-                <div class="col-sm-10 d-flex align-items-center" style="white-space: pre-wrap;">{{ $contactForm->contact }}</div>
+                <div class="col-sm-10 d-flex align-items-center"
+                     style="white-space: pre-wrap;">{{ $contactForm->contact }}</div>
             </div>
 
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label text-muted small">{{ __('contact.URL') }}</label>
                 <div class="col-sm-10 d-flex align-items-center">
-                    @if($contactForm->url)
-                        <a href="{{ $contactForm->url }}" target="_blank">{{ $contactForm->url }}</a>
+                    @if ($contactForm->url)
+                        <a href="{{ $contactForm->url }}"
+                           target="_blank">{{ $contactForm->url }}</a>
                     @else
                         -
                     @endif
                 </div>
             </div>
 
-            @foreach($contactFormImages as $i => $contactFormImage)
+            @foreach ($contactFormImages as $i => $contactFormImage)
                 @if ($contactFormImage['file_name'])
                     <div class="mb-3 row">
-                        <label class="col-sm-2 col-form-label text-muted small">{{ __('contact.Image') }}{{ $i+1 }}</label>
+                        <label
+                               class="col-sm-2 col-form-label text-muted small">{{ __('contact.Image') }}{{ $i + 1 }}</label>
                         <div class="col-sm-10 d-flex align-items-center">
-                            <img
-                                src="{{ asset('uploads/contact/' . $contactFormImage['file_name']) }}"
-                                class="img-thumbnail"
-                                style="max-width: 200px;"
-                            />
+                            <img src="{{ asset('uploads/contact/' . $contactFormImage['file_name']) }}"
+                                 class="img-thumbnail"
+                                 style="max-width: 200px;" />
                         </div>
                     </div>
                 @endif
@@ -85,36 +84,24 @@
         <div class="card-footer text-center position-relative">
             <div class="d-inline-block">
                 <div class="mx-auto">
-                    <a
-                        class="btn btn-primary"
-                        href="{{ route('admin.contact.edit', ['contactForm' => $contactForm ]) }}"
-                        @if(!Auth::user()->role->isHighManager())
-                            disabled="disabled"
-                        @endif
-                    >
+                    <a class="btn btn-primary"
+                       href="{{ route('admin.contact.edit', ['contactForm' => $contactForm]) }}"
+                       @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>
                         {{ __('common.Change') }}
                     </a>
                 </div>
             </div>
-            <div
-                class="d-inline-block position-absolute"
-                style="right: 30px;"
-            >
-                <form
-                    method="POST"
-                    action="{{ route('admin.contact.destroy', ['contactForm' => $contactForm ]) }}"
-                    id="delete_{{ $contactForm->id }}"
-                >
+            <div class="d-inline-block position-absolute"
+                 style="right: 30px;">
+                <form method="POST"
+                      action="{{ route('admin.contact.destroy', ['contactForm' => $contactForm]) }}"
+                      id="delete_{{ $contactForm->id }}">
                     @method('DELETE')
                     @csrf
-                    <button
-                        href="#"
-                        class="btn btn-danger js-deleteBtn"
-                        data-id="{{ $contactForm->id }}"
-                        @if(!Auth::user()->role->isHighManager())
-                            disabled="disabled"
-                        @endif
-                    >
+                    <button href="#"
+                            class="btn btn-danger js-deleteBtn"
+                            data-id="{{ $contactForm->id }}"
+                            @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>
                         {{ __('common.Delete') }}
                     </button>
                 </form>

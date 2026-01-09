@@ -31,11 +31,13 @@ class CreateController extends BaseController
         $service = app(CreateService::class);
 
         DB::beginTransaction();
+
         try {
             $staff = $service->save($request);
             DB::commit();
         } catch (Throwable $e) {
             DB::rollBack();
+
             throw $e;
         }
 

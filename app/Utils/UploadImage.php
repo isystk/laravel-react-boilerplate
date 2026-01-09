@@ -12,7 +12,7 @@ class UploadImage
     public static function convertBase64(string $base64): UploadedFile
     {
         // Base64ヘッダーを取り除き、デコード
-        $fileData = base64_decode(preg_replace('/^data:image\/\w+;base64,/', '', $base64));
+        $fileData = base64_decode((string) preg_replace('/^data:image\/\w+;base64,/', '', $base64));
 
         // 一時ファイルに保存
         $tmpFilePath = tempnam(sys_get_temp_dir(), 'img_');

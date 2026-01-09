@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Repositories\Cart;
+namespace Tests\Unit\Domain\Repositories\Cart;
 
 use App\Domain\Entities\Cart;
 use App\Domain\Repositories\Cart\CartRepository;
@@ -36,7 +36,7 @@ class CartRepositoryTest extends BaseTest
         $this->createDefaultCart(['user_id' => $user2->id, 'stock_id' => $stock1->id]);
         $expectCartIds = [$fitCart1->id, $fitCart2->id];
 
-        $carts = $this->repository->getByUserId($user1->id);
+        $carts   = $this->repository->getByUserId($user1->id);
         $cartIds = $carts->pluck('id')->all();
         $this->assertSame($expectCartIds, $cartIds, '指定したユーザーのカートが取得されることをテスト');
     }

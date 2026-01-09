@@ -1,6 +1,6 @@
 <?php
 
-namespace Console\Commands;
+namespace Tests\Feature\Console\Commands;
 
 use App\Console\Commands\BaseCommand;
 use Illuminate\Console\OutputStyle;
@@ -30,9 +30,9 @@ class BaseCommandTest extends BaseTest
         // @phpstan-ignore-next-line
         $command->executeOutputLog($messages);
 
-        $dir = 'TestCommand'; // class_basename($this) の結果
+        $dir      = 'TestCommand'; // class_basename($this) の結果
         $fileName = '20250101.log';
-        $path = "{$dir}/{$fileName}";
+        $path     = "{$dir}/{$fileName}";
 
         // ファイルが存在しないことを確認
         Storage::disk('log')->assertMissing($path);
@@ -46,9 +46,9 @@ class BaseCommandTest extends BaseTest
         // @phpstan-ignore-next-line
         $command->executeOutputLog($messages);
 
-        $dir = class_basename($command);
+        $dir      = class_basename($command);
         $fileName = '20250101.log';
-        $path = "{$dir}/{$fileName}";
+        $path     = "{$dir}/{$fileName}";
 
         // ファイルが存在することを確認
         Storage::disk('log')->assertExists($path);
@@ -62,12 +62,11 @@ class BaseCommandTest extends BaseTest
     /**
      * テスト用のBaseCommandインスタンスを作成する
      *
-     * @param  bool  $isRealRun  本実行フラグ
+     * @param bool $isRealRun 本実行フラグ
      */
     private function createTestCommand(bool $isRealRun): BaseCommand
     {
-        $command = new class extends BaseCommand
-        {
+        $command = new class extends BaseCommand {
             protected $signature = 'test:command';
 
             public bool $isRealRun;
@@ -78,7 +77,7 @@ class BaseCommandTest extends BaseTest
             }
 
             /**
-             * @param  array<int, string>  $messages
+             * @param array<int, string> $messages
              */
             public function executeOutputLog(array $messages): void
             {
@@ -87,8 +86,8 @@ class BaseCommandTest extends BaseTest
         };
         $command->setIsRealRun($isRealRun);
         $command->setLaravel($this->app);
-        $input = new ArrayInput([]);
-        $output = new BufferedOutput;
+        $input       = new ArrayInput([]);
+        $output      = new BufferedOutput;
         $outputStyle = new OutputStyle($input, $output);
         $command->setOutput($outputStyle);
 

@@ -22,7 +22,7 @@ class AddCartServiceTest extends BaseTest
     public function test_addMyCart(): void
     {
         $user1 = $this->createDefaultUser([
-            'name' => 'aaa',
+            'name'  => 'aaa',
             'email' => 'aaa@test.com',
         ]);
         // ユーザをログイン状態にする
@@ -33,7 +33,7 @@ class AddCartServiceTest extends BaseTest
         $stock2 = $this->createDefaultStock(['name' => 'stock2']);
         $this->service->addMyCart($stock2->id);
 
-        $carts = Cart::where(['user_id' => $user1->id]);
+        $carts   = Cart::where(['user_id' => $user1->id]);
         $cartIds = $carts->pluck('stock_id')->all();
         $this->assertSame([$stock1->id, $stock2->id], $cartIds);
     }

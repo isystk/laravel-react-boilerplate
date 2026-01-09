@@ -189,7 +189,7 @@ $ make test                      # Lint, Static Analysis, Testing を一括実�
 
 ## 🚀 本番環境へのデプロイ
 
-[AWS ECS (Fargate) デプロイガイド](documents/aws.md) をご覧ください。
+[AWS ECS (Fargate) デプロイガイド](documents/aws-deploy.md) をご覧ください。
 
 ----
 

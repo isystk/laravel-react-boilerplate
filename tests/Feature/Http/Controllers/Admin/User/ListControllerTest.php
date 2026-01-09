@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\Controllers\Admin\User;
+namespace Tests\Feature\Http\Controllers\Admin\User;
 
 use App\Enums\AdminRole;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
@@ -20,9 +20,9 @@ class ListControllerTest extends BaseTest
     public function test_index(): void
     {
         $admin = $this->createDefaultAdmin([
-            'name' => 'admin1',
+            'name'  => 'admin1',
             'email' => 'admin1@test.com',
-            'role' => AdminRole::Manager->value,
+            'role'  => AdminRole::Manager->value,
         ]);
         $this->actingAs($admin, 'admin');
 
