@@ -26,6 +26,7 @@ yarn-error.log
 .history
 *.log
 !.gitkeep
+.rector_cache
 
 # mysql
 docker/mysql/logs

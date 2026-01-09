@@ -1,8 +1,8 @@
 {
   "indentSize": 4,
   "wrapLineLength": 120,
-  "wrapAttributes": "auto",
-  "wrapAttributesMinAttrs": 2,
+  "wrapAttributes": "force-aligned",
+  "wrapAttributesMinAttrs": 1,
   "indentInnerHtml": true,
   "endWithNewline": true,
   "endOfLine": "LF",
