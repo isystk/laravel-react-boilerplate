@@ -2,7 +2,6 @@
 @extends('layouts.admin')
 @section('title', __('common.HOME'))
 
-
 @section('content')
     <div class="app-content">
         <div class="container-fluid">
@@ -22,8 +21,6 @@
                     </a>
                 </div>
 
-
-
             </div>
 
             <div class="row">
@@ -33,7 +30,8 @@
                             <h3 class="card-title">売上推移</h3>
                         </div>
                         <div class="card-body">
-                            <canvas id="salesChart" style="height: 250px;"></canvas>
+                            <canvas id="salesChart"
+                                    style="height: 250px;"></canvas>
                         </div>
                     </div>
                 </div>

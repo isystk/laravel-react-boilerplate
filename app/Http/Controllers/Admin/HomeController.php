@@ -12,6 +12,13 @@ class HomeController extends BaseController
      */
     public function index(): View
     {
-        return view('admin.home');
+        // 最新の注文を取得
+        $latestOrders = [];
+
+        return view('admin.home',
+            compact([
+                'latestOrders',
+            ])
+        );
     }
 }
