@@ -2,7 +2,7 @@
 set -e
 
 COMMAND=$1
-DIFF_MODE=$2 # branch or staged
+DIFF_MODE=${2:-} # branch, staged, or [branch_name]
 
 # スクリプトの場所を基準にルートディレクトリを特定
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
@@ -14,24 +14,6 @@ DOCKER_HOME="$BASE_DIR/docker"
 DOCKER_CMD="docker compose -f $DOCKER_HOME/docker-compose.yml"
 
 # --- 共通関数 ---
-
-# 比較対象のファイルリストを取得する関数
-get_diff_files() {
-    local mode=$1
-    local filter="d"
-    shift 1
-    local patterns=("$@")
-    if [ "$mode" = "branch" ]; then
-        local branch_list=$(git branch -a --format='%(refname:short)' | grep -v "HEAD")
-        source "$UTILS_SH"
-        local selected_branch=$(select_from_list "$branch_list" "🌿 比較対象のブランチを選択してください")
-        [ -z "$selected_branch" ] && { echo "🚫 キャンセルされました。"; exit 1; }
-        # 選択されたブランチと現在のHEADの差分をとる
-        git diff --name-only --diff-filter=$filter "$selected_branch...HEAD" -- "${patterns[@]}"
-    else
-        git diff --name-only --cached --diff-filter=$filter -- "${patterns[@]}"
-    fi
-}
 
 # 差分ファイルから関連するテストファイルを抽出する関数
 get_test_targets() {
@@ -54,11 +36,18 @@ get_test_targets() {
 
 case $COMMAND in
     format)
-        DIFF_FILES=$(get_diff_files "$DIFF_MODE" "*.php")
+        # 全差分を取得
+        source "$UTILS_SH"
+        ALL_DIFF=$(get_diff_files "$DIFF_MODE")
+
+        # 呼び出し側でフィルタリング（削除されたファイルを除外 --diff-filter=d 相当のチェックも含む）
+        # かつ .php ファイルに限定
+        DIFF_FILES=$(echo "$ALL_DIFF" | grep '\.php$' | xargs -r ls -d 2>/dev/null || true)
+
         [ -z "$DIFF_FILES" ] && { echo "✨ 対象ファイルは見つかりませんでした。"; exit 0; }
 
-        PHP_FILES=$(echo "$DIFF_FILES" | grep -v '\.blade\.php$' | xargs -r ls -d 2>/dev/null | tr '\n' ' ' || true)
-        BLADE_FILES=$(echo "$DIFF_FILES" | grep '\.blade\.php$' | xargs -r ls -d 2>/dev/null | tr '\n' ' ' || true)
+        PHP_FILES=$(echo "$DIFF_FILES" | grep -v '\.blade\.php$' | tr '\n' ' ')
+        BLADE_FILES=$(echo "$DIFF_FILES" | grep '\.blade\.php$' | tr '\n' ' ')
 
         if [ -n "$(echo "$PHP_FILES" | xargs)" ]; then
             echo "📝 PHPファイル実行中 (Rector, Pint):"
@@ -87,7 +76,12 @@ case $COMMAND in
 
     test)
         echo "🔍 テスト対象を抽出中..."
-        DIFF_FILES=$(get_diff_files "$DIFF_MODE" "app/" "tests/")
+        # 全差分を取得
+        source "$UTILS_SH"
+        ALL_DIFF=$(get_diff_files "$DIFF_MODE")
+
+        # app/ または tests/ ディレクトリ配下のファイルのみ抽出
+        DIFF_FILES=$(echo "$ALL_DIFF" | grep -E '^(app/|tests/)' || true)
 
         TEST_FILES=$(get_test_targets "$DIFF_FILES")
 
@@ -97,5 +91,10 @@ case $COMMAND in
 
         echo "🚀 実行: $TEST_FILES"
         $DOCKER_CMD exec -e XDEBUG_MODE=off app ./vendor/bin/phpunit $TEST_FILES
+        ;;
+
+    *)
+        echo "Usage: $0 {format|test} {branch|staged|branch_name}"
+        exit 1
         ;;
 esac
