@@ -8,10 +8,8 @@
 
 @section('content')
     <div class="text-start mb-3">
-        <a
-            class="btn btn-secondary"
-            href="{{ route('admin.order') }}"
-        >{{ __('common.Back') }}</a>
+        <a class="btn btn-secondary"
+           href="{{ route('admin.order') }}">{{ __('common.Back') }}</a>
     </div>
 
     <div class="card card-purple">
@@ -47,7 +45,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($orderStocks as $orderStock)
+                        @foreach ($orderStocks as $orderStock)
                             <tr>
                                 <td>{{ $orderStock->stock->name }}</td>
                                 <td class="text-end">{{ number_format($orderStock->price) }}</td>
