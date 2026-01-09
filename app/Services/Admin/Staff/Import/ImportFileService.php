@@ -11,13 +11,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ImportFileService extends BaseService
 {
-    private ImportHistoryRepository $importHistoryRepository;
-
-    public function __construct(
-        ImportHistoryRepository $importHistoryRepository
-    ) {
-        $this->importHistoryRepository = $importHistoryRepository;
-    }
+    public function __construct(private readonly ImportHistoryRepository $importHistoryRepository) {}
 
     /**
      * インポートしたファイルのパスを取得します。

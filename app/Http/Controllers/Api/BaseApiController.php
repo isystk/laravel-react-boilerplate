@@ -15,7 +15,7 @@ class BaseApiController extends BaseController
     {
         $items = [
             'result' => false,
-            'error' => [
+            'error'  => [
                 'messages' => [$e->getMessage()],
             ],
         ];

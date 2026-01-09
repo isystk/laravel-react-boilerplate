@@ -20,7 +20,7 @@ class EditControllerTest extends BaseTest
     public function test_edit(): void
     {
         $user1 = $this->createDefaultUser([
-            'name' => 'user1',
+            'name'  => 'user1',
             'email' => 'user1@test.com',
         ]);
 
@@ -47,7 +47,7 @@ class EditControllerTest extends BaseTest
     public function test_update(): void
     {
         $user1 = $this->createDefaultUser([
-            'name' => 'user1',
+            'name'  => 'user1',
             'email' => 'user1@test.com',
         ]);
 
@@ -68,7 +68,7 @@ class EditControllerTest extends BaseTest
         $this->actingAs($admin2, 'admin');
 
         $redirectResponse = $this->put(route('admin.user.update', $user1), [
-            'name' => 'userA',
+            'name'  => 'userA',
             'email' => 'userA@test.com',
         ]);
         $response = $this->get($redirectResponse->headers->get('Location'));
@@ -76,8 +76,8 @@ class EditControllerTest extends BaseTest
 
         // データが更新されたことをテスト
         $this->assertDatabaseHas('users', [
-            'id' => $user1->id,
-            'name' => 'userA',
+            'id'    => $user1->id,
+            'name'  => 'userA',
             'email' => 'userA@test.com',
         ]);
     }

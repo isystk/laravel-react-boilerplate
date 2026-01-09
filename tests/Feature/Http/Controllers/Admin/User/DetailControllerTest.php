@@ -20,14 +20,14 @@ class DetailControllerTest extends BaseTest
     public function test_show(): void
     {
         $user1 = $this->createDefaultUser([
-            'name' => 'user1',
+            'name'  => 'user1',
             'email' => 'user1@test.com',
         ]);
 
         $admin1 = $this->createDefaultAdmin([
-            'name' => '管理者A',
+            'name'  => '管理者A',
             'email' => 'admin1@test.com',
-            'role' => AdminRole::HighManager,
+            'role'  => AdminRole::HighManager,
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -40,7 +40,7 @@ class DetailControllerTest extends BaseTest
     public function test_destroy(): void
     {
         $user1 = $this->createDefaultUser([
-            'name' => 'user1',
+            'name'  => 'user1',
             'email' => 'user1@test.com',
         ]);
 
@@ -61,7 +61,7 @@ class DetailControllerTest extends BaseTest
         $this->actingAs($admin2, 'admin');
 
         $redirectResponse = $this->delete(route('admin.user.destroy', $user1));
-        $response = $this->get($redirectResponse->headers->get('Location'));
+        $response         = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();
 
         // データが削除されたことをテスト

@@ -22,7 +22,7 @@ class ExportMonthlySales extends BaseCommand
         $service = app(ExportMonthlySalesService::class);
 
         // 引数の入力チェック
-        $args = array_merge($this->argument(), $this->option());
+        $args   = array_merge($this->argument(), $this->option());
         $errors = $service->validateArgs($args);
         if (count($errors) > 0) {
             $this->error(implode("\n", $errors));
@@ -31,7 +31,7 @@ class ExportMonthlySales extends BaseCommand
         }
 
         // オプションの取得
-        $outputPath = $this->argument('output_path');
+        $outputPath      = $this->argument('output_path');
         $this->isRealRun = $this->option('run');
 
         $this->outputLog(['処理が開始しました。pid[' . getmypid() . ']']);

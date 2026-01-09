@@ -14,16 +14,16 @@ use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
- * @property int $id
- * @property int|null $provider_id
+ * @property int         $id
+ * @property int|null    $provider_id
  * @property string|null $provider_name
  * @property string|null $name
  * @property string|null $email
  * @property Carbon|null $email_verified_at
  * @property string|null $password
  * @property string|null $remember_token
- * @property Carbon $created_at
- * @property Carbon $updated_at
+ * @property Carbon      $created_at
+ * @property Carbon      $updated_at
  */
 class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
@@ -48,17 +48,6 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         'email',
         'password',
         'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
     ];
 
     /**
@@ -111,5 +100,19 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     public function getJWTCustomClaims(): array
     {
         return [];
+    }
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'created_at'        => 'datetime',
+            'updated_at'        => 'datetime',
+        ];
     }
 }

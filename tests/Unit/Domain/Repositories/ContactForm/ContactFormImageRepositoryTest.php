@@ -32,7 +32,7 @@ class ContactFormImageRepositoryTest extends BaseTest
         $this->createDefaultContactFormImage(['contact_form_id' => $contactForm2->id]);
         $expectContactFormImageIds = [$expectContactForm1Image1->id, $expectContactForm1Image2->id];
 
-        $contactFormImages = $this->repository->getByContactFormId($contactForm1->id);
+        $contactFormImages   = $this->repository->getByContactFormId($contactForm1->id);
         $contactFormImageIds = $contactFormImages->pluck('id')->all();
 
         $this->assertSame($expectContactFormImageIds, $contactFormImageIds,

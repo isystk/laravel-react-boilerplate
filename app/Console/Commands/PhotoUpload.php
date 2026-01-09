@@ -24,7 +24,7 @@ class PhotoUpload extends BaseCommand
         $service = app(PhotoUploadService::class);
 
         // 引数の入力チェック
-        $args = array_merge($this->argument(), $this->option());
+        $args   = array_merge($this->argument(), $this->option());
         $errors = $service->validateArgs($args);
         if (count($errors) > 0) {
             $this->error(implode("\n", $errors));
@@ -34,7 +34,7 @@ class PhotoUpload extends BaseCommand
 
         // オプションの取得
         $this->isRealRun = $this->option('run');
-        $targetFileName = $this->option('file_name');
+        $targetFileName  = $this->option('file_name');
 
         $this->outputLog(['処理が開始しました。pid[' . getmypid() . ']']);
 
@@ -47,7 +47,7 @@ class PhotoUpload extends BaseCommand
         }
 
         foreach ($files as $file) {
-            $fileName = basename($file);
+            $fileName = basename((string) $file);
 
             // file_nameが指定されている場合は、ファイル名が一致するもののみ処理を行う
             if (!is_null($targetFileName) && $fileName !== $targetFileName) {
@@ -61,7 +61,7 @@ class PhotoUpload extends BaseCommand
                     Storage::path($file),
                     $fileName
                 );
-                if (false === $result) {
+                if ($result === false) {
                     $this->outputLog(["S3アップロードに失敗しました。file={$file}"]);
 
                     continue;

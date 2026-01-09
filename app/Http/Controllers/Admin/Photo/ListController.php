@@ -20,7 +20,7 @@ class ListController extends BaseController
         $service = app(IndexService::class);
 
         $conditions = $service->convertConditionsFromRequest($request);
-        $photos = $service->searchPhotoList($conditions);
+        $photos     = $service->searchPhotoList($conditions);
 
         return view('admin.photo.index', compact([
             'photos',

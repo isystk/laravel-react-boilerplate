@@ -19,10 +19,10 @@ class CreatePaymentService extends BaseCartService
         $stripe = new StripeClient(config('const.stripe.secret'));
 
         $items = [
-            'amount' => $request->amount,
-            'currency' => 'jpy',
+            'amount'      => $request->amount,
+            'currency'    => 'jpy',
             'description' => 'LaraEC',
-            'metadata' => [
+            'metadata'    => [
                 'username' => $request->username,
             ],
         ];

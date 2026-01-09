@@ -20,6 +20,7 @@ class ContactFormController extends BaseApiController
         /** @var StoreService $service */
         $service = app(StoreService::class);
         DB::beginTransaction();
+
         try {
             $service->save($request);
             DB::commit();

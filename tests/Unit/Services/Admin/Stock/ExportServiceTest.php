@@ -23,8 +23,8 @@ class ExportServiceTest extends BaseTest
     public function test_getExport(): void
     {
         $request = new Request([
-            'name' => null,
-            'sort_name' => 'updated_at',
+            'name'           => null,
+            'sort_name'      => 'updated_at',
             'sort_direction' => 'asc',
         ]);
         $default = new SearchConditionDto($request);
@@ -35,10 +35,10 @@ class ExportServiceTest extends BaseTest
         $this->createDefaultStock(['name' => 'stock1', 'price' => 111]);
         $stock2 = $this->createDefaultStock(['name' => 'stock2', 'price' => 222]);
 
-        $input = clone $default;
+        $input       = clone $default;
         $input->name = 'stock2';
-        $export = $this->service->getExport($input);
-        $rows = $export->collection();
+        $export      = $this->service->getExport($input);
+        $rows        = $export->collection();
 
         $this->assertSame($stock2->id, $rows[0]['id'], '「ID」が正しく出力されること');
         $this->assertSame($stock2->name, $rows[0]['name'], '「商品名」が正しく出力されること');

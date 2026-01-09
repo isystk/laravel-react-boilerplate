@@ -21,7 +21,7 @@ class ContactFormTest extends BaseTest
     {
         $model = $this->createDefaultContactForm([
             'gender' => Gender::Male->value,
-            'age' => Age::Under19->value,
+            'age'    => Age::Under19->value,
         ]);
 
         $this->assertInstanceOf(Gender::class, $model->gender);

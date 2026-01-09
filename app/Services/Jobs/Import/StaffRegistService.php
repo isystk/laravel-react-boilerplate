@@ -10,18 +10,12 @@ use Illuminate\Support\Facades\Hash;
 
 class StaffRegistService extends BaseService
 {
-    private AdminRepository $adminRepository;
-
-    public function __construct(
-        AdminRepository $adminRepository
-    ) {
-        $this->adminRepository = $adminRepository;
-    }
+    public function __construct(private readonly AdminRepository $adminRepository) {}
 
     /**
      * 管理者を登録します。
      *
-     * @param  array<array<string, ?string>>  $rows
+     * @param array<array<string, ?string>> $rows
      */
     public function exec(
         array $rows,
@@ -29,7 +23,7 @@ class StaffRegistService extends BaseService
     ): void {
         foreach ($rows as $row) {
             $admin = $this->adminRepository->getByEmail($row['email']);
-            $exist = null !== $admin;
+            $exist = $admin !== null;
 
             if ($exist) {
                 $this->adminRepository->update([
@@ -39,10 +33,10 @@ class StaffRegistService extends BaseService
                 $outputLog('Admin updated. id:[' . $admin->id . ']');
             } else {
                 $newAdmin = $this->adminRepository->create([
-                    'name' => $row['name'],
-                    'email' => $row['email'],
+                    'name'     => $row['name'],
+                    'email'    => $row['email'],
                     'password' => Hash::make('password'),
-                    'role' => AdminRole::from($row['role']),
+                    'role'     => AdminRole::from($row['role']),
                 ]);
                 $outputLog('Admin registered. id:[' . $newAdmin->id . ']');
             }

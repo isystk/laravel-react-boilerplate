@@ -25,14 +25,14 @@ class CreateServiceTest extends BaseTest
     {
         Storage::fake('s3');
 
-        $request = new StoreRequest;
-        $request['name'] = 'aaa';
-        $request['detail'] = 'aaaの説明';
-        $request['price'] = 111;
-        $request['quantity'] = 1;
-        $request['fileName'] = 'stock1.jpg';
+        $request                = new StoreRequest;
+        $request['name']        = 'aaa';
+        $request['detail']      = 'aaaの説明';
+        $request['price']       = 111;
+        $request['quantity']    = 1;
+        $request['fileName']    = 'stock1.jpg';
         $request['imageBase64'] = 'data:image/jpeg;base64,xxxx';
-        $stock = $this->service->save($request);
+        $stock                  = $this->service->save($request);
 
         // データが更新されたことをテスト
         $updatedStock = Stock::find($stock->id);

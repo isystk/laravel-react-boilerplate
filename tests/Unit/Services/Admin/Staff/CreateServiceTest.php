@@ -23,11 +23,11 @@ class CreateServiceTest extends BaseTest
 
     public function test_save(): void
     {
-        $request = new StoreRequest;
-        $request['name'] = 'aaa';
-        $request['email'] = 'aaa@test.com';
+        $request             = new StoreRequest;
+        $request['name']     = 'aaa';
+        $request['email']    = 'aaa@test.com';
         $request['password'] = 'password';
-        $admin = $this->service->save($request);
+        $admin               = $this->service->save($request);
 
         // データが登録されたことをテスト
         $createdAdmin = Admin::find($admin->id);

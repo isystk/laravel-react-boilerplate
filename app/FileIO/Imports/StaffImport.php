@@ -9,13 +9,13 @@ use Illuminate\Validation\Rules\Enum;
 class StaffImport extends BaseImport
 {
     protected array $attribute = [
-        '名前' => 'name',
+        '名前'           => 'name',
         'メールアドレス' => 'email',
-        '権限' => 'role',
+        '権限'           => 'role',
     ];
 
     /**
-     * @param  array<int, mixed>  $row
+     * @param  array<int, mixed>      $row
      * @return array<string, ?string>
      */
     public function map($row): array
@@ -23,20 +23,12 @@ class StaffImport extends BaseImport
         // 配列データをヘッダーをキーとした連想配列に変換します
         $rowMap = $this->getRowMap($row);
 
-        $cell = static function (string $key, Closure $callback) use ($rowMap) {
-            return [$key => $callback($rowMap[$key] ?? null)];
-        };
+        $cell = (static fn (string $key, Closure $callback) => [$key => $callback($rowMap[$key] ?? null)]);
 
         return array_merge(
-            $cell('name', function ($val) {
-                return $this->trimData($val);
-            }),
-            $cell('email', function ($val) {
-                return $this->trimData($val);
-            }),
-            $cell('role', function ($val) {
-                return $this->trimData($val);
-            }),
+            $cell('name', $this->trimData(...)),
+            $cell('email', $this->trimData(...)),
+            $cell('role', $this->trimData(...)),
         );
     }
 

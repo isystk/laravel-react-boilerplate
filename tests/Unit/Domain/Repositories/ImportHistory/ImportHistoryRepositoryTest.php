@@ -44,7 +44,7 @@ class ImportHistoryRepositoryTest extends BaseTest
         $this->assertFalse($result, 'データがない状態で正常に動作することを始めにテスト');
 
         $this->createDefaultImportHistory([
-            'type' => ImportType::Staff->value,
+            'type'   => ImportType::Staff->value,
             'status' => JobStatus::Success->value,
         ]);
 
@@ -52,11 +52,11 @@ class ImportHistoryRepositoryTest extends BaseTest
         $this->assertFalse($result, '処理中（または処理待ち）のデータが存在しない場合 → False');
 
         $this->createDefaultImportHistory([
-            'type' => ImportType::Staff->value,
+            'type'   => ImportType::Staff->value,
             'status' => JobStatus::Waiting->value,
         ]);
         $this->createDefaultImportHistory([
-            'type' => ImportType::Staff->value,
+            'type'   => ImportType::Staff->value,
             'status' => JobStatus::Processing->value,
         ]);
 

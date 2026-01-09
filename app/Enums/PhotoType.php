@@ -23,7 +23,7 @@ enum PhotoType: int
     public function type(): string
     {
         return match ($this) {
-            self::Stock => 'stock',
+            self::Stock   => 'stock',
             self::Contact => 'contact',
         };
     }
@@ -34,9 +34,9 @@ enum PhotoType: int
     public static function getByType(string $type): PhotoType
     {
         return match ($type) {
-            'stock' => self::Stock,
+            'stock'   => self::Stock,
             'contact' => self::Contact,
-            default => throw new \RuntimeException('An unexpected error occurred.')
+            default   => throw new \RuntimeException('An unexpected error occurred.')
         };
     }
 }

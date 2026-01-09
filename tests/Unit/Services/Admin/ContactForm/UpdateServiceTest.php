@@ -29,30 +29,30 @@ class UpdateServiceTest extends BaseTest
 
         $contactForm = $this->createDefaultContactForm([
             'user_name' => 'aaa',
-            'title' => 'タイトル1',
-            'email' => 'aaa@test.com',
-            'url' => 'https://aaa.test.com',
-            'gender' => Gender::Male->value,
-            'age' => Age::Over30->value,
-            'contact' => 'お問い合わせ1',
+            'title'     => 'タイトル1',
+            'email'     => 'aaa@test.com',
+            'url'       => 'https://aaa.test.com',
+            'gender'    => Gender::Male->value,
+            'age'       => Age::Over30->value,
+            'contact'   => 'お問い合わせ1',
         ]);
         $contactFormImage = $this->createDefaultContactFormImage([
             'contact_form_id' => $contactForm->id,
-            'file_name' => 'file1.jpg',
+            'file_name'       => 'file1.jpg',
         ]);
         Storage::disk('s3')->put('contact/image1.jpg', 'dummy');
 
-        $request = new UpdateRequest;
-        $request['user_name'] = 'bbb';
-        $request['title'] = 'タイトル2';
-        $request['email'] = 'bbb@test.com';
-        $request['url'] = 'https://bbb.test.com';
-        $request['gender'] = Gender::Female->value;
-        $request['age'] = Age::Over40->value;
-        $request['contact'] = 'お問い合わせ2';
+        $request                   = new UpdateRequest;
+        $request['user_name']      = 'bbb';
+        $request['title']          = 'タイトル2';
+        $request['email']          = 'bbb@test.com';
+        $request['url']            = 'https://bbb.test.com';
+        $request['gender']         = Gender::Female->value;
+        $request['age']            = Age::Over40->value;
+        $request['contact']        = 'お問い合わせ2';
         $request['delete_image_1'] = '1';
-        $request['image_file_2'] = UploadedFile::fake()->image('image2.jpg');
-        $request['image_file_3'] = UploadedFile::fake()->image('image3.jpg');
+        $request['image_file_2']   = UploadedFile::fake()->image('image2.jpg');
+        $request['image_file_3']   = UploadedFile::fake()->image('image3.jpg');
         $this->service->update($contactForm->id, $request);
 
         // データが更新されたことをテスト

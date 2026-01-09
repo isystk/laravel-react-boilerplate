@@ -9,13 +9,7 @@ use Illuminate\Support\Collection;
 
 class ShowService extends BaseService
 {
-    private OrderStockRepository $orderStockRepository;
-
-    public function __construct(
-        OrderStockRepository $orderStockRepository
-    ) {
-        $this->orderStockRepository = $orderStockRepository;
-    }
+    public function __construct(private readonly OrderStockRepository $orderStockRepository) {}
 
     /**
      * 注文情報を取得します。

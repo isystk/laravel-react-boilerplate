@@ -13,10 +13,10 @@ class AdminsTableSeeder extends Seeder
     {
         Admin::truncate();
         Admin::create([
-            'name' => '管理者A',
-            'email' => 'sample@sample.com',
+            'name'     => '管理者A',
+            'email'    => 'sample@sample.com',
             'password' => Hash::make('password'),
-            'role' => AdminRole::HighManager->value,
+            'role'     => AdminRole::HighManager->value,
         ]);
     }
 }

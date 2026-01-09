@@ -20,7 +20,7 @@ class DestroyServiceTest extends BaseTest
 
     public function test_delete(): void
     {
-        $contactForm = $this->createDefaultContactForm();
+        $contactForm      = $this->createDefaultContactForm();
         $contactFormImage = $this->createDefaultContactFormImage([
             'contact_form_id' => $contactForm->id,
         ]);

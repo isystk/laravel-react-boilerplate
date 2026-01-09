@@ -58,18 +58,18 @@ class CreateControllerTest extends BaseTest
         $this->actingAs($admin2, 'admin');
 
         $redirectResponse = $this->post(route('admin.staff.store'), [
-            'name' => '管理者3',
-            'email' => 'admin3@test.com',
-            'password' => 'password',
+            'name'                  => '管理者3',
+            'email'                 => 'admin3@test.com',
+            'password'              => 'password',
             'password_confirmation' => 'password',
-            'role' => AdminRole::Manager->value,
+            'role'                  => AdminRole::Manager->value,
         ]);
         $response = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();
 
         // データが登録されたことをテスト
         $this->assertDatabaseHas('admins', [
-            'name' => '管理者3',
+            'name'  => '管理者3',
             'email' => 'admin3@test.com',
             //            'password' => Hash::make('password'),
             'role' => AdminRole::Manager,

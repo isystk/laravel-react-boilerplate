@@ -26,21 +26,21 @@ class StoreRequestTest extends BaseTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->request = new StoreRequest;
+        $this->request     = new StoreRequest;
         $this->baseRequest = [
-            'name' => 'user1',
-            'email' => 'user1@test.com',
-            'password' => 'password',
+            'name'                  => 'user1',
+            'email'                 => 'user1@test.com',
+            'password'              => 'password',
             'password_confirmation' => 'password',
-            'role' => AdminRole::Manager->value,
+            'role'                  => AdminRole::Manager->value,
         ];
     }
 
     /**
-     * @param  array<string>  $attrs  変更する値の配列
-     * @param  bool  $expect  期待されるバリデーション結果
-     * @param  string  $attribute  属性の名称
-     * @param  array<string>  $messages  期待されるエラーメッセージ
+     * @param array<string> $attrs     変更する値の配列
+     * @param bool          $expect    期待されるバリデーション結果
+     * @param string        $attribute 属性の名称
+     * @param array<string> $messages  期待されるエラーメッセージ
      *
      * @throws Exception
      */
@@ -53,7 +53,7 @@ class StoreRequestTest extends BaseTest
         $requestData = [...$this->baseRequest, ...$attrs];
         $this->request->merge($requestData);
         // バリデーションルール取得
-        $rules = $this->request->rules();
+        $rules     = $this->request->rules();
         $validator = Validator::make($requestData, $rules, $this->request->messages(), $this->request->attributes());
 
         // 結果保証
@@ -75,128 +75,128 @@ class StoreRequestTest extends BaseTest
     {
         return [
             'NG : name 必須条件を満たさない' => [
-                'attrs' => ['name' => null],
-                'expect' => false,
+                'attrs'     => ['name' => null],
+                'expect'    => false,
                 'attribute' => 'name',
-                'messages' => [
+                'messages'  => [
                     '氏名を入力してください。',
                 ],
             ],
             'NG : name 文字数上限を超えている' => [
-                'attrs' => ['name' => implode('', range(1, 51))],
-                'expect' => false,
+                'attrs'     => ['name' => implode('', range(1, 51))],
+                'expect'    => false,
                 'attribute' => 'name',
-                'messages' => [
+                'messages'  => [
                     '氏名には50文字以下の文字列を指定してください。',
                 ],
             ],
             'OK : name が正常' => [
-                'attrs' => ['name' => 'user1'],
-                'expect' => true,
+                'attrs'     => ['name' => 'user1'],
+                'expect'    => true,
                 'attribute' => 'name',
-                'messages' => [],
+                'messages'  => [],
             ],
             'NG : email 必須条件を満たさない' => [
-                'attrs' => ['email' => null],
-                'expect' => false,
+                'attrs'     => ['email' => null],
+                'expect'    => false,
                 'attribute' => 'email',
-                'messages' => [
+                'messages'  => [
                     'メールアドレスを入力してください。',
                 ],
             ],
             'OK : email 文字数上限を超えている' => [
-                'attrs' => ['email' => implode('', range(1, 56)) . '@test.com'],
-                'expect' => false,
+                'attrs'     => ['email' => implode('', range(1, 56)) . '@test.com'],
+                'expect'    => false,
                 'attribute' => 'email',
-                'messages' => [
+                'messages'  => [
                     'メールアドレスには64文字以下の文字列を指定してください。',
                 ],
             ],
             'NG : email メールアドレスとして不正' => [
-                'attrs' => ['email' => 'abcde'],
-                'expect' => false,
+                'attrs'     => ['email' => 'abcde'],
+                'expect'    => false,
                 'attribute' => 'email',
-                'messages' => [
+                'messages'  => [
                     'メールアドレスには正しい形式のメールアドレスを指定してください。',
                 ],
             ],
             'OK : email が正常' => [
-                'attrs' => ['email' => 'user1@test.com'],
-                'expect' => true,
+                'attrs'     => ['email' => 'user1@test.com'],
+                'expect'    => true,
                 'attribute' => 'email',
-                'messages' => [],
+                'messages'  => [],
             ],
             'NG : password 必須条件を満たさない' => [
-                'attrs' => ['password' => null],
-                'expect' => false,
+                'attrs'     => ['password' => null],
+                'expect'    => false,
                 'attribute' => 'password',
-                'messages' => [
+                'messages'  => [
                     'パスワードを入力してください。',
                 ],
             ],
             'NG : password 文字数上限を超えている' => [
                 'attrs' => [
-                    'password' => implode('', range(1, 13)),
+                    'password'              => implode('', range(1, 13)),
                     'password_confirmation' => implode('', range(1, 13)),
                 ],
-                'expect' => false,
+                'expect'    => false,
                 'attribute' => 'password',
-                'messages' => [
+                'messages'  => [
                     'パスワードには12文字以下の文字列を指定してください。',
                 ],
             ],
             'NG : password 確認用パスワードと一致しない' => [
                 'attrs' => [
-                    'password' => 'password1',
+                    'password'              => 'password1',
                     'password_confirmation' => 'password2',
                 ],
-                'expect' => false,
+                'expect'    => false,
                 'attribute' => 'password',
-                'messages' => [
+                'messages'  => [
                     'パスワードが確認用の値と一致しません。',
                 ],
             ],
             'NG : password パスワードには8文字未満' => [
                 'attrs' => [
-                    'password' => '1234567',
+                    'password'              => '1234567',
                     'password_confirmation' => '1234567',
                 ],
-                'expect' => false,
+                'expect'    => false,
                 'attribute' => 'password',
-                'messages' => [
+                'messages'  => [
                     'パスワードには8文字以上の文字列を指定してください。',
                 ],
             ],
             'OK : password が正常' => [
                 'attrs' => [
-                    'password' => 'password',
+                    'password'              => 'password',
                     'password_confirmation' => 'password',
                 ],
-                'expect' => true,
+                'expect'    => true,
                 'attribute' => 'password',
-                'messages' => [],
+                'messages'  => [],
             ],
             'NG : role 必須条件を満たさない' => [
-                'attrs' => ['role' => null],
-                'expect' => false,
+                'attrs'     => ['role' => null],
+                'expect'    => false,
                 'attribute' => 'role',
-                'messages' => [
+                'messages'  => [
                     '権限を入力してください。',
                 ],
             ],
             'NG : role 不正な文字' => [
-                'attrs' => ['role' => '不正'],
-                'expect' => false,
+                'attrs'     => ['role' => '不正'],
+                'expect'    => false,
                 'attribute' => 'role',
-                'messages' => [
+                'messages'  => [
                     '権限の値が不正です。',
                 ],
             ],
             'OK : role が正常' => [
-                'attrs' => ['role' => AdminRole::Manager->value],
-                'expect' => true,
+                'attrs'     => ['role' => AdminRole::Manager->value],
+                'expect'    => true,
                 'attribute' => 'role',
-                'messages' => [],
+                'messages'  => [],
             ],
         ];
     }

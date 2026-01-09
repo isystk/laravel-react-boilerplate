@@ -20,15 +20,15 @@ class BaseStockService extends BaseService
     public function convertConditionsFromRequest(Request $request, int $limit = 20): array
     {
         $conditions = [
-            'name' => null,
-            'email' => null,
-            'role' => null,
-            'sort_name' => $request->sort_name ?? 'updated_at',
+            'name'           => null,
+            'email'          => null,
+            'role'           => null,
+            'sort_name'      => $request->sort_name ?? 'updated_at',
             'sort_direction' => $request->sort_direction ?? 'desc',
-            'limit' => $limit,
+            'limit'          => $limit,
         ];
 
-        if (null !== $request->name) {
+        if ($request->name !== null) {
             $conditions['name'] = $request->name;
         }
 

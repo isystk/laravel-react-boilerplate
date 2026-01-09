@@ -8,17 +8,7 @@ use App\Services\BaseService;
 
 class DestroyService extends BaseService
 {
-    private ContactFormRepository $contactFormRepository;
-
-    private ContactFormImageRepository $contactFormImageRepository;
-
-    public function __construct(
-        ContactFormRepository $contactFormRepository,
-        ContactFormImageRepository $contactFormImageRepository
-    ) {
-        $this->contactFormRepository = $contactFormRepository;
-        $this->contactFormImageRepository = $contactFormImageRepository;
-    }
+    public function __construct(private readonly ContactFormRepository $contactFormRepository, private readonly ContactFormImageRepository $contactFormImageRepository) {}
 
     /**
      * お問い合わせを削除します。

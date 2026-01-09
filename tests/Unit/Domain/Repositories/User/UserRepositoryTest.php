@@ -22,11 +22,11 @@ class UserRepositoryTest extends BaseTest
     public function test_getByConditions(): void
     {
         $defaultConditions = [
-            'name' => null,
-            'email' => null,
-            'sort_name' => null,
+            'name'           => null,
+            'email'          => null,
+            'sort_name'      => null,
             'sort_direction' => null,
-            'limit' => null,
+            'limit'          => null,
         ];
 
         $users = $this->repository->getByConditions($defaultConditions);

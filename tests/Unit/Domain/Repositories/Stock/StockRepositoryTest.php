@@ -38,10 +38,10 @@ class StockRepositoryTest extends BaseTest
     public function test_getByConditions(): void
     {
         $defaultConditions = [
-            'name' => null,
-            'sort_name' => null,
+            'name'           => null,
+            'sort_name'      => null,
             'sort_direction' => null,
-            'limit' => null,
+            'limit'          => null,
         ];
 
         $stocks = $this->repository->getByConditions($defaultConditions);

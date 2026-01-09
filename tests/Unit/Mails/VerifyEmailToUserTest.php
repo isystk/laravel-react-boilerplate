@@ -16,7 +16,7 @@ class VerifyEmailToUserTest extends BaseTest
         Notification::fake();
 
         $user = $this->createDefaultUser([
-            'name' => 'テストユーザー',
+            'name'  => 'テストユーザー',
             'email' => 'test@example.com',
         ]);
         $user->notify(new VerifyEmailToUser($user));
@@ -27,8 +27,8 @@ class VerifyEmailToUserTest extends BaseTest
             static function ($notification, $channels) use ($user) {
                 $mail = $notification->toMail($user);
 
-                return 'mails.verify_email_to_user_html' === $mail->view['html']
-                    && 'mails.verify_email_to_user_text' === $mail->view['text']
+                return $mail->view['html'] === 'mails.verify_email_to_user_html'
+                    && $mail->view['text'] === 'mails.verify_email_to_user_text'
                     && $mail->subject === config('const.mail.subject.verify_email_to_user')
                     && $mail->from[0] === config('mail.from.address');
             }

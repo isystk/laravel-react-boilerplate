@@ -26,25 +26,25 @@ class StoreRequestTest extends BaseTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->request = new StoreRequest;
-        $dummyImage = UploadedFile::fake()->image('test.jpg');
-        $base64String = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($dummyImage->path()));
-        $fileName = $dummyImage->getClientOriginalName();
+        $this->request     = new StoreRequest;
+        $dummyImage        = UploadedFile::fake()->image('test.jpg');
+        $base64String      = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($dummyImage->path()));
+        $fileName          = $dummyImage->getClientOriginalName();
         $this->baseRequest = [
-            'name' => 'user1',
-            'price' => 1234,
-            'detail' => 'abcde',
-            'quantity' => 1,
+            'name'        => 'user1',
+            'price'       => 1234,
+            'detail'      => 'abcde',
+            'quantity'    => 1,
             'imageBase64' => $base64String,
-            'fileName' => $fileName,
+            'fileName'    => $fileName,
         ];
     }
 
     /**
-     * @param  array<string>  $attrs  変更する値の配列
-     * @param  bool  $expect  期待されるバリデーション結果
-     * @param  string  $attribute  属性の名称
-     * @param  array<string>  $messages  期待されるエラーメッセージ
+     * @param array<string> $attrs     変更する値の配列
+     * @param bool          $expect    期待されるバリデーション結果
+     * @param string        $attribute 属性の名称
+     * @param array<string> $messages  期待されるエラーメッセージ
      *
      * @throws Exception
      */
@@ -57,7 +57,7 @@ class StoreRequestTest extends BaseTest
         $requestData = [...$this->baseRequest, ...$attrs];
         $this->request->merge($requestData);
         // バリデーションルール取得
-        $rules = $this->request->rules();
+        $rules     = $this->request->rules();
         $validator = Validator::make($requestData, $rules, $this->request->messages(), $this->request->attributes());
 
         // 結果保証
@@ -79,98 +79,98 @@ class StoreRequestTest extends BaseTest
     {
         return [
             'NG : name 必須条件を満たさない' => [
-                'attrs' => ['name' => null],
-                'expect' => false,
+                'attrs'     => ['name' => null],
+                'expect'    => false,
                 'attribute' => 'name',
-                'messages' => [
+                'messages'  => [
                     '商品名を入力してください。',
                 ],
             ],
             'NG : name 文字数上限を超えている' => [
-                'attrs' => ['name' => implode('', range(1, 51))],
-                'expect' => false,
+                'attrs'     => ['name' => implode('', range(1, 51))],
+                'expect'    => false,
                 'attribute' => 'name',
-                'messages' => [
+                'messages'  => [
                     '商品名には50文字以下の文字列を指定してください。',
                 ],
             ],
             'OK : name が正常' => [
-                'attrs' => ['name' => 'user1'],
-                'expect' => true,
+                'attrs'     => ['name' => 'user1'],
+                'expect'    => true,
                 'attribute' => 'name',
-                'messages' => [],
+                'messages'  => [],
             ],
             'NG : price 必須条件を満たさない' => [
-                'attrs' => ['price' => null],
-                'expect' => false,
+                'attrs'     => ['price' => null],
+                'expect'    => false,
                 'attribute' => 'price',
-                'messages' => [
+                'messages'  => [
                     '価格を入力してください。',
                 ],
             ],
             'NG : price 数値ではない' => [
-                'attrs' => ['price' => 'abced'],
-                'expect' => false,
+                'attrs'     => ['price' => 'abced'],
+                'expect'    => false,
                 'attribute' => 'price',
-                'messages' => [
+                'messages'  => [
                     '価格には数値を指定してください。',
                 ],
             ],
             'OK : price が正常' => [
-                'attrs' => ['price' => 12345],
-                'expect' => true,
+                'attrs'     => ['price' => 12345],
+                'expect'    => true,
                 'attribute' => 'price',
-                'messages' => [],
+                'messages'  => [],
             ],
             'NG : detail 必須条件を満たさない' => [
-                'attrs' => ['detail' => null],
-                'expect' => false,
+                'attrs'     => ['detail' => null],
+                'expect'    => false,
                 'attribute' => 'detail',
-                'messages' => [
+                'messages'  => [
                     '商品説明を入力してください。',
                 ],
             ],
             'NG : detail 文字数上限を超えている' => [
-                'attrs' => ['detail' => implode('', range(1, 501))],
-                'expect' => false,
+                'attrs'     => ['detail' => implode('', range(1, 501))],
+                'expect'    => false,
                 'attribute' => 'detail',
-                'messages' => [
+                'messages'  => [
                     '商品説明には500文字以下の文字列を指定してください。',
                 ],
             ],
             'OK : detail が正常' => [
-                'attrs' => ['detail' => 'abcde'],
-                'expect' => true,
+                'attrs'     => ['detail' => 'abcde'],
+                'expect'    => true,
                 'attribute' => 'detail',
-                'messages' => [],
+                'messages'  => [],
             ],
             'NG : quantity 必須条件を満たさない' => [
-                'attrs' => ['quantity' => null],
-                'expect' => false,
+                'attrs'     => ['quantity' => null],
+                'expect'    => false,
                 'attribute' => 'quantity',
-                'messages' => [
+                'messages'  => [
                     '在庫数を入力してください。',
                 ],
             ],
             'NG : quantity 数値ではない' => [
-                'attrs' => ['quantity' => 'abced'],
-                'expect' => false,
+                'attrs'     => ['quantity' => 'abced'],
+                'expect'    => false,
                 'attribute' => 'quantity',
-                'messages' => [
+                'messages'  => [
                     '在庫数には数値を指定してください。',
                 ],
             ],
             'OK : quantity が正常' => [
-                'attrs' => ['quantity' => 12345],
-                'expect' => true,
+                'attrs'     => ['quantity' => 12345],
+                'expect'    => true,
                 'attribute' => 'quantity',
-                'messages' => [],
+                'messages'  => [],
             ],
             'NG : imageBase64 画像として不正' => [
-                'attrs' => ['imageBase64' => '不正'],
-                'expect' => false,
+                'attrs'     => ['imageBase64' => '不正'],
+                'expect'    => false,
                 'attribute' => 'imageBase64',
-                'messages' => [
+                'messages'  => [
                     '商品画像は画像データとして正しくありません。',
                 ],
             ],
@@ -182,9 +182,9 @@ class StoreRequestTest extends BaseTest
                         return 'data:image/png;base64,' . base64_encode(file_get_contents($image->getPathname()));
                     })(),
                 ],
-                'expect' => false,
+                'expect'    => false,
                 'attribute' => 'imageBase64',
-                'messages' => [
+                'messages'  => [
                     '商品画像は画像データとして正しくありません。',
                 ],
             ],
@@ -196,9 +196,9 @@ class StoreRequestTest extends BaseTest
                         return 'data:image/jpeg;base64,' . base64_encode(file_get_contents($image->getPathname()));
                     })(),
                 ],
-                'expect' => true,
+                'expect'    => true,
                 'attribute' => 'imageBase64',
-                'messages' => [],
+                'messages'  => [],
             ],
         ];
     }

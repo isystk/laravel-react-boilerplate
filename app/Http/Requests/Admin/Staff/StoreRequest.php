@@ -61,10 +61,10 @@ class StoreRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => __('staff.Name'),
-            'email' => __('staff.EMail'),
+            'name'     => __('staff.Name'),
+            'email'    => __('staff.EMail'),
             'password' => __('staff.Password'),
-            'role' => __('staff.Role'),
+            'role'     => __('staff.Role'),
         ];
     }
 

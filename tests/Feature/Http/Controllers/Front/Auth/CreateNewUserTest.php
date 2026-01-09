@@ -20,9 +20,9 @@ class CreateNewUserTest extends BaseTest
     public function test_create(): void
     {
         $items = [
-            'name' => 'user1',
-            'email' => 'user1@test.com',
-            'password' => 'password',
+            'name'                  => 'user1',
+            'email'                 => 'user1@test.com',
+            'password'              => 'password',
             'password_confirmation' => 'password',
         ];
         $this->post('/register', $items)

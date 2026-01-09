@@ -78,10 +78,10 @@ class StoreRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => __('stock.Name'),
-            'price' => __('stock.Price'),
-            'detail' => __('stock.Detail'),
-            'quantity' => __('stock.Quantity'),
+            'name'        => __('stock.Name'),
+            'price'       => __('stock.Price'),
+            'detail'      => __('stock.Detail'),
+            'quantity'    => __('stock.Quantity'),
             'imageBase64' => __('stock.Image'),
         ];
     }

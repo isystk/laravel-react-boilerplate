@@ -30,11 +30,11 @@ class IndexServiceTest extends BaseTest
         ]);
 
         $importHistory = $this->createDefaultImportHistory([
-            'type' => ImportType::Staff->value,
-            'import_at' => '2024-06-01 12:34:56',
+            'type'           => ImportType::Staff->value,
+            'import_at'      => '2024-06-01 12:34:56',
             'import_user_id' => $admin->id,
-            'file_name' => 'test.csv',
-            'status' => JobStatus::Success->value,
+            'file_name'      => 'test.csv',
+            'status'         => JobStatus::Success->value,
         ]);
 
         $result = $this->service->getImportHistories();

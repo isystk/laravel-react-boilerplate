@@ -61,15 +61,15 @@ class CreateControllerTest extends BaseTest
         ]);
         $this->actingAs($admin2, 'admin');
 
-        $image1 = UploadedFile::fake()->image('image1.jpg');
-        $base64String = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($image1->path()));
+        $image1           = UploadedFile::fake()->image('image1.jpg');
+        $base64String     = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($image1->path()));
         $redirectResponse = $this->post(route('admin.stock.store'), [
-            'name' => 'aaa',
-            'detail' => 'aaaの説明',
-            'price' => 111,
-            'quantity' => 1,
-            'imageFile' => $image1,
-            'fileName' => 'image1.jpg',
+            'name'        => 'aaa',
+            'detail'      => 'aaaの説明',
+            'price'       => 111,
+            'quantity'    => 1,
+            'imageFile'   => $image1,
+            'fileName'    => 'image1.jpg',
             'imageBase64' => $base64String,
         ]);
         $response = $this->get($redirectResponse->headers->get('Location'));
@@ -77,10 +77,10 @@ class CreateControllerTest extends BaseTest
 
         // データが登録されたことをテスト
         $this->assertDatabaseHas('stocks', [
-            'name' => 'aaa',
-            'detail' => 'aaaの説明',
-            'price' => 111,
-            'quantity' => 1,
+            'name'            => 'aaa',
+            'detail'          => 'aaaの説明',
+            'price'           => 111,
+            'quantity'        => 1,
             'image_file_name' => 'image1.jpg',
         ]);
 

@@ -16,7 +16,7 @@ class ResetPasswordToUserTest extends BaseTest
         Notification::fake();
 
         $user = $this->createDefaultUser([
-            'name' => 'テストユーザー',
+            'name'  => 'テストユーザー',
             'email' => 'test@example.com',
         ]);
         $token = 'token';
@@ -28,8 +28,8 @@ class ResetPasswordToUserTest extends BaseTest
             static function ($notification, $channels) use ($user) {
                 $mail = $notification->toMail($user);
 
-                return 'mails.reset_password_to_user_html' === $mail->view['html']
-                    && 'mails.reset_password_to_user_text' === $mail->view['text']
+                return $mail->view['html'] === 'mails.reset_password_to_user_html'
+                    && $mail->view['text'] === 'mails.reset_password_to_user_text'
                     && $mail->subject === config('const.mail.subject.reset_password_to_user')
                     && $mail->from[0] === config('mail.from.address');
             }
