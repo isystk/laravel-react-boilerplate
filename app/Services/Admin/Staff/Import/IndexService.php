@@ -21,7 +21,7 @@ class IndexService extends BaseService
     /**
      * 受理ファイルインポート履歴を取得します。
      *
-     * @return array<int, array<string, ?string>>
+     * @return array<int, array<string, int|string>>
      */
     public function getImportHistories(): array
     {

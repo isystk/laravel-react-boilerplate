@@ -95,8 +95,8 @@ format: ## すべてのコード自動整形
 	# リファクタリング・静的解析・型チェック \
 	$(DOCKER_CMD) exec app npm run lint; \
 	$(DOCKER_CMD) exec app npm run ts-check; \
-	$(DOCKER_CMD) exec app ./vendor/bin/phpstan analyse --memory-limit=1G; \
 	$(DOCKER_CMD) exec -T app ./vendor/bin/rector process --clear-cache; \
+	$(DOCKER_CMD) exec app ./vendor/bin/phpstan analyse --memory-limit=1G; \
 	# コードフォーマット \
 	$(DOCKER_CMD) exec app npm run prettier; \
 	$(DOCKER_CMD) exec app ./vendor/bin/pint; \
