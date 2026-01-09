@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\Controllers\Admin\Photo;
+namespace Tests\Feature\Http\Controllers\Admin\Photo;
 
 use App\Enums\AdminRole;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;

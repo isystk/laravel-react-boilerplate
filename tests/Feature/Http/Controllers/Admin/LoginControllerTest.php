@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\Controllers\Admin;
+namespace Tests\Feature\Http\Controllers\Admin;
 
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;

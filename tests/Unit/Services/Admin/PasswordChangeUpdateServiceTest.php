@@ -1,6 +1,6 @@
 <?php
 
-namespace Services\Admin;
+namespace Tests\Unit\Services\Admin;
 
 use App\Services\Admin\PasswordChangeUpdateService;
 use Illuminate\Foundation\Testing\RefreshDatabase;

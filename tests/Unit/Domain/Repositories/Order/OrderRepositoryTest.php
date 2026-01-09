@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Repositories\Order;
+namespace Tests\Unit\Domain\Repositories\Order;
 
 use App\Domain\Repositories\Order\OrderRepository;
 use App\Utils\DateUtil;

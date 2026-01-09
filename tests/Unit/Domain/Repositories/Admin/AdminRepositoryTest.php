@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Repositories\Admin;
+namespace Tests\Unit\Domain\Repositories\Admin;
 
 use App\Domain\Entities\Admin;
 use App\Domain\Repositories\Admin\AdminRepository;

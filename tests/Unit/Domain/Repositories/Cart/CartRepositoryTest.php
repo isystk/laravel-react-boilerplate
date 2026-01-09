@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Repositories\Cart;
+namespace Tests\Unit\Domain\Repositories\Cart;
 
 use App\Domain\Entities\Cart;
 use App\Domain\Repositories\Cart\CartRepository;

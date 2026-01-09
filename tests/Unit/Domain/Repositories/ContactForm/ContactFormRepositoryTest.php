@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Repositories\ContactForm;
+namespace Tests\Unit\Domain\Repositories\ContactForm;
 
 use App\Domain\Entities\ContactForm;
 use App\Domain\Repositories\ContactForm\ContactFormRepository;

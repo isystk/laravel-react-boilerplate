@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Repositories\ImportHistory;
+namespace Tests\Unit\Domain\Repositories\ImportHistory;
 
 use App\Domain\Repositories\ImportHistory\ImportHistoryRepository;
 use App\Enums\ImportType;

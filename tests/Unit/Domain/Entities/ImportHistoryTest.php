@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Entities;
+namespace Tests\Unit\Domain\Entities;
 
 use App\Enums\ImportType;
 use App\Enums\JobStatus;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Repositories;
+namespace Tests\Unit\Domain\Repositories;
 
 use App\Domain\Entities\User;
 use App\Domain\Repositories\BaseEloquentRepository;

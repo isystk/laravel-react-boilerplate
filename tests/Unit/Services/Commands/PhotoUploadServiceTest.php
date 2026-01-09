@@ -1,6 +1,6 @@
 <?php
 
-namespace Services\Commands;
+namespace Tests\Unit\Services\Commands;
 
 use App\Services\Commands\PhotoUploadService;
 use Illuminate\Foundation\Testing\RefreshDatabase;

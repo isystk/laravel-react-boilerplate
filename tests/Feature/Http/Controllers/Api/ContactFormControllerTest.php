@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\Controllers\Api;
+namespace Tests\Feature\Http\Controllers\Api;
 
 use App\Enums\Age;
 use App\Enums\Gender;

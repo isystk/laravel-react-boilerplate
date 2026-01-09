@@ -1,6 +1,6 @@
 <?php
 
-namespace Requests\Admin\User;
+namespace Tests\Unit\Requests\Admin\User;
 
 use App\Http\Requests\Admin\User\UpdateRequest;
 use Exception;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Services\Admin\Staff\Import;
+namespace Tests\Unit\Services\Admin\Staff\Import;
 
 use App\Enums\AdminRole;
 use App\Services\Admin\Staff\Import\ExportService;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Entities;
+namespace Tests\Unit\Domain\Entities;
 
 use App\Domain\Entities\User;
 use App\Mails\ResetPasswordToUser;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Rules;
+namespace Tests\Unit\Rules;
 
 use App\Rules\Base64ImageRule;
 use Illuminate\Http\UploadedFile;

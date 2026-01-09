@@ -1,6 +1,6 @@
 <?php
 
-namespace Services\Admin\Stock;
+namespace Tests\Unit\Services\Admin\Stock;
 
 use App\Dto\Request\Admin\Stock\SearchConditionDto;
 use App\Services\Admin\Stock\ExportService;

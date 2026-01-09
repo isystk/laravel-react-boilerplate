@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Repositories\Stock;
+namespace Tests\Unit\Domain\Repositories\Stock;
 
 use App\Domain\Entities\Stock;
 use App\Domain\Repositories\Stock\StockRepository;

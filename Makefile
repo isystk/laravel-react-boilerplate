@@ -92,15 +92,22 @@ npm-run-build: ## appコンテナでビルドを実行します。
 
 .PHONY: format
 format: ## すべてのコード自動整形
-	# リファクタリング・静的解析・型チェック \
-	$(DOCKER_CMD) exec app npm run lint; \
-	$(DOCKER_CMD) exec app npm run ts-check; \
-	$(DOCKER_CMD) exec -T app ./vendor/bin/rector process --clear-cache; \
-	$(DOCKER_CMD) exec app ./vendor/bin/phpstan analyse --memory-limit=1G; \
-	# コードフォーマット \
-	$(DOCKER_CMD) exec app npm run prettier; \
-	$(DOCKER_CMD) exec app ./vendor/bin/pint; \
-	$(DOCKER_CMD) exec -T app npx -y blade-formatter --write resources/views/**/*.blade.php;
+	# リファクタリング・静的解析・型チェック
+	$(DOCKER_CMD) exec app npm run lint
+	$(DOCKER_CMD) exec app npm run ts-check
+	$(DOCKER_CMD) exec -T app ./vendor/bin/rector process --clear-cache
+	$(DOCKER_CMD) exec app ./vendor/bin/phpstan analyse --memory-limit=1G
+	@WARNINGS=$$($(DOCKER_CMD) exec -T app composer dump-autoload 2>&1 | grep "does not comply" || true); \
+	# オートロードの整合性を確認 \
+	if [ -n "$$WARNINGS" ]; then \
+		echo "❌ PSR-4 違反が検出されました:"; \
+		echo "$$WARNINGS"; \
+		exit 1; \
+	fi
+	# コードフォーマット
+	$(DOCKER_CMD) exec app npm run prettier
+	$(DOCKER_CMD) exec app ./vendor/bin/pint
+	$(DOCKER_CMD) exec -T app npx -y blade-formatter --write "resources/views/**/*.blade.php"
 
 .PHONY: format-branch
 format-branch: ## 選択したブランチとローカル差分のコード自動整形

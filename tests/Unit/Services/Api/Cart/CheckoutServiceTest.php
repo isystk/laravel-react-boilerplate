@@ -1,6 +1,6 @@
 <?php
 
-namespace Services\Api\Cart;
+namespace Tests\Unit\Services\Api\Cart;
 
 use App\Domain\Entities\Order;
 use App\Domain\Entities\Stock;

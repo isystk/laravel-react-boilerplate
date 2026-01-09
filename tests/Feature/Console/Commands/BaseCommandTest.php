@@ -1,6 +1,6 @@
 <?php
 
-namespace Console\Commands;
+namespace Tests\Feature\Console\Commands;
 
 use App\Console\Commands\BaseCommand;
 use Illuminate\Console\OutputStyle;

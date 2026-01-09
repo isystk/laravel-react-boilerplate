@@ -1,6 +1,6 @@
 <?php
 
-namespace Helpers;
+namespace Tests\Unit\Helpers;
 
 use App\Domain\Entities\User;
 use App\Helpers\AuthHelper;

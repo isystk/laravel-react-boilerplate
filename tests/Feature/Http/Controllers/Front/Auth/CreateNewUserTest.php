@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\Controllers\Front\Auth;
+namespace Tests\Feature\Http\Controllers\Front\Auth;
 
 use App\Domain\Entities\User;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;

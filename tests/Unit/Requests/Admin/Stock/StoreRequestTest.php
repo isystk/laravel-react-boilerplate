@@ -1,6 +1,6 @@
 <?php
 
-namespace Requests\Admin\Stock;
+namespace Tests\Unit\Requests\Admin\Stock;
 
 use App\Http\Requests\Admin\Stock\StoreRequest;
 use Exception;

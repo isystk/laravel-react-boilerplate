@@ -1,6 +1,6 @@
 <?php
 
-namespace Middleware;
+namespace Tests\Feature\Middleware;
 
 use App\Http\Middleware\AuthWebOrApi;
 use Illuminate\Foundation\Testing\RefreshDatabase;

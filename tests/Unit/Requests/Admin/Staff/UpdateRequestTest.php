@@ -1,6 +1,6 @@
 <?php
 
-namespace Requests\Admin\Staff;
+namespace Tests\Unit\Requests\Admin\Staff;
 
 use App\Enums\AdminRole;
 use App\Http\Requests\Admin\Staff\UpdateRequest;

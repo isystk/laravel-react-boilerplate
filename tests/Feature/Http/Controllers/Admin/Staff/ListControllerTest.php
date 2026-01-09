@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\Controllers\Admin\Staff;
+namespace Tests\Feature\Http\Controllers\Admin\Staff;
 
 use App\Enums\AdminRole;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;

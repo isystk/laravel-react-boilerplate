@@ -1,6 +1,6 @@
 <?php
 
-namespace Services\Commands;
+namespace Tests\Unit\Services\Commands;
 
 use App\Services\Commands\ExportMonthlySalesService;
 use Illuminate\Foundation\Testing\RefreshDatabase;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Requests\Admin\ContactForm;
+namespace Tests\Unit\Requests\Admin\ContactForm;
 
 use App\Enums\Age;
 use App\Enums\Gender;
