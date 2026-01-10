@@ -11,6 +11,7 @@ DOCKER_HOME := $(BASE_DIR)/docker
 COMPOSE_FILE := $(DOCKER_HOME)/docker-compose.yml
 ENV_FILE := $(BASE_DIR)/.env
 DOCKER_CMD := docker compose -f $(COMPOSE_FILE) --env-file $(ENV_FILE)
+MYSQL_EXEC := $(DOCKER_CMD) exec -T mysql bash -c 'mysql -N -s -u $$MYSQL_USER -p$$MYSQL_PASSWORD $$MYSQL_DATABASE'
 
 # デフォルトタスク
 .DEFAULT_GOAL := help
@@ -162,3 +163,33 @@ aws-destroy: ## AWSスタックの削除
 .PHONY: awscli
 awscli: ## AWSコンテナに入ります
 	@$(DOCKER_CMD) exec aws /bin/bash
+
+.PHONY: user-login
+user-login: ## ユーザーログインします。
+	@LIST=$$(echo "SELECT CONCAT(id, ':', name) FROM users;" | $(MYSQL_EXEC)); \
+	if [ -z "$$LIST" ]; then \
+		echo "ユーザーが見つかりませんでした。"; \
+		exit 1; \
+	fi; \
+	source $(UTILS_SH); \
+	SELECTED=$$(select_from_list "$$LIST" "📂 ログインするユーザーを選択してください"); \
+	ID=$$(echo $$SELECTED | cut -d':' -f1); \
+	URL="http://localhost/skip-login/user?id=$$ID"; \
+	echo "ID: $$ID でログインします..."; \
+	echo "Opening: $$URL"; \
+	open "$$URL"
+
+.PHONY: admin-login
+admin-login: ## 管理画面にログインします。
+	@LIST=$$(echo "SELECT CONCAT(id, ':', name, '(', role, ')') FROM admins;" | $(MYSQL_EXEC)); \
+	if [ -z "$$LIST" ]; then \
+		echo "ユーザーが見つかりませんでした。"; \
+		exit 1; \
+	fi; \
+	source $(UTILS_SH); \
+	SELECTED=$$(select_from_list "$$LIST" "📂 ログインするユーザーを選択してください"); \
+	ID=$$(echo $$SELECTED | cut -d':' -f1); \
+	URL="http://localhost/skip-login/admin?id=$$ID"; \
+	echo "ID: $$ID でログインします..."; \
+	echo "Opening: $$URL"; \
+	open "$$URL"
