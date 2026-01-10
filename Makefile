@@ -162,19 +162,12 @@ login: ## ユーザーまたは管理者を選択してログインします。
 	TYPE_LABEL=$$(select_from_list "$$TYPES" "📂 ログインタイプを選択してください"); \
 	TYPE=$$(echo $$TYPE_LABEL | cut -d':' -f1); \
 	if [ "$$TYPE" = "user" ]; then \
-		QUERY="SELECT CONCAT(id, ':', name) FROM users;"; \
+		ID=$$( $(DB_OPS_SH) select --query="SELECT CONCAT(id, ':', name) FROM users;" --name="ユーザー" ); \
 		ENDPOINT="user"; \
 	else \
-		QUERY="SELECT CONCAT(id, ':', name, '(', role, ')') FROM admins;"; \
+	    ID=$$( $(DB_OPS_SH) select --query="SELECT CONCAT(id, ':', name, '(', role, ')') FROM admins;" --name="管理者" ); \
 		ENDPOINT="admin"; \
 	fi; \
-	LIST=$$(echo "$$QUERY" | $(MYSQL_EXEC) -N -s 2>/dev/null); \
-	if [ -z "$$LIST" ]; then \
-		echo "ユーザーが見つかりませんでした。"; \
-		exit 1; \
-	fi; \
-	SELECTED=$$(select_from_list "$$LIST" "👤 ログインする $$TYPE を選択してください"); \
-	ID=$$(echo $$SELECTED | cut -d':' -f1); \
 	URL="http://localhost/skip-login/$$ENDPOINT?id=$$ID"; \
 	echo "ID: $$ID ($$TYPE) でログインします..."; \
 	open "$$URL"
