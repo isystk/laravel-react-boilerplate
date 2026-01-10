@@ -10,6 +10,13 @@ SCRIPT_DIR=$(cd $(dirname $0); pwd)
 BASE_DIR=$(dirname "$SCRIPT_DIR")
 UTILS_SH=~/dotfiles/scripts/utils.sh
 
+if [ -f "$UTILS_SH" ]; then
+    source "$UTILS_SH"
+else
+    echo "❌ $UTILS_SH が見つかりません。"
+    exit 1
+fi
+
 # .env ファイルから変数をロード
 if [ -f "$BASE_DIR/.env" ]; then
     export $(grep -v '^#' "$BASE_DIR/.env" | xargs)
@@ -45,13 +52,6 @@ case "$COMMAND" in
             exit 1
         fi
 
-        if [ -f "$UTILS_SH" ]; then
-            source "$UTILS_SH"
-        else
-            echo "❌ $UTILS_SH が見つかりません。"
-            exit 1
-        fi
-
         SELECTED=$(select_from_list "$FILES_LIST" "📂 インポートするファイルを選択してください")
 
         if [ -z "$SELECTED" ]; then
@@ -65,8 +65,38 @@ case "$COMMAND" in
         echo "✅ インポートが完了しました。"
         ;;
 
+    "select")
+        QUERY=""
+        NAME="項目"
+
+        for arg in "$@"; do
+            case "$arg" in
+                --query=*) QUERY="${arg#*=}" ;;
+                --name=*)  NAME="${arg#*=}" ;;
+            esac
+        done
+        if [ -z "$QUERY" ]; then
+            echo "❌ --query が指定されていません。" >&2
+            exit 1
+        fi
+
+        LIST=$($DOCKER_CMD exec -T mysql bash -c "echo \"$QUERY\" | mysql -N -s -u \$MYSQL_USER -p\$MYSQL_PASSWORD \$MYSQL_DATABASE" 2>/dev/null || true)
+        if [ -z "$LIST" ]; then
+            echo "❌ $NAME が見つかりませんでした。" >&2
+            exit 1
+        fi
+
+        SELECTED=$(select_from_list "$LIST" "👤 ログインする $NAME を選択してください")
+        if [ -z "$SELECTED" ]; then
+            echo "🚫 キャンセルされました。" >&2
+            exit 1
+        fi
+
+        echo "$SELECTED" | cut -d':' -f1
+        ;;
+
     *)
-        echo "Usage: $0 {export|import}"
+        echo "Usage: $0 {export|import|select}"
         exit 1
         ;;
 esac
