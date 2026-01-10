@@ -7,13 +7,7 @@ use App\Services\BaseService;
 
 class DestroyService extends BaseService
 {
-    private AdminRepository $adminRepository;
-
-    public function __construct(
-        AdminRepository $adminRepository
-    ) {
-        $this->adminRepository = $adminRepository;
-    }
+    public function __construct(private readonly AdminRepository $adminRepository) {}
 
     /**
      * 管理者を削除します。

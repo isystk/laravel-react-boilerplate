@@ -7,12 +7,12 @@ use Illuminate\Support\Collection;
 interface BaseRepository
 {
     /**
-     * @param  array<string, mixed>  $data
+     * @param array<string, mixed> $data
      */
     public function create(array $data): mixed;
 
     /**
-     * @param  array<string, mixed>  $data
+     * @param array<string, mixed> $data
      */
     public function update(array $data, int $id): mixed;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\Controllers\Admin\ContactForm;
+namespace Tests\Feature\Http\Controllers\Admin\ContactForm;
 
 use App\Domain\Entities\Admin;
 use App\Enums\AdminRole;
@@ -32,12 +32,12 @@ class EditControllerTest extends BaseTest
 
         $contactForm = $this->createDefaultContactForm([
             'user_name' => 'user1',
-            'title' => 'title1',
-            'email' => '111@test.com',
-            'url' => 'https://test.com',
-            'gender' => Gender::Female->value,
-            'age' => Age::Over40->value,
-            'contact' => 'お問い合わせ内容',
+            'title'     => 'title1',
+            'email'     => '111@test.com',
+            'url'       => 'https://test.com',
+            'gender'    => Gender::Female->value,
+            'age'       => Age::Over40->value,
+            'contact'   => 'お問い合わせ内容',
         ]);
         $this->createDefaultContactFormImage(['contact_form_id' => $contactForm->id, 'file_name' => 'image1.jpg']);
         $this->createDefaultContactFormImage(['contact_form_id' => $contactForm->id, 'file_name' => 'image2.jpg']);
@@ -68,16 +68,16 @@ class EditControllerTest extends BaseTest
 
         $contactForm = $this->createDefaultContactForm([
             'user_name' => 'aaa',
-            'title' => 'タイトル1',
-            'email' => 'aaa@test.com',
-            'url' => 'https://aaa.test.com',
-            'gender' => Gender::Male->value,
-            'age' => Age::Over30->value,
-            'contact' => 'お問い合わせ1',
+            'title'     => 'タイトル1',
+            'email'     => 'aaa@test.com',
+            'url'       => 'https://aaa.test.com',
+            'gender'    => Gender::Male->value,
+            'age'       => Age::Over30->value,
+            'contact'   => 'お問い合わせ1',
         ]);
         $contactFormImage = $this->createDefaultContactFormImage([
             'contact_form_id' => $contactForm->id,
-            'file_name' => 'image1.jpg',
+            'file_name'       => 'image1.jpg',
         ]);
 
         // manager権限ではアクセスできないことのテスト
@@ -92,16 +92,16 @@ class EditControllerTest extends BaseTest
         $this->actingAs($admin2, 'admin');
 
         $redirectResponse = $this->put(route('admin.contact.update', $contactForm), [
-            'user_name' => 'bbb',
-            'title' => 'タイトル2',
-            'email' => 'bbb@test.com',
-            'url' => 'https://bbb.test.com',
-            'gender' => Gender::Female->value,
-            'age' => Age::Over40->value,
-            'contact' => 'お問い合わせ2',
+            'user_name'      => 'bbb',
+            'title'          => 'タイトル2',
+            'email'          => 'bbb@test.com',
+            'url'            => 'https://bbb.test.com',
+            'gender'         => Gender::Female->value,
+            'age'            => Age::Over40->value,
+            'contact'        => 'お問い合わせ2',
             'delete_image_1' => '1',
-            'image_file_2' => UploadedFile::fake()->image('image2.jpg'),
-            'image_file_3' => UploadedFile::fake()->image('image3.jpg'),
+            'image_file_2'   => UploadedFile::fake()->image('image2.jpg'),
+            'image_file_3'   => UploadedFile::fake()->image('image3.jpg'),
         ]);
         $response = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();
@@ -148,11 +148,11 @@ class EditControllerTest extends BaseTest
 
         $this->put(route('admin.contact.update', $contactForm), [
             'user_name' => 'test-update',
-            'title' => 'test-title',
-            'email' => 'test@test.com',
-            'gender' => Gender::Male->value,
-            'age' => Age::Over30->value,
-            'contact' => 'test-content',
+            'title'     => 'test-title',
+            'email'     => 'test@test.com',
+            'gender'    => Gender::Male->value,
+            'age'       => Age::Over30->value,
+            'contact'   => 'test-content',
         ]);
     }
 }

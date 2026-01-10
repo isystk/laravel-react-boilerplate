@@ -7,7 +7,6 @@ use App\Domain\Entities\ImportHistory;
 use App\Domain\Repositories\ImportHistory\ImportHistoryRepository;
 use App\Enums\ImportType;
 use App\Enums\JobStatus;
-use App\Jobs\Import\ImportStaffJobs;
 use App\Services\BaseService;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -16,13 +15,7 @@ use RuntimeException;
 
 class ImportService extends BaseService
 {
-    private ImportHistoryRepository $importHistoryRepository;
-
-    public function __construct(
-        ImportHistoryRepository $importHistoryRepository
-    ) {
-        $this->importHistoryRepository = $importHistoryRepository;
-    }
+    public function __construct(private readonly ImportHistoryRepository $importHistoryRepository) {}
 
     /**
      * 管理者をインポートするJobを登録します。
@@ -42,22 +35,22 @@ class ImportService extends BaseService
         }
         $filePath = $importFile->store($directory);
 
-        if (false === $filePath) {
+        if ($filePath === false) {
             throw ValidationException::withMessages(['import_file' => 'An unexpected error has occurred.']);
         }
         // インポート履歴の登録
         $importHistory = $this->importHistoryRepository->create([
-            'type' => ImportType::Staff,
-            'file_name' => $importFile->getClientOriginalName(),
-            'status' => JobStatus::Waiting, // ステータスを「処理待ち」で登録
+            'type'           => ImportType::Staff,
+            'file_name'      => $importFile->getClientOriginalName(),
+            'status'         => JobStatus::Waiting, // ステータスを「処理待ち」で登録
             'import_user_id' => $admin->id,
-            'import_at' => time(),
+            'import_at'      => time(),
             'save_file_name' => basename($filePath),
         ]);
         if (!$importHistory instanceof ImportHistory) {
             throw new RuntimeException('An unexpected error has occurred.');
         }
         // インポートJOBを溜める
-        ImportStaffJobs::dispatch($admin, $filePath, $importFile->getClientOriginalName(), $importHistory->id);
+        dispatch(new \App\Jobs\Import\ImportStaffJobs($admin, $filePath, $importFile->getClientOriginalName(), $importHistory->id));
     }
 }

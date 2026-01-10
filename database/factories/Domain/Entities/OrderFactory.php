@@ -5,6 +5,9 @@ namespace Database\Factories\Domain\Entities;
 use App\Domain\Entities\Order;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Domain\Entities\Order>
+ */
 class OrderFactory extends Factory
 {
     /**
@@ -20,8 +23,8 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => \App\Domain\Entities\User::factory(),
-            'sum_price' => $this->faker->numberBetween(1000, 100000),
+            'user_id'   => \App\Domain\Entities\User::factory(),
+            'sum_price' => fake()->numberBetween(1000, 100000),
         ];
     }
 
@@ -30,9 +33,7 @@ class OrderFactory extends Factory
      */
     public function unverified(): Factory
     {
-        return $this->state(function (array $attributes) {
-            return [
-            ];
-        });
+        return $this->state(fn (array $attributes) => [
+        ]);
     }
 }

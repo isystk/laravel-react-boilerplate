@@ -1,6 +1,6 @@
 <?php
 
-namespace Rules;
+namespace Tests\Unit\Rules;
 
 use App\Rules\Base64ImageRule;
 use Illuminate\Http\UploadedFile;
@@ -18,7 +18,7 @@ class Base64ImageRuleTest extends BaseTest
 
     public function test_ファイルがjpegの場合(): void
     {
-        $image = UploadedFile::fake()->image('test.jpg');
+        $image  = UploadedFile::fake()->image('test.jpg');
         $base64 = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($image->getPathname()));
 
         $rule = new Base64ImageRule(['png']);
@@ -30,7 +30,7 @@ class Base64ImageRuleTest extends BaseTest
 
     public function test_ファイルがpngの場合(): void
     {
-        $image = UploadedFile::fake()->image('test.png');
+        $image  = UploadedFile::fake()->image('test.png');
         $base64 = 'data:image/png;base64,' . base64_encode(file_get_contents($image->getPathname()));
 
         $rule = new Base64ImageRule(['gif']);

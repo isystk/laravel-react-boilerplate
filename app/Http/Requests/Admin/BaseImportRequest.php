@@ -4,7 +4,6 @@ namespace App\Http\Requests\Admin;
 
 use Closure;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Validator;
 
 abstract class BaseImportRequest extends FormRequest
 {
@@ -19,17 +18,17 @@ abstract class BaseImportRequest extends FormRequest
         }
         foreach ($files as $file) {
             $filePath = $file->path() ?: '';
-            $mime = mime_content_type($filePath);
+            $mime     = mime_content_type($filePath);
             if (!in_array($mime, ['text/plain', 'text/csv'], true)) {
                 // テキストファイル以外は何もしない
                 return;
             }
             $tmp = file_get_contents($filePath) ?: '';
             $enc = mb_detect_encoding($tmp, ['ASCII', 'ISO-2022-JP', 'UTF-8', 'EUC-JP', 'SJIS'], true);
-            if (false === $enc) {
+            if ($enc === false) {
                 $enc = 'SJIS';
             }
-            if ('UTF-8' !== $enc) {
+            if ($enc !== 'UTF-8') {
                 // UTF-8以外の文字コードでアップロードされた場合は、UTF-8に変換する
                 $tmp = mb_convert_encoding($tmp, 'UTF-8', $enc);
             }
@@ -53,11 +52,11 @@ abstract class BaseImportRequest extends FormRequest
                 'required',
                 'file',
                 function ($attribute, $value, $fail) {
-                    $fileName = $value->getClientOriginalName();
-                    $fileInfo = pathinfo($fileName);
-                    $fileMimeType = mime_content_type($value->path());
-                    $fileExtension = strtolower($fileInfo['extension'] ?? '');
-                    $fileSize = $value->getSize();
+                    $fileName            = $value->getClientOriginalName();
+                    $fileInfo            = pathinfo($fileName);
+                    $fileMimeType        = mime_content_type($value->path());
+                    $fileExtension       = strtolower($fileInfo['extension'] ?? '');
+                    $fileSize            = $value->getSize();
                     $upload_max_filesize = config('const.upload_max_filesize');
                     if (is_numeric($upload_max_filesize) && (int) $upload_max_filesize < $fileSize) {
                         $fail('ファイルには、' . floor($upload_max_filesize / 1000 / 1000) . 'MB以下のファイルを指定してください。');
@@ -69,7 +68,7 @@ abstract class BaseImportRequest extends FormRequest
 
                         return;
                     }
-                    if ('application/encrypted' === $fileMimeType) {
+                    if ($fileMimeType === 'application/encrypted') {
                         $fail('ファイルがパスワードで保護されています。パスワードを解除してください。');
 
                         return;
@@ -90,8 +89,8 @@ abstract class BaseImportRequest extends FormRequest
     public function after(): array
     {
         return [
-            function (Validator $validator) {
-                if (0 === count($validator->errors()->messages())) {
+            function (\Illuminate\Contracts\Validation\Validator $validator) {
+                if (count($validator->errors()->messages()) === 0) {
                     // rules に記載のエラーチェックに問題がなければ、ファイルの中身をチェックする
                     $import = $this->createImporter()($this->upload_file->path());
                     // ファイルの中身をチェックする
@@ -128,8 +127,8 @@ abstract class BaseImportRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'upload_file.required' => 'ファイルは必須です',
-            'upload_file.*.mimes' => 'ファイルの拡張子がエクセル形式またはCSV形式ではありません',
+            'upload_file.required'    => 'ファイルは必須です',
+            'upload_file.*.mimes'     => 'ファイルの拡張子がエクセル形式またはCSV形式ではありません',
             'upload_file.*.mimetypes' => 'ファイルがエクセル形式またはCSV形式ではありません',
         ];
     }

@@ -45,13 +45,13 @@ class IndexService extends BaseService
      */
     public function searchPhotoList(array $conditions): array
     {
-        $photos = [];
-        $storage = Storage::disk('s3');
-        $stockFiles = $storage->allFiles('stock');
+        $photos       = [];
+        $storage      = Storage::disk('s3');
+        $stockFiles   = $storage->allFiles('stock');
         $contactFiles = $storage->allFiles('contact');
-        $files = array_merge($stockFiles, $contactFiles);
+        $files        = array_merge($stockFiles, $contactFiles);
         foreach ($files as $file) {
-            if (null !== $conditions['file_name'] && !str_contains($file, $conditions['file_name'])) {
+            if ($conditions['file_name'] !== null && !str_contains($file, $conditions['file_name'])) {
                 continue;
             }
             $type = substr($file, 0, strpos($file, '/'));
@@ -60,11 +60,11 @@ class IndexService extends BaseService
                 continue;
             }
             $photoType = PhotoType::getByType($type);
-            if (null !== $conditions['file_type'] && $conditions['file_type'] !== $photoType->value) {
+            if ($conditions['file_type'] !== null && $conditions['file_type'] !== $photoType->value) {
                 continue;
             }
             $photo = [
-                'type' => $photoType,
+                'type'     => $photoType,
                 'fileName' => $file,
             ];
             $photos[] = $photo;

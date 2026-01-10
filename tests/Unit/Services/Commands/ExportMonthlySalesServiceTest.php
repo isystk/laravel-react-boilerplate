@@ -1,6 +1,6 @@
 <?php
 
-namespace Services\Commands;
+namespace Tests\Unit\Services\Commands;
 
 use App\Services\Commands\ExportMonthlySalesService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -22,7 +22,7 @@ class ExportMonthlySalesServiceTest extends BaseTest
     {
         $testCases = $this->getValidateArgsTestCases();
         foreach ($testCases as $key => $testCase) {
-            $args = $testCase['args'];
+            $args     = $testCase['args'];
             $expected = $testCase['expected'];
 
             $errors = $this->sut->validateArgs($args);
@@ -46,11 +46,11 @@ class ExportMonthlySalesServiceTest extends BaseTest
 
         return [
             'OK : すべての正常な場合' => [
-                'args' => $safeArgs,
+                'args'     => $safeArgs,
                 'expected' => [],
             ],
             'NG : 出力ファイルパスが未指定の場合' => [
-                'args' => [...$safeArgs, 'output_path' => null],
+                'args'     => [...$safeArgs, 'output_path' => null],
                 'expected' => [
                     '出力ファイルパスを入力してください。',
                 ],
@@ -62,7 +62,7 @@ class ExportMonthlySalesServiceTest extends BaseTest
     {
         [$header, $data] = $this->sut->getCsvData();
 
-        $method = $this->setPrivateMethodTest($this->sut, 'getHeader');
+        $method       = $this->setPrivateMethodTest($this->sut, 'getHeader');
         $expectHeader = $method->invoke($this->sut);
         $this->assertSame($expectHeader, $header, 'ヘッダーのみが出力されること');
         $this->assertCount(0, $data);
@@ -71,19 +71,19 @@ class ExportMonthlySalesServiceTest extends BaseTest
     public function test_getCsvData_出力データが存在する場合(): void
     {
         $m1 = $this->createDefaultMonthlySale([
-            'year_month' => '202404',
+            'year_month'  => '202404',
             'order_count' => 222,
-            'amount' => 54321,
+            'amount'      => 54321,
         ]);
         $m2 = $this->createDefaultMonthlySale([
-            'year_month' => '202405',
+            'year_month'  => '202405',
             'order_count' => 333,
-            'amount' => 65432,
+            'amount'      => 65432,
         ]);
         $m3 = $this->createDefaultMonthlySale([
-            'year_month' => '202406',
+            'year_month'  => '202406',
             'order_count' => 111,
-            'amount' => 76543,
+            'amount'      => 76543,
         ]);
 
         [, $data] = $this->sut->getCsvData();

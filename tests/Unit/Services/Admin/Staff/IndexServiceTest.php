@@ -24,52 +24,52 @@ class IndexServiceTest extends BaseTest
     public function test_searchStaff(): void
     {
         $default = [
-            'name' => null,
-            'email' => null,
-            'role' => null,
-            'sort_name' => 'updated_at',
+            'name'           => null,
+            'email'          => null,
+            'role'           => null,
+            'sort_name'      => 'updated_at',
             'sort_direction' => 'asc',
-            'limit' => 20,
+            'limit'          => 20,
         ];
 
         $admins = $this->service->searchStaff($default);
         $this->assertCount(0, $admins->items(), 'データがない状態でエラーにならないことを始めにテスト');
 
         $admin1 = $this->createDefaultAdmin([
-            'name' => 'user1',
+            'name'  => 'user1',
             'email' => 'user1@test.com',
-            'role' => AdminRole::HighManager->value,
+            'role'  => AdminRole::HighManager->value,
         ]);
         $admin2 = $this->createDefaultAdmin([
-            'name' => 'user2',
+            'name'  => 'user2',
             'email' => 'user2@test.com',
-            'role' => AdminRole::Manager->value,
+            'role'  => AdminRole::Manager->value,
         ]);
 
-        $input = $default;
+        $input         = $default;
         $input['name'] = 'user2';
         /** @var LengthAwarePaginator<int, Admin> $admins */
-        $admins = $this->service->searchStaff($input);
+        $admins   = $this->service->searchStaff($input);
         $adminIds = $admins->pluck('id')->all();
         $this->assertSame([$admin2->id], $adminIds, 'nameで検索が出来ることをテスト');
 
         $input['email'] = 'user2@test.com';
         /** @var LengthAwarePaginator<int, Admin> $admins */
-        $admins = $this->service->searchStaff($input);
+        $admins   = $this->service->searchStaff($input);
         $adminIds = $admins->pluck('id')->all();
         $this->assertSame([$admin2->id], $adminIds, 'emailで検索が出来ることをテスト');
 
         $input['role'] = AdminRole::Manager->value;
         /** @var LengthAwarePaginator<int, Admin> $admins */
-        $admins = $this->service->searchStaff($input);
+        $admins   = $this->service->searchStaff($input);
         $adminIds = $admins->pluck('id')->all();
         $this->assertSame([$admin2->id], $adminIds, 'roleで検索が出来ることをテスト');
 
-        $input = $default;
-        $input['sort_name'] = 'id';
+        $input                   = $default;
+        $input['sort_name']      = 'id';
         $input['sort_direction'] = 'desc';
         /** @var LengthAwarePaginator<int, Admin> $admins */
-        $admins = $this->service->searchStaff($input);
+        $admins   = $this->service->searchStaff($input);
         $adminIds = $admins->pluck('id')->all();
         $this->assertSame([$admin2->id, $admin1->id], $adminIds, 'ソート指定で検索が出来ることをテスト');
     }

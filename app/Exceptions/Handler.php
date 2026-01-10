@@ -33,7 +33,7 @@ class Handler extends ExceptionHandler
     }
 
     /**
-     * @param  Request  $request
+     * @param Request $request
      */
     protected function unauthenticated($request, AuthenticationException $exception): RedirectResponse|JsonResponse
     {

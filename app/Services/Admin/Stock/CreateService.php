@@ -11,13 +11,7 @@ use Illuminate\Http\Request;
 
 class CreateService extends BaseService
 {
-    private StockRepository $stockRepository;
-
-    public function __construct(
-        StockRepository $stockRepository
-    ) {
-        $this->stockRepository = $stockRepository;
-    }
+    public function __construct(private readonly StockRepository $stockRepository) {}
 
     /**
      * 商品を登録します。
@@ -27,17 +21,17 @@ class CreateService extends BaseService
         $fileName = $request->fileName;
 
         $model = [
-            'name' => $request->input('name'),
-            'detail' => $request->input('detail'),
-            'price' => $request->input('price'),
-            'quantity' => $request->input('quantity'),
+            'name'            => $request->input('name'),
+            'detail'          => $request->input('detail'),
+            'price'           => $request->input('price'),
+            'quantity'        => $request->input('quantity'),
             'image_file_name' => $fileName,
         ];
         $stock = $this->stockRepository->create(
             $model
         );
 
-        if (null !== $fileName) {
+        if ($fileName !== null) {
             // s3に画像をアップロード
             $tmpFile = UploadImage::convertBase64($request->imageBase64);
             $tmpFile->storeAs(PhotoType::Stock->type(), $fileName, 's3');

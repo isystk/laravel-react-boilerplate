@@ -8,13 +8,7 @@ use App\Services\BaseService;
 
 class ExportService extends BaseService
 {
-    private AdminRepository $adminRepository;
-
-    public function __construct(
-        AdminRepository $adminRepository
-    ) {
-        $this->adminRepository = $adminRepository;
-    }
+    public function __construct(private readonly AdminRepository $adminRepository) {}
 
     /**
      * エクスポート用のオブジェクトを取得します。

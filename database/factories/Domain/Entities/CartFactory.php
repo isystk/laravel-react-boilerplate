@@ -5,6 +5,9 @@ namespace Database\Factories\Domain\Entities;
 use App\Domain\Entities\Cart;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Domain\Entities\Cart>
+ */
 class CartFactory extends Factory
 {
     /**
@@ -28,9 +31,7 @@ class CartFactory extends Factory
      */
     public function unverified(): Factory
     {
-        return $this->state(function (array $attributes) {
-            return [
-            ];
-        });
+        return $this->state(fn (array $attributes) => [
+        ]);
     }
 }

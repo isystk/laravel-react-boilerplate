@@ -31,12 +31,6 @@ export default [
     },
   },
   {
-    ignores: [
-      'node_modules',
-      'dist',
-      'build',
-      'storybook-static',
-      'vendor',
-    ],
+    ignores: ['node_modules', 'dist', 'build', 'storybook-static', 'vendor', '.storybook'],
   },
 ];

@@ -8,13 +8,7 @@ use App\Services\BaseService;
 
 class PasswordChangeUpdateService extends BaseService
 {
-    private AdminRepository $adminRepository;
-
-    public function __construct(
-        AdminRepository $adminRepository
-    ) {
-        $this->adminRepository = $adminRepository;
-    }
+    public function __construct(private readonly AdminRepository $adminRepository) {}
 
     /**
      * パスワードを変更します。

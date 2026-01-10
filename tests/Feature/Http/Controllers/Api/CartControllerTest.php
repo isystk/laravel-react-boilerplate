@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\Controllers\Api;
+namespace Tests\Feature\Http\Controllers\Api;
 
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -19,7 +19,7 @@ class CartControllerTest extends BaseTest
     public function test_my_cart(): void
     {
         $user1 = $this->createDefaultUser([
-            'name' => 'user1',
+            'name'  => 'user1',
             'email' => 'user1@test.com',
         ]);
         $this->actingAs($user1);
@@ -28,12 +28,12 @@ class CartControllerTest extends BaseTest
         $response = $this->post(route('api.mycart'), []);
         $response->assertSuccessful();
         $response->assertJson([
-            'result' => true,
+            'result'  => true,
             'message' => '',
-            'stocks' => [],
-            'email' => $user1->email,
-            'sum' => 0,
-            'count' => 0,
+            'stocks'  => [],
+            'email'   => $user1->email,
+            'sum'     => 0,
+            'count'   => 0,
         ]);
 
         $stock1 = $this->createDefaultStock(['name' => 'stock1', 'price' => 111, 'image_file_name' => 'aaa.jpg']);
@@ -45,14 +45,14 @@ class CartControllerTest extends BaseTest
         $response = $this->post(route('api.mycart'), []);
         $response->assertSuccessful();
         $response->assertJson([
-            'result' => true,
+            'result'  => true,
             'message' => '',
-            'stocks' => [
+            'stocks'  => [
                 ['id' => $cart1->id, 'stockId' => $stock1->id, 'name' => 'stock1', 'imageUrl' => config('app.url') . '/uploads/stock/aaa.jpg', 'price' => 111],
                 ['id' => $cart2->id, 'stockId' => $stock2->id, 'name' => 'stock2', 'imageUrl' => config('app.url') . '/uploads/stock/bbb.jpg', 'price' => 222],
             ],
             'email' => $user1->email,
-            'sum' => 333,
+            'sum'   => 333,
             'count' => 2,
         ]);
     }
@@ -60,17 +60,17 @@ class CartControllerTest extends BaseTest
     public function test_add_cart(): void
     {
         $user1 = $this->createDefaultUser([
-            'name' => 'user1',
+            'name'  => 'user1',
             'email' => 'user1@test.com',
         ]);
         $this->actingAs($user1);
 
-        $stock1 = $this->createDefaultStock(['name' => 'stock1', 'price' => 111]);
+        $stock1   = $this->createDefaultStock(['name' => 'stock1', 'price' => 111]);
         $response = $this->post(route('api.mycart.add'), ['stock_id' => $stock1->id]);
         $response->assertSuccessful();
         $this->assertDatabaseCount('carts', 1);
 
-        $stock2 = $this->createDefaultStock(['name' => 'stock2', 'price' => 222]);
+        $stock2   = $this->createDefaultStock(['name' => 'stock2', 'price' => 222]);
         $response = $this->post(route('api.mycart.add'), ['stock_id' => $stock2->id]);
         $response->assertSuccessful();
         $this->assertDatabaseCount('carts', 2);
@@ -79,7 +79,7 @@ class CartControllerTest extends BaseTest
     public function test_delete_cart(): void
     {
         $user1 = $this->createDefaultUser([
-            'name' => 'user1',
+            'name'  => 'user1',
             'email' => 'user1@test.com',
         ]);
         $this->actingAs($user1);

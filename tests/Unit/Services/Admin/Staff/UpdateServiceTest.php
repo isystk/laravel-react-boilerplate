@@ -24,15 +24,15 @@ class UpdateServiceTest extends BaseTest
     public function test_update(): void
     {
         $admin1 = $this->createDefaultAdmin([
-            'name' => 'aaa',
+            'name'  => 'aaa',
             'email' => 'aaa@test.com',
-            'role' => AdminRole::Manager->value,
+            'role'  => AdminRole::Manager->value,
         ]);
 
-        $request = new UpdateRequest;
-        $request['name'] = 'bbb';
+        $request          = new UpdateRequest;
+        $request['name']  = 'bbb';
         $request['email'] = 'bbb@test.com';
-        $request['role'] = AdminRole::HighManager->value;
+        $request['role']  = AdminRole::HighManager->value;
         $this->service->update($admin1->id, $request);
 
         // データが更新されたことをテスト

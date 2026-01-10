@@ -5,6 +5,9 @@ namespace Database\Factories\Domain\Entities;
 use App\Domain\Entities\ImportHistory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Domain\Entities\ImportHistory>
+ */
 class ImportHistoryFactory extends Factory
 {
     /**
@@ -20,8 +23,8 @@ class ImportHistoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'file_name' => $this->faker->text(255),
-            'save_file_name' => $this->faker->text(255),
+            'file_name'      => fake()->text(255),
+            'save_file_name' => fake()->text(255),
         ];
     }
 
@@ -30,9 +33,7 @@ class ImportHistoryFactory extends Factory
      */
     public function unverified(): Factory
     {
-        return $this->state(function (array $attributes) {
-            return [
-            ];
-        });
+        return $this->state(fn (array $attributes) => [
+        ]);
     }
 }

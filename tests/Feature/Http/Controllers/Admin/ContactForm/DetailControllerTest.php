@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\Controllers\Admin\ContactForm;
+namespace Tests\Feature\Http\Controllers\Admin\ContactForm;
 
 use App\Enums\AdminRole;
 use App\Enums\Age;
@@ -30,12 +30,12 @@ class DetailControllerTest extends BaseTest
 
         $contactForm = $this->createDefaultContactForm([
             'user_name' => 'user1',
-            'title' => 'title1',
-            'email' => '111@test.com',
-            'url' => 'https://test.com',
-            'gender' => Gender::Female->value,
-            'age' => Age::Over40->value,
-            'contact' => 'お問い合わせ内容',
+            'title'     => 'title1',
+            'email'     => '111@test.com',
+            'url'       => 'https://test.com',
+            'gender'    => Gender::Female->value,
+            'age'       => Age::Over40->value,
+            'contact'   => 'お問い合わせ内容',
         ]);
         $this->createDefaultContactFormImage(['contact_form_id' => $contactForm->id, 'file_name' => 'image1.jpg']);
         $this->createDefaultContactFormImage(['contact_form_id' => $contactForm->id, 'file_name' => 'image2.jpg']);
@@ -57,7 +57,7 @@ class DetailControllerTest extends BaseTest
     {
         $contactForm = $this->createDefaultContactForm([
             'user_name' => 'user1',
-            'title' => 'title1',
+            'title'     => 'title1',
         ]);
         $contactFormImage1 = $this->createDefaultContactFormImage(['contact_form_id' => $contactForm->id]);
         $contactFormImage2 = $this->createDefaultContactFormImage(['contact_form_id' => $contactForm->id]);
@@ -79,7 +79,7 @@ class DetailControllerTest extends BaseTest
         $this->actingAs($admin2, 'admin');
 
         $redirectResponse = $this->delete(route('admin.contact.destroy', $contactForm));
-        $response = $this->get($redirectResponse->headers->get('Location'));
+        $response         = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();
 
         // データが削除されたことをテスト

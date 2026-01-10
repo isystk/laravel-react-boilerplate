@@ -31,7 +31,7 @@ class IndexServiceTest extends BaseTest
         $stock6 = $this->createDefaultStock(['name' => 'stock6']);
         $stock7 = $this->createDefaultStock(['name' => 'stock7']);
 
-        $result = $this->service->searchStock();
+        $result          = $this->service->searchStock();
         $expectedStockId = [
             $stock7->id,
             $stock6->id,

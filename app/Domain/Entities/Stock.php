@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
- * @property int $id
+ * @property int    $id
  * @property string $name
  * @property string $detail
  * @property string $image_file_name
- * @property int $price
- * @property int $quantity
+ * @property int    $price
+ * @property int    $quantity
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
@@ -38,16 +38,6 @@ class Stock extends Model
     ];
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
-
-    /**
      * 在庫がある場合にTrueを返却する
      */
     public function hasQuantity(): bool
@@ -61,5 +51,18 @@ class Stock extends Model
     public function getImageUrl(): string
     {
         return config('app.url') . '/uploads/stock/' . $this->image_file_name;
+    }
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
     }
 }

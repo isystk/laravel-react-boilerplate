@@ -22,6 +22,6 @@ enum AdminRole: string
      */
     public function isHighManager(): bool
     {
-        return self::HighManager === $this;
+        return $this === self::HighManager;
     }
 }

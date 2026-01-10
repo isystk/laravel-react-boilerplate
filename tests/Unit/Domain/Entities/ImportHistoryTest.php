@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Entities;
+namespace Tests\Unit\Domain\Entities;
 
 use App\Enums\ImportType;
 use App\Enums\JobStatus;
@@ -20,7 +20,7 @@ class ImportHistoryTest extends BaseTest
     public function test_正しくキャストされる事(): void
     {
         $model = $this->createDefaultImportHistory([
-            'type' => ImportType::Staff->value,
+            'type'   => ImportType::Staff->value,
             'status' => JobStatus::Success->value,
         ]);
 

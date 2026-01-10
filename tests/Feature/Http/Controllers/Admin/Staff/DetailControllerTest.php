@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\Controllers\Admin\Staff;
+namespace Tests\Feature\Http\Controllers\Admin\Staff;
 
 use App\Enums\AdminRole;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
@@ -20,9 +20,9 @@ class DetailControllerTest extends BaseTest
     public function test_show(): void
     {
         $admin1 = $this->createDefaultAdmin([
-            'name' => '管理者A',
+            'name'  => '管理者A',
             'email' => 'admin1@test.com',
-            'role' => AdminRole::HighManager,
+            'role'  => AdminRole::HighManager,
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -57,7 +57,7 @@ class DetailControllerTest extends BaseTest
 
         // 自分以外は削除出来ることのテスト
         $redirectResponse = $this->delete(route('admin.staff.destroy', $admin1));
-        $response = $this->get($redirectResponse->headers->get('Location'));
+        $response         = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();
 
         // データが削除されたことをテスト

@@ -10,13 +10,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class IndexService extends BaseService
 {
-    private AdminRepository $adminRepository;
-
-    public function __construct(
-        AdminRepository $adminRepository
-    ) {
-        $this->adminRepository = $adminRepository;
-    }
+    public function __construct(private readonly AdminRepository $adminRepository) {}
 
     /**
      * リクエストパラメータから検索条件に変換します。
@@ -33,21 +27,21 @@ class IndexService extends BaseService
     public function convertConditionsFromRequest(Request $request, int $limit = 20): array
     {
         $conditions = [
-            'name' => null,
-            'email' => null,
-            'role' => null,
-            'sort_name' => $request->sort_name ?? 'updated_at',
+            'name'           => null,
+            'email'          => null,
+            'role'           => null,
+            'sort_name'      => $request->sort_name ?? 'updated_at',
             'sort_direction' => $request->sort_direction ?? 'desc',
-            'limit' => $limit,
+            'limit'          => $limit,
         ];
 
-        if (null !== $request->name) {
+        if ($request->name !== null) {
             $conditions['name'] = $request->name;
         }
-        if (null !== $request->email) {
+        if ($request->email !== null) {
             $conditions['email'] = $request->email;
         }
-        if (null !== $request->role) {
+        if ($request->role !== null) {
             $conditions['role'] = $request->role;
         }
 

@@ -12,13 +12,7 @@ use App\Services\BaseService;
 
 class BaseCartService extends BaseService
 {
-    private CartRepository $cartRepository;
-
-    public function __construct(
-        CartRepository $cartRepository,
-    ) {
-        $this->cartRepository = $cartRepository;
-    }
+    public function __construct(private readonly CartRepository $cartRepository) {}
 
     /**
      * カートに追加された商品を取得します。
@@ -36,7 +30,7 @@ class BaseCartService extends BaseService
             return new CartStockDto($cart, $stock);
         })->all();
 
-        $sum = 0;
+        $sum   = 0;
         $count = 0;
         foreach ($items as $item) {
             $sum += $item->price;

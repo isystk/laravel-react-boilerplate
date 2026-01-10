@@ -41,11 +41,13 @@ class DetailController extends BaseController
         $service = app(DestroyService::class);
 
         DB::beginTransaction();
+
         try {
             $service->delete($staff->id);
             DB::commit();
         } catch (Throwable $e) {
             DB::rollBack();
+
             throw $e;
         }
 

@@ -23,8 +23,6 @@ abstract class BaseImport implements WithMapping, WithStartRow, WithValidation
 
     private int $startRow = 2;
 
-    protected string $filePath;
-
     protected string $readerType;
 
     /**
@@ -37,14 +35,13 @@ abstract class BaseImport implements WithMapping, WithStartRow, WithValidation
      */
     protected array $attribute = [];
 
-    public function __construct(string $filePath)
+    public function __construct(protected string $filePath)
     {
-        $this->filePath = $filePath;
-        $this->readerType = match (mime_content_type($filePath)) {
+        $this->readerType = match (mime_content_type($this->filePath)) {
             'text/plain', 'text/csv' => Excel::CSV,
-            'application/vnd.ms-excel' => Excel::XLS,
+            'application/vnd.ms-excel'                                          => Excel::XLS,
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => Excel::XLSX,
-            default => throw new \RuntimeException('$extension is an unknown value'),
+            default                                                             => throw new \RuntimeException('$extension is an unknown value'),
         };
         // ヘッダーを読み込んでおく
         $lines = \Maatwebsite\Excel\Facades\Excel::toArray(new Collection, $this->filePath, null,
@@ -100,7 +97,7 @@ abstract class BaseImport implements WithMapping, WithStartRow, WithValidation
     /**
      * 配列データをヘッダーをキーとした連想配列に変換します
      *
-     * @param  array<int, mixed>  $row
+     * @param  array<int, mixed>      $row
      * @return array<string, ?string>
      */
     protected function getRowMap(array $row): array
@@ -126,10 +123,10 @@ abstract class BaseImport implements WithMapping, WithStartRow, WithValidation
         }
 
         $date = DateUtil::toCarbon($col);
-        if (null !== $date) {
+        if ($date !== null) {
             return $date->format($format);
         }
-        if (Excel::XLS === $this->readerType || Excel::XLSX === $this->readerType) {
+        if ($this->readerType === Excel::XLS || $this->readerType === Excel::XLSX) {
             // Excelの書式が「日付」の場合は、数値が渡されるため、日付文字列に変換する
             if (is_numeric($col)) {
                 return Date::excelToDateTimeObject((int) $col)->format($format);
@@ -152,7 +149,7 @@ abstract class BaseImport implements WithMapping, WithStartRow, WithValidation
     }
 
     /**
-     * @param  array<int, mixed>  $row
+     * @param  array<int, mixed>      $row
      * @return array<string, ?string>
      */
     abstract public function map($row): array;

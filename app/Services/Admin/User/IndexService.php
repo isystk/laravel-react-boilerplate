@@ -10,13 +10,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class IndexService extends BaseService
 {
-    private UserRepository $userRepository;
-
-    public function __construct(
-        UserRepository $userRepository
-    ) {
-        $this->userRepository = $userRepository;
-    }
+    public function __construct(private readonly UserRepository $userRepository) {}
 
     /**
      * ユーザーを検索します。
@@ -26,11 +20,11 @@ class IndexService extends BaseService
     public function searchUser(SearchConditionDto $searchConditionDto): LengthAwarePaginator
     {
         $items = [
-            'name' => $searchConditionDto->name,
-            'email' => $searchConditionDto->email,
-            'sort_name' => $searchConditionDto->sortName,
+            'name'           => $searchConditionDto->name,
+            'email'          => $searchConditionDto->email,
+            'sort_name'      => $searchConditionDto->sortName,
             'sort_direction' => $searchConditionDto->sortDirection,
-            'limit' => $searchConditionDto->limit,
+            'limit'          => $searchConditionDto->limit,
         ];
 
         return $this->userRepository->getByConditions($items);

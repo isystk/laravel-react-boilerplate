@@ -19,13 +19,13 @@ class UpdateRequest extends FormRequest
         $imageFile2 = null;
         $imageFile3 = null;
         // imageBase64パラメータがあればUploadedFileオブジェクトに変換してimageFileパラメータに上書きする。
-        if ($this->has('imageBase64_1') && null !== $this->imageBase64_1) {
+        if ($this->has('imageBase64_1') && $this->imageBase64_1 !== null) {
             $imageFile1 = UploadImage::convertBase64($this->imageBase64_1);
         }
-        if ($this->has('imageBase64_2') && null !== $this->imageBase64_2) {
+        if ($this->has('imageBase64_2') && $this->imageBase64_2 !== null) {
             $imageFile2 = UploadImage::convertBase64($this->imageBase64_2);
         }
-        if ($this->has('imageBase64_3') && null !== $this->imageBase64_3) {
+        if ($this->has('imageBase64_3') && $this->imageBase64_3 !== null) {
             $imageFile3 = UploadImage::convertBase64($this->imageBase64_3);
         }
         $this->merge([
@@ -89,12 +89,12 @@ class UpdateRequest extends FormRequest
     {
         return [
             'user_name' => __('contact.Name'),
-            'title' => __('contact.Title'),
-            'email' => __('contact.EMail'),
-            'gender' => __('contact.Gender'),
-            'age' => __('contact.Age'),
-            'contact' => __('contact.Contact'),
-            'url' => __('contact.URL'),
+            'title'     => __('contact.Title'),
+            'email'     => __('contact.EMail'),
+            'gender'    => __('contact.Gender'),
+            'age'       => __('contact.Age'),
+            'contact'   => __('contact.Contact'),
+            'url'       => __('contact.URL'),
             'imageFile' => __('contact.Image'),
         ];
     }

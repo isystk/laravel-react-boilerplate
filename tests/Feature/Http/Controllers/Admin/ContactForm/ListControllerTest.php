@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\Controllers\Admin\ContactForm;
+namespace Tests\Feature\Http\Controllers\Admin\ContactForm;
 
 use App\Enums\AdminRole;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;

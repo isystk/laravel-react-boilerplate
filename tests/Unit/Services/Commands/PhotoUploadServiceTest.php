@@ -1,6 +1,6 @@
 <?php
 
-namespace Services\Commands;
+namespace Tests\Unit\Services\Commands;
 
 use App\Services\Commands\PhotoUploadService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -23,7 +23,7 @@ class PhotoUploadServiceTest extends BaseTest
     {
         $testCases = $this->getValidateArgsTestCases();
         foreach ($testCases as $key => $testCase) {
-            $args = $testCase['args'];
+            $args     = $testCase['args'];
             $expected = $testCase['expected'];
 
             $errors = $this->sut->validateArgs($args);
@@ -47,11 +47,11 @@ class PhotoUploadServiceTest extends BaseTest
 
         return [
             'OK : すべての正常な場合' => [
-                'args' => $safeArgs,
+                'args'     => $safeArgs,
                 'expected' => [],
             ],
             'NG : ファイル名が32文字より大きい場合' => [
-                'args' => [...$safeArgs, 'file_name' => Str::random(33)],
+                'args'     => [...$safeArgs, 'file_name' => Str::random(33)],
                 'expected' => [
                     'ファイル名(--file_name)には32文字以下の文字列を指定してください。',
                 ],

@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\Controllers\Admin;
+namespace Tests\Feature\Http\Controllers\Admin;
 
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -38,13 +38,13 @@ class LoginControllerTest extends BaseTest
     public function test_login_認証成功時にホームへリダイレクトすること(): void
     {
         $password = 'secret-pass';
-        $admin = $this->createDefaultAdmin([
-            'email' => 'success@test.com',
+        $admin    = $this->createDefaultAdmin([
+            'email'    => 'success@test.com',
             'password' => Hash::make($password),
         ]);
 
         $response = $this->post(route('admin.login'), [
-            'email' => 'success@test.com',
+            'email'    => 'success@test.com',
             'password' => $password,
         ]);
 
@@ -55,13 +55,13 @@ class LoginControllerTest extends BaseTest
     public function test_login_認証失敗時にエラーと共に戻ること(): void
     {
         $this->createDefaultAdmin([
-            'email' => 'fail@test.com',
+            'email'    => 'fail@test.com',
             'password' => Hash::make('correct-password'),
         ]);
 
         $response = $this->from(route('admin.login'))
             ->post(route('admin.login'), [
-                'email' => 'fail@test.com',
+                'email'    => 'fail@test.com',
                 'password' => 'wrong-password',
             ]);
 

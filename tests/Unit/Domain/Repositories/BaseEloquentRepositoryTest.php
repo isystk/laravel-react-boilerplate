@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Repositories;
+namespace Tests\Unit\Domain\Repositories;
 
 use App\Domain\Entities\User;
 use App\Domain\Repositories\BaseEloquentRepository;
@@ -17,8 +17,7 @@ class BaseEloquentRepositoryTest extends BaseTest
     {
         parent::setUp();
 
-        $this->repository = new class extends BaseEloquentRepository
-        {
+        $this->repository = new class extends BaseEloquentRepository {
             protected function model(): string
             {
                 return User::class;
@@ -29,8 +28,8 @@ class BaseEloquentRepositoryTest extends BaseTest
     public function test_create_データが作成できること(): void
     {
         $data = [
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name'     => 'Test User',
+            'email'    => 'test@example.com',
             'password' => 'password',
         ];
 
@@ -42,7 +41,7 @@ class BaseEloquentRepositoryTest extends BaseTest
 
     public function test_update_正常に更新できること(): void
     {
-        $user = $this->createDefaultUser(['name' => 'Old Name']);
+        $user       = $this->createDefaultUser(['name' => 'Old Name']);
         $updateData = ['name' => 'New Name'];
 
         $result = $this->repository->update($updateData, $user->id);

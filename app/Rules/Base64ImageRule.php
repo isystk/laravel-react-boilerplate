@@ -7,28 +7,20 @@ use Illuminate\Contracts\Validation\Rule;
 class Base64ImageRule implements Rule
 {
     /**
-     * @var array<string>
+     * @param array<string> $allowedExtensions
      */
-    private array $allowedExtensions;
-
-    /**
-     * @param  array<string>  $allowedExtensions
-     */
-    public function __construct(array $allowedExtensions = ['jpeg', 'png', 'gif'])
-    {
-        $this->allowedExtensions = $allowedExtensions;
-    }
+    public function __construct(private readonly array $allowedExtensions = ['jpeg', 'png', 'gif']) {}
 
     public function passes($attribute, $value): bool
     {
         $regex = '/^data:image\/(' . implode('|', $this->allowedExtensions) . ');base64,/';
-        if (preg_match($regex, $value)) {
-            $base64Str = substr($value, strpos($value, ',') + 1);
+        if (preg_match($regex, (string) $value)) {
+            $base64Str    = substr((string) $value, strpos((string) $value, ',') + 1);
             $decodedImage = base64_decode($base64Str);
-            $imgInfo = getimagesizefromstring($decodedImage);
+            $imgInfo      = getimagesizefromstring($decodedImage);
 
             return
-                false !== $imgInfo &&
+                $imgInfo !== false &&
                 in_array($imgInfo[2], [IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF], true);
         }
 

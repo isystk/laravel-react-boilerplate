@@ -18,7 +18,7 @@ class ListController extends BaseController
         $service = app(IndexService::class);
 
         $conditions = $service->convertConditionsFromRequest($request);
-        $staffs = $service->searchStaff($conditions);
+        $staffs     = $service->searchStaff($conditions);
 
         return view('admin.staff.index', compact([
             'staffs',
