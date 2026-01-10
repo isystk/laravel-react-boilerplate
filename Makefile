@@ -1,6 +1,7 @@
 SHELL := /bin/bash
 UTILS_SH := ~/dotfiles/scripts/utils.sh
 DB_OPS_SH := ./scripts/db-ops.sh
+JS_OPS_SH := ./scripts/js-ops.sh
 PHP_OPS_SH := ./scripts/php-ops.sh
 AWS_DEPLOY_SH := ./scripts/aws-deploy.sh
 .SHELLFLAGS := -eu -o pipefail -c
@@ -93,42 +94,32 @@ npm-run-build: ## appコンテナでビルドを実行します。
 
 .PHONY: format
 format: ## すべてのコード自動整形
-	# リファクタリング・静的解析・型チェック
-	$(DOCKER_CMD) exec app npm run lint
-	$(DOCKER_CMD) exec app npm run ts-check
-	$(DOCKER_CMD) exec -T app ./vendor/bin/rector process --clear-cache
-	$(DOCKER_CMD) exec app ./vendor/bin/phpstan analyse --memory-limit=1G
-	@WARNINGS=$$($(DOCKER_CMD) exec -T app composer dump-autoload 2>&1 | grep "does not comply" || true); \
-	# オートロードの整合性を確認 \
-	if [ -n "$$WARNINGS" ]; then \
-		echo "❌ PSR-4 違反が検出されました:"; \
-		echo "$$WARNINGS"; \
-		exit 1; \
-	fi
-	# コードフォーマット
-	$(DOCKER_CMD) exec app npm run prettier
-	$(DOCKER_CMD) exec app ./vendor/bin/pint
-	$(DOCKER_CMD) exec -T app npx -y blade-formatter --write "resources/views/**/*.blade.php"
+	@bash $(JS_OPS_SH) format
+	@bash $(PHP_OPS_SH) format
 
 .PHONY: format-branch
 format-branch: ## 選択したブランチとローカル差分のコード自動整形
+	@bash $(JS_OPS_SH) format branch
 	@bash $(PHP_OPS_SH) format branch
 
 .PHONY: format-staged
 format-staged: ## ステージング済みのファイルのコード自動整形
+	@bash $(JS_OPS_SH) format staged
 	@bash $(PHP_OPS_SH) format staged
 
 .PHONY: test
 test: ## すべてのテスト実行
-	@$(DOCKER_CMD) exec app npm run test; \
-	$(DOCKER_CMD) exec -e XDEBUG_MODE=off app php -d memory_limit=1G ./vendor/bin/phpunit --display-phpunit-deprecations
+	@bash $(JS_OPS_SH) test
+	@bash $(PHP_OPS_SH) test
 
 .PHONY: test-branch
 test-branch: ## 選択したブランチとローカル差分のテスト実行
+	@bash $(JS_OPS_SH) test branch
 	@bash $(PHP_OPS_SH) test branch
 
 .PHONY: test-staged
 test-staged: ## ステージング済みファイルのテスト実行
+	@bash $(JS_OPS_SH) test staged
 	@bash $(PHP_OPS_SH) test staged
 
 .PHONY: test-coverage
