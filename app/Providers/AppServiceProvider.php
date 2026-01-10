@@ -44,9 +44,11 @@ class AppServiceProvider extends ServiceProvider
                 ])
                 ->group(function () {
                     Route::get('user', static function () {
-                        /** @var \App\Domain\Entities\User $user */
+                        /** @var \App\Domain\Entities\User|null $user */
                         $user = \App\Domain\Entities\User::find(request('id'));
-                        if (!$user) return "User not found.";
+                        if (is_null($user)) {
+                            return 'User not found.';
+                        }
 
                         // ログアウト
                         auth()->logout();
@@ -60,9 +62,11 @@ class AppServiceProvider extends ServiceProvider
                         return redirect('/');
                     });
                     Route::get('admin', static function () {
-                        /** @var \App\Domain\Entities\Admin $admin */
+                        /** @var \App\Domain\Entities\Admin|null $admin */
                         $admin = \App\Domain\Entities\Admin::find(request('id'));
-                        if (!$admin) return "User not found.";
+                        if (is_null($admin)) {
+                            return 'User not found.';
+                        }
 
                         // ログアウト
                         auth()->guard('admin')->logout();
@@ -73,7 +77,7 @@ class AppServiceProvider extends ServiceProvider
                         auth()->guard('admin')->login($admin);
 
                         // リダイレクト
-                        return redirect()->route('admin.home');
+                        return to_route('admin.home');
                     });
                 });
         }
