@@ -96,7 +96,7 @@ case "$COMMAND" in
         ;;
 
     *)
-        echo "Usage: $0 {export|import}"
+        echo "Usage: $0 {export|import|select}"
         exit 1
         ;;
 esac
