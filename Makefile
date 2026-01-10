@@ -164,32 +164,26 @@ aws-destroy: ## AWSスタックの削除
 awscli: ## AWSコンテナに入ります
 	@$(DOCKER_CMD) exec aws /bin/bash
 
-.PHONY: user-login
-user-login: ## ユーザーログインします。
-	@LIST=$$(echo "SELECT CONCAT(id, ':', name) FROM users;" | $(MYSQL_EXEC)); \
+.PHONY: login
+login: ## ユーザーまたは管理者を選択してログインします。
+	@source $(UTILS_SH); \
+	TYPES=$$(printf "user:ユーザー\nadmin:管理者"); \
+	TYPE_LABEL=$$(select_from_list "$$TYPES" "📂 ログインタイプを選択してください"); \
+	TYPE=$$(echo $$TYPE_LABEL | cut -d':' -f1); \
+	if [ "$$TYPE" = "user" ]; then \
+		QUERY="SELECT CONCAT(id, ':', name) FROM users;"; \
+		ENDPOINT="user"; \
+	else \
+		QUERY="SELECT CONCAT(id, ':', name, '(', role, ')') FROM admins;"; \
+		ENDPOINT="admin"; \
+	fi; \
+	LIST=$$(echo "$$QUERY" | $(MYSQL_EXEC) -N -s 2>/dev/null); \
 	if [ -z "$$LIST" ]; then \
 		echo "ユーザーが見つかりませんでした。"; \
 		exit 1; \
 	fi; \
-	source $(UTILS_SH); \
-	SELECTED=$$(select_from_list "$$LIST" "📂 ログインするユーザーを選択してください"); \
+	SELECTED=$$(select_from_list "$$LIST" "👤 ログインする $$TYPE を選択してください"); \
 	ID=$$(echo $$SELECTED | cut -d':' -f1); \
-	URL="http://localhost/skip-login/user?id=$$ID"; \
-	echo "ID: $$ID でログインします..."; \
-	echo "Opening: $$URL"; \
-	open "$$URL"
-
-.PHONY: admin-login
-admin-login: ## 管理画面にログインします。
-	@LIST=$$(echo "SELECT CONCAT(id, ':', name, '(', role, ')') FROM admins;" | $(MYSQL_EXEC)); \
-	if [ -z "$$LIST" ]; then \
-		echo "ユーザーが見つかりませんでした。"; \
-		exit 1; \
-	fi; \
-	source $(UTILS_SH); \
-	SELECTED=$$(select_from_list "$$LIST" "📂 ログインするユーザーを選択してください"); \
-	ID=$$(echo $$SELECTED | cut -d':' -f1); \
-	URL="http://localhost/skip-login/admin?id=$$ID"; \
-	echo "ID: $$ID でログインします..."; \
-	echo "Opening: $$URL"; \
+	URL="http://localhost/skip-login/$$ENDPOINT?id=$$ID"; \
+	echo "ID: $$ID ($$TYPE) でログインします..."; \
 	open "$$URL"
