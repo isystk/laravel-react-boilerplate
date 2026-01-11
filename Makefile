@@ -163,4 +163,4 @@ login: ## ユーザーまたは管理者を選択してログインします。
 	fi; \
 	URL="http://localhost/skip-login/$$ENDPOINT?id=$$ID"; \
 	echo "ID: $$ID ($$TYPE) でログインします..."; \
-	open "$$URL"
+	open_browser "$$URL"
