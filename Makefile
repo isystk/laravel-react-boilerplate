@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 UTILS_SH := ~/dotfiles/scripts/utils.sh
-DB_OPS_SH := ./scripts/db-ops.sh
+DB_OPS_SH := ~/dotfiles/scripts/mysql-ops.sh
 JS_OPS_SH := ./scripts/js-ops.sh
 PHP_OPS_SH := ./scripts/php-ops.sh
 AWS_DEPLOY_SH := ./scripts/aws-deploy.sh
@@ -59,21 +59,13 @@ down: ## 停止します。
 restart: ## 再起動します。
 	stop start
 
-.PHONY: db-login
-db-login: ## DBにログインします。
-	$(DOCKER_CMD) exec mysql bash -c 'mysql -u $$MYSQL_USER -p$$MYSQL_PASSWORD $$MYSQL_DATABASE'
+.PHONY: mysql
+mysql: ## MySQLデータベースに関する各種操作を行います。
+	$(DB_OPS_SH) laraec-mysql
 
-.PHONY: db-migrate
-db-migrate: ## マイグレーションを実行します。
+.PHONY: migrate
+migrate: ## マイグレーションを実行します。
 	$(DOCKER_CMD) exec app php artisan migrate
-
-.PHONY: db-export
-db-export: ## DBのdumpファイルをエクスポートします。
-	@$(DB_OPS_SH) export
-
-.PHONY: db-import
-db-import: ## DBにdumpファイルをインポートします。
-	@$(DB_OPS_SH) import
 
 .PHONY: app
 app: ## appコンテナに入ります。
@@ -162,10 +154,10 @@ login: ## ユーザーまたは管理者を選択してログインします。
 	TYPE_LABEL=$$(select_from_list "$$TYPES" "📂 ログインタイプを選択してください"); \
 	TYPE=$$(echo $$TYPE_LABEL | cut -d':' -f1); \
 	if [ "$$TYPE" = "user" ]; then \
-		ID=$$( $(DB_OPS_SH) select --query="SELECT CONCAT(id, ':', name) FROM users;" --name="ユーザー" ); \
+		ID=$$( $(DB_OPS_SH) laraec-mysql select --query="SELECT CONCAT(id, ':', name) FROM users;" --name="ユーザー" ); \
 		ENDPOINT="user"; \
 	else \
-	    ID=$$( $(DB_OPS_SH) select --query="SELECT CONCAT(id, ':', name, '(', role, ')') FROM admins;" --name="管理者" ); \
+	    ID=$$( $(DB_OPS_SH) laraec-mysql select --query="SELECT CONCAT(id, ':', name, '(', role, ')') FROM admins;" --name="管理者" ); \
 		ENDPOINT="admin"; \
 	fi; \
 	URL="http://localhost/skip-login/$$ENDPOINT?id=$$ID"; \
