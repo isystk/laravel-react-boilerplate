@@ -109,6 +109,7 @@ graph LR
 │       └── front       # フロント画面(React)
 ├── routes              # ルーティング設定
 ├── storage             # ログ・キャッシュ・テスト出力
+├── scripts             # スクリプトファイル
 ├── tests               # PHPUnit / Featureテスト
 ├── Makefile            # プロジェクト操作用コマンド集
 └── package.json        # フロントエンド依存関係
@@ -158,7 +159,7 @@ $ make help
 $ make init
 
 # Dockerを起動して各サーバーを構築
-$ make start
+$ make up
 
 # サーバーの状態を確認
 $ make ps
@@ -169,14 +170,14 @@ $ make ps
 
 ```bash
 # Webサーバー(appコンテナ)にログイン
-$ make app-login
+$ make app
 
 # コンテナ内での操作例
 > php artisan photo_upload --run # テスト用画像をMinioにアップロード
 > ./vendor/bin/phpunit           # テストの実行
 
 # コンテナに入らずに実行する場合
-$ make test                      # Lint, Static Analysis, Testing を一括実行
+$ make test
 
 ```
 
