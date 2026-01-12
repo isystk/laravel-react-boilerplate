@@ -12,6 +12,7 @@ DOCKER_HOME := $(BASE_DIR)/docker
 COMPOSE_FILE := $(DOCKER_HOME)/docker-compose.yml
 ENV_FILE := $(BASE_DIR)/.env
 DOCKER_CMD := docker compose -f $(COMPOSE_FILE) --env-file $(ENV_FILE)
+APP_CMD := $(DOCKER_CMD) exec app
 MYSQL_EXEC := $(DOCKER_CMD) exec -T mysql bash -c 'mysql -N -s -u $$MYSQL_USER -p$$MYSQL_PASSWORD $$MYSQL_DATABASE'
 
 # デフォルトタスク
@@ -32,7 +33,7 @@ logs: ## Dockerコンテナのログを表示します。
 
 .PHONY: tinker
 tinker: ## tinkerを実行します。
-	$(DOCKER_CMD) exec app php artisan tinker
+	$(APP_CMD) php artisan tinker
 
 .PHONY: init
 init: ## 初期化します。
@@ -66,24 +67,20 @@ mysql: ## MySQLデータベースに関する各種操作を行います。
 
 .PHONY: migrate
 migrate: ## マイグレーションを実行します。
-	$(DOCKER_CMD) exec app php artisan migrate
+	$(APP_CMD) php artisan migrate
 
 .PHONY: app
 app: ## appコンテナに入ります。
-	$(DOCKER_CMD) exec app /bin/bash
-
-.PHONY: artisan
-artisan: ## AppコンテナでArtisanコマンドを実行します。(使い方: make artisan -- "photo_upload --run")
-	 ${DOCKER_CMD} exec app php artisan $(filter-out $@,$(MAKECMDGOALS))
+	$(APP_CMD) /bin/bash
 
 .PHONY: npm-run-dev
 npm-run-dev: ## appコンテナで開発用ビルドを実行します。
-	$(DOCKER_CMD) exec app npm run dev
+	$(APP_CMD) npm run dev
 
 .PHONY: npm-run-build
 npm-run-build: ## appコンテナでビルドを実行します。
-	$(DOCKER_CMD) exec app npm run build; \
-	$(DOCKER_CMD) exec app npm run build-storybook;
+	$(APP_CMD) npm run build; \
+	$(APP_CMD) npm run build-storybook;
 
 .PHONY: format
 format: ## すべてのコード自動整形
@@ -169,7 +166,9 @@ login: ## ユーザーまたは管理者を選択してログインします。
 batch: ## バッチを選択して実行します。
 	@source $(UTILS_SH); \
 	CMD=$$(select_from_list "$$BATCH_COMMANDS" "📂 バッチコマンドを選択してください"); \
-	make artisan "$$CMD";
+	if [ -n "$$CMD" ]; then \
+		$(APP_CMD) php artisan $$CMD; \
+	fi
 # バッチコマンド定義
 define BATCH_COMMANDS
 export_monthly_sales ./export_monthly_sales.sh --run
