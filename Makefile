@@ -170,4 +170,16 @@ login: ## ユーザーまたは管理者を選択してログインします。
 	fi; \
 	URL="http://localhost/skip-login/$$ENDPOINT?id=$$ID"; \
 	echo "ID: $$ID ($$TYPE) でログインします..."; \
-	open "$$URL"
+	open_browser "$$URL"
+
+.PHONY: batch
+batch: ## バッチを選択して実行します。
+	@source $(UTILS_SH); \
+	CMD=$$(select_from_list "$$BATCH_COMMANDS" "📂 バッチコマンドを選択してください"); \
+	make artisan "$$CMD";
+# バッチコマンド定義
+define BATCH_COMMANDS
+export_monthly_sales ./export_monthly_sales.sh --run
+photo_upload  --run
+endef
+export BATCH_COMMANDS
