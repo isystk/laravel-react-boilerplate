@@ -31,10 +31,6 @@ ps: ## Dockerコンテナの状態を表示します。
 logs: ## Dockerコンテナのログを表示します。
 	$(DOCKER_CMD) logs -f
 
-.PHONY: tinker
-tinker: ## tinkerを実行します。
-	$(APP_CMD) php artisan tinker
-
 .PHONY: init
 init: ## 初期化します。
 	@if [ ! -f .env ]; then \
@@ -73,6 +69,14 @@ migrate: ## マイグレーションを実行します。
 .PHONY: app
 app: ## appコンテナに入ります。
 	$(APP_CMD) /bin/bash
+
+.PHONY: tinker
+tinker: ## tinkerを実行します。
+	$(APP_CMD) php artisan tinker
+
+.PHONY: cache-clear
+cache-clear: ## 全てのキャッシュを一括でクリアします。
+	$(APP_CMD) php artisan optimize:clear
 
 .PHONY: npm-run-dev
 npm-run-dev: ## appコンテナで開発用ビルドを実行します。
@@ -161,6 +165,7 @@ login: ## ユーザーまたは管理者を選択してログインします。
 	fi; \
 	URL="http://localhost/skip-login/$$ENDPOINT?id=$$ID"; \
 	echo "ID: $$ID ($$TYPE) でログインします..."; \
+	echo "$$URL"; \
 	open_browser "$$URL"
 
 .PHONY: batch
