@@ -31,10 +31,6 @@ ps: ## Dockerコンテナの状態を表示します。
 logs: ## Dockerコンテナのログを表示します。
 	$(DOCKER_CMD) logs -f
 
-.PHONY: tinker
-tinker: ## tinkerを実行します。
-	$(APP_CMD) php artisan tinker
-
 .PHONY: init
 init: ## 初期化します。
 	@if [ ! -f .env ]; then \
@@ -63,6 +59,7 @@ restart: ## 再起動します。
 
 .PHONY: mysql
 mysql: ## MySQLデータベースに関する各種操作を行います。
+	export DUMP_DIR="./dump" && \
 	$(MYSQL_OPS_SH) laraec-mysql
 
 .PHONY: migrate
@@ -72,6 +69,14 @@ migrate: ## マイグレーションを実行します。
 .PHONY: app
 app: ## appコンテナに入ります。
 	$(APP_CMD) /bin/bash
+
+.PHONY: tinker
+tinker: ## tinkerを実行します。
+	$(APP_CMD) php artisan tinker
+
+.PHONY: cache-clear
+cache-clear: ## 全てのキャッシュを一括でクリアします。
+	$(APP_CMD) php artisan optimize:clear
 
 .PHONY: npm-run-dev
 npm-run-dev: ## appコンテナで開発用ビルドを実行します。
@@ -160,18 +165,21 @@ login: ## ユーザーまたは管理者を選択してログインします。
 	fi; \
 	URL="http://localhost/skip-login/$$ENDPOINT?id=$$ID"; \
 	echo "ID: $$ID ($$TYPE) でログインします..."; \
+	echo "$$URL"; \
 	open_browser "$$URL"
 
 .PHONY: batch
 batch: ## バッチを選択して実行します。
 	@source $(UTILS_SH); \
-	CMD=$$(select_from_list "$$BATCH_COMMANDS" "📂 バッチコマンドを選択してください"); \
+	SELECTED=$$(select_from_list "$$BATCH_COMMANDS" "📂 バッチコマンドを選択してください"); \
+	TAB=$$(printf '\t'); \
+	CMD=$$(echo "$$SELECTED" | cut -d"$$TAB" -f1); \
 	if [ -n "$$CMD" ]; then \
 		$(APP_CMD) php artisan $$CMD; \
 	fi
 # バッチコマンド定義
 define BATCH_COMMANDS
-export_monthly_sales ./export_monthly_sales.sh --run
-photo_upload  --run
+export_monthly_sales ./export_monthly_sales.sh --run	月別売上金額出力バッチ
+photo_upload  --run	S3アップロードバッチ
 endef
 export BATCH_COMMANDS

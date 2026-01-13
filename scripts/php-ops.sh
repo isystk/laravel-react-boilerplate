@@ -56,7 +56,7 @@ case $COMMAND in
             ALL_DIFF=$(get_diff_files "$DIFF_MODE")
             DIFF_FILES=$(echo "$ALL_DIFF" | grep '\.php$' | xargs -r ls -d 2>/dev/null || true)
 
-            [ -z "$DIFF_FILES" ] && { echo "✨ 対象ファイルは見つかりませんでした。"; exit 0; }
+            [ -z "$DIFF_FILES" ] && { echo "✨ 対象のPHPファイルは見つかりませんでした。"; exit 0; }
 
             PHP_FILES=$(echo "$DIFF_FILES" | grep -v '\.blade\.php$' | tr '\n' ' ')
             BLADE_FILES=$(echo "$DIFF_FILES" | grep '\.blade\.php$' | tr '\n' ' ')

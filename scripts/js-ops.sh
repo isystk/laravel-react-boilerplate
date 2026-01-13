@@ -54,9 +54,9 @@ case $COMMAND in
             # resources/assets 配下などの JS/TS 系ファイルに限定
             DIFF_FILES=$(echo "$ALL_DIFF" | grep -E '\.(js|jsx|ts|tsx)$' | xargs -r ls -d 2>/dev/null || true)
 
-            [ -z "$DIFF_FILES" ] && { echo "✨ 対象ファイルは見つかりませんでした。"; exit 0; }
+            [ -z "$DIFF_FILES" ] && { echo "✨ 対象のJS/TSファイルは見つかりませんでした。"; exit 0; }
 
-            echo "📝 差分ファイルを処理中..."
+            echo "📝 差分のJS/TSファイルを処理中..."
             $DOCKER_CMD exec -T app npm run lint -- $DIFF_FILES
             $DOCKER_CMD exec -T app npm run ts-check
             $DOCKER_CMD exec -T app npm run prettier -- --write $DIFF_FILES
@@ -70,7 +70,7 @@ case $COMMAND in
             echo "🚀 全テストを実行します..."
             $DOCKER_CMD exec -T app npm run test
         else
-            echo "🔍 テスト対象を抽出中 ($DIFF_MODE)..."
+            echo "🔍 JS/TSファイルのテスト対象を抽出中 ($DIFF_MODE)..."
             source "$UTILS_SH"
             ALL_DIFF=$(get_diff_files "$DIFF_MODE")
 
@@ -79,7 +79,7 @@ case $COMMAND in
             TEST_FILES=$(get_js_test_targets "$JS_DIFF")
 
             if [ -z "$TEST_FILES" ]; then
-                echo "✨ 関連するテストは見つかりませんでした。"; exit 0;
+                echo "✨ 関連するJS/TSファイルのテストは見つかりませんでした。"; exit 0;
             fi
 
             echo "🚀 実行: $TEST_FILES"
