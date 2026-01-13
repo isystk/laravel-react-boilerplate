@@ -63,6 +63,7 @@ restart: ## 再起動します。
 
 .PHONY: mysql
 mysql: ## MySQLデータベースに関する各種操作を行います。
+	export DUMP_DIR="./dump" && \
 	$(MYSQL_OPS_SH) laraec-mysql
 
 .PHONY: migrate
