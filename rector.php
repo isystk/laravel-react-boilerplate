@@ -38,12 +38,12 @@ return RectorConfig::configure()
     ->withSkip([
         // Laravel のヘルパー関数で誤検知が多いため、余分な引数の削除を停止
         RemoveExtraParametersRector::class,
-
-        // Carbon から Date ファサードへの変換を停止
-        CarbonToDateFacadeRector::class,
-
-        // app() ヘルパー関数を resolve() に変換するルールを停止
-        AppToResolveRector::class,
+//
+//        // Carbon から Date ファサードへの変換を停止
+//        CarbonToDateFacadeRector::class,
+//
+//        // app() ヘルパー関数を resolve() に変換するルールを停止
+//        AppToResolveRector::class,
     ])
 
     // --- 実行パフォーマンス設定 ---

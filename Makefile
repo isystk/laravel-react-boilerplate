@@ -166,13 +166,15 @@ login: ## ユーザーまたは管理者を選択してログインします。
 .PHONY: batch
 batch: ## バッチを選択して実行します。
 	@source $(UTILS_SH); \
-	CMD=$$(select_from_list "$$BATCH_COMMANDS" "📂 バッチコマンドを選択してください"); \
+	SELECTED=$$(select_from_list "$$BATCH_COMMANDS" "📂 バッチコマンドを選択してください"); \
+	TAB=$$(printf '\t'); \
+	CMD=$$(echo "$$SELECTED" | cut -d"$$TAB" -f1); \
 	if [ -n "$$CMD" ]; then \
 		$(APP_CMD) php artisan $$CMD; \
 	fi
 # バッチコマンド定義
 define BATCH_COMMANDS
-export_monthly_sales ./export_monthly_sales.sh --run
-photo_upload  --run
+export_monthly_sales ./export_monthly_sales.sh --run	月別売上金額出力バッチ
+photo_upload  --run	S3アップロードバッチ
 endef
 export BATCH_COMMANDS
