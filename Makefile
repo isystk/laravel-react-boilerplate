@@ -89,8 +89,8 @@ npm-run-build: ## appコンテナでビルドを実行します。
 
 .PHONY: format
 format: ## すべてのコード自動整形
-	@bash $(JS_OPS_SH) format
-	@bash $(PHP_OPS_SH) format
+	@bash $(JS_OPS_SH) format $(filter-out $@,$(MAKECMDGOALS))
+	@bash $(PHP_OPS_SH) format $(filter-out $@,$(MAKECMDGOALS))
 
 .PHONY: format-branch
 format-branch: ## 選択したブランチとローカル差分のコード自動整形
@@ -104,8 +104,8 @@ format-staged: ## ステージング済みのファイルのコード自動整�
 
 .PHONY: test
 test: ## すべてのテスト実行
-	@bash $(JS_OPS_SH) test
-	@bash $(PHP_OPS_SH) test
+	@bash $(JS_OPS_SH) test $(filter-out $@,$(MAKECMDGOALS))
+	@bash $(PHP_OPS_SH) test $(filter-out $@,$(MAKECMDGOALS))
 
 .PHONY: test-branch
 test-branch: ## 選択したブランチとローカル差分のテスト実行
