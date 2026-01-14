@@ -68,7 +68,7 @@ case $COMMAND in
             echo "📢 全ファイルを対象にフォーマットを開始します..."
             $APP_CMD ./vendor/bin/rector process --clear-cache
             $APP_CMD ./vendor/bin/pint
-            npx -y blade-formatter --write "resources/**/*.blade.php"
+            $APP_CMD npx -y blade-formatter --write "resources/**/*.blade.php"
             $APP_CMD composer dump-autoload
         else
             # ファイルが存在するか、または特殊キーワード(staged/branch等)でないかを確認
@@ -107,7 +107,7 @@ case $COMMAND in
 
             if [ -n "$(echo "$BLADE_FILES" | xargs)" ]; then
                 echo "🎨 Bladeファイル実行中:"
-                npx -y blade-formatter --write $(echo "$BLADE_FILES" | xargs)
+                $APP_CMD npx -y blade-formatter --write $(echo "$BLADE_FILES" | xargs)
             fi
         fi
         echo "✅ 完了しました。"
