@@ -1,4 +1,25 @@
 #!/bin/bash
+
+# ==============================================================================
+# Script Name:  Frontend Task Runner (Docker Wrapper)
+# Description:  Dockerコンテナ内のJS/TSプロジェクトに対して、フォーマットやテストを実行します。
+#               Gitの差分(staged/branch)やファイルパスを指定して、限定的な実行が可能です。
+#
+# Usage:        ./js-ops.sh {format|test} [branch|staged|file_paths...]
+#
+# Arguments:
+#   COMMAND:    format - Lint, TypeCheck, Prettierを実行
+#               test   - テストを実行 (関連するテストファイルを自動抽出)
+#
+#   DIFF_MODE:  branch    - 現在のブランチの差分を対象
+#               staged    - ステージング済みのファイルを対象
+#               filepaths - 特定のファイルパスを直接指定
+#               (空)      - 全ファイルを対象
+#
+# Environment:  $LLM_GEMINI_KEY を含む環境変数や .env ファイル、
+#               ~/dotfiles/scripts/utils.sh に依存します。
+# ==============================================================================
+
 set -e
 
 COMMAND=$1

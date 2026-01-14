@@ -1,4 +1,27 @@
 #!/bin/bash
+
+# ==============================================================================
+# Script Name:  Backend Task Runner (Laravel/Docker Wrapper)
+# Description:  Dockerコンテナ内のPHP(Laravel)環境に対して、静的解析・修正・テストを実行します。
+#               PHPファイル（Rector/Pint）とBladeファイル（blade-formatter）の両方に対応し、
+#               PSR-4 規約の自動チェックも行います。
+#
+# Usage:        ./php-ops.sh {format|test} [branch|staged|file_paths...]
+#
+# Arguments:
+#   COMMAND:    format - Rector (自動修正), Pint (スタイル修正), blade-formatter を実行
+#               test   - PHPUnitを実行 (ソース変更から関連するテストを自動特定)
+#
+#   DIFF_MODE:  branch    - 現在のブランチの差分を対象
+#               staged    - ステージング済みのファイルを対象
+#               filepaths - 特定のファイルパスを直接指定
+#               (空)      - プロジェクト全ファイルを対象
+#
+# Features:     - 差分抽出時に `app/*.php` に対応する `tests/*Test.php` を自動検索
+#               - `composer dump-autoload` による PSR-4 違反の検知と停止
+#               - XDEBUGオフ、メモリ制限1Gでの高速なテスト実行
+# ==============================================================================
+
 set -e
 
 COMMAND=$1
