@@ -119,7 +119,7 @@ case $COMMAND in
         if [ -z "$DIFF_MODE" ]; then
             echo "🚀 全テストを実行します..."
             # 引数なしでphpunitを実行
-            $DOCKER_CMD exec -e XDEBUG_MODE=off app php -d memory_limit=1G ./vendor/bin/phpunit
+            $DOCKER_CMD exec -e XDEBUG_MODE=off app php -d memory_limit=1G ./vendor/bin/phpunit --stop-on-failure --display-phpunit-deprecations
         else
             if [ -f "$DIFF_MODE" ] || [[ ! "$DIFF_MODE" =~ ^(staged|branch)$ ]]; then
                 echo "🔍 指定されたファイルのテストを実行します..."
@@ -138,7 +138,7 @@ case $COMMAND in
             fi
 
             echo "🚀 実行: $TEST_FILES"
-            $DOCKER_CMD exec -e XDEBUG_MODE=off app php -d memory_limit=1G ./vendor/bin/phpunit $TEST_FILES
+            $DOCKER_CMD exec -e XDEBUG_MODE=off app php -d memory_limit=1G ./vendor/bin/phpunit --stop-on-failure --display-phpunit-deprecations $TEST_FILES
         fi
         exit 0
         ;;
