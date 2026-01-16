@@ -78,7 +78,6 @@ tinker: ## tinkerを実行します。
 cache-clear: ## 全てのキャッシュを一括でクリアします。
 	$(APP_CMD) php artisan optimize:clear
 	$(APP_CMD) php artisan clear-compiled
-	$(APP_CMD) composer dump-autoload -o
 
 .PHONY: npm-run-dev
 npm-run-dev: ## appコンテナで開発用ビルドを実行します。
