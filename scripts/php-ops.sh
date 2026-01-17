@@ -39,7 +39,7 @@ ENV_FILE="$BASE_DIR/.env"
 DOCKER_HOME="$BASE_DIR/docker"
 COMPOSE_FILE="$DOCKER_HOME/docker-compose.yml"
 DOCKER_CMD="docker compose -f $COMPOSE_FILE --env-file $ENV_FILE"
-APP_CMD="$DOCKER_CMD exec -T app"
+APP_CMD="$DOCKER_CMD exec -T laraec-app"
 
 # --- 共通関数 ---
 

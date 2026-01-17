@@ -12,8 +12,8 @@ DOCKER_HOME := $(BASE_DIR)/docker
 COMPOSE_FILE := $(DOCKER_HOME)/docker-compose.yml
 ENV_FILE := $(BASE_DIR)/.env
 DOCKER_CMD := docker compose -f $(COMPOSE_FILE) --env-file $(ENV_FILE)
-APP_CMD := $(DOCKER_CMD) exec app
-MYSQL_EXEC := $(DOCKER_CMD) exec -T mysql bash -c 'mysql -N -s -u $$MYSQL_USER -p$$MYSQL_PASSWORD $$MYSQL_DATABASE'
+APP_CMD := $(DOCKER_CMD) exec laraec-app
+MYSQL_EXEC := $(DOCKER_CMD) exec -T laraec-mysql bash -c 'mysql -N -s -u $$MYSQL_USER -p$$MYSQL_PASSWORD $$MYSQL_DATABASE'
 
 # デフォルトタスク
 .DEFAULT_GOAL := help
