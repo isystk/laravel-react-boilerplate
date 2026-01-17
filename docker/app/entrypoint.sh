@@ -42,7 +42,7 @@ fi
 
 ## Minio にバケットを作成
 echo "🪣 Setup Bucket for Minio..."
-mc alias set minio http://s3:9000 admin password
+mc alias set minio http://laraec-s3:9000 admin password
 # 初回なら Minio にバケットを作成
 if ! mc ls minio/laraec.isystk.com >/dev/null 2>&1; then
     mc mb minio/laraec.isystk.com
