@@ -138,7 +138,7 @@ case $COMMAND in
             fi
 
             echo "🚀 実行: $TEST_FILES"
-            $DOCKER_CMD exec -e XDEBUG_MODE=off app php -d memory_limit=1G ./vendor/bin/phpunit --stop-on-failure --display-phpunit-deprecations $TEST_FILES
+            $APP_CMD php -d memory_limit=1G ./vendor/bin/phpunit --stop-on-failure --display-phpunit-deprecations $TEST_FILES
         fi
         exit 0
         ;;
