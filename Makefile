@@ -12,8 +12,8 @@ DOCKER_HOME := $(BASE_DIR)/docker
 COMPOSE_FILE := $(DOCKER_HOME)/docker-compose.yml
 ENV_FILE := $(BASE_DIR)/.env
 DOCKER_CMD := docker compose -f $(COMPOSE_FILE) --env-file $(ENV_FILE)
-APP_CMD := $(DOCKER_CMD) exec app
-MYSQL_EXEC := $(DOCKER_CMD) exec -T mysql bash -c 'mysql -N -s -u $$MYSQL_USER -p$$MYSQL_PASSWORD $$MYSQL_DATABASE'
+APP_CMD := $(DOCKER_CMD) exec laraec-app
+MYSQL_EXEC := $(DOCKER_CMD) exec -T laraec-mysql bash -c 'mysql -N -s -u $$MYSQL_USER -p$$MYSQL_PASSWORD $$MYSQL_DATABASE'
 
 # デフォルトタスク
 .DEFAULT_GOAL := help
@@ -37,7 +37,7 @@ init: ## 初期化します。
 		echo "📄 .env not found, copying from .env.example"; \
 		cp .env.example .env; \
 	fi
-	$(DOCKER_CMD) down --rmi all --volumes --remove-orphans
+	$(DOCKER_CMD) down --rmi local --volumes
 	rm -rf "$(DOCKER_HOME)/mysql/logs" && mkdir -p "$(DOCKER_HOME)/mysql/logs"
 	rm -rf "$(DOCKER_HOME)/app/logs" && mkdir -p "$(DOCKER_HOME)/app/logs"
 	chmod -R 755 "$(DOCKER_HOME)/mysql/logs" "$(DOCKER_HOME)/app/logs"
@@ -77,6 +77,7 @@ tinker: ## tinkerを実行します。
 .PHONY: cache-clear
 cache-clear: ## 全てのキャッシュを一括でクリアします。
 	$(APP_CMD) php artisan optimize:clear
+	$(APP_CMD) php artisan clear-compiled
 
 .PHONY: npm-run-dev
 npm-run-dev: ## appコンテナで開発用ビルドを実行します。
@@ -88,34 +89,14 @@ npm-run-build: ## appコンテナでビルドを実行します。
 	$(APP_CMD) npm run build-storybook;
 
 .PHONY: format
-format: ## すべてのコード自動整形
+format: ## コード自動整形 [branch|staged|file_paths...]
 	@bash $(JS_OPS_SH) format $(filter-out $@,$(MAKECMDGOALS))
 	@bash $(PHP_OPS_SH) format $(filter-out $@,$(MAKECMDGOALS))
 
-.PHONY: format-branch
-format-branch: ## 選択したブランチとローカル差分のコード自動整形
-	@bash $(JS_OPS_SH) format branch
-	@bash $(PHP_OPS_SH) format branch
-
-.PHONY: format-staged
-format-staged: ## ステージング済みのファイルのコード自動整形
-	@bash $(JS_OPS_SH) format staged
-	@bash $(PHP_OPS_SH) format staged
-
 .PHONY: test
-test: ## すべてのテスト実行
+test: ## テスト実行 [branch|staged|file_paths...]
 	@bash $(JS_OPS_SH) test $(filter-out $@,$(MAKECMDGOALS))
 	@bash $(PHP_OPS_SH) test $(filter-out $@,$(MAKECMDGOALS))
-
-.PHONY: test-branch
-test-branch: ## 選択したブランチとローカル差分のテスト実行
-	@bash $(JS_OPS_SH) test branch
-	@bash $(PHP_OPS_SH) test branch
-
-.PHONY: test-staged
-test-staged: ## ステージング済みファイルのテスト実行
-	@bash $(JS_OPS_SH) test staged
-	@bash $(PHP_OPS_SH) test staged
 
 .PHONY: test-coverage
 test-coverage: ## コードカバレッジレポートを出力します。

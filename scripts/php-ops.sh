@@ -39,7 +39,7 @@ ENV_FILE="$BASE_DIR/.env"
 DOCKER_HOME="$BASE_DIR/docker"
 COMPOSE_FILE="$DOCKER_HOME/docker-compose.yml"
 DOCKER_CMD="docker compose -f $COMPOSE_FILE --env-file $ENV_FILE"
-APP_CMD="$DOCKER_CMD exec -T app"
+APP_CMD="$DOCKER_CMD exec -T laraec-app"
 
 # --- 共通関数 ---
 
@@ -119,7 +119,7 @@ case $COMMAND in
         if [ -z "$DIFF_MODE" ]; then
             echo "🚀 全テストを実行します..."
             # 引数なしでphpunitを実行
-            $DOCKER_CMD exec -e XDEBUG_MODE=off app php -d memory_limit=1G ./vendor/bin/phpunit
+            $APP_CMD php -d memory_limit=1G ./vendor/bin/phpunit --stop-on-failure --display-phpunit-deprecations
         else
             if [ -f "$DIFF_MODE" ] || [[ ! "$DIFF_MODE" =~ ^(staged|branch)$ ]]; then
                 echo "🔍 指定されたファイルのテストを実行します..."
@@ -138,7 +138,7 @@ case $COMMAND in
             fi
 
             echo "🚀 実行: $TEST_FILES"
-            $DOCKER_CMD exec -e XDEBUG_MODE=off app php -d memory_limit=1G ./vendor/bin/phpunit $TEST_FILES
+            $APP_CMD php -d memory_limit=1G ./vendor/bin/phpunit --stop-on-failure --display-phpunit-deprecations $TEST_FILES
         fi
         exit 0
         ;;
