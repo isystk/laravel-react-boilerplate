@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - 80:80
-      #- 443:443
+      - 443:443
       - 5173:5173
       - 6006:6006
     restart: always
@@ -17,8 +17,6 @@ services:
       - ..:/var/www/html
     environment:
       - TZ=Asia/Tokyo
-    networks:
-      - default
 
   laraec-mysql:
     image: laraec/mysql
@@ -80,8 +78,3 @@ services:
 volumes:
   laraec-db-store:
   laraec-s3-store:
-
-networks:
-  proxy_network:
-    external: true
-    name: docker_default
