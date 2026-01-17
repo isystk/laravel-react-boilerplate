@@ -37,7 +37,7 @@ init: ## 初期化します。
 		echo "📄 .env not found, copying from .env.example"; \
 		cp .env.example .env; \
 	fi
-	$(DOCKER_CMD) down --rmi all --volumes --remove-orphans
+	$(DOCKER_CMD) down --rmi local --volumes
 	rm -rf "$(DOCKER_HOME)/mysql/logs" && mkdir -p "$(DOCKER_HOME)/mysql/logs"
 	rm -rf "$(DOCKER_HOME)/app/logs" && mkdir -p "$(DOCKER_HOME)/app/logs"
 	chmod -R 755 "$(DOCKER_HOME)/mysql/logs" "$(DOCKER_HOME)/app/logs"
