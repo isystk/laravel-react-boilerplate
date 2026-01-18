@@ -1,16 +1,15 @@
 services:
 
-  app:
+  laraec-app:
     image: laraec/app
     build:
       context: ./app
       dockerfile: Dockerfile
-    container_name: laraec-app
     ports:
-      - 80:80
-      - 443:443
-      - 5173:5173
-      - 6006:6006
+      - '80:80'
+      - '443:443'
+      - '5173:5173'
+      - '6006:6006'
     restart: always
     volumes:
       - ./app/logs/apache:/var/log/apache2
@@ -19,20 +18,19 @@ services:
     environment:
       - TZ=Asia/Tokyo
 
-  mysql:
+  laraec-mysql:
     image: laraec/mysql
-    container_name: laraec-mysql
     build:
       context: ./mysql
       dockerfile: Dockerfile
+    ports:
+      - '3306:3306'
     environment:
       MYSQL_DATABASE: laraec
       MYSQL_USER: user
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: password
       TZ: Asia/Tokyo
-    ports:
-      - 3306:3306
     restart: always
     volumes:
       - laraec-db-store:/var/lib/mysql
@@ -40,27 +38,24 @@ services:
       - ./mysql/conf:/etc/mysql/conf.d
       - ./mysql/initdb.d:/docker-entrypoint-initdb.d
 
-  adminer:
+  laraec-adminer:
     image: adminer
-    container_name: laraec-adminer
     restart: always
     ports:
-      - 8888:8080
+      - '8888:8080'
     environment:
       - ADMINER_DEFAULT_SERVER=mysql
 
-  mailpit:
+  laraec-mailpit:
     image: axllent/mailpit
-    container_name: laraec-mailpit
     ports:
-      - 8025:8025
-      - 25:1025
+      - '8025:8025'
+      - '25:1025'
 
-  s3:
+  laraec-s3:
     image: minio/minio:RELEASE.2021-10-10T16-53-30Z
-    container_name: laraec-s3
     ports:
-      - 9001:9001
+      - '9001:9001'
     environment:
       MINIO_ACCESS_KEY: admin
       MINIO_SECRET_KEY: password
@@ -68,8 +63,7 @@ services:
     volumes:
       - laraec-s3-store:/data
 
-  aws:
-    container_name: laraec-aws
+  laraec-aws:
     build:
       context: ./aws
       dockerfile: Dockerfile
