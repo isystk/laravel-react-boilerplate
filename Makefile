@@ -46,6 +46,7 @@ init: ## 初期化します。
 
 .PHONY: up
 up: ## 起動します。
+	docker network inspect docker_default >/dev/null 2>&1 || docker network create docker_default
 	$(DOCKER_CMD) up -d --wait
 
 .PHONY: down
