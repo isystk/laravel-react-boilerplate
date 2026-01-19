@@ -80,3 +80,8 @@ services:
 volumes:
   laraec-db-store:
   laraec-s3-store:
+
+networks:
+  default:
+    external: true
+    name: docker_default
