@@ -118,6 +118,7 @@ case $COMMAND in
     test)
         if [ -z "$DIFF_MODE" ]; then
             echo "🚀 全テストを実行します..."
+            $APP_CMD npm run build
             # 引数なしでphpunitを実行
             $APP_CMD php -d memory_limit=1G ./vendor/bin/phpunit --stop-on-failure --display-phpunit-deprecations
         else
