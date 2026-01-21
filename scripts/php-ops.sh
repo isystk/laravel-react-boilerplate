@@ -29,10 +29,9 @@ shift
 DIFF_MODE=$1 # branch, staged, [file_path], or empty (all)
 
 # スクリプトの場所を基準にルートディレクトリを特定
-UTILS_SH=~/dotfiles/scripts/utils.sh
-
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
 BASE_DIR=$(dirname "$SCRIPT_DIR")
+UTILS_SH=$(dirname $0)/utils.sh
 ENV_FILE="$BASE_DIR/.env"
 
 # 内部変数
@@ -118,6 +117,7 @@ case $COMMAND in
     test)
         if [ -z "$DIFF_MODE" ]; then
             echo "🚀 全テストを実行します..."
+            $APP_CMD npm run build
             # 引数なしでphpunitを実行
             $APP_CMD php -d memory_limit=1G ./vendor/bin/phpunit --stop-on-failure --display-phpunit-deprecations
         else
