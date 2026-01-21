@@ -1,6 +1,6 @@
 SHELL := /bin/bash
-UTILS_SH := ~/dotfiles/scripts/utils.sh
-MYSQL_OPS_SH := ~/dotfiles/scripts/mysql-ops.sh
+UTILS_SH := ./scripts/utils.sh
+MYSQL_OPS_SH := ./scripts/mysql-ops.sh
 JS_OPS_SH := ./scripts/js-ops.sh
 PHP_OPS_SH := ./scripts/php-ops.sh
 AWS_DEPLOY_SH := ./scripts/aws-deploy.sh
@@ -60,7 +60,7 @@ restart: ## 再起動します。
 
 .PHONY: mysql
 mysql: ## MySQLデータベースに関する各種操作を行います。
-	export DUMP_DIR="./dump" && \
+	@export DUMP_DIR="./dump" && \
 	$(MYSQL_OPS_SH) laraec-mysql
 
 .PHONY: migrate
