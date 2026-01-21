@@ -2,6 +2,7 @@ services:
 
   laraec-app:
     image: laraec/app
+    container_name: laraec-app
     build:
       context: ./app
       dockerfile: Dockerfile
@@ -20,6 +21,7 @@ services:
 
   laraec-mysql:
     image: laraec/mysql
+    container_name: laraec-mysql
     build:
       context: ./mysql
       dockerfile: Dockerfile
@@ -40,6 +42,7 @@ services:
 
   laraec-adminer:
     image: adminer
+    container_name: laraec-adminer
     restart: always
     ports:
       - '8888:8080'
@@ -48,12 +51,14 @@ services:
 
   laraec-mailpit:
     image: axllent/mailpit
+    container_name: laraec-mailpit
     ports:
       - '8025:8025'
       - '25:1025'
 
   laraec-s3:
     image: minio/minio:RELEASE.2021-10-10T16-53-30Z
+    container_name: laraec-s3
     ports:
       - '9001:9001'
     environment:
@@ -64,6 +69,8 @@ services:
       - laraec-s3-store:/data
 
   laraec-aws:
+    image: laraec/aws
+    container_name: laraec-aws
     build:
       context: ./aws
       dockerfile: Dockerfile
