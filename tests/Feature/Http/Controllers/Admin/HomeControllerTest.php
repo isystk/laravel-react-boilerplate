@@ -26,6 +26,8 @@ class HomeControllerTest extends BaseTest
         $this->actingAs($admin, 'admin');
 
         $response = $this->get(route('admin.home'));
-        $response->assertSee('ようこそ！管理者A');
+        $response->assertSuccessful();
+        $response->assertViewIs('admin.home');
+        $response->assertViewHasAll(['latestOrders']);
     }
 }
