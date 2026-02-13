@@ -36,11 +36,14 @@ RUN curl -O https://dl.min.io/client/mc/release/linux-amd64/mc \
     && chmod +x mc \
     && mv mc /usr/local/bin/
 
+WORKDIR /var/www/html
+
+COPY package*.json ./
+RUN npm install
+
 # Playwright のインストール先を固定し、ブラウザを明示的に指定
 ENV PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright
 RUN npx playwright install chromium --with-deps
-
-WORKDIR /var/www/html
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
