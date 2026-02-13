@@ -15,7 +15,7 @@
                             <span class="info-box-icon"><i class="fas fa-shopping-cart"></i></span>
                             <div class="info-box-content">
                                 <span class="secondary-box-text">本日の注文</span>
-                                <span class="info-box-number">12 件</span>
+                                <span class="info-box-number">{{ $todaysOrdersCount }} 件</span>
                             </div>
                         </div>
                     </a>
@@ -30,8 +30,7 @@
                             <h3 class="card-title">売上推移</h3>
                         </div>
                         <div class="card-body">
-                            <canvas id="salesChart"
-                                    style="height: 250px;"></canvas>
+                            <div id="sales-chart" data-sales='{!! json_encode($salesByMonth) !!}' style="width:100%; height:400px;"></div>
                         </div>
                     </div>
                 </div>
@@ -42,20 +41,24 @@
                             <h3 class="card-title">最新の注文</h3>
                         </div>
                         <div class="card-body p-0">
-                            <table class="table table-striped">
+                            <table class="table table-hover mb-0">
                                 <thead>
                                     <tr>
                                         <th>注文ID</th>
-                                        <th>顧客名</th>
+                                        <th>注文者</th>
                                         <th>金額</th>
+                                        <th>注文日時</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($latestOrders as $order)
                                     <tr>
-                                        <td>#1024</td>
-                                        <td>山田 太郎</td>
-                                        <td>¥5,400</td>
+                                        <td>{{ $order->id }}</td>
+                                        <td>{{ $order->user->name ?? '不明' }}</td>
+                                        <td>¥{{ number_format($order->sum_price) }}</td>
+                                        <td>{{ $order->created_at->format('Y/m/d H:i') }}</td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -67,4 +70,9 @@
             </div>
         </div>
     </div>
+
+@endsection
+
+@section('scripts')
+    @vite('resources/assets/admin/js/pages/home/index.js')
 @endsection

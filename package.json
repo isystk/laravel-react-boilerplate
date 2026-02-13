@@ -60,6 +60,7 @@
     "bootstrap-datepicker": "^1.10.0",
     "formik": "^2.4.6",
     "heic2any": "^0.0.4",
+    "highcharts": "^12.5.0",
     "jquery": "^3.7.1",
     "lodash": "^4.17.21",
     "react": "^19.1.0",
