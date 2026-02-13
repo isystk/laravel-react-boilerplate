@@ -30,9 +30,6 @@ RUN npx playwright install-deps chromium
 
 WORKDIR /var/www/html
 
-# インストール先をボリュームマウントで保護できる場所に指定（任意ですが推奨）
-ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
-
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]

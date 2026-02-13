@@ -15,10 +15,8 @@ services:
       - ./app/logs/apache:/var/log/apache2
       - ./app/logs/php:/var/log/php
       - ..:/var/www/html
-      - /ms-playwright
     environment:
       - TZ=Asia/Tokyo
-      - PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
 
   laraec-mysql:
     image: laraec/mysql
