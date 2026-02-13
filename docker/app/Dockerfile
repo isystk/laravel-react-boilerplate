@@ -1,19 +1,8 @@
 FROM php:8.3-apache
 
 RUN apt-get update && apt-get install -y \
-    git \
-    unzip \
-    libzip-dev \
-    zlib1g-dev \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libpng-dev \
-    mariadb-client \
-    tzdata \
-    curl \
-    nano \
-    nodejs \
-    npm \
+    git unzip libzip-dev zlib1g-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
+    mariadb-client tzdata curl nano nodejs npm \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install zip pdo_mysql gd \
     && pecl install xdebug-3.3.2 \
@@ -38,14 +27,12 @@ RUN curl -O https://dl.min.io/client/mc/release/linux-amd64/mc \
 
 WORKDIR /var/www/html
 
-COPY package*.json ./
-RUN npm install
+# ブラウザの依存ライブラリだけを先にインストールしておく
+RUN npx playwright install-deps chromium
 
-# Playwright のインストール先を固定し、ブラウザを明示的に指定
-ENV PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright
-RUN npx playwright install chromium --with-deps
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
 
-COPY ./app/entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 
