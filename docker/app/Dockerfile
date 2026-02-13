@@ -1,20 +1,8 @@
 FROM php:8.3-apache
 
 RUN apt-get update && apt-get install -y \
-    git \
-    unzip \
-    libzip-dev \
-    zlib1g-dev \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libpng-dev \
-    mariadb-client \
-    tzdata \
-    curl \
-    openssl \
-    nano \
-    nodejs \
-    npm \
+    git unzip libzip-dev zlib1g-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
+    mariadb-client tzdata curl nano nodejs npm \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install zip pdo_mysql gd \
     && pecl install xdebug-3.3.2 \
@@ -23,18 +11,10 @@ RUN apt-get update && apt-get install -y \
 ENV TZ=Asia/Tokyo
 RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
-RUN a2enmod rewrite proxy proxy_http proxy_fcgi ssl
+RUN a2enmod rewrite proxy proxy_http proxy_fcgi
 RUN rm -f /etc/apache2/sites-enabled/*
 COPY ./sites-enabled/local-default.conf /etc/apache2/sites-enabled/local-default.conf
 COPY ./php.ini /usr/local/etc/php/php.ini
-
-RUN mkdir -p /etc/apache2/ssl && \
-    openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-    -keyout /etc/apache2/ssl/server.key \
-    -out /etc/apache2/ssl/server.crt \
-    -subj "/C=JP/ST=Tokyo/L=Chiyoda/O=Example/CN=localhost"
-
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -45,9 +25,8 @@ RUN curl -O https://dl.min.io/client/mc/release/linux-amd64/mc \
     && chmod +x mc \
     && mv mc /usr/local/bin/
 
-# Playwright のインストール先を固定し、ブラウザを明示的に指定
-ENV PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright
-RUN npx playwright install chromium --with-deps
+# ブラウザ本体は入れず、実行に必要なシステムライブラリ（libnss3 等）だけを入れる
+RUN npx playwright install-deps chromium
 
 WORKDIR /var/www/html
 
@@ -55,4 +34,4 @@ COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 
-EXPOSE 80 443 5173
+EXPOSE 80 5173

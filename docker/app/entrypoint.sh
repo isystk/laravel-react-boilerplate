@@ -17,6 +17,8 @@ echo "🔧 Running composer install..."
 composer install
 echo "🔧 Running npm install..."
 npm install
+# node_modules 内の Playwright のバージョンに完全に一致するブラウザをダウンロード
+npx playwright install chromium
 echo "🔧 Running npm run build..."
 npm run build || echo "Build failed: ignoring and continuing"
 
