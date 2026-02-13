@@ -5,13 +5,13 @@ $(function () {
   if ($el.length === 0) return;
 
   const salesData = $el.data('sales');
-  console.log({salesData})
+  console.log({ salesData });
 
   Highcharts.chart('sales-chart', {
     chart: { type: 'line' },
     title: { text: null },
     xAxis: {
-      categories: salesData.map((item) => item.year_month),
+      categories: salesData.map(item => item.year_month),
     },
     yAxis: {
       title: { text: '売上金額 (円)' },
@@ -19,7 +19,7 @@ $(function () {
     series: [
       {
         name: '売上',
-        data: salesData.map((item) => item.amount),
+        data: salesData.map(item => item.amount),
       },
     ],
     credits: { enabled: false },

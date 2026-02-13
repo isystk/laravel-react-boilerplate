@@ -30,7 +30,9 @@
                             <h3 class="card-title">売上推移</h3>
                         </div>
                         <div class="card-body">
-                            <div id="sales-chart" data-sales='{!! json_encode($salesByMonth) !!}' style="width:100%; height:400px;"></div>
+                            <div id="sales-chart"
+                                 data-sales='{!! json_encode($salesByMonth) !!}'
+                                 style="width:100%; height:400px;"></div>
                         </div>
                     </div>
                 </div>
@@ -51,13 +53,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($latestOrders as $order)
-                                    <tr>
-                                        <td>{{ $order->id }}</td>
-                                        <td>{{ $order->user->name ?? '不明' }}</td>
-                                        <td>¥{{ number_format($order->sum_price) }}</td>
-                                        <td>{{ $order->created_at->format('Y/m/d H:i') }}</td>
-                                    </tr>
+                                    @foreach ($latestOrders as $order)
+                                        <tr>
+                                            <td>{{ $order->id }}</td>
+                                            <td>{{ $order->user->name ?? '不明' }}</td>
+                                            <td>¥{{ number_format($order->sum_price) }}</td>
+                                            <td>{{ $order->created_at->format('Y/m/d H:i') }}</td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>

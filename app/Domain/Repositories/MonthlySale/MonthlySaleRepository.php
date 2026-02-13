@@ -14,4 +14,11 @@ interface MonthlySaleRepository extends BaseRepository
      * @return Collection<int, MonthlySale>
      */
     public function getAllOrderByYearMonthDesc(): Collection;
+
+    /**
+     * 年月の古い順にすべてのレコードを返却する。
+     *
+     * @return Collection<int, MonthlySale>
+     */
+    public function getAllOrderByYearMonth(): Collection;
 }

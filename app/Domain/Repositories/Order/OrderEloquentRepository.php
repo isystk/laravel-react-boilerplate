@@ -4,6 +4,7 @@ namespace App\Domain\Repositories\Order;
 
 use App\Domain\Entities\Order;
 use App\Domain\Repositories\BaseEloquentRepository;
+use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
@@ -59,5 +60,25 @@ class OrderEloquentRepository extends BaseEloquentRepository implements OrderRep
 
         /** @var Collection<int, Order> */
         return $query->get();
+    }
+
+    public function countTodaysOrders(): int
+    {
+        return $this->model
+            ->whereDate('created_at', Carbon::today()->toDateString())
+            ->count();
+    }
+
+    /**
+     * @return Collection<int, Order>
+     */
+    public function getLatestWithUser(int $limit): Collection
+    {
+        /** @var Collection<int, Order> */
+        return $this->model
+            ->with('user')
+            ->latest('created_at')
+            ->take($limit)
+            ->get();
     }
 }

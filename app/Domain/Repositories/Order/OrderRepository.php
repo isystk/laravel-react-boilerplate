@@ -24,4 +24,16 @@ interface OrderRepository extends BaseRepository
      * @return Collection<int, Order>|LengthAwarePaginator<int, Order>
      */
     public function getConditionsWithUserStock(array $conditions): Collection|LengthAwarePaginator;
+
+    /**
+     * 本日の注文件数を返却する。
+     */
+    public function countTodaysOrders(): int;
+
+    /**
+     * 最新の注文をユーザー情報付きで取得する。
+     *
+     * @return Collection<int, Order>
+     */
+    public function getLatestWithUser(int $limit): Collection;
 }
