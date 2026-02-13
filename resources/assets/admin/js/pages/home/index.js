@@ -5,7 +5,6 @@ $(function () {
   if ($el.length === 0) return;
 
   const salesData = $el.data('sales');
-  console.log({ salesData });
 
   Highcharts.chart('sales-chart', {
     chart: { type: 'line' },
