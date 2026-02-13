@@ -5,7 +5,6 @@ namespace Tests;
 use App\Domain\Entities\Admin;
 use App\Domain\Entities\Cart;
 use App\Domain\Entities\ContactForm;
-use App\Domain\Entities\ContactFormImage;
 use App\Domain\Entities\ImportHistory;
 use App\Domain\Entities\MonthlySale;
 use App\Domain\Entities\Order;
@@ -202,25 +201,6 @@ abstract class BaseTest extends TestCase
 
         /** @var ContactForm */
         return ContactForm::factory($items)->create();
-    }
-
-    /**
-     * ContactFormImageを作成する
-     *
-     * @param array<string, mixed> $params
-     */
-    public function createDefaultContactFormImage(array $params = []): ContactFormImage
-    {
-        $contactForm = $this->createDefaultContactForm();
-        $items       = [
-            'contact_form_id' => $contactForm->id,
-        ];
-        if (count($params) > 0) {
-            $items = array_merge($items, $params);
-        }
-
-        /** @var ContactFormImage */
-        return ContactFormImage::factory($items)->create();
     }
 
     /**

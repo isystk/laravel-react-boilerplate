@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\User;
 
 use App\Domain\Entities\User;
+use App\Dto\Request\Admin\User\UpdateDto;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Admin\User\UpdateRequest;
 use App\Services\Admin\User\UpdateService;
@@ -35,8 +36,10 @@ class EditController extends BaseController
 
         DB::beginTransaction();
 
+        $dto = new UpdateDto($request);
+
         try {
-            $service->update($user->id, $request);
+            $service->update($user->id, $dto);
             DB::commit();
         } catch (Throwable $e) {
             DB::rollBack();

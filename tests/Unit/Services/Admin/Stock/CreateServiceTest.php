@@ -3,6 +3,7 @@
 namespace Tests\Unit\Services\Admin\Stock;
 
 use App\Domain\Entities\Stock;
+use App\Dto\Request\Admin\Stock\CreateDto;
 use App\Http\Requests\Admin\Stock\StoreRequest;
 use App\Services\Admin\Stock\CreateService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -32,7 +33,8 @@ class CreateServiceTest extends BaseTest
         $request['quantity']    = 1;
         $request['fileName']    = 'stock1.jpg';
         $request['imageBase64'] = 'data:image/jpeg;base64,xxxx';
-        $stock                  = $this->service->save($request);
+        $dto                    = new CreateDto($request);
+        $stock                  = $this->service->save($dto);
 
         // データが更新されたことをテスト
         $updatedStock = Stock::find($stock->id);

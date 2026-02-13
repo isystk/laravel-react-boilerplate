@@ -3,6 +3,7 @@
 namespace Tests\Unit\Services\Admin\Staff;
 
 use App\Domain\Entities\Admin;
+use App\Dto\Request\Admin\Staff\CreateDto;
 use App\Enums\AdminRole;
 use App\Http\Requests\Admin\Staff\StoreRequest;
 use App\Services\Admin\Staff\CreateService;
@@ -27,7 +28,8 @@ class CreateServiceTest extends BaseTest
         $request['name']     = 'aaa';
         $request['email']    = 'aaa@test.com';
         $request['password'] = 'password';
-        $admin               = $this->service->save($request);
+        $dto                 = new CreateDto($request);
+        $admin               = $this->service->save($dto);
 
         // データが登録されたことをテスト
         $createdAdmin = Admin::find($admin->id);

@@ -37,9 +37,7 @@ const ContactCreate = () => {
     title: '',
     contact: '',
     url: '',
-    imageBase64_1: '',
-    imageBase64_2: '',
-    imageBase64_3: '',
+    image_base_64: '',
     caution: [],
   };
 
@@ -60,7 +58,7 @@ const ContactCreate = () => {
       .max(200, 'お問い合わせ内容は200文字以下を入れてください')
       .required('お問い合わせ内容を入力してください'),
     url: Yup.string().url('URLを正しく入力してください'),
-    imageBase64_1: Yup.string().required('画像1を選択してください'),
+    image_base_64: Yup.string().required('画像を選択してください'),
     caution: Yup.array().min(1, '注意事項に同意してください'),
   });
 
@@ -167,33 +165,15 @@ const ContactCreate = () => {
                 className="mb-5 md:w-100"
               />
               <ImageInput
-                label="画像1"
-                identity="imageBase64_1"
-                name="imageBase64_1"
-                value={values.imageBase64_1}
+                label="画像"
+                identity="image_base_64"
+                name="image_base_64"
+                value={values.image_base_64}
                 required={true}
                 setFieldValue={setFieldValue}
-                error={errors.imageBase64_1 as string}
+                error={errors.image_base_64 as string}
                 className="mb-5 md:w-100"
                 noImage={noImage}
-              />
-              <ImageInput
-                label="画像2"
-                identity="imageBase64_2"
-                name="imageBase64_2"
-                value={values.imageBase64_2}
-                setFieldValue={setFieldValue}
-                error={errors.imageBase64_2 as string}
-                className="mb-5 md:w-100"
-              />
-              <ImageInput
-                label="画像3"
-                identity="imageBase64_3"
-                name="imageBase64_3"
-                value={values.imageBase64_3}
-                setFieldValue={setFieldValue}
-                error={errors.imageBase64_3 as string}
-                className="mb-5 md:w-100"
               />
               <SelectionInput
                 identity="caution"

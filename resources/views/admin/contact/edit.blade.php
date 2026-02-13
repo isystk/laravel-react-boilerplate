@@ -121,53 +121,24 @@
                            maxlength="{{ config('const.maxlength.contact_forms.url') }}" />
                 </div>
 
-                @for ($i = 1; $i <= 3; $i++)
-                    <div class="form-group">
-                        <div class="control-group"
-                             id="userName">
-                            <label class="col-sm-6 control-label">{{ __('contact.Image') }}{{ $i }}</label>
-                            <div class="col-sm-12">
-                                <p>
-                                    <input class="js-uploadImage"
-                                           type="file"
-                                           accept="image/png, image/jpeg">
-                                </p>
-                                <div class="result">
-                                    @php
-                                        $imageBase64 = old("imageBase64_$i");
-                                        $fileName = old("fileName_$i");
-                                        $imageExists = $contactFormImages->count() >= $i;
-                                        $imageData = $imageExists ? $contactFormImages->skip($i - 1)->first() : null;
-                                    @endphp
-
-                                    @if ($imageBase64)
-                                        <img src="{{ $imageBase64 }}"
-                                             width="200px" />
-                                        <input type="hidden"
-                                               name="imageBase64_{{ $i }}"
-                                               value="{{ $imageBase64 }}" />
-                                        <input type="hidden"
-                                               name="fileName_{{ $i }}"
-                                               value="{{ $fileName }}" />
-                                        <button type="button"
-                                                class="btn btn-danger btn-sm js-remove-image"
-                                                data-target="{{ $i }}">
-                                            {{ __('common.Delete') }}
-                                        </button>
-                                    @elseif ($imageExists)
-                                        <img src="{{ asset('uploads/contact/' . $imageData['file_name']) }}"
-                                             width="200px" />
-                                        <button type="button"
-                                                class="btn btn-danger btn-sm ms-2 js-remove-image"
-                                                data-target="{{ $i }}">
-                                            {{ __('common.Delete') }}
-                                        </button>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
+                <div class="col-sm-12">
+                    <p>
+                        <input class="js-uploadImage"
+                               type="file"
+                               accept="image/png, image/jpeg">
+                    </p>
+                    <div class="result">
+                        @if (!is_null($contactForm->image_file_name))
+                            <img src="{{ asset('uploads/contact/' . $contactForm->image_file_name) }}"
+                                 width="200px" />
+                            <button type="button"
+                                    class="btn btn-danger btn-sm ms-2 js-remove-image">
+                                {{ __('common.Delete') }}
+                            </button>
+                        @endif
                     </div>
-                @endfor
+                </div>
+
                 <div class="card-footer text-center">
                     <input class="btn btn-primary"
                            type="submit"

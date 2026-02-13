@@ -4,7 +4,7 @@ namespace App\Services\Admin\Staff;
 
 use App\Domain\Entities\Admin;
 use App\Domain\Repositories\Admin\AdminRepository;
-use App\Http\Requests\Admin\Staff\UpdateRequest;
+use App\Dto\Request\Admin\Staff\UpdateDto;
 use App\Services\BaseService;
 
 class UpdateService extends BaseService
@@ -14,12 +14,12 @@ class UpdateService extends BaseService
     /**
      * 管理者を更新します。
      */
-    public function update(int $adminId, UpdateRequest $request): Admin
+    public function update(int $adminId, UpdateDto $dto): Admin
     {
         return $this->adminRepository->update([
-            'name'  => $request->name,
-            'email' => $request->email,
-            'role'  => $request->role,
+            'name'  => $dto->name,
+            'email' => $dto->email,
+            'role'  => $dto->role,
         ], $adminId);
     }
 }

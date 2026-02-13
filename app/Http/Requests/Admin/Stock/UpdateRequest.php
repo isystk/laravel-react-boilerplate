@@ -3,26 +3,10 @@
 namespace App\Http\Requests\Admin\Stock;
 
 use App\Rules\Base64ImageRule;
-use App\Utils\UploadImage;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRequest extends FormRequest
 {
-    /**
-     * @return array<string, mixed>
-     */
-    public function validationData(): array
-    {
-        $all = parent::validationData();
-
-        // imageBase64パラメータがあればUploadedFileオブジェクトに変換してimageFileパラメータに上書きする。
-        if ($this->has('imageBase64')) {
-            $all['imageFile'] = UploadImage::convertBase64($this->imageBase64);
-        }
-
-        return $all;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *

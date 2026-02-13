@@ -4,7 +4,7 @@ namespace App\Services\Admin\User;
 
 use App\Domain\Entities\User;
 use App\Domain\Repositories\User\UserRepository;
-use App\Http\Requests\Admin\User\UpdateRequest;
+use App\Dto\Request\Admin\User\UpdateDto;
 use App\Services\BaseService;
 
 class UpdateService extends BaseService
@@ -14,11 +14,11 @@ class UpdateService extends BaseService
     /**
      * ユーザーを更新します。
      */
-    public function update(int $userId, UpdateRequest $request): User
+    public function update(int $userId, UpdateDto $dto): User
     {
         return $this->userRepository->update([
-            'name'  => $request->name,
-            'email' => $request->email,
+            'name'  => $dto->name,
+            'email' => $dto->email,
         ], $userId);
     }
 }

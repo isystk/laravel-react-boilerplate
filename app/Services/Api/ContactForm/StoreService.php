@@ -3,48 +3,35 @@
 namespace App\Services\Api\ContactForm;
 
 use App\Domain\Entities\ContactForm;
-use App\Domain\Repositories\ContactForm\ContactFormImageRepository;
 use App\Domain\Repositories\ContactForm\ContactFormRepository;
+use App\Dto\Request\Api\ContactForm\CreateDto;
 use App\Enums\PhotoType;
-use App\Http\Requests\Api\ContactForm\StoreRequest;
 use App\Services\BaseService;
 
 class StoreService extends BaseService
 {
-    public function __construct(private readonly ContactFormRepository $contactFormRepository, private readonly ContactFormImageRepository $contactFormImageRepository) {}
+    public function __construct(private readonly ContactFormRepository $contactFormRepository) {}
 
     /**
      * お問い合わせを登録します。
      */
-    public function save(StoreRequest $request): ContactForm
+    public function save(CreateDto $dto): ContactForm
     {
-        $model = [
-            'user_name' => $request->user_name,
-            'title'     => $request->title,
-            'email'     => $request->email,
-            'url'       => $request->url,
-            'gender'    => $request->gender,
-            'age'       => $request->age,
-            'contact'   => $request->contact,
-        ];
-
         $contactForm = $this->contactFormRepository->create(
-            $model
+            [
+                'user_name'       => $dto->userName,
+                'title'           => $dto->title,
+                'email'           => $dto->email,
+                'url'             => $dto->url,
+                'gender'          => $dto->gender,
+                'age'             => $dto->age,
+                'contact'         => $dto->contact,
+                'image_file_name' => $dto->imageFile?->getClientOriginalName(),
+            ]
         );
 
-        $contactFormId = $contactForm['id'];
-
-        // お問い合わせ画像テーブルを登録
-        foreach ($request['image_files'] as $imageFile) {
-            $fileName = $imageFile->getClientOriginalName();
-            $this->contactFormImageRepository->create(
-                [
-                    'contact_form_id' => $contactFormId,
-                    'file_name'       => $fileName,
-                ]
-            );
-            // s3に画像をアップロード
-            $imageFile->storeAs(PhotoType::Contact->type() . '/', $fileName, 's3');
+        if (!is_null($dto->imageFile)) {
+            $dto->imageFile->storeAs(PhotoType::Contact->type(), $dto->imageFile->getClientOriginalName(), 's3');
         }
 
         return $contactForm;

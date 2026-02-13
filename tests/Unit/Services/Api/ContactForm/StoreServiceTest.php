@@ -3,7 +3,7 @@
 namespace Tests\Unit\Services\Api\ContactForm;
 
 use App\Domain\Entities\ContactForm;
-use App\Domain\Entities\ContactFormImage;
+use App\Dto\Request\Api\ContactForm\CreateDto;
 use App\Enums\Age;
 use App\Enums\Gender;
 use App\Http\Requests\Api\ContactForm\StoreRequest;
@@ -29,20 +29,17 @@ class StoreServiceTest extends BaseTest
     {
         Storage::fake('s3');
 
-        $request                = new StoreRequest;
-        $request['user_name']   = 'aaa';
-        $request['title']       = 'タイトル1';
-        $request['email']       = 'aaa@test.com';
-        $request['url']         = 'https://aaa.test.com';
-        $request['gender']      = Gender::Male->value;
-        $request['age']         = Age::Over30->value;
-        $request['contact']     = 'お問い合わせ1';
-        $request['image_files'] = [
-            UploadedFile::fake()->image('file1.jpg'),
-            UploadedFile::fake()->image('file2.jpg'),
-            UploadedFile::fake()->image('file3.jpg'),
-        ];
-        $contactForm = $this->service->save($request);
+        $request              = new StoreRequest;
+        $request['user_name'] = 'aaa';
+        $request['title']     = 'タイトル1';
+        $request['email']     = 'aaa@test.com';
+        $request['url']       = 'https://aaa.test.com';
+        $request['gender']    = Gender::Male->value;
+        $request['age']       = Age::Over30->value;
+        $request['contact']   = 'お問い合わせ1';
+        $dto                  = new CreateDto($request);
+        $dto->imageFile      = UploadedFile::fake()->image('file1.jpg');
+        $contactForm = $this->service->save($dto);
 
         // データが登録されたことをテスト
         $updatedContactForm = ContactForm::find($contactForm->id);
@@ -53,13 +50,9 @@ class StoreServiceTest extends BaseTest
         $this->assertEquals(Gender::Male, $updatedContactForm->gender);
         $this->assertEquals(Age::Over30, $updatedContactForm->age);
         $this->assertEquals('お問い合わせ1', $updatedContactForm->contact);
+        $this->assertEquals('file1.jpg', $updatedContactForm->image_file_name);
 
-        // 新しい画像が登録されたことをテスト
-        $createdContactFormImage = ContactFormImage::where(['contact_form_id' => $contactForm->id]);
-        $fileNames               = $createdContactFormImage->pluck('file_name')->all();
-        $this->assertSame(['file1.jpg', 'file2.jpg', 'file3.jpg'], $fileNames);
+        // 新しい画像が登録されたこと
         Storage::disk('s3')->assertExists('contact/file1.jpg');
-        Storage::disk('s3')->assertExists('contact/file2.jpg');
-        Storage::disk('s3')->assertExists('contact/file3.jpg');
     }
 }

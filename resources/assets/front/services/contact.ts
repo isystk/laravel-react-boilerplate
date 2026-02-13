@@ -9,9 +9,7 @@ export type ContactForm = {
   title: string;
   contact: string;
   url: string;
-  imageBase64_1: string;
-  imageBase64_2: string;
-  imageBase64_3: string;
+  image_base_64: string;
   caution: string[];
 };
 

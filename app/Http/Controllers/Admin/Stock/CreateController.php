@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Stock;
 
+use App\Dto\Request\Admin\Stock\CreateDto;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Admin\Stock\StoreRequest;
 use App\Services\Admin\Stock\CreateService;
@@ -32,8 +33,10 @@ class CreateController extends BaseController
 
         DB::beginTransaction();
 
+        $dto = new CreateDto($request);
+
         try {
-            $stock = $service->save($request);
+            $stock = $service->save($dto);
             DB::commit();
         } catch (Throwable $e) {
             DB::rollBack();

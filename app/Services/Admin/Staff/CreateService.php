@@ -4,10 +4,8 @@ namespace App\Services\Admin\Staff;
 
 use App\Domain\Entities\Admin;
 use App\Domain\Repositories\Admin\AdminRepository;
-use App\Enums\AdminRole;
-use App\Http\Requests\Admin\Staff\StoreRequest;
+use App\Dto\Request\Admin\Staff\CreateDto;
 use App\Services\BaseService;
-use Illuminate\Support\Facades\Hash;
 
 class CreateService extends BaseService
 {
@@ -16,13 +14,13 @@ class CreateService extends BaseService
     /**
      * 管理者を登録します。
      */
-    public function save(StoreRequest $request): Admin
+    public function save(CreateDto $dto): Admin
     {
         return $this->adminRepository->create([
-            'name'     => $request->name,
-            'email'    => $request->email,
-            'password' => Hash::make($request->password),
-            'role'     => AdminRole::Manager,
+            'name'     => $dto->name,
+            'email'    => $dto->email,
+            'password' => $dto->password,
+            'role'     => $dto->role,
         ]);
     }
 }
