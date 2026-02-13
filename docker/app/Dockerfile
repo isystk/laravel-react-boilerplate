@@ -11,7 +11,6 @@ RUN apt-get update && apt-get install -y \
     mariadb-client \
     tzdata \
     curl \
-    openssl \
     nano \
     nodejs \
     npm \
@@ -23,18 +22,10 @@ RUN apt-get update && apt-get install -y \
 ENV TZ=Asia/Tokyo
 RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
-RUN a2enmod rewrite proxy proxy_http proxy_fcgi ssl
+RUN a2enmod rewrite proxy proxy_http proxy_fcgi
 RUN rm -f /etc/apache2/sites-enabled/*
 COPY ./sites-enabled/local-default.conf /etc/apache2/sites-enabled/local-default.conf
 COPY ./php.ini /usr/local/etc/php/php.ini
-
-RUN mkdir -p /etc/apache2/ssl && \
-    openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-    -keyout /etc/apache2/ssl/server.key \
-    -out /etc/apache2/ssl/server.crt \
-    -subj "/C=JP/ST=Tokyo/L=Chiyoda/O=Example/CN=localhost"
-
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -55,4 +46,4 @@ COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 
-EXPOSE 80 443 5173
+EXPOSE 80 5173
