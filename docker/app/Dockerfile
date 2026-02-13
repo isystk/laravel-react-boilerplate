@@ -45,7 +45,7 @@ RUN npm install
 ENV PLAYWRIGHT_BROWSERS_PATH=/usr/local/share/playwright
 RUN npx playwright install chromium --with-deps
 
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY ./app/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 

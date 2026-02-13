@@ -4,8 +4,8 @@ services:
     image: laraec/app
     container_name: laraec-app
     build:
-      context: ./app
-      dockerfile: Dockerfile
+      context: ../
+      dockerfile: ./app/Dockerfile
     ports:
       - '80:80'
       - '5173:5173'
