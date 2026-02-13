@@ -12,11 +12,11 @@ class CreateDtoTest extends BaseTest
     public function test_construct_リクエストから各プロパティが正しく設定されること(): void
     {
         $request = StoreRequest::create('/', 'POST', [
-            'name'     => 'テスト商品',
-            'detail'   => '商品の説明文',
-            'price'    => '1500',
-            'quantity' => '10',
-            'fileName' => 'test.png',
+            'name'            => 'テスト商品',
+            'detail'          => '商品の説明文',
+            'price'           => '1500',
+            'quantity'        => '10',
+            'image_file_name' => 'test.png',
         ]);
 
         $dto = new CreateDto($request);
@@ -35,12 +35,12 @@ class CreateDtoTest extends BaseTest
         $base64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
 
         $request = StoreRequest::create('/', 'POST', [
-            'name'        => 'テスト商品',
-            'detail'      => '説明',
-            'price'       => '1000',
-            'quantity'    => '5',
-            'fileName'    => 'test.png',
-            'imageBase64' => $base64,
+            'name'            => 'テスト商品',
+            'detail'          => '説明',
+            'price'           => '1000',
+            'quantity'        => '5',
+            'image_file_name' => 'test.png',
+            'image_base_64'   => $base64,
         ]);
 
         $dto = new CreateDto($request);
@@ -51,11 +51,11 @@ class CreateDtoTest extends BaseTest
     public function test_construct_imageBase64がない場合imageFileがnullになること(): void
     {
         $request = StoreRequest::create('/', 'POST', [
-            'name'     => 'テスト商品',
-            'detail'   => '説明',
-            'price'    => '1000',
-            'quantity' => '5',
-            'fileName' => 'test.png',
+            'name'            => 'テスト商品',
+            'detail'          => '説明',
+            'price'           => '1000',
+            'quantity'        => '5',
+            'image_file_name' => 'test.png',
         ]);
 
         $dto = new CreateDto($request);
@@ -66,11 +66,11 @@ class CreateDtoTest extends BaseTest
     public function test_construct_priceとquantityがintにキャストされること(): void
     {
         $request = StoreRequest::create('/', 'POST', [
-            'name'     => 'テスト',
-            'detail'   => '説明',
-            'price'    => '2500',
-            'quantity' => '30',
-            'fileName' => 'test.png',
+            'name'            => 'テスト',
+            'detail'          => '説明',
+            'price'           => '2500',
+            'quantity'        => '30',
+            'image_file_name' => 'test.png',
         ]);
 
         $dto = new CreateDto($request);

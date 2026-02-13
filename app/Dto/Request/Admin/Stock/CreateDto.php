@@ -33,11 +33,11 @@ class CreateDto
         $this->detail        = (string) $request->input('detail');
         $this->price         = (int) $request->input('price');
         $this->quantity      = (int) $request->input('quantity');
-        $this->imageFileName = (string) $request->input('fileName');
+        $this->imageFileName = (string) $request->input('image_file_name');
         // imageBase64パラメータがあればUploadedFileオブジェクトに変換してimageFileパラメータに上書きする。
         $this->imageFile = null;
-        if ($request->has('imageBase64')) {
-            $this->imageFile = UploadImage::convertBase64($request->imageBase64);
+        if ($request->has('image_base_64') && $request->image_base_64) {
+            $this->imageFile = UploadImage::convertBase64($request->image_base_64);
         }
     }
 }

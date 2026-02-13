@@ -72,16 +72,16 @@
                     <table class="table table-hover table-responsive">
                         <thead>
                             <tr>
-                                @include('admin.common.sortablelink_th', [
+                                @include('admin.parts.sortablelink_th', [
                                     'params' => ['id', __('contact.ID')],
                                 ])
-                                @include('admin.common.sortablelink_th', [
+                                @include('admin.parts.sortablelink_th', [
                                     'params' => ['user_name', __('contact.Name')],
                                 ])
-                                @include('admin.common.sortablelink_th', [
+                                @include('admin.parts.sortablelink_th', [
                                     'params' => ['title', __('contact.Title')],
                                 ])
-                                @include('admin.common.sortablelink_th', [
+                                @include('admin.parts.sortablelink_th', [
                                     'params' => ['created_at', __('common.Registration Date')],
                                 ])
                                 <th></th>
@@ -107,7 +107,7 @@
                     </table>
                 </div>
                 <div class="card-footer  ">
-                    {!! $contactForms->links('admin.common.pagination') !!}
+                    {!! $contactForms->links('admin.parts.pagination') !!}
                 </div>
             </div>
         </div>

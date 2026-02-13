@@ -3,26 +3,10 @@
 namespace App\Http\Requests\Admin\Stock;
 
 use App\Rules\Base64ImageRule;
-use App\Utils\UploadImage;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequest extends FormRequest
 {
-    /**
-     * @return array<string, mixed>
-     */
-    public function validationData(): array
-    {
-        $all = parent::validationData();
-
-        // imageBase64パラメータがあればUploadedFileオブジェクトに変換してimageFileパラメータに上書きする。
-        if ($this->has('imageBase64')) {
-            $all['imageFile'] = UploadImage::convertBase64($this->imageBase64);
-        }
-
-        return $all;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -51,19 +35,12 @@ class StoreRequest extends FormRequest
                 'required',
                 'numeric',
             ],
-            //            'imageFile' => [
-            //                'required',
-            //                'image',
-            //                'mimes:jpeg,png',
-            //                'max:10000',  // 10MB
-            //                'dimensions:max_width=1200,max_height=1200',
-            //            ],
-            'imageBase64' => [
+            'image_base_64' => [
                 'nullable',
                 new Base64ImageRule(['jpeg']),
             ],
             // 画像データをbase64で文字列としても受け入れる。バリデーションルールはimageFileが適用される。
-            'fileName' => [
+            'image_file_name' => [
                 'nullable',
                 'string',
             ],
@@ -78,11 +55,11 @@ class StoreRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name'        => __('stock.Name'),
-            'price'       => __('stock.Price'),
-            'detail'      => __('stock.Detail'),
-            'quantity'    => __('stock.Quantity'),
-            'imageBase64' => __('stock.Image'),
+            'name'          => __('stock.Name'),
+            'price'         => __('stock.Price'),
+            'detail'        => __('stock.Detail'),
+            'quantity'      => __('stock.Quantity'),
+            'image_base_64' => __('stock.Image'),
         ];
     }
 }

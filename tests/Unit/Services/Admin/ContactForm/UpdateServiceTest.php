@@ -40,17 +40,17 @@ class UpdateServiceTest extends BaseTest
         ]);
         Storage::disk('s3')->put('contact/image1.jpg', 'dummy');
 
-        $request                   = new UpdateRequest;
-        $request['user_name']      = 'bbb';
-        $request['title']          = 'タイトル2';
-        $request['email']          = 'bbb@test.com';
-        $request['url']            = 'https://bbb.test.com';
-        $request['gender']         = Gender::Female->value;
-        $request['age']            = Age::Over40->value;
-        $request['contact']        = 'お問い合わせ2';
-        $request['delete_image_1'] = '1';
-        $dto                       = new UpdateDto($request);
-        $dto->imageFile            = UploadedFile::fake()->image('image2.jpg');
+        $request              = new UpdateRequest;
+        $request['user_name'] = 'bbb';
+        $request['title']     = 'タイトル2';
+        $request['email']     = 'bbb@test.com';
+        $request['url']       = 'https://bbb.test.com';
+        $request['gender']    = Gender::Female->value;
+        $request['age']       = Age::Over40->value;
+        $request['contact']   = 'お問い合わせ2';
+        $dto                  = new UpdateDto($request);
+        $dto->imageFile       = UploadedFile::fake()->image('image2.jpg');
+        $dto->imageFileName   = 'image2.jpg';
         $this->service->update($contactForm, $dto);
 
         // データが更新されたことをテスト

@@ -86,9 +86,8 @@ class CreateControllerTest extends BaseTest
             'detail'      => 'aaaの説明',
             'price'       => 111,
             'quantity'    => 1,
-            'imageFile'   => $image1,
-            'fileName'    => 'image1.jpg',
-            'imageBase64' => $base64String,
+            'image_file_name'    => 'image1.jpg',
+            'image_base_64' => $base64String,
         ]);
         $response = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();

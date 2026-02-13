@@ -121,22 +121,13 @@
                            maxlength="{{ config('const.maxlength.contact_forms.url') }}" />
                 </div>
 
-                <div class="col-sm-12">
-                    <p>
-                        <input class="js-uploadImage"
-                               type="file"
-                               accept="image/png, image/jpeg">
-                    </p>
-                    <div class="result">
-                        @if (!is_null($contactForm->image_file_name))
-                            <img src="{{ asset('uploads/contact/' . $contactForm->image_file_name) }}"
-                                 width="200px" />
-                            <button type="button"
-                                    class="btn btn-danger btn-sm ms-2 js-remove-image">
-                                {{ __('common.Delete') }}
-                            </button>
-                        @endif
-                    </div>
+                <label class="col-sm-2 control-label">{{ __('contact.Image') }}</label>
+                <div class="col-sm-10">
+                    @include('admin.parts.image_upload', [
+                        'id' => 'image',
+                        'fileName' => old('image_file_name', $contactForm->image_file_name),
+                        'photoType' => \App\Enums\PhotoType::Contact,
+                    ])
                 </div>
 
                 <div class="card-footer text-center">

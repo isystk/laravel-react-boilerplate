@@ -104,9 +104,8 @@ class EditControllerTest extends BaseTest
             'detail'      => 'bbbの説明',
             'price'       => 222,
             'quantity'    => 2,
-            'imageFile'   => $image2,
-            'fileName'    => 'image2.jpg',
-            'imageBase64' => $base64String,
+            'image_file_name'    => 'image2.jpg',
+            'image_base_64' => $base64String,
         ]);
         $response = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();

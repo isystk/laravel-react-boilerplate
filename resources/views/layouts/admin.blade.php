@@ -67,7 +67,7 @@
                     </div>
                 </div>
             </nav>
-            @include('admin.common.sidemenu')
+            @include('admin.parts.sidemenu')
 
             <main class="app-main">
                 <div class="app-content-header">

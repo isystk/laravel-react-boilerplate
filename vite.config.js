@@ -16,6 +16,7 @@ export default defineConfig({
         'resources/assets/front/app.tsx',
         'resources/assets/admin/js/app.js',
         'resources/assets/admin/js/plugins/index.js',
+        'resources/assets/admin/js/parts/image_upload.js',
         'resources/assets/admin/js/pages/common.js',
         'resources/assets/admin/js/pages/stock/show.js',
         'resources/assets/admin/js/pages/stock/index.js',

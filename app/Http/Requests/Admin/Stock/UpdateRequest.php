@@ -35,19 +35,12 @@ class UpdateRequest extends FormRequest
                 'required',
                 'numeric',
             ],
-            //            'imageFile' => [
-            //                'nullable',
-            //                'image',
-            //                'mimes:jpeg,png',
-            //                'max:10000',  // 10MB
-            //                'dimensions:max_width=1200,max_height=1200',
-            //            ],
-            'imageBase64' => [
+            'image_base_64' => [
                 'nullable',
                 new Base64ImageRule(['jpeg']),
             ],
             // 画像データをbase64で文字列としても受け入れる。バリデーションルールはimageFileが適用される。
-            'fileName' => [
+            'image_file_name' => [
                 'nullable',
                 'string',
             ],
@@ -62,11 +55,11 @@ class UpdateRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name'        => __('stock.Name'),
-            'price'       => __('stock.Price'),
-            'detail'      => __('stock.Detail'),
-            'quantity'    => __('stock.Quantity'),
-            'imageBase64' => __('stock.Image'),
+            'name'          => __('stock.Name'),
+            'price'         => __('stock.Price'),
+            'detail'        => __('stock.Detail'),
+            'quantity'      => __('stock.Quantity'),
+            'image_base_64' => __('stock.Image'),
         ];
     }
 }

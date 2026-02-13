@@ -39,8 +39,8 @@ class UpdateServiceTest extends BaseTest
         $request['detail']      = 'bbbの説明';
         $request['price']       = 222;
         $request['quantity']    = 2;
-        $request['fileName']    = 'stock2.jpg';
-        $request['imageBase64'] = 'data:image/jpeg;base64,xxxx';
+        $request['image_file_name']    = 'stock2.jpg';
+        $request['image_base_64'] = 'data:image/jpeg;base64,xxxx';
         $dto                    = new UpdateDto($request);
         $this->service->update($stock->id, $dto);
 

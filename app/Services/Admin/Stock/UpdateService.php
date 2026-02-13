@@ -20,14 +20,12 @@ class UpdateService extends BaseService
         $imageFileName = $dto->imageFileName;
 
         $data = [
-            'name'     => $dto->name,
-            'detail'   => $dto->detail,
-            'price'    => $dto->price,
-            'quantity' => $dto->quantity,
+            'name'            => $dto->name,
+            'detail'          => $dto->detail,
+            'price'           => $dto->price,
+            'quantity'        => $dto->quantity,
+            'image_file_name' => $dto->imageFileName,
         ];
-        if (!empty($imageFileName)) {
-            $data['image_file_name'] = $imageFileName;
-        }
 
         $stock = $this->stockRepository->update($data, $stockId);
 

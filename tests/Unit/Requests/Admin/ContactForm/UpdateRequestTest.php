@@ -7,6 +7,7 @@ use App\Enums\Gender;
 use App\Http\Requests\Admin\ContactForm\UpdateRequest;
 use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Validator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -229,6 +230,40 @@ class UpdateRequestTest extends BaseTest
                 'attrs'     => ['url' => 'https://111.test.com'],
                 'expect'    => true,
                 'attribute' => 'url',
+                'messages'  => [],
+            ],
+            'NG : image_base_64 画像として不正' => [
+                'attrs'     => ['image_base_64' => '不正'],
+                'expect'    => false,
+                'attribute' => 'image_base_64',
+                'messages'  => [
+                    '画像は画像データとして正しくありません。',
+                ],
+            ],
+            'NG : image_base_64 異なる画像形式' => [
+                'attrs' => [
+                    'image_base_64' => (static function () {
+                        $image = UploadedFile::fake()->image('test.png');
+
+                        return 'data:image/png;base64,' . base64_encode(file_get_contents($image->getPathname()));
+                    })(),
+                ],
+                'expect'    => false,
+                'attribute' => 'image_base_64',
+                'messages'  => [
+                    '画像は画像データとして正しくありません。',
+                ],
+            ],
+            'OK : image_base_64 が正常' => [
+                'attrs' => [
+                    'image_base_64' => (static function () {
+                        $image = UploadedFile::fake()->image('test.jpg');
+
+                        return 'data:image/jpeg;base64,' . base64_encode(file_get_contents($image->getPathname()));
+                    })(),
+                ],
+                'expect'    => true,
+                'attribute' => 'image_base_64',
                 'messages'  => [],
             ],
         ];

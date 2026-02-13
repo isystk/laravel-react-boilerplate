@@ -73,16 +73,16 @@
                     <table class="table table-hover text-nowrap">
                         <thead>
                             <tr>
-                                @include('admin.common.sortablelink_th', [
+                                @include('admin.parts.sortablelink_th', [
                                     'params' => ['id', __('user.ID')],
                                 ])
-                                @include('admin.common.sortablelink_th', [
+                                @include('admin.parts.sortablelink_th', [
                                     'params' => ['name', __('user.Name')],
                                 ])
-                                @include('admin.common.sortablelink_th', [
+                                @include('admin.parts.sortablelink_th', [
                                     'params' => ['email', __('user.EMail')],
                                 ])
-                                @include('admin.common.sortablelink_th', [
+                                @include('admin.parts.sortablelink_th', [
                                     'params' => ['created_at', __('common.Registration Date')],
                                 ])
                             </tr>
@@ -104,7 +104,7 @@
                     </table>
                 </div>
                 <div class="card-footer  ">
-                    {!! $users->links('admin.common.pagination') !!}
+                    {!! $users->links('admin.parts.pagination') !!}
                 </div>
             </div>
         </div>

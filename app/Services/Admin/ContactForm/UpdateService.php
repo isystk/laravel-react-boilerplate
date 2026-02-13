@@ -25,11 +25,11 @@ class UpdateService extends BaseService
             'gender'          => $dto->gender,
             'age'             => $dto->age,
             'contact'         => $dto->contact,
-            'image_file_name' => $dto->imageFile?->getClientOriginalName(),
+            'image_file_name' => $dto->imageFileName,
         ], $contactForm->id);
 
         if (!is_null($dto->imageFile)) {
-            $dto->imageFile->storeAs(PhotoType::Contact->type(), $dto->imageFile->getClientOriginalName(), 's3');
+            $dto->imageFile->storeAs(PhotoType::Contact->type(), $dto->imageFileName, 's3');
         }
 
         return $contactForm;

@@ -31,12 +31,12 @@ class StoreRequestTest extends BaseTest
         $base64String      = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($dummyImage->path()));
         $fileName          = $dummyImage->getClientOriginalName();
         $this->baseRequest = [
-            'name'        => 'user1',
-            'price'       => 1234,
-            'detail'      => 'abcde',
-            'quantity'    => 1,
-            'imageBase64' => $base64String,
-            'fileName'    => $fileName,
+            'name'            => 'user1',
+            'price'           => 1234,
+            'detail'          => 'abcde',
+            'quantity'        => 1,
+            'image_base_64'   => $base64String,
+            'image_file_name' => $fileName,
         ];
     }
 
@@ -166,38 +166,38 @@ class StoreRequestTest extends BaseTest
                 'attribute' => 'quantity',
                 'messages'  => [],
             ],
-            'NG : imageBase64 画像として不正' => [
-                'attrs'     => ['imageBase64' => '不正'],
+            'NG : image_base_64 画像として不正' => [
+                'attrs'     => ['image_base_64' => '不正'],
                 'expect'    => false,
-                'attribute' => 'imageBase64',
+                'attribute' => 'image_base_64',
                 'messages'  => [
                     '商品画像は画像データとして正しくありません。',
                 ],
             ],
-            'NG : imageBase64 異なる画像形式' => [
+            'NG : image_base_64 異なる画像形式' => [
                 'attrs' => [
-                    'imageBase64' => (static function () {
+                    'image_base_64' => (static function () {
                         $image = UploadedFile::fake()->image('test.png');
 
                         return 'data:image/png;base64,' . base64_encode(file_get_contents($image->getPathname()));
                     })(),
                 ],
                 'expect'    => false,
-                'attribute' => 'imageBase64',
+                'attribute' => 'image_base_64',
                 'messages'  => [
                     '商品画像は画像データとして正しくありません。',
                 ],
             ],
-            'OK : imageBase64 が正常' => [
+            'OK : image_base_64 が正常' => [
                 'attrs' => [
-                    'imageBase64' => (static function () {
+                    'image_base_64' => (static function () {
                         $image = UploadedFile::fake()->image('test.jpg');
 
                         return 'data:image/jpeg;base64,' . base64_encode(file_get_contents($image->getPathname()));
                     })(),
                 ],
                 'expect'    => true,
-                'attribute' => 'imageBase64',
+                'attribute' => 'image_base_64',
                 'messages'  => [],
             ],
         ];
