@@ -39,6 +39,24 @@ class CreateControllerTest extends BaseTest
         $response->assertSuccessful();
     }
 
+    public function test_create_管理者ロール別アクセス権限検証(): void
+    {
+        $cases = [
+            ['role' => AdminRole::HighManager, 'status' => 200],
+            ['role' => AdminRole::Manager,     'status' => 403],
+        ];
+
+        foreach ($cases as $case) {
+            $admin = $this->createDefaultAdmin([
+                'role' => $case['role']->value,
+            ]);
+
+            $this->actingAs($admin, 'admin')
+                ->get(route('admin.staff.create'))
+                ->assertStatus($case['status']);
+        }
+    }
+
     public function test_store(): void
     {
         $admin1 = $this->createDefaultAdmin([

@@ -86,16 +86,16 @@
                     <table class="table table-hover table-responsive">
                         <thead>
                             <tr>
-                                @include('admin.common.sortablelink_th', [
+                                @include('admin.parts.sortablelink_th', [
                                     'params' => ['id', __('order.ID')],
                                 ])
-                                @include('admin.common.sortablelink_th', [
+                                @include('admin.parts.sortablelink_th', [
                                     'params' => ['users.name', __('order.User Name')],
                                 ])
-                                @include('admin.common.sortablelink_th', [
+                                @include('admin.parts.sortablelink_th', [
                                     'params' => ['sum_price', __('order.Sum Price')],
                                 ])
-                                @include('admin.common.sortablelink_th', [
+                                @include('admin.parts.sortablelink_th', [
                                     'params' => ['created_at', __('order.Order Date')],
                                 ])
                             </tr>
@@ -117,7 +117,7 @@
                     </table>
                 </div>
                 <div class="card-footer  ">
-                    {!! $orders->links('admin.common.pagination') !!}
+                    {!! $orders->links('admin.parts.pagination') !!}
                 </div>
             </div>
         </div>

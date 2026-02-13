@@ -3,6 +3,7 @@
 namespace Tests\Unit\Services\Admin\Staff;
 
 use App\Domain\Entities\Admin;
+use App\Dto\Request\Admin\Staff\UpdateDto;
 use App\Enums\AdminRole;
 use App\Http\Requests\Admin\Staff\UpdateRequest;
 use App\Services\Admin\Staff\UpdateService;
@@ -33,7 +34,8 @@ class UpdateServiceTest extends BaseTest
         $request['name']  = 'bbb';
         $request['email'] = 'bbb@test.com';
         $request['role']  = AdminRole::HighManager->value;
-        $this->service->update($admin1->id, $request);
+        $dto              = new UpdateDto($request);
+        $this->service->update($admin1->id, $dto);
 
         // データが更新されたことをテスト
         $updatedAdmin = Admin::find($admin1->id);

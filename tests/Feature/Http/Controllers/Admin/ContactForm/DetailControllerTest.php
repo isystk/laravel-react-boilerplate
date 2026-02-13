@@ -29,16 +29,15 @@ class DetailControllerTest extends BaseTest
         $this->actingAs($admin, 'admin');
 
         $contactForm = $this->createDefaultContactForm([
-            'user_name' => 'user1',
-            'title'     => 'title1',
-            'email'     => '111@test.com',
-            'url'       => 'https://test.com',
-            'gender'    => Gender::Female->value,
-            'age'       => Age::Over40->value,
-            'contact'   => 'お問い合わせ内容',
+            'user_name'       => 'user1',
+            'title'           => 'title1',
+            'email'           => '111@test.com',
+            'url'             => 'https://test.com',
+            'gender'          => Gender::Female->value,
+            'age'             => Age::Over40->value,
+            'contact'         => 'お問い合わせ内容',
+            'image_file_name' => 'image1.jpg',
         ]);
-        $this->createDefaultContactFormImage(['contact_form_id' => $contactForm->id, 'file_name' => 'image1.jpg']);
-        $this->createDefaultContactFormImage(['contact_form_id' => $contactForm->id, 'file_name' => 'image2.jpg']);
 
         $response = $this->get(route('admin.contact.show', $contactForm));
         $response->assertSuccessful();
@@ -50,7 +49,26 @@ class DetailControllerTest extends BaseTest
         $response->assertSee(Age::Over40->label());
         $response->assertSee('お問い合わせ内容');
         $response->assertSee('contact/image1.jpg');
-        $response->assertSee('contact/image2.jpg');
+    }
+
+    public function test_show_管理者ロール別アクセス権限検証(): void
+    {
+        $cases = [
+            ['role' => AdminRole::HighManager, 'status' => 200],
+            ['role' => AdminRole::Manager,     'status' => 200],
+        ];
+
+        $contact = $this->createDefaultContactForm();
+
+        foreach ($cases as $case) {
+            $admin = $this->createDefaultAdmin([
+                'role' => $case['role']->value,
+            ]);
+
+            $this->actingAs($admin, 'admin')
+                ->get(route('admin.contact.show', $contact))
+                ->assertStatus($case['status']);
+        }
     }
 
     public function test_destroy(): void
@@ -59,8 +77,6 @@ class DetailControllerTest extends BaseTest
             'user_name' => 'user1',
             'title'     => 'title1',
         ]);
-        $contactFormImage1 = $this->createDefaultContactFormImage(['contact_form_id' => $contactForm->id]);
-        $contactFormImage2 = $this->createDefaultContactFormImage(['contact_form_id' => $contactForm->id]);
 
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
@@ -84,8 +100,6 @@ class DetailControllerTest extends BaseTest
 
         // データが削除されたことをテスト
         $this->assertDatabaseMissing('contact_forms', ['id' => $contactForm->id]);
-        $this->assertDatabaseMissing('contact_form_images', ['id' => $contactFormImage1->id]);
-        $this->assertDatabaseMissing('contact_form_images', ['id' => $contactFormImage2->id]);
     }
 
     public function test_destroy_例外発生時にロールバックされ例外がスローされること(): void

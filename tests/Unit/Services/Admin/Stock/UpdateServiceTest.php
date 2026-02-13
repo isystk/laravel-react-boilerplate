@@ -3,6 +3,7 @@
 namespace Tests\Unit\Services\Admin\Stock;
 
 use App\Domain\Entities\Stock;
+use App\Dto\Request\Admin\Stock\UpdateDto;
 use App\Http\Requests\Admin\Stock\UpdateRequest;
 use App\Services\Admin\Stock\UpdateService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -38,9 +39,10 @@ class UpdateServiceTest extends BaseTest
         $request['detail']      = 'bbbの説明';
         $request['price']       = 222;
         $request['quantity']    = 2;
-        $request['fileName']    = 'stock2.jpg';
-        $request['imageBase64'] = 'data:image/jpeg;base64,xxxx';
-        $this->service->update($stock->id, $request);
+        $request['image_file_name']    = 'stock2.jpg';
+        $request['image_base_64'] = 'data:image/jpeg;base64,xxxx';
+        $dto                    = new UpdateDto($request);
+        $this->service->update($stock->id, $dto);
 
         // データが更新されたことをテスト
         $updatedStock = Stock::find($stock->id);

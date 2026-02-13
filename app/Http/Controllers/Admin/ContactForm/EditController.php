@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin\ContactForm;
 
 use App\Domain\Entities\ContactForm;
+use App\Dto\Request\Admin\ContactForm\UpdateDto;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Admin\ContactForm\UpdateRequest;
-use App\Services\Admin\ContactForm\EditService;
 use App\Services\Admin\ContactForm\UpdateService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
@@ -19,13 +19,8 @@ class EditController extends BaseController
      */
     public function edit(ContactForm $contactForm): View
     {
-        /** @var EditService $service */
-        $service           = app(EditService::class);
-        $contactFormImages = $service->getContactFormImage($contactForm->id);
-
         return view('admin.contact.edit', compact([
             'contactForm',
-            'contactFormImages',
         ]));
     }
 
@@ -41,8 +36,10 @@ class EditController extends BaseController
 
         DB::beginTransaction();
 
+        $dto = new UpdateDto($request);
+
         try {
-            $service->update($contactForm->id, $request);
+            $service->update($contactForm, $dto);
             DB::commit();
         } catch (Throwable $e) {
             DB::rollBack();

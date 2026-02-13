@@ -18,6 +18,7 @@ use Illuminate\Support\Carbon;
  * @property Gender      $gender
  * @property Age         $age
  * @property string|null $contact
+ * @property string|null $image_file_name
  * @property Carbon      $created_at
  * @property Carbon      $updated_at
  */
@@ -41,6 +42,7 @@ class ContactForm extends Model
         'gender',
         'age',
         'contact',
+        'image_file_name',
     ];
 
     /**

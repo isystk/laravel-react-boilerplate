@@ -67,19 +67,16 @@
                 </div>
             </div>
 
-            @foreach ($contactFormImages as $i => $contactFormImage)
-                @if ($contactFormImage['file_name'])
-                    <div class="mb-3 row">
-                        <label
-                               class="col-sm-2 col-form-label text-muted small">{{ __('contact.Image') }}{{ $i + 1 }}</label>
-                        <div class="col-sm-10 d-flex align-items-center">
-                            <img src="{{ asset('uploads/contact/' . $contactFormImage['file_name']) }}"
-                                 class="img-thumbnail"
-                                 style="max-width: 200px;" />
-                        </div>
+            @if ($contactForm->image_file_name)
+                <div class="mb-3 row">
+                    <label class="col-sm-2 col-form-label text-muted small">{{ __('contact.Image') }}</label>
+                    <div class="col-sm-10 d-flex align-items-center">
+                        <img src="{{ asset('uploads/contact/' . $contactForm->image_file_name) }}"
+                             class="img-thumbnail"
+                             style="max-width: 200px;" />
                     </div>
-                @endif
-            @endforeach
+                </div>
+            @endif
         </div>
         <div class="card-footer text-center position-relative">
             <div class="d-inline-block">

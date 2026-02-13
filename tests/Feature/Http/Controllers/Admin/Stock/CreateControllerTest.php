@@ -41,6 +41,24 @@ class CreateControllerTest extends BaseTest
         $response->assertSuccessful();
     }
 
+    public function test_create_管理者ロール別アクセス権限検証(): void
+    {
+        $cases = [
+            ['role' => AdminRole::HighManager, 'status' => 200],
+            ['role' => AdminRole::Manager,     'status' => 403],
+        ];
+
+        foreach ($cases as $case) {
+            $admin = $this->createDefaultAdmin([
+                'role' => $case['role']->value,
+            ]);
+
+            $this->actingAs($admin, 'admin')
+                ->get(route('admin.stock.create'))
+                ->assertStatus($case['status']);
+        }
+    }
+
     public function test_store(): void
     {
         Storage::fake('s3');
@@ -68,9 +86,8 @@ class CreateControllerTest extends BaseTest
             'detail'      => 'aaaの説明',
             'price'       => 111,
             'quantity'    => 1,
-            'imageFile'   => $image1,
-            'fileName'    => 'image1.jpg',
-            'imageBase64' => $base64String,
+            'image_file_name'    => 'image1.jpg',
+            'image_base_64' => $base64String,
         ]);
         $response = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();

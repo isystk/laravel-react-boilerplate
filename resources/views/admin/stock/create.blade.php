@@ -89,26 +89,13 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label">{{ __('stock.Image') }}</label>
-                    <div class="col-sm-2"
-                         id="drop-zone">
-                        <p>
-                            <input id="js-uploadImage"
-                                   type="file">
-                        </p>
-                        <div id="result">
-                            @if (old('imageBase64'))
-                                <img src="{{ old('imageBase64') }}"
-                                     width="200px" />
-                                <input type="hidden"
-                                       name="imageBase64"
-                                       value="{{ old('imageBase64') }}" />
-                                <input type="hidden"
-                                       name="fileName"
-                                       value="{{ old('fileName') }}" />
-                            @endif
-                        </div>
-                        <p class="error error-message"></p>
+                    <label class="col-sm-2 control-label">{{ __('stock.Image') }}</label>
+                    <div class="col-sm-10">
+                        @include('admin.parts.image_upload', [
+                            'id' => 'image',
+                            'fileName' => old('image_file_name'),
+                            'photoType' => \App\Enums\PhotoType::Stock,
+                        ])
                     </div>
                 </div>
                 <div class="card-footer text-center  ">

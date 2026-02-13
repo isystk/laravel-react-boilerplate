@@ -31,16 +31,15 @@ class EditControllerTest extends BaseTest
         $this->actingAs($admin1, 'admin');
 
         $contactForm = $this->createDefaultContactForm([
-            'user_name' => 'user1',
-            'title'     => 'title1',
-            'email'     => '111@test.com',
-            'url'       => 'https://test.com',
-            'gender'    => Gender::Female->value,
-            'age'       => Age::Over40->value,
-            'contact'   => 'お問い合わせ内容',
+            'user_name'       => 'user1',
+            'title'           => 'title1',
+            'email'           => '111@test.com',
+            'url'             => 'https://test.com',
+            'gender'          => Gender::Female->value,
+            'age'             => Age::Over40->value,
+            'contact'         => 'お問い合わせ内容',
+            'image_file_name' => 'image1.jpg',
         ]);
-        $this->createDefaultContactFormImage(['contact_form_id' => $contactForm->id, 'file_name' => 'image1.jpg']);
-        $this->createDefaultContactFormImage(['contact_form_id' => $contactForm->id, 'file_name' => 'image2.jpg']);
 
         // manager権限ではアクセスできないことのテスト
         $response = $this->get(route('admin.contact.edit', $contactForm));
@@ -56,6 +55,26 @@ class EditControllerTest extends BaseTest
         $response->assertSuccessful();
     }
 
+    public function test_edit_管理者ロール別アクセス権限検証(): void
+    {
+        $cases = [
+            ['role' => AdminRole::HighManager, 'status' => 200],
+            ['role' => AdminRole::Manager,     'status' => 403],
+        ];
+
+        $contactForm = $this->createDefaultContactForm();
+
+        foreach ($cases as $case) {
+            $admin = $this->createDefaultAdmin([
+                'role' => $case['role']->value,
+            ]);
+
+            $this->actingAs($admin, 'admin')
+                ->get(route('admin.contact.edit', $contactForm))
+                ->assertStatus($case['status']);
+        }
+    }
+
     public function test_update(): void
     {
         Storage::fake('s3');
@@ -67,17 +86,14 @@ class EditControllerTest extends BaseTest
         $this->actingAs($admin1, 'admin');
 
         $contactForm = $this->createDefaultContactForm([
-            'user_name' => 'aaa',
-            'title'     => 'タイトル1',
-            'email'     => 'aaa@test.com',
-            'url'       => 'https://aaa.test.com',
-            'gender'    => Gender::Male->value,
-            'age'       => Age::Over30->value,
-            'contact'   => 'お問い合わせ1',
-        ]);
-        $contactFormImage = $this->createDefaultContactFormImage([
-            'contact_form_id' => $contactForm->id,
-            'file_name'       => 'image1.jpg',
+            'user_name'       => 'aaa',
+            'title'           => 'タイトル1',
+            'email'           => 'aaa@test.com',
+            'url'             => 'https://aaa.test.com',
+            'gender'          => Gender::Male->value,
+            'age'             => Age::Over30->value,
+            'contact'         => 'お問い合わせ1',
+            'image_file_name' => 'image1.jpg',
         ]);
 
         // manager権限ではアクセスできないことのテスト
@@ -92,16 +108,14 @@ class EditControllerTest extends BaseTest
         $this->actingAs($admin2, 'admin');
 
         $redirectResponse = $this->put(route('admin.contact.update', $contactForm), [
-            'user_name'      => 'bbb',
-            'title'          => 'タイトル2',
-            'email'          => 'bbb@test.com',
-            'url'            => 'https://bbb.test.com',
-            'gender'         => Gender::Female->value,
-            'age'            => Age::Over40->value,
-            'contact'        => 'お問い合わせ2',
-            'delete_image_1' => '1',
-            'image_file_2'   => UploadedFile::fake()->image('image2.jpg'),
-            'image_file_3'   => UploadedFile::fake()->image('image3.jpg'),
+            'user_name'  => 'bbb',
+            'title'      => 'タイトル2',
+            'email'      => 'bbb@test.com',
+            'url'        => 'https://bbb.test.com',
+            'gender'     => Gender::Female->value,
+            'age'        => Age::Over40->value,
+            'contact'    => 'お問い合わせ2',
+            'image_file' => UploadedFile::fake()->image('image2.jpg'),
         ]);
         $response = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();
@@ -116,13 +130,10 @@ class EditControllerTest extends BaseTest
         $this->assertDatabaseHas('contact_forms', ['id' => $contactForm->id, 'contact' => 'お問い合わせ2']);
 
         // 元の画像が削除されたことをテスト
-        $this->assertDatabaseMissing('contact_form_images', ['id' => $contactFormImage->id]);
+        $this->assertDatabaseMissing('contact_forms', ['id' => $contactForm->id, 'image_file_name' => 'image1.jpg']);
 
         // 新しい画像が登録されたことをテスト
-        $this->assertDatabaseHas('contact_form_images',
-            ['contact_form_id' => $contactForm->id, 'file_name' => 'image2.jpg']);
-        $this->assertDatabaseHas('contact_form_images',
-            ['contact_form_id' => $contactForm->id, 'file_name' => 'image3.jpg']);
+        $this->assertDatabaseMissing('contact_forms', ['id' => $contactForm->id, 'image_file_name' => 'image2.jpg']);
     }
 
     public function test_update_例外発生時にロールバックされ例外がスローされること(): void

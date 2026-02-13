@@ -86,19 +86,19 @@
                     <table class="table table-hover table-responsive">
                         <thead>
                             <tr>
-                                @include('admin.common.sortablelink_th', [
+                                @include('admin.parts.sortablelink_th', [
                                     'params' => ['id', __('stock.ID')],
                                 ])
-                                @include('admin.common.sortablelink_th', [
+                                @include('admin.parts.sortablelink_th', [
                                     'params' => ['name', __('stock.Name')],
                                 ])
-                                @include('admin.common.sortablelink_th', [
+                                @include('admin.parts.sortablelink_th', [
                                     'params' => ['price', __('stock.Price')],
                                 ])
-                                @include('admin.common.sortablelink_th', [
+                                @include('admin.parts.sortablelink_th', [
                                     'params' => ['quantity', __('stock.Quantity')],
                                 ])
-                                @include('admin.common.sortablelink_th', [
+                                @include('admin.parts.sortablelink_th', [
                                     'params' => ['created_at', __('common.Registration Date')],
                                 ])
                                 <th></th>
@@ -122,7 +122,7 @@
                     </table>
                 </div>
                 <div class="card-footer  ">
-                    {!! $stocks->links('admin.common.pagination') !!}
+                    {!! $stocks->links('admin.parts.pagination') !!}
                 </div>
             </div>
         </div>

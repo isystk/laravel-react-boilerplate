@@ -30,4 +30,22 @@ class HomeControllerTest extends BaseTest
         $response->assertViewIs('admin.home');
         $response->assertViewHasAll(['latestOrders']);
     }
+
+    public function test_index_管理者ロール別アクセス権限検証(): void
+    {
+        $cases = [
+            ['role' => AdminRole::HighManager, 'status' => 200],
+            ['role' => AdminRole::Manager,     'status' => 200],
+        ];
+
+        foreach ($cases as $case) {
+            $admin = $this->createDefaultAdmin([
+                'role' => $case['role']->value,
+            ]);
+
+            $this->actingAs($admin, 'admin')
+                ->get(route('admin.home'))
+                ->assertStatus($case['status']);
+        }
+    }
 }

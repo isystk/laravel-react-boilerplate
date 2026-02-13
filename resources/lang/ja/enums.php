@@ -16,7 +16,7 @@ return [
     'Age' . Age::Over40->value                  => '40歳～49歳',
     'Age' . Age::Over50->value                  => '50歳～59歳',
     'Age' . Age::Over60->value                  => '60歳～',
-    'AdminRole' . AdminRole::Manager->value     => '管理者',
+    'AdminRole' . AdminRole::Manager->value     => '一般管理者',
     'AdminRole' . AdminRole::HighManager->value => '上位管理者',
     'PhotoType' . PhotoType::Stock->value       => '商品',
     'PhotoType' . PhotoType::Contact->value     => 'お問い合わせ',

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Stock;
 
 use App\Domain\Entities\Stock;
+use App\Dto\Request\Admin\Stock\UpdateDto;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Admin\Stock\UpdateRequest;
 use App\Services\Admin\Stock\UpdateService;
@@ -35,8 +36,10 @@ class EditController extends BaseController
 
         DB::beginTransaction();
 
+        $dto = new UpdateDto($request);
+
         try {
-            $service->update($stock->id, $request);
+            $service->update($stock->id, $dto);
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();

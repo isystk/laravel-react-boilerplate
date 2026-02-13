@@ -45,6 +45,28 @@ class EditControllerTest extends BaseTest
         $response->assertSuccessful();
     }
 
+    public function test_edit_管理者ロール別アクセス権限検証(): void
+    {
+        $cases = [
+            ['role' => AdminRole::HighManager, 'status' => 200],
+            ['role' => AdminRole::Manager,     'status' => 403],
+        ];
+
+        $stock = $this->createDefaultStock([
+            'name' => 'aaa',
+        ]);
+
+        foreach ($cases as $case) {
+            $admin = $this->createDefaultAdmin([
+                'role' => $case['role']->value,
+            ]);
+
+            $this->actingAs($admin, 'admin')
+                ->get(route('admin.stock.edit', $stock))
+                ->assertStatus($case['status']);
+        }
+    }
+
     public function test_update(): void
     {
         Storage::fake('s3');
@@ -82,9 +104,8 @@ class EditControllerTest extends BaseTest
             'detail'      => 'bbbの説明',
             'price'       => 222,
             'quantity'    => 2,
-            'imageFile'   => $image2,
-            'fileName'    => 'image2.jpg',
-            'imageBase64' => $base64String,
+            'image_file_name'    => 'image2.jpg',
+            'image_base_64' => $base64String,
         ]);
         $response = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();

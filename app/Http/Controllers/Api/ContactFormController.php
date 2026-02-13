@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Dto\Request\Api\ContactForm\CreateDto;
 use App\Http\Requests\Api\ContactForm\StoreRequest;
 use App\Services\Api\ContactForm\StoreService;
 use Illuminate\Http\JsonResponse;
@@ -21,8 +22,10 @@ class ContactFormController extends BaseApiController
         $service = app(StoreService::class);
         DB::beginTransaction();
 
+        $dto = new CreateDto($request);
+
         try {
-            $service->save($request);
+            $service->save($dto);
             DB::commit();
         } catch (Throwable $e) {
             DB::rollBack();

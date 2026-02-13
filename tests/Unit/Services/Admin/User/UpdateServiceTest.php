@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Services\Admin\User;
 
+use App\Dto\Request\Admin\User\UpdateDto;
 use App\Http\Requests\Admin\User\UpdateRequest;
 use App\Services\Admin\User\UpdateService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -29,7 +30,8 @@ class UpdateServiceTest extends BaseTest
         $request          = new UpdateRequest;
         $request['name']  = 'bbb';
         $request['email'] = 'bbb@test.com';
-        $this->service->update($user->id, $request);
+        $dto              = new UpdateDto($request);
+        $this->service->update($user->id, $dto);
 
         $user->refresh();
         $this->assertEquals('bbb', $user->name, '名前が変更される事');

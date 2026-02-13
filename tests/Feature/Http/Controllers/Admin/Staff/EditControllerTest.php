@@ -39,6 +39,26 @@ class EditControllerTest extends BaseTest
         $response->assertSuccessful();
     }
 
+    public function test_edit_管理者ロール別アクセス権限検証(): void
+    {
+        $cases = [
+            ['role' => AdminRole::HighManager, 'status' => 200],
+            ['role' => AdminRole::Manager,     'status' => 403],
+        ];
+
+        $staffA = $this->createDefaultAdmin();
+
+        foreach ($cases as $case) {
+            $admin = $this->createDefaultAdmin([
+                'role' => $case['role']->value,
+            ]);
+
+            $this->actingAs($admin, 'admin')
+                ->get(route('admin.staff.edit', $staffA))
+                ->assertStatus($case['status']);
+        }
+    }
+
     public function test_update(): void
     {
         $admin1 = $this->createDefaultAdmin([

@@ -108,19 +108,19 @@
                     <table class="table table-hover table-responsive">
                         <thead>
                             <tr>
-                                @include('admin.common.sortablelink_th', [
+                                @include('admin.parts.sortablelink_th', [
                                     'params' => ['id', __('staff.ID')],
                                 ])
-                                @include('admin.common.sortablelink_th', [
+                                @include('admin.parts.sortablelink_th', [
                                     'params' => ['name', __('staff.Name')],
                                 ])
-                                @include('admin.common.sortablelink_th', [
+                                @include('admin.parts.sortablelink_th', [
                                     'params' => ['email', __('staff.EMail')],
                                 ])
-                                @include('admin.common.sortablelink_th', [
+                                @include('admin.parts.sortablelink_th', [
                                     'params' => ['role', __('staff.Role')],
                                 ])
-                                @include('admin.common.sortablelink_th', [
+                                @include('admin.parts.sortablelink_th', [
                                     'params' => ['created_at', __('common.Registration Date')],
                                 ])
                             </tr>
@@ -143,7 +143,7 @@
                     </table>
                 </div>
                 <div class="card-footer  ">
-                    {!! $staffs->links('admin.common.pagination') !!}
+                    {!! $staffs->links('admin.parts.pagination') !!}
                 </div>
             </div>
         </div>
