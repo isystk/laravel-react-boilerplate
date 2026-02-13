@@ -38,6 +38,13 @@ docker/apache/logs
 docker/php/logs
 !docker/php/logs/.gitkeep
 
+# PDF fonts
+/storage/fonts/*.php
+/storage/fonts/*.ttf
+/storage/fonts/*.ufm
+/storage/fonts/*.json
+/storage/fonts/dompdf_font_family_cache.dist.php
+
 # job
 storage/app/import_job
 
