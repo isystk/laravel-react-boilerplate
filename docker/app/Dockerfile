@@ -25,11 +25,12 @@ RUN curl -O https://dl.min.io/client/mc/release/linux-amd64/mc \
     && chmod +x mc \
     && mv mc /usr/local/bin/
 
-WORKDIR /var/www/html
-
-# ブラウザの依存ライブラリだけを先にインストールしておく
+# ブラウザ本体は入れず、実行に必要なシステムライブラリ（libnss3 等）だけを入れる
 RUN npx playwright install-deps chromium
 
+WORKDIR /var/www/html
+
+# インストール先をボリュームマウントで保護できる場所に指定（任意ですが推奨）
 ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
