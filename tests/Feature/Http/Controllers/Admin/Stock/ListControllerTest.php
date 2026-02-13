@@ -33,19 +33,21 @@ class ListControllerTest extends BaseTest
         $response->assertSeeInOrder(['stock2', 'stock1']);
     }
 
-    public function test_index(): void
+    public function test_index_管理者ロール別アクセス権限検証(): void
     {
-        $this->createDefaultStock(['name' => 'stock1']);
-        $this->createDefaultStock(['name' => 'stock2']);
+        $cases = [
+            ['role' => AdminRole::HighManager, 'status' => 200],
+            ['role' => AdminRole::Manager,     'status' => 200],
+        ];
 
-        $admin = $this->createDefaultAdmin([
-            'name' => 'admin1',
-            'role' => AdminRole::Manager->value,
-        ]);
-        $this->actingAs($admin, 'admin');
+        foreach ($cases as $case) {
+            $admin = $this->createDefaultAdmin([
+                'role' => $case['role']->value,
+            ]);
 
-        $response = $this->get(route('admin.stock'));
-        $response->assertSuccessful();
-        $response->assertSeeInOrder(['stock2', 'stock1']);
+            $this->actingAs($admin, 'admin')
+                ->get(route('admin.stock'))
+                ->assertStatus($case['status']);
+        }
     }
 }

@@ -51,6 +51,26 @@ class DetailControllerTest extends BaseTest
         $response->assertSee('contact/image1.jpg');
     }
 
+    public function test_show_管理者ロール別アクセス権限検証(): void
+    {
+        $cases = [
+            ['role' => AdminRole::HighManager, 'status' => 200],
+            ['role' => AdminRole::Manager,     'status' => 200],
+        ];
+
+        $contact = $this->createDefaultContactForm();
+
+        foreach ($cases as $case) {
+            $admin = $this->createDefaultAdmin([
+                'role' => $case['role']->value,
+            ]);
+
+            $this->actingAs($admin, 'admin')
+                ->get(route('admin.contact.show', $contact))
+                ->assertStatus($case['status']);
+        }
+    }
+
     public function test_destroy(): void
     {
         $contactForm = $this->createDefaultContactForm([

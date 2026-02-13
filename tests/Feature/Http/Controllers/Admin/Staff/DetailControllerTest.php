@@ -33,6 +33,26 @@ class DetailControllerTest extends BaseTest
         $response->assertSee('上位管理者');
     }
 
+    public function test_show_管理者ロール別アクセス権限検証(): void
+    {
+        $cases = [
+            ['role' => AdminRole::HighManager, 'status' => 200],
+            ['role' => AdminRole::Manager,     'status' => 200],
+        ];
+
+        $staff = $this->createDefaultAdmin();
+
+        foreach ($cases as $case) {
+            $admin = $this->createDefaultAdmin([
+                'role' => $case['role']->value,
+            ]);
+
+            $this->actingAs($admin, 'admin')
+                ->get(route('admin.staff.show', $staff))
+                ->assertStatus($case['status']);
+        }
+    }
+
     public function test_destroy(): void
     {
         $admin1 = $this->createDefaultAdmin([

@@ -4,7 +4,7 @@ namespace App\Enums;
 
 enum AdminRole: string
 {
-    /** 管理者 */
+    /** 一般管理者 */
     case Manager = 'manager';
     /** 上位管理者 */
     case HighManager = 'high-manager';
