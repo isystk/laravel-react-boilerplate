@@ -26,6 +26,7 @@ export default defineConfig({
         'resources/assets/admin/js/pages/contact/show.js',
         'resources/assets/admin/js/pages/contact/edit.js',
         'resources/assets/admin/js/pages/user/show.js',
+        'resources/assets/admin/js/pages/home/index.js',
         'resources/assets/admin/sass/app.scss',
       ],
       refresh: true,

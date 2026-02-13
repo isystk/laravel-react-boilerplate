@@ -25,4 +25,15 @@ class MonthlySaleEloquentRepository extends BaseEloquentRepository implements Mo
             ->orderBy('year_month', 'desc')
             ->get();
     }
+
+    /**
+     * @return Collection<int, MonthlySale>
+     */
+    public function getAllOrderByYearMonth(): Collection
+    {
+        /** @var Collection<int, MonthlySale> */
+        return $this->model
+            ->orderBy('year_month')
+            ->get(['year_month', 'amount']);
+    }
 }

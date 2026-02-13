@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BaseController;
+use App\Services\Admin\Home\IndexService;
 use Illuminate\View\View;
 
 class HomeController extends BaseController
@@ -12,6 +13,18 @@ class HomeController extends BaseController
      */
     public function index(): View
     {
-        return view('admin.home');
+        $service = app(IndexService::class);
+
+        $todaysOrdersCount = $service->getTodaysOrdersCount();
+        $salesByMonth      = $service->getSalesByMonth();
+        $latestOrders      = $service->getLatestOrders();
+
+        return view('admin.home',
+            compact([
+                'todaysOrdersCount',
+                'salesByMonth',
+                'latestOrders',
+            ])
+        );
     }
 }
