@@ -29,13 +29,13 @@ class DetailControllerTest extends BaseTest
         $this->actingAs($admin, 'admin');
 
         $contactForm = $this->createDefaultContactForm([
-            'user_name' => 'user1',
-            'title'     => 'title1',
-            'email'     => '111@test.com',
-            'url'       => 'https://test.com',
-            'gender'    => Gender::Female->value,
-            'age'       => Age::Over40->value,
-            'contact'   => 'お問い合わせ内容',
+            'user_name'       => 'user1',
+            'title'           => 'title1',
+            'email'           => '111@test.com',
+            'url'             => 'https://test.com',
+            'gender'          => Gender::Female->value,
+            'age'             => Age::Over40->value,
+            'contact'         => 'お問い合わせ内容',
             'image_file_name' => 'image1.jpg',
         ]);
 

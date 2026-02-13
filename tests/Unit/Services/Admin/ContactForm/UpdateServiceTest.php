@@ -29,13 +29,13 @@ class UpdateServiceTest extends BaseTest
         Storage::fake('s3');
 
         $contactForm = $this->createDefaultContactForm([
-            'user_name' => 'aaa',
-            'title'     => 'タイトル1',
-            'email'     => 'aaa@test.com',
-            'url'       => 'https://aaa.test.com',
-            'gender'    => Gender::Male->value,
-            'age'       => Age::Over30->value,
-            'contact'   => 'お問い合わせ1',
+            'user_name'       => 'aaa',
+            'title'           => 'タイトル1',
+            'email'           => 'aaa@test.com',
+            'url'             => 'https://aaa.test.com',
+            'gender'          => Gender::Male->value,
+            'age'             => Age::Over30->value,
+            'contact'         => 'お問い合わせ1',
             'image_file_name' => 'file1.jpg',
         ]);
         Storage::disk('s3')->put('contact/image1.jpg', 'dummy');
@@ -50,7 +50,7 @@ class UpdateServiceTest extends BaseTest
         $request['contact']        = 'お問い合わせ2';
         $request['delete_image_1'] = '1';
         $dto                       = new UpdateDto($request);
-        $dto->imageFile           = UploadedFile::fake()->image('image2.jpg');
+        $dto->imageFile            = UploadedFile::fake()->image('image2.jpg');
         $this->service->update($contactForm, $dto);
 
         // データが更新されたことをテスト
@@ -68,7 +68,7 @@ class UpdateServiceTest extends BaseTest
         Storage::disk('s3')->assertExists('contact/image1.jpg');
 
         // 新しい画像が登録されたことをテスト
-        $this->assertDatabaseHas('contact_forms', ['id' => $contactForm->id, 'image_file_name' => 'image2.jpg']);;
+        $this->assertDatabaseHas('contact_forms', ['id' => $contactForm->id, 'image_file_name' => 'image2.jpg']);
         Storage::disk('s3')->assertExists('contact/image2.jpg');
     }
 }

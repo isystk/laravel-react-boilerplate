@@ -31,13 +31,13 @@ class EditControllerTest extends BaseTest
         $this->actingAs($admin1, 'admin');
 
         $contactForm = $this->createDefaultContactForm([
-            'user_name' => 'user1',
-            'title'     => 'title1',
-            'email'     => '111@test.com',
-            'url'       => 'https://test.com',
-            'gender'    => Gender::Female->value,
-            'age'       => Age::Over40->value,
-            'contact'   => 'お問い合わせ内容',
+            'user_name'       => 'user1',
+            'title'           => 'title1',
+            'email'           => '111@test.com',
+            'url'             => 'https://test.com',
+            'gender'          => Gender::Female->value,
+            'age'             => Age::Over40->value,
+            'contact'         => 'お問い合わせ内容',
             'image_file_name' => 'image1.jpg',
         ]);
 
@@ -66,13 +66,13 @@ class EditControllerTest extends BaseTest
         $this->actingAs($admin1, 'admin');
 
         $contactForm = $this->createDefaultContactForm([
-            'user_name' => 'aaa',
-            'title'     => 'タイトル1',
-            'email'     => 'aaa@test.com',
-            'url'       => 'https://aaa.test.com',
-            'gender'    => Gender::Male->value,
-            'age'       => Age::Over30->value,
-            'contact'   => 'お問い合わせ1',
+            'user_name'       => 'aaa',
+            'title'           => 'タイトル1',
+            'email'           => 'aaa@test.com',
+            'url'             => 'https://aaa.test.com',
+            'gender'          => Gender::Male->value,
+            'age'             => Age::Over30->value,
+            'contact'         => 'お問い合わせ1',
             'image_file_name' => 'image1.jpg',
         ]);
 
@@ -88,14 +88,14 @@ class EditControllerTest extends BaseTest
         $this->actingAs($admin2, 'admin');
 
         $redirectResponse = $this->put(route('admin.contact.update', $contactForm), [
-            'user_name'      => 'bbb',
-            'title'          => 'タイトル2',
-            'email'          => 'bbb@test.com',
-            'url'            => 'https://bbb.test.com',
-            'gender'         => Gender::Female->value,
-            'age'            => Age::Over40->value,
-            'contact'        => 'お問い合わせ2',
-            'image_file'   => UploadedFile::fake()->image('image2.jpg'),
+            'user_name'  => 'bbb',
+            'title'      => 'タイトル2',
+            'email'      => 'bbb@test.com',
+            'url'        => 'https://bbb.test.com',
+            'gender'     => Gender::Female->value,
+            'age'        => Age::Over40->value,
+            'contact'    => 'お問い合わせ2',
+            'image_file' => UploadedFile::fake()->image('image2.jpg'),
         ]);
         $response = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();

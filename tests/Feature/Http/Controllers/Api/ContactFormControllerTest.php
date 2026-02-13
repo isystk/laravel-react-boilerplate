@@ -38,15 +38,15 @@ class ContactFormControllerTest extends BaseTest
         $base64Image = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($image->getPathname()));
 
         $response = $this->post(route('api.contact.store'), [
-            'user_name'    => $user1->name,
-            'email'        => $user1->email,
-            'title'        => 'タイトル1',
-            'url'          => 'https://aaa.test.com',
-            'gender'       => Gender::Female->value,
-            'age'          => Age::Over40->value,
-            'contact'      => 'お問い合わせ1',
+            'user_name'     => $user1->name,
+            'email'         => $user1->email,
+            'title'         => 'タイトル1',
+            'url'           => 'https://aaa.test.com',
+            'gender'        => Gender::Female->value,
+            'age'           => Age::Over40->value,
+            'contact'       => 'お問い合わせ1',
             'image_base_64' => $base64Image,
-            'caution'      => 1,
+            'caution'       => 1,
         ]);
         $response->assertSuccessful();
 

@@ -38,8 +38,8 @@ class StoreServiceTest extends BaseTest
         $request['age']       = Age::Over30->value;
         $request['contact']   = 'お問い合わせ1';
         $dto                  = new CreateDto($request);
-        $dto->imageFile      = UploadedFile::fake()->image('file1.jpg');
-        $contactForm = $this->service->save($dto);
+        $dto->imageFile       = UploadedFile::fake()->image('file1.jpg');
+        $contactForm          = $this->service->save($dto);
 
         // データが登録されたことをテスト
         $updatedContactForm = ContactForm::find($contactForm->id);
