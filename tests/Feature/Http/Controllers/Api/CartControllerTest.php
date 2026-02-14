@@ -36,8 +36,8 @@ class CartControllerTest extends BaseTest
             'count'   => 0,
         ]);
 
-        $stock1 = $this->createDefaultStock(['name' => 'stock1', 'price' => 111, 'image_file_name' => 'aaa.jpg']);
-        $stock2 = $this->createDefaultStock(['name' => 'stock2', 'price' => 222, 'image_file_name' => 'bbb.jpg']);
+        $stock1 = $this->createDefaultStock(['name' => 'stock1', 'price' => 111]);
+        $stock2 = $this->createDefaultStock(['name' => 'stock2', 'price' => 222]);
 
         $cart1 = $this->createDefaultCart(['user_id' => $user1->id, 'stock_id' => $stock1->id]);
         $cart2 = $this->createDefaultCart(['user_id' => $user1->id, 'stock_id' => $stock2->id]);
@@ -48,8 +48,8 @@ class CartControllerTest extends BaseTest
             'result'  => true,
             'message' => '',
             'stocks'  => [
-                ['id' => $cart1->id, 'stockId' => $stock1->id, 'name' => 'stock1', 'imageUrl' => config('app.url') . '/uploads/stock/aaa.jpg', 'price' => 111],
-                ['id' => $cart2->id, 'stockId' => $stock2->id, 'name' => 'stock2', 'imageUrl' => config('app.url') . '/uploads/stock/bbb.jpg', 'price' => 222],
+                ['id' => $cart1->id, 'stockId' => $stock1->id, 'name' => 'stock1', 'imageUrl' => $stock1->getImageUrl(), 'price' => 111],
+                ['id' => $cart2->id, 'stockId' => $stock2->id, 'name' => 'stock2', 'imageUrl' => $stock2->getImageUrl(), 'price' => 222],
             ],
             'email' => $user1->email,
             'sum'   => 333,

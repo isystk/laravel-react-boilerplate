@@ -7,29 +7,29 @@ use App\Domain\Repositories\Stock\StockRepository;
 use App\Dto\Request\Admin\Stock\CreateDto;
 use App\Enums\PhotoType;
 use App\Services\BaseService;
+use App\Services\Common\ImageService;
 
 class CreateService extends BaseService
 {
-    public function __construct(private readonly StockRepository $stockRepository) {}
+    public function __construct(
+        private readonly StockRepository $stockRepository,
+        private readonly ImageService $imageService,
+    ) {}
 
     /**
      * 商品を登録します。
      */
     public function save(CreateDto $dto): Stock
     {
-        $imageFileName = $dto->imageFileName;
+        // 画像をアップロード
+        $image = $this->imageService->store($dto->imageFile, PhotoType::Stock, $dto->imageFileName);
 
-        $stock = $this->stockRepository->create([
-            'name'            => $dto->name,
-            'detail'          => $dto->detail,
-            'price'           => $dto->price,
-            'quantity'        => $dto->quantity,
-            'image_file_name' => $imageFileName,
+        return $this->stockRepository->create([
+            'name'     => $dto->name,
+            'detail'   => $dto->detail,
+            'price'    => $dto->price,
+            'quantity' => $dto->quantity,
+            'image_id' => $image->id,
         ]);
-
-        // s3に画像をアップロード
-        $dto->imageFile?->storeAs(PhotoType::Stock->type(), $imageFileName, 's3');
-
-        return $stock;
     }
 }

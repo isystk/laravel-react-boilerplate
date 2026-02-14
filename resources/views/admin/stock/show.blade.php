@@ -46,8 +46,8 @@
                 <label class="col-sm-2 col-form-label text-muted small">{{ __('stock.Image') }}</label>
                 <div class="col-sm-10">
                     <div id="result">
-                        @if ($stock->image_file_name)
-                            <img src="{{ asset('/uploads/stock/' . $stock->image_file_name) }}"
+                        @if ($stock->image)
+                            <img src="{{ $stock->image->getImageUrl() }}"
                                  alt="{{ $stock->name }}"
                                  id="stockImage"
                                  class="img-thumbnail"

@@ -27,11 +27,10 @@ class DetailControllerTest extends BaseTest
         $this->actingAs($admin1, 'admin');
 
         $stock = $this->createDefaultStock([
-            'name'            => 'aaa',
-            'detail'          => 'aaaの説明',
-            'price'           => 111,
-            'quantity'        => 1,
-            'image_file_name' => 'stock1.jpg',
+            'name'     => 'aaa',
+            'detail'   => 'aaaの説明',
+            'price'    => 111,
+            'quantity' => 1,
         ]);
 
         $response = $this->get(route('admin.stock.show', $stock));
@@ -39,7 +38,6 @@ class DetailControllerTest extends BaseTest
         $response->assertSee('aaa');
         $response->assertSee('111');
         $response->assertSee('1');
-        $response->assertSee('stock1.jpg');
     }
 
     public function test_show_管理者ロール別アクセス権限検証(): void

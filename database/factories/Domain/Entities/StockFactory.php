@@ -2,6 +2,7 @@
 
 namespace Database\Factories\Domain\Entities;
 
+use App\Domain\Entities\Image;
 use App\Domain\Entities\Stock;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -26,7 +27,7 @@ class StockFactory extends Factory
             'name'            => fake()->text(50),
             'detail'          => fake()->realText(500),
             'price'           => fake()->numberBetween(1, 6),
-            'image_file_name' => fake()->image('/tmp', 400, 300, null, false),
+            'image_id'        => Image::factory(),
             'quantity'        => fake()->numberBetween(0, 10),
         ];
     }

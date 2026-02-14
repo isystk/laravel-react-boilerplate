@@ -94,11 +94,13 @@ class CreateControllerTest extends BaseTest
 
         // データが登録されたことをテスト
         $this->assertDatabaseHas('stocks', [
-            'name'            => 'aaa',
-            'detail'          => 'aaaの説明',
-            'price'           => 111,
-            'quantity'        => 1,
-            'image_file_name' => 'image1.jpg',
+            'name'     => 'aaa',
+            'detail'   => 'aaaの説明',
+            'price'    => 111,
+            'quantity' => 1,
+        ]);
+        $this->assertDatabaseHas('images', [
+            'file_name' => 'image1.jpg',
         ]);
 
         // ファイルが存在することをテスト

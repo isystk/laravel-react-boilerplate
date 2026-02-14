@@ -79,11 +79,10 @@ class EditControllerTest extends BaseTest
         $this->actingAs($admin1, 'admin');
 
         $stock = $this->createDefaultStock([
-            'name'            => 'aaa',
-            'detail'          => 'aaaの説明',
-            'price'           => 111,
-            'quantity'        => 1,
-            'image_file_name' => 'image1.jpg',
+            'name'     => 'aaa',
+            'detail'   => 'aaaの説明',
+            'price'    => 111,
+            'quantity' => 1,
         ]);
 
         // manager権限ではアクセスできないことのテスト
@@ -112,11 +111,13 @@ class EditControllerTest extends BaseTest
 
         // データが更新されたことをテスト
         $this->assertDatabaseHas('stocks', [
-            'name'            => 'bbb',
-            'detail'          => 'bbbの説明',
-            'price'           => 222,
-            'quantity'        => 2,
-            'image_file_name' => 'image2.jpg',
+            'name'     => 'bbb',
+            'detail'   => 'bbbの説明',
+            'price'    => 222,
+            'quantity' => 2,
+        ]);
+        $this->assertDatabaseHas('images', [
+            'file_name' => 'image2.jpg',
         ]);
 
         // ファイルが存在することをテスト

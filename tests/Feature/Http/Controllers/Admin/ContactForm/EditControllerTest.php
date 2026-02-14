@@ -31,14 +31,13 @@ class EditControllerTest extends BaseTest
         $this->actingAs($admin1, 'admin');
 
         $contactForm = $this->createDefaultContactForm([
-            'user_name'       => 'user1',
-            'title'           => 'title1',
-            'email'           => '111@test.com',
-            'url'             => 'https://test.com',
-            'gender'          => Gender::Female->value,
-            'age'             => Age::Over40->value,
-            'contact'         => 'お問い合わせ内容',
-            'image_file_name' => 'image1.jpg',
+            'user_name' => 'user1',
+            'title'     => 'title1',
+            'email'     => '111@test.com',
+            'url'       => 'https://test.com',
+            'gender'    => Gender::Female->value,
+            'age'       => Age::Over40->value,
+            'contact'   => 'お問い合わせ内容',
         ]);
 
         // manager権限ではアクセスできないことのテスト
@@ -86,14 +85,13 @@ class EditControllerTest extends BaseTest
         $this->actingAs($admin1, 'admin');
 
         $contactForm = $this->createDefaultContactForm([
-            'user_name'       => 'aaa',
-            'title'           => 'タイトル1',
-            'email'           => 'aaa@test.com',
-            'url'             => 'https://aaa.test.com',
-            'gender'          => Gender::Male->value,
-            'age'             => Age::Over30->value,
-            'contact'         => 'お問い合わせ1',
-            'image_file_name' => 'image1.jpg',
+            'user_name' => 'aaa',
+            'title'     => 'タイトル1',
+            'email'     => 'aaa@test.com',
+            'url'       => 'https://aaa.test.com',
+            'gender'    => Gender::Male->value,
+            'age'       => Age::Over30->value,
+            'contact'   => 'お問い合わせ1',
         ]);
 
         // manager権限ではアクセスできないことのテスト
@@ -129,11 +127,9 @@ class EditControllerTest extends BaseTest
         $this->assertDatabaseHas('contact_forms', ['id' => $contactForm->id, 'age' => Age::Over40->value]);
         $this->assertDatabaseHas('contact_forms', ['id' => $contactForm->id, 'contact' => 'お問い合わせ2']);
 
-        // 元の画像が削除されたことをテスト
-        $this->assertDatabaseMissing('contact_forms', ['id' => $contactForm->id, 'image_file_name' => 'image1.jpg']);
-
-        // 新しい画像が登録されたことをテスト
-        $this->assertDatabaseMissing('contact_forms', ['id' => $contactForm->id, 'image_file_name' => 'image2.jpg']);
+        // 画像が更新されたことをテスト
+        $updatedContactForm = $contactForm->fresh();
+        $this->assertNotNull($updatedContactForm->image_id);
     }
 
     public function test_update_例外発生時にロールバックされ例外がスローされること(): void

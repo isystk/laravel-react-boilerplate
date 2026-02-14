@@ -20,7 +20,8 @@ return new class extends Migration {
             $table->tinyInteger('gender')->comment('性別');
             $table->tinyInteger('age')->comment('年齢');
             $table->string('contact', 200)->comment('お問い合わせ内容');
-            $table->string('image_file_name', 100)->nullable()->comment('画像ファイル名');
+            $table->unsignedBigInteger('image_id')->nullable()->comment('画像ID');
+            $table->foreign('image_id')->references('id')->on('images');
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
         });

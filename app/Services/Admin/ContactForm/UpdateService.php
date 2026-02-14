@@ -7,31 +7,39 @@ use App\Domain\Repositories\ContactForm\ContactFormRepository;
 use App\Dto\Request\Admin\ContactForm\UpdateDto;
 use App\Enums\PhotoType;
 use App\Services\BaseService;
+use App\Services\Common\ImageService;
 
 class UpdateService extends BaseService
 {
-    public function __construct(private readonly ContactFormRepository $contactFormRepository) {}
+    public function __construct(
+        private readonly ContactFormRepository $contactFormRepository,
+        private readonly ImageService $imageService,
+    ) {}
 
     /**
      * お問い合わせを更新します。
      */
     public function update(ContactForm $contactForm, UpdateDto $dto): ContactForm
     {
-        $contactForm = $this->contactFormRepository->update([
-            'user_name'       => $dto->userName,
-            'title'           => $dto->title,
-            'email'           => $dto->email,
-            'url'             => $dto->url,
-            'gender'          => $dto->gender,
-            'age'             => $dto->age,
-            'contact'         => $dto->contact,
-            'image_file_name' => $dto->imageFileName,
-        ], $contactForm->id);
+        $data = [
+            'user_name' => $dto->userName,
+            'title'     => $dto->title,
+            'email'     => $dto->email,
+            'url'       => $dto->url,
+            'gender'    => $dto->gender,
+            'age'       => $dto->age,
+            'contact'   => $dto->contact,
+        ];
 
-        if (!is_null($dto->imageFile)) {
-            $dto->imageFile->storeAs(PhotoType::Contact->type(), $dto->imageFileName, 's3');
+        if ($dto->imageFile) {
+            $image = $this->imageService->store(
+                $dto->imageFile,
+                PhotoType::Contact,
+                $dto->imageFileName
+            );
+            $data['image_id'] = $image->id;
         }
 
-        return $contactForm;
+        return $this->contactFormRepository->update($data, $contactForm->id);
     }
 }
