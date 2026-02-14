@@ -10,7 +10,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(OrderTableSeeder::class);
         $this->call(StockTableSeeder::class);
-        $this->call(ContactFormSeeder::class);
+        $this->call(ContactSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(AdminsTableSeeder::class);
     }

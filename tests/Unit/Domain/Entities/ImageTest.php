@@ -3,7 +3,7 @@
 namespace Tests\Unit\Domain\Entities;
 
 use App\Domain\Entities\Image;
-use App\Enums\PhotoType;
+use App\Enums\ImageType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
 use Tests\BaseTest;
@@ -24,7 +24,7 @@ class ImageTest extends BaseTest
     {
         $model = $this->createDefaultImage();
 
-        $this->assertInstanceOf(PhotoType::class, $model->type);
+        $this->assertInstanceOf(ImageType::class, $model->type);
         $this->assertInstanceOf(Carbon::class, $model->created_at);
         $this->assertInstanceOf(Carbon::class, $model->updated_at);
     }
@@ -33,12 +33,12 @@ class ImageTest extends BaseTest
     {
         $model = $this->createDefaultImage([
             'file_name' => 'test.jpg',
-            'type'      => PhotoType::Stock,
+            'type'      => ImageType::Stock,
         ]);
 
         $hash            = md5((string) $model->id);
         $hashedDirectory = substr($hash, 0, 2) . '/' . substr($hash, 2, 2) . '/' . substr($hash, 4);
-        $expected        = PhotoType::Stock->type() . '/' . $hashedDirectory . '/test.jpg';
+        $expected        = ImageType::Stock->type() . '/' . $hashedDirectory . '/test.jpg';
         $this->assertSame($expected, $model->getS3Path());
     }
 
@@ -57,12 +57,12 @@ class ImageTest extends BaseTest
 
         $model = $this->createDefaultImage([
             'file_name' => 'test.jpg',
-            'type'      => PhotoType::Stock,
+            'type'      => ImageType::Stock,
         ]);
 
         $hash            = md5((string) $model->id);
         $hashedDirectory = substr($hash, 0, 2) . '/' . substr($hash, 2, 2) . '/' . substr($hash, 4);
-        $expected        = $configAppUrl . '/uploads/' . PhotoType::Stock->type() . '/' . $hashedDirectory . '/test.jpg';
+        $expected        = $configAppUrl . '/uploads/' . ImageType::Stock->type() . '/' . $hashedDirectory . '/test.jpg';
         $this->assertSame($expected, $model->getImageUrl());
     }
 

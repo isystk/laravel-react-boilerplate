@@ -5,7 +5,7 @@ namespace App\Services\Admin\Stock;
 use App\Domain\Entities\Stock;
 use App\Domain\Repositories\Stock\StockRepository;
 use App\Dto\Request\Admin\Stock\CreateDto;
-use App\Enums\PhotoType;
+use App\Enums\ImageType;
 use App\Services\BaseService;
 use App\Services\Common\ImageService;
 
@@ -22,7 +22,7 @@ class CreateService extends BaseService
     public function save(CreateDto $dto): Stock
     {
         // 画像をアップロード
-        $image = $this->imageService->store($dto->imageFile, PhotoType::Stock, $dto->imageFileName);
+        $image = $this->imageService->store($dto->imageFile, ImageType::Stock, $dto->imageFileName);
 
         return $this->stockRepository->create([
             'name'     => $dto->name,

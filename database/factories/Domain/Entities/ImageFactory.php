@@ -3,7 +3,7 @@
 namespace Database\Factories\Domain\Entities;
 
 use App\Domain\Entities\Image;
-use App\Enums\PhotoType;
+use App\Enums\ImageType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -25,7 +25,7 @@ class ImageFactory extends Factory
     {
         return [
             'file_name' => fake()->image('/tmp', 400, 300, null, false),
-            'type'      => PhotoType::Stock->value,
+            'type'      => ImageType::Stock->value,
         ];
     }
 }

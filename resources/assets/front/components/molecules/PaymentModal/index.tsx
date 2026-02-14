@@ -16,7 +16,7 @@ import useAppRoot from '@/states/useAppRoot';
 
 type FormValues = {
   amount: number;
-  username: string;
+  email: string;
   cardNumber: string;
   cardExp: string;
   cardCvc: string;
@@ -37,20 +37,20 @@ const PaymentModal = ({ isOpen, handleClose, amount }: Props) => {
 
   if (!state) return <></>;
   const handlePayment = async (values: FormValues) => {
-    const { amount, username } = values;
+    const { amount, email } = values;
     if (!stripe || !elements) {
       return;
     }
 
     // 決算処理を行う
-    await service.cart.payment({ stripe, elements, amount, username });
+    await service.cart.payment({ stripe, elements, amount, email });
     // 完了画面を表示する
     navigate(Url.PAY_COMPLETE);
   };
 
   const initialValues = {
     amount: amount,
-    username: state.auth.email,
+    email: state.auth.email,
     cardNumber: '',
     cardExp: '',
     cardCvc: '',
@@ -78,7 +78,7 @@ const PaymentModal = ({ isOpen, handleClose, amount }: Props) => {
               </div>
               <div>
                 <label className="font-bold">メールアドレス</label>
-                <p className="p-3">{values.username}</p>
+                <p className="p-3">{values.email}</p>
               </div>
               <div className="mt-3">
                 <label className="font-bold">

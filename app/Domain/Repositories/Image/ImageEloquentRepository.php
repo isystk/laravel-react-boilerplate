@@ -31,7 +31,7 @@ class ImageEloquentRepository extends BaseEloquentRepository implements ImageRep
     {
         $query = $this->model->select('images.*')
             ->selectRaw('(SELECT id FROM stocks WHERE stocks.image_id = images.id) as used_by_stock_id')
-            ->selectRaw('(SELECT id FROM contact_forms WHERE contact_forms.image_id = images.id) as used_by_contact_id');
+            ->selectRaw('(SELECT id FROM contacts WHERE contacts.image_id = images.id) as used_by_contact_id');
 
         if (!is_null($conditions['file_name'] ?? null)) {
             $query->where('file_name', 'like', '%' . $conditions['file_name'] . '%');
@@ -43,7 +43,7 @@ class ImageEloquentRepository extends BaseEloquentRepository implements ImageRep
 
         if ($conditions['unused_only'] ?? false) {
             $query->whereRaw('NOT EXISTS(SELECT 1 FROM stocks WHERE stocks.image_id = images.id)')
-                ->whereRaw('NOT EXISTS(SELECT 1 FROM contact_forms WHERE contact_forms.image_id = images.id)');
+                ->whereRaw('NOT EXISTS(SELECT 1 FROM contacts WHERE contacts.image_id = images.id)');
         }
 
         if (!is_null($conditions['sort_name'] ?? null)) {

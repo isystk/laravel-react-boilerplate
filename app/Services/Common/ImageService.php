@@ -4,7 +4,7 @@ namespace App\Services\Common;
 
 use App\Domain\Entities\Image;
 use App\Domain\Repositories\Image\ImageRepository;
-use App\Enums\PhotoType;
+use App\Enums\ImageType;
 use App\Services\BaseService;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -18,7 +18,7 @@ class ImageService extends BaseService
     /**
      * 画像を保存し、Imageエンティティを返却する
      */
-    public function store(UploadedFile $file, PhotoType $type, string $fileName): Image
+    public function store(UploadedFile $file, ImageType $type, string $fileName): Image
     {
         $image = $this->imageRepository->create([
             'file_name' => $fileName,

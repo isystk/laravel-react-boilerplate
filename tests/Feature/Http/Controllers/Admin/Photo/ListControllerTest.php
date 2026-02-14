@@ -3,7 +3,7 @@
 namespace Tests\Feature\Http\Controllers\Admin\Photo;
 
 use App\Enums\AdminRole;
-use App\Enums\PhotoType;
+use App\Enums\ImageType;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
@@ -28,9 +28,9 @@ class ListControllerTest extends BaseTest
         $this->actingAs($admin, 'admin');
 
         // テスト用のImageレコードを作成
-        $this->createDefaultImage(['file_name' => 'stock1.jpg', 'type' => PhotoType::Stock->value]);
-        $this->createDefaultImage(['file_name' => 'stock2.jpg', 'type' => PhotoType::Stock->value]);
-        $this->createDefaultImage(['file_name' => 'contact1.jpg', 'type' => PhotoType::Contact->value]);
+        $this->createDefaultImage(['file_name' => 'stock1.jpg', 'type' => ImageType::Stock->value]);
+        $this->createDefaultImage(['file_name' => 'stock2.jpg', 'type' => ImageType::Stock->value]);
+        $this->createDefaultImage(['file_name' => 'contact1.jpg', 'type' => ImageType::Contact->value]);
 
         $response = $this->get(route('admin.photo'));
         $response->assertSuccessful();
@@ -71,8 +71,8 @@ class ListControllerTest extends BaseTest
         $this->actingAs($admin, 'admin');
 
         // テスト用のImageレコードを作成
-        $image1 = $this->createDefaultImage(['file_name' => 'contact1.jpg', 'type' => PhotoType::Contact->value]);
-        $image2 = $this->createDefaultImage(['file_name' => 'stock1.jpg', 'type' => PhotoType::Stock->value]);
+        $image1 = $this->createDefaultImage(['file_name' => 'contact1.jpg', 'type' => ImageType::Contact->value]);
+        $image2 = $this->createDefaultImage(['file_name' => 'stock1.jpg', 'type' => ImageType::Stock->value]);
 
         // S3にファイルを配置
         $storage->put($image1->getS3Path(), 'dummy');

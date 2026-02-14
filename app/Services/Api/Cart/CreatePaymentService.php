@@ -23,7 +23,7 @@ class CreatePaymentService extends BaseCartService
             'currency'    => 'jpy',
             'description' => 'LaraEC',
             'metadata'    => [
-                'username' => $request->username,
+                'username' => $request->email,
             ],
         ];
 

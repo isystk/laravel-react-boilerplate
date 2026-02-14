@@ -32,6 +32,6 @@ export const Api = {
   MYCART_DELETE: getBffUrl('/mycart/delete'),
   /** Stripe用のペイメント作成 */
   MYCART_PAYMENT: getBffUrl('/mycart/payment'),
-  /** 決算処理後の後処理 */
+  /** 決済処理後の後処理 */
   MYCART_CHECKOUT: getBffUrl('/mycart/checkout'),
 };

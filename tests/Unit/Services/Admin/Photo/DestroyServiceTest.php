@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Services\Admin\Photo;
 
-use App\Enums\PhotoType;
+use App\Enums\ImageType;
 use App\Services\Admin\Photo\DestroyService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
@@ -26,7 +26,7 @@ class DestroyServiceTest extends BaseTest
         $storage = Storage::disk('s3');
 
         // テスト用のImageレコードを作成
-        $image = $this->createDefaultImage(['file_name' => 'test.jpg', 'type' => PhotoType::Stock->value]);
+        $image = $this->createDefaultImage(['file_name' => 'test.jpg', 'type' => ImageType::Stock->value]);
 
         // S3にファイルを配置
         $s3Path = $image->getS3Path();

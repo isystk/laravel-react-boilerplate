@@ -29,7 +29,7 @@
                                id="user_name"
                                value="{{ request()->user_name }}"
                                class="form-control"
-                               maxlength="{{ config('const.maxlength.contact_forms.user_name') }}" />
+                               maxlength="{{ config('const.maxlength.contacts.user_name') }}" />
                     </div>
                 </div>
 
@@ -42,7 +42,7 @@
                                id="title"
                                value="{{ request()->title }}"
                                class="form-control"
-                               maxlength="{{ config('const.maxlength.contact_forms.title') }}" />
+                               maxlength="{{ config('const.maxlength.contacts.title') }}" />
                     </div>
                 </div>
             </div>
@@ -88,18 +88,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($contactForms as $contactForm)
+                            @foreach ($contacts as $contact)
                                 <tr>
-                                    <th>{{ $contactForm->id }}</th>
-                                    <td>{{ $contactForm->user_name }}</td>
+                                    <th>{{ $contact->id }}</th>
+                                    <td>{{ $contact->user_name }}</td>
                                     <td class="text-truncate"
                                         style="max-width: 350px;">
-                                        {{ $contactForm->title }}
+                                        {{ $contact->title }}
                                     </td>
-                                    <td>{{ $contactForm->created_at }}</td>
+                                    <td>{{ $contact->created_at }}</td>
                                     <td>
                                         <a class="btn btn-primary btn-sm"
-                                           href="{{ route('admin.contact.show', ['contactForm' => $contactForm]) }}">詳細</a>
+                                           href="{{ route('admin.contact.show', ['contact' => $contact]) }}">詳細</a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -107,7 +107,7 @@
                     </table>
                 </div>
                 <div class="card-footer  ">
-                    {!! $contactForms->links('admin.parts.pagination') !!}
+                    {!! $contacts->links('admin.parts.pagination') !!}
                 </div>
             </div>
         </div>

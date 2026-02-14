@@ -4,7 +4,7 @@ namespace Tests\Unit\Dto\Response\Api\Cart;
 
 use App\Domain\Entities\Image;
 use App\Dto\Response\Api\Cart\CartStockDto;
-use App\Enums\PhotoType;
+use App\Enums\ImageType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
 
@@ -18,7 +18,7 @@ class CartStockDtoTest extends BaseTest
 
         $image = Image::factory()->create([
             'file_name' => 'test.jpg',
-            'type'      => PhotoType::Stock->value,
+            'type'      => ImageType::Stock->value,
         ]);
 
         $stock = $this->createDefaultStock([

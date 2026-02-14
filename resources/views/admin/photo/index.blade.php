@@ -41,7 +41,7 @@
                                 id="fileType"
                                 class="form-select">
                             <option value="">未選択</option>
-                            @foreach (App\Enums\PhotoType::cases() as $item)
+                            @foreach (App\Enums\ImageType::cases() as $item)
                                 <option value="{{ $item->value }}"
                                         {{ $item->value === (int) request()->fileType ? 'selected' : '' }}>
                                     {{ $item->label() }}
@@ -116,7 +116,7 @@
                                         $usedByUrl = route('admin.stock.show', ['stock' => $image->used_by_stock_id]);
                                     } elseif ($image->used_by_contact_id) {
                                         $usedByUrl = route('admin.contact.show', [
-                                            'contactForm' => $image->used_by_contact_id,
+                                            'contact' => $image->used_by_contact_id,
                                         ]);
                                     }
                                 @endphp

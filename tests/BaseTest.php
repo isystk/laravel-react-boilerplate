@@ -4,7 +4,7 @@ namespace Tests;
 
 use App\Domain\Entities\Admin;
 use App\Domain\Entities\Cart;
-use App\Domain\Entities\ContactForm;
+use App\Domain\Entities\Contact;
 use App\Domain\Entities\Image;
 use App\Domain\Entities\ImportHistory;
 use App\Domain\Entities\MonthlySale;
@@ -205,19 +205,19 @@ abstract class BaseTest extends TestCase
     }
 
     /**
-     * ContactFormを作成する
+     * Contactを作成する
      *
      * @param array<string, mixed> $params
      */
-    public function createDefaultContactForm(array $params = []): ContactForm
+    public function createDefaultContact(array $params = []): Contact
     {
         $items = [];
         if (count($params) > 0) {
             $items = array_merge($items, $params);
         }
 
-        /** @var ContactForm */
-        return ContactForm::factory($items)->create();
+        /** @var Contact */
+        return Contact::factory($items)->create();
     }
 
     /**

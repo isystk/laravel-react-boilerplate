@@ -30,14 +30,12 @@ return [
             'price'    => 10,
             'quantity' => 10,
         ],
-        'contact_forms' => [
+        'contacts' => [
             'user_name' => 50,
             'title'     => 50,
             'email'     => 64,
             'url'       => 255,
             'contact'   => 200,
-        ],
-        'contact_form_images' => [
         ],
     ],
 
