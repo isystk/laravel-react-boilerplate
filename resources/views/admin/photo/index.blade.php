@@ -41,7 +41,7 @@
                                 id="fileType"
                                 class="form-select">
                             <option value="">未選択</option>
-                            @foreach (App\Enums\PhotoType::cases() as $item)
+                            @foreach (App\Enums\ImageType::cases() as $item)
                                 <option value="{{ $item->value }}"
                                         {{ $item->value === (int) request()->fileType ? 'selected' : '' }}>
                                     {{ $item->label() }}

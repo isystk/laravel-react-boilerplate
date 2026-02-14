@@ -5,7 +5,7 @@ namespace App\Services\Admin\ContactForm;
 use App\Domain\Entities\ContactForm;
 use App\Domain\Repositories\ContactForm\ContactFormRepository;
 use App\Dto\Request\Admin\ContactForm\UpdateDto;
-use App\Enums\PhotoType;
+use App\Enums\ImageType;
 use App\Services\BaseService;
 use App\Services\Common\ImageService;
 
@@ -43,7 +43,7 @@ class UpdateService extends BaseService
         } elseif ($dto->imageFile) {
             $image = $this->imageService->store(
                 $dto->imageFile,
-                PhotoType::Contact,
+                ImageType::Contact,
                 $dto->imageFileName
             );
             $data['image_id'] = $image->id;

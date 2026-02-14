@@ -3,7 +3,7 @@
 namespace Tests\Unit\Services\Common;
 
 use App\Domain\Entities\Image;
-use App\Enums\PhotoType;
+use App\Enums\ImageType;
 use App\Services\Common\ImageService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -28,7 +28,7 @@ class ImageServiceTest extends BaseTest
     public function test_store_画像を保存しレコードを返却すること(): void
     {
         $file     = UploadedFile::fake()->image('test.jpg');
-        $type     = PhotoType::Stock;
+        $type     = ImageType::Stock;
         $fileName = 'stock_image.jpg';
 
         $result = $this->service->store($file, $type, $fileName);
@@ -44,7 +44,7 @@ class ImageServiceTest extends BaseTest
     public function test_update_既存の画像を削除し新しい画像を保存すること(): void
     {
         $oldFile = UploadedFile::fake()->image('old.jpg');
-        $oldType = PhotoType::Stock;
+        $oldType = ImageType::Stock;
         $oldName = 'old_image.jpg';
         $image   = $this->service->store($oldFile, $oldType, $oldName);
 
@@ -72,7 +72,7 @@ class ImageServiceTest extends BaseTest
     public function test_delete_物理ファイルとDBレコードを削除すること(): void
     {
         $file     = UploadedFile::fake()->image('delete_target.jpg');
-        $type     = PhotoType::Stock;
+        $type     = ImageType::Stock;
         $fileName = 'delete_target.jpg';
         $image    = $this->service->store($file, $type, $fileName);
 
@@ -89,7 +89,7 @@ class ImageServiceTest extends BaseTest
     public function test_delete_物理ファイルが存在しない場合でもDBレコードを削除すること(): void
     {
         $file     = UploadedFile::fake()->image('no_physical.jpg');
-        $type     = PhotoType::Stock;
+        $type     = ImageType::Stock;
         $fileName = 'no_physical.jpg';
         $image    = $this->service->store($file, $type, $fileName);
 

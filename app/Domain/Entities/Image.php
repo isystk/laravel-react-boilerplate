@@ -2,7 +2,7 @@
 
 namespace App\Domain\Entities;
 
-use App\Enums\PhotoType;
+use App\Enums\ImageType;
 use Database\Factories\Domain\Entities\ImageFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +11,7 @@ use Illuminate\Support\Carbon;
 /**
  * @property int       $id
  * @property string    $file_name
- * @property PhotoType $type
+ * @property ImageType $type
  * @property Carbon    $created_at
  * @property Carbon    $updated_at
  */
@@ -66,7 +66,7 @@ class Image extends Model
     protected function casts(): array
     {
         return [
-            'type'       => PhotoType::class,
+            'type'       => ImageType::class,
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];

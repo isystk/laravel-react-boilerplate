@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Domain\Entities\Image;
 use App\Domain\Entities\Stock;
-use App\Enums\PhotoType;
+use App\Enums\ImageType;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 
@@ -34,7 +34,7 @@ class StockTableSeeder extends Seeder
         foreach ($stocks as $stockData) {
             $image = Image::create([
                 'file_name' => $stockData['image'],
-                'type'      => PhotoType::Stock->value,
+                'type'      => ImageType::Stock->value,
             ]);
 
             Storage::disk('s3')->putFileAs(

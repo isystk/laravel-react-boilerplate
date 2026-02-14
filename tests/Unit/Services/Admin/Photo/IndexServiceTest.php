@@ -3,7 +3,7 @@
 namespace Tests\Unit\Services\Admin\Photo;
 
 use App\Dto\Request\Admin\Photo\SearchConditionDto;
-use App\Enums\PhotoType;
+use App\Enums\ImageType;
 use App\Services\Admin\Photo\IndexService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
@@ -34,9 +34,9 @@ class IndexServiceTest extends BaseTest
         $this->assertSame(0, $images->count(), '引数がない状態でエラーにならないことを始めにテスト');
 
         // テスト用のImageレコードを作成
-        $image1 = $this->createDefaultImage(['file_name' => 'stock1.jpg', 'type' => PhotoType::Stock->value]);
-        $image2 = $this->createDefaultImage(['file_name' => 'stock2.jpg', 'type' => PhotoType::Stock->value]);
-        $image3 = $this->createDefaultImage(['file_name' => 'contact1.jpg', 'type' => PhotoType::Contact->value]);
+        $image1 = $this->createDefaultImage(['file_name' => 'stock1.jpg', 'type' => ImageType::Stock->value]);
+        $image2 = $this->createDefaultImage(['file_name' => 'stock2.jpg', 'type' => ImageType::Stock->value]);
+        $image3 = $this->createDefaultImage(['file_name' => 'contact1.jpg', 'type' => ImageType::Contact->value]);
 
         // file_nameで検索
         $input           = clone $default;
@@ -47,7 +47,7 @@ class IndexServiceTest extends BaseTest
 
         // file_typeで検索
         $input           = clone $default;
-        $input->fileType = PhotoType::Stock->value;
+        $input->fileType = ImageType::Stock->value;
         $images          = $this->service->searchPhotoList($input)->getCollection();
         $imageIds        = $images->pluck('id')->all();
         $this->assertSame([$image1->id, $image2->id], $imageIds, 'file_typeで検索が出来ることをテスト');
@@ -63,9 +63,9 @@ class IndexServiceTest extends BaseTest
         $default = new SearchConditionDto($request);
 
         // テスト用のImageレコードを作成
-        $image1 = $this->createDefaultImage(['file_name' => 'unused.jpg', 'type' => PhotoType::Stock->value]);
-        $image2 = $this->createDefaultImage(['file_name' => 'used_by_stock.jpg', 'type' => PhotoType::Stock->value]);
-        $image3 = $this->createDefaultImage(['file_name' => 'used_by_contact.jpg', 'type' => PhotoType::Contact->value]);
+        $image1 = $this->createDefaultImage(['file_name' => 'unused.jpg', 'type' => ImageType::Stock->value]);
+        $image2 = $this->createDefaultImage(['file_name' => 'used_by_stock.jpg', 'type' => ImageType::Stock->value]);
+        $image3 = $this->createDefaultImage(['file_name' => 'used_by_contact.jpg', 'type' => ImageType::Contact->value]);
 
         // Stockに参照されるImageを作成
         $this->createDefaultStock(['image_id' => $image2->id]);

@@ -5,7 +5,7 @@ namespace App\Services\Api\ContactForm;
 use App\Domain\Entities\ContactForm;
 use App\Domain\Repositories\ContactForm\ContactFormRepository;
 use App\Dto\Request\Api\ContactForm\CreateDto;
-use App\Enums\PhotoType;
+use App\Enums\ImageType;
 use App\Services\BaseService;
 use App\Services\Common\ImageService;
 
@@ -25,7 +25,7 @@ class StoreService extends BaseService
         if ($dto->imageFile) {
             $image = $this->imageService->store(
                 $dto->imageFile,
-                PhotoType::Contact,
+                ImageType::Contact,
                 $dto->imageFile->getClientOriginalName()
             );
         }

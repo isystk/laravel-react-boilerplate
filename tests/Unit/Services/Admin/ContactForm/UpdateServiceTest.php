@@ -6,7 +6,7 @@ use App\Domain\Entities\Image;
 use App\Dto\Request\Admin\ContactForm\UpdateDto;
 use App\Enums\Age;
 use App\Enums\Gender;
-use App\Enums\PhotoType;
+use App\Enums\ImageType;
 use App\Http\Requests\Admin\ContactForm\UpdateRequest;
 use App\Services\Admin\ContactForm\UpdateService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -41,7 +41,7 @@ class UpdateServiceTest extends BaseTest
         ]);
         $image1 = $this->createDefaultImage([
             'file_name' => 'image1.jpg',
-            'type'      => PhotoType::Contact,
+            'type'      => ImageType::Contact,
         ]);
         Storage::disk('s3')->put($image1->getS3Path(), 'dummy');
 

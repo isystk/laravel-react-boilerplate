@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum PhotoType: int
+enum ImageType: int
 {
     /** 商品 */
     case Stock = 1;
@@ -14,7 +14,7 @@ enum PhotoType: int
      */
     public function label(): string
     {
-        return __('enums.PhotoType' . $this->value);
+        return __('enums.ImageType' . $this->value);
     }
 
     /**
@@ -31,7 +31,7 @@ enum PhotoType: int
     /**
      * タイプに紐づくEnumを返却する
      */
-    public static function getByType(string $type): PhotoType
+    public static function getByType(string $type): ImageType
     {
         return match ($type) {
             'stock'   => self::Stock,

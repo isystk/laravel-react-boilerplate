@@ -6,7 +6,7 @@ use App\Domain\Entities\ContactForm;
 use App\Domain\Entities\Image;
 use App\Enums\Age;
 use App\Enums\Gender;
-use App\Enums\PhotoType;
+use App\Enums\ImageType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -34,7 +34,7 @@ class ContactFormFactory extends Factory
             'gender'    => fake()->randomElement(Gender::cases()),
             'age'       => fake()->randomElement(Age::cases()),
             'contact'   => fake()->realText(200),
-            'image_id'  => Image::factory()->state(['type' => PhotoType::Contact->value]),
+            'image_id'  => Image::factory()->state(['type' => ImageType::Contact->value]),
         ];
     }
 
