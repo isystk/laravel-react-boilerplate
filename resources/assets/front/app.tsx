@@ -2,22 +2,9 @@ import Router from '@/router';
 import axios from 'axios';
 import { createRoot } from 'react-dom/client';
 import { type User } from '@/states/auth';
-import { AppProvider } from '@/states/AppContext';
+import AppRoot from '@/components/AppRoot';
 import '@/assets/styles/app.scss';
-import { JSX, StrictMode } from 'react';
-import { BrowserRouter } from 'react-router-dom';
 import { Api } from '@/constants/api';
-
-// --- アプリケーションのRootコンポーネント ---
-export const AppRoot = ({ children }: { children: JSX.Element }) => {
-  return (
-    <StrictMode>
-      <AppProvider>
-        <BrowserRouter>{children}</BrowserRouter>
-      </AppProvider>
-    </StrictMode>
-  );
-};
 
 const render = (user: User) => {
   const container = document.getElementById('react-root');
