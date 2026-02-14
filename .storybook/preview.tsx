@@ -1,7 +1,7 @@
 import type { Preview } from '@storybook/react';
 
 import '@/assets/styles/app.scss';
-import {AppRoot} from '@/app';
+import AppRoot from '@/components/AppRoot';
 import { MINIMAL_VIEWPORTS} from '@storybook/addon-viewport';
 
 // RootコンポーネントをラップしてStorybook上に適用する

@@ -10,6 +10,8 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
         <link rel="dns-prefetch"
               href="//fonts.gstatic.com">
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css?family=Nunito">
         @viteReactRefresh
     </head>
 
