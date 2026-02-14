@@ -41,7 +41,7 @@ class UpdateRequest extends FormRequest
             ],
             // 画像データをbase64で文字列としても受け入れる。バリデーションルールはimageFileが適用される。
             'image_file_name' => [
-                'nullable',
+                'required',
                 'string',
             ],
         ];
@@ -55,11 +55,12 @@ class UpdateRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name'          => __('stock.Name'),
-            'price'         => __('stock.Price'),
-            'detail'        => __('stock.Detail'),
-            'quantity'      => __('stock.Quantity'),
-            'image_base_64' => __('stock.Image'),
+            'name'            => __('stock.Name'),
+            'price'           => __('stock.Price'),
+            'detail'          => __('stock.Detail'),
+            'quantity'        => __('stock.Quantity'),
+            'image_base_64'   => __('stock.Image'),
+            'image_file_name' => __('stock.Image'),
         ];
     }
 }

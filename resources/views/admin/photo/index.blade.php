@@ -115,13 +115,15 @@
                                     if ($image->used_by_stock_id) {
                                         $usedByUrl = route('admin.stock.show', ['stock' => $image->used_by_stock_id]);
                                     } elseif ($image->used_by_contact_id) {
-                                        $usedByUrl = route('admin.contact.show', ['contactForm' => $image->used_by_contact_id]);
+                                        $usedByUrl = route('admin.contact.show', [
+                                            'contactForm' => $image->used_by_contact_id,
+                                        ]);
                                     }
                                 @endphp
                                 <tr>
                                     <td>{{ $image->type?->label() ?? '' }}</td>
                                     <td>
-                                        @if($usedByUrl)
+                                        @if ($usedByUrl)
                                             <a href="{{ $usedByUrl }}">
                                                 {{ $image->file_name }}
                                             </a>
@@ -130,7 +132,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if($usedByUrl)
+                                        @if ($usedByUrl)
                                             <a href="{{ $usedByUrl }}">
                                                 <img src="{{ $image->getImageUrl() }}"
                                                      alt="{{ $image->file_name }}"
