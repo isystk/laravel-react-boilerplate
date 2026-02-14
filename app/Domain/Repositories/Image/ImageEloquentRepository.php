@@ -30,8 +30,8 @@ class ImageEloquentRepository extends BaseEloquentRepository implements ImageRep
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator
     {
         $query = $this->model->select('images.*')
-            ->selectRaw('EXISTS(SELECT 1 FROM stocks WHERE stocks.image_id = images.id) as is_used_by_stock')
-            ->selectRaw('EXISTS(SELECT 1 FROM contact_forms WHERE contact_forms.image_id = images.id) as is_used_by_contact');
+            ->selectRaw('(SELECT id FROM stocks WHERE stocks.image_id = images.id) as used_by_stock_id')
+            ->selectRaw('(SELECT id FROM contact_forms WHERE contact_forms.image_id = images.id) as used_by_contact_id');
 
         if (!is_null($conditions['file_name'] ?? null)) {
             $query->where('file_name', 'like', '%' . $conditions['file_name'] . '%');

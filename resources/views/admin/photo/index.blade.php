@@ -95,26 +95,58 @@
                     <table class="table table-hover table-responsive">
                         <thead>
                             <tr>
-                                <th>{{ __('photo.Type') }}</th>
-                                <th>{{ __('photo.File Name') }}</th>
+                                @include('admin.parts.sortablelink_th', [
+                                    'params' => ['type', __('photo.Type')],
+                                ])
+                                @include('admin.parts.sortablelink_th', [
+                                    'params' => ['file_name', __('photo.File Name')],
+                                ])
                                 <th>{{ __('photo.Image') }}</th>
+                                @include('admin.parts.sortablelink_th', [
+                                    'params' => ['created_at', __('common.Registration Date')],
+                                ])
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($images as $image)
+                                @php
+                                    $usedByUrl = null;
+                                    if ($image->used_by_stock_id) {
+                                        $usedByUrl = route('admin.stock.show', ['stock' => $image->used_by_stock_id]);
+                                    } elseif ($image->used_by_contact_id) {
+                                        $usedByUrl = route('admin.contact.show', ['contactForm' => $image->used_by_contact_id]);
+                                    }
+                                @endphp
                                 <tr>
                                     <td>{{ $image->type?->label() ?? '' }}</td>
-                                    <td>{{ $image->file_name }}</td>
                                     <td>
-                                        <img src="{{ $image->getImageUrl() }}"
-                                             alt=""
-                                             width="100px" />
+                                        @if($usedByUrl)
+                                            <a href="{{ $usedByUrl }}">
+                                                {{ $image->file_name }}
+                                            </a>
+                                        @else
+                                            {{ $image->file_name }}
+                                        @endif
                                     </td>
+                                    <td>
+                                        @if($usedByUrl)
+                                            <a href="{{ $usedByUrl }}">
+                                                <img src="{{ $image->getImageUrl() }}"
+                                                     alt="{{ $image->file_name }}"
+                                                     width="100px" />
+                                            </a>
+                                        @else
+                                            <img src="{{ $image->getImageUrl() }}"
+                                                 alt="{{ $image->file_name }}"
+                                                 width="100px" />
+                                        @endif
+                                    </td>
+                                    <td>{{ $image->created_at }}</td>
                                     <td>
                                         <button class="btn btn-danger btn-sm js-deleteBtn"
                                                 data-id="{{ $image->id }}"
-                                                @if (!Auth::user()->role->isHighManager() || $image->is_used_by_stock || $image->is_used_by_contact) disabled="disabled" @endif>削除する
+                                                @if (!Auth::user()->role->isHighManager() || $image->used_by_stock_id || $image->used_by_contact_id) disabled="disabled" @endif>削除する
                                         </button>
                                         <form id="delete_{{ $image->id }}"
                                               action="{{ route('admin.photo.destroy') }}"
