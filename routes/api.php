@@ -16,7 +16,7 @@ Route::middleware(['web'])->group(function () {
     Route::post('/like/store', [\App\Http\Controllers\Api\LikeController::class, 'store']);
     Route::post('/like/destroy/{id}', [\App\Http\Controllers\Api\LikeController::class, 'destroy']);
     Route::get('/stock', [\App\Http\Controllers\Api\StockController::class, 'index'])->name('api.stock');
-    Route::post('/contact/store', [\App\Http\Controllers\Api\ContactFormController::class, 'store'])->name('api.contact.store');
+    Route::post('/contact/store', [\App\Http\Controllers\Api\ContactController::class, 'store'])->name('api.contact.store');
 
     Route::middleware([\App\Http\Middleware\AuthWebOrApi::class])->group(function () {
         // ログイン後

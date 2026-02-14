@@ -1,7 +1,7 @@
 import MainService from '@/services/main';
 import { Api } from '@/constants/api';
 
-export type ContactForm = {
+export type Contact = {
   user_name: string;
   email: string;
   gender: string;
@@ -20,7 +20,7 @@ export default class ContactService {
     this.main = main;
   }
 
-  async registContact(values: ContactForm): Promise<void> {
+  async registContact(values: Contact): Promise<void> {
     this.main.showLoading();
     try {
       // 入力したお問い合わせ内容を送信する。

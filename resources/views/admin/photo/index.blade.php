@@ -116,7 +116,7 @@
                                         $usedByUrl = route('admin.stock.show', ['stock' => $image->used_by_stock_id]);
                                     } elseif ($image->used_by_contact_id) {
                                         $usedByUrl = route('admin.contact.show', [
-                                            'contactForm' => $image->used_by_contact_id,
+                                            'contact' => $image->used_by_contact_id,
                                         ]);
                                     }
                                 @endphp

@@ -6,8 +6,8 @@ use App\Domain\Repositories\Admin\AdminEloquentRepository;
 use App\Domain\Repositories\Admin\AdminRepository;
 use App\Domain\Repositories\Cart\CartEloquentRepository;
 use App\Domain\Repositories\Cart\CartRepository;
-use App\Domain\Repositories\ContactForm\ContactFormEloquentRepository;
-use App\Domain\Repositories\ContactForm\ContactFormRepository;
+use App\Domain\Repositories\Contact\ContactEloquentRepository;
+use App\Domain\Repositories\Contact\ContactRepository;
 use App\Domain\Repositories\Image\ImageEloquentRepository;
 use App\Domain\Repositories\Image\ImageRepository;
 use App\Domain\Repositories\ImportHistory\ImportHistoryEloquentRepository;
@@ -33,7 +33,7 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         $this->app->bind(AdminRepository::class, AdminEloquentRepository::class);
         $this->app->bind(CartRepository::class, CartEloquentRepository::class);
-        $this->app->bind(ContactFormRepository::class, ContactFormEloquentRepository::class);
+        $this->app->bind(ContactRepository::class, ContactEloquentRepository::class);
         $this->app->bind(ImageRepository::class, ImageEloquentRepository::class);
         $this->app->bind(OrderRepository::class, OrderEloquentRepository::class);
         $this->app->bind(OrderStockRepository::class, OrderStockEloquentRepository::class);

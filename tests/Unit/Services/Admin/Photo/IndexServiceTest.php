@@ -70,8 +70,8 @@ class IndexServiceTest extends BaseTest
         // Stockに参照されるImageを作成
         $this->createDefaultStock(['image_id' => $image2->id]);
 
-        // ContactFormに参照されるImageを作成
-        $this->createDefaultContactForm(['image_id' => $image3->id]);
+        // Contactに参照されるImageを作成
+        $this->createDefaultContact(['image_id' => $image3->id]);
 
         // unusedOnly=falseの場合は全件取得
         $input             = clone $default;
