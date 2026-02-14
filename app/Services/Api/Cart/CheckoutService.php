@@ -26,30 +26,14 @@ class CheckoutService extends BaseCartService
     }
 
     /**
-     * 決済処理を行います。
+     * 決済後の後処理を行います。
      */
-    public function checkout(?string $stripeEmail, ?string $stripeToken): void
+    public function checkout(): void
     {
-        // TODO Stripe との通信処理は一旦コメントアウト
-        //        Stripe::setApiKey(config('const.stripe.secret'));
-        //
-        //        // 料金を支払う人
-        //        $customer = Customer::create(array(
-        //            'email' => $stripeEmail,
-        //            'source' => $stripeToken,
-        //        ));
-
         /** @var User $user */
         $user = AuthHelper::frontLoginedUser();
 
         $cart = $this->getMyCart();
-
-        // Stripe 料金の支払いを実行
-        //        Charge::create(array(
-        //            'customer' => $customer->id,
-        //            'amount' => $items['sum'],
-        //            'currency' => 'jpy',
-        //        ));
 
         $order = $this->orderRepository->create([
             'user_id'   => $user->id,

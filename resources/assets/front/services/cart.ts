@@ -7,7 +7,7 @@ export type PaymentForm = {
   stripe: stripeJs.Stripe;
   elements: stripeJs.StripeElements;
   amount: number;
-  username: string;
+  email: string;
 };
 
 export default class CartService {
@@ -88,10 +88,10 @@ export default class CartService {
     }
   }
 
-  async payment({ stripe, elements, amount, username }: PaymentForm): Promise<void> {
+  async payment({ stripe, elements, amount, email }: PaymentForm): Promise<void> {
     this.main.showLoading();
     try {
-      //paymentIntentの作成を（ローカルサーバ経由で）リクエスト
+      // PaymentIntentの作成
       const response = await fetch(Api.MYCART_PAYMENT, {
         method: 'POST',
         headers: {
@@ -99,34 +99,40 @@ export default class CartService {
         },
         body: JSON.stringify({
           amount,
-          username,
+          email,
         }),
       });
       const { client_secret } = await response.json();
 
-      //client_secretを利用して（確認情報をStripeに投げて）決済を完了させる
+      // Stripe側で決済処理を行う
       const confirmRes = await stripe.confirmCardPayment(client_secret, {
         payment_method: {
           // @ts-ignore
           card: elements.getElement('cardNumber'),
           billing_details: {
-            name: username,
+            name: email,
           },
         },
       });
 
       if (!confirmRes.paymentIntent || confirmRes.paymentIntent.status !== 'succeeded') {
-        throw new Error();
+        throw new Error('決済処理に失敗しました');
       }
-      // 決算処理が完了したら、注文履歴に追加してマイカートから商品を削除する。
-      await fetch(Api.MYCART_CHECKOUT, {
+
+      // Stripe側で決済処理が完了したら、注文履歴に追加してマイカートから商品を削除する。
+      const checkoutRes = await fetch(Api.MYCART_CHECKOUT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
       });
+      if (!checkoutRes.ok) {
+        console.error(
+          'Stripe側の決済処理は成功したが、注文履歴への追加やマイカートからの削除に失敗しました',
+        );
+      }
     } catch (e) {
-      this.main.showToastMessage('決算処理に失敗しました');
+      this.main.showToastMessage('決済処理に失敗しました');
       throw e;
     } finally {
       this.main.hideLoading();

@@ -10,7 +10,6 @@ use App\Services\Api\Cart\MyCartService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use InvalidArgumentException;
 use Throwable;
 
 class CartController extends BaseApiController
@@ -100,20 +99,14 @@ class CartController extends BaseApiController
      */
     public function checkout(Request $request): JsonResponse
     {
-        $stripeEmail = is_string($request->stripeEmail) ? $request->stripeEmail : null;
-        $stripeToken = is_string($request->stripeToken) ? $request->stripeToken : null;
-
-        //        if (is_null($stripeEmail) || is_null($stripeToken)) {
-        //            throw new InvalidArgumentException('stripeEmail is null.');
-        //        }
-
         /** @var CheckoutService $service */
         $service = app(CheckoutService::class);
+
         DB::beginTransaction();
 
         try {
-            // 支払い処理の実行
-            $service->checkout($stripeEmail, $stripeToken);
+            // 決済後の後処理
+            $service->checkout();
 
             // 削除後の情報を取得
             $result = $service->getMyCart();
