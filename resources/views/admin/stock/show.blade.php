@@ -9,41 +9,41 @@
 @section('content')
     <div class="text-start mb-3">
         <a class="btn btn-secondary"
-           href="{{ route('admin.stock') }}">{{ __('common.Back') }}</a>
+           href="{{ route('admin.stock') }}">前に戻る</a>
     </div>
 
     <div class="card card-purple">
         <div class="card-body">
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted small">{{ __('stock.Name') }}</label>
+                <label class="col-sm-2 col-form-label text-muted small">商品名</label>
                 <div class="col-sm-10 d-flex align-items-center">
                     {{ $stock->name }}
                 </div>
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted small">{{ __('stock.Detail') }}</label>
+                <label class="col-sm-2 col-form-label text-muted small">商品説明</label>
                 <div class="col-sm-10 d-flex align-items-center">
                     {!! nl2br(e($stock->detail)) !!}
                 </div>
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted small">{{ __('stock.Price') }}</label>
+                <label class="col-sm-2 col-form-label text-muted small">価格</label>
                 <div class="col-sm-10 d-flex align-items-center">
                     {{ number_format($stock->price) }} 円
                 </div>
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted small">{{ __('stock.Quantity') }}</label>
+                <label class="col-sm-2 col-form-label text-muted small">在庫数</label>
                 <div class="col-sm-10 d-flex align-items-center">
                     {{ number_format($stock->quantity) }} 個
                 </div>
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted small">{{ __('stock.Image') }}</label>
+                <label class="col-sm-2 col-form-label text-muted small">商品画像</label>
                 <div class="col-sm-10">
                     <div id="result">
                         @if ($stock->image)
@@ -65,7 +65,7 @@
                     <a class="btn btn-primary"
                        href="{{ route('admin.stock.edit', ['stock' => $stock]) }}"
                        @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>
-                        {{ __('common.Change') }}
+                        変更する
                     </a>
                 </div>
             </div>
@@ -79,7 +79,7 @@
                     <button class="btn btn-danger js-deleteBtn"
                             data-id="{{ $stock->id }}"
                             @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>
-                        {{ __('common.Delete') }}
+                        削除する
                     </button>
                 </form>
             </div>

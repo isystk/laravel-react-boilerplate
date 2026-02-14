@@ -1,5 +1,5 @@
 @extends('layouts.pdf')
-<p>{{ __('stock.Stock List') }}</p>
+<p>商品一覧</p>
 <table>
     <thead>
         <tr>

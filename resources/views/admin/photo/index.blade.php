@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', __('photo.Photo List'))
+@section('title', '画像一覧')
 @section('mainMenu', 'system')
 @section('subMenu', 'photo')
 @section('breadcrumbs')
@@ -9,7 +9,7 @@
 @section('content')
     <div class="card card-purple">
         <div class="card-header">
-            <h3 class="card-title">{{ __('common.Search Condition') }}</h3>
+            <h3 class="card-title">検索条件</h3>
         </div>
         <form action="{{ route('admin.photo') }}"
               method="GET">
@@ -22,7 +22,7 @@
                 @endif
                 <div class="mb-3 row">
                     <label for="fileName"
-                           class="col-sm-2 col-form-label">{{ __('photo.File Name') }}</label>
+                           class="col-sm-2 col-form-label">ファイル名</label>
                     <div class="col-sm-4">
                         <input type="text"
                                name="fileName"
@@ -35,12 +35,12 @@
 
                 <div class="mb-3 row">
                     <label for="fileType"
-                           class="col-sm-2 col-form-label">{{ __('photo.Type') }}</label>
+                           class="col-sm-2 col-form-label">種別</label>
                     <div class="col-sm-4">
                         <select name="fileType"
                                 id="fileType"
                                 class="form-select">
-                            <option value="">{{ __('common.Unselected') ?? '未選択' }}</option>
+                            <option value="">未選択</option>
                             @foreach (App\Enums\PhotoType::cases() as $item)
                                 <option value="{{ $item->value }}"
                                         {{ $item->value === (int) request()->fileType ? 'selected' : '' }}>
@@ -53,7 +53,7 @@
 
                 <div class="mb-3 row">
                     <label for="unusedOnly"
-                           class="col-sm-2 col-form-label">{{ __('photo.Unused Only') ?? '未参照のみ' }}</label>
+                           class="col-sm-2 col-form-label">未参照のみ</label>
                     <div class="col-sm-4">
                         <div class="form-check mt-2">
                             <input type="checkbox"
@@ -68,7 +68,7 @@
             </div>
             <div class="card-footer text-center">
                 <button type="submit"
-                        class="btn btn-secondary">{{ __('common.Search') }}</button>
+                        class="btn btn-secondary">検索</button>
             </div>
         </form>
     </div>
@@ -89,21 +89,21 @@
         <div class="col-12">
             <div class="card card-purple">
                 <div class="card-header">
-                    <h3 class="card-title">{{ __('common.Search Result') }}</h3>
+                    <h3 class="card-title">検索結果</h3>
                 </div>
                 <div class="card-body p-0">
                     <table class="table table-hover table-responsive">
                         <thead>
                             <tr>
                                 @include('admin.parts.sortablelink_th', [
-                                    'params' => ['type', __('photo.Type')],
+                                    'params' => ['type', '種別'],
                                 ])
                                 @include('admin.parts.sortablelink_th', [
-                                    'params' => ['file_name', __('photo.File Name')],
+                                    'params' => ['file_name', 'ファイル名'],
                                 ])
-                                <th>{{ __('photo.Image') }}</th>
+                                <th>画像</th>
                                 @include('admin.parts.sortablelink_th', [
-                                    'params' => ['created_at', __('common.Registration Date')],
+                                    'params' => ['created_at', '登録日時'],
                                 ])
                                 <th></th>
                             </tr>

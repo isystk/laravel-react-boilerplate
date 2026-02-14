@@ -9,7 +9,7 @@
 @section('content')
     <div class="text-start mb-3">
         <a class="btn btn-secondary"
-           href="{{ route('admin.staff') }}">{{ __('common.Back') }}</a>
+           href="{{ route('admin.staff') }}">前に戻る</a>
     </div>
 
     @if ($errors->any())
@@ -25,21 +25,21 @@
     <div class="card card-purple">
         <div class="card-body">
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted small">{{ __('staff.Name') }}</label>
+                <label class="col-sm-2 col-form-label text-muted small">氏名</label>
                 <div class="col-sm-10 d-flex align-items-center">
                     {{ $staff->name }}
                 </div>
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted small">{{ __('staff.EMail') }}</label>
+                <label class="col-sm-2 col-form-label text-muted small">メールアドレス</label>
                 <div class="col-sm-10 d-flex align-items-center">
                     {{ $staff->email }}
                 </div>
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted small">{{ __('staff.Role') }}</label>
+                <label class="col-sm-2 col-form-label text-muted small">権限</label>
                 <div class="col-sm-10 d-flex align-items-center">
                     {{ $staff->role->label() }}
                 </div>
@@ -51,7 +51,7 @@
                     <a class="btn btn-primary"
                        href="{{ route('admin.staff.edit', ['staff' => $staff]) }}"
                        @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>
-                        {{ __('common.Change') }}
+                        変更する
                     </a>
                 </div>
             </div>
@@ -64,7 +64,7 @@
                     @csrf
                     <button class="btn btn-danger js-deleteBtn"
                             data-id="{{ $staff->id }}"
-                            @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>{{ __('common.Delete') }}</button>
+                            @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>削除する</button>
                 </form>
             </div>
         </div>

@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', $user->name . __('common.Of Change'))
+@section('title', $user->name . 'の変更')
 @section('mainMenu', 'user')
 @section('subMenu', 'user')
 @section('breadcrumbs')
@@ -9,7 +9,7 @@
 @section('content')
     <div class="text-start mb-3">
         <a class="btn btn-secondary"
-           href="{{ route('admin.user.show', ['user' => $user]) }}">{{ __('common.Back') }}</a>
+           href="{{ route('admin.user.show', ['user' => $user]) }}">前に戻る</a>
     </div>
 
     @if (session('status'))
@@ -37,7 +37,7 @@
                 @csrf
                 <div class="mb-3">
                     <label for="name"
-                           class="form-label">{{ __('user.Name') }}</label>
+                           class="form-label">氏名</label>
                     <input type="text"
                            name="name"
                            id="name"
@@ -48,7 +48,7 @@
 
                 <div class="mb-3">
                     <label for="email"
-                           class="form-label">{{ __('user.EMail') }}</label>
+                           class="form-label">メールアドレス</label>
                     <input type="email"
                            name="email"
                            id="email"
@@ -59,7 +59,7 @@
                 <div class="card-footer text-center  ">
                     <input class="btn btn-primary"
                            type="submit"
-                           value="{{ __('common.Execute') }}" />
+                           value="登録する" />
                 </div>
             </form>
         </div>

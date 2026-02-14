@@ -1,6 +1,6 @@
 @php use Illuminate\Support\Carbon; @endphp
 @extends('layouts.admin')
-@section('title', __('common.HOME'))
+@section('title', 'ダッシュボード')
 
 @section('content')
     <div class="app-content">

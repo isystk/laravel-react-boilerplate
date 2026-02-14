@@ -1,5 +1,5 @@
 @extends('layouts.admin_simple')
-@section('title', __('common.SystemName'))
+@section('title', 'LaraEC')
 
 @section('content')
     <form method="POST"
@@ -10,7 +10,7 @@
 
         <div class="mb-3">
             <label for="email"
-                   class="form-label">{{ __('common.EMail') }}</label>
+                   class="form-label">メールアドレス</label>
             <input id="email"
                    type="email"
                    class="form-control @error('email') is-invalid @enderror"
@@ -29,7 +29,7 @@
 
         <div class="mb-3">
             <label for="password"
-                   class="form-label">{{ __('common.Password') }}</label>
+                   class="form-label">パスワード</label>
             <input id="password"
                    type="password"
                    class="form-control @error('password') is-invalid @enderror"
@@ -52,7 +52,7 @@
                    {{ old('remember') ? 'checked' : '' }} />
             <label class="form-check-label"
                    for="remember">
-                {{ __('Remember Me') }}
+                ログイン状態を保持する
             </label>
         </div>
 
@@ -66,7 +66,7 @@
             <button type="submit"
                     class="btn btn-primary btn-lg"
                     id="Login">
-                {{ __('common.Login') }}
+                ログイン
             </button>
         </div>
     </form>

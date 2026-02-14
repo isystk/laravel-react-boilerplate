@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', __('staff.Staff Regist'))
+@section('title', 'スタッフ登録')
 @section('mainMenu', 'system')
 @section('subMenu', 'staff')
 @section('breadcrumbs')
@@ -9,7 +9,7 @@
 @section('content')
     <div class="text-start mb-3">
         <a class="btn btn-secondary"
-           href="{{ route('admin.staff') }}">{{ __('common.Back') }}</a>
+           href="{{ route('admin.staff') }}">前に戻る</a>
     </div>
 
     @if (session('status'))
@@ -36,7 +36,7 @@
                 @csrf
                 <div class="form-group">
                     <label for="name"
-                           class="form-label">{{ __('staff.Name') }}</label>
+                           class="form-label">氏名</label>
                     <input type="text"
                            name="name"
                            id="name"
@@ -47,7 +47,7 @@
 
                 <div class="form-group">
                     <label for="email"
-                           class="form-label">{{ __('staff.EMail') }}</label>
+                           class="form-label">メールアドレス</label>
                     <input type="email"
                            name="email"
                            id="email"
@@ -58,7 +58,7 @@
 
                 <div class="form-group">
                     <label for="role"
-                           class="form-label">{{ __('staff.Role') }}</label>
+                           class="form-label">権限</label>
                     <select name="role"
                             id="role"
                             class="form-select">
@@ -74,7 +74,7 @@
 
                 <div class="form-group">
                     <label for="password"
-                           class="form-label">{{ __('staff.Password') }}</label>
+                           class="form-label">パスワード</label>
                     <input type="password"
                            name="password"
                            id="password"
@@ -84,7 +84,7 @@
 
                 <div class="form-group">
                     <label for="password_confirmation"
-                           class="form-label">{{ __('staff.PasswordConfirm') }}</label>
+                           class="form-label">パスワード確認</label>
                     <input type="password"
                            name="password_confirmation"
                            id="password_confirmation"
@@ -94,7 +94,7 @@
                 <div class="card-footer text-center  ">
                     <input class="btn btn-primary"
                            type="submit"
-                           value="{{ __('common.Execute') }}" />
+                           value="登録する" />
                 </div>
             </form>
         </div>

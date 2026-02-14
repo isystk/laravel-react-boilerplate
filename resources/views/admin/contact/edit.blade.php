@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', __('order.Order ID:') . $contactForm->id . __('common.Of Change'))
+@section('title', 'お問い合わせID:' . $contactForm->id . 'の変更')
 @section('mainMenu', 'user')
 @section('subMenu', 'contact')
 @section('breadcrumbs')
@@ -9,7 +9,7 @@
 @section('content')
     <div class="text-start mb-3">
         <a class="btn btn-secondary"
-           href="{{ route('admin.contact.show', ['contactForm' => $contactForm]) }}">{{ __('common.Back') }}</a>
+           href="{{ route('admin.contact.show', ['contactForm' => $contactForm]) }}">前に戻る</a>
     </div>
 
     <div class="card card-purple">
@@ -36,7 +36,7 @@
                 @csrf
                 <div class="form-group">
                     <label for="user_name"
-                           class="form-label">{{ __('contact.Name') }}</label>
+                           class="form-label">氏名</label>
                     <input type="text"
                            name="user_name"
                            id="user_name"
@@ -47,7 +47,7 @@
 
                 <div class="form-group">
                     <label for="email"
-                           class="form-label">{{ __('contact.EMail') }}</label>
+                           class="form-label">メールアドレス</label>
                     <input type="email"
                            name="email"
                            id="email"
@@ -56,7 +56,7 @@
                            maxlength="{{ config('const.maxlength.contact_forms.email') }}" />
                 </div>
                 <div class="form-group">
-                    <label class="form-label d-block">{{ __('contact.Gender') }}</label>
+                    <label class="form-label d-block">性別</label>
                     <div class="ps-2">
                         @foreach (App\Enums\Gender::cases() as $e)
                             <div class="form-check form-check-inline">
@@ -76,11 +76,11 @@
                 </div>
                 <div class="form-group">
                     <label for="age"
-                           class="form-label">{{ __('contact.Age') }}</label>
+                           class="form-label">年齢</label>
                     <select name="age"
                             id="age"
                             class="form-select">
-                        <option value="">{{ __('common.Please Select') }}</option>
+                        <option value="">選択してください</option>
                         @foreach (App\Enums\Age::cases() as $e)
                             <option value="{{ $e->value }}"
                                     {{ $e->value == old('age', $contactForm->age->value) ? 'selected' : '' }}>
@@ -92,7 +92,7 @@
 
                 <div class="form-group">
                     <label for="title"
-                           class="form-label">{{ __('contact.Title') }}</label>
+                           class="form-label">件名</label>
                     <input type="text"
                            name="title"
                            id="title"
@@ -103,7 +103,7 @@
 
                 <div class="form-group">
                     <label for="contact"
-                           class="form-label">{{ __('contact.Contact') }}</label>
+                           class="form-label">お問い合わせ内容</label>
                     <textarea name="contact"
                               id="contact"
                               rows="10"
@@ -112,7 +112,7 @@
 
                 <div class="form-group">
                     <label for="url"
-                           class="form-label">{{ __('contact.URL') }}</label>
+                           class="form-label">ホームページURL</label>
                     <input type="url"
                            name="url"
                            id="url"
@@ -121,7 +121,7 @@
                            maxlength="{{ config('const.maxlength.contact_forms.url') }}" />
                 </div>
 
-                <label class="col-sm-2 control-label">{{ __('contact.Image') }}</label>
+                <label class="col-sm-2 control-label">画像</label>
                 <div class="col-sm-10">
                     @include('admin.parts.image_upload', [
                         'id' => 'image',
@@ -133,7 +133,7 @@
                 <div class="card-footer text-center">
                     <input class="btn btn-primary"
                            type="submit"
-                           value="{{ __('common.Execute') }}">
+                           value="登録する">
                 </div>
             </form>
         </div>

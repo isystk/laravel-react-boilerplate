@@ -55,12 +55,12 @@ class StoreRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name'            => __('stock.Name'),
-            'price'           => __('stock.Price'),
-            'detail'          => __('stock.Detail'),
-            'quantity'        => __('stock.Quantity'),
-            'image_base_64'   => __('stock.Image'),
-            'image_file_name' => __('stock.Image'),
+            'name'            => '商品名',
+            'price'           => '価格',
+            'detail'          => '商品説明',
+            'quantity'        => '在庫数',
+            'image_base_64'   => '商品画像',
+            'image_file_name' => '商品画像',
         ];
     }
 }

@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', __('staff.Staff Import'))
+@section('title', 'スタッフ一括登録')
 @section('mainMenu', 'system')
 @section('subMenu', 'staff')
 @section('breadcrumbs')
@@ -9,7 +9,7 @@
 @section('content')
     <div class="text-start mb-3">
         <a class="btn btn-secondary"
-           href="{{ route('admin.staff') }}">{{ __('common.Back') }}</a>
+           href="{{ route('admin.staff') }}">前に戻る</a>
     </div>
 
     @if ($errors->any())
@@ -33,15 +33,15 @@
                                 data-bs-toggle="dropdown"
                                 aria-haspopup="true"
                                 aria-expanded="true">
-                            {{ __('common.Export') }}
+                            一括出力
                             <span class="caret"></span>
                         </button>
                         <div class="dropdown-menu dropdown-menu-end"
                              aria-labelledby="dropdownMenu1">
                             <a class="dropdown-item text-muted js-download"
-                               href="{{ route('admin.staff.import.export') . '?file_type=csv' }}">{{ __('common.CSV Download') }}</a>
+                               href="{{ route('admin.staff.import.export') . '?file_type=csv' }}">CSVダウンロード</a>
                             <a class="dropdown-item text-muted js-download"
-                               href="{{ route('admin.staff.import.export') . '?file_type=xlsx' }}">{{ __('common.Excel Download') }}</a>
+                               href="{{ route('admin.staff.import.export') . '?file_type=xlsx' }}">Excelダウンロード</a>
                         </div>
                     </div>
                     <div class="text-center">
@@ -55,7 +55,7 @@
                                        @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>
                             </div>
                             <button class="btn btn-primary"
-                                    @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>{{ __('common.Execute') }}</button>
+                                    @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>登録する</button>
                         </form>
                     </div>
                 </div>
