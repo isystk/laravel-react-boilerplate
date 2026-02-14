@@ -21,6 +21,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property string|null $password
  * @property string|null $google_id
  * @property string|null $avatar_url
+ * @property string|null $remember_token
  * @property Carbon      $created_at
  * @property Carbon      $updated_at
  */
@@ -49,6 +50,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         'password',
         'google_id',
         'avatar_url',
+        'remember_token',
     ];
 
     /**
@@ -58,6 +60,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
      */
     protected $hidden = [
         'password',
+        'remember_token',
     ];
 
     /**

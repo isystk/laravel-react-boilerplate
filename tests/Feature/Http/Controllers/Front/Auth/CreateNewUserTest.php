@@ -31,4 +31,52 @@ class CreateNewUserTest extends BaseTest
         $user = User::where(['email' => $items['email']])->first();
         $this->assertSame($items['name'], $user->name, 'ユーザーが新規登録できることをテスト');
     }
+
+    public function test_create_validation_error_name_required(): void
+    {
+        $items = [
+            'email'                 => 'user1@test.com',
+            'password'              => 'password',
+            'password_confirmation' => 'password',
+        ];
+        $this->post('/register', $items)
+            ->assertSessionHasErrors('name');
+    }
+
+    public function test_create_validation_error_email_required(): void
+    {
+        $items = [
+            'name'                  => 'user1',
+            'password'              => 'password',
+            'password_confirmation' => 'password',
+        ];
+        $this->post('/register', $items)
+            ->assertSessionHasErrors('email');
+    }
+
+    public function test_create_validation_error_email_duplicate(): void
+    {
+        $this->createDefaultUser(['email' => 'existing@test.com']);
+
+        $items = [
+            'name'                  => 'user2',
+            'email'                 => 'existing@test.com',
+            'password'              => 'password',
+            'password_confirmation' => 'password',
+        ];
+        $this->post('/register', $items)
+            ->assertSessionHasErrors('email');
+    }
+
+    public function test_create_validation_error_password_confirmation_mismatch(): void
+    {
+        $items = [
+            'name'                  => 'user1',
+            'email'                 => 'user1@test.com',
+            'password'              => 'password',
+            'password_confirmation' => 'different',
+        ];
+        $this->post('/register', $items)
+            ->assertSessionHasErrors('password');
+    }
 }
