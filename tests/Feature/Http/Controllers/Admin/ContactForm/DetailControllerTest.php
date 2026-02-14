@@ -29,14 +29,13 @@ class DetailControllerTest extends BaseTest
         $this->actingAs($admin, 'admin');
 
         $contactForm = $this->createDefaultContactForm([
-            'user_name'       => 'user1',
-            'title'           => 'title1',
-            'email'           => '111@test.com',
-            'url'             => 'https://test.com',
-            'gender'          => Gender::Female->value,
-            'age'             => Age::Over40->value,
-            'contact'         => 'お問い合わせ内容',
-            'image_file_name' => 'image1.jpg',
+            'user_name' => 'user1',
+            'title'     => 'title1',
+            'email'     => '111@test.com',
+            'url'       => 'https://test.com',
+            'gender'    => Gender::Female->value,
+            'age'       => Age::Over40->value,
+            'contact'   => 'お問い合わせ内容',
         ]);
 
         $response = $this->get(route('admin.contact.show', $contactForm));
@@ -48,7 +47,6 @@ class DetailControllerTest extends BaseTest
         $response->assertSee(Gender::Female->label());
         $response->assertSee(Age::Over40->label());
         $response->assertSee('お問い合わせ内容');
-        $response->assertSee('contact/image1.jpg');
     }
 
     public function test_show_管理者ロール別アクセス権限検証(): void

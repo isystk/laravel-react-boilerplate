@@ -2,9 +2,11 @@
 
 namespace Tests\Unit\Services\Admin\ContactForm;
 
+use App\Domain\Entities\Image;
 use App\Dto\Request\Admin\ContactForm\UpdateDto;
 use App\Enums\Age;
 use App\Enums\Gender;
+use App\Enums\PhotoType;
 use App\Http\Requests\Admin\ContactForm\UpdateRequest;
 use App\Services\Admin\ContactForm\UpdateService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -29,16 +31,19 @@ class UpdateServiceTest extends BaseTest
         Storage::fake('s3');
 
         $contactForm = $this->createDefaultContactForm([
-            'user_name'       => 'aaa',
-            'title'           => 'タイトル1',
-            'email'           => 'aaa@test.com',
-            'url'             => 'https://aaa.test.com',
-            'gender'          => Gender::Male->value,
-            'age'             => Age::Over30->value,
-            'contact'         => 'お問い合わせ1',
-            'image_file_name' => 'file1.jpg',
+            'user_name' => 'aaa',
+            'title'     => 'タイトル1',
+            'email'     => 'aaa@test.com',
+            'url'       => 'https://aaa.test.com',
+            'gender'    => Gender::Male->value,
+            'age'       => Age::Over30->value,
+            'contact'   => 'お問い合わせ1',
         ]);
-        Storage::disk('s3')->put('contact/image1.jpg', 'dummy');
+        $image1 = $this->createDefaultImage([
+            'file_name' => 'image1.jpg',
+            'type'      => PhotoType::Contact,
+        ]);
+        Storage::disk('s3')->put($image1->getS3Path(), 'dummy');
 
         $request              = new UpdateRequest;
         $request['user_name'] = 'bbb';
@@ -62,13 +67,15 @@ class UpdateServiceTest extends BaseTest
         $this->assertDatabaseHas('contact_forms', ['id' => $contactForm->id, 'age' => Age::Over40->value]);
         $this->assertDatabaseHas('contact_forms', ['id' => $contactForm->id, 'contact' => 'お問い合わせ2']);
 
-        // 元の画像が削除されたことをテスト
-        $this->assertDatabaseMissing('contact_forms', ['id' => $contactForm->id, 'image_file_name' => 'image1.jpg']);
-        // お問い合わせから画像ファイルを削除しても、S3上にファイルが残っていることを確認
-        Storage::disk('s3')->assertExists('contact/image1.jpg');
+        // 新しい画像レコードが作成されたことをテスト
+        $updatedContactForm = $contactForm->fresh();
+        $image2             = Image::find($updatedContactForm->image_id);
+        $this->assertEquals('image2.jpg', $image2->file_name);
 
-        // 新しい画像が登録されたことをテスト
-        $this->assertDatabaseHas('contact_forms', ['id' => $contactForm->id, 'image_file_name' => 'image2.jpg']);
-        Storage::disk('s3')->assertExists('contact/image2.jpg');
+        // お問い合わせから画像ファイルを削除しても、S3上にファイルが残っていることを確認
+        Storage::disk('s3')->assertExists($image1->getS3Path());
+
+        // 新しい画像がS3に登録されたことをテスト
+        Storage::disk('s3')->assertExists($image2->getS3Path());
     }
 }

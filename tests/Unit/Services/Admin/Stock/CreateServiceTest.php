@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Services\Admin\Stock;
 
+use App\Domain\Entities\Image;
 use App\Domain\Entities\Stock;
 use App\Dto\Request\Admin\Stock\CreateDto;
 use App\Http\Requests\Admin\Stock\StoreRequest;
@@ -42,9 +43,13 @@ class CreateServiceTest extends BaseTest
         $this->assertEquals('aaaの説明', $updatedStock->detail);
         $this->assertEquals(111, $updatedStock->price);
         $this->assertEquals(1, $updatedStock->quantity);
-        $this->assertEquals('stock1.jpg', $updatedStock->image_file_name);
+
+        // 画像レコードが作成されたことをテスト
+        $this->assertNotNull($updatedStock->image_id);
+        $image = Image::find($updatedStock->image_id);
+        $this->assertEquals('stock1.jpg', $image->file_name);
 
         // ファイルが存在することをテスト
-        Storage::disk('s3')->assertExists('stock/stock1.jpg');
+        Storage::disk('s3')->assertExists($image->getS3Path());
     }
 }

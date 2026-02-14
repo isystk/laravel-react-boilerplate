@@ -7,10 +7,12 @@ use App\Enums\Gender;
 use Database\Factories\Domain\Entities\ContactFormFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
  * @property int         $id
+ * @property int|null    $image_id
  * @property string|null $user_name
  * @property string|null $title
  * @property string|null $email
@@ -18,9 +20,9 @@ use Illuminate\Support\Carbon;
  * @property Gender      $gender
  * @property Age         $age
  * @property string|null $contact
- * @property string|null $image_file_name
  * @property Carbon      $created_at
  * @property Carbon      $updated_at
+ * @property-read Image|null $image
  */
 class ContactForm extends Model
 {
@@ -42,8 +44,16 @@ class ContactForm extends Model
         'gender',
         'age',
         'contact',
-        'image_file_name',
+        'image_id',
     ];
+
+    /**
+     * @return BelongsTo<Image, $this>
+     */
+    public function image(): BelongsTo
+    {
+        return $this->belongsTo(Image::class);
+    }
 
     /**
      * The attributes that should be cast.

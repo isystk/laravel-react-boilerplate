@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Photo;
 
+use App\Dto\Request\Admin\Photo\SearchConditionDto;
 use App\Http\Controllers\BaseController;
 use App\Services\Admin\Photo\DestroyService;
 use App\Services\Admin\Photo\IndexService;
@@ -19,11 +20,11 @@ class ListController extends BaseController
         /** @var IndexService $service */
         $service = app(IndexService::class);
 
-        $conditions = $service->convertConditionsFromRequest($request);
-        $photos     = $service->searchPhotoList($conditions);
+        $conditions = new SearchConditionDto($request);
+        $images     = $service->searchPhotoList($conditions);
 
         return view('admin.photo.index', compact([
-            'photos',
+            'images',
         ]));
     }
 
@@ -32,11 +33,11 @@ class ListController extends BaseController
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $fileName = (string) $request->fileName;
+        $imageId = (int) $request->imageId;
 
         /** @var DestroyService $service */
         $service = app(DestroyService::class);
-        $service->delete($fileName);
+        $service->delete($imageId);
 
         return redirect(route('admin.photo'));
     }

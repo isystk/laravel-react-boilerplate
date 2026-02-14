@@ -7,7 +7,7 @@ $(function () {
     confirmClass: 'btn-danger',
     onConfirm: function (target) {
       const id = $(target).data('id');
-      $('#delete_' + id.replace(/[ !"#$%&'()*+,.\/:;<=>?@\[\\\]^`{|}~]/g, '\\$&')).submit();
+      $('#delete_' + id).submit();
     },
   });
 });

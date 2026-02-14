@@ -5,17 +5,19 @@ namespace App\Domain\Entities;
 use Database\Factories\Domain\Entities\StockFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
  * @property int    $id
+ * @property int    $image_id
  * @property string $name
  * @property string $detail
- * @property string $image_file_name
  * @property int    $price
  * @property int    $quantity
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * @property-read Image $image
  */
 class Stock extends Model
 {
@@ -33,9 +35,17 @@ class Stock extends Model
         'name',
         'detail',
         'price',
-        'image_file_name',
+        'image_id',
         'quantity',
     ];
+
+    /**
+     * @return BelongsTo<Image, $this>
+     */
+    public function image(): BelongsTo
+    {
+        return $this->belongsTo(Image::class);
+    }
 
     /**
      * 在庫がある場合にTrueを返却する
@@ -50,7 +60,7 @@ class Stock extends Model
      */
     public function getImageUrl(): string
     {
-        return config('app.url') . '/uploads/stock/' . $this->image_file_name;
+        return $this->image->getImageUrl();
     }
 
     /**

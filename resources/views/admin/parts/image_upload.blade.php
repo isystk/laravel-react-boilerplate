@@ -19,7 +19,7 @@
             {{ __('common.Delete') }}
         </button>
     @elseif ($fileName)
-        <img src="{{ asset('uploads/' . $photoType->type() . '/' . $fileName) }}"
+        <img src="{{ $imageUrl }}"
              width="200px"
              id="{{ $id }}-image">
         <button type="button"

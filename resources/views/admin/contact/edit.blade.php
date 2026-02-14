@@ -125,8 +125,8 @@
                 <div class="col-sm-10">
                     @include('admin.parts.image_upload', [
                         'id' => 'image',
-                        'fileName' => old('image_file_name', $contactForm->image_file_name),
-                        'photoType' => \App\Enums\PhotoType::Contact,
+                        'fileName' => old('image_file_name', $contactForm->image?->file_name),
+                        'imageUrl' => $contactForm->image?->getImageUrl(),
                     ])
                 </div>
 

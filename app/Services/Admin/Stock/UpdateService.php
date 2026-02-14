@@ -7,31 +7,45 @@ use App\Domain\Repositories\Stock\StockRepository;
 use App\Dto\Request\Admin\Stock\UpdateDto;
 use App\Enums\PhotoType;
 use App\Services\BaseService;
+use App\Services\Common\ImageService;
 
 class UpdateService extends BaseService
 {
-    public function __construct(private readonly StockRepository $stockRepository) {}
+    public function __construct(
+        private readonly StockRepository $stockRepository,
+        private readonly ImageService $imageService,
+    ) {}
 
     /**
      * 商品を更新します。
+     * * 画像の処理ルール:
+     * - 既存画像があり、新しいファイル名が空の場合: 画像を紐付け解除（null）
+     * - 既存画像があり、新しいファイルがある場合: ImageServiceで画像を更新
+     * - 既存画像がなく、新しいファイルがある場合: ImageServiceで新規保存し、IDを紐付け
      */
-    public function update(int $stockId, UpdateDto $dto): Stock
+    public function update(Stock $stock, UpdateDto $dto): Stock
     {
-        $imageFileName = $dto->imageFileName;
-
         $data = [
-            'name'            => $dto->name,
-            'detail'          => $dto->detail,
-            'price'           => $dto->price,
-            'quantity'        => $dto->quantity,
-            'image_file_name' => $dto->imageFileName,
+            'name'     => $dto->name,
+            'detail'   => $dto->detail,
+            'price'    => $dto->price,
+            'quantity' => $dto->quantity,
         ];
 
-        $stock = $this->stockRepository->update($data, $stockId);
+        if (!empty($stock->image_id) && !$dto->imageFileName) {
+            $data['image_id'] = null;
+        } elseif (!empty($dto->imageId) && $dto->imageFile) {
+            $oldImage = $stock->image;
+            $this->imageService->update($oldImage, $dto->imageFile, $dto->imageFileName);
+        } elseif ($dto->imageFile) {
+            $image = $this->imageService->store(
+                $dto->imageFile,
+                PhotoType::Stock,
+                $dto->imageFileName
+            );
+            $data['image_id'] = $image->id;
+        }
 
-        // 画像ファイルがある場合はs3にアップロード
-        $dto->imageFile?->storeAs(PhotoType::Stock->type(), $dto->imageFileName, 's3');
-
-        return $stock;
+        return $this->stockRepository->update($data, $stock->id);
     }
 }

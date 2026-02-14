@@ -162,6 +162,5 @@ batch: ## バッチを選択して実行します。
 # バッチコマンド定義
 define BATCH_COMMANDS
 export_monthly_sales ./export_monthly_sales.sh --run	月別売上金額出力バッチ
-photo_upload  --run	S3アップロードバッチ
 endef
 export BATCH_COMMANDS

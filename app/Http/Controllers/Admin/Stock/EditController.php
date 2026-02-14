@@ -39,7 +39,7 @@ class EditController extends BaseController
         $dto = new UpdateDto($request);
 
         try {
-            $service->update($stock->id, $dto);
+            $service->update($stock, $dto);
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();

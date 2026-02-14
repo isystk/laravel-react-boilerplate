@@ -5,6 +5,7 @@ namespace Tests;
 use App\Domain\Entities\Admin;
 use App\Domain\Entities\Cart;
 use App\Domain\Entities\ContactForm;
+use App\Domain\Entities\Image;
 use App\Domain\Entities\ImportHistory;
 use App\Domain\Entities\MonthlySale;
 use App\Domain\Entities\Order;
@@ -74,6 +75,22 @@ abstract class BaseTest extends TestCase
         fclose($csvFile);
 
         return $rows;
+    }
+
+    /**
+     * Imageを作成する
+     *
+     * @param array<string, mixed> $params
+     */
+    public function createDefaultImage(array $params = []): Image
+    {
+        $items = [];
+        if (count($params) > 0) {
+            $items = array_merge($items, $params);
+        }
+
+        /** @var Image */
+        return Image::factory($items)->create();
     }
 
     /**

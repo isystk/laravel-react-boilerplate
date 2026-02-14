@@ -3,6 +3,7 @@
 namespace Tests\Unit\Services\Api\ContactForm;
 
 use App\Domain\Entities\ContactForm;
+use App\Domain\Entities\Image;
 use App\Dto\Request\Api\ContactForm\CreateDto;
 use App\Enums\Age;
 use App\Enums\Gender;
@@ -50,9 +51,13 @@ class StoreServiceTest extends BaseTest
         $this->assertEquals(Gender::Male, $updatedContactForm->gender);
         $this->assertEquals(Age::Over30, $updatedContactForm->age);
         $this->assertEquals('お問い合わせ1', $updatedContactForm->contact);
-        $this->assertEquals('file1.jpg', $updatedContactForm->image_file_name);
+
+        // 画像レコードが作成されたことをテスト
+        $this->assertNotNull($updatedContactForm->image_id);
+        $image = Image::find($updatedContactForm->image_id);
+        $this->assertEquals('file1.jpg', $image->file_name);
 
         // 新しい画像が登録されたこと
-        Storage::disk('s3')->assertExists('contact/file1.jpg');
+        Storage::disk('s3')->assertExists($image->getS3Path());
     }
 }

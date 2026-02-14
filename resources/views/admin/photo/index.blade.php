@@ -50,6 +50,21 @@
                         </select>
                     </div>
                 </div>
+
+                <div class="mb-3 row">
+                    <label for="unusedOnly"
+                           class="col-sm-2 col-form-label">{{ __('photo.Unused Only') ?? '未参照のみ' }}</label>
+                    <div class="col-sm-4">
+                        <div class="form-check mt-2">
+                            <input type="checkbox"
+                                   name="unusedOnly"
+                                   id="unusedOnly"
+                                   value="1"
+                                   class="form-check-input"
+                                   {{ request()->unusedOnly ? 'checked' : '' }} />
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="card-footer text-center">
                 <button type="submit"
@@ -66,6 +81,9 @@
         <input type="hidden"
                name="fileType"
                value="{{ request()->fileType }}">
+        <input type="hidden"
+               name="unusedOnly"
+               value="{{ request()->unusedOnly }}">
     </form>
     <div class="row">
         <div class="col-12">
@@ -77,35 +95,70 @@
                     <table class="table table-hover table-responsive">
                         <thead>
                             <tr>
-                                <th>{{ __('photo.Type') }}</th>
-                                <th>{{ __('photo.File Name') }}</th>
+                                @include('admin.parts.sortablelink_th', [
+                                    'params' => ['type', __('photo.Type')],
+                                ])
+                                @include('admin.parts.sortablelink_th', [
+                                    'params' => ['file_name', __('photo.File Name')],
+                                ])
                                 <th>{{ __('photo.Image') }}</th>
+                                @include('admin.parts.sortablelink_th', [
+                                    'params' => ['created_at', __('common.Registration Date')],
+                                ])
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($photos as $photo)
+                            @foreach ($images as $image)
+                                @php
+                                    $usedByUrl = null;
+                                    if ($image->used_by_stock_id) {
+                                        $usedByUrl = route('admin.stock.show', ['stock' => $image->used_by_stock_id]);
+                                    } elseif ($image->used_by_contact_id) {
+                                        $usedByUrl = route('admin.contact.show', [
+                                            'contactForm' => $image->used_by_contact_id,
+                                        ]);
+                                    }
+                                @endphp
                                 <tr>
-                                    <td>{{ $photo['type']?->label() ?? '' }}</td>
-                                    <td>{{ $photo['fileName'] }}</td>
+                                    <td>{{ $image->type?->label() ?? '' }}</td>
                                     <td>
-                                        <img src="{{ asset('/uploads/' . $photo['fileName']) }}"
-                                             alt=""
-                                             width="100px" />
+                                        @if ($usedByUrl)
+                                            <a href="{{ $usedByUrl }}">
+                                                {{ $image->file_name }}
+                                            </a>
+                                        @else
+                                            {{ $image->file_name }}
+                                        @endif
                                     </td>
                                     <td>
+                                        @if ($usedByUrl)
+                                            <a href="{{ $usedByUrl }}">
+                                                <img src="{{ $image->getImageUrl() }}"
+                                                     alt="{{ $image->file_name }}"
+                                                     width="100px" />
+                                            </a>
+                                        @else
+                                            <img src="{{ $image->getImageUrl() }}"
+                                                 alt="{{ $image->file_name }}"
+                                                 width="100px" />
+                                        @endif
+                                    </td>
+                                    <td>{{ $image->created_at }}</td>
+                                    <td>
                                         <button class="btn btn-danger btn-sm js-deleteBtn"
-                                                data-id="{{ $photo['fileName'] }}"
-                                                @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>削除する
+                                                data-id="{{ $image->id }}"
+                                                @if (!Auth::user()->role->isHighManager() || $image->used_by_stock_id || $image->used_by_contact_id) disabled="disabled" @endif>削除する
                                         </button>
-                                        <form id="delete_{{ $photo['fileName'] }}"
+                                        <form id="delete_{{ $image->id }}"
                                               action="{{ route('admin.photo.destroy') }}"
                                               method="POST"
                                               style="display: none;">
                                             @method('DELETE')
                                             @csrf
                                             <input type="hidden"
-                                                   name="fileName"
-                                                   value="{{ $photo['fileName'] }}" />
+                                                   name="imageId"
+                                                   value="{{ $image->id }}" />
                                         </form>
                                     </td>
                                 </tr>
@@ -114,6 +167,7 @@
                     </table>
                 </div>
                 <div class="card-footer  ">
+                    {!! $images->links('admin.parts.pagination') !!}
                 </div>
             </div>
         </div>

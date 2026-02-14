@@ -95,8 +95,8 @@
                     <div class="col-sm-10">
                         @include('admin.parts.image_upload', [
                             'id' => 'image',
-                            'fileName' => old('image_file_name', $stock->image_file_name),
-                            'photoType' => \App\Enums\PhotoType::Stock,
+                            'fileName' => old('image_file_name', $stock->image?->file_name),
+                            'imageUrl' => $stock->image?->getImageUrl(),
                         ])
                     </div>
                 </div>

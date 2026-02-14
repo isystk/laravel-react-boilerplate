@@ -16,8 +16,9 @@ return new class extends Migration {
             $table->string('name', '50')->comment('商品名');
             $table->string('detail', '500')->comment('説明文');
             $table->integer('price')->default(0)->comment('価格');
-            $table->string('image_file_name', '200')->comment('画像ファイル名');
+            $table->unsignedBigInteger('image_id')->comment('画像ID');
             $table->integer('quantity')->default(0)->comment('在庫数');
+            $table->foreign('image_id')->references('id')->on('images');
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
         });
