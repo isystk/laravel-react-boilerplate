@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Services\Admin\Photo;
 
+use App\Enums\PhotoType;
 use App\Services\Admin\Photo\DestroyService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
@@ -24,13 +25,19 @@ class DestroyServiceTest extends BaseTest
         Storage::fake('s3');
         $storage = Storage::disk('s3');
 
-        // テスト用のファイルを作成
-        $filePath = 'stock\test.jpg';
-        $storage->put($filePath, 'dummy');
+        // テスト用のImageレコードを作成
+        $image = $this->createDefaultImage(['file_name' => 'test.jpg', 'type' => PhotoType::Stock->value]);
 
-        $this->service->delete($filePath);
+        // S3にファイルを配置
+        $s3Path = $image->getS3Path();
+        $storage->put($s3Path, 'dummy');
 
-        // ファイルが削除されたかを確認
-        $this->assertFalse($storage->exists($filePath));
+        $this->service->delete($image->id);
+
+        // S3ファイルが削除されたことを確認
+        $this->assertFalse($storage->exists($s3Path));
+
+        // DBレコードが削除されたことを確認
+        $this->assertDatabaseMissing('images', ['id' => $image->id]);
     }
 }

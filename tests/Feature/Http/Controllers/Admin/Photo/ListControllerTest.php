@@ -3,6 +3,7 @@
 namespace Tests\Feature\Http\Controllers\Admin\Photo;
 
 use App\Enums\AdminRole;
+use App\Enums\PhotoType;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
@@ -20,33 +21,28 @@ class ListControllerTest extends BaseTest
 
     public function test_index(): void
     {
-        Storage::fake('s3');
-        $storage = Storage::disk('s3');
-
         $admin = $this->createDefaultAdmin([
             'name' => '管理者A',
             'role' => AdminRole::Manager,
         ]);
         $this->actingAs($admin, 'admin');
 
-        // テスト用のファイルを作成
-        $storage->put('contact\contact1.jpg', 'dummy');
-        $storage->put('stock\stock1.jpg', 'dummy');
-        $storage->put('stock\stock2.jpg', 'dummy');
+        // テスト用のImageレコードを作成
+        $this->createDefaultImage(['file_name' => 'stock1.jpg', 'type' => PhotoType::Stock->value]);
+        $this->createDefaultImage(['file_name' => 'stock2.jpg', 'type' => PhotoType::Stock->value]);
+        $this->createDefaultImage(['file_name' => 'contact1.jpg', 'type' => PhotoType::Contact->value]);
 
         $response = $this->get(route('admin.photo'));
         $response->assertSuccessful();
         $response->assertSeeInOrder([
-            'stock/stock1.jpg',
-            'stock/stock2.jpg',
-            'contact/contact1.jpg',
+            'contact1.jpg',
+            'stock2.jpg',
+            'stock1.jpg',
         ]);
     }
 
     public function test_index_管理者ロール別アクセス権限検証(): void
     {
-        Storage::fake('s3');
-
         $cases = [
             ['role' => AdminRole::HighManager, 'status' => 200],
             ['role' => AdminRole::Manager,     'status' => 200],
@@ -74,9 +70,13 @@ class ListControllerTest extends BaseTest
         ]);
         $this->actingAs($admin, 'admin');
 
-        // テスト用のファイルを作成
-        $storage->put('contact\contact1.jpg', 'dummy');
-        $storage->put('stock\stock1.jpg', 'dummy');
+        // テスト用のImageレコードを作成
+        $image1 = $this->createDefaultImage(['file_name' => 'contact1.jpg', 'type' => PhotoType::Contact->value]);
+        $image2 = $this->createDefaultImage(['file_name' => 'stock1.jpg', 'type' => PhotoType::Stock->value]);
+
+        // S3にファイルを配置
+        $storage->put($image1->getS3Path(), 'dummy');
+        $storage->put($image2->getS3Path(), 'dummy');
 
         // manager権限ではアクセスできないことのテスト
         $response = $this->delete(route('admin.photo.destroy'), []);
@@ -89,19 +89,23 @@ class ListControllerTest extends BaseTest
         $this->actingAs($admin2, 'admin');
 
         $redirectResponse = $this->delete(route('admin.photo.destroy'), [
-            'fileName' => 'contact\contact1.jpg',
+            'imageId' => $image1->id,
         ]);
         $response = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();
-        // ファイルが削除されたことを確認
-        $this->assertFalse($storage->exists('contact\contact1.jpg'));
+        // S3ファイルが削除されたことを確認
+        $this->assertFalse($storage->exists($image1->getS3Path()));
+        // DBレコードが削除されたことを確認
+        $this->assertDatabaseMissing('images', ['id' => $image1->id]);
 
         $redirectResponse = $this->delete(route('admin.photo.destroy'), [
-            'fileName' => 'stock\stock1.jpg',
+            'imageId' => $image2->id,
         ]);
         $response = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();
-        // ファイルが削除されたことを確認
-        $this->assertFalse($storage->exists('stock\stock1.jpg'));
+        // S3ファイルが削除されたことを確認
+        $this->assertFalse($storage->exists($image2->getS3Path()));
+        // DBレコードが削除されたことを確認
+        $this->assertDatabaseMissing('images', ['id' => $image2->id]);
     }
 }

@@ -2,16 +2,23 @@
 
 namespace App\Services\Admin\Photo;
 
+use App\Domain\Repositories\Image\ImageRepository;
 use App\Services\BaseService;
-use Illuminate\Support\Facades\Storage;
+use App\Services\Common\ImageService;
 
 class DestroyService extends BaseService
 {
+    public function __construct(
+        private readonly ImageRepository $imageRepository,
+        private readonly ImageService $imageService,
+    ) {}
+
     /**
-     * 写真を削除します。
+     * 画像を削除します。
      */
-    public function delete(string $fileName): void
+    public function delete(int $imageId): void
     {
-        Storage::disk('s3')->delete($fileName);
+        $image = $this->imageRepository->findById($imageId);
+        $this->imageService->delete($image);
     }
 }

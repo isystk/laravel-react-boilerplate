@@ -2,74 +2,32 @@
 
 namespace App\Services\Admin\Photo;
 
-use App\Enums\PhotoType;
+use App\Domain\Entities\Image;
+use App\Domain\Repositories\Image\ImageRepository;
+use App\Dto\Request\Admin\Photo\SearchConditionDto;
 use App\Services\BaseService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class IndexService extends BaseService
 {
+    public function __construct(private readonly ImageRepository $imageRepository) {}
+
     /**
-     * リクエストパラメータから検索条件に変換します。
+     * 画像を検索します。
      *
-     * @return array{
-     *   file_name : ?string,
-     *   file_type : ?int,
-     * }
+     * @return LengthAwarePaginator<int, Image>
      */
-    public function convertConditionsFromRequest(Request $request): array
+    public function searchPhotoList(SearchConditionDto $searchConditionDto): LengthAwarePaginator
     {
-        $conditions = [
-            'file_name' => $request->fileName,
-            'file_type' => null,
+        $items = [
+            'file_name'      => $searchConditionDto->fileName,
+            'file_type'      => $searchConditionDto->fileType,
+            'unused_only'    => $searchConditionDto->unusedOnly,
+            'sort_name'      => $searchConditionDto->sortName,
+            'sort_direction' => $searchConditionDto->sortDirection,
+            'limit'          => $searchConditionDto->limit,
         ];
 
-        if (is_string($request->fileType)) {
-            $conditions['file_type'] = (int) $request->fileType;
-        }
-
-        return $conditions;
-    }
-
-    /**
-     * 写真を検索します。
-     *
-     * @param array{
-     *   file_name : ?string,
-     *   file_type : ?int,
-     * } $conditions
-     * @return array<array{
-     *     type: ?PhotoType,
-     *     fileName: string
-     * }>
-     */
-    public function searchPhotoList(array $conditions): array
-    {
-        $photos       = [];
-        $storage      = Storage::disk('s3');
-        $stockFiles   = $storage->allFiles('stock');
-        $contactFiles = $storage->allFiles('contact');
-        $files        = array_merge($stockFiles, $contactFiles);
-        foreach ($files as $file) {
-            if ($conditions['file_name'] !== null && !str_contains($file, $conditions['file_name'])) {
-                continue;
-            }
-            $type = substr($file, 0, strpos($file, '/'));
-            if (empty($type)) {
-                // ルート直下のファイルは何もしない
-                continue;
-            }
-            $photoType = PhotoType::getByType($type);
-            if ($conditions['file_type'] !== null && $conditions['file_type'] !== $photoType->value) {
-                continue;
-            }
-            $photo = [
-                'type'     => $photoType,
-                'fileName' => $file,
-            ];
-            $photos[] = $photo;
-        }
-
-        return $photos;
+        return $this->imageRepository->getByConditions($items);
     }
 }
