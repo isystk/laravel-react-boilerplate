@@ -30,7 +30,7 @@ class StockDtoTest extends BaseTest
 
         $this->assertSame($stock->id, $dto->id);
         $this->assertSame('テスト商品', $dto->name);
-        $this->assertSame('http://localhost/uploads/stock/test.jpg', $dto->imageUrl);
+        $this->assertSame($image->getImageUrl(), $dto->imageUrl);
         $this->assertSame(1500, $dto->price);
         $this->assertSame(10, $dto->quantity);
     }

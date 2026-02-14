@@ -28,15 +28,27 @@ class ImageTest extends BaseTest
         $this->assertInstanceOf(Carbon::class, $model->created_at);
         $this->assertInstanceOf(Carbon::class, $model->updated_at);
     }
+
     public function test_getS3Path_正しいパスを返却する事(): void
     {
         $model = $this->createDefaultImage([
             'file_name' => 'test.jpg',
-            'type' => PhotoType::Stock,
+            'type'      => PhotoType::Stock,
         ]);
 
-        $expected = PhotoType::Stock->type() . '/test.jpg';
+        $hash            = md5((string) $model->id);
+        $hashedDirectory = substr($hash, 0, 2) . '/' . substr($hash, 2, 2) . '/' . substr($hash, 4);
+        $expected        = PhotoType::Stock->type() . '/' . $hashedDirectory . '/test.jpg';
         $this->assertSame($expected, $model->getS3Path());
+    }
+
+    public function test_getHashedDirectory_正しいハッシュパスを返却する事(): void
+    {
+        $model = $this->createDefaultImage();
+
+        $hash     = md5((string) $model->id);
+        $expected = substr($hash, 0, 2) . '/' . substr($hash, 2, 2) . '/' . substr($hash, 4);
+        $this->assertSame($expected, $model->getHashedDirectory());
     }
 
     public function test_getImageUrl_正しいURLを返却する事(): void
@@ -45,10 +57,12 @@ class ImageTest extends BaseTest
 
         $model = $this->createDefaultImage([
             'file_name' => 'test.jpg',
-            'type' => PhotoType::Stock,
+            'type'      => PhotoType::Stock,
         ]);
 
-        $expected = $configAppUrl . '/uploads/' . PhotoType::Stock->type() . '/test.jpg';
+        $hash            = md5((string) $model->id);
+        $hashedDirectory = substr($hash, 0, 2) . '/' . substr($hash, 2, 2) . '/' . substr($hash, 4);
+        $expected        = $configAppUrl . '/uploads/' . PhotoType::Stock->type() . '/' . $hashedDirectory . '/test.jpg';
         $this->assertSame($expected, $model->getImageUrl());
     }
 

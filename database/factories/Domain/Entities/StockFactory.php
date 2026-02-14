@@ -24,11 +24,11 @@ class StockFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'            => fake()->text(50),
-            'detail'          => fake()->realText(500),
-            'price'           => fake()->numberBetween(1, 6),
-            'image_id'        => Image::factory(),
-            'quantity'        => fake()->numberBetween(0, 10),
+            'name'     => fake()->text(50),
+            'detail'   => fake()->realText(500),
+            'price'    => fake()->numberBetween(1, 6),
+            'image_id' => Image::factory(),
+            'quantity' => fake()->numberBetween(0, 10),
         ];
     }
 

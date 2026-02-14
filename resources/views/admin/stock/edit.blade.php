@@ -96,7 +96,7 @@
                         @include('admin.parts.image_upload', [
                             'id' => 'image',
                             'fileName' => old('image_file_name', $stock->image?->file_name),
-                            'photoType' => \App\Enums\PhotoType::Stock,
+                            'imageUrl' => $stock->image?->getImageUrl(),
                         ])
                     </div>
                 </div>

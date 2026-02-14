@@ -52,7 +52,9 @@ class ContactFormControllerTest extends BaseTest
 
         // ファイルが存在することをテスト
         $contactForm = ContactForm::where('email', $user1->email)->first();
-        $this->assertNotNull($contactForm->image_id);
-        Storage::disk('s3')->assertExists('contact/' . $contactForm->image->file_name);
+
+        $image = $contactForm->image;
+        $this->assertNotNull($image);
+        Storage::disk('s3')->assertExists($image->getS3Path());
     }
 }

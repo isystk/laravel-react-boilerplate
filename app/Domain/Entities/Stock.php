@@ -17,7 +17,6 @@ use Illuminate\Support\Carbon;
  * @property int    $quantity
  * @property Carbon $created_at
  * @property Carbon $updated_at
- *
  * @property-read Image $image
  */
 class Stock extends Model

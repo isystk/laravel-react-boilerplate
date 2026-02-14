@@ -42,7 +42,7 @@ class UpdateServiceTest extends BaseTest
         $request['image_file_name'] = 'stock2.jpg';
         $request['image_base_64']   = 'data:image/jpeg;base64,xxxx';
         $dto                        = new UpdateDto($request);
-        $this->service->update($stock->id, $dto);
+        $this->service->update($stock, $dto);
 
         // データが更新されたことをテスト
         $updatedStock = Stock::find($stock->id);
@@ -56,6 +56,6 @@ class UpdateServiceTest extends BaseTest
         $this->assertEquals('stock2.jpg', $image->file_name);
 
         // ファイルが存在することをテスト
-        Storage::disk('s3')->assertExists('stock/stock2.jpg');
+        Storage::disk('s3')->assertExists($image->getS3Path());
     }
 }

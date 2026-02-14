@@ -58,6 +58,6 @@ class StoreServiceTest extends BaseTest
         $this->assertEquals('file1.jpg', $image->file_name);
 
         // 新しい画像が登録されたこと
-        Storage::disk('s3')->assertExists('contact/file1.jpg');
+        Storage::disk('s3')->assertExists($image->getS3Path());
     }
 }

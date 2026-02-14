@@ -99,28 +99,27 @@ class EditControllerTest extends BaseTest
         $image2           = UploadedFile::fake()->image('image2.jpg');
         $base64String     = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($image2->path()));
         $redirectResponse = $this->put(route('admin.stock.update', $stock), [
-            'name'        => 'bbb',
-            'detail'      => 'bbbの説明',
-            'price'       => 222,
-            'quantity'    => 2,
-            'image_file_name'    => 'image2.jpg',
-            'image_base_64' => $base64String,
+            'name'            => 'bbb',
+            'detail'          => 'bbbの説明',
+            'price'           => 222,
+            'quantity'        => 2,
+            'image_file_name' => 'image2.jpg',
+            'image_base_64'   => $base64String,
         ]);
         $response = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();
 
         // データが更新されたことをテスト
-        $this->assertDatabaseHas('stocks', [
-            'name'     => 'bbb',
-            'detail'   => 'bbbの説明',
-            'price'    => 222,
-            'quantity' => 2,
-        ]);
-        $this->assertDatabaseHas('images', [
-            'file_name' => 'image2.jpg',
-        ]);
+        $stock = $stock->fresh();
+        $this->assertSame('bbb', $stock->name);
+        $this->assertSame('bbbの説明', $stock->detail);
+        $this->assertSame(222, $stock->price);
+        $this->assertSame(2, $stock->quantity);
+
+        $image = $stock->image;
+        $this->assertSame('image2.jpg', $image->file_name);
 
         // ファイルが存在することをテスト
-        Storage::disk('s3')->assertExists('stock/image2.jpg');
+        Storage::disk('s3')->assertExists($image->getS3Path());
     }
 }

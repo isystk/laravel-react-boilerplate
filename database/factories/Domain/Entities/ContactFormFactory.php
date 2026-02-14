@@ -27,14 +27,14 @@ class ContactFormFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_name'       => fake()->text(20),
-            'title'           => fake()->realText(50),
-            'email'           => fake()->unique()->email,
-            'url'             => fake()->url,
-            'gender'          => fake()->randomElement(Gender::cases()),
-            'age'             => fake()->randomElement(Age::cases()),
-            'contact'         => fake()->realText(200),
-            'image_id'        => Image::factory()->state(['type' => PhotoType::Contact->value]),
+            'user_name' => fake()->text(20),
+            'title'     => fake()->realText(50),
+            'email'     => fake()->unique()->email,
+            'url'       => fake()->url,
+            'gender'    => fake()->randomElement(Gender::cases()),
+            'age'       => fake()->randomElement(Age::cases()),
+            'contact'   => fake()->realText(200),
+            'image_id'  => Image::factory()->state(['type' => PhotoType::Contact->value]),
         ];
     }
 

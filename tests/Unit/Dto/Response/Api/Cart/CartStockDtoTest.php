@@ -32,7 +32,7 @@ class CartStockDtoTest extends BaseTest
         $this->assertSame($cart->id, $dto->id);
         $this->assertSame($stock->id, $dto->stockId);
         $this->assertSame('テスト商品', $dto->name);
-        $this->assertSame('http://localhost/uploads/stock/test.jpg', $dto->imageUrl);
+        $this->assertSame($image->getImageUrl(), $dto->imageUrl);
         $this->assertSame(2000, $dto->price);
     }
 }

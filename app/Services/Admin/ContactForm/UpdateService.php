@@ -31,7 +31,10 @@ class UpdateService extends BaseService
             'contact'   => $dto->contact,
         ];
 
-        if ($dto->imageFile) {
+        if (!empty($contactForm->image_id) && $dto->imageFile) {
+            $oldImage = $contactForm->image;
+            $this->imageService->update($oldImage, $dto->imageFile, $dto->imageFileName);
+        } elseif ($dto->imageFile) {
             $image = $this->imageService->store(
                 $dto->imageFile,
                 PhotoType::Contact,

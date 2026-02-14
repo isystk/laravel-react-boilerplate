@@ -105,31 +105,34 @@ class EditControllerTest extends BaseTest
         ]);
         $this->actingAs($admin2, 'admin');
 
+        $imageFile        = UploadedFile::fake()->image('image2.jpg');
         $redirectResponse = $this->put(route('admin.contact.update', $contactForm), [
-            'user_name'  => 'bbb',
-            'title'      => 'タイトル2',
-            'email'      => 'bbb@test.com',
-            'url'        => 'https://bbb.test.com',
-            'gender'     => Gender::Female->value,
-            'age'        => Age::Over40->value,
-            'contact'    => 'お問い合わせ2',
-            'image_file' => UploadedFile::fake()->image('image2.jpg'),
+            'user_name'       => 'bbb',
+            'title'           => 'タイトル2',
+            'email'           => 'bbb@test.com',
+            'url'             => 'https://bbb.test.com',
+            'gender'          => Gender::Female->value,
+            'age'             => Age::Over40->value,
+            'contact'         => 'お問い合わせ2',
+            'image_file_name' => 'image2.jpg',
+            'image_base_64'   => 'data:image/jpeg;base64,' . base64_encode(file_get_contents($imageFile->path())),
         ]);
         $response = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();
 
         // データが更新されたことをテスト
-        $this->assertDatabaseHas('contact_forms', ['id' => $contactForm->id, 'user_name' => 'bbb']);
-        $this->assertDatabaseHas('contact_forms', ['id' => $contactForm->id, 'title' => 'タイトル2']);
-        $this->assertDatabaseHas('contact_forms', ['id' => $contactForm->id, 'email' => 'bbb@test.com']);
-        $this->assertDatabaseHas('contact_forms', ['id' => $contactForm->id, 'url' => 'https://bbb.test.com']);
-        $this->assertDatabaseHas('contact_forms', ['id' => $contactForm->id, 'gender' => Gender::Female->value]);
-        $this->assertDatabaseHas('contact_forms', ['id' => $contactForm->id, 'age' => Age::Over40->value]);
-        $this->assertDatabaseHas('contact_forms', ['id' => $contactForm->id, 'contact' => 'お問い合わせ2']);
+        $contactForm->refresh();
+        $this->assertSame('bbb', $contactForm->user_name);
+        $this->assertSame('タイトル2', $contactForm->title);
+        $this->assertSame('https://bbb.test.com', $contactForm->url);
+        $this->assertSame(Gender::Female, $contactForm->gender);
+        $this->assertSame(Age::Over40, $contactForm->age);
+        $this->assertSame('お問い合わせ2', $contactForm->contact);
 
         // 画像が更新されたことをテスト
-        $updatedContactForm = $contactForm->fresh();
-        $this->assertNotNull($updatedContactForm->image_id);
+        $image = $contactForm->image;
+        $this->assertEquals('image2.jpg', $image->file_name);
+        Storage::disk('s3')->assertExists($image->getS3Path());
     }
 
     public function test_update_例外発生時にロールバックされ例外がスローされること(): void

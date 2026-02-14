@@ -82,7 +82,7 @@ abstract class BaseTest extends TestCase
      *
      * @param array<string, mixed> $params
      */
-    public function createDefaultImage(array $params = []):Image
+    public function createDefaultImage(array $params = []): Image
     {
         $items = [];
         if (count($params) > 0) {

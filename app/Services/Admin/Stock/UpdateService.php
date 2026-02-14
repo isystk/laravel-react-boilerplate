@@ -19,7 +19,7 @@ class UpdateService extends BaseService
     /**
      * 商品を更新します。
      */
-    public function update(int $stockId, UpdateDto $dto): Stock
+    public function update(Stock $stock, UpdateDto $dto): Stock
     {
         $data = [
             'name'     => $dto->name,
@@ -28,7 +28,10 @@ class UpdateService extends BaseService
             'quantity' => $dto->quantity,
         ];
 
-        if ($dto->imageFile) {
+        if (!empty($dto->imageId) && $dto->imageFile) {
+            $oldImage = $stock->image;
+            $this->imageService->update($oldImage, $dto->imageFile, $dto->imageFileName);
+        } elseif ($dto->imageFile) {
             $image = $this->imageService->store(
                 $dto->imageFile,
                 PhotoType::Stock,
@@ -37,6 +40,6 @@ class UpdateService extends BaseService
             $data['image_id'] = $image->id;
         }
 
-        return $this->stockRepository->update($data, $stockId);
+        return $this->stockRepository->update($data, $stock->id);
     }
 }

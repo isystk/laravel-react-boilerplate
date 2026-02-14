@@ -6,6 +6,7 @@ use App\Domain\Entities\Image;
 use App\Domain\Entities\Stock;
 use App\Enums\PhotoType;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class StockTableSeeder extends Seeder
 {
@@ -13,7 +14,7 @@ class StockTableSeeder extends Seeder
     {
         $stocks = [
             ['name' => 'マカロン',              'detail' => '厳選した素材で作ったマカロンです。',               'price' => 2000,   'image' => 'makaron.jpg',  'quantity' => 2],
-            ['name' => 'Bluetoothヘッドフォン',  'detail' => 'ノイズキャンセリング機能搭載です。',               'price' => 10000,  'image' => 'headphone.jpg','quantity' => 5],
+            ['name' => 'Bluetoothヘッドフォン',  'detail' => 'ノイズキャンセリング機能搭載です。',               'price' => 10000,  'image' => 'headphone.jpg', 'quantity' => 5],
             ['name' => '目覚まし時計',           'detail' => '電波時計、オートスヌーズ機能搭載です。',           'price' => 2000,   'image' => 'clock.jpg',    'quantity' => 1],
             ['name' => 'ドーナツ',               'detail' => 'カロリーオフの美味しいドーナツです。',             'price' => 120000, 'image' => 'donut.jpg',    'quantity' => 99],
             ['name' => '高級腕時計',             'detail' => 'メンズ用の高級腕時計です。',                       'price' => 198000, 'image' => 'watch.jpg',    'quantity' => 0],
@@ -35,6 +36,12 @@ class StockTableSeeder extends Seeder
                 'file_name' => $stockData['image'],
                 'type'      => PhotoType::Stock->value,
             ]);
+
+            Storage::disk('s3')->putFileAs(
+                $image->type->type() . '/' . $image->getHashedDirectory(),
+                Storage::path('stocks' . '/' . $stockData['image']),
+                $stockData['image']
+            );
 
             Stock::create([
                 'name'     => $stockData['name'],

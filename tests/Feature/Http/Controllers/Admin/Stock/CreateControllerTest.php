@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers\Admin\Stock;
 
+use App\Domain\Entities\Stock;
 use App\Enums\AdminRole;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -82,28 +83,27 @@ class CreateControllerTest extends BaseTest
         $image1           = UploadedFile::fake()->image('image1.jpg');
         $base64String     = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($image1->path()));
         $redirectResponse = $this->post(route('admin.stock.store'), [
-            'name'        => 'aaa',
-            'detail'      => 'aaaの説明',
-            'price'       => 111,
-            'quantity'    => 1,
-            'image_file_name'    => 'image1.jpg',
-            'image_base_64' => $base64String,
+            'name'            => 'aaa',
+            'detail'          => 'aaaの説明',
+            'price'           => 111,
+            'quantity'        => 1,
+            'image_file_name' => 'image1.jpg',
+            'image_base_64'   => $base64String,
         ]);
         $response = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();
 
         // データが登録されたことをテスト
-        $this->assertDatabaseHas('stocks', [
-            'name'     => 'aaa',
-            'detail'   => 'aaaの説明',
-            'price'    => 111,
-            'quantity' => 1,
-        ]);
-        $this->assertDatabaseHas('images', [
-            'file_name' => 'image1.jpg',
-        ]);
+        $stock = Stock::first();
+        $this->assertSame('aaa', $stock->name);
+        $this->assertSame('aaaの説明', $stock->detail);
+        $this->assertSame(111, $stock->price);
+        $this->assertSame(1, $stock->quantity);
+
+        $image = $stock->image;
+        $this->assertSame('image1.jpg', $image->file_name);
 
         // ファイルが存在することをテスト
-        Storage::disk('s3')->assertExists('stock/image1.jpg');
+        Storage::disk('s3')->assertExists($image->getS3Path());
     }
 }

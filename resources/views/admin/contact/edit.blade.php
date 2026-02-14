@@ -126,7 +126,7 @@
                     @include('admin.parts.image_upload', [
                         'id' => 'image',
                         'fileName' => old('image_file_name', $contactForm->image?->file_name),
-                        'photoType' => \App\Enums\PhotoType::Contact,
+                        'imageUrl' => $contactForm->image?->getImageUrl(),
                     ])
                 </div>
 

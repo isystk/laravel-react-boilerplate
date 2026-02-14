@@ -33,11 +33,21 @@ class Image extends Model
     ];
 
     /**
+     * IDからハッシュ化されたディレクトリパスを返却します。
+     */
+    public function getHashedDirectory(): string
+    {
+        $hash = md5((string) $this->id);
+
+        return substr($hash, 0, 2) . '/' . substr($hash, 2, 2) . '/' . substr($hash, 4);
+    }
+
+    /**
      * S3保存パスを返却します。
      */
     public function getS3Path(): string
     {
-        return $this->type->type() . '/' . $this->file_name;
+        return $this->type->type() . '/' . $this->getHashedDirectory() . '/' . $this->file_name;
     }
 
     /**

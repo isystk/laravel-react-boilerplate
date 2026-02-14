@@ -50,6 +50,6 @@ class CreateServiceTest extends BaseTest
         $this->assertEquals('stock1.jpg', $image->file_name);
 
         // ファイルが存在することをテスト
-        Storage::disk('s3')->assertExists('stock/stock1.jpg');
+        Storage::disk('s3')->assertExists($image->getS3Path());
     }
 }

@@ -5,7 +5,6 @@ namespace Database\Factories\Domain\Entities;
 use App\Domain\Entities\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Domain\Entities\User>
