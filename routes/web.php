@@ -11,18 +11,11 @@ require __DIR__ . '/admin.php';
 
 /*
 |--------------------------------------------------------------------------
-| ソーシャルログイン
+| Googleログイン
 |--------------------------------------------------------------------------
 */
-Route::prefix('auth')->middleware('guest')->group(function () {
-    Route::get('/{provider}', [\App\Http\Controllers\Front\Auth\OAuthController::class, 'socialOAuth'])
-        ->where('provider', 'google')
-        ->name('socialOAuth');
-
-    Route::get('/{provider}/callback', [\App\Http\Controllers\Front\Auth\OAuthController::class, 'handleProviderCallback'])
-        ->where('provider', 'google')
-        ->name('oauthCallback');
-});
+Route::get('auth/google', [App\Http\Controllers\Front\Auth\GoogleLoginController::class, 'redirectToGoogle'])->name('login.google');
+Route::get('auth/google/callback', [App\Http\Controllers\Front\Auth\GoogleLoginController::class, 'handleGoogleCallback']);
 
 /*
 |--------------------------------------------------------------------------
