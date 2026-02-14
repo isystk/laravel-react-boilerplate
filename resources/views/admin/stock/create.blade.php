@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', __('stock.Stock Regist'))
+@section('title', '商品登録')
 @section('mainMenu', 'master')
 @section('subMenu', 'stock')
 @section('breadcrumbs')
@@ -9,7 +9,7 @@
 @section('content')
     <div class="text-start mb-3">
         <a class="btn btn-secondary"
-           href="{{ route('admin.stock') }}">{{ __('common.Back') }}</a>
+           href="{{ route('admin.stock') }}">前に戻る</a>
     </div>
 
     @if (session('status'))
@@ -35,7 +35,7 @@
                 @csrf
                 <div class="form-group">
                     <label for="name"
-                           class="col-form-label">{{ __('stock.Name') }}</label>
+                           class="col-form-label">商品名</label>
                     <div class="col-sm-8">
                         <input type="text"
                                name="name"
@@ -48,7 +48,7 @@
 
                 <div class="form-group">
                     <label for="detail"
-                           class="col-form-label">{{ __('stock.Detail') }}</label>
+                           class="col-form-label">商品説明</label>
                     <div class="col-sm-8">
                         <textarea name="detail"
                                   id="detail"
@@ -59,7 +59,7 @@
 
                 <div class="form-group">
                     <label for="price"
-                           class="col-form-label">{{ __('stock.Price') }}</label>
+                           class="col-form-label">価格</label>
                     <div class="col-sm-4">
                         <div class="input-group">
                             <input type="number"
@@ -75,7 +75,7 @@
 
                 <div class="form-group">
                     <label for="quantity"
-                           class="col-form-label">{{ __('stock.Quantity') }}</label>
+                           class="col-form-label">在庫数</label>
                     <div class="col-sm-4">
                         <div class="input-group">
                             <input type="number"
@@ -89,7 +89,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">{{ __('stock.Image') }}</label>
+                    <label class="col-sm-2 control-label">商品画像</label>
                     <div class="col-sm-10">
                         @include('admin.parts.image_upload', [
                             'id' => 'image',
@@ -101,7 +101,7 @@
                 <div class="card-footer text-center  ">
                     <input class="btn btn-primary"
                            type="submit"
-                           value="{{ __('common.Execute') }}">
+                           value="登録する">
                 </div>
             </form>
         </div>

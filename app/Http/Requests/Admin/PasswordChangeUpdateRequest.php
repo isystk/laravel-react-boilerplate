@@ -35,7 +35,7 @@ class PasswordChangeUpdateRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'password' => __('staff.Password'),
+            'password' => 'パスワード',
         ];
     }
 }

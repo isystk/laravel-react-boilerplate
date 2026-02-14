@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', __('order.Order List'))
+@section('title', '注文履歴一覧')
 @section('mainMenu', 'master')
 @section('subMenu', 'order')
 @section('breadcrumbs')
@@ -9,7 +9,7 @@
 @section('content')
     <div class="card card-purple">
         <div class="card-header">
-            <h3 class="card-title">{{ __('common.Search Condition') }}</h3>
+            <h3 class="card-title">検索条件</h3>
         </div>
         <form action="{{ route('admin.order') }}"
               method="GET">
@@ -22,7 +22,7 @@
                 @endif
                 <div class="mb-3 row">
                     <label for="name"
-                           class="col-sm-2 col-form-label">{{ __('order.User Name') }}</label>
+                           class="col-sm-2 col-form-label">注文者</label>
                     <div class="col-sm-4">
                         <input type="text"
                                name="name"
@@ -35,7 +35,7 @@
 
                 <div class="mb-3 row">
                     <label for="order_date_from"
-                           class="col-sm-2 col-form-label">{{ __('order.Order Date') }}</label>
+                           class="col-sm-2 col-form-label">注文日時</label>
                     <div class="col-sm-10">
                         <div class="row align-items-center g-2">
                             <div class="col-auto"
@@ -65,7 +65,7 @@
             </div>
             <div class="card-footer text-center">
                 <button type="submit"
-                        class="btn btn-secondary">{{ __('common.Search') }}</button>
+                        class="btn btn-secondary">検索</button>
             </div>
         </form>
     </div>
@@ -80,23 +80,23 @@
         <div class="col-12">
             <div class="card card-purple">
                 <div class="card-header">
-                    <h3 class="card-title">{{ __('common.Search Result') }}</h3>
+                    <h3 class="card-title">検索結果</h3>
                 </div>
                 <div class="card-body p-0">
                     <table class="table table-hover table-responsive">
                         <thead>
                             <tr>
                                 @include('admin.parts.sortablelink_th', [
-                                    'params' => ['id', __('order.ID')],
+                                    'params' => ['id', 'ID'],
                                 ])
                                 @include('admin.parts.sortablelink_th', [
-                                    'params' => ['users.name', __('order.User Name')],
+                                    'params' => ['users.name', '注文者'],
                                 ])
                                 @include('admin.parts.sortablelink_th', [
-                                    'params' => ['sum_price', __('order.Sum Price')],
+                                    'params' => ['sum_price', '合計金額'],
                                 ])
                                 @include('admin.parts.sortablelink_th', [
-                                    'params' => ['created_at', __('order.Order Date')],
+                                    'params' => ['created_at', '注文日時'],
                                 ])
                             </tr>
                         </thead>
@@ -109,7 +109,7 @@
                                     <td>{{ $order->created_at }}</td>
                                     <td>
                                         <a class="btn btn-primary btn-sm"
-                                           href="{{ route('admin.order.show', ['order' => $order]) }}">{{ __('common.Detail') }}</a>
+                                           href="{{ route('admin.order.show', ['order' => $order]) }}">詳細</a>
                                     </td>
                                 </tr>
                             @endforeach

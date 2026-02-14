@@ -9,20 +9,20 @@
 @section('content')
     <div class="text-start mb-3">
         <a class="btn btn-secondary"
-           href="{{ route('admin.user') }}">{{ __('common.Back') }}</a>
+           href="{{ route('admin.user') }}">前に戻る</a>
     </div>
 
     <div class="card card-purple">
         <div class="card-body">
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted small">{{ __('user.Name') }}</label>
+                <label class="col-sm-2 col-form-label text-muted small">氏名</label>
                 <div class="col-sm-10 d-flex align-items-center">
                     {{ $user->name }}
                 </div>
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted small">{{ __('user.EMail') }}</label>
+                <label class="col-sm-2 col-form-label text-muted small">メールアドレス</label>
                 <div class="col-sm-10 d-flex align-items-center">
                     {{ $user->email }}
                 </div>
@@ -34,7 +34,7 @@
                     <a class="btn btn-primary"
                        href="{{ route('admin.user.edit', ['user' => $user]) }}"
                        @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>
-                        {{ __('common.Change') }}
+                        変更する
                     </a>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                     <button class="btn btn-danger js-deleteBtn"
                             data-id="{{ $user->id }}"
                             @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>
-                        {{ __('common.Delete') }}
+                        削除する
                     </button>
                 </form>
             </div>

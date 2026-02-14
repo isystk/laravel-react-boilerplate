@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', __('stock.Stock List'))
+@section('title', '商品一覧')
 @section('mainMenu', 'master')
 @section('subMenu', 'stock')
 @section('breadcrumbs')
@@ -12,14 +12,14 @@
             <a href="{{ route('admin.stock.create') }}"
                class="btn btn-primary"
                @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>
-                {{ __('common.Regist') }}
+                新規登録
             </a>
         </div>
     </div>
 
     <div class="card card-purple">
         <div class="card-header">
-            <h3 class="card-title">{{ __('common.Search Condition') }}</h3>
+            <h3 class="card-title">検索条件</h3>
         </div>
         <form action="{{ route('admin.stock') }}"
               method="GET">
@@ -32,7 +32,7 @@
                 @endif
                 <div class="mb-3 row">
                     <label for="search_name"
-                           class="col-sm-2 col-form-label">{{ __('stock.Name') }}</label>
+                           class="col-sm-2 col-form-label">商品名</label>
                     <div class="col-sm-4">
                         <input type="text"
                                name="name"
@@ -45,7 +45,7 @@
             </div>
             <div class="card-footer text-center">
                 <button type="submit"
-                        class="btn btn-secondary">{{ __('common.Search') }}</button>
+                        class="btn btn-secondary">検索</button>
             </div>
         </form>
     </div>
@@ -60,7 +60,7 @@
         <div class="col-12">
             <div class="card card-purple">
                 <div class="card-header">
-                    <h3 class="card-title">{{ __('common.Search Result') }}</h3>
+                    <h3 class="card-title">検索結果</h3>
                     <div class="dropdown text-end">
                         <button class="btn btn-secondary dropdown-toggle btn-sm"
                                 type="button"
@@ -68,17 +68,17 @@
                                 data-bs-toggle="dropdown"
                                 aria-haspopup="true"
                                 aria-expanded="true">
-                            {{ __('common.Operation') }}
+                            操作
                             <span class="caret"></span>
                         </button>
                         <div class="dropdown-menu dropdown-menu-end"
                              aria-labelledby="dropdownMenu1">
                             <a class="dropdown-item text-muted js-download"
-                               href="{{ route('admin.stock.export') . '?file_type=csv' }}">{{ __('common.CSV Download') }}</a>
+                               href="{{ route('admin.stock.export') . '?file_type=csv' }}">CSVダウンロード</a>
                             <a class="dropdown-item text-muted js-download"
-                               href="{{ route('admin.stock.export') . '?file_type=xlsx' }}">{{ __('common.Excel Download') }}</a>
+                               href="{{ route('admin.stock.export') . '?file_type=xlsx' }}">Excelダウンロード</a>
                             <a class="dropdown-item text-muted js-download"
-                               href="{{ route('admin.stock.export') . '?file_type=pdf' }}">{{ __('common.PDF Download') }}</a>
+                               href="{{ route('admin.stock.export') . '?file_type=pdf' }}">PDFダウンロード</a>
                         </div>
                     </div>
                 </div>
@@ -87,19 +87,19 @@
                         <thead>
                             <tr>
                                 @include('admin.parts.sortablelink_th', [
-                                    'params' => ['id', __('stock.ID')],
+                                    'params' => ['id', 'ID'],
                                 ])
                                 @include('admin.parts.sortablelink_th', [
-                                    'params' => ['name', __('stock.Name')],
+                                    'params' => ['name', '商品名'],
                                 ])
                                 @include('admin.parts.sortablelink_th', [
-                                    'params' => ['price', __('stock.Price')],
+                                    'params' => ['price', '価格'],
                                 ])
                                 @include('admin.parts.sortablelink_th', [
-                                    'params' => ['quantity', __('stock.Quantity')],
+                                    'params' => ['quantity', '在庫数'],
                                 ])
                                 @include('admin.parts.sortablelink_th', [
-                                    'params' => ['created_at', __('common.Registration Date')],
+                                    'params' => ['created_at', '登録日時'],
                                 ])
                                 <th></th>
                             </tr>
@@ -114,7 +114,7 @@
                                     <td>{{ $stock->created_at }}</td>
                                     <td>
                                         <a class="btn btn-primary btn-sm"
-                                           href="{{ route('admin.stock.show', ['stock' => $stock]) }}">{{ __('common.Detail') }}</a>
+                                           href="{{ route('admin.stock.show', ['stock' => $stock]) }}">詳細</a>
                                     </td>
                                 </tr>
                             @endforeach

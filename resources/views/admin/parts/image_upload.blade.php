@@ -16,7 +16,7 @@
              width="200px" />
         <button type="button"
                 class="btn btn-danger btn-sm js-remove-image">
-            {{ __('common.Delete') }}
+            削除する
         </button>
     @elseif ($fileName)
         <img src="{{ $imageUrl }}"
@@ -24,7 +24,7 @@
              id="{{ $id }}-image">
         <button type="button"
                 class="btn btn-danger btn-sm js-remove-image">
-            {{ __('common.Delete') }}
+            削除する
         </button>
     @endif
 </div>

@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', __('contact.Contact List'))
+@section('title', 'お問い合わせ一覧')
 @section('mainMenu', 'user')
 @section('subMenu', 'contact')
 @section('breadcrumbs')
@@ -9,7 +9,7 @@
 @section('content')
     <div class="card card-purple">
         <div class="card-header">
-            <h3 class="card-title">{{ __('common.Search Condition') }}</h3>
+            <h3 class="card-title">検索条件</h3>
         </div>
         <form action="{{ route('admin.contact') }}"
               method="GET">
@@ -22,7 +22,7 @@
                 @endif
                 <div class="mb-3 row">
                     <label for="user_name"
-                           class="col-sm-2 col-form-label">{{ __('contact.Name') }}</label>
+                           class="col-sm-2 col-form-label">氏名</label>
                     <div class="col-sm-4">
                         <input type="text"
                                name="user_name"
@@ -35,7 +35,7 @@
 
                 <div class="mb-3 row">
                     <label for="title"
-                           class="col-sm-2 col-form-label">{{ __('contact.Title') }}</label>
+                           class="col-sm-2 col-form-label">件名</label>
                     <div class="col-sm-4">
                         <input type="text"
                                name="title"
@@ -48,7 +48,7 @@
             </div>
             <div class="card-footer text-center">
                 <button type="submit"
-                        class="btn btn-secondary">{{ __('common.Search') }}</button>
+                        class="btn btn-secondary">検索</button>
             </div>
         </form>
     </div>
@@ -66,23 +66,23 @@
         <div class="col-12">
             <div class="card card-purple">
                 <div class="card-header">
-                    <h3 class="card-title">{{ __('common.Search Result') }}</h3>
+                    <h3 class="card-title">検索結果</h3>
                 </div>
                 <div class="card-body p-0">
                     <table class="table table-hover table-responsive">
                         <thead>
                             <tr>
                                 @include('admin.parts.sortablelink_th', [
-                                    'params' => ['id', __('contact.ID')],
+                                    'params' => ['id', 'ID'],
                                 ])
                                 @include('admin.parts.sortablelink_th', [
-                                    'params' => ['user_name', __('contact.Name')],
+                                    'params' => ['user_name', '氏名'],
                                 ])
                                 @include('admin.parts.sortablelink_th', [
-                                    'params' => ['title', __('contact.Title')],
+                                    'params' => ['title', '件名'],
                                 ])
                                 @include('admin.parts.sortablelink_th', [
-                                    'params' => ['created_at', __('common.Registration Date')],
+                                    'params' => ['created_at', '登録日時'],
                                 ])
                                 <th></th>
                             </tr>
@@ -99,7 +99,7 @@
                                     <td>{{ $contactForm->created_at }}</td>
                                     <td>
                                         <a class="btn btn-primary btn-sm"
-                                           href="{{ route('admin.contact.show', ['contactForm' => $contactForm]) }}">{{ __('common.Detail') }}</a>
+                                           href="{{ route('admin.contact.show', ['contactForm' => $contactForm]) }}">詳細</a>
                                     </td>
                                 </tr>
                             @endforeach

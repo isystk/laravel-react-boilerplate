@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', __('staff.Staff List'))
+@section('title', 'スタッフ一覧')
 @section('mainMenu', 'system')
 @section('subMenu', 'staff')
 @section('breadcrumbs')
@@ -13,13 +13,13 @@
                 <a href="{{ route('admin.staff.create') }}"
                    class="btn btn-primary m-auto"
                    @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>
-                    {{ __('common.Regist') }}
+                    新規登録
                 </a>
                 <a href="{{ route('admin.staff.import') }}"
                    class="btn btn-primary position-absolute"
                    style="right: 20px"
                    @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>
-                    {{ __('common.Import') }}
+                    一括登録
                 </a>
             </div>
         </div>
@@ -27,7 +27,7 @@
 
     <div class="card card-purple">
         <div class="card-header">
-            <h3 class="card-title">{{ __('common.Search Condition') }}</h3>
+            <h3 class="card-title">検索条件</h3>
         </div>
         <form action="{{ route('admin.staff') }}"
               method="GET">
@@ -40,7 +40,7 @@
                 @endif
                 <div class="mb-3 row">
                     <label for="name"
-                           class="col-sm-2 col-form-label">{{ __('staff.Name') }}</label>
+                           class="col-sm-2 col-form-label">氏名</label>
                     <div class="col-sm-4">
                         <input type="text"
                                name="name"
@@ -52,7 +52,7 @@
                 </div>
                 <div class="mb-3 row">
                     <label for="email"
-                           class="col-sm-2 col-form-label">{{ __('staff.EMail') }}</label>
+                           class="col-sm-2 col-form-label">メールアドレス</label>
                     <div class="col-sm-4">
                         <input type="email"
                                name="email"
@@ -64,7 +64,7 @@
                 </div>
                 <div class="mb-3 row">
                     <label for="role"
-                           class="col-sm-2 col-form-label">{{ __('staff.Role') }}</label>
+                           class="col-sm-2 col-form-label">権限</label>
                     <div class="col-sm-4">
                         <select name="role"
                                 id="role"
@@ -81,7 +81,7 @@
             </div>
             <div class="card-footer text-center">
                 <button type="submit"
-                        class="btn btn-secondary">{{ __('common.Search') }}</button>
+                        class="btn btn-secondary">検索</button>
             </div>
         </form>
     </div>
@@ -102,26 +102,26 @@
         <div class="col-12">
             <div class="card card-purple">
                 <div class="card-header">
-                    <h3 class="card-title">{{ __('common.Search Result') }}</h3>
+                    <h3 class="card-title">検索結果</h3>
                 </div>
                 <div class="card-body p-0">
                     <table class="table table-hover table-responsive">
                         <thead>
                             <tr>
                                 @include('admin.parts.sortablelink_th', [
-                                    'params' => ['id', __('staff.ID')],
+                                    'params' => ['id', 'ID'],
                                 ])
                                 @include('admin.parts.sortablelink_th', [
-                                    'params' => ['name', __('staff.Name')],
+                                    'params' => ['name', '氏名'],
                                 ])
                                 @include('admin.parts.sortablelink_th', [
-                                    'params' => ['email', __('staff.EMail')],
+                                    'params' => ['email', 'メールアドレス'],
                                 ])
                                 @include('admin.parts.sortablelink_th', [
-                                    'params' => ['role', __('staff.Role')],
+                                    'params' => ['role', '権限'],
                                 ])
                                 @include('admin.parts.sortablelink_th', [
-                                    'params' => ['created_at', __('common.Registration Date')],
+                                    'params' => ['created_at', '登録日時'],
                                 ])
                             </tr>
                         </thead>
@@ -135,7 +135,7 @@
                                     <td>{{ $staff->created_at }}</td>
                                     <td>
                                         <a class="btn btn-primary btn-sm"
-                                           href="{{ route('admin.staff.show', ['staff' => $staff]) }}">{{ __('common.Detail') }}</a>
+                                           href="{{ route('admin.staff.show', ['staff' => $staff]) }}">詳細</a>
                                     </td>
                                 </tr>
                             @endforeach

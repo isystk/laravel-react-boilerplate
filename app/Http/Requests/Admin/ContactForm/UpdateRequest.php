@@ -72,14 +72,14 @@ class UpdateRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'user_name'     => __('contact.Name'),
-            'title'         => __('contact.Title'),
-            'email'         => __('contact.EMail'),
-            'gender'        => __('contact.Gender'),
-            'age'           => __('contact.Age'),
-            'contact'       => __('contact.Contact'),
-            'url'           => __('contact.URL'),
-            'image_base_64' => __('contact.Image'),
+            'user_name'     => '氏名',
+            'title'         => '件名',
+            'email'         => 'メールアドレス',
+            'gender'        => '性別',
+            'age'           => '年齢',
+            'contact'       => 'お問い合わせ内容',
+            'url'           => 'ホームページURL',
+            'image_base_64' => '画像',
         ];
     }
 

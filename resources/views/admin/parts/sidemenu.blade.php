@@ -3,10 +3,7 @@
     <div class="sidebar-brand">
         <a href="{{ url('/admin') }}"
            class="brand-link">
-            <img src="{{ Vite::asset('resources/assets/admin/images/AdminLTELogo.png') }}"
-                 alt="AdminLTE Logo"
-                 class="brand-image opacity-75 shadow" />
-            <span class="brand-text fw-light">LaraEC</span>
+            <span class="text-white">LaraEC</span>
         </a>
     </div>
 
@@ -26,7 +23,7 @@
                        class="nav-link {{ $mainMenu === 'master' ? 'active' : '' }}">
                         <i class="nav-icon fas fa-table"></i>
                         <p>
-                            {{ __('menu.Product') }}
+                            商品管理
                             <i class="nav-arrow fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -35,14 +32,14 @@
                             <a href="{{ url('/admin/stock') }}"
                                class="nav-link {{ $subMenu === 'stock' ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-box-open"></i>
-                                <p>{{ __('menu.Inventories') }}</p>
+                                <p>在庫管理</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ url('/admin/order') }}"
                                class="nav-link {{ $subMenu === 'order' ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-cart-arrow-down"></i>
-                                <p>{{ __('menu.Orders') }}</p>
+                                <p>注文履歴</p>
                             </a>
                         </li>
                     </ul>
@@ -53,7 +50,7 @@
                        class="nav-link {{ $mainMenu === 'user' ? 'active' : '' }}">
                         <i class="nav-icon far fa-user"></i>
                         <p>
-                            {{ __('menu.User') }}
+                            ユーザ管理
                             <i class="nav-arrow fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -62,14 +59,14 @@
                             <a href="{{ url('/admin/user') }}"
                                class="nav-link {{ $subMenu === 'user' ? 'active' : '' }}">
                                 <i class="nav-icon fa fa-layer-group"></i>
-                                <p>{{ __('menu.Customers') }}</p>
+                                <p>顧客管理</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ url('/admin/contact') }}"
                                class="nav-link {{ $subMenu === 'contact' ? 'active' : '' }}">
                                 <i class="nav-icon far fa-comment"></i>
-                                <p>{{ __('menu.Inquiries') }}</p>
+                                <p>お問い合わせ</p>
                             </a>
                         </li>
                     </ul>
@@ -80,7 +77,7 @@
                        class="nav-link {{ $mainMenu === 'system' ? 'active' : '' }}">
                         <i class="nav-icon fa fa-cogs"></i>
                         <p>
-                            {{ __('menu.System') }}
+                            システム管理
                             <i class="nav-arrow fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -89,14 +86,14 @@
                             <a href="{{ url('/admin/staff') }}"
                                class="nav-link {{ $subMenu === 'staff' ? 'active' : '' }}">
                                 <i class="nav-icon fa fa-layer-group"></i>
-                                <p>{{ __('menu.Staffs') }}</p>
+                                <p>スタッフ管理</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ url('/admin/photo') }}"
                                class="nav-link {{ $subMenu === 'photo' ? 'active' : '' }}">
                                 <i class="nav-icon fa fa-file-image"></i>
-                                <p>{{ __('menu.Photos') }}</p>
+                                <p>画像管理</p>
                             </a>
                         </li>
                     </ul>

@@ -43,7 +43,7 @@
                                 <li>
                                     <a class="dropdown-item"
                                        href="{{ route('admin.passwordChange') }}">
-                                        {{ __('common.Password Change') }}
+                                        パスワード変更
                                     </a>
                                 </li>
                                 <li>
@@ -53,7 +53,7 @@
                                     <a class="dropdown-item"
                                        href="#"
                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        {{ __('common.Logout') }}
+                                        ログアウト
                                     </a>
                                 </li>
                             </ul>

@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', __('common.Password Change'))
+@section('title', 'パスワード変更')
 
 @section('breadcrumbs')
     {{ Breadcrumbs::render('admin.passwordChange') }}
@@ -8,7 +8,7 @@
 @section('content')
     <div class="text-start mb-3">
         <a class="btn btn-secondary"
-           href="{{ route('admin.home') }}">{{ __('common.Back') }}</a>
+           href="{{ route('admin.home') }}">前に戻る</a>
     </div>
 
     @if (session('status'))
@@ -35,7 +35,7 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="password"
-                           class="form-label">{{ __('staff.Password') }}</label>
+                           class="form-label">パスワード</label>
                     <input type="password"
                            name="password"
                            id="password"
@@ -45,7 +45,7 @@
                 </div>
                 <div class="form-group">
                     <label for="password_confirmation"
-                           class="form-label">{{ __('staff.Password') }} ({{ __('common.Confirmation') }})</label>
+                           class="form-label">パスワード (確認)</label>
                     <input type="password"
                            name="password_confirmation"
                            id="password_confirmation"
@@ -56,7 +56,7 @@
                 <div class="card-footer text-center  ">
                     <button class="btn btn-primary"
                             type="submit">
-                        {{ __('common.Change') }}
+                        変更する
                     </button>
                 </div>
             </div>
