@@ -1,0 +1,90 @@
+<?php
+
+namespace Tests\Feature\Http\Controllers\Front\Auth;
+
+use App\Domain\Entities\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Socialite\Facades\Socialite;
+use Laravel\Socialite\Two\GoogleProvider;
+use Laravel\Socialite\Two\User as SocialiteUser;
+use Mockery;
+use Tests\BaseTest;
+
+class GoogleLoginControllerTest extends BaseTest
+{
+    use RefreshDatabase;
+
+    public function test_redirect_to_google(): void
+    {
+        $this->get('/auth/google')
+            ->assertRedirect();
+    }
+
+    public function test_handle_google_callback_creates_new_user(): void
+    {
+        $this->mockSocialiteUser('google-123', 'Google User', 'google@test.com', 'https://avatar.url');
+
+        $this->get('/auth/google/callback')
+            ->assertRedirect('/');
+
+        $user = User::where('google_id', 'google-123')->first();
+        $this->assertNotNull($user);
+        $this->assertSame('Google User', $user->name);
+        $this->assertSame('google@test.com', $user->email);
+        $this->assertSame('https://avatar.url', $user->avatar_url);
+        $this->assertNotNull($user->email_verified_at);
+        $this->assertAuthenticatedAs($user);
+    }
+
+    public function test_handle_google_callback_updates_existing_user(): void
+    {
+        $existingUser = User::factory()->create([
+            'google_id'  => 'google-123',
+            'name'       => 'Old Name',
+            'email'      => 'old@test.com',
+            'avatar_url' => 'https://old-avatar.url',
+        ]);
+
+        $this->mockSocialiteUser('google-123', 'New Name', 'new@test.com', 'https://new-avatar.url');
+
+        $this->get('/auth/google/callback')
+            ->assertRedirect('/');
+
+        $existingUser->refresh();
+        $this->assertSame('New Name', $existingUser->name);
+        $this->assertSame('new@test.com', $existingUser->email);
+        $this->assertSame('https://new-avatar.url', $existingUser->avatar_url);
+        $this->assertAuthenticatedAs($existingUser);
+    }
+
+    public function test_handle_google_callback_exception_redirects_to_login(): void
+    {
+        $provider = Mockery::mock(GoogleProvider::class);
+        $provider->shouldReceive('user')
+            ->andThrow(new \Exception('Google auth failed'));
+
+        Socialite::shouldReceive('driver')
+            ->with('google')
+            ->andReturn($provider);
+
+        $this->get('/auth/google/callback')
+            ->assertRedirect('/login');
+    }
+
+    private function mockSocialiteUser(string $id, string $name, string $email, string $avatar): void
+    {
+        $socialiteUser         = new SocialiteUser;
+        $socialiteUser->id     = $id;
+        $socialiteUser->name   = $name;
+        $socialiteUser->email  = $email;
+        $socialiteUser->avatar = $avatar;
+
+        $provider = Mockery::mock(GoogleProvider::class);
+        $provider->shouldReceive('user')
+            ->andReturn($socialiteUser);
+
+        Socialite::shouldReceive('driver')
+            ->with('google')
+            ->andReturn($provider);
+    }
+}
