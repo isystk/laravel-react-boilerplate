@@ -61,17 +61,26 @@ make ps            # コンテナ状態確認
 make logs          # ログ表示
 
 # テスト
-npm run test       # Vitest (フロントエンド)
-# PHPUnit はDockerコンテナ内で実行
+make test
 
-# Lint / Format
+# フロントエンドのみテスト (Dockerコンテナ内で実行)
+npm run test       # Vitest (フロントエンド)
+
+# Lint / Format (Dockerコンテナ内で実行)
 npm run lint       # ESLint
 npm run prettier   # Prettier
-# PHP: Laravel Pint
 
-# ビルド
+# ビルド (Dockerコンテナ内で実行)
 npm run build      # Vite本番ビルド
 npm run dev        # Vite開発サーバー
+
+# PHPのみテスト (Dockerコンテナ内で実行)
+php -d memory_limit=1G ./vendor/bin/phpunit
+
+# Pint / Rector / Bladeフォーマッタ (Dockerコンテナ内で実行)
+./vendor/bin/pint    # Pint
+./vendor/bin/rector  # Rector
+npx -y blade-formatter --write # Bladeフォーマッタ
 
 # Storybook
 npm run storybook  # Storybook開発サーバー

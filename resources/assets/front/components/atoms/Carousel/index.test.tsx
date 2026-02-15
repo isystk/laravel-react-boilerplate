@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import * as stories from './index.stories';
 import '@testing-library/jest-dom';
 import { composeStories } from '@storybook/react';
-import { act } from 'react-dom/test-utils';
+import { act } from 'react';
 
 const { Default, WithAutoPlay } = composeStories(stories);
 

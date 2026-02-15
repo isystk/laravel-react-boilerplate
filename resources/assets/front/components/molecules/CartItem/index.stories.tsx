@@ -15,7 +15,6 @@ export const Default: { render: () => JSX.Element } = {
       imageUrl: 'https://localhost/uploads/stock/makaron.jpg',
       price: 1000,
       detail: 'この商品の説明です。',
-      key: 1,
     };
     return <CartItem {...props} />;
   },
