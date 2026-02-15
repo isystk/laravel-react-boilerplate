@@ -3,13 +3,13 @@ import RootState from '@/states/root';
 
 // --- 型定義 ---
 type AppState = {
-  root: RootState | null;
+  root: RootState;
 };
 
 type Action = { type: 'SET_STATE'; payload: RootState };
 
 const initialState: AppState = {
-  root: null,
+  root: new RootState(),
 };
 
 // --- Reducer ---

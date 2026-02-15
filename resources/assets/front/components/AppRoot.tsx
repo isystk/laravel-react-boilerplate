@@ -6,7 +6,9 @@ const AppRoot = ({ children }: { children: JSX.Element }) => {
   return (
     <StrictMode>
       <AppProvider>
-        <BrowserRouter>{children}</BrowserRouter>
+        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          {children}
+        </BrowserRouter>
       </AppProvider>
     </StrictMode>
   );

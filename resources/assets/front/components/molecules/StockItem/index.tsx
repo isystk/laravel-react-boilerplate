@@ -13,7 +13,6 @@ export type Props = {
   detail: string;
   quantity: number;
   isLike: boolean;
-  key?: number;
 };
 
 const StockItem = ({ id, name, imageUrl, price, detail, quantity, isLike }: Props) => {

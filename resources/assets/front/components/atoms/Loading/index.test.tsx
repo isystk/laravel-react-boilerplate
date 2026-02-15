@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { render } from '@testing-library/react';
 import * as stories from './index.stories';
 import { composeStories } from '@storybook/react';
-import { act } from 'react-dom/test-utils'; // Storybookファイル名に合わせて変更してください
+import { act } from 'react';
 
 const { Default, HideLoading } = composeStories(stories);
 

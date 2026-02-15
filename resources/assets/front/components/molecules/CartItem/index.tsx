@@ -10,7 +10,6 @@ export type Props = {
   detail: string;
   price: number;
   imageUrl: string;
-  key: number | string;
 };
 
 const CartItem = ({ id, name, imageUrl, price, detail }: Props) => {

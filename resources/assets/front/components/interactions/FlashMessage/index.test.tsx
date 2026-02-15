@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import * as stories from './index.stories';
 import '@testing-library/jest-dom';
 import { composeStories } from '@storybook/react';
@@ -23,12 +23,14 @@ describe('FlashMessage Storybook Tests', () => {
     expect(window.laravelSession.status).toBeUndefined();
   });
 
-  it('5秒後にフラッシュメッセージが消えること', () => {
+  it('5秒後にフラッシュメッセージが消えること', async () => {
     vi.useFakeTimers();
     render(<WithMessage />);
     const message = screen.getByText('これはフラッシュメッセージです。');
     expect(message).toBeInTheDocument();
-    vi.advanceTimersByTime(5000);
+    await act(async () => {
+      vi.advanceTimersByTime(5000);
+    });
     vi.useRealTimers();
   });
 

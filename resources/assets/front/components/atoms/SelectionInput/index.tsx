@@ -79,6 +79,7 @@ const SelectionInput = (props: Props) => {
                 value={option.value}
                 checked={isChecked}
                 onChange={props.onChange}
+                readOnly={!props.onChange}
                 className={`${styles.formControl} ${valid.isInvalid}`}
                 required={props.required && index === 0} // ラジオ or 最初のチェックボックスのみ required
               />

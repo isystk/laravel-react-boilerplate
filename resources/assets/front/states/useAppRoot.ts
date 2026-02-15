@@ -15,8 +15,7 @@ const useAppRoot = () => {
   );
 
   const service = useMemo(() => {
-    const effectiveState = state ?? new RootState();
-    return new MainService(effectiveState, setRootState);
+    return new MainService(state, setRootState);
   }, [state, setRootState]);
 
   return { state, service };
