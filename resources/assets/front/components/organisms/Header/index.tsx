@@ -31,12 +31,16 @@ const Header = () => {
                       text={`${name} 様`}
                       items={[
                         {
-                          text: 'プロフィール',
-                          onClick: () => navigate(Url.PROFILE),
-                        },
-                        {
                           text: 'カートを見る',
                           onClick: () => navigate(Url.MYCART),
+                        },
+                        {
+                          text: 'お問い合わせ',
+                          onClick: () => navigate(Url.CONTACT),
+                        },
+                        {
+                          text: 'プロフィール変更',
+                          onClick: () => navigate(Url.PROFILE),
                         },
                         {
                           text: 'ログアウト',
@@ -73,9 +77,6 @@ const Header = () => {
                 <Image src={cartImage as string} width={30} height={30} alt="カート" />
               </Link>
             </li>
-            <li>
-              <Link to={Url.CONTACT}>お問い合わせ</Link>
-            </li>
           </ul>
         </div>
         {/* サイドメニュー */}
@@ -83,18 +84,33 @@ const Header = () => {
           text={isLogined ? `${name} 様` : ''}
           items={(() => {
             const items: Array<{ text: string; onClick?: () => void }> = [];
+            items.push(
+              {
+                text: 'カートを見る',
+                onClick: () => navigate(Url.MYCART),
+              },
+              {
+                text: 'お問い合わせ',
+                onClick: () => navigate(Url.CONTACT),
+              },
+            );
             if (isLogined) {
-              items.push({
-                text: 'ログアウト',
-                onClick: () => {
-                  const element: HTMLFormElement = document.getElementById(
-                    'logout-form',
-                  ) as HTMLFormElement;
-                  if (element) {
-                    element.submit();
-                  }
+              items.push(
+                {
+                  text: 'プロフィール変更',
+                  onClick: () => navigate(Url.PROFILE),
                 },
-              });
+                {
+                  text: 'ログアウト',
+                  onClick: () => {
+                    const element: HTMLFormElement = document.getElementById(
+                      'logout-form',
+                    ) as HTMLFormElement;
+                    if (element) {
+                      element.submit();
+                    }
+                  },
+                });
             } else {
               items.push(
                 {
@@ -107,16 +123,6 @@ const Header = () => {
                 },
               );
             }
-            items.push(
-              {
-                text: 'カートを見る',
-                onClick: () => navigate(Url.MYCART),
-              },
-              {
-                text: 'お問い合わせ',
-                onClick: () => navigate(Url.CONTACT),
-              },
-            );
             return items;
           })()}
         />
