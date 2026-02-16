@@ -7,6 +7,7 @@ use App\Mails\VerifyEmailToUser;
 use Database\Factories\Domain\Entities\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -15,15 +16,17 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
  * @property int         $id
- * @property string|null $name
- * @property string|null $email
+ * @property string      $name
+ * @property string      $email
  * @property Carbon|null $email_verified_at
  * @property string|null $password
+ * @property int|null    $avatar_image_id
  * @property string|null $google_id
  * @property string|null $avatar_url
  * @property string|null $remember_token
  * @property Carbon      $created_at
  * @property Carbon      $updated_at
+ * @property-read Image $avatarImage
  */
 class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
@@ -42,12 +45,11 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
      * @var list<string>
      */
     protected $fillable = [
-        'provider_id',
-        'provider_name',
         'name',
         'email',
         'email_verified_at',
         'password',
+        'avatar_image_id',
         'google_id',
         'avatar_url',
         'remember_token',
@@ -62,6 +64,14 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         'password',
         'remember_token',
     ];
+
+    /**
+     * @return BelongsTo<Image, $this>
+     */
+    public function avatarImage(): BelongsTo
+    {
+        return $this->belongsTo(Image::class, 'avatar_image_id');
+    }
 
     /**
      * メール認証済みの場合にTrueを返却する

@@ -49,4 +49,12 @@ class UserEloquentRepository extends BaseEloquentRepository implements UserRepos
         /** @var Collection<int, User> */
         return $query->get();
     }
+
+    /**
+     * Google IDからユーザを取得します。
+     */
+    public function findByGoogleId(string $googleId): ?User
+    {
+        return $this->model->where('google_id', $googleId)->first();
+    }
 }

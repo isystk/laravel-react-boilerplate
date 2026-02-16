@@ -5,26 +5,6 @@ import useAppRoot from '@/states/useAppRoot';
 import { Link } from 'react-router-dom';
 import TextInput from '@/components/atoms/TextInput';
 
-// TODO react-google-recaptcha-v3 が react19では未だサポートされていないのでコメントアウト
-// import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
-// import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
-// const ReChaptcha = () => {
-//     const [token, setToken] = useState<string>("");
-//     const { executeRecaptcha } = useGoogleReCaptcha();
-//
-//     useEffect(() => {
-//         if (!executeRecaptcha) {
-//             return;
-//         }
-//         (async () => {
-//             const token = await executeRecaptcha("Contact");
-//             setToken(token);
-//         })();
-//     }, [executeRecaptcha]);
-//
-//     return <input type="hidden" name="g-recaptcha-response" value={token} />;
-// };
-
 const LoginForm = () => {
   const { state } = useAppRoot();
 

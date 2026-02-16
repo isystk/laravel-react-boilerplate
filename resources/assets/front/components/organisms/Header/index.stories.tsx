@@ -24,6 +24,7 @@ export const Login: { render: () => JSX.Element } = {
           name: 'ユーザー名',
           email: 'test@test.com',
           email_verified_at: '2020-01-01 00:00:00',
+          avatar_url: null,
         } as User);
       }, [service]);
 

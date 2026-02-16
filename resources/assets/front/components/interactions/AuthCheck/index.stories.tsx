@@ -19,6 +19,7 @@ export const LoggedInVerified: StoryFn = () => {
         name: 'John Doe',
         email: 'john@example.com',
         email_verified_at: '2023-01-01T00:00:00Z',
+        avatar_url: null,
       } as User);
     }, [service]);
 
@@ -41,6 +42,7 @@ export const NotVerified: StoryFn = () => {
         name: 'Jane Doe',
         email: 'jane@example.com',
         email_verified_at: null,
+        avatar_url: null,
       } as User);
     }, [service]);
     if (!state) {

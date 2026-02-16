@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Dto\Response\Api\Auth\AuthenticateDto;
 use App\Helpers\AuthHelper;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class AuthController extends BaseApiController
 {
@@ -38,7 +40,15 @@ class AuthController extends BaseApiController
     public function authenticate(): JsonResponse
     {
         $user = AuthHelper::frontLoginedUser();
+        if (is_null($user)) {
+            throw new UnauthorizedHttpException('jwt-auth');
+        }
 
-        return response()->json($user);
+        $dto = new AuthenticateDto(
+            $user->name,
+            $user->avatarImage?->getImageUrl() ?? $user->avatar_url,
+        );
+
+        return response()->json($dto);
     }
 }

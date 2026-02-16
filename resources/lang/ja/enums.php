@@ -20,6 +20,7 @@ return [
     'AdminRole' . AdminRole::HighManager->value => '上位管理者',
     'ImageType' . ImageType::Stock->value       => '商品',
     'ImageType' . ImageType::Contact->value     => 'お問い合わせ',
+    'ImageType' . ImageType::User->value        => 'ユーザー',
     'JobStatus' . JobStatus::Waiting->value     => '処理待ち',
     'JobStatus' . JobStatus::Processing->value  => '処理中',
     'JobStatus' . JobStatus::Success->value     => '正常終了',

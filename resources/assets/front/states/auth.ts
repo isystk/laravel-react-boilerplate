@@ -1,42 +1,31 @@
 export type User = {
-  id: number;
   name: string;
   email: string;
   email_verified_at: string | null;
+  avatar_url: string | null;
 };
 
-export type Auth = {
-  userId?: number | null;
-  name: string | null;
-  email?: string;
-  emailVerifiedAt?: string | null;
-  remember?: string;
-};
-
-const initialState: Auth = {
-  userId: null,
-  name: null,
+const initialState: User = {
+  name: '',
   email: '',
-  emailVerifiedAt: '',
-  remember: '',
+  email_verified_at: null,
+  avatar_url: null,
 };
 
 export default class AuthState {
-  userId?: number | null;
   name: string | null;
-  email?: string;
-  emailVerifiedAt?: string | null;
-  remember?: string;
+  email: string | null;
+  email_verified_at: string | null;
+  avatar_url: string | null;
 
   constructor() {
-    this.userId = initialState.userId;
     this.name = initialState.name;
     this.email = initialState.email;
-    this.emailVerifiedAt = initialState.emailVerifiedAt;
-    this.remember = initialState.remember;
+    this.email_verified_at = initialState.email_verified_at;
+    this.avatar_url = initialState.avatar_url;
   }
 
   get isLogined(): boolean {
-    return !!this.userId;
+    return !!this.email;
   }
 }

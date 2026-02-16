@@ -11,10 +11,9 @@ export default class AuthService {
   }
 
   setUser(user: User) {
-    this.auth.userId = user.id;
     this.auth.name = user.name;
     this.auth.email = user.email;
-    this.auth.emailVerifiedAt = user.email_verified_at;
+    this.auth.avatar_url = user.avatar_url;
     this.main.setRootState();
   }
 }

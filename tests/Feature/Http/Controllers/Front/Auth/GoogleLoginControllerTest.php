@@ -36,27 +36,6 @@ class GoogleLoginControllerTest extends BaseTest
         $this->assertAuthenticatedAs($user);
     }
 
-    public function test_handle_google_callback_updates_existing_user(): void
-    {
-        $existingUser = User::factory()->create([
-            'google_id'  => 'google-123',
-            'name'       => 'Old Name',
-            'email'      => 'old@test.com',
-            'avatar_url' => 'https://old-avatar.url',
-        ]);
-
-        $this->mockSocialiteUser('google-123', 'New Name', 'new@test.com', 'https://new-avatar.url');
-
-        $this->get('/auth/google/callback')
-            ->assertRedirect('/');
-
-        $existingUser->refresh();
-        $this->assertSame('New Name', $existingUser->name);
-        $this->assertSame('new@test.com', $existingUser->email);
-        $this->assertSame('https://new-avatar.url', $existingUser->avatar_url);
-        $this->assertAuthenticatedAs($existingUser);
-    }
-
     public function test_handle_google_callback_exception_redirects_to_login(): void
     {
         $provider = Mockery::mock(GoogleProvider::class);

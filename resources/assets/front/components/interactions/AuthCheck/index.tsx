@@ -10,7 +10,7 @@ type Props = {
 
 const AuthCheck = ({ user, component }: Props) => {
   // ログインしてなければログイン画面へとばす
-  if (!user.id) {
+  if (!user.email) {
     return <Navigate to={Url.LOGIN} />;
   }
 

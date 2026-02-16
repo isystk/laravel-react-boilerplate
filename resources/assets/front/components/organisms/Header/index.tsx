@@ -31,6 +31,14 @@ const Header = () => {
                       text={`${name} 様`}
                       items={[
                         {
+                          text: 'プロフィール',
+                          onClick: () => navigate(Url.PROFILE),
+                        },
+                        {
+                          text: 'カートを見る',
+                          onClick: () => navigate(Url.MYCART),
+                        },
+                        {
                           text: 'ログアウト',
                           onClick: () => {
                             const element: HTMLFormElement = document.getElementById(
@@ -40,10 +48,6 @@ const Header = () => {
                               element.submit();
                             }
                           },
-                        },
-                        {
-                          text: 'カートを見る',
-                          onClick: () => navigate(Url.MYCART),
                         },
                       ]}
                     />

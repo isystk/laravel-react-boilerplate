@@ -22,4 +22,6 @@ interface UserRepository extends BaseRepository
      * @return Collection<int, User>|LengthAwarePaginator<int, User>
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator;
+
+    public function findByGoogleId(string $googleId): ?User;
 }
