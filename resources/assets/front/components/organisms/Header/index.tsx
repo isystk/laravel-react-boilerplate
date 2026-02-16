@@ -8,13 +8,21 @@ import SideMenu from '@/components/organisms/SideMenu';
 import useAppRoot from '@/states/useAppRoot';
 import CSRFToken from '@/components/atoms/CSRFToken';
 import cartImage from '@/assets/images/cart.png';
+import Avatar from '@/components/atoms/Avatar';
 
 const Header = () => {
   const { state } = useAppRoot();
   const navigate = useNavigate();
 
   if (!state) return <></>;
-  const { isLogined, name } = state.auth;
+  const { isLogined, name, avatar_url } = state.auth;
+
+  const userLabel = (
+    <div className="flex items-center gap-2">
+      <Avatar src={avatar_url} size={24} />
+      <span>{name} 様</span>
+    </div>
+  );
 
   return (
     <header className={`${styles.header} shadow-sm`}>
@@ -28,7 +36,7 @@ const Header = () => {
                 return (
                   <li>
                     <DropDown
-                      text={`${name} 様`}
+                      label={userLabel}
                       items={[
                         {
                           text: 'カートを見る',
@@ -81,7 +89,7 @@ const Header = () => {
         </div>
         {/* サイドメニュー */}
         <SideMenu
-          text={isLogined ? `${name} 様` : ''}
+          label={isLogined ? userLabel : ''}
           items={(() => {
             const items: Array<{ text: string; onClick?: () => void }> = [];
             items.push(

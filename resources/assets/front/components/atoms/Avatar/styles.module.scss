@@ -1,0 +1,24 @@
+.avatarContainer {
+  display: inline-block;
+  border-radius: 9999px;
+  overflow: hidden;
+  background-color: #f3f4f6;
+  flex-shrink: 0;
+}
+
+.avatarImage {
+  object-fit: cover;
+  display: block;
+}
+
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e5e7eb;
+}
+
+.placeholderIcon {
+  color: #9ca3af;
+  font-size: 0.8em;
+}

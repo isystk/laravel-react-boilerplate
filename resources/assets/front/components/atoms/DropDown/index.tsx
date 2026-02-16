@@ -1,13 +1,13 @@
-import { useState, useEffect, useRef } from 'react';
+import { ReactNode, useState, useEffect, useRef } from 'react';
 import styles from './styles.module.scss';
 
 type Props = {
-  text: string;
+  label: ReactNode;
   items: Array<{ text: string; onClick: () => void }>;
   className?: string;
 };
 
-const DropDown = ({ text, items, className }: Props) => {
+const DropDown = ({ label, items, className }: Props) => {
   const [isOpen, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -32,7 +32,7 @@ const DropDown = ({ text, items, className }: Props) => {
           setOpen(!isOpen);
         }}
       >
-        {text}
+        {label}
         <svg
           className="-mr-1 size-5 text-gray-400"
           viewBox="0 0 20 20"

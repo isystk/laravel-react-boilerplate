@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import styles from './styles.module.scss';
 import HamburgerButton from '@/components/atoms/HamburgerButton';
 
 type Props = {
-  text: string;
+  label: ReactNode;
   items: Array<{ text: string; onClick?: () => void }>;
   className?: string;
 };
 
-const SideMenu = ({ text, items, className = '' }: Props) => {
+const SideMenu = ({ label, items, className = '' }: Props) => {
   const [isOpen, setOpen] = useState(false);
 
   return (
@@ -18,7 +18,9 @@ const SideMenu = ({ text, items, className = '' }: Props) => {
       {/* サイドメニュー */}
       <div className={`${styles.sideMenu} ${className} ${isOpen ? styles.open : styles.closed}`}>
         <div className={styles.menuHeader}>
-          <p>{text}</p>
+          <div className="flex items-center gap-2 p-3">
+            {label}
+          </div>
         </div>
         <nav className={`sideMenu ${isOpen ? 'open' : ''}`}>
           <ul className={styles.menuList}>
