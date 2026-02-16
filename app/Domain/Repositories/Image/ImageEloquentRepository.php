@@ -31,7 +31,8 @@ class ImageEloquentRepository extends BaseEloquentRepository implements ImageRep
     {
         $query = $this->model->select('images.*')
             ->selectRaw('(SELECT id FROM stocks WHERE stocks.image_id = images.id) as used_by_stock_id')
-            ->selectRaw('(SELECT id FROM contacts WHERE contacts.image_id = images.id) as used_by_contact_id');
+            ->selectRaw('(SELECT id FROM contacts WHERE contacts.image_id = images.id) as used_by_contact_id')
+            ->selectRaw('(SELECT id FROM users WHERE users.avatar_image_id = images.id) as used_by_user_id');
 
         if (!is_null($conditions['file_name'] ?? null)) {
             $query->where('file_name', 'like', '%' . $conditions['file_name'] . '%');

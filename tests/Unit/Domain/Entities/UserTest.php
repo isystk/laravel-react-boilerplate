@@ -2,7 +2,9 @@
 
 namespace Tests\Unit\Domain\Entities;
 
+use App\Domain\Entities\Image;
 use App\Domain\Entities\User;
+use App\Enums\ImageType;
 use App\Mails\ResetPasswordToUser;
 use App\Mails\VerifyEmailToUser;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -66,5 +68,26 @@ class UserTest extends BaseTest
     public function test_getJWTCustomClaims_空の配列が返却されること(): void
     {
         $this->assertSame([], $this->sub->getJWTCustomClaims());
+    }
+
+    public function test_avatarImage_リレーションが正しく動作すること(): void
+    {
+        $image = Image::factory()->create([
+            'file_name' => 'avatar.png',
+            'type'      => ImageType::User->value,
+        ]);
+
+        $user = $this->createDefaultUser(['avatar_image_id' => $image->id]);
+
+        $this->assertNotNull($user->avatarImage);
+        $this->assertSame($image->id, $user->avatarImage->id);
+        $this->assertSame('avatar.png', $user->avatarImage->file_name);
+    }
+
+    public function test_avatarImage_画像が未設定の場合nullが返却されること(): void
+    {
+        $user = $this->createDefaultUser(['avatar_image_id' => null]);
+
+        $this->assertNull($user->avatarImage);
     }
 }

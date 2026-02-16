@@ -110,21 +110,11 @@
                         </thead>
                         <tbody>
                             @foreach ($images as $image)
-                                @php
-                                    $usedByUrl = null;
-                                    if ($image->used_by_stock_id) {
-                                        $usedByUrl = route('admin.stock.show', ['stock' => $image->used_by_stock_id]);
-                                    } elseif ($image->used_by_contact_id) {
-                                        $usedByUrl = route('admin.contact.show', [
-                                            'contact' => $image->used_by_contact_id,
-                                        ]);
-                                    }
-                                @endphp
                                 <tr>
                                     <td>{{ $image->type?->label() ?? '' }}</td>
                                     <td>
-                                        @if ($usedByUrl)
-                                            <a href="{{ $usedByUrl }}">
+                                        @if (!is_null($image->getUsedUrl()))
+                                            <a href="{{ $image->getUsedUrl() }}">
                                                 {{ $image->file_name }}
                                             </a>
                                         @else
@@ -132,8 +122,8 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($usedByUrl)
-                                            <a href="{{ $usedByUrl }}">
+                                        @if (!is_null($image->getUsedUrl()))
+                                            <a href="{{ $image->getUsedUrl() }}">
                                                 <img src="{{ $image->getImageUrl() }}"
                                                      alt="{{ $image->file_name }}"
                                                      width="100px" />
@@ -148,7 +138,7 @@
                                     <td>
                                         <button class="btn btn-danger btn-sm js-deleteBtn"
                                                 data-id="{{ $image->id }}"
-                                                @if (!Auth::user()->role->isHighManager() || $image->used_by_stock_id || $image->used_by_contact_id) disabled="disabled" @endif>削除する
+                                                @if (!Auth::user()->role->isHighManager() || !$image->isUsed()) disabled="disabled" @endif>削除する
                                         </button>
                                         <form id="delete_{{ $image->id }}"
                                               action="{{ route('admin.photo.destroy') }}"

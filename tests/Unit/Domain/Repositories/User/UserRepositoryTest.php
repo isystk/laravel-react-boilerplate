@@ -55,4 +55,29 @@ class UserRepositoryTest extends BaseTest
         ]);
         $this->assertSame(1, $users->count(), 'limitで取得件数が指定出来ることをテスト');
     }
+
+    public function test_findByGoogleId_存在するGoogleIDの場合ユーザーが返却されること(): void
+    {
+        $user = $this->createDefaultUser([
+            'google_id'  => 'google-abc-123',
+            'avatar_url' => 'https://example.com/avatar.png',
+        ]);
+
+        $result = $this->repository->findByGoogleId('google-abc-123');
+
+        $this->assertNotNull($result);
+        $this->assertSame($user->id, $result->id);
+        $this->assertSame('google-abc-123', $result->google_id);
+    }
+
+    public function test_findByGoogleId_存在しないGoogleIDの場合nullが返却されること(): void
+    {
+        $this->createDefaultUser([
+            'google_id' => 'google-abc-123',
+        ]);
+
+        $result = $this->repository->findByGoogleId('google-not-exist');
+
+        $this->assertNull($result);
+    }
 }
