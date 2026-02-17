@@ -85,6 +85,8 @@
                                 @include('admin.parts.sortablelink_th', [
                                     'params' => ['created_at', '登録日時'],
                                 ])
+                                <th>アバター</th>
+                                <th>Google</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -94,6 +96,26 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->created_at }}</td>
+                                    <td>
+                                        @if ($user->avatarImage)
+                                            <img src="{{ $user->avatarImage->getImageUrl() }}"
+                                                 alt="avatar"
+                                                 style="width:40px;height:40px;object-fit:cover;border-radius:50%;" />
+                                        @elseif ($user->avatar_url)
+                                            <img src="{{ $user->avatar_url }}"
+                                                 alt="avatar"
+                                                 style="width:40px;height:40px;object-fit:cover;border-radius:50%;" />
+                                        @else
+                                            <span class="text-muted small">-</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($user->google_id)
+                                            <span class="badge bg-success">はい</span>
+                                        @else
+                                            <span class="badge bg-secondary">いいえ</span>
+                                        @endif
+                                    </td>
                                     <td>
                                         <a class="btn btn-primary btn-sm"
                                            href="{{ route('admin.user.show', ['user' => $user]) }}">詳細</a>

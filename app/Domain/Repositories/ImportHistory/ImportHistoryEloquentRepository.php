@@ -25,7 +25,7 @@ class ImportHistoryEloquentRepository extends BaseEloquentRepository implements 
         /** @var Collection<int, ImportHistory> */
         return $this->model
             ->where('type', $importType)
-            ->orderBy('created_at', 'desc')
+            ->orderBy('id', 'desc')
             ->get();
     }
 

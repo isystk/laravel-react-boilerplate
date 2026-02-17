@@ -22,13 +22,13 @@
 }
 
 .menuHeader {
+    display: flex;
+    align-items: center;
     height: 70px;
+    padding: 0 16px;
     font-size: 18px;
     font-weight: 600;
     border-bottom: 1px solid #e5e5e5;
-    p {
-        padding: 20px 12px 6px;
-    }
 }
 
 .menuList {

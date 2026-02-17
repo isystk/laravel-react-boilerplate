@@ -28,6 +28,6 @@ class GoogleLoginController extends BaseController
             return redirect('/login');
         }
 
-        return redirect()->intended('/');
+        return redirect()->intended('/home');
     }
 }
