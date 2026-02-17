@@ -36,8 +36,10 @@ class GoogleLoginControllerTest extends BaseTest
         $this->assertAuthenticatedAs($user);
     }
 
-    public function test_handleGoogleCallback_例外発生時はログイン画面へリダイレクト(): void
+    public function test_handleGoogleCallback_例外発生時はエラーがスローされる(): void
     {
+        $this->withoutExceptionHandling();
+
         $provider = Mockery::mock(GoogleProvider::class);
         $provider->shouldReceive('user')
             ->andThrow(new \Exception('Google auth failed'));
@@ -46,8 +48,10 @@ class GoogleLoginControllerTest extends BaseTest
             ->with('google')
             ->andReturn($provider);
 
-        $this->get('/auth/google/callback')
-            ->assertRedirect('/login');
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Google auth failed');
+
+        $this->get('/auth/google/callback');
     }
 
     private function mockSocialiteUser(string $id, string $name, string $email, string $avatar): void

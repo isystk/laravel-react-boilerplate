@@ -47,8 +47,12 @@ class ImageEloquentRepository extends BaseEloquentRepository implements ImageRep
                 ->whereRaw('NOT EXISTS(SELECT 1 FROM contacts WHERE contacts.image_id = images.id)');
         }
 
-        if (!is_null($conditions['sort_name'] ?? null)) {
-            $query->orderBy($conditions['sort_name'], $conditions['sort_direction'] ?? 'asc');
+        $sortColumn = $this->validateSortColumn(
+            $conditions['sort_name'] ?? '',
+            ['id', 'file_name', 'type', 'created_at', 'updated_at'],
+        );
+        if ($sortColumn !== null) {
+            $query->orderBy($sortColumn, $conditions['sort_direction'] ?? 'asc');
         }
         // デフォルトの並び順を指定
         $query->orderBy('id', 'asc');

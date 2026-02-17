@@ -62,5 +62,15 @@ abstract class BaseEloquentRepository implements BaseRepository
         return $this->model->find($id);
     }
 
+    /**
+     * ソートカラム名が許可リストに含まれるか検証し、安全なカラム名を返します。
+     *
+     * @param array<int, string> $allowedColumns
+     */
+    protected function validateSortColumn(string $sortName, array $allowedColumns): ?string
+    {
+        return in_array($sortName, $allowedColumns, true) ? $sortName : null;
+    }
+
     abstract protected function model(): string;
 }
