@@ -34,4 +34,7 @@ export const Api = {
   MYCART_PAYMENT: getBffUrl('/mycart/payment'),
   /** 決済処理後の後処理 */
   MYCART_CHECKOUT: getBffUrl('/mycart/checkout'),
+
+  /** プロフィール更新 */
+  PROFILE_UPDATE: getBffUrl('/profile/update'),
 };

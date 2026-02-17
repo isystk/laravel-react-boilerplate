@@ -26,5 +26,6 @@ Route::middleware(['web'])->group(function () {
         Route::post('/mycart/delete', [\App\Http\Controllers\Api\CartController::class, 'deleteCart'])->name('api.mycart.delete');
         Route::post('/mycart/payment', [\App\Http\Controllers\Api\CartController::class, 'createPayment'])->name('api.mycart.payment');
         Route::post('/mycart/checkout', [\App\Http\Controllers\Api\CartController::class, 'checkout'])->name('api.mycart.checkout');
+        Route::post('/profile/update', [\App\Http\Controllers\Api\ProfileController::class, 'update'])->name('api.profile.update');
     });
 });

@@ -71,4 +71,35 @@ class Image extends Model
             'updated_at' => 'datetime',
         ];
     }
+
+    /**
+     * 画像が在庫、問い合わせ、ユーザーのいずれかで使用されている場合にTrueを返却します。
+     */
+    public function isUsed(): bool
+    {
+        return $this->used_by_stock_id || $this->used_by_contact_id || $this->used_by_user_id;
+    }
+
+    /**
+     * 画像が使用されている場合、そのURLを返却します。
+     */
+    public function getUsedUrl(): ?string
+    {
+        $usedUrl = null;
+        if ($this->used_by_stock_id) {
+            $usedUrl = route('admin.stock.show', [
+                'stock' => $this->used_by_stock_id,
+            ]);
+        } elseif ($this->used_by_contact_id) {
+            $usedUrl = route('admin.contact.show', [
+                'contact' => $this->used_by_contact_id,
+            ]);
+        } elseif ($this->used_by_user_id) {
+            $usedUrl = route('admin.user.show', [
+                'user' => $this->used_by_user_id,
+            ]);
+        }
+
+        return $usedUrl;
+    }
 }

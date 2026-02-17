@@ -8,6 +8,8 @@ enum ImageType: int
     case Stock = 1;
     /** お問い合わせ */
     case Contact = 2;
+    /** ユーザー */
+    case User = 3;
 
     /**
      * ラベルを返却する
@@ -25,6 +27,7 @@ enum ImageType: int
         return match ($this) {
             self::Stock   => 'stock',
             self::Contact => 'contact',
+            self::User    => 'user',
         };
     }
 
@@ -36,6 +39,7 @@ enum ImageType: int
         return match ($type) {
             'stock'   => self::Stock,
             'contact' => self::Contact,
+            'user'    => self::User,
             default   => throw new \RuntimeException('An unexpected error occurred.')
         };
     }

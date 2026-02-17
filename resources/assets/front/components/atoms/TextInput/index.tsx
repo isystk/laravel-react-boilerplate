@@ -8,11 +8,11 @@ type Props = {
   autoComplete?: string;
   label: string;
   defaultValue?: string;
-  action?: any;
   autoFocus?: boolean;
   required?: boolean;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: ChangeEvent<HTMLInputElement>) => void;
+  action?: (value: string) => void;
   value?: string;
   className?: string;
   error?: string;
@@ -67,7 +67,14 @@ const TextInput = (props: Props) => {
         autoComplete={props.autoComplete}
         autoFocus={props.autoFocus}
         required={props.required}
-        onChange={props.onChange}
+        onChange={e => {
+          if (props.onChange) {
+            props.onChange(e);
+          }
+          if (props.action) {
+            props.action(e.target.value);
+          }
+        }}
         onBlur={props.onBlur}
         value={props.value}
         defaultValue={props.defaultValue}

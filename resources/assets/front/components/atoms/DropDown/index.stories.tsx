@@ -19,7 +19,7 @@ export const Default: StoryFn = () => {
 
   return (
     <div style={{ width: '160px' }}>
-      <DropDown text="メニューを開く" items={items} />
+      <DropDown label="メニューを開く" items={items} />
       {selected && <p>選択された項目: {selected}</p>}
     </div>
   );

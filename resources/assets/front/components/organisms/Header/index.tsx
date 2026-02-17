@@ -8,13 +8,21 @@ import SideMenu from '@/components/organisms/SideMenu';
 import useAppRoot from '@/states/useAppRoot';
 import CSRFToken from '@/components/atoms/CSRFToken';
 import cartImage from '@/assets/images/cart.png';
+import Avatar from '@/components/atoms/Avatar';
 
 const Header = () => {
   const { state } = useAppRoot();
   const navigate = useNavigate();
 
   if (!state) return <></>;
-  const { isLogined, name } = state.auth;
+  const { isLogined, name, avatar_url } = state.auth;
+
+  const userLabel = (
+    <div className="flex items-center gap-2">
+      <Avatar src={avatar_url} size={24} />
+      <span>{name} 様</span>
+    </div>
+  );
 
   return (
     <header className={`${styles.header} shadow-sm`}>
@@ -28,8 +36,20 @@ const Header = () => {
                 return (
                   <li>
                     <DropDown
-                      text={`${name} 様`}
+                      label={userLabel}
                       items={[
+                        {
+                          text: 'カートを見る',
+                          onClick: () => navigate(Url.MYCART),
+                        },
+                        {
+                          text: 'お問い合わせ',
+                          onClick: () => navigate(Url.CONTACT),
+                        },
+                        {
+                          text: 'プロフィール変更',
+                          onClick: () => navigate(Url.PROFILE),
+                        },
                         {
                           text: 'ログアウト',
                           onClick: () => {
@@ -40,10 +60,6 @@ const Header = () => {
                               element.submit();
                             }
                           },
-                        },
-                        {
-                          text: 'カートを見る',
-                          onClick: () => navigate(Url.MYCART),
                         },
                       ]}
                     />
@@ -69,28 +85,41 @@ const Header = () => {
                 <Image src={cartImage as string} width={30} height={30} alt="カート" />
               </Link>
             </li>
-            <li>
-              <Link to={Url.CONTACT}>お問い合わせ</Link>
-            </li>
           </ul>
         </div>
         {/* サイドメニュー */}
         <SideMenu
-          text={isLogined ? `${name} 様` : ''}
+          label={isLogined ? userLabel : ''}
           items={(() => {
             const items: Array<{ text: string; onClick?: () => void }> = [];
+            items.push(
+              {
+                text: 'カートを見る',
+                onClick: () => navigate(Url.MYCART),
+              },
+              {
+                text: 'お問い合わせ',
+                onClick: () => navigate(Url.CONTACT),
+              },
+            );
             if (isLogined) {
-              items.push({
-                text: 'ログアウト',
-                onClick: () => {
-                  const element: HTMLFormElement = document.getElementById(
-                    'logout-form',
-                  ) as HTMLFormElement;
-                  if (element) {
-                    element.submit();
-                  }
+              items.push(
+                {
+                  text: 'プロフィール変更',
+                  onClick: () => navigate(Url.PROFILE),
                 },
-              });
+                {
+                  text: 'ログアウト',
+                  onClick: () => {
+                    const element: HTMLFormElement = document.getElementById(
+                      'logout-form',
+                    ) as HTMLFormElement;
+                    if (element) {
+                      element.submit();
+                    }
+                  },
+                },
+              );
             } else {
               items.push(
                 {
@@ -103,16 +132,6 @@ const Header = () => {
                 },
               );
             }
-            items.push(
-              {
-                text: 'カートを見る',
-                onClick: () => navigate(Url.MYCART),
-              },
-              {
-                text: 'お問い合わせ',
-                onClick: () => navigate(Url.CONTACT),
-              },
-            );
             return items;
           })()}
         />

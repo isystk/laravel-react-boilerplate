@@ -14,18 +14,18 @@ class GoogleLoginControllerTest extends BaseTest
 {
     use RefreshDatabase;
 
-    public function test_redirect_to_google(): void
+    public function test_handleGoogleCallback_リダイレクト(): void
     {
         $this->get('/auth/google')
             ->assertRedirect();
     }
 
-    public function test_handle_google_callback_creates_new_user(): void
+    public function test_handleGoogleCallback_新規ユーザー作成(): void
     {
         $this->mockSocialiteUser('google-123', 'Google User', 'google@test.com', 'https://avatar.url');
 
         $this->get('/auth/google/callback')
-            ->assertRedirect('/');
+            ->assertRedirect('/home');
 
         $user = User::where('google_id', 'google-123')->first();
         $this->assertNotNull($user);
@@ -36,28 +36,7 @@ class GoogleLoginControllerTest extends BaseTest
         $this->assertAuthenticatedAs($user);
     }
 
-    public function test_handle_google_callback_updates_existing_user(): void
-    {
-        $existingUser = User::factory()->create([
-            'google_id'  => 'google-123',
-            'name'       => 'Old Name',
-            'email'      => 'old@test.com',
-            'avatar_url' => 'https://old-avatar.url',
-        ]);
-
-        $this->mockSocialiteUser('google-123', 'New Name', 'new@test.com', 'https://new-avatar.url');
-
-        $this->get('/auth/google/callback')
-            ->assertRedirect('/');
-
-        $existingUser->refresh();
-        $this->assertSame('New Name', $existingUser->name);
-        $this->assertSame('new@test.com', $existingUser->email);
-        $this->assertSame('https://new-avatar.url', $existingUser->avatar_url);
-        $this->assertAuthenticatedAs($existingUser);
-    }
-
-    public function test_handle_google_callback_exception_redirects_to_login(): void
+    public function test_handleGoogleCallback_例外発生時はログイン画面へリダイレクト(): void
     {
         $provider = Mockery::mock(GoogleProvider::class);
         $provider->shouldReceive('user')

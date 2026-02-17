@@ -22,6 +22,8 @@ export const Url = {
   CONTACT_COMPLETE: '/contact/complete',
   /** マイカート */
   MYCART: '/mycart',
+  /** プロフィール */
+  PROFILE: '/profile',
   /** 購入完了 */
   PAY_COMPLETE: '/complete',
 };

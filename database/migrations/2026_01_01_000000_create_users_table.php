@@ -12,12 +12,13 @@ return new class extends Migration {
     {
         Schema::create('users', static function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->dateTime('email_verified_at')->nullable();
-            $table->string('password')->nullable();
-            $table->string('google_id')->nullable()->unique();
-            $table->string('avatar_url')->nullable();
+            $table->string('name')->comment('表示名');
+            $table->string('email')->unique()->comment('メールアドレス');
+            $table->dateTime('email_verified_at')->nullable()->comment('メールアドレス確認日時');
+            $table->string('password')->nullable()->comment('パスワード');
+            $table->unsignedBigInteger('avatar_image_id')->nullable()->comment('アバター画像ID');
+            $table->string('google_id')->nullable()->unique()->comment('GoogleアカウントID(OAuthログイン専用)');
+            $table->string('avatar_url')->nullable()->comment('アバターURL(OAuthログイン専用)');
             $table->rememberToken();
             $table->dateTime('created_at');
             $table->dateTime('updated_at');

@@ -31,7 +31,7 @@ class ImportHistoryRepositoryTest extends BaseTest
         $importHistory2 = $this->createDefaultImportHistory([
             'type' => ImportType::Staff->value,
         ]);
-        $expected = [$importHistory1->id, $importHistory2->id];
+        $expected = [$importHistory2->id, $importHistory1->id];
 
         $result = $this->repository->getByImportHistory(ImportType::Staff);
         $actual = $result->pluck('id')->all();

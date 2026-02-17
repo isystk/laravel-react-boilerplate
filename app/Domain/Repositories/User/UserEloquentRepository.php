@@ -28,7 +28,7 @@ class UserEloquentRepository extends BaseEloquentRepository implements UserRepos
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator
     {
-        $query = $this->model->select();
+        $query = $this->model->with('avatarImage')->select();
 
         if (!is_null($conditions['name'] ?? null)) {
             $query->where('name', 'like', '%' . $conditions['name'] . '%');
@@ -48,5 +48,13 @@ class UserEloquentRepository extends BaseEloquentRepository implements UserRepos
 
         /** @var Collection<int, User> */
         return $query->get();
+    }
+
+    /**
+     * Google IDからユーザを取得します。
+     */
+    public function findByGoogleId(string $googleId): ?User
+    {
+        return $this->model->where('google_id', $googleId)->first();
     }
 }

@@ -22,9 +22,14 @@ class OrderFactory extends Factory
      */
     public function definition(): array
     {
+        // 1年前から現在までのランダムな日時を生成
+        $createdAt = fake()->dateTimeBetween('-1 year', 'now');
+
         return [
-            'user_id'   => \App\Domain\Entities\User::factory(),
-            'sum_price' => fake()->numberBetween(1000, 100000),
+            'user_id'    => \App\Domain\Entities\User::factory(),
+            'sum_price'  => fake()->numberBetween(1000, 100000),
+            'created_at' => $createdAt,
+            'updated_at' => fake()->dateTimeBetween($createdAt, 'now'),
         ];
     }
 

@@ -20,7 +20,7 @@ export const Default: { render: () => JSX.Element } = {
       if (!state) return <></>;
       return (
         <SideMenu
-          text="メニュー"
+          label="メニュー"
           items={[
             { text: 'ホーム', onClick: () => console.log('ホーム') },
             { text: 'プロフィール', onClick: () => console.log('プロフィール') },

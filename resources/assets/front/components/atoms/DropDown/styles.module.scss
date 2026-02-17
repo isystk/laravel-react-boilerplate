@@ -1,38 +1,40 @@
-
 .dropdown {
-    position: relative;
+  position: relative;
 }
 
 .dropdownToggle {
-    color: #4b5563;
-    cursor: pointer;
-    outline: none;
-    background: none;
-    border: none;
+  color: #4b5563;
+  cursor: pointer;
+  outline: none;
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .dropdownMenu {
-    position: absolute;
-    right: 0;
-    margin-top: 4px;
-    width: 160px;
-    background-color: white;
-    border: 1px solid #d1d5db;
-    border-radius: 0.375rem;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    z-index: 10;
+  position: absolute;
+  right: 0;
+  margin-top: 4px;
+  width: 180px;
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  z-index: 10;
 }
 
 .dropdownItem {
-    display: block;
-    width: 100%;
-    text-align: left;
-    padding: 8px 16px;
-    background: none;
-    border: none;
-    cursor: pointer;
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 8px 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .dropdownItem:hover {
-    background-color: #f3f4f6;
+  background-color: #f3f4f6;
 }
