@@ -27,6 +27,34 @@
                     {{ $user->email }}
                 </div>
             </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label text-muted small">アバター</label>
+                <div class="col-sm-10 d-flex align-items-center">
+                    @if ($user->avatarImage)
+                        <img src="{{ $user->avatarImage->getImageUrl() }}"
+                             alt="avatar"
+                             style="width:64px;height:64px;object-fit:cover;border-radius:50%;" />
+                    @elseif ($user->avatar_url)
+                        <img src="{{ $user->avatar_url }}"
+                             alt="avatar"
+                             style="width:64px;height:64px;object-fit:cover;border-radius:50%;" />
+                    @else
+                        <span class="text-muted">未設定</span>
+                    @endif
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label text-muted small">Googleログイン</label>
+                <div class="col-sm-10 d-flex align-items-center">
+                    @if ($user->google_id)
+                        <span class="badge bg-success">はい</span>
+                    @else
+                        <span class="badge bg-secondary">いいえ</span>
+                    @endif
+                </div>
+            </div>
         </div>
         <div class="card-footer text-center position-relative">
             <div class="d-inline-block">

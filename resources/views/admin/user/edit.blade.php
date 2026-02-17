@@ -56,6 +56,42 @@
                            class="form-control"
                            maxlength="{{ config('const.maxlength.users.email') }}" />
                 </div>
+
+                <div class="mb-3 row">
+                    <label class="col-sm-2 col-form-label">アバター</label>
+                    <div class="col-sm-10">
+                        @if ($user->avatarImage)
+                            <div class="mb-2">
+                                <img src="{{ $user->avatarImage->getImageUrl() }}"
+                                     alt="avatar"
+                                     style="width:80px;height:80px;object-fit:cover;border-radius:50%;" />
+                            </div>
+                        @elseif ($user->avatar_url)
+                            <div class="mb-2">
+                                <img src="{{ $user->avatar_url }}"
+                                     alt="avatar"
+                                     style="width:80px;height:80px;object-fit:cover;border-radius:50%;" />
+                            </div>
+                        @endif
+                        <input type="file"
+                               name="avatar"
+                               accept="image/*"
+                               class="form-control">
+                        <div class="form-text">画像を選択するとアバターが更新されます。 (最大5MB)</div>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label class="col-sm-2 col-form-label">Googleログイン</label>
+                    <div class="col-sm-10 d-flex align-items-center">
+                        @if ($user->google_id)
+                            <span class="badge bg-success">はい</span>
+                        @else
+                            <span class="badge bg-secondary">いいえ</span>
+                        @endif
+                    </div>
+                </div>
+
                 <div class="card-footer text-center  ">
                     <input class="btn btn-primary"
                            type="submit"

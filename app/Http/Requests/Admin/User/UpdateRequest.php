@@ -39,6 +39,12 @@ class UpdateRequest extends FormRequest
                 'max:' . $maxlength['email'],
                 //                Rule::unique(User::class),
             ],
+            'avatar' => [
+                'nullable',
+                'file',
+                'image',
+                'max:5120', // 5MB
+            ],
             //            'password' => $this->passwordRules(),
         ];
     }
