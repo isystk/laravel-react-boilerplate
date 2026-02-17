@@ -7,35 +7,25 @@ import logoImage from '@/assets/images/logo.png';
 
 export type Props = {
   hasLink?: boolean;
+  src?: string;
 };
 
-const Logo = ({ hasLink = true }: Props) => {
-  return hasLink ? <LinkLogo /> : <NoLinkLogo />;
+const Logo = ({ hasLink = true, src }: Props) => {
+  const imageSrc = src || (logoImage as string);
+  return hasLink ? <LinkLogo src={imageSrc} /> : <NoLinkLogo src={imageSrc} />;
 };
 
-const LinkLogo = () => {
+const LinkLogo = ({ src }: { src: string }) => {
   return (
     <Link to={Url.TOP} className={`flex items-center`}>
-      <Image
-        src={logoImage as string}
-        width={200}
-        height={60}
-        alt={Env.APP_NAME}
-        className={styles.logoImage}
-      />
+      <Image src={src} width={200} height={60} alt={Env.APP_NAME} className={styles.logoImage} />
     </Link>
   );
 };
 
-const NoLinkLogo = () => {
+const NoLinkLogo = ({ src }: { src: string }) => {
   return (
-    <Image
-      src={logoImage as string}
-      width={200}
-      height={60}
-      alt={Env.APP_NAME}
-      className={styles.logoImage}
-    />
+    <Image src={src} width={200} height={60} alt={Env.APP_NAME} className={styles.logoImage} />
   );
 };
 

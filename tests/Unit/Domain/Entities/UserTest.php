@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Domain\Entities;
 
-use App\Domain\Entities\Image;
 use App\Domain\Entities\User;
 use App\Enums\ImageType;
 use App\Mails\ResetPasswordToUser;
@@ -72,7 +71,7 @@ class UserTest extends BaseTest
 
     public function test_avatarImage_リレーションが正しく動作すること(): void
     {
-        $image = Image::factory()->create([
+        $image = $this->createDefaultImage([
             'file_name' => 'avatar.png',
             'type'      => ImageType::User->value,
         ]);
