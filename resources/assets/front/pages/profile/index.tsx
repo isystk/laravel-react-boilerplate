@@ -98,7 +98,9 @@ const ProfilePage = () => {
             />
 
             <div className="mb-5">
-              <label className="block text-gray-700 text-sm font-bold mb-2">{t('form.email')}</label>
+              <label className="block text-gray-700 text-sm font-bold mb-2">
+                {t('form.email')}
+              </label>
               <input type="text" className="form-control" value={state.auth.email || ''} disabled />
               <small className="text-gray-500">{t('form.emailNote')}</small>
             </div>

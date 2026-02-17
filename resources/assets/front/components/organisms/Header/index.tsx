@@ -27,9 +27,7 @@ const Header = () => {
   );
 
   const handleLogout = () => {
-    const element: HTMLFormElement = document.getElementById(
-      'logout-form',
-    ) as HTMLFormElement;
+    const element: HTMLFormElement = document.getElementById('logout-form') as HTMLFormElement;
     if (element) {
       element.submit();
     }
@@ -115,7 +113,7 @@ const Header = () => {
                 {
                   text: t('nav.logout'),
                   onClick: handleLogout,
-                }
+                },
               );
             } else {
               items.push(

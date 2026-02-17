@@ -49,7 +49,9 @@ const ContactCreate = () => {
       .email(t('validation:email'))
       .max(255, t('validation:maxLength', { field: t('contact:form.email'), max: 255 }))
       .required(t('validation:required', { field: t('contact:form.email') })),
-    gender: Yup.number().required(t('validation:requiredSelect', { field: t('contact:form.gender') })),
+    gender: Yup.number().required(
+      t('validation:requiredSelect', { field: t('contact:form.gender') }),
+    ),
     age: Yup.number().required(t('validation:requiredSelect', { field: t('contact:form.age') })),
     title: Yup.string()
       .max(50, t('validation:maxLength', { field: t('contact:form.subject'), max: 50 }))
