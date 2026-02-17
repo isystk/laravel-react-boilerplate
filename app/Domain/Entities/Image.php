@@ -73,7 +73,7 @@ class Image extends Model
     }
 
     /**
-     * 画像が在庫、問い合わせ、ユーザーのいずれかで使用されているかを返却します。
+     * 画像が在庫、問い合わせ、ユーザーのいずれかで使用されている場合にTrueを返却します。
      */
     public function isUsed(): bool
     {
