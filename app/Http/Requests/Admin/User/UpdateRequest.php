@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests\Admin\User;
 
+use App\Domain\Entities\User;
 use App\Http\Controllers\Front\Auth\PasswordValidationRules;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
@@ -37,7 +39,7 @@ class UpdateRequest extends FormRequest
                 'string',
                 'email',
                 'max:' . $maxlength['email'],
-                //                Rule::unique(User::class),
+                Rule::unique(User::class)->ignore($this->route('user')),
             ],
             'avatar' => [
                 'nullable',
@@ -45,7 +47,6 @@ class UpdateRequest extends FormRequest
                 'image',
                 'max:5120', // 5MB
             ],
-            //            'password' => $this->passwordRules(),
         ];
     }
 

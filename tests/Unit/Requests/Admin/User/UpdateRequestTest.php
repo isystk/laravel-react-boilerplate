@@ -2,8 +2,10 @@
 
 namespace Tests\Unit\Requests\Admin\User;
 
+use App\Domain\Entities\User;
 use App\Http\Requests\Admin\User\UpdateRequest;
 use Exception;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Validator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -12,6 +14,8 @@ use Tests\BaseTest;
 
 class UpdateRequestTest extends BaseTest
 {
+    use RefreshDatabase;
+
     private UpdateRequest $request;
 
     /**
@@ -40,11 +44,22 @@ class UpdateRequestTest extends BaseTest
     #[Test]
     #[Group('validate')]
     #[DataProvider('dataValidate')]
-    public function validate(array $attrs, bool $expect, string $attribute, array $messages): void
+    public function validate(array $attrs, bool $expect, string $attribute, array $messages, ?int $userId = null): void
     {
+        // ユーザIDが指定されている場合は、テストデータを投入し、ルートパラメータに設定する
+        if ($userId) {
+            User::factory()->create(['id' => 1, 'email' => 'user1@test.com']);
+            User::factory()->create(['id' => 2, 'email' => 'already@test.com']);
+
+            $route = $this->createMock(\Illuminate\Routing\Route::class);
+            $route->method('parameter')->with('user')->willReturn($userId);
+            $this->request->setRouteResolver(static fn () => $route);
+        }
+
         // リクエストデータ作成
         $requestData = [...$this->baseRequest, ...$attrs];
         $this->request->merge($requestData);
+
         // バリデーションルール取得
         $rules     = $this->request->rules();
         $validator = Validator::make($requestData, $rules, $this->request->messages(), $this->request->attributes());
@@ -118,6 +133,22 @@ class UpdateRequestTest extends BaseTest
                 'expect'    => true,
                 'attribute' => 'email',
                 'messages'  => [],
+            ],
+            'OK : email が自身のものであれば正常' => [
+                'attrs'     => ['email' => 'user1@test.com'],
+                'expect'    => true,
+                'attribute' => 'email',
+                'messages'  => [],
+                'userId'    => 1,
+            ],
+            'NG : email が既に使用されている' => [
+                'attrs'     => ['email' => 'already@test.com'],
+                'expect'    => false,
+                'attribute' => 'email',
+                'messages'  => [
+                    'そのメールアドレスはすでに使われています。',
+                ],
+                'userId' => 1,
             ],
         ];
     }

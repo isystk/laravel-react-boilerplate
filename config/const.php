@@ -2,7 +2,7 @@
 
 return [
 
-    'upload_max_filesize' => 104857600, // 100MB
+    'upload_max_filesize' => 10485760, // 10MB
 
     'maxlength' => [
         'commons' => [

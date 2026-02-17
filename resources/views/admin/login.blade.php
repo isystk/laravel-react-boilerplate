@@ -6,7 +6,6 @@
           action="{{ route('admin.login') }}"
           class="p-3">
         @csrf
-        {!! RecaptchaV3::field('login') !!}
 
         <div class="mb-3">
             <label for="email"
@@ -70,8 +69,4 @@
             </button>
         </div>
     </form>
-@endsection
-
-@section('scripts')
-    {!! RecaptchaV3::initJs() !!}
 @endsection

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\AccessControlMiddleware;
+use App\Http\Middleware\SecurityHeadersMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -17,7 +18,8 @@ return Application::configure(basePath: dirname(__DIR__))
             ->trustProxies(at: '*')
             ->validateCsrfTokens(except: [
                 'api/*',
-            ]);
+            ])
+            ->append(SecurityHeadersMiddleware::class);
     })
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([

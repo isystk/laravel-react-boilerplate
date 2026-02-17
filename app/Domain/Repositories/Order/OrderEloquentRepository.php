@@ -48,8 +48,12 @@ class OrderEloquentRepository extends BaseEloquentRepository implements OrderRep
             $query->where('orders.created_at', '<=', $conditions['order_date_to']->format('Y-m-d'));
         }
 
-        if (!is_null($conditions['sort_name'] ?? null)) {
-            $query->orderBy($conditions['sort_name'], $conditions['sort_direction'] ?? 'asc');
+        $sortColumn = $this->validateSortColumn(
+            $conditions['sort_name'] ?? '',
+            ['id', 'orders.created_at', 'orders.updated_at', 'users.name'],
+        );
+        if ($sortColumn !== null) {
+            $query->orderBy($sortColumn, $conditions['sort_direction'] ?? 'asc');
         }
         $query->orderBy('id', 'asc');
 

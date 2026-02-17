@@ -5,7 +5,6 @@ namespace App\Providers;
 use App\Domain\Entities\Order;
 use App\Observers\OrderObserver;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
@@ -22,11 +21,8 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(UrlGenerator $url): void
+    public function boot(): void
     {
-        // httpでアクセスされた際に強制的にhttpsに変換する
-        //        $url->forceScheme('https');
-
         // ページネーションでBootstrapを利用する
         Paginator::useBootstrap();
 
