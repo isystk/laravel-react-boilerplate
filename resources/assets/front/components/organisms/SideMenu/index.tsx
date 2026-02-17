@@ -18,9 +18,7 @@ const SideMenu = ({ label, items, className = '' }: Props) => {
       {/* サイドメニュー */}
       <div className={`${styles.sideMenu} ${className} ${isOpen ? styles.open : styles.closed}`}>
         <div className={styles.menuHeader}>
-          <div className="flex items-center gap-2 p-3">
-            {label}
-          </div>
+          <div className="flex items-center gap-2 p-3">{label}</div>
         </div>
         <nav className={`sideMenu ${isOpen ? 'open' : ''}`}>
           <ul className={styles.menuList}>

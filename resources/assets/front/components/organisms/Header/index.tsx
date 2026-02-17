@@ -118,7 +118,8 @@ const Header = () => {
                       element.submit();
                     }
                   },
-                });
+                },
+              );
             } else {
               items.push(
                 {
