@@ -1,0 +1,14 @@
+{
+  "title": "编辑个人资料",
+  "avatar.noImage": "无图片",
+  "avatar.select": "选择图片",
+  "avatar.alt": "头像预览",
+  "form.name": "姓名",
+  "form.email": "电子邮箱",
+  "form.emailNote": "电子邮箱不可更改。",
+  "form.submit": "保存",
+  "language": "显示语言",
+  "language.ja": "日本語",
+  "language.en": "English",
+  "language.zh": "中文"
+}

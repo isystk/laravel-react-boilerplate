@@ -1,0 +1,18 @@
+{
+  "404.title": "404 - 页面未找到",
+  "404.text": "您访问的页面不存在或已被移动。",
+  "500.title": "500 - 服务器错误",
+  "500.text": "请稍后再试。",
+  "service.cartFetchFailed": "获取购物车失败",
+  "service.cartAddFailed": "添加到购物车失败",
+  "service.cartRemoveFailed": "从购物车删除失败",
+  "service.paymentFailed": "支付失败",
+  "service.likeFetchFailed": "获取收藏列表失败",
+  "service.likeAdded": "已添加到收藏",
+  "service.likeAddFailed": "添加收藏失败",
+  "service.likeRemoveFailed": "删除收藏失败",
+  "service.stockFetchFailed": "获取商品数据失败",
+  "service.contactFailed": "提交咨询失败",
+  "service.profileUpdated": "个人资料已更新",
+  "service.profileUpdateFailed": "更新个人资料失败"
+}

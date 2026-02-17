@@ -1,0 +1,12 @@
+{
+  "required": "Please enter {{field}}",
+  "requiredSelect": "Please select {{field}}",
+  "maxLength": "{{field}} must be {{max}} characters or less",
+  "email": "Please enter a valid email address",
+  "url": "Please enter a valid URL",
+  "imageRequired": "Please select an image",
+  "cautionRequired": "Please agree to the terms",
+  "cardNumber": "Please enter a card number",
+  "cardExp": "Please enter an expiration date",
+  "cardCvc": "Please enter a security code"
+}

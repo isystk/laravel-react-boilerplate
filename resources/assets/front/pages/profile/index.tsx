@@ -3,9 +3,17 @@ import CSRFToken from '@/components/atoms/CSRFToken';
 import BasicLayout from '@/components/templates/BasicLayout';
 import useAppRoot from '@/states/useAppRoot';
 import TextInput from '@/components/atoms/TextInput';
+import { useTranslation } from 'react-i18next';
+
+const languages = [
+  { code: 'ja', label: '日本語' },
+  { code: 'en', label: 'English' },
+  { code: 'zh', label: '中文' },
+];
 
 const ProfilePage = () => {
   const { state, service } = useAppRoot();
+  const { t, i18n } = useTranslation('profile');
   const [name, setName] = useState<string>(state.auth.name || '');
   const [avatarPreview, setAvatarPreview] = useState<string | null>(state.auth.avatar_url || null);
   const [avatarBase64, setAvatarBase64] = useState<string | null>(null);
@@ -37,10 +45,14 @@ const ProfilePage = () => {
     });
   };
 
+  const handleLanguageChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    i18n.changeLanguage(e.target.value);
+  };
+
   if (!state) return <></>;
 
   return (
-    <BasicLayout title="プロフィール編集">
+    <BasicLayout title={t('title')}>
       <div className="bg-white p-6 rounded-md shadow-md">
         <form onSubmit={handleSubmit}>
           <CSRFToken />
@@ -50,12 +62,12 @@ const ProfilePage = () => {
                 {avatarPreview ? (
                   <img
                     src={avatarPreview}
-                    alt="Avatar Preview"
+                    alt={t('avatar.alt')}
                     className="w-32 h-32 rounded-full mx-auto object-cover border"
                   />
                 ) : (
                   <div className="w-32 h-32 rounded-full mx-auto bg-gray-200 flex items-center justify-center border">
-                    <span className="text-gray-400">No Image</span>
+                    <span className="text-gray-400">{t('avatar.noImage')}</span>
                   </div>
                 )}
               </div>
@@ -64,7 +76,7 @@ const ProfilePage = () => {
                 className="btn btn-outline-secondary btn-sm"
                 onClick={() => fileInputRef.current?.click()}
               >
-                画像を選択
+                {t('avatar.select')}
               </button>
               <input
                 type="file"
@@ -78,7 +90,7 @@ const ProfilePage = () => {
             <TextInput
               identity="name"
               controlType="text"
-              label="お名前"
+              label={t('form.name')}
               defaultValue={name}
               onChange={e => setName(e.target.value)}
               autoFocus={true}
@@ -86,14 +98,31 @@ const ProfilePage = () => {
             />
 
             <div className="mb-5">
-              <label className="block text-gray-700 text-sm font-bold mb-2">メールアドレス</label>
+              <label className="block text-gray-700 text-sm font-bold mb-2">
+                {t('form.email')}
+              </label>
               <input type="text" className="form-control" value={state.auth.email || ''} disabled />
-              <small className="text-gray-500">メールアドレスは変更できません。</small>
+              <small className="text-gray-500">{t('form.emailNote')}</small>
+            </div>
+
+            <div className="mb-5">
+              <label className="block text-gray-700 text-sm font-bold mb-2">{t('language')}</label>
+              <select
+                className="form-control"
+                value={i18n.language}
+                onChange={handleLanguageChange}
+              >
+                {languages.map(lang => (
+                  <option key={lang.code} value={lang.code}>
+                    {lang.label}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div className="mt-3 text-center">
               <button type="submit" className="btn btn-primary">
-                保存する
+                {t('form.submit')}
               </button>
             </div>
           </div>

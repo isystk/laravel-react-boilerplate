@@ -1,0 +1,14 @@
+{
+  "title": "Edit Profile",
+  "avatar.noImage": "No Image",
+  "avatar.select": "Select Image",
+  "avatar.alt": "Avatar Preview",
+  "form.name": "Name",
+  "form.email": "Email",
+  "form.emailNote": "Email address cannot be changed.",
+  "form.submit": "Save",
+  "language": "Display Language",
+  "language.ja": "日本語",
+  "language.en": "English",
+  "language.zh": "中文"
+}

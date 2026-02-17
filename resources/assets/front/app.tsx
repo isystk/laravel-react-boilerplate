@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client';
 import { type User } from '@/states/auth';
 import AppRoot from '@/components/AppRoot';
 import '@/assets/styles/app.scss';
+import '@/i18n';
 import { Api } from '@/constants/api';
 
 const render = (user: User) => {

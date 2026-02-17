@@ -2,17 +2,19 @@ import SessionAlert from '@/components/atoms/SessionAlert';
 import CSRFToken from '@/components/atoms/CSRFToken';
 import BasicLayout from '@/components/templates/BasicLayout';
 import useAppRoot from '@/states/useAppRoot';
+import { useTranslation } from 'react-i18next';
 
 const Verify = () => {
   const { state } = useAppRoot();
+  const { t } = useTranslation('auth');
 
   if (!state) return <></>;
 
   return (
-    <BasicLayout title="メールを確認してください">
+    <BasicLayout title={t('verify.title')}>
       <div className="bg-white p-6 rounded-md shadow-md ">
         <SessionAlert target="resent" />
-        確認用リンクが記載されたメールをご確認ください。メールが届いていない場合は{' '}
+        {t('verify.message')}{' '}
         <a
           href="#"
           onClick={e => {
@@ -25,9 +27,9 @@ const Verify = () => {
             }
           }}
         >
-          こちら
+          {t('verify.resendLink')}
         </a>{' '}
-        から再度リクエストしてください。
+        {t('verify.resendSuffix')}
         <form
           id="email-form"
           action="/email/verification-notification"

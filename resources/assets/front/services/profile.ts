@@ -1,6 +1,7 @@
 import MainService from '@/services/main';
 import { Api } from '@/constants/api';
 import AuthState from '@/states/auth';
+import i18n from '@/i18n';
 
 export default class ProfileService {
   main: MainService;
@@ -24,13 +25,13 @@ export default class ProfileService {
       });
       const result = await response.json();
       if (!result) {
-        throw new Error('プロフィールの変更に失敗しました');
+        throw new Error(i18n.t('error:service.profileUpdateFailed'));
       }
       this.auth.name = result.name;
       this.auth.avatar_url = result.avatarUrl || null;
-      this.main.showToastMessage('プロフィールを更新しました');
+      this.main.showToastMessage(i18n.t('error:service.profileUpdated'));
     } catch (e) {
-      this.main.showToastMessage('プロフィールの変更に失敗しました');
+      this.main.showToastMessage(i18n.t('error:service.profileUpdateFailed'));
       throw e;
     } finally {
       this.main.hideLoading();

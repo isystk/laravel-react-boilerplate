@@ -5,9 +5,11 @@ import BasicLayout from '@/components/templates/BasicLayout';
 import useAppRoot from '@/states/useAppRoot';
 import TextInput from '@/components/atoms/TextInput';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const ResetForm = () => {
   const { state } = useAppRoot();
+  const { t } = useTranslation('auth');
   const { token } = useParams<{ token: string }>();
   const [email, setEmail] = useState<string>('');
 
@@ -18,7 +20,7 @@ const ResetForm = () => {
   if (!state) return <></>;
 
   return (
-    <BasicLayout title="パスワード変更">
+    <BasicLayout title={t('passwordChange.title')}>
       <div className="bg-white p-6 rounded-md shadow-md ">
         <SessionAlert target="status" />
         <form method="POST" action="/reset-password" id="login-form">
@@ -28,7 +30,7 @@ const ResetForm = () => {
             <TextInput
               identity="email"
               controlType="email"
-              label="メールアドレス"
+              label={t('passwordChange.email')}
               defaultValue={email}
               action={handleSetEmail}
               autoFocus={true}
@@ -38,19 +40,19 @@ const ResetForm = () => {
               identity="password"
               controlType="password"
               autoComplete="new-password"
-              label="新しいパスワード"
+              label={t('passwordChange.newPassword')}
               className="mb-5"
             />
             <TextInput
               identity="password_confirmation"
               controlType="password"
               autoComplete="new-password"
-              label="新しいパスワード(確認)"
+              label={t('passwordChange.newPasswordConfirm')}
               className="mb-5"
             />
             <div className="mt-3 text-center">
               <button type="submit" className="btn btn-primary mr-5">
-                パスワードを変更する
+                {t('passwordChange.submit')}
               </button>
             </div>
           </div>

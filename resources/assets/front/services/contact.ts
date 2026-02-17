@@ -1,5 +1,6 @@
 import MainService from '@/services/main';
 import { Api } from '@/constants/api';
+import i18n from '@/i18n';
 
 export type Contact = {
   user_name: string;
@@ -33,7 +34,7 @@ export default class ContactService {
       });
       await response.json();
     } catch (e) {
-      this.main.showToastMessage('お問い合わせの登録に失敗しました');
+      this.main.showToastMessage(i18n.t('error:service.contactFailed'));
       throw e;
     } finally {
       this.main.hideLoading();

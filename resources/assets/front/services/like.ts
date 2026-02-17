@@ -1,6 +1,7 @@
 import MainService from '@/services/main';
 import { Api } from '@/constants/api';
 import LikeState from '@/states/like';
+import i18n from '@/i18n';
 
 export default class LikeService {
   main: MainService;
@@ -18,7 +19,7 @@ export default class LikeService {
       const { stockIds } = await response.json();
       this.like.stockIds = stockIds;
     } catch (e) {
-      this.main.showToastMessage('お気に入りの取得に失敗しました');
+      this.main.showToastMessage(i18n.t('error:service.likeFetchFailed'));
     }
 
     this.main.hideLoading();
@@ -38,11 +39,11 @@ export default class LikeService {
       });
       const { result } = await response.json();
       if (result) {
-        this.main.showToastMessage('お気に入りに追加しました');
+        this.main.showToastMessage(i18n.t('error:service.likeAdded'));
         this.like.stockIds = [id, ...this.like.stockIds];
       }
     } catch (e) {
-      this.main.showToastMessage('お気に入りの追加に失敗しました');
+      this.main.showToastMessage(i18n.t('error:service.likeAddFailed'));
     }
     this.main.hideLoading();
   }
@@ -58,7 +59,7 @@ export default class LikeService {
         this.like.stockIds = this.like.stockIds.filter(n => n !== id);
       }
     } catch (e) {
-      this.main.showToastMessage('お気に入りの削除に失敗しました');
+      this.main.showToastMessage(i18n.t('error:service.likeRemoveFailed'));
       throw e;
     } finally {
       this.main.hideLoading();

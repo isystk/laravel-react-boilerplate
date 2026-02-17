@@ -13,6 +13,7 @@ import {
 } from '@stripe/react-stripe-js';
 import Modal from '@/components/interactions/Modal';
 import useAppRoot from '@/states/useAppRoot';
+import { useTranslation } from 'react-i18next';
 
 type FormValues = {
   amount: number;
@@ -30,6 +31,7 @@ type Props = {
 
 const PaymentModal = ({ isOpen, handleClose, amount }: Props) => {
   const { state, service } = useAppRoot();
+  const { t } = useTranslation(['cart', 'validation']);
 
   const navigate = useNavigate();
   const stripe = useStripe();
@@ -42,9 +44,7 @@ const PaymentModal = ({ isOpen, handleClose, amount }: Props) => {
       return;
     }
 
-    // 決算処理を行う
     await service.cart.payment({ stripe, elements, amount, email });
-    // 完了画面を表示する
     navigate(Url.PAY_COMPLETE);
   };
 
@@ -59,58 +59,55 @@ const PaymentModal = ({ isOpen, handleClose, amount }: Props) => {
   return (
     <Modal isOpen={isOpen} onClose={handleClose}>
       <>
-        <h2 className="text-center font-bold text-xl mb-4">決済情報の入力</h2>
+        <h2 className="text-center font-bold text-xl mb-4">{t('cart:payment.title')}</h2>
         <Formik
           initialValues={initialValues}
           onSubmit={handlePayment}
           validationSchema={Yup.object().shape({
-            cardNumber: Yup.string().required('カード番号を入力してください'),
-            cardExp: Yup.string().required('有効期限を入力してください'),
-            cardCvc: Yup.string().required('セキュリティコードを入力してください'),
+            cardNumber: Yup.string().required(t('validation:cardNumber')),
+            cardExp: Yup.string().required(t('validation:cardExp')),
+            cardCvc: Yup.string().required(t('validation:cardCvc')),
           })}
         >
           {({ isValid, values, errors, setFieldValue }) => (
             <Form>
               <CSRFToken />
               <div>
-                <label className="font-bold">金額</label>
-                <p className="p-3">{values.amount}円</p>
+                <label className="font-bold">{t('cart:payment.amount')}</label>
+                <p className="p-3">{t('cart:payment.amountValue', { amount: values.amount })}</p>
               </div>
               <div>
-                <label className="font-bold">メールアドレス</label>
+                <label className="font-bold">{t('cart:payment.email')}</label>
                 <p className="p-3">{values.email}</p>
               </div>
               <div className="mt-3">
                 <label className="font-bold">
-                  カード番号{' '}
-                  <span className="text-red-600 text-sm">(テストデータ：5555555555554444)</span>
+                  {t('cart:payment.cardNumber')}{' '}
+                  <span className="text-red-600 text-sm">{t('cart:payment.cardNumberTest')}</span>
                 </label>
                 <CardNumberElement
                   className={styles.formControl}
                   onChange={event => {
-                    // Stripe Elements はセキュリティ上の理由から値を直接 JavaScript 経由で取得できない」仕様になっている
                     setFieldValue('cardNumber', event.complete ? 'complete' : '');
                   }}
                 />
                 {errors.cardNumber && <p className={styles.error}>{errors.cardNumber}</p>}
               </div>
               <div className="mt-3">
-                <label className="font-bold">有効期限</label>
+                <label className="font-bold">{t('cart:payment.cardExp')}</label>
                 <CardExpiryElement
                   className={styles.formControl}
                   onChange={event => {
-                    // Stripe Elements はセキュリティ上の理由から値を直接 JavaScript 経由で取得できない」仕様になっている
                     setFieldValue('cardExp', event.complete ? 'complete' : '');
                   }}
                 />
                 {errors.cardExp && <p className={styles.error}>{errors.cardExp}</p>}
               </div>
               <div className="mt-3">
-                <label className="font-bold">セキュリティーコード</label>
+                <label className="font-bold">{t('cart:payment.cardCvc')}</label>
                 <CardCvcElement
                   className={styles.formControl}
                   onChange={event => {
-                    // Stripe Elements はセキュリティ上の理由から値を直接 JavaScript 経由で取得できない」仕様になっている
                     setFieldValue('cardCvc', event.complete ? 'complete' : '');
                   }}
                 />
@@ -118,7 +115,7 @@ const PaymentModal = ({ isOpen, handleClose, amount }: Props) => {
               </div>
               <p className="text-center mt-3">
                 <button type="submit" className="btn btn-primary" disabled={!stripe || !isValid}>
-                  購入する
+                  {t('cart:payment.submit')}
                 </button>
               </p>
             </Form>

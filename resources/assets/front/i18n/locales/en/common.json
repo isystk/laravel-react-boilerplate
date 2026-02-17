@@ -1,0 +1,15 @@
+{
+  "nav.viewCart": "View Cart",
+  "nav.contact": "Contact",
+  "nav.editProfile": "Edit Profile",
+  "nav.logout": "Logout",
+  "nav.login": "Login",
+  "nav.register": "Sign Up",
+  "nav.cartAlt": "Cart",
+  "honorific": "{{name}}",
+  "loading": "Loading...",
+  "toast.yes": "Yes",
+  "toast.no": "No",
+  "backToProducts": "Back to Products",
+  "backToHome": "Back to Home"
+}

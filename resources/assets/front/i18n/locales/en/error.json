@@ -1,0 +1,18 @@
+{
+  "404.title": "404 - Page Not Found",
+  "404.text": "The page you are looking for does not exist or has been moved.",
+  "500.title": "500 - Server Error",
+  "500.text": "Please try again later.",
+  "service.cartFetchFailed": "Failed to load cart",
+  "service.cartAddFailed": "Failed to add item to cart",
+  "service.cartRemoveFailed": "Failed to remove item from cart",
+  "service.paymentFailed": "Payment failed",
+  "service.likeFetchFailed": "Failed to load favorites",
+  "service.likeAdded": "Added to favorites",
+  "service.likeAddFailed": "Failed to add to favorites",
+  "service.likeRemoveFailed": "Failed to remove from favorites",
+  "service.stockFetchFailed": "Failed to load products",
+  "service.contactFailed": "Failed to submit inquiry",
+  "service.profileUpdated": "Profile updated",
+  "service.profileUpdateFailed": "Failed to update profile"
+}

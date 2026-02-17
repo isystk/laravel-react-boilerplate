@@ -4,6 +4,7 @@ import Image from '@/components/atoms/Image';
 import { Url } from '@/constants/url';
 import useAppRoot from '@/states/useAppRoot';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export type Props = {
   id: number;
@@ -18,6 +19,7 @@ export type Props = {
 const StockItem = ({ id, name, imageUrl, price, detail, quantity, isLike }: Props) => {
   const { state, service } = useAppRoot();
   const navigate = useNavigate();
+  const { t } = useTranslation('cart');
 
   if (!state) return <></>;
 
@@ -47,7 +49,7 @@ const StockItem = ({ id, name, imageUrl, price, detail, quantity, isLike }: Prop
           data-id={id}
           onClick={handleLikeClick}
         >
-          気になる
+          {t('stock.like')}
         </button>
       </div>
       <Image src={imageUrl} width={276} height={184} alt={name} className="mb-2 w-100" />
@@ -61,7 +63,7 @@ const StockItem = ({ id, name, imageUrl, price, detail, quantity, isLike }: Prop
         onClick={handleAddToCart}
         disabled={quantity === 0}
       >
-        カートに入れる（残り{quantity}個）
+        {t('stock.addToCart', { quantity })}
       </button>
     </div>
   );

@@ -1,0 +1,12 @@
+{
+  "required": "{{field}}を入力してください",
+  "requiredSelect": "{{field}}を選択してください",
+  "maxLength": "{{field}}は{{max}}文字以下を入れてください",
+  "email": "メールアドレスを正しく入力してしてください",
+  "url": "URLを正しく入力してください",
+  "imageRequired": "画像を選択してください",
+  "cautionRequired": "注意事項に同意してください",
+  "cardNumber": "カード番号を入力してください",
+  "cardExp": "有効期限を入力してください",
+  "cardCvc": "セキュリティコードを入力してください"
+}

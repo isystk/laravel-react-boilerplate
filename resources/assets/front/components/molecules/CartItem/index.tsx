@@ -3,6 +3,7 @@ import Image from '@/components/atoms/Image';
 import useAppRoot from '@/states/useAppRoot';
 import { useState } from 'react';
 import { ToastMessage, ToastTypes } from '@/components/interactions/ToastMessage';
+import { useTranslation } from 'react-i18next';
 
 export type Props = {
   id: number;
@@ -14,6 +15,7 @@ export type Props = {
 
 const CartItem = ({ id, name, imageUrl, price, detail }: Props) => {
   const { state, service } = useAppRoot();
+  const { t } = useTranslation('cart');
 
   const [isShowDeleteConfirm, setIsShowDeleteConfirm] = useState(false);
 
@@ -35,11 +37,11 @@ const CartItem = ({ id, name, imageUrl, price, detail }: Props) => {
           setIsShowDeleteConfirm(true);
         }}
       >
-        カートから削除する
+        {t('cartItem.removeFromCart')}
       </button>
       <ToastMessage
         isOpen={isShowDeleteConfirm}
-        message="削除します。よろしいですか？"
+        message={t('cartItem.confirmDelete')}
         type={ToastTypes.Confirm}
         onConfirm={() => {
           setIsShowDeleteConfirm(false);

@@ -2,27 +2,29 @@ import { Url } from '@/constants/url';
 import { Link } from 'react-router-dom';
 import BasicLayout from '@/components/templates/BasicLayout';
 import useAppRoot from '@/states/useAppRoot';
+import { useTranslation } from 'react-i18next';
 
 const ShopComplete = () => {
   const { state } = useAppRoot();
+  const { t } = useTranslation('cart');
 
   if (!state) return <></>;
   const auth = state.auth;
 
   return (
-    <BasicLayout title="商品購入完了">
+    <BasicLayout title={t('complete.title')}>
       <div className="bg-white p-6 rounded-md shadow-md ">
         <h2 className="font-bold text-xl text-center">
-          {auth.name}さん。ご購入ありがとうございました
+          {t('complete.thankYou', { name: auth.name })}
         </h2>
         <div className="text-center mt-10">
           <p className="mt-5">
-            ご登録頂いたメールアドレスへ決済情報をお送りしております。
+            {t('complete.message1')}
             <br />
-            お手続き完了次第商品を発送致します。
+            {t('complete.message2')}
           </p>
           <Link to={Url.TOP} className="btn btn-primary mt-10">
-            商品一覧へ戻る
+            {t('common:backToProducts')}
           </Link>
         </div>
       </div>

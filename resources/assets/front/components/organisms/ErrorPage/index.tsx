@@ -2,20 +2,23 @@ import styles from './styles.module.scss';
 import BasicLayout from '@/components/templates/BasicLayout';
 import { Link } from 'react-router-dom';
 import { Url } from '@/constants/url';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   status?: number;
 };
 
 const ErrorPage = ({ status = 500 }: Props) => {
+  const { t } = useTranslation('error');
+
   const errors: { [key: number]: { title: string; text: string } } = {
     404: {
-      title: '404 - ページが見つかりません',
-      text: 'お探しのページは存在しないか、移動されました。',
+      title: t('404.title'),
+      text: t('404.text'),
     },
     500: {
-      title: '500 - サーバーエラーが発生しました',
-      text: '少し時間を置いて再度お試しください。',
+      title: t('500.title'),
+      text: t('500.text'),
     },
   };
 
@@ -28,7 +31,7 @@ const ErrorPage = ({ status = 500 }: Props) => {
           <h1 className={styles.heading}>{title}</h1>
           <p className={styles.text}>{text}</p>
           <Link to={Url.TOP} className={styles.link}>
-            ホームに戻る
+            {t('common:backToHome')}
           </Link>
         </div>
       </div>
