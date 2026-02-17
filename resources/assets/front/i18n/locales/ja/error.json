@@ -1,0 +1,18 @@
+{
+  "404.title": "404 - ページが見つかりません",
+  "404.text": "お探しのページは存在しないか、移動されました。",
+  "500.title": "500 - サーバーエラーが発生しました",
+  "500.text": "少し時間を置いて再度お試しください。",
+  "service.cartFetchFailed": "マイカートの取得に失敗しました",
+  "service.cartAddFailed": "マイカートの追加に失敗しました",
+  "service.cartRemoveFailed": "マイカートの削除に失敗しました",
+  "service.paymentFailed": "決済処理に失敗しました",
+  "service.likeFetchFailed": "お気に入りの取得に失敗しました",
+  "service.likeAdded": "お気に入りに追加しました",
+  "service.likeAddFailed": "お気に入りの追加に失敗しました",
+  "service.likeRemoveFailed": "お気に入りの削除に失敗しました",
+  "service.stockFetchFailed": "商品データの取得に失敗しました",
+  "service.contactFailed": "お問い合わせの登録に失敗しました",
+  "service.profileUpdated": "プロフィールを更新しました",
+  "service.profileUpdateFailed": "プロフィールの変更に失敗しました"
+}

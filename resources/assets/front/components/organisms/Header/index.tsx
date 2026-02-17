@@ -9,10 +9,12 @@ import useAppRoot from '@/states/useAppRoot';
 import CSRFToken from '@/components/atoms/CSRFToken';
 import cartImage from '@/assets/images/cart.png';
 import Avatar from '@/components/atoms/Avatar';
+import { useTranslation } from 'react-i18next';
 
 const Header = () => {
   const { state } = useAppRoot();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   if (!state) return <></>;
   const { isLogined, name, avatar_url } = state.auth;
@@ -20,9 +22,18 @@ const Header = () => {
   const userLabel = (
     <div className="flex items-center gap-2">
       <Avatar src={avatar_url} size={24} />
-      <span>{name} 様</span>
+      <span>{t('honorific', { name })}</span>
     </div>
   );
+
+  const handleLogout = () => {
+    const element: HTMLFormElement = document.getElementById(
+      'logout-form',
+    ) as HTMLFormElement;
+    if (element) {
+      element.submit();
+    }
+  };
 
   return (
     <header className={`${styles.header} shadow-sm`}>
@@ -39,27 +50,20 @@ const Header = () => {
                       label={userLabel}
                       items={[
                         {
-                          text: 'カートを見る',
+                          text: t('nav.viewCart'),
                           onClick: () => navigate(Url.MYCART),
                         },
                         {
-                          text: 'お問い合わせ',
+                          text: t('nav.contact'),
                           onClick: () => navigate(Url.CONTACT),
                         },
                         {
-                          text: 'プロフィール変更',
+                          text: t('nav.editProfile'),
                           onClick: () => navigate(Url.PROFILE),
                         },
                         {
-                          text: 'ログアウト',
-                          onClick: () => {
-                            const element: HTMLFormElement = document.getElementById(
-                              'logout-form',
-                            ) as HTMLFormElement;
-                            if (element) {
-                              element.submit();
-                            }
-                          },
+                          text: t('nav.logout'),
+                          onClick: handleLogout,
                         },
                       ]}
                     />
@@ -70,11 +74,11 @@ const Header = () => {
                   <>
                     <li>
                       <Link className="btn btn-danger" to={Url.LOGIN}>
-                        ログイン
+                        {t('nav.login')}
                       </Link>
                     </li>
                     <li>
-                      <Link to={Url.REGISTER}>新規登録</Link>
+                      <Link to={Url.REGISTER}>{t('nav.register')}</Link>
                     </li>
                   </>
                 );
@@ -82,7 +86,7 @@ const Header = () => {
             })()}
             <li>
               <Link to={Url.MYCART}>
-                <Image src={cartImage as string} width={30} height={30} alt="カート" />
+                <Image src={cartImage as string} width={30} height={30} alt={t('nav.cartAlt')} />
               </Link>
             </li>
           </ul>
@@ -94,40 +98,33 @@ const Header = () => {
             const items: Array<{ text: string; onClick?: () => void }> = [];
             items.push(
               {
-                text: 'カートを見る',
+                text: t('nav.viewCart'),
                 onClick: () => navigate(Url.MYCART),
               },
               {
-                text: 'お問い合わせ',
+                text: t('nav.contact'),
                 onClick: () => navigate(Url.CONTACT),
               },
             );
             if (isLogined) {
               items.push(
                 {
-                  text: 'プロフィール変更',
+                  text: t('nav.editProfile'),
                   onClick: () => navigate(Url.PROFILE),
                 },
                 {
-                  text: 'ログアウト',
-                  onClick: () => {
-                    const element: HTMLFormElement = document.getElementById(
-                      'logout-form',
-                    ) as HTMLFormElement;
-                    if (element) {
-                      element.submit();
-                    }
-                  },
-                },
+                  text: t('nav.logout'),
+                  onClick: handleLogout,
+                }
               );
             } else {
               items.push(
                 {
-                  text: 'ログイン',
+                  text: t('nav.login'),
                   onClick: () => navigate(Url.LOGIN),
                 },
                 {
-                  text: '新規登録',
+                  text: t('nav.register'),
                   onClick: () => navigate(Url.REGISTER),
                 },
               );

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   target: string;
@@ -6,6 +7,7 @@ type Props = {
 };
 
 const SessionAlert = ({ target, className }: Props) => {
+  const { t } = useTranslation('auth');
   const [message, setMessage] = useState<string | undefined>(undefined);
 
   useEffect(() => {
@@ -25,7 +27,7 @@ const SessionAlert = ({ target, className }: Props) => {
 
   return (
     <div className={`bg-gray-100 text-center py-4 lg:px-4 ${className}`}>
-      {target === 'resent' ? 'あなたのメールアドレスに新しい認証リンクが送信されました。' : message}
+      {target === 'resent' ? t('verify.resentMessage') : message}
     </div>
   );
 };

@@ -1,0 +1,16 @@
+{
+  "title": "联系我们",
+  "form.name": "姓名",
+  "form.email": "电子邮箱",
+  "form.gender": "性别",
+  "form.age": "年龄",
+  "form.subject": "主题",
+  "form.content": "内容",
+  "form.url": "网站URL",
+  "form.image": "图片",
+  "form.caution": "同意注意事项",
+  "form.submit": "提交",
+  "complete.title": "提交完成",
+  "complete.heading": "您的咨询已提交",
+  "complete.message": "您的咨询已提交成功，请等待工作人员与您联系。"
+}

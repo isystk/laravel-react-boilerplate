@@ -1,0 +1,12 @@
+{
+  "required": "请输入{{field}}",
+  "requiredSelect": "请选择{{field}}",
+  "maxLength": "{{field}}不能超过{{max}}个字符",
+  "email": "请输入有效的电子邮箱地址",
+  "url": "请输入有效的URL",
+  "imageRequired": "请选择图片",
+  "cautionRequired": "请同意注意事项",
+  "cardNumber": "请输入卡号",
+  "cardExp": "请输入有效期",
+  "cardCvc": "请输入安全码"
+}

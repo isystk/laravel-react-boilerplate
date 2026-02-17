@@ -1,0 +1,15 @@
+{
+  "nav.viewCart": "查看购物车",
+  "nav.contact": "联系我们",
+  "nav.editProfile": "编辑个人资料",
+  "nav.logout": "退出登录",
+  "nav.login": "登录",
+  "nav.register": "注册",
+  "nav.cartAlt": "购物车",
+  "honorific": "{{name}}",
+  "loading": "加载中...",
+  "toast.yes": "是",
+  "toast.no": "否",
+  "backToProducts": "返回商品列表",
+  "backToHome": "返回首页"
+}

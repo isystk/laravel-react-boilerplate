@@ -2,6 +2,7 @@ import MainService from '@/services/main';
 import { Api } from '@/constants/api';
 import CartState from '@/states/cart';
 import * as stripeJs from '@stripe/stripe-js';
+import i18n from '@/i18n';
 
 export type PaymentForm = {
   stripe: stripeJs.Stripe;
@@ -33,7 +34,7 @@ export default class CartService {
         Object.assign(this.cart, result);
       }
     } catch (e) {
-      this.main.showToastMessage('マイカートの取得に失敗しました');
+      this.main.showToastMessage(i18n.t('error:service.cartFetchFailed'));
       throw e;
     } finally {
       this.main.hideLoading();
@@ -57,7 +58,7 @@ export default class CartService {
         Object.assign(this.cart, result);
       }
     } catch (e) {
-      this.main.showToastMessage('マイカートの追加に失敗しました');
+      this.main.showToastMessage(i18n.t('error:service.cartAddFailed'));
       throw e;
     } finally {
       this.main.hideLoading();
@@ -81,7 +82,7 @@ export default class CartService {
         Object.assign(this.cart, result);
       }
     } catch (e) {
-      this.main.showToastMessage('マイカートの削除に失敗しました');
+      this.main.showToastMessage(i18n.t('error:service.cartRemoveFailed'));
       throw e;
     } finally {
       this.main.hideLoading();
@@ -116,7 +117,7 @@ export default class CartService {
       });
 
       if (!confirmRes.paymentIntent || confirmRes.paymentIntent.status !== 'succeeded') {
-        throw new Error('決済処理に失敗しました');
+        throw new Error(i18n.t('error:service.paymentFailed'));
       }
 
       // Stripe側で決済処理が完了したら、注文履歴に追加してマイカートから商品を削除する。
@@ -132,7 +133,7 @@ export default class CartService {
         );
       }
     } catch (e) {
-      this.main.showToastMessage('決済処理に失敗しました');
+      this.main.showToastMessage(i18n.t('error:service.paymentFailed'));
       throw e;
     } finally {
       this.main.hideLoading();

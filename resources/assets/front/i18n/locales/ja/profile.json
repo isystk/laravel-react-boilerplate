@@ -1,0 +1,14 @@
+{
+  "title": "プロフィール編集",
+  "avatar.noImage": "No Image",
+  "avatar.select": "画像を選択",
+  "avatar.alt": "Avatar Preview",
+  "form.name": "お名前",
+  "form.email": "メールアドレス",
+  "form.emailNote": "メールアドレスは変更できません。",
+  "form.submit": "保存する",
+  "language": "表示言語",
+  "language.ja": "日本語",
+  "language.en": "English",
+  "language.zh": "中文"
+}

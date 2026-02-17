@@ -1,0 +1,16 @@
+{
+  "title": "Contact Us",
+  "form.name": "Name",
+  "form.email": "Email",
+  "form.gender": "Gender",
+  "form.age": "Age",
+  "form.subject": "Subject",
+  "form.content": "Message",
+  "form.url": "Website URL",
+  "form.image": "Image",
+  "form.caution": "I agree to the terms",
+  "form.submit": "Submit",
+  "complete.title": "Contact Complete",
+  "complete.heading": "Your inquiry has been submitted",
+  "complete.message": "Your inquiry has been submitted. Please wait for our representative to contact you."
+}

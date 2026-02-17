@@ -1,0 +1,15 @@
+{
+  "nav.viewCart": "カートを見る",
+  "nav.contact": "お問い合わせ",
+  "nav.editProfile": "プロフィール変更",
+  "nav.logout": "ログアウト",
+  "nav.login": "ログイン",
+  "nav.register": "新規登録",
+  "nav.cartAlt": "カート",
+  "honorific": "{{name}} 様",
+  "loading": "Loading...",
+  "toast.yes": "はい",
+  "toast.no": "いいえ",
+  "backToProducts": "商品一覧へ戻る",
+  "backToHome": "ホームに戻る"
+}

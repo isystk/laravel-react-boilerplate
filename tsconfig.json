@@ -20,6 +20,7 @@
       "noUnusedLocals": true,                   /* 未使用のローカルのエラーを報告します。 */
       "allowSyntheticDefaultImports": true,
       "esModuleInterop": true,                  /* コンパイル時にヘルパーメソッドが生成されるようになり、モジュールシステムの相互運用性が高まる。これにより、defaultをエクスポートしていない CommonJS 形式のモジュールを、ES Modules でデフォルトインポートする、といったことが可能になる。 */
+      "resolveJsonModule": true,                /* JSONファイルのインポートを有効にします。 */
       "forceConsistentCasingInFileNames": true, /* 大文字小文字を区別して参照を解決するようにします。 */
 
       /* 追加チェック */

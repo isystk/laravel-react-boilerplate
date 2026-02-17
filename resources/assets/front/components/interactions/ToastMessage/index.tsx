@@ -1,6 +1,7 @@
 import styles from './styles.module.scss';
 import Modal from '@/components/interactions/Modal';
 import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const ToastTypes = {
   Alert: 'alert',
@@ -24,6 +25,7 @@ const ToastMessage = ({
   onConfirm: onPropConfirm,
   onCancel: onPropCancel,
 }: ToastMessageProps) => {
+  const { t } = useTranslation();
   const cancelButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -45,11 +47,11 @@ const ToastMessage = ({
         <p className={styles.message}>{message}</p>
         <div className={styles.buttonGroup}>
           <button className="btn btn-primary" onClick={onConfirm}>
-            はい
+            {t('toast.yes')}
           </button>
           {type === ToastTypes.Confirm && (
             <button className="btn btn-danger" onClick={onCancel} ref={cancelButtonRef}>
-              いいえ
+              {t('toast.no')}
             </button>
           )}
         </div>
