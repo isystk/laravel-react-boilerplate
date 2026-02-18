@@ -37,4 +37,6 @@ export const Api = {
 
   /** プロフィール更新 */
   PROFILE_UPDATE: getBffUrl('/profile/update'),
+  /** アカウント削除 */
+  PROFILE_DESTROY: getBffUrl('/profile/destroy'),
 };

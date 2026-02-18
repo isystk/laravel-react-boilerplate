@@ -14,5 +14,7 @@
   "service.stockFetchFailed": "Failed to load products",
   "service.contactFailed": "Failed to submit inquiry",
   "service.profileUpdated": "Profile updated",
-  "service.profileUpdateFailed": "Failed to update profile"
+  "service.profileUpdateFailed": "Failed to update profile",
+  "service.accountDeleted": "Account deleted",
+  "service.accountDeletionFailed": "Failed to delete account"
 }

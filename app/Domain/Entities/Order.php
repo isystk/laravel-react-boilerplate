@@ -43,6 +43,14 @@ class Order extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Domain\Entities\OrderStock, $this>
+     */
+    public function orderStocks(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(OrderStock::class);
+    }
+
+    /**
      * The attributes that should be cast.
      *
      * @return array<string, string>

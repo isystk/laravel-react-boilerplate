@@ -41,4 +41,28 @@ class ProfileController extends BaseApiController
 
         return response()->json($dto);
     }
+
+    /**
+     * アカウントを削除します。
+     */
+    public function destroy(Request $request): JsonResponse
+    {
+        /** @var User $user */
+        $user = $request->user();
+
+        $service = app(\App\Services\Api\Profile\DestroyService::class);
+
+        DB::beginTransaction();
+
+        try {
+            $service->destroy($user);
+            DB::commit();
+        } catch (Throwable $e) {
+            DB::rollBack();
+
+            return $this->getErrorJsonResponse($e);
+        }
+
+        return response()->json(['result' => true]);
+    }
 }
