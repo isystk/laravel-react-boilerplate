@@ -2,6 +2,23 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
+// テスト実行時のi18nextプロモーションログを抑制
+if (typeof window !== 'undefined' && (window as any).vi) {
+  const suppress =
+    (fn: any) =>
+    (...args: any[]) => {
+      if (
+        typeof args[0] === 'string' &&
+        args[0].includes('i18next is maintained with support from Locize')
+      )
+        return;
+      fn(...args);
+    };
+  console.log = suppress(console.log);
+  console.info = suppress(console.info);
+  console.warn = suppress(console.warn);
+}
+
 import jaCommon from './locales/ja/common.json';
 import jaAuth from './locales/ja/auth.json';
 import jaContact from './locales/ja/contact.json';
@@ -67,6 +84,7 @@ i18n
     interpolation: {
       escapeValue: false,
     },
+    debug: false,
     detection: {
       order: ['localStorage'],
       lookupLocalStorage: 'i18n_language',
