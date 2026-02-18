@@ -16,11 +16,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    // フロントエンドの開発環境のオリジンを全て書く
-    'allowed_origins' => [
-        'http://localhost:3000',
-        'http://127.0.0.1:3000',
-    ],
+    'allowed_origins' => [],
 
     'allowed_headers' => ['*'],
 

@@ -31,7 +31,7 @@
                         </div>
                         <div class="card-body">
                             <div id="sales-chart"
-                                 data-sales='{!! json_encode($salesByMonth) !!}'
+                                 data-sales='{{ json_encode($salesByMonth, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) }}'
                                  style="width:100%; height:400px;"></div>
                         </div>
                     </div>

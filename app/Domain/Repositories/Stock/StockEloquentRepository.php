@@ -46,8 +46,12 @@ class StockEloquentRepository extends BaseEloquentRepository implements StockRep
             $query->where('name', 'like', '%' . $conditions['name'] . '%');
         }
 
-        if (!is_null($conditions['sort_name'] ?? null)) {
-            $query->orderBy($conditions['sort_name'], $conditions['sort_direction'] ?? 'asc');
+        $sortColumn = $this->validateSortColumn(
+            $conditions['sort_name'] ?? '',
+            ['id', 'name', 'detail', 'price', 'quantity', 'created_at', 'updated_at'],
+        );
+        if ($sortColumn !== null) {
+            $query->orderBy($sortColumn, $conditions['sort_direction'] ?? 'asc');
         }
 
         if (!is_null($conditions['limit'] ?? null)) {
