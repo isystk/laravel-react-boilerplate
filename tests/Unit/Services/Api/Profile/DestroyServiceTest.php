@@ -3,9 +3,8 @@
 namespace Tests\Unit\Services\Api\Profile;
 
 use App\Services\Api\Profile\DestroyService;
-use App\Services\Common\ImageService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Mockery;
+use Illuminate\Support\Facades\Storage;
 use Tests\BaseTest;
 
 class DestroyServiceTest extends BaseTest
@@ -22,6 +21,7 @@ class DestroyServiceTest extends BaseTest
 
     public function test_destroy_ユーザーに関連するすべてのデータが削除されること(): void
     {
+        Storage::fake('s3');
         $user = $this->createDefaultUser();
 
         $image = $this->createDefaultImage();
@@ -32,12 +32,6 @@ class DestroyServiceTest extends BaseTest
         $this->createDefaultOrderStock(['order_id' => $order->id]);
 
         $this->createDefaultCart(['user_id' => $user->id]);
-
-        $imageService = Mockery::mock(ImageService::class);
-        $imageService->shouldReceive('delete')
-            ->once()
-            ->with(Mockery::on(fn ($img) => $img->id === $image->id));
-        $this->app->instance(ImageService::class, $imageService);
 
         $this->service->destroy($user);
 

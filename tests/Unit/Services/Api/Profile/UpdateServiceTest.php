@@ -4,12 +4,9 @@ namespace Tests\Unit\Services\Api\Profile;
 
 use App\Domain\Entities\Image;
 use App\Dto\Response\Api\Profile\UpdateDto;
-use App\Enums\ImageType;
 use App\Services\Api\Profile\UpdateService;
-use App\Services\Common\ImageService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
-use Mockery;
+use Illuminate\Support\Facades\Storage;
 use Tests\BaseTest;
 
 class UpdateServiceTest extends BaseTest
@@ -43,27 +40,12 @@ class UpdateServiceTest extends BaseTest
 
     public function test_update_アバター画像を更新する場合(): void
     {
+        Storage::fake('s3');
         $user = $this->createDefaultUser([
-            'name'       => 'テストユーザー',
-            'avatar_url' => 'https://example.com/old-avatar.png',
+            'name'            => 'テストユーザー',
+            'avatar_url'      => 'https://example.com/old-avatar.png',
+            'avatar_image_id' => null,
         ]);
-
-        // ImageServiceをモック
-        $mockImage     = new Image;
-        $mockImage->id = 99;
-        $mockImage->forceFill([
-            'id'        => 99,
-            'file_name' => 'test.png',
-            'type'      => ImageType::User,
-        ]);
-
-        $imageService = Mockery::mock(ImageService::class);
-        $imageService->shouldReceive('store')
-            ->once()
-            ->withArgs(fn (UploadedFile $file, ImageType $type, string $fileName) => $type === ImageType::User)
-            ->andReturn($mockImage);
-
-        $this->app->instance(ImageService::class, $imageService);
 
         // 1x1 pixel PNG base64
         $base64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
@@ -72,7 +54,8 @@ class UpdateServiceTest extends BaseTest
         $this->assertInstanceOf(UpdateDto::class, $dto);
 
         $user->refresh();
-        $this->assertSame(99, $user->avatar_image_id);
+        $image = Image::first();
+        $this->assertSame($image->id, $user->avatar_image_id);
         $this->assertNull($user->avatar_url, 'アバター画像が設定された場合、avatar_urlはnullになる');
     }
 }

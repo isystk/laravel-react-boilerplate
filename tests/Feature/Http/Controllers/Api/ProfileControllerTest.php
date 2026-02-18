@@ -3,12 +3,9 @@
 namespace Tests\Feature\Http\Controllers\Api;
 
 use App\Domain\Entities\Image;
-use App\Enums\ImageType;
-use App\Services\Common\ImageService;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
-use Mockery;
+use Illuminate\Support\Facades\Storage;
 use Tests\BaseTest;
 
 class ProfileControllerTest extends BaseTest
@@ -44,26 +41,12 @@ class ProfileControllerTest extends BaseTest
 
     public function test_update_アバター画像を更新する場合(): void
     {
+        Storage::fake('s3');
         $user = $this->createDefaultUser([
             'name'       => 'テストユーザー',
             'avatar_url' => 'https://example.com/old.png',
         ]);
         $this->actingAs($user);
-
-        $mockImage = new Image;
-        $mockImage->forceFill([
-            'id'        => 99,
-            'file_name' => 'avatar.png',
-            'type'      => ImageType::User,
-        ]);
-
-        $imageService = Mockery::mock(ImageService::class);
-        $imageService->shouldReceive('store')
-            ->once()
-            ->withArgs(fn (UploadedFile $file, ImageType $type, string $fileName) => $type === ImageType::User)
-            ->andReturn($mockImage);
-
-        $this->app->instance(ImageService::class, $imageService);
 
         // 1x1 pixel PNG base64
         $base64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
@@ -76,7 +59,8 @@ class ProfileControllerTest extends BaseTest
         $response->assertOk();
 
         $user->refresh();
-        $this->assertSame(99, $user->avatar_image_id);
+        $image = Image::first();
+        $this->assertSame($image->id, $user->avatar_image_id);
         $this->assertNull($user->avatar_url);
     }
 
