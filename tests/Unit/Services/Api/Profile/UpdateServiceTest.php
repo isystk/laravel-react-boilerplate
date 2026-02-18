@@ -16,6 +16,14 @@ class UpdateServiceTest extends BaseTest
 {
     use RefreshDatabase;
 
+    private UpdateService $service;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->service = app(UpdateService::class);
+    }
+
     public function test_update_名前のみ更新する場合(): void
     {
         $user = $this->createDefaultUser([
@@ -23,9 +31,7 @@ class UpdateServiceTest extends BaseTest
             'avatar_url' => 'https://example.com/old-avatar.png',
         ]);
 
-        $service = app(UpdateService::class);
-
-        $dto = $service->update($user, '更新後', null);
+        $dto = $this->service->update($user, '更新後', null);
 
         $this->assertInstanceOf(UpdateDto::class, $dto);
         $this->assertSame('更新前', $dto->name, 'DTOにはupdate呼び出し前のuser->nameが入る');
@@ -59,11 +65,9 @@ class UpdateServiceTest extends BaseTest
 
         $this->app->instance(ImageService::class, $imageService);
 
-        $service = app(UpdateService::class);
-
         // 1x1 pixel PNG base64
         $base64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
-        $dto    = $service->update($user, 'テストユーザー', $base64);
+        $dto    = $this->service->update($user, 'テストユーザー', $base64);
 
         $this->assertInstanceOf(UpdateDto::class, $dto);
 

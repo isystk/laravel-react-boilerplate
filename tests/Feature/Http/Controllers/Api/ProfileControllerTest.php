@@ -101,4 +101,17 @@ class ProfileControllerTest extends BaseTest
 
         $response->assertStatus(401);
     }
+
+    public function test_destroy_アカウントを削除できること(): void
+    {
+        $user = $this->createDefaultUser();
+        $this->actingAs($user);
+
+        $response = $this->postJson(route('api.profile.destroy'));
+
+        $response->assertOk();
+        $response->assertJson(['result' => true]);
+
+        $this->assertDatabaseMissing('users', ['id' => $user->id]);
+    }
 }
