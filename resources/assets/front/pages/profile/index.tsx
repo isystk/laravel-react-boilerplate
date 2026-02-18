@@ -128,6 +128,24 @@ const ProfilePage = () => {
           </div>
         </form>
       </div>
+
+      <div className="bg-white p-6 rounded-md shadow-md mt-6 border-red-100 border">
+        <h3 className="text-lg font-bold text-red-600 mb-4">{t('deleteAccount.title')}</h3>
+        <p className="text-gray-600 mb-4 text-sm">{t('deleteAccount.description')}</p>
+        <div className="text-center md:text-left">
+          <button
+            type="button"
+            className="btn btn-outline-danger"
+            onClick={async () => {
+              if (window.confirm(t('deleteAccount.confirm'))) {
+                await service.profile.destroyAccount();
+              }
+            }}
+          >
+            {t('deleteAccount.button')}
+          </button>
+        </div>
+      </div>
     </BasicLayout>
   );
 };

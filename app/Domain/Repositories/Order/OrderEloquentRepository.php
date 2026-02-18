@@ -85,4 +85,16 @@ class OrderEloquentRepository extends BaseEloquentRepository implements OrderRep
             ->take($limit)
             ->get();
     }
+
+    /**
+     * ユーザーIDからデータを削除します。
+     */
+    public function deleteByUserId(int $userId): void
+    {
+        $orders = $this->model->where('user_id', $userId)->get();
+        foreach ($orders as $order) {
+            $order->orderStocks()->delete(); // 関連する注文商品を削除
+            $order->delete();
+        }
+    }
 }
