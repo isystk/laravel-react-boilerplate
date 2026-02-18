@@ -9,7 +9,7 @@ import { MINIMAL_VIEWPORTS } from '@storybook/addon-viewport';
 export const decorators = [
   (Story) => (
     <AppProvider>
-      <MemoryRouter>
+      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <Story />
       </MemoryRouter>
     </AppProvider>
