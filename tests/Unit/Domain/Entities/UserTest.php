@@ -4,6 +4,7 @@ namespace Tests\Unit\Domain\Entities;
 
 use App\Domain\Entities\User;
 use App\Enums\ImageType;
+use App\Enums\UserStatus;
 use App\Mails\ResetPasswordToUser;
 use App\Mails\VerifyEmailToUser;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -21,6 +22,15 @@ class UserTest extends BaseTest
     {
         parent::setUp();
         $this->sub = new User;
+    }
+
+    public function test_正しくキャストされる事(): void
+    {
+        $model = $this->createDefaultUser();
+
+        $this->assertInstanceOf(UserStatus::class, $model->status);
+        $this->assertInstanceOf(Carbon::class, $model->created_at);
+        $this->assertInstanceOf(Carbon::class, $model->updated_at);
     }
 
     public function test_isEmailVerified(): void

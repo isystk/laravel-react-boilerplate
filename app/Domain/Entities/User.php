@@ -2,6 +2,7 @@
 
 namespace App\Domain\Entities;
 
+use App\Enums\UserStatus;
 use App\Mails\ResetPasswordToUser;
 use App\Mails\VerifyEmailToUser;
 use Database\Factories\Domain\Entities\UserFactory;
@@ -24,6 +25,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property string|null $google_id
  * @property string|null $avatar_url
  * @property string|null $remember_token
+ * @property UserStatus  $status
  * @property Carbon      $created_at
  * @property Carbon      $updated_at
  * @property-read Image $avatarImage
@@ -53,6 +55,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         'google_id',
         'avatar_url',
         'remember_token',
+        'status',
     ];
 
     /**
@@ -126,6 +129,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
             'email_verified_at' => 'datetime',
             'created_at'        => 'datetime',
             'updated_at'        => 'datetime',
+            'status'            => UserStatus::class,
         ];
     }
 }

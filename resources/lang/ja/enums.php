@@ -6,6 +6,7 @@ use App\Enums\Gender;
 use App\Enums\ImageType;
 use App\Enums\ImportType;
 use App\Enums\JobStatus;
+use App\Enums\UserStatus;
 
 return [
     'Gender' . Gender::Male->value              => '男性',
@@ -26,4 +27,6 @@ return [
     'JobStatus' . JobStatus::Success->value     => '正常終了',
     'JobStatus' . JobStatus::Failure->value     => '異常終了',
     'ImportType' . ImportType::Staff->value     => 'スタッフ',
+    'UserStatus' . UserStatus::Active->value    => '有効',
+    'UserStatus' . UserStatus::Suspended->value => 'アカウント停止',
 ];

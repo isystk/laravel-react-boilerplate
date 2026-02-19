@@ -22,7 +22,8 @@ Route::prefix('admin')->group(function () {
 
         Route::get('user', [\App\Http\Controllers\Admin\User\ListController::class, 'index'])->name('admin.user');
         Route::get('user/{user}', [\App\Http\Controllers\Admin\User\DetailController::class, 'show'])->name('admin.user.show');
-        Route::delete('user/{user}/destroy', [\App\Http\Controllers\Admin\User\DetailController::class, 'destroy'])->name('admin.user.destroy');
+        Route::put('user/{user}/suspend', [\App\Http\Controllers\Admin\User\DetailController::class, 'suspend'])->name('admin.user.suspend');
+        Route::put('user/{user}/activate', [\App\Http\Controllers\Admin\User\DetailController::class, 'activate'])->name('admin.user.activate');
         Route::get('user/{user}/edit', [\App\Http\Controllers\Admin\User\EditController::class, 'edit'])->name('admin.user.edit');
         Route::put('user/{user}/update', [\App\Http\Controllers\Admin\User\EditController::class, 'update'])->name('admin.user.update');
 

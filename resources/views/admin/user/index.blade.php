@@ -1,3 +1,4 @@
+@php use App\Enums\UserStatus; @endphp
 @extends('layouts.admin')
 @section('title', '顧客一覧')
 @section('mainMenu', 'user')
@@ -85,6 +86,7 @@
                                 @include('admin.parts.sortablelink_th', [
                                     'params' => ['created_at', '登録日時'],
                                 ])
+                                <th>ステータス</th>
                                 <th>アバター</th>
                                 <th>Google</th>
                             </tr>
@@ -96,6 +98,13 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->created_at }}</td>
+                                    <td>
+                                        @if ($user->status->isActive())
+                                            <span class="badge bg-success">{{ UserStatus::Active->label() }}</span>
+                                        @else
+                                            <span class="badge bg-danger">{{ UserStatus::Suspended->label() }}</span>
+                                        @endif
+                                    </td>
                                     <td>
                                         @if ($user->avatarImage)
                                             <img src="{{ $user->avatarImage->getImageUrl() }}"

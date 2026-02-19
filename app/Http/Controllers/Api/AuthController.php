@@ -11,12 +11,10 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class AuthController extends BaseApiController
 {
-    /**
-     * ログイン処理
-     */
     public function login(Request $request): JsonResponse
     {
-        $credentials = $request->only('email', 'password');
+        $credentials           = $request->only('email', 'password');
+        $credentials['status'] = \App\Enums\UserStatus::Active->value;
         if (!$token = Auth::guard('api')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }

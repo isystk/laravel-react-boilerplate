@@ -22,9 +22,7 @@ class AdminTest extends BaseTest
 
     public function test_正しくキャストされる事(): void
     {
-        $model = $this->createDefaultAdmin([
-            'role' => AdminRole::HighManager->value,
-        ]);
+        $model = $this->createDefaultAdmin();
 
         $this->assertInstanceOf(AdminRole::class, $model->role);
         $this->assertInstanceOf(Carbon::class, $model->created_at);
