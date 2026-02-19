@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Dto\Response\Api\Auth\AuthenticateDto;
+use App\Enums\UserStatus;
 use App\Helpers\AuthHelper;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ class AuthController extends BaseApiController
     public function login(Request $request): JsonResponse
     {
         $credentials           = $request->only('email', 'password');
-        $credentials['status'] = \App\Enums\UserStatus::Active->value;
+        $credentials['status'] = UserStatus::Active->value;
         if (!$token = Auth::guard('api')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }

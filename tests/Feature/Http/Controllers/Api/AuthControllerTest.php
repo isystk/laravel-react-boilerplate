@@ -51,6 +51,23 @@ class AuthControllerTest extends BaseTest
         $response->assertJson(['error' => 'Unauthorized']);
     }
 
+    public function test_login_アカウント停止中のユーザーは401が返却されること(): void
+    {
+        $this->createDefaultUser([
+            'email'    => 'test@test.com',
+            'password' => bcrypt('password'),
+            'status'   => \App\Enums\UserStatus::Suspended->value,
+        ]);
+
+        $response = $this->postJson('/api/login', [
+            'email'    => 'test@test.com',
+            'password' => 'password',
+        ]);
+
+        $response->assertStatus(401);
+        $response->assertJson(['error' => 'Unauthorized']);
+    }
+
     public function test_logout_ログアウトが成功すること(): void
     {
         $user  = $this->createDefaultUser();

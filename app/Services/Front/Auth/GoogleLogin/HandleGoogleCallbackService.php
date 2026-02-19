@@ -4,6 +4,7 @@ namespace App\Services\Front\Auth\GoogleLogin;
 
 use App\Domain\Entities\User;
 use App\Domain\Repositories\User\UserRepository;
+use App\Enums\UserStatus;
 use Carbon\Carbon;
 
 class HandleGoogleCallbackService
@@ -26,6 +27,7 @@ class HandleGoogleCallbackService
                 'avatar_url'        => $googleUser->avatar,
                 'email_verified_at' => Carbon::now(),
                 'google_id'         => $googleUser->id,
+                'status'            => UserStatus::Active,
             ]);
         }
 
