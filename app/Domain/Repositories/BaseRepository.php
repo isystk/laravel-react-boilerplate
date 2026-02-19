@@ -18,6 +18,8 @@ interface BaseRepository
 
     public function delete(int $id): void;
 
+    public function restore(int $id): void;
+
     /**
      * @return Collection<int, mixed>
      */

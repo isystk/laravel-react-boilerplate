@@ -24,6 +24,7 @@ return new class extends Migration {
             $table->rememberToken();
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
+            $table->dateTime('deleted_at')->nullable();
         });
 
         Schema::create('password_reset_tokens', static function (Blueprint $table) {

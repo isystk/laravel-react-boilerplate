@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 Route::middleware(['web'])->group(function () {
-    Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
-    Route::post('/logout', [\App\Http\Controllers\Api\AuthController::class, 'logout']);
-    Route::get('/authenticate', [\App\Http\Controllers\Api\AuthController::class, 'authenticate'])->middleware('auth:api');
     Route::get('/const', [\App\Http\Controllers\Api\ConstController::class, 'index'])->name('api.const');
     Route::resource('/like', App\Http\Controllers\Api\LikeController::class);
     Route::post('/like/store', [\App\Http\Controllers\Api\LikeController::class, 'store']);

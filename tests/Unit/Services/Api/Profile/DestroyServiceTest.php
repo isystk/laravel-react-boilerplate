@@ -36,7 +36,7 @@ class DestroyServiceTest extends BaseTest
         $this->service->destroy($user);
 
         // ユーザーが削除されていること
-        $this->assertDatabaseMissing('users', ['id' => $user->id]);
+        $this->assertSoftDeleted('users', ['id' => $user->id]);
 
         // 注文と注文商品が削除されていること
         $this->assertDatabaseMissing('orders', ['id' => $order->id]);

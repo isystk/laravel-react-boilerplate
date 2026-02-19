@@ -27,22 +27,20 @@ class GoogleLoginController extends BaseController
 
             $user = $service->findOrCreate($googleUser);
 
-            if (!$user->status->isActive()) {
-                DB::rollBack();
-
-                return to_route('login')->withErrors([
-                    'email' => __('auth.suspended'),
-                ]);
-            }
-
-            Auth::login($user);
-
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
 
             throw $th;
         }
+
+        if (!$user->status->isActive()) {
+            return to_route('login')->withErrors([
+                'email' => __('auth.suspended'),
+            ]);
+        }
+
+        Auth::login($user);
 
         return redirect()->intended('/home');
     }

@@ -15,6 +15,8 @@ abstract class BaseEloquentRepository implements BaseRepository
     }
 
     /**
+     * データを作成します。
+     *
      * @param array<string, mixed> $data
      */
     public function create(array $data): mixed
@@ -23,6 +25,8 @@ abstract class BaseEloquentRepository implements BaseRepository
     }
 
     /**
+     * データを更新します。
+     *
      * @param array<string, mixed> $data
      */
     public function update(array $data, int $id): mixed
@@ -38,6 +42,9 @@ abstract class BaseEloquentRepository implements BaseRepository
         return $record;
     }
 
+    /**
+     * データを削除します。
+     */
     public function delete(int $id): void
     {
         $record = $this->findById($id);
@@ -50,6 +57,22 @@ abstract class BaseEloquentRepository implements BaseRepository
     }
 
     /**
+     * データを復元します。
+     */
+    public function restore(int $id): void
+    {
+        $record = $this->model->withTrashed()->find($id);
+
+        if ($record === null) {
+            throw new \RuntimeException('An unexpected error occurred.');
+        }
+
+        $record->restore();
+    }
+
+    /**
+     * 全件取得します。
+     *
      * @return Collection<int, mixed>
      */
     public function getAll(): Collection
@@ -57,6 +80,9 @@ abstract class BaseEloquentRepository implements BaseRepository
         return $this->model->all();
     }
 
+    /**
+     * IDでデータを検索します。
+     */
     public function findById(int $id): mixed
     {
         return $this->model->find($id);

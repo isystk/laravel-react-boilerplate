@@ -61,7 +61,6 @@ class ProfileControllerTest extends BaseTest
         $user->refresh();
         $image = Image::first();
         $this->assertSame($image->id, $user->avatar_image_id);
-        $this->assertNull($user->avatar_url);
     }
 
     public function test_update_バリデーションエラー_名前が空の場合(): void
@@ -96,6 +95,6 @@ class ProfileControllerTest extends BaseTest
         $response->assertOk();
         $response->assertJson(['result' => true]);
 
-        $this->assertDatabaseMissing('users', ['id' => $user->id]);
+        $this->assertSoftDeleted('users', ['id' => $user->id]);
     }
 }

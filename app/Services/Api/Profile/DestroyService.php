@@ -39,6 +39,9 @@ class DestroyService
         }
 
         // ユーザーの削除
+        $this->userRepository->update([
+            'avatar_image_id' => null,
+        ], $user->id);
         $this->userRepository->delete($user->id);
     }
 }

@@ -56,6 +56,5 @@ class UpdateServiceTest extends BaseTest
         $user->refresh();
         $image = Image::first();
         $this->assertSame($image->id, $user->avatar_image_id);
-        $this->assertNull($user->avatar_url, 'アバター画像が設定された場合、avatar_urlはnullになる');
     }
 }

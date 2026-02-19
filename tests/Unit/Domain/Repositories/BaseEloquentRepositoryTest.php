@@ -64,7 +64,8 @@ class BaseEloquentRepositoryTest extends BaseTest
 
         $this->repository->delete($user->id);
 
-        $this->assertDatabaseMissing('users', ['id' => $user->id]);
+        $user->refresh();
+        $this->assertNotNull($user->deleted_at);
     }
 
     public function test_delete_対象が存在しない場合に例外を投げること(): void
@@ -73,6 +74,17 @@ class BaseEloquentRepositoryTest extends BaseTest
         $this->expectExceptionMessage('An unexpected error occurred.');
 
         $this->repository->delete(9999);
+    }
+
+    public function test_restore_正常に復元できること(): void
+    {
+        $user = $this->createDefaultUser();
+        $user->delete();
+
+        $this->repository->restore($user->id);
+
+        $user->refresh();
+        $this->assertNull($user->deleted_at);
     }
 
     public function test_getAll_全件取得できること(): void
