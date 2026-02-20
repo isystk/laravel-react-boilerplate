@@ -29,7 +29,7 @@ class CreateDto
         $this->message = (string) $request->input('message');
         // imageBase64パラメータがあればUploadedFileオブジェクトに変換してimageFileパラメータに上書きする。
         $this->imageFile = null;
-        if ($request->has('image_base_64')) {
+        if (!is_null($request->image_base_64)) {
             $this->imageFile = UploadImage::convertBase64($request->image_base_64);
         }
     }
