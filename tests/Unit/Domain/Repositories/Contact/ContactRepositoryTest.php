@@ -32,8 +32,10 @@ class ContactRepositoryTest extends BaseTest
         $stocks = $this->repository->getByConditions($defaultConditions);
         $this->assertSame(0, $stocks->count(), 'データがない状態で正常に動作することを始めにテスト');
 
-        $expectContact1 = $this->createDefaultContact(['user_name' => 'user1', 'title' => 'title1']);
-        $expectContact2 = $this->createDefaultContact(['user_name' => 'user2', 'title' => 'title2']);
+        $user1          = $this->createDefaultUser(['name' => 'user1']);
+        $user2          = $this->createDefaultUser(['name' => 'user2']);
+        $expectContact1 = $this->createDefaultContact(['user_id' => $user1->id, 'title' => 'title1']);
+        $expectContact2 = $this->createDefaultContact(['user_id' => $user2->id, 'title' => 'title2']);
 
         /** @var Contact $contact */
         $contact = $this->repository->getByConditions([

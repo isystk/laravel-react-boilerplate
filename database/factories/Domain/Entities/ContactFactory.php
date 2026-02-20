@@ -4,13 +4,12 @@ namespace Database\Factories\Domain\Entities;
 
 use App\Domain\Entities\Contact;
 use App\Domain\Entities\Image;
-use App\Enums\Age;
-use App\Enums\Gender;
+use App\Enums\ContactType;
 use App\Enums\ImageType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Domain\Entities\Contact>
+ * @extends Factory<Contact>
  */
 class ContactFactory extends Factory
 {
@@ -26,15 +25,17 @@ class ContactFactory extends Factory
      */
     public function definition(): array
     {
+        // 1年前から現在までのランダムな日時を生成
+        $createdAt = fake()->dateTimeBetween('-1 year', 'now');
+
         return [
-            'user_name' => fake()->text(20),
-            'title'     => fake()->realText(50),
-            'email'     => fake()->unique()->email,
-            'url'       => fake()->url,
-            'gender'    => fake()->randomElement(Gender::cases()),
-            'age'       => fake()->randomElement(Age::cases()),
-            'contact'   => fake()->realText(200),
-            'image_id'  => Image::factory()->state(['type' => ImageType::Contact->value]),
+            'user_id'    => \App\Domain\Entities\User::factory(),
+            'type'       => fake()->randomElement(ContactType::cases()),
+            'title'      => fake()->realText(100),
+            'message'    => fake()->realText(500),
+            'image_id'   => Image::factory()->state(['type' => ImageType::Contact->value]),
+            'created_at' => $createdAt,
+            'updated_at' => fake()->dateTimeBetween($createdAt, 'now'),
         ];
     }
 

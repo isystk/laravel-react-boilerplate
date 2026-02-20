@@ -12,16 +12,12 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('contacts', static function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('user_name', 20)->comment('お名前');
-            $table->string('title', 50)->comment('タイトル');
-            $table->string('email', 64)->comment('メールアドレス');
-            $table->longText('url')->comment('URL')->nullable($value = true);
-            $table->tinyInteger('gender')->comment('性別');
-            $table->tinyInteger('age')->comment('年齢');
-            $table->string('contact', 200)->comment('お問い合わせ内容');
-            $table->unsignedBigInteger('image_id')->nullable()->comment('画像ID');
-            $table->foreign('image_id')->references('id')->on('images');
+            $table->id();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->tinyInteger('type')->comment('お問い合わせ種類');
+            $table->string('title', 100)->comment('タイトル');
+            $table->string('message', 500)->comment('お問い合わせ内容');
+            $table->foreignId('image_id')->nullable()->constrained('images')->comment('画像ID');
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
         });

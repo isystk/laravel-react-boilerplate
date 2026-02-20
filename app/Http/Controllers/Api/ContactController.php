@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Domain\Entities\User;
 use App\Dto\Request\Api\Contact\CreateDto;
 use App\Http\Requests\Api\Contact\StoreRequest;
 use App\Services\Api\Contact\StoreService;
@@ -18,6 +19,9 @@ class ContactController extends BaseApiController
      */
     public function store(StoreRequest $request): JsonResponse
     {
+        /** @var User $user */
+        $user = $request->user();
+
         /** @var StoreService $service */
         $service = app(StoreService::class);
         DB::beginTransaction();
@@ -25,7 +29,7 @@ class ContactController extends BaseApiController
         $dto = new CreateDto($request);
 
         try {
-            $service->save($dto);
+            $service->save($user, $dto);
             DB::commit();
         } catch (Throwable $e) {
             DB::rollBack();

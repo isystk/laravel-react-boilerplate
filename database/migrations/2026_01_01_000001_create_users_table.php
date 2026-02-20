@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->string('email')->unique()->comment('メールアドレス');
             $table->dateTime('email_verified_at')->nullable()->comment('メールアドレス確認日時');
             $table->string('password')->nullable()->comment('パスワード');
-            $table->unsignedBigInteger('avatar_image_id')->nullable()->comment('アバター画像ID');
+            $table->foreignId('avatar_image_id')->nullable()->constrained('images')->comment('アバター画像ID');
             $table->string('google_id')->nullable()->unique()->comment('GoogleアカウントID(OAuthログイン専用)');
             $table->string('avatar_url')->nullable()->comment('アバターURL(OAuthログイン専用)');
             $table->tinyInteger('status')->default(UserStatus::Active)->comment('ステータス');

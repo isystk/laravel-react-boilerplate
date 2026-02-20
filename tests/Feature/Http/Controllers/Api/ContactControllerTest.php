@@ -3,8 +3,7 @@
 namespace Tests\Feature\Http\Controllers\Api;
 
 use App\Domain\Entities\Contact;
-use App\Enums\Age;
-use App\Enums\Gender;
+use App\Enums\ContactType;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -38,20 +37,16 @@ class ContactControllerTest extends BaseTest
         $base64Image = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($image->getPathname()));
 
         $response = $this->post(route('api.contact.store'), [
-            'user_name'     => $user1->name,
-            'email'         => $user1->email,
             'title'         => 'タイトル1',
-            'url'           => 'https://aaa.test.com',
-            'gender'        => Gender::Female->value,
-            'age'           => Age::Over40->value,
-            'contact'       => 'お問い合わせ1',
+            'type'          => ContactType::Service->value,
+            'message'       => 'お問い合わせ1',
             'image_base_64' => $base64Image,
             'caution'       => 1,
         ]);
         $response->assertSuccessful();
 
         // ファイルが存在することをテスト
-        $contact = Contact::where('email', $user1->email)->first();
+        $contact = Contact::first();
 
         $image = $contact->image;
         $this->assertNotNull($image);

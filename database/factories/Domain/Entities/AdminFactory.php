@@ -7,7 +7,7 @@ use App\Enums\AdminRole;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Domain\Entities\Admin>
+ * @extends Factory<Admin>
  */
 class AdminFactory extends Factory
 {

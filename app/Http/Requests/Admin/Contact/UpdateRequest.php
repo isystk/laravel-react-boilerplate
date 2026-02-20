@@ -2,8 +2,7 @@
 
 namespace App\Http\Requests\Admin\Contact;
 
-use App\Enums\Age;
-use App\Enums\Gender;
+use App\Enums\ContactType;
 use App\Rules\Base64ImageRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
@@ -20,37 +19,19 @@ class UpdateRequest extends FormRequest
         $maxlength = config('const.maxlength.contacts');
 
         return [
-            'user_name' => [
-                'required',
-                'string',
-                'max:' . $maxlength['user_name'],
-            ],
             'title' => [
                 'required',
                 'string',
                 'max:' . $maxlength['title'],
             ],
-            'email' => [
+            'type' => [
                 'required',
-                'email',
-                'max:' . $maxlength['email'],
+                new Enum(ContactType::class),
             ],
-            'gender' => [
-                'required',
-                new Enum(Gender::class),
-            ],
-            'age' => [
-                'required',
-                new Enum(Age::class),
-            ],
-            'contact' => [
+            'message' => [
                 'required',
                 'string',
-                'max:' . $maxlength['contact'],
-            ],
-            'url' => [
-                'url',
-                'nullable',
+                'max:' . $maxlength['message'],
             ],
             'image_base_64' => [
                 'nullable',

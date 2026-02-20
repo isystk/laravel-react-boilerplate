@@ -31,11 +31,8 @@ return [
             'quantity' => 10,
         ],
         'contacts' => [
-            'user_name' => 50,
-            'title'     => 50,
-            'email'     => 64,
-            'url'       => 255,
-            'contact'   => 200,
+            'title'   => 100,
+            'message' => 500,
         ],
     ],
 

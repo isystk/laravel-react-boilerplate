@@ -4,16 +4,13 @@ export interface KeyValue {
 }
 
 const initialState: ConstState = {
-  gender: null,
-  age: null,
+  contactType: null,
 };
 
 export default class ConstState {
-  gender: KeyValue[] | null;
-  age: KeyValue[] | null;
+  contactType: KeyValue[] | null;
 
   constructor() {
-    this.gender = initialState.gender;
-    this.age = initialState.age;
+    this.contactType = initialState.contactType;
   }
 }

@@ -36,13 +36,13 @@ class DestroyService
 
         // アバター画像の削除
         if ($user->avatarImage) {
+            $this->userRepository->update([
+                'avatar_image_id' => null,
+            ], $user->id);
             $this->imageService->delete($user->avatarImage);
         }
 
         // ユーザーの削除
-        $this->userRepository->update([
-            'avatar_image_id' => null,
-        ], $user->id);
         $this->userRepository->delete($user->id);
     }
 }

@@ -34,8 +34,10 @@ class IndexServiceTest extends BaseTest
         $contacts = $this->service->searchContact($default)->getCollection();
         $this->assertSame(0, $contacts->count(), '引数がない状態でエラーにならないことを始めにテスト');
 
-        $contact1 = $this->createDefaultContact(['user_name' => 'user1', 'title' => 'title1']);
-        $contact2 = $this->createDefaultContact(['user_name' => 'user2', 'title' => 'title2']);
+        $user1    = $this->createDefaultUser(['name' => 'user1']);
+        $user2    = $this->createDefaultUser(['name' => 'user2']);
+        $contact1 = $this->createDefaultContact(['user_id' => $user1->id, 'title' => 'title1']);
+        $contact2 = $this->createDefaultContact(['user_id' => $user2->id, 'title' => 'title2']);
 
         $input           = clone $default;
         $input->userName = 'user2';

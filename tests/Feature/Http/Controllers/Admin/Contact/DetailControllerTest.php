@@ -3,8 +3,7 @@
 namespace Tests\Feature\Http\Controllers\Admin\Contact;
 
 use App\Enums\AdminRole;
-use App\Enums\Age;
-use App\Enums\Gender;
+use App\Enums\ContactType;
 use App\Services\Admin\Contact\DestroyService;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -28,24 +27,21 @@ class DetailControllerTest extends BaseTest
         ]);
         $this->actingAs($admin, 'admin');
 
+        $user = $this->createDefaultUser([
+            'name' => 'user1',
+        ]);
         $contact = $this->createDefaultContact([
-            'user_name' => 'user1',
-            'title'     => 'title1',
-            'email'     => '111@test.com',
-            'url'       => 'https://test.com',
-            'gender'    => Gender::Female->value,
-            'age'       => Age::Over40->value,
-            'contact'   => 'お問い合わせ内容',
+            'user_id' => $user->id,
+            'title'   => 'title1',
+            'type'    => ContactType::Service->value,
+            'message' => 'お問い合わせ内容',
         ]);
 
         $response = $this->get(route('admin.contact.show', $contact));
         $response->assertSuccessful();
         $response->assertSee('user1');
         $response->assertSee('title1');
-        $response->assertSee('111@test.com');
-        $response->assertSee('https://test.com');
-        $response->assertSee(Gender::Female->label());
-        $response->assertSee(Age::Over40->label());
+        $response->assertSee(ContactType::Service->label());
         $response->assertSee('お問い合わせ内容');
     }
 
@@ -71,9 +67,12 @@ class DetailControllerTest extends BaseTest
 
     public function test_destroy(): void
     {
+        $user = $this->createDefaultUser([
+            'name' => 'user1',
+        ]);
         $contact = $this->createDefaultContact([
-            'user_name' => 'user1',
-            'title'     => 'title1',
+            'user_id' => $user->id,
+            'title'   => 'title1',
         ]);
 
         $admin1 = $this->createDefaultAdmin([
