@@ -92,7 +92,7 @@ case $COMMAND in
                 echo "📝 PHPファイル実行中 (Rector, Pint):"
                 $APP_CMD ./vendor/bin/rector process $PHP_FILES --clear-cache
                 $APP_CMD ./vendor/bin/pint $PHP_FILES
-                $APP_CMD ./vendor/bin/phpstan analyse $PHP_FILES
+                $APP_CMD ./vendor/bin/phpstan analyse $PHP_FILES --memory-limit=1G
 
                 echo "🚚 オートロードの整合性を確認中..."
                 WARNINGS=$($APP_CMD composer dump-autoload 2>&1 | grep "does not comply" || true)
