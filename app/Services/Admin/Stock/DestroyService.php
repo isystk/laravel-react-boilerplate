@@ -2,12 +2,12 @@
 
 namespace App\Services\Admin\Stock;
 
-use App\Domain\Repositories\Stock\StockRepository;
+use App\Domain\Repositories\Stock\StockRepositoryInterface;
 use App\Services\BaseService;
 
 class DestroyService extends BaseService
 {
-    public function __construct(private readonly StockRepository $stockRepository) {}
+    public function __construct(private readonly StockRepositoryInterface $stockRepository) {}
 
     /**
      * 商品を削除します。

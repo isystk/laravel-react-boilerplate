@@ -3,7 +3,7 @@
 namespace Tests\Unit\Domain\Repositories;
 
 use App\Domain\Entities\User;
-use App\Domain\Repositories\BaseEloquentRepository;
+use App\Domain\Repositories\BaseRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
 
@@ -11,13 +11,13 @@ class BaseEloquentRepositoryTest extends BaseTest
 {
     use RefreshDatabase;
 
-    private BaseEloquentRepository $repository;
+    private BaseRepository $repository;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->repository = new class extends BaseEloquentRepository {
+        $this->repository = new class extends BaseRepository {
             protected function model(): string
             {
                 return User::class;

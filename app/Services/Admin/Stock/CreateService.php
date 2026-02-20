@@ -3,7 +3,7 @@
 namespace App\Services\Admin\Stock;
 
 use App\Domain\Entities\Stock;
-use App\Domain\Repositories\Stock\StockRepository;
+use App\Domain\Repositories\Stock\StockRepositoryInterface;
 use App\Dto\Request\Admin\Stock\CreateDto;
 use App\Enums\ImageType;
 use App\Services\BaseService;
@@ -12,7 +12,7 @@ use App\Services\Common\ImageService;
 class CreateService extends BaseService
 {
     public function __construct(
-        private readonly StockRepository $stockRepository,
+        private readonly StockRepositoryInterface $stockRepository,
         private readonly ImageService $imageService,
     ) {}
 

@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Domain\Repositories\Order;
 
-use App\Domain\Repositories\Order\OrderStockRepository;
+use App\Domain\Repositories\Order\OrderStockRepositoryInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
 
@@ -10,13 +10,13 @@ class OrderStockRepositoryTest extends BaseTest
 {
     use RefreshDatabase;
 
-    private OrderStockRepository $repository;
+    private OrderStockRepositoryInterface $repository;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->repository = app(OrderStockRepository::class);
+        $this->repository = app(OrderStockRepositoryInterface::class);
     }
 
     public function test_getByOrderId(): void

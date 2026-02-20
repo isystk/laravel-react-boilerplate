@@ -6,17 +6,35 @@ use App\Domain\Entities\OrderStock;
 use App\Domain\Repositories\BaseRepository;
 use Illuminate\Support\Collection;
 
-interface OrderStockRepository extends BaseRepository
+class OrderStockRepository extends BaseRepository implements OrderStockRepositoryInterface
 {
-    /**
-     * orderId からデータを取得します。
-     *
-     * @return Collection<int, OrderStock>
-     */
-    public function getByOrderId(int $orderId): Collection;
+    protected function model(): string
+    {
+        return OrderStock::class;
+    }
 
     /**
-     * ユーザーIDからデータを削除します。
+     * {@inheritDoc}
      */
-    public function deleteByUserId(int $userId): void;
+    public function getByOrderId(int $orderId): Collection
+    {
+        /** @var Collection<int, OrderStock> */
+        return $this->model
+            ->where('order_id', $orderId)
+            ->get();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function deleteByUserId(int $userId): void
+    {
+        $this->model
+            ->whereIn('order_id', function ($query) use ($userId) {
+                $query->select('id')
+                    ->from('orders')
+                    ->where('user_id', $userId);
+            })
+            ->delete();
+    }
 }

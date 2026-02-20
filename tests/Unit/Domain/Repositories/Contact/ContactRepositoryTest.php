@@ -3,7 +3,7 @@
 namespace Tests\Unit\Domain\Repositories\Contact;
 
 use App\Domain\Entities\Contact;
-use App\Domain\Repositories\Contact\ContactRepository;
+use App\Domain\Repositories\Contact\ContactRepositoryInterface;
 use App\Utils\DateUtil;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
@@ -12,12 +12,12 @@ class ContactRepositoryTest extends BaseTest
 {
     use RefreshDatabase;
 
-    private ContactRepository $repository;
+    private ContactRepositoryInterface $repository;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->repository = app(ContactRepository::class);
+        $this->repository = app(ContactRepositoryInterface::class);
     }
 
     public function test_getByConditions(): void

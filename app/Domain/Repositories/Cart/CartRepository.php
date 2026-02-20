@@ -6,17 +6,35 @@ use App\Domain\Entities\Cart;
 use App\Domain\Repositories\BaseRepository;
 use Illuminate\Support\Collection;
 
-interface CartRepository extends BaseRepository
+class CartRepository extends BaseRepository implements CartRepositoryInterface
 {
-    /**
-     * ユーザーIDからデータを取得します。
-     *
-     * @return Collection<int, Cart>
-     */
-    public function getByUserId(int $userId): Collection;
+    protected function model(): string
+    {
+        return Cart::class;
+    }
 
     /**
-     * ユーザーIDからデータを削除します。
+     * {@inheritDoc}
      */
-    public function deleteByUserId(int $userId): void;
+    public function getByUserId(int $userId): Collection
+    {
+        /** @var Collection<int, Cart> */
+        return $this->model
+            ->with([
+                'user',
+                'stock',
+            ])
+            ->where('user_id', $userId)
+            ->get();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function deleteByUserId(int $userId): void
+    {
+        $this->model
+            ->where('user_id', $userId)
+            ->delete();
+    }
 }

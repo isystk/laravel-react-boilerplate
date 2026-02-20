@@ -3,7 +3,7 @@
 namespace Tests\Unit\Domain\Repositories\Cart;
 
 use App\Domain\Entities\Cart;
-use App\Domain\Repositories\Cart\CartRepository;
+use App\Domain\Repositories\Cart\CartRepositoryInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
 
@@ -11,13 +11,13 @@ class CartRepositoryTest extends BaseTest
 {
     use RefreshDatabase;
 
-    private CartRepository $repository;
+    private CartRepositoryInterface $repository;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->repository = app(CartRepository::class);
+        $this->repository = app(CartRepositoryInterface::class);
     }
 
     public function test_getByUserId(): void

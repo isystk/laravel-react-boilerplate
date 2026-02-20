@@ -3,7 +3,7 @@
 namespace App\Services\Common;
 
 use App\Domain\Entities\Image;
-use App\Domain\Repositories\Image\ImageRepository;
+use App\Domain\Repositories\Image\ImageRepositoryInterface;
 use App\Enums\ImageType;
 use App\Services\BaseService;
 use Illuminate\Http\UploadedFile;
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 class ImageService extends BaseService
 {
     public function __construct(
-        private readonly ImageRepository $imageRepository
+        private readonly ImageRepositoryInterface $imageRepository
     ) {}
 
     /**

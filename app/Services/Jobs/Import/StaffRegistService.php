@@ -2,7 +2,7 @@
 
 namespace App\Services\Jobs\Import;
 
-use App\Domain\Repositories\Admin\AdminRepository;
+use App\Domain\Repositories\Admin\AdminRepositoryInterface;
 use App\Enums\AdminRole;
 use App\Services\BaseService;
 use Closure;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class StaffRegistService extends BaseService
 {
-    public function __construct(private readonly AdminRepository $adminRepository) {}
+    public function __construct(private readonly AdminRepositoryInterface $adminRepository) {}
 
     /**
      * 管理者を登録します。

@@ -3,14 +3,14 @@
 namespace App\Services\Admin\Staff;
 
 use App\Domain\Entities\Admin;
-use App\Domain\Repositories\Admin\AdminRepository;
+use App\Domain\Repositories\Admin\AdminRepositoryInterface;
 use App\Services\BaseService;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class IndexService extends BaseService
 {
-    public function __construct(private readonly AdminRepository $adminRepository) {}
+    public function __construct(private readonly AdminRepositoryInterface $adminRepository) {}
 
     /**
      * リクエストパラメータから検索条件に変換します。

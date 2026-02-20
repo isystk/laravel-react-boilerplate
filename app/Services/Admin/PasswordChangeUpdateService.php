@@ -3,12 +3,12 @@
 namespace App\Services\Admin;
 
 use App\Domain\Entities\Admin;
-use App\Domain\Repositories\Admin\AdminRepository;
+use App\Domain\Repositories\Admin\AdminRepositoryInterface;
 use App\Services\BaseService;
 
 class PasswordChangeUpdateService extends BaseService
 {
-    public function __construct(private readonly AdminRepository $adminRepository) {}
+    public function __construct(private readonly AdminRepositoryInterface $adminRepository) {}
 
     /**
      * パスワードを変更します。

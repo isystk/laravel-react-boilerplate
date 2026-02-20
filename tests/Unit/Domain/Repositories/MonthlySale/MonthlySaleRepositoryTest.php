@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Domain\Repositories\MonthlySale;
 
-use App\Domain\Repositories\MonthlySale\MonthlySaleRepository;
+use App\Domain\Repositories\MonthlySale\MonthlySaleRepositoryInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
 
@@ -10,12 +10,12 @@ class MonthlySaleRepositoryTest extends BaseTest
 {
     use RefreshDatabase;
 
-    private MonthlySaleRepository $repository;
+    private MonthlySaleRepositoryInterface $repository;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->repository = app(MonthlySaleRepository::class);
+        $this->repository = app(MonthlySaleRepositoryInterface::class);
     }
 
     public function test_getAllOrderByYearMonth_データがない場合(): void

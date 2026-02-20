@@ -3,7 +3,7 @@
 namespace App\Services\Admin\Staff\Import;
 
 use App\Domain\Entities\ImportHistory;
-use App\Domain\Repositories\ImportHistory\ImportHistoryRepository;
+use App\Domain\Repositories\ImportHistory\ImportHistoryRepositoryInterface;
 use App\Enums\ImportType;
 use App\Services\BaseService;
 use Illuminate\Support\Facades\Storage;
@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ImportFileService extends BaseService
 {
-    public function __construct(private readonly ImportHistoryRepository $importHistoryRepository) {}
+    public function __construct(private readonly ImportHistoryRepositoryInterface $importHistoryRepository) {}
 
     /**
      * インポートしたファイルのパスを取得します。

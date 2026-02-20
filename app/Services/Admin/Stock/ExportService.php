@@ -3,14 +3,14 @@
 namespace App\Services\Admin\Stock;
 
 use App\Domain\Entities\Stock;
-use App\Domain\Repositories\Stock\StockRepository;
+use App\Domain\Repositories\Stock\StockRepositoryInterface;
 use App\Dto\Request\Admin\Stock\SearchConditionDto;
 use App\FileIO\Exports\StockExport;
 use Illuminate\Support\Collection;
 
 class ExportService extends BaseStockService
 {
-    public function __construct(private readonly StockRepository $stockRepository) {}
+    public function __construct(private readonly StockRepositoryInterface $stockRepository) {}
 
     /**
      * エクスポート用のオブジェクトを取得します。

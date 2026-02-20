@@ -3,7 +3,7 @@
 namespace Tests\Unit\Domain\Repositories\User;
 
 use App\Domain\Entities\User;
-use App\Domain\Repositories\User\UserRepository;
+use App\Domain\Repositories\User\UserRepositoryInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
 
@@ -11,12 +11,12 @@ class UserRepositoryTest extends BaseTest
 {
     use RefreshDatabase;
 
-    private UserRepository $repository;
+    private UserRepositoryInterface $repository;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->repository = app(UserRepository::class);
+        $this->repository = app(UserRepositoryInterface::class);
     }
 
     public function test_getByConditions(): void

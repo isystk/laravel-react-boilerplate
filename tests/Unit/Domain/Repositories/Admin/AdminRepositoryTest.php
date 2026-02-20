@@ -3,7 +3,7 @@
 namespace Tests\Unit\Domain\Repositories\Admin;
 
 use App\Domain\Entities\Admin;
-use App\Domain\Repositories\Admin\AdminRepository;
+use App\Domain\Repositories\Admin\AdminRepositoryInterface;
 use App\Enums\AdminRole;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
@@ -12,7 +12,7 @@ class AdminRepositoryTest extends BaseTest
 {
     use RefreshDatabase;
 
-    private AdminRepository $repository;
+    private AdminRepositoryInterface $repository;
 
     /**
      * @var array<string, mixed>
@@ -23,7 +23,7 @@ class AdminRepositoryTest extends BaseTest
     {
         parent::setUp();
 
-        $this->repository        = app(AdminRepository::class);
+        $this->repository        = app(AdminRepositoryInterface::class);
         $this->defaultConditions = [
             'name'           => null,
             'email'          => null,
