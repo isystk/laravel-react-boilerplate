@@ -1,6 +1,6 @@
 @php use App\Enums\UserStatus; @endphp
 @extends('layouts.admin')
-@section('title', '顧客一覧')
+@section('title', 'ユーザ一覧')
 @section('mainMenu', 'user')
 @section('subMenu', 'user')
 @section('breadcrumbs')
