@@ -7,7 +7,9 @@ use Database\Factories\Domain\Entities\ContactFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 
 /**
  * @property int         $id
@@ -20,6 +22,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon      $updated_at
  * @property-read User   $user
  * @property-read Image|null $image
+ * @property-read Collection<int, ContactReply> $replies
  */
 class Contact extends Model
 {
@@ -55,6 +58,14 @@ class Contact extends Model
     public function image(): BelongsTo
     {
         return $this->belongsTo(Image::class);
+    }
+
+    /**
+     * @return HasMany<ContactReply, $this>
+     */
+    public function replies(): HasMany
+    {
+        return $this->hasMany(ContactReply::class)->oldest();
     }
 
     /**

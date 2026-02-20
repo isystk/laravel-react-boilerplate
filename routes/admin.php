@@ -42,6 +42,7 @@ Route::prefix('admin')->group(function () {
         Route::get('contact', [\App\Http\Controllers\Admin\Contact\ListController::class, 'index'])->name('admin.contact');
         Route::get('contact/{contact}', [\App\Http\Controllers\Admin\Contact\DetailController::class, 'show'])->name('admin.contact.show');
         Route::delete('contact/{contact}/destroy', [\App\Http\Controllers\Admin\Contact\DetailController::class, 'destroy'])->name('admin.contact.destroy');
+        Route::post('contact/{contact}/reply', [\App\Http\Controllers\Admin\Contact\DetailController::class, 'reply'])->name('admin.contact.reply');
 
         Route::get('photo', [\App\Http\Controllers\Admin\Photo\ListController::class, 'index'])->name('admin.photo');
         Route::delete('photo/destroy', [\App\Http\Controllers\Admin\Photo\ListController::class, 'destroy'])->name('admin.photo.destroy');

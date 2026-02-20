@@ -4,9 +4,12 @@ namespace Tests\Feature\Http\Controllers\Admin\Contact;
 
 use App\Enums\AdminRole;
 use App\Enums\ContactType;
+use App\Mails\ContactReplyToUser;
 use App\Services\Admin\Contact\DestroyService;
+use App\Services\Admin\Contact\ReplyService;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Mail;
 use Tests\BaseTest;
 
 class DetailControllerTest extends BaseTest
@@ -121,5 +124,108 @@ class DetailControllerTest extends BaseTest
         $this->expectExceptionMessage('Database Error');
 
         $this->delete(route('admin.contact.destroy', $contact));
+    }
+
+    public function test_reply(): void
+    {
+        Mail::fake();
+
+        $user  = $this->createDefaultUser(['email' => 'user@example.com']);
+        $admin = $this->createDefaultAdmin([
+            'name' => '管理者A',
+            'role' => AdminRole::Manager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $contact = $this->createDefaultContact(['user_id' => $user->id]);
+
+        $redirectResponse = $this->post(route('admin.contact.reply', $contact), [
+            'body' => '返信内容です。',
+        ]);
+
+        // 詳細画面にリダイレクトされることをテスト
+        $redirectResponse->assertRedirect(route('admin.contact.show', $contact));
+
+        // DBに保存されることをテスト
+        $this->assertDatabaseHas('contact_replies', [
+            'contact_id' => $contact->id,
+            'admin_id'   => $admin->id,
+            'body'       => '返信内容です。',
+        ]);
+
+        // ユーザーにメールが送信されることをテスト
+        Mail::assertSent(ContactReplyToUser::class, static fn ($mail) => $mail->hasTo($user->email));
+
+        // リダイレクト後の画面に成功メッセージが表示されることをテスト
+        $response = $this->get($redirectResponse->headers->get('Location'));
+        $response->assertSuccessful();
+        $response->assertSee('返信を送信しました。');
+    }
+
+    public function test_reply_バリデーションエラー(): void
+    {
+        Mail::fake();
+
+        $admin = $this->createDefaultAdmin(['role' => AdminRole::Manager]);
+        $this->actingAs($admin, 'admin');
+
+        $contact = $this->createDefaultContact();
+
+        // body が空の場合
+        $response = $this->post(route('admin.contact.reply', $contact), [
+            'body' => '',
+        ]);
+        $response->assertSessionHasErrors(['body']);
+
+        // メールが送信されていないことをテスト
+        Mail::assertNothingSent();
+
+        // DBに保存されていないことをテスト
+        $this->assertDatabaseMissing('contact_replies', ['contact_id' => $contact->id]);
+    }
+
+    public function test_reply_返信履歴が詳細画面に表示される事(): void
+    {
+        $admin = $this->createDefaultAdmin([
+            'name' => '管理者A',
+            'role' => AdminRole::Manager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $contact = $this->createDefaultContact();
+        $this->createDefaultContactReply([
+            'contact_id' => $contact->id,
+            'admin_id'   => $admin->id,
+            'body'       => '過去の返信内容',
+        ]);
+
+        $response = $this->get(route('admin.contact.show', $contact));
+        $response->assertSuccessful();
+        $response->assertSee('過去の返信内容');
+        $response->assertSee('管理者A');
+    }
+
+    public function test_reply_例外発生時にロールバックされ例外がスローされること(): void
+    {
+        $this->withoutExceptionHandling();
+
+        Mail::fake();
+
+        $contact = $this->createDefaultContact();
+        $admin   = $this->createDefaultAdmin(['role' => AdminRole::Manager]);
+        $this->actingAs($admin, 'admin');
+
+        $this->mock(ReplyService::class, function ($mock) {
+            $mock->shouldReceive('reply')
+                ->once()
+                ->andThrow(new \Exception('Database Error'));
+        });
+
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Database Error');
+
+        $this->post(route('admin.contact.reply', $contact), [
+            'body' => '返信内容です。',
+        ]);
     }
 }
