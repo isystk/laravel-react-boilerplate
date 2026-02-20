@@ -15,35 +15,35 @@
     <div class="card card-purple">
         <div class="card-body">
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted small">商品名</label>
+                <label class="col-sm-2 col-form-label text-muted fw-bold">商品名</label>
                 <div class="col-sm-10 d-flex align-items-center">
                     {{ $stock->name }}
                 </div>
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted small">商品説明</label>
+                <label class="col-sm-2 col-form-label text-muted fw-bold">商品説明</label>
                 <div class="col-sm-10 d-flex align-items-center">
                     {!! nl2br(e($stock->detail)) !!}
                 </div>
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted small">価格</label>
+                <label class="col-sm-2 col-form-label text-muted fw-bold">価格</label>
                 <div class="col-sm-10 d-flex align-items-center">
                     {{ number_format($stock->price) }} 円
                 </div>
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted small">在庫数</label>
+                <label class="col-sm-2 col-form-label text-muted fw-bold">在庫数</label>
                 <div class="col-sm-10 d-flex align-items-center">
                     {{ number_format($stock->quantity) }} 個
                 </div>
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted small">商品画像</label>
+                <label class="col-sm-2 col-form-label text-muted fw-bold">商品画像</label>
                 <div class="col-sm-10">
                     <div id="result">
                         @if ($stock->image)

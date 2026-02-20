@@ -22,7 +22,7 @@
                 @endif
                 <div class="mb-3 row">
                     <label for="user_name"
-                           class="col-sm-2 col-form-label">氏名</label>
+                           class="col-sm-2 col-form-label fw-bold">表示名</label>
                     <div class="col-sm-4">
                         <input type="text"
                                name="user_name"
@@ -35,7 +35,7 @@
 
                 <div class="mb-3 row">
                     <label for="title"
-                           class="col-sm-2 col-form-label">件名</label>
+                           class="col-sm-2 col-form-label fw-bold">件名</label>
                     <div class="col-sm-4">
                         <input type="text"
                                name="title"
@@ -76,7 +76,7 @@
                                     'params' => ['id', 'ID'],
                                 ])
                                 @include('admin.parts.sortablelink_th', [
-                                    'params' => ['users.name', '氏名'],
+                                    'params' => ['users.name', '表示名'],
                                 ])
                                 @include('admin.parts.sortablelink_th', [
                                     'params' => ['title', '件名'],

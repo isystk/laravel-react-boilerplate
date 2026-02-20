@@ -32,7 +32,7 @@
                 @endif
                 <div class="mb-3 row">
                     <label for="search_name"
-                           class="col-sm-2 col-form-label">商品名</label>
+                           class="col-sm-2 col-form-label fw-bold">商品名</label>
                     <div class="col-sm-4">
                         <input type="text"
                                name="name"

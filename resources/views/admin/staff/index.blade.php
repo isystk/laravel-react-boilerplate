@@ -40,7 +40,7 @@
                 @endif
                 <div class="mb-3 row">
                     <label for="name"
-                           class="col-sm-2 col-form-label">氏名</label>
+                           class="col-sm-2 col-form-label fw-bold">氏名</label>
                     <div class="col-sm-4">
                         <input type="text"
                                name="name"
@@ -52,7 +52,7 @@
                 </div>
                 <div class="mb-3 row">
                     <label for="email"
-                           class="col-sm-2 col-form-label">メールアドレス</label>
+                           class="col-sm-2 col-form-label fw-bold">メールアドレス</label>
                     <div class="col-sm-4">
                         <input type="email"
                                name="email"
@@ -64,7 +64,7 @@
                 </div>
                 <div class="mb-3 row">
                     <label for="role"
-                           class="col-sm-2 col-form-label">権限</label>
+                           class="col-sm-2 col-form-label fw-bold">権限</label>
                     <div class="col-sm-4">
                         <select name="role"
                                 id="role"

@@ -13,6 +13,6 @@ class AdminRoleTest extends BaseTest
         $this->assertFalse($sut->isHighManager(), '管理者の場合 → False');
 
         $sut = AdminRole::HighManager;
-        $this->assertTrue($sut->isHighManager(), '上位管理者の場合 → True');
+        $this->assertTrue($sut->isHighManager(), 'システム管理者の場合 → True');
     }
 }

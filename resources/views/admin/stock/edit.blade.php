@@ -37,7 +37,7 @@
                 @csrf
                 <div class="form-group">
                     <label for="name"
-                           class="col-sm-2 col-form-label">商品名</label>
+                           class="col-sm-2 col-form-label fw-bold">商品名</label>
                     <div class="col-sm-8">
                         <input type="text"
                                name="name"
@@ -50,7 +50,7 @@
 
                 <div class="form-group">
                     <label for="detail"
-                           class="col-sm-2 col-form-label">商品説明</label>
+                           class="col-sm-2 col-form-label fw-bold">商品説明</label>
                     <div class="col-sm-8">
                         <textarea name="detail"
                                   id="detail"
@@ -61,7 +61,7 @@
 
                 <div class="form-group">
                     <label for="price"
-                           class="col-sm-2 col-form-label">価格</label>
+                           class="col-sm-2 col-form-label fw-bold">価格</label>
                     <div class="col-sm-4">
                         <div class="input-group">
                             <input type="number"
@@ -77,7 +77,7 @@
 
                 <div class="form-group">
                     <label for="quantity"
-                           class="col-sm-2 col-form-label">在庫数</label>
+                           class="col-sm-2 col-form-label fw-bold">在庫数</label>
                     <div class="col-sm-4">
                         <div class="input-group">
                             <input type="number"
@@ -91,7 +91,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">商品画像</label>
+                    <label class="col-sm-2 control-label fw-bold">商品画像</label>
                     <div class="col-sm-10">
                         @include('admin.parts.image_upload', [
                             'id' => 'image',

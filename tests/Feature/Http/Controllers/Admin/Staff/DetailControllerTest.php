@@ -30,7 +30,7 @@ class DetailControllerTest extends BaseTest
         $response->assertSuccessful();
         $response->assertSee('管理者A');
         $response->assertSee('admin1@test.com');
-        $response->assertSee('上位管理者');
+        $response->assertSee('システム管理者');
     }
 
     public function test_show_管理者ロール別アクセス権限検証(): void

@@ -37,7 +37,7 @@
                 @csrf
                 <div class="form-group">
                     <label for="name"
-                           class="form-label">氏名</label>
+                           class="form-label fw-bold">氏名</label>
                     <input type="text"
                            name="name"
                            id="name"
@@ -48,7 +48,7 @@
 
                 <div class="form-group">
                     <label for="email"
-                           class="form-label">メールアドレス</label>
+                           class="form-label fw-bold">メールアドレス</label>
                     <input type="email"
                            name="email"
                            id="email"
@@ -59,7 +59,7 @@
 
                 <div class="form-group">
                     <label for="role"
-                           class="form-label">権限</label>
+                           class="form-label fw-bold">権限</label>
                     <select name="role"
                             id="role"
                             class="form-select">

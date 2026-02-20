@@ -51,7 +51,7 @@ class Admin extends Authenticatable
     ];
 
     /**
-     * 権限が上位管理者の場合にTrueを返却する
+     * 権限がシステム管理者の場合にTrueを返却する
      */
     public function isHighManager(): bool
     {

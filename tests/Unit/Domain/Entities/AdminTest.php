@@ -31,9 +31,9 @@ class AdminTest extends BaseTest
 
     public function test_isHighManager(): void
     {
-        $this->assertFalse($this->sub->isHighManager(), '上位管理者以外の場合 → False');
+        $this->assertFalse($this->sub->isHighManager(), 'システム管理者以外の場合 → False');
         $this->sub->role = AdminRole::HighManager;
-        $this->assertTrue($this->sub->isHighManager(), '上位管理者の場合 → True');
+        $this->assertTrue($this->sub->isHighManager(), 'システム管理者の場合 → True');
     }
 
     public function test_isManager(): void
