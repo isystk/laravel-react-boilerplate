@@ -12,7 +12,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('images', static function (Blueprint $table) {
-            $table->bigIncrements('id')->comment('画像ID');
+            $table->id();
             $table->string('file_name', 200)->comment('ファイル名');
             $table->tinyInteger('type')->comment('画像タイプ');
             $table->dateTime('created_at');

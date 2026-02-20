@@ -12,13 +12,12 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('stocks', static function (Blueprint $table) {
-            $table->bigIncrements('id')->comment('商品ID');
+            $table->id();
             $table->string('name', '50')->comment('商品名');
             $table->string('detail', '500')->comment('説明文');
             $table->integer('price')->default(0)->comment('価格');
-            $table->unsignedBigInteger('image_id')->comment('画像ID');
+            $table->foreignId('image_id')->nullable()->constrained('images')->comment('画像ID');
             $table->integer('quantity')->default(0)->comment('在庫数');
-            $table->foreign('image_id')->references('id')->on('images');
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
         });

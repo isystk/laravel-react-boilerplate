@@ -6,7 +6,7 @@ use App\Domain\Entities\MonthlySale;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Domain\Entities\MonthlySale>
+ * @extends Factory<MonthlySale>
  */
 class MonthlySaleFactory extends Factory
 {

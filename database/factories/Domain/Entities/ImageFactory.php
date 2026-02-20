@@ -7,7 +7,7 @@ use App\Enums\ImageType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Domain\Entities\Image>
+ * @extends Factory<Image>
  */
 class ImageFactory extends Factory
 {

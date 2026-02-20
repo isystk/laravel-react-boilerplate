@@ -212,6 +212,7 @@ abstract class BaseTest extends TestCase
     public function createDefaultContact(array $params = []): Contact
     {
         $items = [];
+
         if (count($params) > 0) {
             $items = array_merge($items, $params);
         }

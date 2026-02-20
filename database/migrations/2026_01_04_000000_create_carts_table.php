@@ -12,15 +12,11 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('carts', static function (Blueprint $table) {
-            $table->bigIncrements('id')->comment('カートID');
-            $table->unsignedBigInteger('stock_id')->comment('商品ID');
-            $table->unsignedBigInteger('user_id')->comment('ユーザID');
+            $table->id();
+            $table->foreignId('stock_id')->constrained('stocks')->comment('商品ID');
+            $table->foreignId('user_id')->constrained('users')->comment('ユーザID');
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
-
-            // 外部キーを追加
-            $table->foreign('stock_id')->references('id')->on('stocks');
-            $table->foreign('user_id')->references('id')->on('users');
         });
         DB::statement("ALTER TABLE carts COMMENT 'カート'");
     }

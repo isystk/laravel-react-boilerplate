@@ -6,7 +6,7 @@ use App\Domain\Entities\OrderStock;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Domain\Entities\OrderStock>
+ * @extends Factory<OrderStock>
  */
 class OrderStockFactory extends Factory
 {

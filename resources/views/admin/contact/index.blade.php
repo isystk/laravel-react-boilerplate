@@ -76,7 +76,7 @@
                                     'params' => ['id', 'ID'],
                                 ])
                                 @include('admin.parts.sortablelink_th', [
-                                    'params' => ['user_name', '氏名'],
+                                    'params' => ['users.name', '氏名'],
                                 ])
                                 @include('admin.parts.sortablelink_th', [
                                     'params' => ['title', '件名'],
@@ -91,7 +91,7 @@
                             @foreach ($contacts as $contact)
                                 <tr>
                                     <th>{{ $contact->id }}</th>
-                                    <td>{{ $contact->user_name }}</td>
+                                    <td>{{ $contact->user->name }}</td>
                                     <td class="text-truncate"
                                         style="max-width: 350px;">
                                         {{ $contact->title }}

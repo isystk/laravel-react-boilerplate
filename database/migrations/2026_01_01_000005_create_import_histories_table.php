@@ -11,8 +11,8 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('import_histories', static function (Blueprint $table) {
-            $table->bigIncrements('id')->comment('ID');
-            $table->unsignedBigInteger('job_id')->nullable()->comment('ジョブ管理テーブル（jobs）ID');
+            $table->id();
+            $table->unsignedInteger('job_id')->nullable()->comment('ジョブ管理テーブル（jobs）ID');
             $table->string('type', 32)->index()->comment('ジョブの種類');
             $table->string('file_name', 255)->comment('インポートファイル名');
             $table->tinyInteger('status')->default(0)->comment('ステータス');

@@ -3,13 +3,9 @@ import { Api } from '@/constants/api';
 import i18n from '@/i18n';
 
 export type Contact = {
-  user_name: string;
-  email: string;
-  gender: string;
-  age: string;
+  type: string;
   title: string;
-  contact: string;
-  url: string;
+  message: string;
   image_base_64: string;
   caution: string[];
 };

@@ -28,18 +28,21 @@ class ContactEloquentRepository extends BaseEloquentRepository implements Contac
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator
     {
-        $query = $this->model->select();
+        $query = $this->model
+            ->select('contacts.*')
+            ->leftJoin('users', 'contacts.user_id', '=', 'users.id')
+            ->with(['image']);
 
         if (!is_null($conditions['user_name'] ?? null)) {
-            $query->where('user_name', 'like', '%' . $conditions['user_name'] . '%');
+            $query->where('users.name', 'like', '%' . $conditions['user_name'] . '%');
         }
         if (!is_null($conditions['title'] ?? null)) {
-            $query->where('title', 'like', '%' . $conditions['title'] . '%');
+            $query->where('contacts.title', 'like', '%' . $conditions['title'] . '%');
         }
 
         $sortColumn = $this->validateSortColumn(
             $conditions['sort_name'] ?? '',
-            ['id', 'user_name', 'title', 'email', 'created_at', 'updated_at'],
+            ['id', 'users.name', 'title', 'email', 'created_at', 'updated_at'],
         );
         if ($sortColumn !== null) {
             $query->orderBy($sortColumn, $conditions['sort_direction'] ?? 'asc');

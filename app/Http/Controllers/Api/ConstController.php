@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Enums\Age;
-use App\Enums\Gender;
+use App\Enums\ContactType;
 use Illuminate\Http\JsonResponse;
 use Throwable;
 
@@ -18,8 +17,7 @@ class ConstController extends BaseApiController
 
         try {
             foreach ([
-                'gender' => Gender::cases(),
-                'age'    => Age::cases(),
+                'contactType' => ContactType::cases(),
             ] as $key => $enum) {
                 $items[$key] = [];
                 foreach ($enum as $item) {

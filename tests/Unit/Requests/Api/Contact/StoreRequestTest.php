@@ -2,8 +2,7 @@
 
 namespace Tests\Unit\Requests\Api\Contact;
 
-use App\Enums\Age;
-use App\Enums\Gender;
+use App\Enums\ContactType;
 use App\Http\Requests\Api\Contact\StoreRequest;
 use Exception;
 use Illuminate\Support\Facades\Validator;
@@ -26,14 +25,10 @@ class StoreRequestTest extends BaseTest
         parent::setUp();
         $this->request     = new StoreRequest;
         $this->baseRequest = [
-            'user_name' => 'user1',
-            'title'     => 'titleA',
-            'email'     => 'user1@test.com',
-            'gender'    => Gender::Male->value,
-            'age'       => Age::Over20->value,
-            'contact'   => '1234567890abcdef',
-            'url'       => 'https://test.co.jp',
-            'caution'   => 'caution',
+            'title'   => 'titleA',
+            'type'    => ContactType::Service->value,
+            'message' => '1234567890abcdef',
+            'caution' => 'caution',
         ];
     }
 
@@ -74,28 +69,6 @@ class StoreRequestTest extends BaseTest
     public static function dataValidate(): array
     {
         return [
-            'NG : user_name 必須条件を満たさない' => [
-                'attrs'     => ['user_name' => null],
-                'expect'    => false,
-                'attribute' => 'user_name',
-                'messages'  => [
-                    '氏名を入力してください。',
-                ],
-            ],
-            'NG : user_name 文字数上限を超えている' => [
-                'attrs'     => ['user_name' => implode('', range(1, 51))],
-                'expect'    => false,
-                'attribute' => 'user_name',
-                'messages'  => [
-                    '氏名には50文字以下の文字列を指定してください。',
-                ],
-            ],
-            'OK : user_name が正常' => [
-                'attrs'     => ['user_name' => 'user1'],
-                'expect'    => true,
-                'attribute' => 'user_name',
-                'messages'  => [],
-            ],
             'NG : title 必須条件を満たさない' => [
                 'attrs'     => ['title' => null],
                 'expect'    => false,
@@ -105,11 +78,11 @@ class StoreRequestTest extends BaseTest
                 ],
             ],
             'NG : title 文字数上限を超えている' => [
-                'attrs'     => ['title' => implode('', range(1, 51))],
+                'attrs'     => ['title' => implode('', range(1, 101))],
                 'expect'    => false,
                 'attribute' => 'title',
                 'messages'  => [
-                    '件名には50文字以下の文字列を指定してください。',
+                    '件名には100文字以下の文字列を指定してください。',
                 ],
             ],
             'OK : title が正常' => [
@@ -118,123 +91,49 @@ class StoreRequestTest extends BaseTest
                 'attribute' => 'title',
                 'messages'  => [],
             ],
-            'NG : email 必須条件を満たさない' => [
-                'attrs'     => ['email' => null],
+            'NG : type 必須条件を満たさない' => [
+                'attrs'     => ['type' => null],
                 'expect'    => false,
-                'attribute' => 'email',
+                'attribute' => 'type',
                 'messages'  => [
-                    'メールアドレスを入力してください。',
+                    'お問い合わせ種類を入力してください。',
                 ],
             ],
-            'OK : email 文字数上限を超えている' => [
-                'attrs'     => ['email' => implode('', range(1, 56)) . '@test.com'],
+            'NG : type 不正な文字' => [
+                'attrs'     => ['type' => '不正'],
                 'expect'    => false,
-                'attribute' => 'email',
+                'attribute' => 'type',
                 'messages'  => [
-                    'メールアドレスには64文字以下の文字列を指定してください。',
+                    'お問い合わせ種類の値が不正です。',
                 ],
             ],
-            'NG : email メールアドレスとして不正' => [
-                'attrs'     => ['email' => 'abcde'],
-                'expect'    => false,
-                'attribute' => 'email',
-                'messages'  => [
-                    'メールアドレスには正しい形式のメールアドレスを指定してください。',
-                ],
-            ],
-            'OK : email が正常' => [
-                'attrs'     => ['email' => 'user1@test.com'],
+            'OK : type が正常' => [
+                'attrs'     => ['type' => ContactType::Service->value],
                 'expect'    => true,
-                'attribute' => 'email',
+                'attribute' => 'type',
                 'messages'  => [],
             ],
-            'NG : gender 必須条件を満たさない' => [
-                'attrs'     => ['gender' => null],
+            'NG : message 必須条件を満たさない' => [
+                'attrs'     => ['message' => null],
                 'expect'    => false,
-                'attribute' => 'gender',
-                'messages'  => [
-                    '性別を入力してください。',
-                ],
-            ],
-            'NG : gender 不正な文字' => [
-                'attrs'     => ['gender' => '不正'],
-                'expect'    => false,
-                'attribute' => 'gender',
-                'messages'  => [
-                    '性別の値が不正です。',
-                ],
-            ],
-            'OK : gender が正常' => [
-                'attrs'     => ['gender' => Gender::Male->value],
-                'expect'    => true,
-                'attribute' => 'gender',
-                'messages'  => [],
-            ],
-            'NG : age 必須条件を満たさない' => [
-                'attrs'     => ['age' => null],
-                'expect'    => false,
-                'attribute' => 'age',
-                'messages'  => [
-                    '年齢を入力してください。',
-                ],
-            ],
-            'NG : age 不正な文字' => [
-                'attrs'     => ['age' => '不正'],
-                'expect'    => false,
-                'attribute' => 'age',
-                'messages'  => [
-                    '年齢の値が不正です。',
-                ],
-            ],
-            'OK : age が正常' => [
-                'attrs'     => ['age' => Age::Over20->value],
-                'expect'    => true,
-                'attribute' => 'age',
-                'messages'  => [],
-            ],
-            'NG : contact 必須条件を満たさない' => [
-                'attrs'     => ['contact' => null],
-                'expect'    => false,
-                'attribute' => 'contact',
+                'attribute' => 'message',
                 'messages'  => [
                     'お問い合わせ内容を入力してください。',
                 ],
             ],
-            'NG : contact 文字数上限を超えている' => [
-                'attrs'     => ['contact' => implode('', range(1, 201))],
+            'NG : message 文字数上限を超えている' => [
+                'attrs'     => ['message' => implode('', range(1, 501))],
                 'expect'    => false,
-                'attribute' => 'contact',
+                'attribute' => 'message',
                 'messages'  => [
-                    'お問い合わせ内容には200文字以下の文字列を指定してください。',
+                    'お問い合わせ内容には500文字以下の文字列を指定してください。',
                 ],
             ],
-            'OK : contact が正常' => [
-                'attrs'     => ['contact' => 'abcde'],
+            'OK : message が正常' => [
+                'attrs'     => ['message' => 'abcde'],
                 'expect'    => true,
-                'attribute' => 'contact',
+                'attribute' => 'message',
                 'messages'  => [],
-            ],
-            'OK : url 文字数上限を超えている' => [
-                'attrs'     => ['url' => 'dummy'],
-                'expect'    => false,
-                'attribute' => 'url',
-                'messages'  => [
-                    'ホームページURLには正しい形式のURLを指定してください。',
-                ],
-            ],
-            'OK : url が正常' => [
-                'attrs'     => ['url' => 'https://111.test.com'],
-                'expect'    => true,
-                'attribute' => 'url',
-                'messages'  => [],
-            ],
-            'NG : caution 必須条件を満たさない' => [
-                'attrs'     => ['caution' => null],
-                'expect'    => false,
-                'attribute' => 'caution',
-                'messages'  => [
-                    '注意事項を入力してください。',
-                ],
             ],
             'OK : caution が正常' => [
                 'attrs'     => ['caution' => 'caution'],

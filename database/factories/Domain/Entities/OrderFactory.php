@@ -3,10 +3,11 @@
 namespace Database\Factories\Domain\Entities;
 
 use App\Domain\Entities\Order;
+use App\Domain\Entities\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Domain\Entities\Order>
+ * @extends Factory<Order>
  */
 class OrderFactory extends Factory
 {
@@ -26,7 +27,7 @@ class OrderFactory extends Factory
         $createdAt = fake()->dateTimeBetween('-1 year', 'now');
 
         return [
-            'user_id'    => \App\Domain\Entities\User::factory(),
+            'user_id'    => User::factory(),
             'sum_price'  => fake()->numberBetween(1000, 100000),
             'created_at' => $createdAt,
             'updated_at' => fake()->dateTimeBetween($createdAt, 'now'),

@@ -2,8 +2,7 @@
 
 namespace Tests\Unit\Domain\Entities;
 
-use App\Enums\Age;
-use App\Enums\Gender;
+use App\Enums\ContactType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
 use Tests\BaseTest;
@@ -20,12 +19,10 @@ class ContactTest extends BaseTest
     public function test_正しくキャストされる事(): void
     {
         $model = $this->createDefaultContact([
-            'gender' => Gender::Male->value,
-            'age'    => Age::Under19->value,
+            'type' => ContactType::Service->value,
         ]);
 
-        $this->assertInstanceOf(Gender::class, $model->gender);
-        $this->assertInstanceOf(Age::class, $model->age);
+        $this->assertInstanceOf(ContactType::class, $model->type);
         $this->assertInstanceOf(Carbon::class, $model->created_at);
         $this->assertInstanceOf(Carbon::class, $model->updated_at);
     }

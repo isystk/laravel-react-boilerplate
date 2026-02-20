@@ -12,14 +12,11 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('orders', static function (Blueprint $table) {
-            $table->bigIncrements('id')->comment('注文ID');
-            $table->unsignedBigInteger('user_id')->comment('ユーザID');
+            $table->id();
+            $table->foreignId('user_id')->constrained('users')->comment('ユーザID');
             $table->integer('sum_price')->default(0)->comment('合計金額');
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
-
-            // 外部キーを追加
-            $table->foreign('user_id')->references('id')->on('users');
         });
         DB::statement("ALTER TABLE orders COMMENT '注文'");
     }

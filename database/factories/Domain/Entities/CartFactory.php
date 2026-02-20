@@ -6,7 +6,7 @@ use App\Domain\Entities\Cart;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Domain\Entities\Cart>
+ * @extends Factory<Cart>
  */
 class CartFactory extends Factory
 {

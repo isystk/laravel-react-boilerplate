@@ -2,8 +2,7 @@
 
 namespace App\Domain\Entities;
 
-use App\Enums\Age;
-use App\Enums\Gender;
+use App\Enums\ContactType;
 use Database\Factories\Domain\Entities\ContactFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,16 +11,14 @@ use Illuminate\Support\Carbon;
 
 /**
  * @property int         $id
+ * @property int         $user_id
+ * @property ContactType $type
+ * @property string      $title
+ * @property string      $message
  * @property int|null    $image_id
- * @property string|null $user_name
- * @property string|null $title
- * @property string|null $email
- * @property string|null $url
- * @property Gender      $gender
- * @property Age         $age
- * @property string|null $contact
  * @property Carbon      $created_at
  * @property Carbon      $updated_at
+ * @property-read User   $user
  * @property-read Image|null $image
  */
 class Contact extends Model
@@ -37,15 +34,20 @@ class Contact extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'user_name',
+        'user_id',
         'title',
-        'email',
-        'url',
-        'gender',
-        'age',
-        'contact',
+        'type',
+        'message',
         'image_id',
     ];
+
+    /**
+     * @return BelongsTo<User, $this>
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
     /**
      * @return BelongsTo<Image, $this>
@@ -63,8 +65,7 @@ class Contact extends Model
     protected function casts(): array
     {
         return [
-            'gender'     => Gender::class,
-            'age'        => Age::class,
+            'type'       => ContactType::class,
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];

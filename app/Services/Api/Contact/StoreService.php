@@ -3,6 +3,7 @@
 namespace App\Services\Api\Contact;
 
 use App\Domain\Entities\Contact;
+use App\Domain\Entities\User;
 use App\Domain\Repositories\Contact\ContactRepository;
 use App\Dto\Request\Api\Contact\CreateDto;
 use App\Enums\ImageType;
@@ -19,10 +20,10 @@ class StoreService extends BaseService
     /**
      * お問い合わせを登録します。
      */
-    public function save(CreateDto $dto): Contact
+    public function save(User $user, CreateDto $dto): Contact
     {
         $image = null;
-        if ($dto->imageFile) {
+        if (!is_null($dto->imageFile)) {
             $image = $this->imageService->store(
                 $dto->imageFile,
                 ImageType::Contact,
@@ -31,14 +32,11 @@ class StoreService extends BaseService
         }
 
         return $this->contactRepository->create([
-            'user_name' => $dto->userName,
-            'title'     => $dto->title,
-            'email'     => $dto->email,
-            'url'       => $dto->url,
-            'gender'    => $dto->gender,
-            'age'       => $dto->age,
-            'contact'   => $dto->contact,
-            'image_id'  => $image?->id,
+            'user_id'  => $user->id,
+            'title'    => $dto->title,
+            'type'     => $dto->type,
+            'message'  => $dto->message,
+            'image_id' => $image?->id,
         ]);
     }
 }

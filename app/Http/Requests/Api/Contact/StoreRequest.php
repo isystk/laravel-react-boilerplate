@@ -2,8 +2,7 @@
 
 namespace App\Http\Requests\Api\Contact;
 
-use App\Enums\Age;
-use App\Enums\Gender;
+use App\Enums\ContactType;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
 
@@ -19,37 +18,19 @@ class StoreRequest extends FormRequest
         $maxlength = config('const.maxlength.contacts');
 
         return [
-            'user_name' => [
-                'required',
-                'string',
-                'max:' . $maxlength['user_name'],
-            ],
             'title' => [
                 'required',
                 'string',
                 'max:' . $maxlength['title'],
             ],
-            'email' => [
+            'type' => [
                 'required',
-                'email',
-                'max:' . $maxlength['email'],
+                new Enum(ContactType::class),
             ],
-            'gender' => [
-                'required',
-                new Enum(Gender::class),
-            ],
-            'age' => [
-                'required',
-                new Enum(Age::class),
-            ],
-            'contact' => [
+            'message' => [
                 'required',
                 'string',
-                'max:' . $maxlength['contact'],
-            ],
-            'url' => [
-                'url',
-                'nullable',
+                'max:' . $maxlength['message'],
             ],
             'caution' => [
                 'required',
@@ -65,13 +46,10 @@ class StoreRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'user_name' => __('contact.Name'),
-            'title'     => __('contact.Title'),
-            'email'     => __('contact.EMail'),
-            'gender'    => __('contact.Gender'),
-            'age'       => __('contact.Age'),
-            'contact'   => __('contact.Contact'),
-            'url'       => __('contact.URL'),
+            'title'   => '件名',
+            'type'    => 'お問い合わせ種類',
+            'message' => 'お問い合わせ内容',
+            'caution' => '注意事項',
         ];
     }
 

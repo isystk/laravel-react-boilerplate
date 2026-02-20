@@ -25,8 +25,10 @@ class ListControllerTest extends BaseTest
         ]);
         $this->actingAs($admin, 'admin');
 
-        $this->createDefaultContact(['user_name' => 'user1', 'title' => 'title1']);
-        $this->createDefaultContact(['user_name' => 'user2', 'title' => 'title2']);
+        $user1 = $this->createDefaultUser();
+        $user2 = $this->createDefaultUser();
+        $this->createDefaultContact(['user_id' => $user1->id, 'title' => 'title1']);
+        $this->createDefaultContact(['user_id' => $user2->id, 'title' => 'title2']);
 
         $response = $this->get(route('admin.contact'));
         $response->assertSuccessful();

@@ -7,7 +7,7 @@ use App\Domain\Entities\Stock;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Domain\Entities\Stock>
+ * @extends Factory<Stock>
  */
 class StockFactory extends Factory
 {
