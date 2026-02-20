@@ -20,7 +20,7 @@ class ContactControllerTest extends BaseTest
         $this->withoutMiddleware(ValidateCsrfToken::class);
     }
 
-    public function test_store(): void
+    public function test_store_画像あり(): void
     {
         Storage::fake('s3');
 
@@ -45,11 +45,39 @@ class ContactControllerTest extends BaseTest
         ]);
         $response->assertSuccessful();
 
-        // ファイルが存在することをテスト
         $contact = Contact::first();
+        $this->assertSame($user1->id, $contact->user->id);
+        $this->assertSame('タイトル1', $contact->title);
+        $this->assertSame(ContactType::Service, $contact->type);
+        $this->assertSame('お問い合わせ1', $contact->message);
 
+        // ファイルが存在することをテスト
         $image = $contact->image;
         $this->assertNotNull($image);
         Storage::disk('s3')->assertExists($image->getS3Path());
+    }
+
+    public function test_store_画像なし(): void
+    {
+        $user1 = $this->createDefaultUser([
+            'name'  => 'user1',
+            'email' => 'user1@test.com',
+        ]);
+        $this->actingAs($user1);
+
+        $response = $this->post(route('api.contact.store'), [
+            'title'         => 'タイトル1',
+            'type'          => ContactType::Service->value,
+            'message'       => 'お問い合わせ1',
+            'image_base_64' => null,
+            'caution'       => 1,
+        ]);
+        $response->assertSuccessful();
+
+        $contact = Contact::first();
+        $this->assertSame($user1->id, $contact->user->id);
+        $this->assertSame('タイトル1', $contact->title);
+        $this->assertSame(ContactType::Service, $contact->type);
+        $this->assertSame('お問い合わせ1', $contact->message);
     }
 }
