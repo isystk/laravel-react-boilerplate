@@ -56,9 +56,9 @@
         </div>
 
         <div class="mb-4 p-2 border rounded bg-light small">
-            <div>テスト用ユーザ</div>
-            <div>メールアドレス: sample@sample.com</div>
-            <div>パスワード: password</div>
+            <div>Test User</div>
+            <div>Email: admin1@test.com</div>
+            <div>Password: password</div>
         </div>
 
         <div class="d-grid gap-2">

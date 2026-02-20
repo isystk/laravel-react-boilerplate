@@ -39,7 +39,7 @@
                     <label for="search_user_email"
                            class="col-sm-2 col-form-label">メールアドレス</label>
                     <div class="col-sm-8">
-                        <input type="email"
+                        <input type="text"
                                name="email"
                                id="search_user_email"
                                value="{{ request()->email }}"
