@@ -42,7 +42,7 @@ class ImageEloquentRepository extends BaseEloquentRepository implements ImageRep
             $query->where('type', $conditions['file_type']);
         }
 
-        if ($conditions['unused_only'] ?? false) {
+        if ($conditions['unused_only']) {
             $query->whereRaw('NOT EXISTS(SELECT 1 FROM stocks WHERE stocks.image_id = images.id)')
                 ->whereRaw('NOT EXISTS(SELECT 1 FROM contacts WHERE contacts.image_id = images.id)');
         }

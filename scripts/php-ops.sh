@@ -9,7 +9,7 @@
 # Usage:        ./php-ops.sh {format|test} [branch|staged|file_paths...]
 #
 # Arguments:
-#   COMMAND:    format - Rector (自動修正), Pint (スタイル修正), blade-formatter を実行
+#   COMMAND:    format - Rector (自動修正), Pint (スタイル修正), blade-formatter, Larastan を実行
 #               test   - PHPUnitを実行 (ソース変更から関連するテストを自動特定)
 #
 #   DIFF_MODE:  branch    - 現在のブランチの差分を対象
@@ -69,6 +69,7 @@ case $COMMAND in
             $APP_CMD ./vendor/bin/pint
             $APP_CMD npx -y blade-formatter --write "resources/**/*.blade.php"
             $APP_CMD composer dump-autoload
+            $APP_CMD ./vendor/bin/phpstan analyse --memory-limit=1G
         else
             # ファイルが存在するか、または特殊キーワード(staged/branch等)でないかを確認
             if [ -f "$DIFF_MODE" ] || [[ ! "$DIFF_MODE" =~ ^(staged|branch)$ ]]; then
@@ -91,6 +92,7 @@ case $COMMAND in
                 echo "📝 PHPファイル実行中 (Rector, Pint):"
                 $APP_CMD ./vendor/bin/rector process $PHP_FILES --clear-cache
                 $APP_CMD ./vendor/bin/pint $PHP_FILES
+                $APP_CMD ./vendor/bin/phpstan analyse $PHP_FILES
 
                 echo "🚚 オートロードの整合性を確認中..."
                 WARNINGS=$($APP_CMD composer dump-autoload 2>&1 | grep "does not comply" || true)

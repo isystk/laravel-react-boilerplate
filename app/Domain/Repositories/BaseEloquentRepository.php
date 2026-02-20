@@ -61,6 +61,7 @@ abstract class BaseEloquentRepository implements BaseRepository
      */
     public function restore(int $id): void
     {
+        // @phpstan-ignore-next-line method.notFound
         $record = $this->model->withTrashed()->find($id);
 
         if ($record === null) {

@@ -5,6 +5,7 @@ namespace App\Services\Admin\Photo;
 use App\Domain\Entities\Image;
 use App\Domain\Repositories\Image\ImageRepository;
 use App\Dto\Request\Admin\Photo\SearchConditionDto;
+use App\Dto\View\Admin\Photo\DisplayDto;
 use App\Services\BaseService;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -15,7 +16,7 @@ class IndexService extends BaseService
     /**
      * 画像を検索します。
      *
-     * @return LengthAwarePaginator<int, Image>
+     * @return LengthAwarePaginator<int, DisplayDto>
      */
     public function searchPhotoList(SearchConditionDto $searchConditionDto): LengthAwarePaginator
     {
@@ -28,6 +29,15 @@ class IndexService extends BaseService
             'limit'          => $searchConditionDto->limit,
         ];
 
-        return $this->imageRepository->getByConditions($items);
+        /** @var LengthAwarePaginator<int, Image> $images */
+        $images = $this->imageRepository->getByConditions($items);
+
+        /** @var \Illuminate\Support\Collection<int, Image> $mappedCollection */
+        $mappedCollection = $images->getCollection()->map(fn (Image $image) => new DisplayDto($image));
+
+        /** @var LengthAwarePaginator<int, DisplayDto> $result */
+        $result = $images->setCollection($mappedCollection);
+
+        return $result;
     }
 }

@@ -41,8 +41,9 @@ class GoogleLoginControllerTest extends BaseTest
         $this->withoutExceptionHandling();
 
         $provider = Mockery::mock(GoogleProvider::class);
-        $provider->shouldReceive('user')
-            ->andThrow(new \Exception('Google auth failed'));
+        /** @var \Mockery\Expectation $expectation */
+        $expectation = $provider->shouldReceive('user');
+        $expectation->andThrow(new \Exception('Google auth failed'));
 
         Socialite::shouldReceive('driver')
             ->with('google')

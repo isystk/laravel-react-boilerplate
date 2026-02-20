@@ -109,38 +109,38 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($images as $image)
+                            @foreach ($displayDtos as $displayDto)
                                 <tr>
-                                    <td>{{ $image->type?->label() ?? '' }}</td>
+                                    <td>{{ $displayDto->image->type?->label() ?? '' }}</td>
                                     <td>
-                                        @if (!is_null($image->getUsedUrl()))
-                                            <a href="{{ $image->getUsedUrl() }}">
-                                                {{ $image->file_name }}
+                                        @if (!is_null($displayDto->getUsedUrl()))
+                                            <a href="{{ $displayDto->getUsedUrl() }}">
+                                                {{ $displayDto->image->file_name }}
                                             </a>
                                         @else
-                                            {{ $image->file_name }}
+                                            {{ $displayDto->image->file_name }}
                                         @endif
                                     </td>
                                     <td>
-                                        @if (!is_null($image->getUsedUrl()))
-                                            <a href="{{ $image->getUsedUrl() }}">
-                                                <img src="{{ $image->getImageUrl() }}"
-                                                     alt="{{ $image->file_name }}"
+                                        @if (!is_null($displayDto->getUsedUrl()))
+                                            <a href="{{ $displayDto->getUsedUrl() }}">
+                                                <img src="{{ $displayDto->image->getImageUrl() }}"
+                                                     alt="{{ $displayDto->image->file_name }}"
                                                      width="100px" />
                                             </a>
                                         @else
-                                            <img src="{{ $image->getImageUrl() }}"
-                                                 alt="{{ $image->file_name }}"
+                                            <img src="{{ $displayDto->image->getImageUrl() }}"
+                                                 alt="{{ $displayDto->image->file_name }}"
                                                  width="100px" />
                                         @endif
                                     </td>
-                                    <td>{{ $image->created_at }}</td>
+                                    <td>{{ $displayDto->image->created_at }}</td>
                                     <td>
                                         <button class="btn btn-danger btn-sm js-deleteBtn"
-                                                data-id="{{ $image->id }}"
-                                                @if (!Auth::user()->role->isHighManager() || $image->isUsed()) disabled="disabled" @endif>削除する
+                                                data-id="{{ $displayDto->image->id }}"
+                                                @if (!Auth::user()->role->isHighManager() || $displayDto->isUsed()) disabled="disabled" @endif>削除する
                                         </button>
-                                        <form id="delete_{{ $image->id }}"
+                                        <form id="delete_{{ $displayDto->image->id }}"
                                               action="{{ route('admin.photo.destroy') }}"
                                               method="POST"
                                               style="display: none;">
@@ -148,7 +148,7 @@
                                             @csrf
                                             <input type="hidden"
                                                    name="imageId"
-                                                   value="{{ $image->id }}" />
+                                                   value="{{ $displayDto->image->id }}" />
                                         </form>
                                     </td>
                                 </tr>
@@ -157,7 +157,7 @@
                     </table>
                 </div>
                 <div class="card-footer  ">
-                    {!! $images->links('admin.parts.pagination') !!}
+                    {!! $displayDtos->links('admin.parts.pagination') !!}
                 </div>
             </div>
         </div>

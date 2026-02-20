@@ -59,6 +59,7 @@ class UserEloquentRepository extends BaseEloquentRepository implements UserRepos
      */
     public function findByGoogleIdWithTrashed(string $googleId): ?User
     {
-        return $this->model->withTrashed()->where('google_id', $googleId)->first();
+        /** @var ?User */
+        return User::withTrashed()->where('google_id', $googleId)->first();
     }
 }

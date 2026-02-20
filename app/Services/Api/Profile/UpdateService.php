@@ -26,6 +26,7 @@ class UpdateService
         ];
 
         // アバター処理
+        $image = null;
         if (!empty($avatar)) {
 
             // Base64エンコードされた画像データをUploadedFileに変換します。
