@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 Route::middleware(['web'])->group(function () {
-    Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
-    Route::post('/logout', [\App\Http\Controllers\Api\AuthController::class, 'logout']);
-    Route::get('/authenticate', [\App\Http\Controllers\Api\AuthController::class, 'authenticate'])->middleware('auth:api');
     Route::get('/const', [\App\Http\Controllers\Api\ConstController::class, 'index'])->name('api.const');
     Route::resource('/like', App\Http\Controllers\Api\LikeController::class);
     Route::post('/like/store', [\App\Http\Controllers\Api\LikeController::class, 'store']);
@@ -27,5 +24,6 @@ Route::middleware(['web'])->group(function () {
         Route::post('/mycart/payment', [\App\Http\Controllers\Api\CartController::class, 'createPayment'])->name('api.mycart.payment');
         Route::post('/mycart/checkout', [\App\Http\Controllers\Api\CartController::class, 'checkout'])->name('api.mycart.checkout');
         Route::post('/profile/update', [\App\Http\Controllers\Api\ProfileController::class, 'update'])->name('api.profile.update');
+        Route::post('/profile/destroy', [\App\Http\Controllers\Api\ProfileController::class, 'destroy'])->name('api.profile.destroy');
     });
 });

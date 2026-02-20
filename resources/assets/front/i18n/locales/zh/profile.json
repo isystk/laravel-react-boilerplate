@@ -10,5 +10,9 @@
   "language": "显示语言",
   "language.ja": "日本語",
   "language.en": "English",
-  "language.zh": "中文"
+  "language.zh": "中文",
+  "deleteAccount.title": "删除账户",
+  "deleteAccount.description": "删除账户将永久删除您的所有数据，包括订单历史记录和购物车物品。此操作无法撤销。",
+  "deleteAccount.button": "删除账户",
+  "deleteAccount.confirm": "您确定要删除账户吗？此操作无法撤销。"
 }

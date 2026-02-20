@@ -55,30 +55,55 @@
                     @endif
                 </div>
             </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label text-muted small">ステータス</label>
+                <div class="col-sm-10 d-flex align-items-center">
+                    @if ($user->status === \App\Enums\UserStatus::Active)
+                        <span class="badge bg-success">{{ $user->status->label() }}</span>
+                    @else
+                        <span class="badge bg-danger">{{ $user->status->label() }}</span>
+                    @endif
+                </div>
+            </div>
         </div>
         <div class="card-footer text-center position-relative">
             <div class="d-inline-block">
                 <div class="mx-auto">
                     <a class="btn btn-primary"
                        href="{{ route('admin.user.edit', ['user' => $user]) }}"
-                       @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>
+                       {{ !Auth::user()->role->isHighManager() ? 'disabled="disabled"' : '' }}>
                         変更する
                     </a>
                 </div>
             </div>
             <div class="d-inline-block position-absolute"
                  style="right: 30px;">
-                <form method="POST"
-                      action="{{ route('admin.user.destroy', ['user' => $user]) }}"
-                      id="delete_{{ $user->id }}">
-                    @method('DELETE')
-                    @csrf
-                    <button class="btn btn-danger js-deleteBtn"
-                            data-id="{{ $user->id }}"
-                            @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>
-                        削除する
-                    </button>
-                </form>
+                @if ($user->status->isActive())
+                    <form method="POST"
+                          action="{{ route('admin.user.suspend', ['user' => $user]) }}"
+                          id="suspend_{{ $user->id }}">
+                        @method('PUT')
+                        @csrf
+                        <button class="btn btn-danger js-suspendBtn"
+                                data-id="{{ $user->id }}"
+                                {{ !Auth::user()->role->isHighManager() ? 'disabled="disabled"' : '' }}>
+                            アカウント停止
+                        </button>
+                    </form>
+                @else
+                    <form method="POST"
+                          action="{{ route('admin.user.activate', ['user' => $user]) }}"
+                          id="activate_{{ $user->id }}">
+                        @method('PUT')
+                        @csrf
+                        <button class="btn btn-success js-activateBtn"
+                                data-id="{{ $user->id }}"
+                                {{ !Auth::user()->role->isHighManager() ? 'disabled="disabled"' : '' }}>
+                            有効にする
+                        </button>
+                    </form>
+                @endif
             </div>
         </div>
     </div>

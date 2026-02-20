@@ -32,7 +32,6 @@ class UpdateService
             $imageFile = UploadImage::convertBase64($avatar);
 
             $image                    = $this->imageService->store($imageFile, ImageType::User, $imageFile->getClientOriginalName());
-            $model['avatar_url']      = null;
             $model['avatar_image_id'] = $image->id;
         }
 

@@ -14,5 +14,7 @@
   "service.stockFetchFailed": "商品データの取得に失敗しました",
   "service.contactFailed": "お問い合わせの登録に失敗しました",
   "service.profileUpdated": "プロフィールを更新しました",
-  "service.profileUpdateFailed": "プロフィールの変更に失敗しました"
+  "service.profileUpdateFailed": "プロフィールの変更に失敗しました",
+  "service.accountDeleted": "アカウントを削除しました",
+  "service.accountDeletionFailed": "アカウントの削除に失敗しました"
 }

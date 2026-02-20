@@ -14,5 +14,7 @@
   "service.stockFetchFailed": "获取商品数据失败",
   "service.contactFailed": "提交咨询失败",
   "service.profileUpdated": "个人资料已更新",
-  "service.profileUpdateFailed": "更新个人资料失败"
+  "service.profileUpdateFailed": "更新个人资料失败",
+  "service.accountDeleted": "账户已删除",
+  "service.accountDeletionFailed": "删除账户失败"
 }

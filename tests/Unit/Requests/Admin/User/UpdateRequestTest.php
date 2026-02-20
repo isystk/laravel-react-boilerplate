@@ -6,6 +6,7 @@ use App\Domain\Entities\User;
 use App\Http\Requests\Admin\User\UpdateRequest;
 use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Validator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -51,7 +52,7 @@ class UpdateRequestTest extends BaseTest
             User::factory()->create(['id' => 1, 'email' => 'user1@test.com']);
             User::factory()->create(['id' => 2, 'email' => 'already@test.com']);
 
-            $route = $this->createMock(\Illuminate\Routing\Route::class);
+            $route = $this->createMock(Route::class);
             $route->method('parameter')->with('user')->willReturn($userId);
             $this->request->setRouteResolver(static fn () => $route);
         }

@@ -36,4 +36,9 @@ interface OrderRepository extends BaseRepository
      * @return Collection<int, Order>
      */
     public function getLatestWithUser(int $limit): Collection;
+
+    /**
+     * ユーザーIDからデータを削除します。
+     */
+    public function deleteByUserId(int $userId): void;
 }

@@ -1,15 +1,18 @@
 import type { Preview } from '@storybook/react';
 
 import '@/assets/styles/app.scss';
-import AppRoot from '@/components/AppRoot';
-import { MINIMAL_VIEWPORTS} from '@storybook/addon-viewport';
+import { AppProvider } from '@/states/AppContext';
+import { MemoryRouter } from 'react-router-dom';
+import { MINIMAL_VIEWPORTS } from '@storybook/addon-viewport';
 
-// RootコンポーネントをラップしてStorybook上に適用する
+// Storybook用のラッパー（BrowserRouterの代わりにMemoryRouterを使用）
 export const decorators = [
   (Story) => (
-    <AppRoot>
-      <Story />
-    </AppRoot>
+    <AppProvider>
+      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        <Story />
+      </MemoryRouter>
+    </AppProvider>
   ),
 ];
 

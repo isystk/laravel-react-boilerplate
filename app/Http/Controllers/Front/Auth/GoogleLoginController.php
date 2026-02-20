@@ -26,7 +26,6 @@ class GoogleLoginController extends BaseController
             $googleUser = Socialite::driver('google')->user();
 
             $user = $service->findOrCreate($googleUser);
-            Auth::login($user);
 
             DB::commit();
         } catch (\Throwable $th) {
@@ -34,6 +33,14 @@ class GoogleLoginController extends BaseController
 
             throw $th;
         }
+
+        if (!$user->status->isActive()) {
+            return to_route('login')->withErrors([
+                'email' => __('auth.suspended'),
+            ]);
+        }
+
+        Auth::login($user);
 
         return redirect()->intended('/home');
     }

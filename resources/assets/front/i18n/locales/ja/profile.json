@@ -10,5 +10,9 @@
   "language": "表示言語",
   "language.ja": "日本語",
   "language.en": "English",
-  "language.zh": "中文"
+  "language.zh": "中文",
+  "deleteAccount.title": "アカウントの削除",
+  "deleteAccount.description": "アカウントを削除すると、これまでの注文履歴やカートの内容など、すべてのデータが完全に削除され、復元することはできません。",
+  "deleteAccount.button": "アカウントを削除する",
+  "deleteAccount.confirm": "本当にアカウントを削除しますか？この操作は取り消せません。"
 }

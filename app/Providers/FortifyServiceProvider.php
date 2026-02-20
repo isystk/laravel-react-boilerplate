@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Domain\Entities\User;
 use App\Http\Controllers\Front\Auth\CreateNewUser;
 use App\Http\Controllers\Front\Auth\ResetUserPassword;
 use App\Http\Controllers\Front\Auth\Responses\LoginResponse;
@@ -9,8 +10,10 @@ use App\Http\Controllers\Front\Auth\UpdateUserPassword;
 use App\Http\Controllers\Front\Auth\UpdateUserProfileInformation;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
 use Laravel\Fortify\Fortify;
 
@@ -39,6 +42,23 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
+        Fortify::authenticateUsing(static function ($request) {
+            /** @var ?User $user */
+            $user = User::where('email', $request->email)->first();
+
+            if (!$user || !Hash::check($request->password, $user->password)) {
+                return null;
+            }
+
+            // アカウント停止チェック
+            if (!$user->status->isActive()) {
+                throw ValidationException::withMessages([
+                    'email' => [__('auth.suspended')],
+                ]);
+            }
+
+            return $user;
+        });
 
         RateLimiter::for('login', static function (Request $request) {
             $email = (string) $request->email;

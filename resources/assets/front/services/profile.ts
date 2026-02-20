@@ -37,4 +37,27 @@ export default class ProfileService {
       this.main.hideLoading();
     }
   }
+
+  /** アカウント削除 */
+  async destroyAccount() {
+    this.main.showLoading();
+    try {
+      const response = await fetch(Api.PROFILE_DESTROY, {
+        method: 'POST',
+      });
+      const result = await response.json();
+      if (!result) {
+        throw new Error(i18n.t('error:service.accountDeletionFailed'));
+      }
+      this.main.showToastMessage(i18n.t('error:service.accountDeleted'));
+      // ログアウト処理とリダイレクト
+      await this.main.auth.logout();
+      window.location.href = '/';
+    } catch (e) {
+      this.main.showToastMessage(i18n.t('error:service.accountDeletionFailed'));
+      throw e;
+    } finally {
+      this.main.hideLoading();
+    }
+  }
 }

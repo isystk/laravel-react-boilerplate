@@ -25,4 +25,18 @@ class OrderStockEloquentRepository extends BaseEloquentRepository implements Ord
             ->where('order_id', $orderId)
             ->get();
     }
+
+    /**
+     * ユーザーIDからデータを削除します。
+     */
+    public function deleteByUserId(int $userId): void
+    {
+        $this->model
+            ->whereIn('order_id', function ($query) use ($userId) {
+                $query->select('id')
+                    ->from('orders')
+                    ->where('user_id', $userId);
+            })
+            ->delete();
+    }
 }

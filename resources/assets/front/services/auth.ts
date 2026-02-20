@@ -16,4 +16,14 @@ export default class AuthService {
     this.auth.avatar_url = user.avatar_url;
     this.main.setRootState();
   }
+
+  /**
+   * ログアウト
+   */
+  async logout() {
+    this.auth.name = null;
+    this.auth.email = null;
+    this.auth.avatar_url = null;
+    this.main.setRootState();
+  }
 }

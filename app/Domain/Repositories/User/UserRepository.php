@@ -23,5 +23,5 @@ interface UserRepository extends BaseRepository
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator;
 
-    public function findByGoogleId(string $googleId): ?User;
+    public function findByGoogleIdWithTrashed(string $googleId): ?User;
 }

@@ -57,7 +57,7 @@ class DetailControllerTest extends BaseTest
         }
     }
 
-    public function test_destroy(): void
+    public function test_suspend(): void
     {
         $user1 = $this->createDefaultUser([
             'name'  => 'user1',
@@ -71,7 +71,7 @@ class DetailControllerTest extends BaseTest
         $this->actingAs($admin1, 'admin');
 
         // manager権限ではアクセスできないことのテスト
-        $response = $this->delete(route('admin.user.destroy', $user1));
+        $response = $this->put(route('admin.user.suspend', $user1));
         $response->assertForbidden();
 
         $admin2 = $this->createDefaultAdmin([
@@ -80,11 +80,39 @@ class DetailControllerTest extends BaseTest
         ]);
         $this->actingAs($admin2, 'admin');
 
-        $redirectResponse = $this->delete(route('admin.user.destroy', $user1));
+        $redirectResponse = $this->put(route('admin.user.suspend', $user1));
         $response         = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();
 
-        // データが削除されたことをテスト
-        $this->assertDatabaseMissing('users', ['id' => $user1->id]);
+        // データのステータスが「アカウント停止」になったことをテスト
+        $this->assertDatabaseHas('users', [
+            'id'     => $user1->id,
+            'status' => \App\Enums\UserStatus::Suspended->value,
+        ]);
+    }
+
+    public function test_activate(): void
+    {
+        $user1 = $this->createDefaultUser([
+            'name'   => 'user1',
+            'email'  => 'user1@test.com',
+            'status' => \App\Enums\UserStatus::Suspended->value,
+        ]);
+
+        $admin1 = $this->createDefaultAdmin([
+            'name' => '管理者1',
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->actingAs($admin1, 'admin');
+
+        $redirectResponse = $this->put(route('admin.user.activate', $user1));
+        $response         = $this->get($redirectResponse->headers->get('Location'));
+        $response->assertSuccessful();
+
+        // データのステータスが「有効」になったことをテスト
+        $this->assertDatabaseHas('users', [
+            'id'     => $user1->id,
+            'status' => \App\Enums\UserStatus::Active->value,
+        ]);
     }
 }

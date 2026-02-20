@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\UserStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,9 +20,11 @@ return new class extends Migration {
             $table->unsignedBigInteger('avatar_image_id')->nullable()->comment('アバター画像ID');
             $table->string('google_id')->nullable()->unique()->comment('GoogleアカウントID(OAuthログイン専用)');
             $table->string('avatar_url')->nullable()->comment('アバターURL(OAuthログイン専用)');
+            $table->tinyInteger('status')->default(UserStatus::Active)->comment('ステータス');
             $table->rememberToken();
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
+            $table->dateTime('deleted_at')->nullable();
         });
 
         Schema::create('password_reset_tokens', static function (Blueprint $table) {

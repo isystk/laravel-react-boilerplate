@@ -14,4 +14,9 @@ interface OrderStockRepository extends BaseRepository
      * @return Collection<int, OrderStock>
      */
     public function getByOrderId(int $orderId): Collection;
+
+    /**
+     * ユーザーIDからデータを削除します。
+     */
+    public function deleteByUserId(int $userId): void;
 }

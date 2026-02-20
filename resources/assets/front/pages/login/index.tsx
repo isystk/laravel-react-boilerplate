@@ -39,26 +39,17 @@ const LoginForm = () => {
               label={t('login.password')}
               className="mb-5 md:w-100"
             />
-            {/*TODO react-google-recaptcha-v3 が react19では未だサポートされていないのでコメントアウト*/}
-            {/*<GoogleReCaptchaProvider*/}
-            {/*    reCaptchaKey={*/}
-            {/*        import.meta.env.MIX_RECAPTCHAV3_SITEKEY + ""*/}
-            {/*    }*/}
-            {/*    language="ja"*/}
-            {/*>*/}
-            {/*    <ReChaptcha />*/}
-            {/*</GoogleReCaptchaProvider>*/}
             <p>
               <input type="checkbox" id="remember" name="remember" value="1" />{' '}
               <span>{t('login.rememberMe')}</span>
             </p>
           </div>
           <div className="mx-auto my-5 border p-3 md:w-100">
-            {t('login.testUser')}
+            Test User
             <br />
-            {t('login.testEmail')}
+            Email: user1@test.com
             <br />
-            {t('login.testPassword')}
+            Password: password
           </div>
           <div className="mt-3 text-center">
             <button type="submit" className="btn btn-primary mr-5">

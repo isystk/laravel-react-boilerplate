@@ -2,12 +2,14 @@
 
 namespace App\Domain\Entities;
 
+use App\Enums\UserStatus;
 use App\Mails\ResetPasswordToUser;
 use App\Mails\VerifyEmailToUser;
 use Database\Factories\Domain\Entities\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -24,8 +26,10 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property string|null $google_id
  * @property string|null $avatar_url
  * @property string|null $remember_token
+ * @property UserStatus  $status
  * @property Carbon      $created_at
  * @property Carbon      $updated_at
+ * @property Carbon|null $deleted_at
  * @property-read Image $avatarImage
  */
 class User extends Authenticatable implements JWTSubject, MustVerifyEmail
@@ -36,6 +40,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     use HasFactory;
 
     use Notifiable;
+    use SoftDeletes;
 
     protected $table = 'users';
 
@@ -53,6 +58,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         'google_id',
         'avatar_url',
         'remember_token',
+        'status',
     ];
 
     /**
@@ -124,8 +130,10 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     {
         return [
             'email_verified_at' => 'datetime',
+            'status'            => UserStatus::class,
             'created_at'        => 'datetime',
             'updated_at'        => 'datetime',
+            'deleted_at'        => 'datetime',
         ];
     }
 }
