@@ -28,6 +28,7 @@ class DestroyService
     public function destroy(User $user): void
     {
         // 注文に関連するデータを削除
+        $this->orderStockRepository->deleteByUserId($user->id);
         $this->orderRepository->deleteByUserId($user->id);
 
         // カートの削除

@@ -42,4 +42,28 @@ class OrderStockRepositoryTest extends BaseTest
         $orderStocks = $this->repository->getByOrderId($order->id);
         $this->assertSame(2, $orderStocks->count());
     }
+
+    public function test_deleteByUserId(): void
+    {
+        $user1        = $this->createDefaultUser();
+        $order1       = $this->createDefaultOrder(['user_id' => $user1->id]);
+        $order1Stock1 = $this->createDefaultOrderStock(['order_id' => $order1->id]);
+        $order1Stock2 = $this->createDefaultOrderStock(['order_id' => $order1->id]);
+        $order2       = $this->createDefaultOrder(['user_id' => $user1->id]);
+        $order2Stock1 = $this->createDefaultOrderStock(['order_id' => $order2->id]);
+        $order2Stock2 = $this->createDefaultOrderStock(['order_id' => $order2->id]);
+
+        $user2        = $this->createDefaultUser();
+        $order3       = $this->createDefaultOrder(['user_id' => $user2->id]);
+        $order3Stock1 = $this->createDefaultOrderStock(['order_id' => $order3->id]);
+
+        $this->repository->deleteByUserId($user1->id);
+
+        // user1の注文が削除され、user2の注文は削除されないことをテスト
+        $this->assertDatabaseMissing('order_stocks', ['id' => $order1Stock1->id]);
+        $this->assertDatabaseMissing('order_stocks', ['id' => $order1Stock2->id]);
+        $this->assertDatabaseMissing('order_stocks', ['id' => $order2Stock1->id]);
+        $this->assertDatabaseMissing('order_stocks', ['id' => $order2Stock2->id]);
+        $this->assertDatabaseHas('order_stocks', ['id' => $order3Stock1->id]);
+    }
 }

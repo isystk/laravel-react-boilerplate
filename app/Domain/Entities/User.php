@@ -35,11 +35,11 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
     use HasApiTokens;
+
     /** @phpstan-use HasFactory<UserFactory> */
     use HasFactory;
 
     use Notifiable;
-
     use SoftDeletes;
 
     protected $table = 'users';

@@ -14,6 +14,7 @@ use Illuminate\Support\Carbon;
  * @property int|null $sum_price
  * @property Carbon   $created_at
  * @property Carbon   $updated_at
+ * @property-read User $user
  */
 class Order extends Model
 {
@@ -40,14 +41,6 @@ class Order extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Domain\Entities\OrderStock, $this>
-     */
-    public function orderStocks(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(OrderStock::class);
     }
 
     /**

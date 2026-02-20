@@ -14,6 +14,8 @@ use Illuminate\Support\Carbon;
  * @property int    $user_id
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * @property-read User $user
+ * @property-read Stock $stock
  */
 class Cart extends Model
 {
