@@ -16,9 +16,7 @@ class ImportHistoryEloquentRepository extends BaseEloquentRepository implements 
     }
 
     /**
-     * インポートタイプからデータを取得します。
-     *
-     * @return Collection<int, ImportHistory>
+     * {@inheritDoc}
      */
     public function getByImportHistory(ImportType $importType): Collection
     {
@@ -30,7 +28,7 @@ class ImportHistoryEloquentRepository extends BaseEloquentRepository implements 
     }
 
     /**
-     * 処理中（または処理待ち）のデータが存在する場合はTrueを返却します。
+     * {@inheritDoc}
      */
     public function hasProcessingByImportHistory(ImportType $importType): bool
     {

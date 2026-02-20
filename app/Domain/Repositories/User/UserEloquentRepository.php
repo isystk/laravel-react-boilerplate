@@ -15,16 +15,7 @@ class UserEloquentRepository extends BaseEloquentRepository implements UserRepos
     }
 
     /**
-     * 検索条件からデータを取得します。
-     *
-     * @param array{
-     *   name : ?string,
-     *   email : ?string,
-     *   sort_name : ?string,
-     *   sort_direction : 'asc' | 'desc' | null,
-     *   limit : ?int,
-     * } $conditions
-     * @return Collection<int, User>|LengthAwarePaginator<int, User>
+     * {@inheritDoc}
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator
     {
@@ -55,7 +46,7 @@ class UserEloquentRepository extends BaseEloquentRepository implements UserRepos
     }
 
     /**
-     * Google IDからユーザを取得します。
+     * {@inheritDoc}
      */
     public function findByGoogleIdWithTrashed(string $googleId): ?User
     {

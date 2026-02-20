@@ -14,9 +14,7 @@ class CartEloquentRepository extends BaseEloquentRepository implements CartRepos
     }
 
     /**
-     * ユーザーIDからデータを取得します。
-     *
-     * @return Collection<int, Cart>
+     * {@inheritDoc}
      */
     public function getByUserId(int $userId): Collection
     {
@@ -31,7 +29,7 @@ class CartEloquentRepository extends BaseEloquentRepository implements CartRepos
     }
 
     /**
-     * ユーザーIDからデータを削除します。
+     * {@inheritDoc}
      */
     public function deleteByUserId(int $userId): void
     {

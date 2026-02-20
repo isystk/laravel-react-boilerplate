@@ -14,9 +14,7 @@ class ContactReplyEloquentRepository extends BaseEloquentRepository implements C
     }
 
     /**
-     * contact_id に紐づく返信一覧を取得します。
-     *
-     * @return Collection<int, ContactReply>
+     * {@inheritDoc}
      */
     public function getByContactId(int $contactId): Collection
     {

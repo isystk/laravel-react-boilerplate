@@ -15,9 +15,7 @@ class StockEloquentRepository extends BaseEloquentRepository implements StockRep
     }
 
     /**
-     * 指定した件数のデータを最新順に取得します。
-     *
-     * @return LengthAwarePaginator<int, Stock>
+     * {@inheritDoc}
      */
     public function getByLimit(int $limit = 0): LengthAwarePaginator
     {
@@ -28,15 +26,7 @@ class StockEloquentRepository extends BaseEloquentRepository implements StockRep
     }
 
     /**
-     * 検索条件からデータを取得します。
-     *
-     * @param array{
-     *   name : ?string,
-     *   sort_name : ?string,
-     *   sort_direction : 'asc' | 'desc' | null,
-     *   limit ?: ?int,
-     * } $conditions
-     * @return Collection<int, Stock>|LengthAwarePaginator<int, Stock>
+     * {@inheritDoc}
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator
     {

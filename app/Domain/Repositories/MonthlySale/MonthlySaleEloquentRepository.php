@@ -14,9 +14,7 @@ class MonthlySaleEloquentRepository extends BaseEloquentRepository implements Mo
     }
 
     /**
-     * 年月の新しい順にすべてのレコードを返却する。
-     *
-     * @return Collection<int, MonthlySale>
+     * {@inheritDoc}
      */
     public function getAllOrderByYearMonthDesc(): Collection
     {
@@ -27,7 +25,7 @@ class MonthlySaleEloquentRepository extends BaseEloquentRepository implements Mo
     }
 
     /**
-     * @return Collection<int, MonthlySale>
+     * {@inheritDoc}
      */
     public function getAllOrderByYearMonth(): Collection
     {
