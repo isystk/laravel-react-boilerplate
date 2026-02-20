@@ -20,11 +20,13 @@ class IndexService extends BaseService
     public function searchContact(SearchConditionDto $searchConditionDto): LengthAwarePaginator
     {
         $conditions = [
-            'user_name'      => $searchConditionDto->userName,
-            'title'          => $searchConditionDto->title,
-            'sort_name'      => $searchConditionDto->sortName,
-            'sort_direction' => $searchConditionDto->sortDirection,
-            'limit'          => $searchConditionDto->limit,
+            'user_name'         => $searchConditionDto->userName,
+            'title'             => $searchConditionDto->title,
+            'contact_date_from' => $searchConditionDto->contactDateFrom,
+            'contact_date_to'   => $searchConditionDto->contactDateTo,
+            'sort_name'         => $searchConditionDto->sortName,
+            'sort_direction'    => $searchConditionDto->sortDirection,
+            'limit'             => $searchConditionDto->limit,
         ];
 
         return $this->contactRepository->getByConditions($conditions);

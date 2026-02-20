@@ -4,6 +4,7 @@ namespace App\Domain\Repositories\Contact;
 
 use App\Domain\Entities\Contact;
 use App\Domain\Repositories\BaseRepository;
+use Carbon\CarbonImmutable;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
@@ -15,6 +16,8 @@ interface ContactRepository extends BaseRepository
      * @param array{
      *   user_name : ?string,
      *   title : ?string,
+     *   contact_date_from : ?CarbonImmutable,
+     *   contact_date_to : ?CarbonImmutable,
      *   sort_name : ?string,
      *   sort_direction : 'asc' | 'desc' | null,
      *   limit : ?int,

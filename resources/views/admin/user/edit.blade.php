@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', $user->name . 'の変更')
+@section('title', 'ユーザID:' . $user->id . 'の変更')
 @section('mainMenu', 'user')
 @section('subMenu', 'user')
 @section('breadcrumbs')

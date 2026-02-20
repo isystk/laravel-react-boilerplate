@@ -45,6 +45,36 @@
                                maxlength="{{ config('const.maxlength.contacts.title') }}" />
                     </div>
                 </div>
+
+                <div class="mb-3 row">
+                    <label for="contact_date_from"
+                           class="col-sm-2 col-form-label fw-bold">お問い合わせ日時</label>
+                    <div class="col-sm-10">
+                        <div class="row align-items-center g-2">
+                            <div class="col-auto"
+                                 style="width: 180px;">
+                                <input type="text"
+                                       name="contact_date_from"
+                                       id="contact_date_from"
+                                       value="{{ request()->contact_date_from }}"
+                                       class="form-control date-picker"
+                                       maxlength="{{ config('const.maxlength.commons.date') }}" />
+                            </div>
+                            <div class="col-auto text-center">
+                                <span>～</span>
+                            </div>
+                            <div class="col-auto"
+                                 style="width: 180px;">
+                                <input type="text"
+                                       name="contact_date_to"
+                                       id="contact_date_to"
+                                       value="{{ request()->contact_date_to }}"
+                                       class="form-control date-picker"
+                                       maxlength="{{ config('const.maxlength.commons.date') }}" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="card-footer text-center">
                 <button type="submit"
@@ -56,11 +86,17 @@
           method="GET"
           id="pagingForm">
         <input type="hidden"
-               name="userName"
-               value="{{ request()->userName }}">
+               name="user_name"
+               value="{{ request()->user_name }}">
         <input type="hidden"
                name="title"
                value="{{ request()->title }}">
+        <input type="hidden"
+               name="contact_date_from"
+               value="{{ request()->contact_date_from }}">
+        <input type="hidden"
+               name="contact_date_to"
+               value="{{ request()->contact_date_to }}">
     </form>
     <div class="row">
         <div class="col-12">

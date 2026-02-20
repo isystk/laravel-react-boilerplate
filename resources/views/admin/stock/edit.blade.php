@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', $stock->name . 'の変更')
+@section('title', '商品ID:' . $stock->id . 'の変更')
 @section('mainMenu', 'master')
 @section('subMenu', 'stock')
 @section('breadcrumbs')
