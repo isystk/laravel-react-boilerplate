@@ -2,14 +2,14 @@
 
 namespace App\Services\Admin\Photo;
 
-use App\Domain\Repositories\Image\ImageRepository;
+use App\Domain\Repositories\Image\ImageRepositoryInterface;
 use App\Services\BaseService;
 use App\Services\Common\ImageService;
 
 class DestroyService extends BaseService
 {
     public function __construct(
-        private readonly ImageRepository $imageRepository,
+        private readonly ImageRepositoryInterface $imageRepository,
         private readonly ImageService $imageService,
     ) {}
 

@@ -4,7 +4,7 @@ namespace App\Services\Admin\Staff\Import;
 
 use App\Domain\Entities\Admin;
 use App\Domain\Entities\ImportHistory;
-use App\Domain\Repositories\ImportHistory\ImportHistoryRepository;
+use App\Domain\Repositories\ImportHistory\ImportHistoryRepositoryInterface;
 use App\Enums\ImportType;
 use App\Enums\JobStatus;
 use App\Services\BaseService;
@@ -15,7 +15,7 @@ use RuntimeException;
 
 class ImportService extends BaseService
 {
-    public function __construct(private readonly ImportHistoryRepository $importHistoryRepository) {}
+    public function __construct(private readonly ImportHistoryRepositoryInterface $importHistoryRepository) {}
 
     /**
      * 管理者をインポートするJobを登録します。

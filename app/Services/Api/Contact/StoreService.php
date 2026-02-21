@@ -4,7 +4,7 @@ namespace App\Services\Api\Contact;
 
 use App\Domain\Entities\Contact;
 use App\Domain\Entities\User;
-use App\Domain\Repositories\Contact\ContactRepository;
+use App\Domain\Repositories\Contact\ContactRepositoryInterface;
 use App\Dto\Request\Api\Contact\CreateDto;
 use App\Enums\ImageType;
 use App\Services\BaseService;
@@ -13,7 +13,7 @@ use App\Services\Common\ImageService;
 class StoreService extends BaseService
 {
     public function __construct(
-        private readonly ContactRepository $contactRepository,
+        private readonly ContactRepositoryInterface $contactRepository,
         private readonly ImageService $imageService,
     ) {}
 

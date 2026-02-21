@@ -3,7 +3,7 @@
 namespace App\Jobs\Import;
 
 use App\Domain\Entities\Admin;
-use App\Domain\Repositories\ImportHistory\ImportHistoryRepository;
+use App\Domain\Repositories\ImportHistory\ImportHistoryRepositoryInterface;
 use App\Enums\JobStatus;
 use App\Jobs\BaseJobs;
 use Closure;
@@ -72,7 +72,7 @@ abstract class BaseImportJobs extends BaseJobs
         if ($this->job === null) {
             throw new RuntimeException('An unexpected error has occurred.');
         }
-        $importHistoryRepository = app(ImportHistoryRepository::class);
+        $importHistoryRepository = app(ImportHistoryRepositoryInterface::class);
         $importHistoryRepository->update([
             'job_id' => $this->job->getJobId(),
             'status' => $status,

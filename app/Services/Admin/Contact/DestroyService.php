@@ -2,12 +2,12 @@
 
 namespace App\Services\Admin\Contact;
 
-use App\Domain\Repositories\Contact\ContactRepository;
+use App\Domain\Repositories\Contact\ContactRepositoryInterface;
 use App\Services\BaseService;
 
 class DestroyService extends BaseService
 {
-    public function __construct(private readonly ContactRepository $contactRepository) {}
+    public function __construct(private readonly ContactRepositoryInterface $contactRepository) {}
 
     /**
      * お問い合わせを削除します。

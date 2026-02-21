@@ -6,19 +6,32 @@ use App\Domain\Entities\MonthlySale;
 use App\Domain\Repositories\BaseRepository;
 use Illuminate\Support\Collection;
 
-interface MonthlySaleRepository extends BaseRepository
+class MonthlySaleRepository extends BaseRepository implements MonthlySaleRepositoryInterface
 {
-    /**
-     * 年月の新しい順にすべてのレコードを返却する。
-     *
-     * @return Collection<int, MonthlySale>
-     */
-    public function getAllOrderByYearMonthDesc(): Collection;
+    protected function model(): string
+    {
+        return MonthlySale::class;
+    }
 
     /**
-     * 年月の古い順にすべてのレコードを返却する。
-     *
-     * @return Collection<int, MonthlySale>
+     * {@inheritDoc}
      */
-    public function getAllOrderByYearMonth(): Collection;
+    public function getAllOrderByYearMonthDesc(): Collection
+    {
+        /** @var Collection<int, MonthlySale> */
+        return $this->model
+            ->orderBy('year_month', 'desc')
+            ->get();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getAllOrderByYearMonth(): Collection
+    {
+        /** @var Collection<int, MonthlySale> */
+        return $this->model
+            ->orderBy('year_month')
+            ->get(['year_month', 'amount']);
+    }
 }

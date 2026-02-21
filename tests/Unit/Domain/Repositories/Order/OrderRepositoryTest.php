@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Domain\Repositories\Order;
 
-use App\Domain\Repositories\Order\OrderRepository;
+use App\Domain\Repositories\Order\OrderRepositoryInterface;
 use App\Utils\DateUtil;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -12,13 +12,13 @@ class OrderRepositoryTest extends BaseTest
 {
     use RefreshDatabase;
 
-    private OrderRepository $repository;
+    private OrderRepositoryInterface $repository;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->repository = app(OrderRepository::class);
+        $this->repository = app(OrderRepositoryInterface::class);
     }
 
     public function test_getConditionsWithUserStock(): void

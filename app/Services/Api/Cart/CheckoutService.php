@@ -3,23 +3,23 @@
 namespace App\Services\Api\Cart;
 
 use App\Domain\Entities\User;
-use App\Domain\Repositories\Cart\CartRepository;
-use App\Domain\Repositories\Order\OrderRepository;
-use App\Domain\Repositories\Order\OrderStockRepository;
-use App\Domain\Repositories\Stock\StockRepository;
+use App\Domain\Repositories\Cart\CartRepositoryInterface;
+use App\Domain\Repositories\Order\OrderRepositoryInterface;
+use App\Domain\Repositories\Order\OrderStockRepositoryInterface;
+use App\Domain\Repositories\Stock\StockRepositoryInterface;
 use App\Helpers\AuthHelper;
 use App\Mails\CheckoutCompleteToUser;
 use Illuminate\Support\Facades\Mail;
 
 class CheckoutService extends BaseCartService
 {
-    private readonly CartRepository $cartRepository;
+    private readonly CartRepositoryInterface $cartRepository;
 
     public function __construct(
-        CartRepository $cartRepository,
-        private readonly StockRepository $stockRepository,
-        private readonly OrderRepository $orderRepository,
-        private readonly OrderStockRepository $orderStockRepository,
+        CartRepositoryInterface $cartRepository,
+        private readonly StockRepositoryInterface $stockRepository,
+        private readonly OrderRepositoryInterface $orderRepository,
+        private readonly OrderStockRepositoryInterface $orderStockRepository,
     ) {
         parent::__construct($cartRepository);
         $this->cartRepository = $cartRepository;

@@ -3,13 +3,13 @@
 namespace App\Services\Admin\Staff;
 
 use App\Domain\Entities\Admin;
-use App\Domain\Repositories\Admin\AdminRepository;
+use App\Domain\Repositories\Admin\AdminRepositoryInterface;
 use App\Dto\Request\Admin\Staff\UpdateDto;
 use App\Services\BaseService;
 
 class UpdateService extends BaseService
 {
-    public function __construct(private readonly AdminRepository $adminRepository) {}
+    public function __construct(private readonly AdminRepositoryInterface $adminRepository) {}
 
     /**
      * 管理者を更新します。

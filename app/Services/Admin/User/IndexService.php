@@ -3,14 +3,14 @@
 namespace App\Services\Admin\User;
 
 use App\Domain\Entities\User;
-use App\Domain\Repositories\User\UserRepository;
+use App\Domain\Repositories\User\UserRepositoryInterface;
 use App\Dto\Request\Admin\User\SearchConditionDto;
 use App\Services\BaseService;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class IndexService extends BaseService
 {
-    public function __construct(private readonly UserRepository $userRepository) {}
+    public function __construct(private readonly UserRepositoryInterface $userRepository) {}
 
     /**
      * ユーザーを検索します。

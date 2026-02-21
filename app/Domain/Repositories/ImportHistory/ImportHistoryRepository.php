@@ -5,19 +5,39 @@ namespace App\Domain\Repositories\ImportHistory;
 use App\Domain\Entities\ImportHistory;
 use App\Domain\Repositories\BaseRepository;
 use App\Enums\ImportType;
+use App\Enums\JobStatus;
 use Illuminate\Support\Collection;
 
-interface ImportHistoryRepository extends BaseRepository
+class ImportHistoryRepository extends BaseRepository implements ImportHistoryRepositoryInterface
 {
-    /**
-     * インポートタイプからデータを取得します。
-     *
-     * @return Collection<int, ImportHistory>
-     */
-    public function getByImportHistory(ImportType $importType): Collection;
+    protected function model(): string
+    {
+        return ImportHistory::class;
+    }
 
     /**
-     * 処理中（または処理待ち）のデータが存在する場合はTrueを返却します。
+     * {@inheritDoc}
      */
-    public function hasProcessingByImportHistory(ImportType $importType): bool;
+    public function getByImportHistory(ImportType $importType): Collection
+    {
+        /** @var Collection<int, ImportHistory> */
+        return $this->model
+            ->where('type', $importType)
+            ->orderBy('id', 'desc')
+            ->get();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function hasProcessingByImportHistory(ImportType $importType): bool
+    {
+        return $this->model
+            ->where('type', $importType)
+            ->whereIn('status', [
+                JobStatus::Waiting,
+                JobStatus::Processing,
+            ])
+            ->exists();
+    }
 }

@@ -3,14 +3,14 @@
 namespace App\Services\Admin\Contact;
 
 use App\Domain\Entities\Contact;
-use App\Domain\Repositories\Contact\ContactRepository;
+use App\Domain\Repositories\Contact\ContactRepositoryInterface;
 use App\Dto\Request\Admin\Contact\SearchConditionDto;
 use App\Services\BaseService;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class IndexService extends BaseService
 {
-    public function __construct(private readonly ContactRepository $contactRepository) {}
+    public function __construct(private readonly ContactRepositoryInterface $contactRepository) {}
 
     /**
      * お問い合わせを検索します。

@@ -3,7 +3,7 @@
 namespace Tests\Unit\Domain\Repositories\ContactReply;
 
 use App\Domain\Entities\ContactReply;
-use App\Domain\Repositories\ContactReply\ContactReplyRepository;
+use App\Domain\Repositories\ContactReply\ContactReplyRepositoryInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
 
@@ -11,12 +11,12 @@ class ContactReplyRepositoryTest extends BaseTest
 {
     use RefreshDatabase;
 
-    private ContactReplyRepository $repository;
+    private ContactReplyRepositoryInterface $repository;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->repository = app(ContactReplyRepository::class);
+        $this->repository = app(ContactReplyRepositoryInterface::class);
     }
 
     public function test_getByContactId(): void

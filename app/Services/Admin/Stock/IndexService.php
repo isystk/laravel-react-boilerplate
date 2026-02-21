@@ -3,13 +3,13 @@
 namespace App\Services\Admin\Stock;
 
 use App\Domain\Entities\Stock;
-use App\Domain\Repositories\Stock\StockRepository;
+use App\Domain\Repositories\Stock\StockRepositoryInterface;
 use App\Dto\Request\Admin\Stock\SearchConditionDto;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class IndexService extends BaseStockService
 {
-    public function __construct(private readonly StockRepository $stockRepository) {}
+    public function __construct(private readonly StockRepositoryInterface $stockRepository) {}
 
     /**
      * 商品を検索します。

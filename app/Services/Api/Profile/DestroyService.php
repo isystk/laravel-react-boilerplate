@@ -3,20 +3,20 @@
 namespace App\Services\Api\Profile;
 
 use App\Domain\Entities\User;
-use App\Domain\Repositories\Cart\CartRepository;
-use App\Domain\Repositories\Order\OrderRepository;
-use App\Domain\Repositories\Order\OrderStockRepository;
-use App\Domain\Repositories\User\UserRepository;
+use App\Domain\Repositories\Cart\CartRepositoryInterface;
+use App\Domain\Repositories\Order\OrderRepositoryInterface;
+use App\Domain\Repositories\Order\OrderStockRepositoryInterface;
+use App\Domain\Repositories\User\UserRepositoryInterface;
 use App\Services\Common\ImageService;
 use Throwable;
 
 class DestroyService
 {
     public function __construct(
-        private readonly UserRepository $userRepository,
-        private readonly CartRepository $cartRepository,
-        private readonly OrderRepository $orderRepository,
-        private readonly OrderStockRepository $orderStockRepository,
+        private readonly UserRepositoryInterface $userRepository,
+        private readonly CartRepositoryInterface $cartRepository,
+        private readonly OrderRepositoryInterface $orderRepository,
+        private readonly OrderStockRepositoryInterface $orderStockRepository,
         private readonly ImageService $imageService
     ) {}
 

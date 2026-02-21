@@ -2,13 +2,13 @@
 
 namespace App\Services\Commands;
 
-use App\Domain\Repositories\MonthlySale\MonthlySaleRepository;
+use App\Domain\Repositories\MonthlySale\MonthlySaleRepositoryInterface;
 use App\Services\BaseService;
 use Illuminate\Support\Facades\Validator;
 
 class ExportMonthlySalesService extends BaseService
 {
-    public function __construct(private readonly MonthlySaleRepository $monthlySaleRepository) {}
+    public function __construct(private readonly MonthlySaleRepositoryInterface $monthlySaleRepository) {}
 
     /**
      * 引数の入力チェックを行い、問題がある場合はエラーメッセージを返却する

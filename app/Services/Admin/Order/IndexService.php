@@ -3,14 +3,14 @@
 namespace App\Services\Admin\Order;
 
 use App\Domain\Entities\Order;
-use App\Domain\Repositories\Order\OrderRepository;
+use App\Domain\Repositories\Order\OrderRepositoryInterface;
 use App\Dto\Request\Admin\Order\SearchConditionDto;
 use App\Services\BaseService;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class IndexService extends BaseService
 {
-    public function __construct(private readonly OrderRepository $orderRepository) {}
+    public function __construct(private readonly OrderRepositoryInterface $orderRepository) {}
 
     /**
      * 注文情報を検索します。

@@ -2,16 +2,16 @@
 
 namespace App\Services\Admin\Home;
 
-use App\Domain\Repositories\MonthlySale\MonthlySaleRepository;
-use App\Domain\Repositories\Order\OrderRepository;
+use App\Domain\Repositories\MonthlySale\MonthlySaleRepositoryInterface;
+use App\Domain\Repositories\Order\OrderRepositoryInterface;
 use App\Services\BaseService;
 use Illuminate\Support\Collection;
 
 class IndexService extends BaseService
 {
     public function __construct(
-        private readonly OrderRepository $orderRepository,
-        private readonly MonthlySaleRepository $monthlySaleRepository,
+        private readonly OrderRepositoryInterface $orderRepository,
+        private readonly MonthlySaleRepositoryInterface $monthlySaleRepository,
     ) {}
 
     /**

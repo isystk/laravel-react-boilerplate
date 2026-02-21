@@ -2,12 +2,12 @@
 
 namespace App\Services\Admin\Staff;
 
-use App\Domain\Repositories\Admin\AdminRepository;
+use App\Domain\Repositories\Admin\AdminRepositoryInterface;
 use App\Services\BaseService;
 
 class DestroyService extends BaseService
 {
-    public function __construct(private readonly AdminRepository $adminRepository) {}
+    public function __construct(private readonly AdminRepositoryInterface $adminRepository) {}
 
     /**
      * 管理者を削除します。

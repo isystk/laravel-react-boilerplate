@@ -3,14 +3,14 @@
 namespace App\Services\Admin\Contact;
 
 use App\Domain\Entities\Contact;
-use App\Domain\Repositories\ContactReply\ContactReplyRepository;
+use App\Domain\Repositories\ContactReply\ContactReplyRepositoryInterface;
 use App\Mails\ContactReplyToUser;
 use App\Services\BaseService;
 use Illuminate\Support\Facades\Mail;
 
 class ReplyService extends BaseService
 {
-    public function __construct(private readonly ContactReplyRepository $contactReplyRepository) {}
+    public function __construct(private readonly ContactReplyRepositoryInterface $contactReplyRepository) {}
 
     /**
      * お問い合わせへの返信を保存し、ユーザーにメールを送信します。

@@ -2,15 +2,15 @@
 
 namespace App\Services\Api\Cart;
 
-use App\Domain\Repositories\Cart\CartRepository;
+use App\Domain\Repositories\Cart\CartRepositoryInterface;
 use App\Helpers\AuthHelper;
 
 class AddCartService extends BaseCartService
 {
-    private readonly CartRepository $cartRepository;
+    private readonly CartRepositoryInterface $cartRepository;
 
     public function __construct(
-        CartRepository $cartRepository,
+        CartRepositoryInterface $cartRepository,
     ) {
         parent::__construct($cartRepository);
         $this->cartRepository = $cartRepository;

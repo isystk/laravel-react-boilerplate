@@ -3,7 +3,7 @@
 namespace Tests\Unit\Domain\Repositories\Stock;
 
 use App\Domain\Entities\Stock;
-use App\Domain\Repositories\Stock\StockRepository;
+use App\Domain\Repositories\Stock\StockRepositoryInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
 
@@ -11,13 +11,13 @@ class StockRepositoryTest extends BaseTest
 {
     use RefreshDatabase;
 
-    private StockRepository $repository;
+    private StockRepositoryInterface $repository;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->repository = app(StockRepository::class);
+        $this->repository = app(StockRepositoryInterface::class);
     }
 
     public function test_getByLimit(): void

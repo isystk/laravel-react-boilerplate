@@ -2,14 +2,14 @@
 
 namespace App\Services\Api\Stock;
 
-use App\Domain\Repositories\Stock\StockRepository;
+use App\Domain\Repositories\Stock\StockRepositoryInterface;
 use App\Dto\Response\Api\Stock\SearchResultDto;
 use App\Dto\Response\Api\Stock\StockDto;
 use App\Services\BaseService;
 
 class IndexService extends BaseService
 {
-    public function __construct(private readonly StockRepository $stockRepository) {}
+    public function __construct(private readonly StockRepositoryInterface $stockRepository) {}
 
     /**
      * 商品を検索します。

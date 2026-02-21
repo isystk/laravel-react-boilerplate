@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Domain\Repositories\ImportHistory;
 
-use App\Domain\Repositories\ImportHistory\ImportHistoryRepository;
+use App\Domain\Repositories\ImportHistory\ImportHistoryRepositoryInterface;
 use App\Enums\ImportType;
 use App\Enums\JobStatus;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -12,12 +12,12 @@ class ImportHistoryRepositoryTest extends BaseTest
 {
     use RefreshDatabase;
 
-    private ImportHistoryRepository $repository;
+    private ImportHistoryRepositoryInterface $repository;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->repository = app(ImportHistoryRepository::class);
+        $this->repository = app(ImportHistoryRepositoryInterface::class);
     }
 
     public function test_getByImportHistory(): void
