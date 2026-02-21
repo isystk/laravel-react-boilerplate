@@ -5,6 +5,7 @@ namespace App\Domain\Repositories\User;
 use App\Domain\Entities\User;
 use App\Domain\Repositories\BaseRepository;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
@@ -20,7 +21,12 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator
     {
-        $query = $this->model->with('avatarImage')->select();
+        /** @var Builder|User $query */
+        $query = $this->model->with('avatarImage');
+
+        if ($conditions['with_trashed']) {
+            $query = $query->withTrashed();
+        }
 
         if (!is_null($conditions['keyword'] ?? null)) {
             $keyword = $conditions['keyword'];

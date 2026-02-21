@@ -16,6 +16,9 @@ class SearchConditionDto
     // Google連携あり
     public ?bool $hasGoogle;
 
+    // 退会済みを含む
+    public bool $withTrashed;
+
     // ソートのカラム名
     public string $sortName;
 
@@ -42,6 +45,7 @@ class SearchConditionDto
         } else {
             $this->hasGoogle = null;
         }
+        $this->withTrashed   = $request->boolean('with_trashed', false);
         $this->sortName      = $request->input('sort_name', 'id'); // デフォルト: id
         $this->sortDirection = in_array($request->input('sort_direction'), ['asc', 'desc']) ? $request->input('sort_direction') : 'desc';
         $this->page          = (int) $request->input('page', 1); // デフォルト: 1

@@ -115,4 +115,26 @@ class IndexServiceTest extends BaseTest
         $users            = $this->service->searchUser($input)->getCollection();
         $this->assertSame([$nonGoogleUser->id], $users->pluck('id')->all(), 'Google連携なしのユーザーのみ取得できることをテスト');
     }
+
+    public function test_searchUser_with_trashedで退会済みユーザーを含めて取得できること(): void
+    {
+        $request = new Request([
+            'sort_name'      => 'id',
+            'sort_direction' => 'asc',
+            'limit'          => 20,
+        ]);
+        $default = new SearchConditionDto($request);
+
+        $activeUser  = $this->createDefaultUser();
+        $deletedUser = $this->createDefaultUser();
+        $deletedUser->delete();
+
+        $users = $this->service->searchUser($default)->getCollection();
+        $this->assertSame([$activeUser->id], $users->pluck('id')->all(), 'デフォルトでは退会済みユーザーが含まれないことをテスト');
+
+        $input              = clone $default;
+        $input->withTrashed = true;
+        $users              = $this->service->searchUser($input)->getCollection();
+        $this->assertSame([$activeUser->id, $deletedUser->id], $users->pluck('id')->all(), 'with_trashedがtrueの場合は退会済みユーザーが含まれることをテスト');
+    }
 }
