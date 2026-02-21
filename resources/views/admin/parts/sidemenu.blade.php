@@ -32,7 +32,7 @@
                             <a href="{{ url('/admin/stock') }}"
                                class="nav-link {{ $subMenu === 'stock' ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-box-open"></i>
-                                <p>在庫管理</p>
+                                <p>商品一覧</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -59,7 +59,7 @@
                             <a href="{{ url('/admin/user') }}"
                                class="nav-link {{ $subMenu === 'user' ? 'active' : '' }}">
                                 <i class="nav-icon fa fa-layer-group"></i>
-                                <p>ユーザ管理</p>
+                                <p>ユーザ一覧</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -86,14 +86,14 @@
                             <a href="{{ url('/admin/staff') }}"
                                class="nav-link {{ $subMenu === 'staff' ? 'active' : '' }}">
                                 <i class="nav-icon fa fa-layer-group"></i>
-                                <p>スタッフ管理</p>
+                                <p>スタッフ一覧</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ url('/admin/photo') }}"
                                class="nav-link {{ $subMenu === 'photo' ? 'active' : '' }}">
                                 <i class="nav-icon fa fa-file-image"></i>
-                                <p>画像管理</p>
+                                <p>画像一覧</p>
                             </a>
                         </li>
                     </ul>

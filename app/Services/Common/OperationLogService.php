@@ -4,10 +4,12 @@ namespace App\Services\Common;
 
 use App\Enums\OperationLogType;
 use Carbon\Carbon;
-use RuntimeException;
+use Illuminate\Support\Facades\Storage;
 
 class OperationLogService
 {
+    private const DISK = 'log';
+
     private const LOG_DIR = 'operation';
 
     /**
@@ -23,7 +25,10 @@ class OperationLogService
             'ip'          => $ip,
         ], JSON_UNESCAPED_UNICODE);
 
-        $this->writeLog('user_' . Carbon::now()->format('Ymd') . '.log', $entry);
+        Storage::disk(self::DISK)->append(
+            self::LOG_DIR . '/user_' . Carbon::now()->format('Ymd') . '.log',
+            $entry
+        );
     }
 
     /**
@@ -39,7 +44,10 @@ class OperationLogService
             'ip'          => $ip,
         ], JSON_UNESCAPED_UNICODE);
 
-        $this->writeLog('admin_' . Carbon::now()->format('Ymd') . '.log', $entry);
+        Storage::disk(self::DISK)->append(
+            self::LOG_DIR . '/admin_' . Carbon::now()->format('Ymd') . '.log',
+            $entry
+        );
     }
 
     /**
@@ -63,40 +71,23 @@ class OperationLogService
     }
 
     /**
-     * ログファイルに1行書き込む
-     */
-    private function writeLog(string $filename, string $entry): void
-    {
-        $dir = storage_path('logs/' . self::LOG_DIR . '/');
-
-        if (!file_exists($dir) && !mkdir($dir, 0777, true) && !is_dir($dir)) {
-            throw new RuntimeException(sprintf('Directory "%s" was not created', $dir));
-        }
-
-        file_put_contents($dir . $filename, $entry . "\n", FILE_APPEND | LOCK_EX);
-    }
-
-    /**
      * 対象IDに一致するログを読み込み、降順で返す
      *
      * @return array<int, array<string, mixed>>
      */
     private function readLogs(string $prefix, int $days, string $idKey, int $idValue, int $limit): array
     {
-        $dir  = storage_path('logs/' . self::LOG_DIR . '/');
         $logs = [];
 
         for ($i = 0; $i < $days; $i++) {
-            $filename = $dir . $prefix . '_' . Carbon::now()->subDays($i)->format('Ymd') . '.log';
+            $path = self::LOG_DIR . '/' . $prefix . '_' . Carbon::now()->subDays($i)->format('Ymd') . '.log';
 
-            if (!file_exists($filename)) {
+            if (!Storage::disk(self::DISK)->exists($path)) {
                 continue;
             }
 
-            $lines = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-            if ($lines === false) {
-                continue;
-            }
+            $content = Storage::disk(self::DISK)->get($path);
+            $lines   = array_filter(explode("\n", $content ?? ''));
 
             foreach ($lines as $line) {
                 $data = json_decode($line, true);
@@ -110,7 +101,7 @@ class OperationLogService
         }
 
         // タイムスタンプ降順でソート
-        usort($logs, static fn (array $a, array $b): int => strcmp($b['timestamp'], $a['timestamp']));
+        usort($logs, static fn (array $a, array $b): int => strcmp((string) $b['timestamp'], (string) $a['timestamp']));
 
         return array_slice($logs, 0, $limit);
     }

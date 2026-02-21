@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Front\Auth;
+namespace App\Http\Controllers\Front\Fortify;
 
 use Illuminate\Validation\Rules\Password;
 

@@ -14,8 +14,8 @@ require __DIR__ . '/admin.php';
 | Googleログイン
 |--------------------------------------------------------------------------
 */
-Route::get('auth/google', [App\Http\Controllers\Front\Auth\GoogleLoginController::class, 'redirectToGoogle'])->name('login.google');
-Route::get('auth/google/callback', [App\Http\Controllers\Front\Auth\GoogleLoginController::class, 'handleGoogleCallback']);
+Route::get('auth/google', [App\Http\Controllers\Front\Fortify\GoogleLoginController::class, 'redirectToGoogle'])->name('login.google');
+Route::get('auth/google/callback', [App\Http\Controllers\Front\Fortify\GoogleLoginController::class, 'handleGoogleCallback']);
 
 /*
 |--------------------------------------------------------------------------

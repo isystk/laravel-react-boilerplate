@@ -20,6 +20,9 @@ class CreateServiceTest extends BaseTest
     protected function setUp(): void
     {
         parent::setUp();
+        Storage::fake('log');
+        $admin = $this->createDefaultAdmin();
+        $this->actingAs($admin, 'admin');
         $this->service = app(CreateService::class);
     }
 
