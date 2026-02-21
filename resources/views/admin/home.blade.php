@@ -7,10 +7,11 @@
             <div class="row">
                 <div class="col-12 col-sm-6 col-md-3">
                     <a href="{{ route('admin.contact') . '?only_unreplied=1' }}">
-                        <div class="info-box bg-primary text-white">
+                        <div
+                             class="info-box {{ $unrepliedContactsCount === 0 ? 'bg-outline-primary' : 'bg-primary text-white' }}">
                             <span class="info-box-icon"><i class="fas fa-envelope-open-text"></i></span>
                             <div class="info-box-content">
-                                <span class="secondary-box-text">未返信のお問い合わせ</span>
+                                <span class="secondary-box-text">お問い合わせ件数</span>
                                 <span class="info-box-number">{{ $unrepliedContactsCount }} 件</span>
                             </div>
                         </div>

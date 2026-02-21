@@ -4,6 +4,7 @@ namespace App\Domain\Repositories\User;
 
 use App\Domain\Entities\User;
 use App\Domain\Repositories\BaseRepositoryInterface;
+use App\Enums\UserStatus;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
@@ -13,8 +14,9 @@ interface UserRepositoryInterface extends BaseRepositoryInterface
      * 検索条件からデータを取得します。
      *
      * @param array{
-     *   name : ?string,
-     *   email : ?string,
+     *   keyword : ?string,
+     *   status : ?UserStatus,
+     *   has_google : ?bool,
      *   sort_name : ?string,
      *   sort_direction : 'asc' | 'desc' | null,
      *   limit : ?int,

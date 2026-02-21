@@ -20,8 +20,9 @@ class IndexService extends BaseService
     public function searchUser(SearchConditionDto $searchConditionDto): LengthAwarePaginator
     {
         $items = [
-            'name'           => $searchConditionDto->name,
-            'email'          => $searchConditionDto->email,
+            'keyword'        => $searchConditionDto->keyword,
+            'status'         => $searchConditionDto->status,
+            'has_google'     => $searchConditionDto->hasGoogle,
             'sort_name'      => $searchConditionDto->sortName,
             'sort_direction' => $searchConditionDto->sortDirection,
             'limit'          => $searchConditionDto->limit,

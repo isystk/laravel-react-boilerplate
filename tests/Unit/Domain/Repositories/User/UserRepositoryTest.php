@@ -4,6 +4,7 @@ namespace Tests\Unit\Domain\Repositories\User;
 
 use App\Domain\Entities\User;
 use App\Domain\Repositories\User\UserRepositoryInterface;
+use App\Enums\UserStatus;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
@@ -24,8 +25,9 @@ class UserRepositoryTest extends BaseTest
     public function test_getByConditions(): void
     {
         $defaultConditions = [
-            'name'           => null,
-            'email'          => null,
+            'keyword'        => null,
+            'status'         => null,
+            'has_google'     => null,
             'sort_name'      => null,
             'sort_direction' => null,
             'limit'          => null,
@@ -40,22 +42,87 @@ class UserRepositoryTest extends BaseTest
         /** @var User $user */
         $user = $this->repository->getByConditions([
             ...$defaultConditions,
-            'name' => 'user1',
+            'keyword' => 'user1',
         ])->first();
-        $this->assertSame($expectUser1->id, $user->id, 'nameで検索が出来ることをテスト');
+        $this->assertSame($expectUser1->id, $user->id, 'keywordで名前検索が出来ることをテスト');
 
         /** @var User $user */
         $user = $this->repository->getByConditions([
             ...$defaultConditions,
-            'email' => 'user2@test.com',
+            'keyword' => 'user2@test.com',
         ])->first();
-        $this->assertSame($expectUser2->id, $user->id, 'emailで検索が出来ることをテスト');
+        $this->assertSame($expectUser2->id, $user->id, 'keywordでメールアドレス検索が出来ることをテスト');
+
+        /** @var User $user */
+        $user = $this->repository->getByConditions([
+            ...$defaultConditions,
+            'keyword' => (string) $expectUser1->id,
+        ])->first();
+        $this->assertSame($expectUser1->id, $user->id, 'keywordでID検索が出来ることをテスト');
 
         $users = $this->repository->getByConditions([
             ...$defaultConditions,
             'limit' => 1,
         ]);
         $this->assertSame(1, $users->count(), 'limitで取得件数が指定出来ることをテスト');
+    }
+
+    public function test_getByConditions_statusで絞り込めること(): void
+    {
+        $defaultConditions = [
+            'keyword'        => null,
+            'status'         => null,
+            'has_google'     => null,
+            'sort_name'      => null,
+            'sort_direction' => null,
+            'limit'          => null,
+        ];
+
+        $activeUser    = $this->createDefaultUser(['status' => UserStatus::Active]);
+        $suspendedUser = $this->createDefaultUser(['status' => UserStatus::Suspended]);
+
+        $users = $this->repository->getByConditions([
+            ...$defaultConditions,
+            'status' => UserStatus::Active,
+        ]);
+        $this->assertSame(1, $users->count());
+        $this->assertSame($activeUser->id, $users->first()->id, '有効ユーザーのみ取得できることをテスト');
+
+        $users = $this->repository->getByConditions([
+            ...$defaultConditions,
+            'status' => UserStatus::Suspended,
+        ]);
+        $this->assertSame(1, $users->count());
+        $this->assertSame($suspendedUser->id, $users->first()->id, '停止ユーザーのみ取得できることをテスト');
+    }
+
+    public function test_getByConditions_has_googleで絞り込めること(): void
+    {
+        $defaultConditions = [
+            'keyword'        => null,
+            'status'         => null,
+            'has_google'     => null,
+            'sort_name'      => null,
+            'sort_direction' => null,
+            'limit'          => null,
+        ];
+
+        $googleUser    = $this->createDefaultUser(['google_id' => 'google-abc-123']);
+        $nonGoogleUser = $this->createDefaultUser(['google_id' => null]);
+
+        $users = $this->repository->getByConditions([
+            ...$defaultConditions,
+            'has_google' => true,
+        ]);
+        $this->assertSame(1, $users->count());
+        $this->assertSame($googleUser->id, $users->first()->id, 'Google連携ありのユーザーのみ取得できることをテスト');
+
+        $users = $this->repository->getByConditions([
+            ...$defaultConditions,
+            'has_google' => false,
+        ]);
+        $this->assertSame(1, $users->count());
+        $this->assertSame($nonGoogleUser->id, $users->first()->id, 'Google連携なしのユーザーのみ取得できることをテスト');
     }
 
     public function test_findByGoogleIdWithTrashed_存在するGoogleIDの場合ユーザーが返却されること(): void

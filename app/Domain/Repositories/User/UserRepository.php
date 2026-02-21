@@ -22,11 +22,25 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     {
         $query = $this->model->with('avatarImage')->select();
 
-        if (!is_null($conditions['name'] ?? null)) {
-            $query->where('name', 'like', '%' . $conditions['name'] . '%');
+        if (!is_null($conditions['keyword'] ?? null)) {
+            $keyword = $conditions['keyword'];
+            $query->where(function ($q) use ($keyword): void {
+                $q->where('name', 'like', '%' . $keyword . '%')
+                    ->orWhere('email', 'like', '%' . $keyword . '%');
+                if (is_numeric($keyword)) {
+                    $q->orWhere('id', '=', (int) $keyword);
+                }
+            });
         }
-        if (!is_null($conditions['email'] ?? null)) {
-            $query->where('email', 'like', '%' . $conditions['email'] . '%');
+        if (!is_null($conditions['status'] ?? null)) {
+            $query->where('status', $conditions['status']->value);
+        }
+        if (!is_null($conditions['has_google'] ?? null)) {
+            if ($conditions['has_google']) {
+                $query->whereNotNull('google_id');
+            } else {
+                $query->whereNull('google_id');
+            }
         }
 
         $sortColumn = $this->validateSortColumn(
