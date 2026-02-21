@@ -21,15 +21,14 @@
                     </div>
                 @endif
                 <div class="mb-3 row">
-                    <label for="user_name"
-                           class="col-sm-2 col-form-label fw-bold">名前</label>
+                    <label for="keyword"
+                           class="col-sm-2 col-form-label fw-bold">ID / 名前 / メールアドレス</label>
                     <div class="col-sm-4">
                         <input type="text"
-                               name="user_name"
-                               id="user_name"
-                               value="{{ request()->user_name }}"
-                               class="form-control"
-                               maxlength="{{ config('const.maxlength.contacts.user_name') }}" />
+                               name="keyword"
+                               id="keyword"
+                               value="{{ request()->keyword }}"
+                               class="form-control" />
                     </div>
                 </div>
 
@@ -75,6 +74,25 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="mb-3 row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-4">
+                        <div class="form-check">
+                            <input type="hidden"
+                                   name="searched"
+                                   value="1" />
+                            <input type="checkbox"
+                                   name="only_unreplied"
+                                   id="only_unreplied"
+                                   value="1"
+                                   class="form-check-input"
+                                   {{ request()->boolean('only_unreplied', !request()->boolean('searched', false)) ? 'checked' : '' }} />
+                            <label for="only_unreplied"
+                                   class="form-check-label fw-bold">未返信のみ</label>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="card-footer text-center">
                 <button type="submit"
@@ -86,8 +104,11 @@
           method="GET"
           id="pagingForm">
         <input type="hidden"
-               name="user_name"
-               value="{{ request()->user_name }}">
+               name="searched"
+               value="1">
+        <input type="hidden"
+               name="keyword"
+               value="{{ request()->keyword }}">
         <input type="hidden"
                name="title"
                value="{{ request()->title }}">
@@ -97,6 +118,11 @@
         <input type="hidden"
                name="contact_date_to"
                value="{{ request()->contact_date_to }}">
+        @if (request()->boolean('only_unreplied', !request()->boolean('searched', false)))
+            <input type="hidden"
+                   name="only_unreplied"
+                   value="1">
+        @endif
     </form>
     <div class="row">
         <div class="col-12">

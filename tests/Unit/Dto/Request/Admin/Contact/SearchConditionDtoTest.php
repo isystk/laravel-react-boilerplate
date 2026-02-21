@@ -11,8 +11,10 @@ class SearchConditionDtoTest extends BaseTest
     public function test_construct_リクエストから各プロパティが正しく設定されること(): void
     {
         $request = Request::create('/', 'GET', [
-            'user_name'      => 'テストユーザー',
+            'searched'       => '1',
+            'keyword'        => 'テストユーザー',
             'title'          => 'お問い合わせ件名',
+            'only_unreplied' => '1',
             'sort_name'      => 'title',
             'sort_direction' => 'asc',
             'page'           => '5',
@@ -21,21 +23,22 @@ class SearchConditionDtoTest extends BaseTest
 
         $dto = new SearchConditionDto($request);
 
-        $this->assertSame('テストユーザー', $dto->userName);
+        $this->assertSame('テストユーザー', $dto->keyword);
         $this->assertSame('お問い合わせ件名', $dto->title);
+        $this->assertTrue($dto->onlyUnreplied);
         $this->assertSame('title', $dto->sortName);
         $this->assertSame('asc', $dto->sortDirection);
         $this->assertSame(5, $dto->page);
         $this->assertSame(30, $dto->limit);
     }
 
-    public function test_construct_userNameとtitleが未指定の場合nullになること(): void
+    public function test_construct_keywordとtitleが未指定の場合nullになること(): void
     {
         $request = Request::create('/', 'GET');
 
         $dto = new SearchConditionDto($request);
 
-        $this->assertNull($dto->userName);
+        $this->assertNull($dto->keyword);
         $this->assertNull($dto->title);
     }
 
@@ -49,6 +52,38 @@ class SearchConditionDtoTest extends BaseTest
         $this->assertSame('desc', $dto->sortDirection);
         $this->assertSame(1, $dto->page);
         $this->assertSame(20, $dto->limit);
+    }
+
+    public function test_construct_初回アクセス時はonlyUnrepliedがtrueになること(): void
+    {
+        $request = Request::create('/', 'GET');
+
+        $dto = new SearchConditionDto($request);
+
+        $this->assertTrue($dto->onlyUnreplied);
+    }
+
+    public function test_construct_フォーム送信時にonly_unrepliedが指定されていればtrueになること(): void
+    {
+        $request = Request::create('/', 'GET', [
+            'searched'       => '1',
+            'only_unreplied' => '1',
+        ]);
+
+        $dto = new SearchConditionDto($request);
+
+        $this->assertTrue($dto->onlyUnreplied);
+    }
+
+    public function test_construct_フォーム送信時にonly_unrepliedが未指定の場合falseになること(): void
+    {
+        $request = Request::create('/', 'GET', [
+            'searched' => '1',
+        ]);
+
+        $dto = new SearchConditionDto($request);
+
+        $this->assertFalse($dto->onlyUnreplied);
     }
 
     /**
