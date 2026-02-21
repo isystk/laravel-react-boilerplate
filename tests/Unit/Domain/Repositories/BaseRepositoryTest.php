@@ -7,7 +7,7 @@ use App\Domain\Repositories\BaseRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
 
-class BaseEloquentRepositoryTest extends BaseTest
+class BaseRepositoryTest extends BaseTest
 {
     use RefreshDatabase;
 

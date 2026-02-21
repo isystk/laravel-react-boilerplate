@@ -37,7 +37,7 @@
                 @csrf
                 <div class="mb-3">
                     <label for="name"
-                           class="form-label fw-bold">表示名</label>
+                           class="form-label fw-bold">名前</label>
                     <input type="text"
                            name="name"
                            id="name"
