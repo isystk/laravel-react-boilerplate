@@ -14,10 +14,11 @@ interface ContactRepositoryInterface extends BaseRepositoryInterface
      * 検索条件からデータを取得します。
      *
      * @param array{
-     *   user_name : ?string,
+     *   keyword : ?string,
      *   title : ?string,
      *   contact_date_from : ?CarbonImmutable,
      *   contact_date_to : ?CarbonImmutable,
+     *   only_unreplied : bool,
      *   sort_name : ?string,
      *   sort_direction : 'asc' | 'desc' | null,
      *   limit : ?int,

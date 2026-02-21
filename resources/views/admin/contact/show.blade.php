@@ -19,7 +19,7 @@
     <div class="card card-purple mb-4">
         <div class="card-body">
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted fw-bold">表示名</label>
+                <label class="col-sm-2 col-form-label text-muted fw-bold">名前</label>
                 <div class="col-sm-10 d-flex align-items-center">
                     {{ $contact->user->name }}
                 </div>
@@ -55,6 +55,13 @@
                     </div>
                 </div>
             @endif
+
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label text-muted fw-bold">お問い合わせ日時</label>
+                <div class="col-sm-10 d-flex align-items-center"
+                     style="white-space: pre-wrap;">{{ $contact->created_at->format('Y-m-d H:m:s') }}</div>
+            </div>
+
         </div>
         <div class="card-footer text-center">
             <div class="d-flex justify-content-end">

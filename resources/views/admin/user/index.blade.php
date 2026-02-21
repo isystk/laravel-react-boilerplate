@@ -24,7 +24,7 @@
                 @endif
                 <div class="mb-3 row">
                     <label for="search_user_name"
-                           class="col-sm-2 col-form-label fw-bold">表示名</label>
+                           class="col-sm-2 col-form-label fw-bold">名前</label>
                     <div class="col-sm-4">
                         <input type="text"
                                name="name"
@@ -78,7 +78,7 @@
                                     'params' => ['id', 'ID'],
                                 ])
                                 @include('admin.parts.sortablelink_th', [
-                                    'params' => ['name', '表示名'],
+                                    'params' => ['name', '名前'],
                                 ])
                                 @include('admin.parts.sortablelink_th', [
                                     'params' => ['email', 'メールアドレス'],

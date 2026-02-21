@@ -39,10 +39,10 @@ class IndexServiceTest extends BaseTest
         $contact1 = $this->createDefaultContact(['user_id' => $user1->id, 'title' => 'title1']);
         $contact2 = $this->createDefaultContact(['user_id' => $user2->id, 'title' => 'title2']);
 
-        $input           = clone $default;
-        $input->userName = 'user2';
-        $contacts        = $this->service->searchContact($input)->getCollection();
-        $contactIds      = $contacts->pluck('id')->all();
+        $input          = clone $default;
+        $input->keyword = 'user2';
+        $contacts       = $this->service->searchContact($input)->getCollection();
+        $contactIds     = $contacts->pluck('id')->all();
         $this->assertSame([$contact2->id], $contactIds, 'user_nameで検索が出来ることをテスト');
 
         $input        = clone $default;

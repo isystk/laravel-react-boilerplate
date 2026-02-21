@@ -4,6 +4,7 @@ namespace Database\Factories\Domain\Entities;
 
 use App\Domain\Entities\Contact;
 use App\Domain\Entities\Image;
+use App\Domain\Entities\User;
 use App\Enums\ContactType;
 use App\Enums\ImageType;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -29,7 +30,7 @@ class ContactFactory extends Factory
         $createdAt = fake()->dateTimeBetween('-1 year', 'now');
 
         return [
-            'user_id'    => \App\Domain\Entities\User::factory(),
+            'user_id'    => User::factory(),
             'type'       => fake()->randomElement(ContactType::cases()),
             'title'      => fake()->realText(100),
             'message'    => fake()->realText(500),

@@ -24,8 +24,18 @@ class ContactRepository extends BaseRepository implements ContactRepositoryInter
             ->leftJoin('users', 'contacts.user_id', '=', 'users.id')
             ->with(['image']);
 
-        if (!is_null($conditions['user_name'] ?? null)) {
-            $query->where('users.name', 'like', '%' . $conditions['user_name'] . '%');
+        if (!is_null($conditions['keyword'] ?? null)) {
+            $keyword = $conditions['keyword'];
+            $query->where(function ($q) use ($keyword): void {
+                $q->where('users.name', 'like', '%' . $keyword . '%')
+                    ->orWhere('users.email', 'like', '%' . $keyword . '%');
+                if (is_numeric($keyword)) {
+                    $q->orWhere('contacts.id', '=', (int) $keyword);
+                }
+            });
+        }
+        if (!empty($conditions['only_unreplied'])) {
+            $query->whereDoesntHave('replies');
         }
         if (!is_null($conditions['title'] ?? null)) {
             $query->where('contacts.title', 'like', '%' . $conditions['title'] . '%');
