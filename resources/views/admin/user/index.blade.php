@@ -67,6 +67,22 @@
                         </select>
                     </div>
                 </div>
+
+                <div class="mb-3 row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-4">
+                        <div class="form-check">
+                            <input type="checkbox"
+                                   name="with_trashed"
+                                   id="with_trashed"
+                                   value="1"
+                                   class="form-check-input"
+                                   {{ request()->boolean('with_trashed') ? 'checked' : '' }} />
+                            <label for="with_trashed"
+                                   class="form-check-label fw-bold">退会済みを含む</label>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="card-footer text-center">
                 <button type="submit"
@@ -86,6 +102,11 @@
         <input type="hidden"
                name="has_google"
                value="{{ request()->input('has_google') }}" />
+        @if (request()->boolean('with_trashed'))
+            <input type="hidden"
+                   name="with_trashed"
+                   value="1" />
+        @endif
     </form>
     <div class="row">
         <div class="col-12">
@@ -111,6 +132,7 @@
                                 ])
                                 <th>ステータス</th>
                                 <th>Google</th>
+                                <th>退会</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -135,7 +157,12 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a class="btn btn-primary btn-sm"
+                                        @if ($user->trashed())
+                                            <span class="badge bg-danger">退会済</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-primary btn-sm {{ $user->trashed() ? 'disabled' : '' }}"
                                            href="{{ route('admin.user.show', ['user' => $user]) }}">詳細</a>
                                     </td>
                                 </tr>

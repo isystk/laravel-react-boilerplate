@@ -23,6 +23,7 @@ class IndexService extends BaseService
             'keyword'        => $searchConditionDto->keyword,
             'status'         => $searchConditionDto->status,
             'has_google'     => $searchConditionDto->hasGoogle,
+            'with_trashed'   => $searchConditionDto->withTrashed,
             'sort_name'      => $searchConditionDto->sortName,
             'sort_direction' => $searchConditionDto->sortDirection,
             'limit'          => $searchConditionDto->limit,

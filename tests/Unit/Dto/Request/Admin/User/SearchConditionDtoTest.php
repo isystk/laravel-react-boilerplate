@@ -15,6 +15,7 @@ class SearchConditionDtoTest extends BaseTest
             'keyword'        => 'テストユーザー',
             'status'         => '0',
             'has_google'     => '1',
+            'with_trashed'   => '1',
             'sort_name'      => 'email',
             'sort_direction' => 'asc',
             'page'           => '2',
@@ -26,6 +27,7 @@ class SearchConditionDtoTest extends BaseTest
         $this->assertSame('テストユーザー', $dto->keyword);
         $this->assertSame(UserStatus::Active, $dto->status);
         $this->assertTrue($dto->hasGoogle);
+        $this->assertTrue($dto->withTrashed);
         $this->assertSame('email', $dto->sortName);
         $this->assertSame('asc', $dto->sortDirection);
         $this->assertSame(2, $dto->page);
@@ -49,10 +51,29 @@ class SearchConditionDtoTest extends BaseTest
 
         $dto = new SearchConditionDto($request);
 
+        $this->assertFalse($dto->withTrashed);
         $this->assertSame('id', $dto->sortName);
         $this->assertSame('desc', $dto->sortDirection);
         $this->assertSame(1, $dto->page);
         $this->assertSame(20, $dto->limit);
+    }
+
+    public function test_construct_with_trashedが1の場合trueになること(): void
+    {
+        $request = Request::create('/', 'GET', ['with_trashed' => '1']);
+
+        $dto = new SearchConditionDto($request);
+
+        $this->assertTrue($dto->withTrashed);
+    }
+
+    public function test_construct_with_trashedが未指定の場合falseになること(): void
+    {
+        $request = Request::create('/', 'GET');
+
+        $dto = new SearchConditionDto($request);
+
+        $this->assertFalse($dto->withTrashed);
     }
 
     public function test_construct_keywordが空文字の場合nullになること(): void

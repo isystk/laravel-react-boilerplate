@@ -28,6 +28,7 @@ class UserRepositoryTest extends BaseTest
             'keyword'        => null,
             'status'         => null,
             'has_google'     => null,
+            'with_trashed'   => false,
             'sort_name'      => null,
             'sort_direction' => null,
             'limit'          => null,
@@ -67,12 +68,39 @@ class UserRepositoryTest extends BaseTest
         $this->assertSame(1, $users->count(), 'limitで取得件数が指定出来ることをテスト');
     }
 
+    public function test_getByConditions_with_trashedで退会済みユーザーを含めて取得できること(): void
+    {
+        $defaultConditions = [
+            'keyword'        => null,
+            'status'         => null,
+            'has_google'     => null,
+            'with_trashed'   => false,
+            'sort_name'      => 'id',
+            'sort_direction' => 'asc',
+            'limit'          => null,
+        ];
+
+        $activeUser  = $this->createDefaultUser();
+        $deletedUser = $this->createDefaultUser();
+        $deletedUser->delete();
+
+        $users = $this->repository->getByConditions($defaultConditions);
+        $this->assertSame([$activeUser->id], $users->pluck('id')->all(), 'デフォルトでは退会済みユーザーが含まれないことをテスト');
+
+        $users = $this->repository->getByConditions([
+            ...$defaultConditions,
+            'with_trashed' => true,
+        ]);
+        $this->assertSame([$activeUser->id, $deletedUser->id], $users->pluck('id')->all(), 'with_trashedがtrueの場合は退会済みユーザーが含まれることをテスト');
+    }
+
     public function test_getByConditions_statusで絞り込めること(): void
     {
         $defaultConditions = [
             'keyword'        => null,
             'status'         => null,
             'has_google'     => null,
+            'with_trashed'   => false,
             'sort_name'      => null,
             'sort_direction' => null,
             'limit'          => null,
@@ -102,6 +130,7 @@ class UserRepositoryTest extends BaseTest
             'keyword'        => null,
             'status'         => null,
             'has_google'     => null,
+            'with_trashed'   => false,
             'sort_name'      => null,
             'sort_direction' => null,
             'limit'          => null,

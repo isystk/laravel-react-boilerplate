@@ -17,6 +17,7 @@ interface UserRepositoryInterface extends BaseRepositoryInterface
      *   keyword : ?string,
      *   status : ?UserStatus,
      *   has_google : ?bool,
+     *   with_trashed : bool,
      *   sort_name : ?string,
      *   sort_direction : 'asc' | 'desc' | null,
      *   limit : ?int,
