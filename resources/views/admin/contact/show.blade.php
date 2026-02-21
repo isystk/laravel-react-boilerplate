@@ -12,7 +12,11 @@
            href="{{ route('admin.contact') }}">前に戻る</a>
     </div>
 
-    <div class="card card-purple">
+    @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+
+    <div class="card card-purple mb-4">
         <div class="card-body">
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label text-muted small">氏名</label>
@@ -52,9 +56,8 @@
                 </div>
             @endif
         </div>
-        <div class="card-footer text-center position-relative">
-            <div class="d-inline-block position-absolute"
-                 style="right: 30px;">
+        <div class="card-footer text-center">
+            <div class="d-flex justify-content-end">
                 <form method="POST"
                       action="{{ route('admin.contact.destroy', ['contact' => $contact]) }}"
                       id="delete_{{ $contact->id }}">
@@ -68,6 +71,58 @@
                     </button>
                 </form>
             </div>
+        </div>
+    </div>
+
+    {{-- 返信履歴 --}}
+    <div class="card card-purple mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">返信履歴</h5>
+        </div>
+        <div class="card-body">
+            @forelse ($contact->replies as $reply)
+                <div class="mb-3 border rounded p-3 bg-light">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="fw-bold small">{{ $reply->admin->name }}</span>
+                        <span class="text-muted small">{{ $reply->created_at->format('Y/m/d H:i') }}</span>
+                    </div>
+                    <div style="white-space: pre-wrap;">{{ $reply->body }}</div>
+                </div>
+            @empty
+                <p class="text-muted mb-0">返信履歴はありません。</p>
+            @endforelse
+        </div>
+    </div>
+
+    {{-- 返信フォーム --}}
+    <div class="card card-purple">
+        <div class="card-header">
+            <h5 class="mb-0">返信する</h5>
+        </div>
+        <div class="card-body">
+            <form method="POST"
+                  action="{{ route('admin.contact.reply', ['contact' => $contact]) }}">
+                @csrf
+                <div class="mb-3">
+                    <label for="body"
+                           class="form-label">返信内容 <span class="text-danger">*</span></label>
+                    <textarea class="form-control @error('body') is-invalid @enderror"
+                              id="body"
+                              name="body"
+                              rows="6"
+                              maxlength="{{ config('const.maxlength.contact_replies.body') }}"
+                              required>{{ old('body') }}</textarea>
+                    @error('body')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="text-end">
+                    <button type="submit"
+                            class="btn btn-primary">
+                        送信する（メール通知あり）
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 @endsection

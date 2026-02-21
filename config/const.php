@@ -34,6 +34,9 @@ return [
             'title'   => 100,
             'message' => 500,
         ],
+        'contact_replies' => [
+            'body' => 1000,
+        ],
     ],
 
     'mail' => [
@@ -41,6 +44,7 @@ return [
             'reset_password_to_user'    => '【Laraec】パスワードリセットのご案内',
             'verify_email_to_user'      => '【Laraec】メールアドレス確認のお願い',
             'checkout_complete_to_user' => '【Laraec】ご購入ありがとうございます',
+            'contact_reply_to_user'     => '【Laraec】お問い合わせへのご返信',
         ],
     ],
 
