@@ -26,11 +26,14 @@ class UserTest extends BaseTest
 
     public function test_正しくキャストされる事(): void
     {
-        $model = $this->createDefaultUser();
+        $model = $this->createDefaultUser([
+            'deleted_at' => Carbon::now(),
+        ]);
 
         $this->assertInstanceOf(UserStatus::class, $model->status);
         $this->assertInstanceOf(Carbon::class, $model->created_at);
         $this->assertInstanceOf(Carbon::class, $model->updated_at);
+        $this->assertInstanceOf(Carbon::class, $model->deleted_at);
     }
 
     public function test_isEmailVerified(): void

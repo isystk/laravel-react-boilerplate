@@ -6,14 +6,18 @@ use App\Domain\Entities\Stock;
 use App\Domain\Repositories\Stock\StockRepositoryInterface;
 use App\Dto\Request\Admin\Stock\UpdateDto;
 use App\Enums\ImageType;
+use App\Enums\OperationLogType;
 use App\Services\BaseService;
 use App\Services\Common\ImageService;
+use App\Services\Common\OperationLogService;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateService extends BaseService
 {
     public function __construct(
         private readonly StockRepositoryInterface $stockRepository,
         private readonly ImageService $imageService,
+        private readonly OperationLogService $operationLogService,
     ) {}
 
     /**
@@ -46,6 +50,15 @@ class UpdateService extends BaseService
             $data['image_id'] = $image->id;
         }
 
-        return $this->stockRepository->update($data, $stock->id);
+        $updated = $this->stockRepository->update($data, $stock->id);
+
+        $this->operationLogService->logAdminAction(
+            Auth::guard('admin')->id(),
+            OperationLogType::AdminStockUpdate,
+            "商品情報を更新 (商品ID: {$stock->id})",
+            request()->ip()
+        );
+
+        return $updated;
     }
 }

@@ -4,6 +4,7 @@ namespace Tests\Unit\Services\Admin\Contact;
 
 use App\Services\Admin\Contact\DestroyService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
 use Tests\BaseTest;
 
 class DestroyServiceTest extends BaseTest
@@ -15,6 +16,9 @@ class DestroyServiceTest extends BaseTest
     protected function setUp(): void
     {
         parent::setUp();
+        Storage::fake('log');
+        $admin = $this->createDefaultAdmin();
+        $this->actingAs($admin, 'admin');
         $this->service = app(DestroyService::class);
     }
 

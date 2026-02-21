@@ -17,6 +17,9 @@ class DestroyServiceTest extends BaseTest
     protected function setUp(): void
     {
         parent::setUp();
+        Storage::fake('log');
+        $actingAdmin = $this->createDefaultAdmin();
+        $this->actingAs($actingAdmin, 'admin');
         $this->service = app(DestroyService::class);
     }
 

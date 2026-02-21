@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->integer('quantity')->default(0)->comment('在庫数');
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
+            $table->dateTime('deleted_at')->nullable();
         });
         DB::statement("ALTER TABLE stocks COMMENT '商品'");
     }

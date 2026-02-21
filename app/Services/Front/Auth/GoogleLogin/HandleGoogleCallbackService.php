@@ -4,13 +4,16 @@ namespace App\Services\Front\Auth\GoogleLogin;
 
 use App\Domain\Entities\User;
 use App\Domain\Repositories\User\UserRepository;
+use App\Enums\OperationLogType;
 use App\Enums\UserStatus;
-use Carbon\Carbon;
+use App\Services\Common\OperationLogService;
+use Illuminate\Support\Carbon;
 
 class HandleGoogleCallbackService
 {
     public function __construct(
         private readonly UserRepository $userRepository,
+        private readonly OperationLogService $operationLogService,
     ) {}
 
     /**
@@ -29,6 +32,14 @@ class HandleGoogleCallbackService
                 'google_id'         => $googleUser->getId(),
                 'status'            => UserStatus::Active,
             ]);
+
+            $this->operationLogService->logUserAction(
+                $user->id,
+                OperationLogType::UserAccountCreate,
+                'アカウントを作成 (Google)',
+                request()->ip()
+            );
+
         } else {
             // 既存ユーザーが削除されている場合は復元
             if (!is_null($user->deleted_at)) {

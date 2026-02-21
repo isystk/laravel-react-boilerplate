@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\OperationLogType;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Admin\LoginRequest;
+use App\Services\Common\OperationLogService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +13,8 @@ use Illuminate\View\View;
 
 class LoginController extends BaseController
 {
+    public function __construct(private readonly OperationLogService $operationLogService) {}
+
     /**
      * ログイン画面の初期表示
      */
@@ -40,6 +44,13 @@ class LoginController extends BaseController
         }
         // ログインが成功した場合
 
+        $this->operationLogService->logAdminAction(
+            Auth::guard('admin')->id(),
+            OperationLogType::AdminLogin,
+            'ログイン',
+            $request->ip()
+        );
+
         // ホーム画面にリダイレクト
         return redirect(route('admin.home'));
     }
@@ -49,9 +60,20 @@ class LoginController extends BaseController
      */
     public function logout(Request $request): RedirectResponse
     {
+        $adminId = Auth::guard('admin')->id();
+
         Auth::guard('admin')->logout();
         $request->session()->flush();
         $request->session()->regenerate();
+
+        if ($adminId !== null) {
+            $this->operationLogService->logAdminAction(
+                $adminId,
+                OperationLogType::AdminLogout,
+                'ログアウト',
+                $request->ip()
+            );
+        }
 
         // ログイン画面にリダイレクト
         return redirect(route('admin.login'));

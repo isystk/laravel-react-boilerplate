@@ -7,8 +7,10 @@ use App\Domain\Repositories\Cart\CartRepositoryInterface;
 use App\Domain\Repositories\Order\OrderRepositoryInterface;
 use App\Domain\Repositories\Order\OrderStockRepositoryInterface;
 use App\Domain\Repositories\Stock\StockRepositoryInterface;
+use App\Enums\OperationLogType;
 use App\Helpers\AuthHelper;
 use App\Mails\CheckoutCompleteToUser;
+use App\Services\Common\OperationLogService;
 use Illuminate\Support\Facades\Mail;
 
 class CheckoutService extends BaseCartService
@@ -20,6 +22,7 @@ class CheckoutService extends BaseCartService
         private readonly StockRepositoryInterface $stockRepository,
         private readonly OrderRepositoryInterface $orderRepository,
         private readonly OrderStockRepositoryInterface $orderStockRepository,
+        private readonly OperationLogService $operationLogService,
     ) {
         parent::__construct($cartRepository);
         $this->cartRepository = $cartRepository;
@@ -75,5 +78,12 @@ class CheckoutService extends BaseCartService
 
         // カートからすべての商品を削除
         $this->cartRepository->deleteByUserId($user->id);
+
+        $this->operationLogService->logUserAction(
+            $user->id,
+            OperationLogType::UserCheckout,
+            "商品を購入 (注文ID: {$order->id}, 合計: ¥" . number_format((int) $cart->sum) . ')',
+            request()->ip()
+        );
     }
 }

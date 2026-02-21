@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Front\Auth;
 
 use App\Domain\Entities\User;
+use App\Enums\OperationLogType;
+use App\Services\Common\OperationLogService;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -12,6 +14,10 @@ use Laravel\Fortify\Contracts\CreatesNewUsers;
 class CreateNewUser implements CreatesNewUsers
 {
     use PasswordValidationRules;
+
+    public function __construct(
+        private readonly OperationLogService $operationLogService,
+    ) {}
 
     /**
      * Validate and create a newly registered user.
@@ -39,10 +45,19 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
         ])->validate();
 
-        return User::create([
+        $user = User::create([
             'name'     => $input['name'],
             'email'    => $input['email'],
             'password' => Hash::make($input['password']),
         ]);
+
+        $this->operationLogService->logUserAction(
+            $user->id,
+            OperationLogType::UserAccountCreate,
+            'アカウントを作成',
+            request()->ip()
+        );
+
+        return $user;
     }
 }

@@ -86,7 +86,7 @@ class DetailControllerTest extends BaseTest
         $response         = $this->get($redirectResponse->headers->get('Location'));
         $response->assertSuccessful();
 
-        // データが削除されたことをテスト
-        $this->assertDatabaseMissing('stocks', ['id' => $stock->id]);
+        // データが論理削除されたことをテスト
+        $this->assertSoftDeleted($stock);
     }
 }

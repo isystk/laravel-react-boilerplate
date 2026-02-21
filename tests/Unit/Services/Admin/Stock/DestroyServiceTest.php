@@ -4,6 +4,7 @@ namespace Tests\Unit\Services\Admin\Stock;
 
 use App\Services\Admin\Stock\DestroyService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
 use Tests\BaseTest;
 
 class DestroyServiceTest extends BaseTest
@@ -15,6 +16,9 @@ class DestroyServiceTest extends BaseTest
     protected function setUp(): void
     {
         parent::setUp();
+        Storage::fake('log');
+        $admin = $this->createDefaultAdmin();
+        $this->actingAs($admin, 'admin');
         $this->service = app(DestroyService::class);
     }
 
@@ -23,7 +27,7 @@ class DestroyServiceTest extends BaseTest
         $stock = $this->createDefaultStock();
         $this->service->delete($stock->id);
 
-        // データが削除されたことをテスト
-        $this->assertDatabaseMissing('stocks', ['id' => $stock->id]);
+        // データが論理削除されたことをテスト
+        $this->assertSoftDeleted($stock);
     }
 }

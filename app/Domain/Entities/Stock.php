@@ -6,23 +6,27 @@ use Database\Factories\Domain\Entities\StockFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 
 /**
- * @property int    $id
- * @property int    $image_id
- * @property string $name
- * @property string $detail
- * @property int    $price
- * @property int    $quantity
- * @property Carbon $created_at
- * @property Carbon $updated_at
+ * @property int         $id
+ * @property int         $image_id
+ * @property string      $name
+ * @property string      $detail
+ * @property int         $price
+ * @property int         $quantity
+ * @property Carbon      $created_at
+ * @property Carbon      $updated_at
+ * @property Carbon|null $deleted_at
  * @property-read Image $image
  */
 class Stock extends Model
 {
     /** @phpstan-use HasFactory<StockFactory> */
     use HasFactory;
+
+    use SoftDeletes;
 
     protected $table = 'stocks';
 
@@ -73,6 +77,7 @@ class Stock extends Model
         return [
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
+            'deleted_at' => 'datetime',
         ];
     }
 }
