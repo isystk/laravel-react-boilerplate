@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin\Contact;
 
+use App\Domain\Entities\Admin;
 use App\Domain\Entities\Contact;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Admin\Contact\ReplyRequest;
 use App\Services\Admin\Contact\DestroyService;
 use App\Services\Admin\Contact\ReplyService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Throwable;
@@ -37,13 +37,14 @@ class DetailController extends BaseController
         /** @var ReplyService $service */
         $service = app(ReplyService::class);
 
-        /** @var \App\Domain\Entities\Admin $admin */
-        $admin = Auth::guard('admin')->user();
+        /** @var Admin $admin */
+        $admin = $request->user();
+        $body  = $request->string('body')->toString();
 
         DB::beginTransaction();
 
         try {
-            $service->reply($contact, $admin->id, $request->string('body')->toString());
+            $service->reply($contact, $admin->id, $body);
             DB::commit();
         } catch (Throwable $e) {
             DB::rollBack();

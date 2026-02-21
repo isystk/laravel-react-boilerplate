@@ -38,6 +38,7 @@ class CreateServiceTest extends BaseTest
         $stock                      = $this->service->save($dto);
 
         // データが更新されたことをテスト
+        /** @var Stock $updatedStock */
         $updatedStock = Stock::find($stock->id);
         $this->assertEquals('aaa', $updatedStock->name);
         $this->assertEquals('aaaの説明', $updatedStock->detail);
@@ -45,7 +46,7 @@ class CreateServiceTest extends BaseTest
         $this->assertEquals(1, $updatedStock->quantity);
 
         // 画像レコードが作成されたことをテスト
-        $this->assertNotNull($updatedStock->image_id);
+        $this->assertGreaterThan(0, $updatedStock->image_id);
         $image = Image::find($updatedStock->image_id);
         $this->assertEquals('stock1.jpg', $image->file_name);
 

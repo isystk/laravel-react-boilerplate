@@ -18,15 +18,15 @@ class HandleGoogleCallbackService
      */
     public function findOrCreate(\Laravel\Socialite\Contracts\User $googleUser): User
     {
-        $user = $this->userRepository->findByGoogleIdWithTrashed($googleUser->id);
+        $user = $this->userRepository->findByGoogleIdWithTrashed($googleUser->getId());
 
         if (is_null($user)) {
             $user = $this->userRepository->create([
-                'name'              => $googleUser->name,
-                'email'             => $googleUser->email,
-                'avatar_url'        => $googleUser->avatar,
+                'name'              => $googleUser->getName(),
+                'email'             => $googleUser->getEmail(),
+                'avatar_url'        => $googleUser->getAvatar(),
                 'email_verified_at' => Carbon::now(),
-                'google_id'         => $googleUser->id,
+                'google_id'         => $googleUser->getId(),
                 'status'            => UserStatus::Active,
             ]);
         } else {
@@ -38,7 +38,7 @@ class HandleGoogleCallbackService
             // 既存ユーザーがGoogle IDを持っていない場合は更新
             if (is_null($user->google_id)) {
                 $user = $this->userRepository->update([
-                    'google_id' => $googleUser->id,
+                    'google_id' => $googleUser->getId(),
                 ], $user->id);
             }
         }

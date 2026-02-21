@@ -39,9 +39,7 @@ class CheckoutServiceTest extends BaseTest
         $this->createDefaultCart(['user_id' => $user1->id, 'stock_id' => $stock2->id]);
         $this->createDefaultCart(['user_id' => $user1->id, 'stock_id' => $stock2->id]);
 
-        $stripeEmail = '';
-        $stripeToken = '';
-        $this->service->checkout($stripeEmail, $stripeToken);
+        $this->service->checkout();
 
         // 注文データが登録されたことをテスト
         $order = Order::where('user_id', $user1->id)->first();

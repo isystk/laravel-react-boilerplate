@@ -30,7 +30,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property Carbon      $created_at
  * @property Carbon      $updated_at
  * @property Carbon|null $deleted_at
- * @property-read Image $avatarImage
+ * @property-read Image|null $avatarImage
  */
 class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {

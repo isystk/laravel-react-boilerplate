@@ -12,7 +12,7 @@ class UpdateRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, array<string|Enum>>
+     * @return array<string, list<string|Enum|Base64ImageRule>>
      */
     public function rules(): array
     {

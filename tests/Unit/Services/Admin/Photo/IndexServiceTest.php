@@ -41,15 +41,15 @@ class IndexServiceTest extends BaseTest
         // file_nameで検索
         $input           = clone $default;
         $input->fileName = 'stock1';
-        $images          = $this->service->searchPhotoList($input)->getCollection();
-        $imageIds        = $images->pluck('id')->all();
+        $paginator       = $this->service->searchPhotoList($input)->getCollection();
+        $imageIds        = $paginator->pluck('image.id')->all();
         $this->assertSame([$image1->id], $imageIds, 'file_nameで検索が出来ることをテスト');
 
         // file_typeで検索
         $input           = clone $default;
         $input->fileType = ImageType::Stock->value;
-        $images          = $this->service->searchPhotoList($input)->getCollection();
-        $imageIds        = $images->pluck('id')->all();
+        $paginator       = $this->service->searchPhotoList($input)->getCollection();
+        $imageIds        = $paginator->pluck('image.id')->all();
         $this->assertSame([$image1->id, $image2->id], $imageIds, 'file_typeで検索が出来ることをテスト');
     }
 
@@ -83,7 +83,7 @@ class IndexServiceTest extends BaseTest
         $input             = clone $default;
         $input->unusedOnly = true;
         $images            = $this->service->searchPhotoList($input)->getCollection();
-        $imageIds          = $images->pluck('id')->all();
+        $imageIds          = $images->pluck('image.id')->all();
         $this->assertSame([$image1->id], $imageIds, 'unusedOnly=trueの場合は未参照のみ取得');
     }
 }

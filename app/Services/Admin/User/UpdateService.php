@@ -8,7 +8,6 @@ use App\Dto\Request\Admin\User\UpdateDto;
 use App\Enums\ImageType;
 use App\Services\BaseService;
 use App\Services\Common\ImageService;
-use Illuminate\Http\UploadedFile;
 
 class UpdateService extends BaseService
 {
@@ -28,7 +27,7 @@ class UpdateService extends BaseService
         ];
 
         // アバター処理（ファイルがアップロードされた場合）
-        if (!empty($dto->avatar) && $dto->avatar instanceof UploadedFile) {
+        if (!empty($dto->avatar)) {
             $user = $this->userRepository->findById($userId);
 
             if ($user === null) {
