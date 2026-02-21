@@ -2,8 +2,10 @@
 
 namespace App\Services\Admin\Home;
 
+use App\Domain\Repositories\Contact\ContactRepositoryInterface;
 use App\Domain\Repositories\MonthlySale\MonthlySaleRepositoryInterface;
 use App\Domain\Repositories\Order\OrderRepositoryInterface;
+use App\Domain\Repositories\User\UserRepositoryInterface;
 use App\Services\BaseService;
 use Illuminate\Support\Collection;
 
@@ -12,6 +14,8 @@ class IndexService extends BaseService
     public function __construct(
         private readonly OrderRepositoryInterface $orderRepository,
         private readonly MonthlySaleRepositoryInterface $monthlySaleRepository,
+        private readonly ContactRepositoryInterface $contactRepository,
+        private readonly UserRepositoryInterface $userRepository,
     ) {}
 
     /**
@@ -20,6 +24,14 @@ class IndexService extends BaseService
     public function getTodaysOrdersCount(): int
     {
         return $this->orderRepository->countTodaysOrders();
+    }
+
+    /**
+     * 未返信のお問い合わせ件数を取得する。
+     */
+    public function getUnrepliedContactsCount(): int
+    {
+        return $this->contactRepository->countUnreplied();
     }
 
     /**
@@ -45,5 +57,20 @@ class IndexService extends BaseService
     public function getLatestOrders(int $limit = 10): Collection
     {
         return $this->orderRepository->getLatestWithUser($limit);
+    }
+
+    /**
+     * 月別の新規ユーザー数を取得する。
+     *
+     * @return Collection<int, array{year_month: string, count: int}>
+     */
+    public function getUsersByMonth(int $months = 12): Collection
+    {
+        $users = $this->userRepository->countByMonth($months);
+
+        return $users->map(fn (object $row) => [
+            'year_month' => (string) $row->year_month,
+            'count'      => (int) $row->count,
+        ])->values();
     }
 }

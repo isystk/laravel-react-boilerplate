@@ -31,12 +31,17 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        // 1年前から現在までのランダムな日時を生成
+        $createdAt = fake()->dateTimeBetween('-1 year', 'now');
+
         return [
             'name'              => fake()->name(),
             'email'             => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password'          => static::$password ??= Hash::make('password'),
             'status'            => UserStatus::Active,
+            'created_at'        => $createdAt,
+            'updated_at'        => fake()->dateTimeBetween($createdAt, 'now'),
         ];
     }
 

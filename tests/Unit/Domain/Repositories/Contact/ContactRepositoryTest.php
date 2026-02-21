@@ -169,4 +169,38 @@ class ContactRepositoryTest extends BaseTest
 
         $this->assertSame(1, $contacts->count());
     }
+
+    public function test_countUnreplied_未返信の件数が正しく取得できること(): void
+    {
+        $unrepliedCount = 3;
+
+        // 未返信のデータを作成
+        $this->createDefaultContact();
+        $this->createDefaultContact();
+        $this->createDefaultContact();
+
+        // 返信済みのデータを作成
+        $repliedItem = $this->createDefaultContact();
+        $this->createDefaultContactReply([
+            'contact_id' => $repliedItem->id,
+            'body'       => 'This is a reply.',
+        ]);
+
+        $result = $this->repository->countUnreplied();
+
+        $this->assertSame($unrepliedCount, $result);
+    }
+
+    public function test_countUnreplied_全データが返信済みの場合は0を返すこと(): void
+    {
+        $repliedItem = $this->createDefaultContact();
+        $this->createDefaultContactReply([
+            'contact_id' => $repliedItem->id,
+            'body'       => 'This is a reply.',
+        ]);
+
+        $result = $this->repository->countUnreplied();
+
+        $this->assertSame(0, $result);
+    }
 }

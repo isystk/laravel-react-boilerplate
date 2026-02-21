@@ -27,4 +27,12 @@ interface UserRepositoryInterface extends BaseRepositoryInterface
      * Google IDからレコードを取得します。削除済みのレコードも対象とします。
      */
     public function findByGoogleIdWithTrashed(string $googleId): ?User;
+
+    /**
+     * 月別の新規ユーザー数を返します。
+     *
+     * @param  int                                                            $months 取得する月数（直近N ヶ月）
+     * @return Collection<int, object{year_month: string, count: int|string}>
+     */
+    public function countByMonth(int $months = 12): Collection;
 }

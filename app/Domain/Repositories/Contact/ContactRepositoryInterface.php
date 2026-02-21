@@ -26,4 +26,9 @@ interface ContactRepositoryInterface extends BaseRepositoryInterface
      * @return Collection<int, Contact>|LengthAwarePaginator<int, Contact>
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator;
+
+    /**
+     * 未返信のお問い合わせ件数を返します。
+     */
+    public function countUnreplied(): int;
 }
