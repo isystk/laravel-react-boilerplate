@@ -63,4 +63,12 @@ class ContactRepository extends BaseRepository implements ContactRepositoryInter
         /** @var Collection<int, Contact> */
         return $query->get();
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function countUnreplied(): int
+    {
+        return $this->model->whereDoesntHave('replies')->count();
+    }
 }

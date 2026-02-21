@@ -15,15 +15,17 @@ class HomeController extends BaseController
     {
         $service = app(IndexService::class);
 
-        $todaysOrdersCount = $service->getTodaysOrdersCount();
-        $salesByMonth      = $service->getSalesByMonth();
-        $latestOrders      = $service->getLatestOrders();
+        $unrepliedContactsCount = $service->getUnrepliedContactsCount();
+        $salesByMonth           = $service->getSalesByMonth();
+        $latestOrders           = $service->getLatestOrders();
+        $usersByMonth           = $service->getUsersByMonth();
 
         return view('admin.home',
             compact([
-                'todaysOrdersCount',
+                'unrepliedContactsCount',
                 'salesByMonth',
                 'latestOrders',
+                'usersByMonth',
             ])
         );
     }

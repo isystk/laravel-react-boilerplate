@@ -23,28 +23,48 @@
                     </div>
                 @endif
                 <div class="mb-3 row">
-                    <label for="search_user_name"
-                           class="col-sm-2 col-form-label fw-bold">名前</label>
+                    <label for="keyword"
+                           class="col-sm-2 col-form-label fw-bold">ID / 名前 / メールアドレス</label>
                     <div class="col-sm-4">
                         <input type="text"
-                               name="name"
-                               id="search_user_name"
-                               value="{{ request()->name }}"
-                               class="form-control"
-                               maxlength="{{ config('const.maxlength.users.name') }}" />
+                               name="keyword"
+                               id="keyword"
+                               value="{{ request()->keyword }}"
+                               class="form-control" />
                     </div>
                 </div>
 
                 <div class="mb-3 row">
-                    <label for="search_user_email"
-                           class="col-sm-2 col-form-label fw-bold">メールアドレス</label>
-                    <div class="col-sm-8">
-                        <input type="text"
-                               name="email"
-                               id="search_user_email"
-                               value="{{ request()->email }}"
-                               class="form-control"
-                               maxlength="{{ config('const.maxlength.users.email') }}" />
+                    <label for="status"
+                           class="col-sm-2 col-form-label fw-bold">ステータス</label>
+                    <div class="col-sm-4">
+                        <select name="status"
+                                id="status"
+                                class="form-select">
+                            <option value="">すべて</option>
+                            @foreach (UserStatus::cases() as $userStatus)
+                                <option value="{{ $userStatus->value }}"
+                                        {{ request()->filled('status') && (int) request()->input('status') === $userStatus->value ? 'selected' : '' }}>
+                                    {{ $userStatus->label() }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="has_google"
+                           class="col-sm-2 col-form-label fw-bold">Google</label>
+                    <div class="col-sm-4">
+                        <select name="has_google"
+                                id="has_google"
+                                class="form-select">
+                            <option value="">すべて</option>
+                            <option value="1"
+                                    {{ request()->input('has_google') === '1' ? 'selected' : '' }}>あり</option>
+                            <option value="0"
+                                    {{ request()->input('has_google') === '0' ? 'selected' : '' }}>なし</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -58,11 +78,14 @@
           method="GET"
           id="pagingForm">
         <input type="hidden"
-               name="name"
-               value="{{ request()->name }}" />
+               name="keyword"
+               value="{{ request()->keyword }}" />
         <input type="hidden"
-               name="email"
-               value="{{ request()->email }}" />
+               name="status"
+               value="{{ request()->input('status') }}" />
+        <input type="hidden"
+               name="has_google"
+               value="{{ request()->input('has_google') }}" />
     </form>
     <div class="row">
         <div class="col-12">

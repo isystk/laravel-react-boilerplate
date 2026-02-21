@@ -96,4 +96,115 @@ class IndexServiceTest extends BaseTest
         $orders = $this->service->getLatestOrders(3);
         $this->assertSame(3, $orders->count(), '指定した件数のみ取得されること');
     }
+
+    // -------------------------
+    // getUnrepliedContactsCount
+    // -------------------------
+
+    public function test_getUnrepliedContactsCount_お問い合わせがない場合(): void
+    {
+        $count = $this->service->getUnrepliedContactsCount();
+        $this->assertSame(0, $count);
+    }
+
+    public function test_getUnrepliedContactsCount_返信あり返信なしが混在する場合_未返信のみカウントされる(): void
+    {
+        // 返信なし: 2件
+        $this->createDefaultContact();
+        $this->createDefaultContact();
+        // 返信あり: 1件
+        $repliedContact = $this->createDefaultContact();
+        $this->createDefaultContactReply(['contact_id' => $repliedContact->id]);
+
+        $count = $this->service->getUnrepliedContactsCount();
+        $this->assertSame(2, $count, '未返信のお問い合わせのみカウントされること');
+    }
+
+    public function test_getUnrepliedContactsCount_すべて返信済みの場合_0を返す(): void
+    {
+        $contact1 = $this->createDefaultContact();
+        $contact2 = $this->createDefaultContact();
+        $this->createDefaultContactReply(['contact_id' => $contact1->id]);
+        $this->createDefaultContactReply(['contact_id' => $contact2->id]);
+
+        $count = $this->service->getUnrepliedContactsCount();
+        $this->assertSame(0, $count, '全件返信済みの場合は0になること');
+    }
+
+    // -------------------------
+    // getUsersByMonth
+    // -------------------------
+
+    public function test_getUsersByMonth_ユーザーがない場合(): void
+    {
+        $result = $this->service->getUsersByMonth();
+        $this->assertSame(0, $result->count());
+    }
+
+    public function test_getUsersByMonth_月別にユーザー数が集計される(): void
+    {
+        $thisMonth = Carbon::now()->format('Y/m');
+        $lastMonth = Carbon::now()->subMonth()->format('Y/m');
+
+        // 今月: 2名
+        $this->createDefaultUser(['created_at' => Carbon::now()->startOfMonth()->addDays(5)]);
+        $this->createDefaultUser(['created_at' => Carbon::now()->startOfMonth()->addDays(10)]);
+        // 先月: 1名
+        $this->createDefaultUser(['created_at' => Carbon::now()->subMonth()->startOfMonth()->addDays(5)]);
+
+        $result = $this->service->getUsersByMonth();
+
+        $thisMonthData = $result->firstWhere('year_month', $thisMonth);
+        $lastMonthData = $result->firstWhere('year_month', $lastMonth);
+
+        $this->assertNotNull($thisMonthData, '今月のデータが含まれること');
+        $this->assertSame(2, $thisMonthData['count'], '今月の新規ユーザーが2件カウントされること');
+        $this->assertNotNull($lastMonthData, '先月のデータが含まれること');
+        $this->assertSame(1, $lastMonthData['count'], '先月の新規ユーザーが1件カウントされること');
+    }
+
+    public function test_getUsersByMonth_昇順で返る(): void
+    {
+        $this->createDefaultUser(['created_at' => Carbon::now()->startOfMonth()]);
+        $this->createDefaultUser(['created_at' => Carbon::now()->subMonth()->startOfMonth()]);
+        $this->createDefaultUser(['created_at' => Carbon::now()->subMonths(2)->startOfMonth()]);
+
+        $result = $this->service->getUsersByMonth();
+
+        $this->assertSame(3, $result->count());
+        $this->assertTrue(
+            $result[0]['year_month'] < $result[1]['year_month'],
+            '年月の昇順で返ること'
+        );
+        $this->assertTrue(
+            $result[1]['year_month'] < $result[2]['year_month'],
+            '年月の昇順で返ること'
+        );
+    }
+
+    public function test_getUsersByMonth_範囲外のユーザーは含まれない(): void
+    {
+        // 今月（範囲内）
+        $this->createDefaultUser(['created_at' => Carbon::now()->startOfMonth()->addDays(1)]);
+        // 2ヶ月前（months=1 の場合は範囲外）
+        $this->createDefaultUser(['created_at' => Carbon::now()->subMonths(2)->startOfMonth()]);
+
+        $result = $this->service->getUsersByMonth(1);
+
+        $this->assertSame(1, $result->count(), '今月分のみ1グループが返ること');
+        $this->assertSame(1, $result->first()['count'], '今月の新規ユーザーが1件のみカウントされること');
+    }
+
+    public function test_getUsersByMonth_月数を指定できる(): void
+    {
+        // 今月（範囲内）
+        $this->createDefaultUser(['created_at' => Carbon::now()->startOfMonth()]);
+        // 先月（months=2 の場合は範囲内）
+        $this->createDefaultUser(['created_at' => Carbon::now()->subMonth()->startOfMonth()]);
+        // 3ヶ月前（months=2 の場合は範囲外）
+        $this->createDefaultUser(['created_at' => Carbon::now()->subMonths(3)->startOfMonth()]);
+
+        $result = $this->service->getUsersByMonth(2);
+        $this->assertSame(2, $result->count(), '直近2ヶ月分のグループのみ返ること');
+    }
 }
