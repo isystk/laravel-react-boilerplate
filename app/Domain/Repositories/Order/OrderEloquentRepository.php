@@ -5,7 +5,6 @@ namespace App\Domain\Repositories\Order;
 use App\Domain\Entities\Order;
 use App\Domain\Repositories\BaseEloquentRepository;
 use Carbon\Carbon;
-use Carbon\CarbonImmutable;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
@@ -17,17 +16,7 @@ class OrderEloquentRepository extends BaseEloquentRepository implements OrderRep
     }
 
     /**
-     * 検索条件からデータを取得します。
-     *
-     * @param array{
-     *   user_name : ?string,
-     *   order_date_from : ?CarbonImmutable,
-     *   order_date_to : ?CarbonImmutable,
-     *   sort_name : ?string,
-     *   sort_direction : 'asc' | 'desc' | null,
-     *   limit : ?int,
-     * } $conditions
-     * @return Collection<int, Order>|LengthAwarePaginator<int, Order>
+     * {@inheritDoc}
      */
     public function getConditionsWithUserStock(array $conditions): Collection|LengthAwarePaginator
     {
@@ -66,6 +55,9 @@ class OrderEloquentRepository extends BaseEloquentRepository implements OrderRep
         return $query->get();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function countTodaysOrders(): int
     {
         return $this->model
@@ -74,7 +66,7 @@ class OrderEloquentRepository extends BaseEloquentRepository implements OrderRep
     }
 
     /**
-     * @return Collection<int, Order>
+     * {@inheritDoc}
      */
     public function getLatestWithUser(int $limit): Collection
     {
@@ -87,7 +79,7 @@ class OrderEloquentRepository extends BaseEloquentRepository implements OrderRep
     }
 
     /**
-     * ユーザーIDからデータを削除します。
+     * {@inheritDoc}
      */
     public function deleteByUserId(int $userId): void
     {

@@ -12,7 +12,7 @@ return [
     'ContactType' . ContactType::Support->value => '不具合・トラブル',
     'ContactType' . ContactType::Other->value   => 'その他',
     'AdminRole' . AdminRole::Manager->value     => '一般管理者',
-    'AdminRole' . AdminRole::HighManager->value => '上位管理者',
+    'AdminRole' . AdminRole::HighManager->value => 'システム管理者',
     'ImageType' . ImageType::Stock->value       => '商品',
     'ImageType' . ImageType::Contact->value     => 'お問い合わせ',
     'ImageType' . ImageType::User->value        => 'ユーザー',

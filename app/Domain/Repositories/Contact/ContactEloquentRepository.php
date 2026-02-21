@@ -15,16 +15,7 @@ class ContactEloquentRepository extends BaseEloquentRepository implements Contac
     }
 
     /**
-     * 検索条件からデータを取得します。
-     *
-     * @param array{
-     *   user_name : ?string,
-     *   title : ?string,
-     *   sort_name : ?string,
-     *   sort_direction : 'asc' | 'desc' | null,
-     *   limit : ?int,
-     * } $conditions
-     * @return Collection<int, Contact>|LengthAwarePaginator<int, Contact>
+     * {@inheritDoc}
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator
     {
@@ -38,6 +29,12 @@ class ContactEloquentRepository extends BaseEloquentRepository implements Contac
         }
         if (!is_null($conditions['title'] ?? null)) {
             $query->where('contacts.title', 'like', '%' . $conditions['title'] . '%');
+        }
+        if (!is_null($conditions['contact_date_from'] ?? null)) {
+            $query->where('contacts.created_at', '>=', $conditions['contact_date_from']->startOfDay());
+        }
+        if (!is_null($conditions['contact_date_to'] ?? null)) {
+            $query->where('contacts.created_at', '<=', $conditions['contact_date_to']->endOfDay());
         }
 
         $sortColumn = $this->validateSortColumn(

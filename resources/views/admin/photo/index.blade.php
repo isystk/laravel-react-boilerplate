@@ -22,7 +22,7 @@
                 @endif
                 <div class="mb-3 row">
                     <label for="fileName"
-                           class="col-sm-2 col-form-label">ファイル名</label>
+                           class="col-sm-2 col-form-label fw-bold">ファイル名</label>
                     <div class="col-sm-4">
                         <input type="text"
                                name="fileName"
@@ -35,7 +35,7 @@
 
                 <div class="mb-3 row">
                     <label for="fileType"
-                           class="col-sm-2 col-form-label">種別</label>
+                           class="col-sm-2 col-form-label fw-bold">種別</label>
                     <div class="col-sm-4">
                         <select name="fileType"
                                 id="fileType"
@@ -53,7 +53,7 @@
 
                 <div class="mb-3 row">
                     <label for="unusedOnly"
-                           class="col-sm-2 col-form-label">未参照のみ</label>
+                           class="col-sm-2 col-form-label fw-bold">未参照のみ</label>
                     <div class="col-sm-4">
                         <div class="form-check mt-2">
                             <input type="checkbox"
@@ -156,7 +156,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="card-footer  ">
+                <div class="card-footer">
                     {!! $displayDtos->links('admin.parts.pagination') !!}
                 </div>
             </div>

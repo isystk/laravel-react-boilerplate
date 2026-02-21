@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', $user->name)
+@section('title', 'ユーザID:' . $user->id)
 @section('mainMenu', 'user')
 @section('subMenu', 'user')
 @section('breadcrumbs')
@@ -15,21 +15,21 @@
     <div class="card card-purple">
         <div class="card-body">
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted small">氏名</label>
+                <label class="col-sm-2 col-form-label text-muted fw-bold">氏名</label>
                 <div class="col-sm-10 d-flex align-items-center">
                     {{ $user->name }}
                 </div>
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted small">メールアドレス</label>
+                <label class="col-sm-2 col-form-label text-muted fw-bold">メールアドレス</label>
                 <div class="col-sm-10 d-flex align-items-center">
                     {{ $user->email }}
                 </div>
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted small">アバター</label>
+                <label class="col-sm-2 col-form-label text-muted fw-bold">アバター</label>
                 <div class="col-sm-10 d-flex align-items-center">
                     @if ($user->avatarImage)
                         <img src="{{ $user->avatarImage->getImageUrl() }}"
@@ -46,7 +46,7 @@
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted small">Googleログイン</label>
+                <label class="col-sm-2 col-form-label text-muted fw-bold">Googleログイン</label>
                 <div class="col-sm-10 d-flex align-items-center">
                     @if ($user->google_id)
                         <span class="badge bg-success">はい</span>
@@ -57,7 +57,7 @@
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted small">ステータス</label>
+                <label class="col-sm-2 col-form-label text-muted fw-bold">ステータス</label>
                 <div class="col-sm-10 d-flex align-items-center">
                     @if ($user->status === \App\Enums\UserStatus::Active)
                         <span class="badge bg-success">{{ $user->status->label() }}</span>

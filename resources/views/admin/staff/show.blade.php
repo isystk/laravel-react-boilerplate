@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', $staff->name)
+@section('title', '管理者ID:' . $staff->id)
 @section('mainMenu', 'system')
 @section('subMenu', 'staff')
 @section('breadcrumbs')
@@ -25,21 +25,21 @@
     <div class="card card-purple">
         <div class="card-body">
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted small">氏名</label>
+                <label class="col-sm-2 col-form-label text-muted fw-bold">氏名</label>
                 <div class="col-sm-10 d-flex align-items-center">
                     {{ $staff->name }}
                 </div>
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted small">メールアドレス</label>
+                <label class="col-sm-2 col-form-label text-muted fw-bold">メールアドレス</label>
                 <div class="col-sm-10 d-flex align-items-center">
                     {{ $staff->email }}
                 </div>
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted small">権限</label>
+                <label class="col-sm-2 col-form-label text-muted fw-bold">権限</label>
                 <div class="col-sm-10 d-flex align-items-center">
                     {{ $staff->role->label() }}
                 </div>

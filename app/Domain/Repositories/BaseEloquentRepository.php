@@ -15,9 +15,7 @@ abstract class BaseEloquentRepository implements BaseRepository
     }
 
     /**
-     * データを作成します。
-     *
-     * @param array<string, mixed> $data
+     * {@inheritDoc}
      */
     public function create(array $data): mixed
     {
@@ -25,9 +23,7 @@ abstract class BaseEloquentRepository implements BaseRepository
     }
 
     /**
-     * データを更新します。
-     *
-     * @param array<string, mixed> $data
+     * {@inheritDoc}
      */
     public function update(array $data, int $id): mixed
     {
@@ -43,7 +39,7 @@ abstract class BaseEloquentRepository implements BaseRepository
     }
 
     /**
-     * データを削除します。
+     * {@inheritDoc}
      */
     public function delete(int $id): void
     {
@@ -57,7 +53,7 @@ abstract class BaseEloquentRepository implements BaseRepository
     }
 
     /**
-     * データを復元します。
+     * {@inheritDoc}
      */
     public function restore(int $id): void
     {
@@ -72,9 +68,7 @@ abstract class BaseEloquentRepository implements BaseRepository
     }
 
     /**
-     * 全件取得します。
-     *
-     * @return Collection<int, mixed>
+     * {@inheritDoc}
      */
     public function getAll(): Collection
     {
@@ -82,7 +76,7 @@ abstract class BaseEloquentRepository implements BaseRepository
     }
 
     /**
-     * IDでデータを検索します。
+     * {@inheritDoc}
      */
     public function findById(int $id): mixed
     {

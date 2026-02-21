@@ -23,5 +23,8 @@ interface UserRepository extends BaseRepository
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator;
 
+    /**
+     * Google IDからレコードを取得します。削除済みのレコードも対象とします。
+     */
     public function findByGoogleIdWithTrashed(string $googleId): ?User;
 }

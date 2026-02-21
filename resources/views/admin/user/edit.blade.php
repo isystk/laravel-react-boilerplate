@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', $user->name . 'の変更')
+@section('title', 'ユーザID:' . $user->id . 'の変更')
 @section('mainMenu', 'user')
 @section('subMenu', 'user')
 @section('breadcrumbs')
@@ -37,7 +37,7 @@
                 @csrf
                 <div class="mb-3">
                     <label for="name"
-                           class="form-label">氏名</label>
+                           class="form-label fw-bold">表示名</label>
                     <input type="text"
                            name="name"
                            id="name"
@@ -48,7 +48,7 @@
 
                 <div class="mb-3">
                     <label for="email"
-                           class="form-label">メールアドレス</label>
+                           class="form-label fw-bold">メールアドレス</label>
                     <input type="email"
                            name="email"
                            id="email"
@@ -58,7 +58,7 @@
                 </div>
 
                 <div class="mb-3 row">
-                    <label class="col-sm-2 col-form-label">アバター</label>
+                    <label class="col-sm-2 col-form-label fw-bold">アバター</label>
                     <div class="col-sm-10">
                         @if ($user->avatarImage)
                             <div class="mb-2">
@@ -82,7 +82,7 @@
                 </div>
 
                 <div class="mb-3 row">
-                    <label class="col-sm-2 col-form-label">Googleログイン</label>
+                    <label class="col-sm-2 col-form-label fw-bold">Googleログイン</label>
                     <div class="col-sm-10 d-flex align-items-center">
                         @if ($user->google_id)
                             <span class="badge bg-success">はい</span>

@@ -14,9 +14,7 @@ class OrderStockEloquentRepository extends BaseEloquentRepository implements Ord
     }
 
     /**
-     * orderId からデータを取得します。
-     *
-     * @return Collection<int, OrderStock>
+     * {@inheritDoc}
      */
     public function getByOrderId(int $orderId): Collection
     {
@@ -27,7 +25,7 @@ class OrderStockEloquentRepository extends BaseEloquentRepository implements Ord
     }
 
     /**
-     * ユーザーIDからデータを削除します。
+     * {@inheritDoc}
      */
     public function deleteByUserId(int $userId): void
     {

@@ -12,7 +12,7 @@ return [
     'ContactType' . ContactType::Support->value => 'Technical Issues / Troubleshooting',
     'ContactType' . ContactType::Other->value   => 'Other',
     'AdminRole' . AdminRole::Manager->value     => 'Standard Administrator',
-    'AdminRole' . AdminRole::HighManager->value => 'Senior Administrator',
+    'AdminRole' . AdminRole::HighManager->value => 'System Administrator',
     'ImageType' . ImageType::Stock->value       => 'Product',
     'ImageType' . ImageType::Contact->value     => 'Inquiry',
     'ImageType' . ImageType::User->value        => 'User',

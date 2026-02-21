@@ -22,7 +22,7 @@
                 @endif
                 <div class="mb-3 row">
                     <label for="name"
-                           class="col-sm-2 col-form-label">注文者</label>
+                           class="col-sm-2 col-form-label fw-bold">注文者</label>
                     <div class="col-sm-4">
                         <input type="text"
                                name="name"
@@ -35,7 +35,7 @@
 
                 <div class="mb-3 row">
                     <label for="order_date_from"
-                           class="col-sm-2 col-form-label">注文日時</label>
+                           class="col-sm-2 col-form-label fw-bold">注文日時</label>
                     <div class="col-sm-10">
                         <div class="row align-items-center g-2">
                             <div class="col-auto"

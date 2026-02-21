@@ -1,6 +1,6 @@
 @php use App\Enums\UserStatus; @endphp
 @extends('layouts.admin')
-@section('title', '顧客一覧')
+@section('title', 'ユーザ一覧')
 @section('mainMenu', 'user')
 @section('subMenu', 'user')
 @section('breadcrumbs')
@@ -24,7 +24,7 @@
                 @endif
                 <div class="mb-3 row">
                     <label for="search_user_name"
-                           class="col-sm-2 col-form-label">氏名</label>
+                           class="col-sm-2 col-form-label fw-bold">表示名</label>
                     <div class="col-sm-4">
                         <input type="text"
                                name="name"
@@ -37,7 +37,7 @@
 
                 <div class="mb-3 row">
                     <label for="search_user_email"
-                           class="col-sm-2 col-form-label">メールアドレス</label>
+                           class="col-sm-2 col-form-label fw-bold">メールアドレス</label>
                     <div class="col-sm-8">
                         <input type="text"
                                name="email"
@@ -78,7 +78,7 @@
                                     'params' => ['id', 'ID'],
                                 ])
                                 @include('admin.parts.sortablelink_th', [
-                                    'params' => ['name', '氏名'],
+                                    'params' => ['name', '表示名'],
                                 ])
                                 @include('admin.parts.sortablelink_th', [
                                     'params' => ['email', 'メールアドレス'],
@@ -87,7 +87,6 @@
                                     'params' => ['created_at', '登録日時'],
                                 ])
                                 <th>ステータス</th>
-                                <th>アバター</th>
                                 <th>Google</th>
                             </tr>
                         </thead>
@@ -103,19 +102,6 @@
                                             <span class="badge bg-success">{{ UserStatus::Active->label() }}</span>
                                         @else
                                             <span class="badge bg-danger">{{ UserStatus::Suspended->label() }}</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($user->avatarImage)
-                                            <img src="{{ $user->avatarImage->getImageUrl() }}"
-                                                 alt="avatar"
-                                                 style="width:40px;height:40px;object-fit:cover;border-radius:50%;" />
-                                        @elseif ($user->avatar_url)
-                                            <img src="{{ $user->avatar_url }}"
-                                                 alt="avatar"
-                                                 style="width:40px;height:40px;object-fit:cover;border-radius:50%;" />
-                                        @else
-                                            <span class="text-muted small">-</span>
                                         @endif
                                     </td>
                                     <td>

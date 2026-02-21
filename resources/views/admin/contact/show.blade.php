@@ -19,35 +19,35 @@
     <div class="card card-purple mb-4">
         <div class="card-body">
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted small">氏名</label>
+                <label class="col-sm-2 col-form-label text-muted fw-bold">表示名</label>
                 <div class="col-sm-10 d-flex align-items-center">
                     {{ $contact->user->name }}
                 </div>
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted small">お問い合わせ種類</label>
+                <label class="col-sm-2 col-form-label text-muted fw-bold">お問い合わせ種類</label>
                 <div class="col-sm-10 d-flex align-items-center">
                     {{ $contact->type->label() }}
                 </div>
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted small">件名</label>
+                <label class="col-sm-2 col-form-label text-muted fw-bold">件名</label>
                 <div class="col-sm-10 d-flex align-items-center">
                     {{ $contact->title }}
                 </div>
             </div>
 
             <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label text-muted small">お問い合わせ内容</label>
+                <label class="col-sm-2 col-form-label text-muted fw-bold">お問い合わせ内容</label>
                 <div class="col-sm-10 d-flex align-items-center"
                      style="white-space: pre-wrap;">{{ $contact->message }}</div>
             </div>
 
             @if ($contact->image)
                 <div class="mb-3 row">
-                    <label class="col-sm-2 col-form-label text-muted small">画像</label>
+                    <label class="col-sm-2 col-form-label text-muted fw-bold">画像</label>
                     <div class="col-sm-10 d-flex align-items-center">
                         <img src="{{ $contact->image->getImageUrl() }}"
                              class="img-thumbnail"
@@ -105,7 +105,7 @@
                 @csrf
                 <div class="mb-3">
                     <label for="body"
-                           class="form-label">返信内容 <span class="text-danger">*</span></label>
+                           class="form-label fw-bold">返信内容 <span class="text-danger">*</span></label>
                     <textarea class="form-control @error('body') is-invalid @enderror"
                               id="body"
                               name="body"

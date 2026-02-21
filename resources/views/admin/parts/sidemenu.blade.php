@@ -59,7 +59,7 @@
                             <a href="{{ url('/admin/user') }}"
                                class="nav-link {{ $subMenu === 'user' ? 'active' : '' }}">
                                 <i class="nav-icon fa fa-layer-group"></i>
-                                <p>顧客管理</p>
+                                <p>ユーザ管理</p>
                             </a>
                         </li>
                         <li class="nav-item">

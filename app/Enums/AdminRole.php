@@ -6,7 +6,7 @@ enum AdminRole: string
 {
     /** 一般管理者 */
     case Manager = 'manager';
-    /** 上位管理者 */
+    /** システム管理者 */
     case HighManager = 'high-manager';
 
     /**
@@ -18,7 +18,7 @@ enum AdminRole: string
     }
 
     /**
-     * 上位管理者の場合にTrueを返却する
+     * システム管理者の場合にTrueを返却する
      */
     public function isHighManager(): bool
     {

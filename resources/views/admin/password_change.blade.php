@@ -35,7 +35,7 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="password"
-                           class="form-label">パスワード</label>
+                           class="form-label fw-bold">パスワード</label>
                     <input type="password"
                            name="password"
                            id="password"
@@ -45,7 +45,7 @@
                 </div>
                 <div class="form-group">
                     <label for="password_confirmation"
-                           class="form-label">パスワード (確認)</label>
+                           class="form-label fw-bold">パスワード (確認)</label>
                     <input type="password"
                            name="password_confirmation"
                            id="password_confirmation"

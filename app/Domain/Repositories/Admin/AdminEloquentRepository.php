@@ -15,17 +15,7 @@ class AdminEloquentRepository extends BaseEloquentRepository implements AdminRep
     }
 
     /**
-     * 検索条件からデータを取得します。
-     *
-     * @param array{
-     *   name : ?string,
-     *   email : ?string,
-     *   role : ?string,
-     *   sort_name : ?string,
-     *   sort_direction : 'asc' | 'desc' | null,
-     *   limit : ?int,
-     * } $conditions
-     * @return Collection<int, Admin>|LengthAwarePaginator<int, Admin>
+     * {@inheritDoc}
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator
     {
@@ -59,7 +49,7 @@ class AdminEloquentRepository extends BaseEloquentRepository implements AdminRep
     }
 
     /**
-     * メールアドレスからレコードを取得します。
+     * {@inheritDoc}
      */
     public function getByEmail(string $email): ?Admin
     {
@@ -70,9 +60,7 @@ class AdminEloquentRepository extends BaseEloquentRepository implements AdminRep
     }
 
     /**
-     * すべてのデータをIDの昇順で取得します。
-     *
-     * @return Collection<int, Admin>
+     * {@inheritDoc}
      */
     public function getAllOrderById(): Collection
     {

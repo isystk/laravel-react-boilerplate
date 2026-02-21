@@ -15,17 +15,7 @@ class ImageEloquentRepository extends BaseEloquentRepository implements ImageRep
     }
 
     /**
-     * 検索条件からデータを取得します。
-     *
-     * @param array{
-     *   file_name: ?string,
-     *   file_type: ?int,
-     *   unused_only: bool,
-     *   sort_name: ?string,
-     *   sort_direction: 'asc'|'desc'|null,
-     *   limit?: ?int,
-     * } $conditions
-     * @return Collection<int, Image>|LengthAwarePaginator<int, Image>
+     * {@inheritDoc}
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator
     {
