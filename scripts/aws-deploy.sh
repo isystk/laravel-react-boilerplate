@@ -23,7 +23,7 @@ APP_NAME="laraec-app"
 
 # コマンド定義
 DOCKER_CMD="docker compose -f $COMPOSE_FILE --env-file $ENV_FILE"
-AWS_CLI_CMD="$DOCKER_CMD exec -T aws"
+AWS_CLI_CMD="$DOCKER_CMD exec -T laraec-aws"
 
 # AWS詳細設定
 ECR_DOMAIN="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
