@@ -14,5 +14,7 @@
   "deleteAccount.title": "Delete Account",
   "deleteAccount.description": "Deleting your account will permanently remove all your data, including order history and cart items. This action cannot be undone.",
   "deleteAccount.button": "Delete Account",
-  "deleteAccount.confirm": "Are you sure you want to delete your account? This action cannot be undone."
+  "deleteAccount.confirm": "Are you sure you want to delete your account? This action cannot be undone.",
+  "deleteAccount.delete": "Delete",
+  "deleteAccount.close": "Close"
 }

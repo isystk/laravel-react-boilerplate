@@ -4,6 +4,7 @@ import BasicLayout from '@/components/templates/BasicLayout';
 import useAppRoot from '@/states/useAppRoot';
 import TextInput from '@/components/atoms/TextInput';
 import { useTranslation } from 'react-i18next';
+import { ToastMessage, ToastTypes } from '@/components/interactions/ToastMessage';
 
 const languages = [
   { code: 'ja', label: '日本語' },
@@ -13,6 +14,7 @@ const languages = [
 
 const ProfilePage = () => {
   const { state, service } = useAppRoot();
+  const [isShowDeleteConfirm, setIsShowDeleteConfirm] = useState(false);
   const { t, i18n } = useTranslation('profile');
   const [name, setName] = useState<string>(state.auth.name || '');
   const [avatarPreview, setAvatarPreview] = useState<string | null>(state.auth.avatar_url || null);
@@ -136,14 +138,26 @@ const ProfilePage = () => {
           <button
             type="button"
             className="btn btn-outline-danger"
-            onClick={async () => {
-              if (window.confirm(t('deleteAccount.confirm'))) {
-                await service.profile.destroyAccount();
-              }
-            }}
+            onClick={() => setIsShowDeleteConfirm(true)}
           >
             {t('deleteAccount.button')}
           </button>
+          <ToastMessage
+            isOpen={isShowDeleteConfirm}
+            title={t('deleteAccount.title')}
+            message={t('deleteAccount.confirm')}
+            type={ToastTypes.Confirm}
+            confirmText={t('deleteAccount.delete')}
+            cancelText={t('deleteAccount.close')}
+            confirmClass="btn btn-danger"
+            onConfirm={async () => {
+              setIsShowDeleteConfirm(false);
+              await service.profile.destroyAccount();
+            }}
+            onCancel={() => {
+              setIsShowDeleteConfirm(false);
+            }}
+          />
         </div>
       </div>
     </BasicLayout>

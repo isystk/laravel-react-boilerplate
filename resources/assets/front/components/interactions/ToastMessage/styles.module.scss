@@ -1,5 +1,21 @@
 @use "@/assets/styles/variable" as *;
 
+.header {
+  padding: 1rem 0;
+}
+
+.body {
+  padding: 1.5rem 0;
+}
+
+.footer {
+    padding: 1rem 0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    background-color: #f9f9f9;
+}
+
 .message {
     font-size: 16px;
     margin-bottom: 24px;

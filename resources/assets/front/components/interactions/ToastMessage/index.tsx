@@ -13,7 +13,12 @@ export type ToastType = (typeof ToastTypes)[keyof typeof ToastTypes];
 type ToastMessageProps = {
   isOpen: boolean;
   type?: ToastType;
+  title?: string;
   message: string;
+  confirmText?: string;
+  cancelText?: string;
+  confirmClass?: string;
+  cancelClass?: string;
   onConfirm?: () => void;
   onCancel?: () => void;
 };
@@ -21,12 +26,20 @@ type ToastMessageProps = {
 const ToastMessage = ({
   isOpen,
   type = ToastTypes.Alert,
+  title = '',
   message,
+  confirmText,
+  cancelText,
+  confirmClass = 'btn btn-primary',
+  cancelClass = 'btn btn-secondary',
   onConfirm: onPropConfirm,
   onCancel: onPropCancel,
 }: ToastMessageProps) => {
   const { t } = useTranslation();
   const cancelButtonRef = useRef<HTMLButtonElement>(null);
+
+  const displayConfirmText = confirmText || t('toast.yes');
+  const displayCancelText = cancelText || t('toast.no');
 
   useEffect(() => {
     setTimeout(() => {
@@ -44,16 +57,23 @@ const ToastMessage = ({
   return (
     <Modal isOpen={isOpen} onClose={onCancel} small={true}>
       <>
-        <p className={styles.message}>{message}</p>
-        <div className={styles.buttonGroup}>
-          <button className="btn btn-primary" onClick={onConfirm}>
-            {t('toast.yes')}
-          </button>
-          {type === ToastTypes.Confirm && (
-            <button className="btn btn-danger" onClick={onCancel} ref={cancelButtonRef}>
-              {t('toast.no')}
+        <div className={styles.header}>
+          <h5 className="text-lg font-bold">{title}</h5>
+        </div>
+        <div className={styles.body}>
+          <p className={styles.message}>{message}</p>
+        </div>
+        <div className={styles.footer}>
+          <div className={styles.buttonGroup}>
+            <button className={confirmClass} onClick={onConfirm}>
+              {displayConfirmText}
             </button>
-          )}
+            {type === ToastTypes.Confirm && (
+              <button className={cancelClass} onClick={onCancel} ref={cancelButtonRef}>
+                {displayCancelText}
+              </button>
+            )}
+          </div>
         </div>
       </>
     </Modal>

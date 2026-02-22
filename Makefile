@@ -40,7 +40,8 @@ init: ## 初期化します。
 	$(DOCKER_CMD) down --rmi local --volumes
 	rm -rf "$(DOCKER_HOME)/mysql/logs" && mkdir -p "$(DOCKER_HOME)/mysql/logs"
 	rm -rf "$(DOCKER_HOME)/app/logs" && mkdir -p "$(DOCKER_HOME)/app/logs"
-	chmod -R 755 "$(DOCKER_HOME)/mysql/logs" "$(DOCKER_HOME)/app/logs"
+	rm -rf "$(BASE_DIR)/storage/logs" && mkdir -p "$(DOCKER_HOME)/storage/logs"
+	chmod -R 755 "$(DOCKER_HOME)/mysql/logs" "$(DOCKER_HOME)/app/logs" "$(DOCKER_HOME)/storage/logs"
 	rm -rf "$(BASE_DIR)/vendor"
 	rm -rf "$(BASE_DIR)/node_modules"
 

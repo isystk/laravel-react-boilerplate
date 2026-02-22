@@ -9,7 +9,11 @@ enum OperationLogType: string
     case UserLogin = 'user_login';
     /** ログアウト */
     case UserLogout = 'user_logout';
-    /** 商品購入 */
+    /** 商品をカートに追加 */
+    case UserCartAdd = 'user_cart_add';
+    /** 商品をカートから削除 */
+    case UserCartDelete = 'user_cart_delete';
+    /** 商品決済完了 */
     case UserCheckout = 'user_checkout';
     /** アカウント作成 */
     case UserAccountCreate = 'user_account_create';
@@ -17,6 +21,8 @@ enum OperationLogType: string
     case UserAccountDelete = 'user_account_delete';
     /** プロフィール更新 */
     case UserProfileUpdate = 'user_profile_update';
+    /** お問い合わせ送信 */
+    case UserContactSend = 'user_contact_send';
 
     // 管理画面スタッフ操作
     /** ログイン */
@@ -35,6 +41,8 @@ enum OperationLogType: string
     case AdminStaffUpdate = 'admin_staff_update';
     /** スタッフ削除 */
     case AdminStaffDelete = 'admin_staff_delete';
+    /** スタッフインポート */
+    case AdminStaffImport = 'admin_staff_import';
     /** 商品作成 */
     case AdminStockCreate = 'admin_stock_create';
     /** 商品更新 */
@@ -56,10 +64,13 @@ enum OperationLogType: string
         return match ($this) {
             self::UserLogin          => 'ログイン',
             self::UserLogout         => 'ログアウト',
-            self::UserCheckout       => '商品購入',
+            self::UserCartAdd        => '商品をカートに追加',
+            self::UserCartDelete     => '商品をカートから削除',
+            self::UserCheckout       => '商品決済完了',
             self::UserAccountCreate  => 'アカウント作成',
             self::UserAccountDelete  => 'アカウント削除',
             self::UserProfileUpdate  => 'プロフィール更新',
+            self::UserContactSend    => 'お問い合わせ送信',
             self::AdminLogin         => 'ログイン',
             self::AdminLogout        => 'ログアウト',
             self::AdminUserUpdate    => 'ユーザー情報更新',
@@ -68,6 +79,7 @@ enum OperationLogType: string
             self::AdminStaffCreate   => 'スタッフ作成',
             self::AdminStaffUpdate   => 'スタッフ更新',
             self::AdminStaffDelete   => 'スタッフ削除',
+            self::AdminStaffImport   => 'スタッフインポート',
             self::AdminStockCreate   => '商品作成',
             self::AdminStockUpdate   => '商品更新',
             self::AdminStockDelete   => '商品削除',
