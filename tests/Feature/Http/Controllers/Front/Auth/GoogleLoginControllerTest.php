@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\Controllers\Front;
+namespace Http\Controllers\Front\Auth;
 
 use App\Domain\Entities\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -34,6 +34,23 @@ class GoogleLoginControllerTest extends BaseTest
         $this->assertSame('https://avatar.url', $user->avatar_url);
         $this->assertNotNull($user->email_verified_at);
         $this->assertAuthenticatedAs($user);
+    }
+
+    public function test_handleGoogleCallback_停止ユーザーはログイン不可(): void
+    {
+        $this->createDefaultUser([
+            'email'     => 'suspended@test.com',
+            'google_id' => 'google-456',
+            'status'    => \App\Enums\UserStatus::Suspended,
+        ]);
+
+        $this->mockSocialiteUser('google-456', 'Suspended User', 'suspended@test.com', 'https://avatar.url');
+
+        $this->get('/auth/google/callback')
+            ->assertRedirect('/login')
+            ->assertSessionHasErrors('email');
+
+        $this->assertGuest();
     }
 
     public function test_handleGoogleCallback_例外発生時はエラーがスローされる(): void
