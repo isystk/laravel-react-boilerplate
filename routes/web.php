@@ -31,4 +31,5 @@ Route::get('/email/verify/{id}/{hash}', [\App\Http\Controllers\Api\Auth\EmailVer
 | フロント
 |--------------------------------------------------------------------------
 */
+Route::get('/login', [\App\Http\Controllers\Front\ReactController::class, 'index'])->where('any', '.*')->name('login');
 Route::get('/{any}', [\App\Http\Controllers\Front\ReactController::class, 'index'])->where('any', '.*')->name('react');

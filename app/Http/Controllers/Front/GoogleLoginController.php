@@ -40,7 +40,7 @@ class GoogleLoginController extends BaseController
         }
 
         if (!$user->status->isActive()) {
-            return to_route('login')->withErrors([
+            return redirect('/login')->withErrors([
                 'email' => __('auth.suspended'),
             ]);
         }
@@ -54,6 +54,6 @@ class GoogleLoginController extends BaseController
             request()->ip()
         );
 
-        return redirect()->intended('/home');
+        return redirect('/home');
     }
 }
