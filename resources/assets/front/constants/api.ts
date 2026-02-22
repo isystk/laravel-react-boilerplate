@@ -6,8 +6,21 @@ const getBffUrl = (path: string): string => {
 
 /** API のエンドポイント */
 export const Api = {
+  /** ログイン */
+  LOGIN: getBffUrl('/login'),
+  /** ログアウト */
+  LOGOUT: getBffUrl('/logout'),
+  /** 会員登録 */
+  REGISTER: getBffUrl('/register'),
+  /** パスワードリセットリンク送信 */
+  FORGOT_PASSWORD: getBffUrl('/forgot-password'),
+  /** パスワードリセット実行 */
+  RESET_PASSWORD: getBffUrl('/reset-password'),
+  /** メール認証再送 */
+  EMAIL_RESEND: getBffUrl('/email/verification-notification'),
+
   /** ログイン状態チェック */
-  LOGIN_CHECK: getBffUrl('/session'),
+  LOGIN_CHECK: getBffUrl('/user'),
 
   /** 共通定数 */
   CONST: getBffUrl('/const'),

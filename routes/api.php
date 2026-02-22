@@ -15,9 +15,19 @@ Route::middleware(['web'])->group(function () {
     Route::get('/stock', [\App\Http\Controllers\Api\StockController::class, 'index'])->name('api.stock');
     Route::post('/contact/store', [\App\Http\Controllers\Api\ContactController::class, 'store'])->name('api.contact.store');
 
-    Route::middleware([\App\Http\Middleware\AuthWebOrApi::class])->group(function () {
+    // 認証 API
+    Route::post('/login', \App\Http\Controllers\Api\Auth\LoginController::class)->middleware('throttle:login')->name('api.login');
+    Route::post('/logout', \App\Http\Controllers\Api\Auth\LogoutController::class)->name('api.logout');
+    Route::post('/register', \App\Http\Controllers\Api\Auth\RegisterController::class)->name('api.register');
+    Route::post('/forgot-password', \App\Http\Controllers\Api\Auth\ForgotPasswordController::class)->name('api.forgot-password');
+    Route::post('/reset-password', \App\Http\Controllers\Api\Auth\ResetPasswordController::class)->name('api.reset-password');
+
+    Route::middleware(['auth:sanctum'])->group(function () {
+        // メール認証
+        Route::post('/email/verification-notification', [\App\Http\Controllers\Api\Auth\EmailVerificationController::class, 'resend'])->name('api.verification.resend');
+
         // ログイン後
-        Route::post('/session', [\App\Http\Controllers\Api\SessionController::class, 'index'])->name('api.session');
+        Route::get('/user', [\App\Http\Controllers\Api\SessionController::class, 'index'])->name('api.login-check');
         Route::post('/mycart', [\App\Http\Controllers\Api\CartController::class, 'mycart'])->name('api.mycart');
         Route::post('/mycart/add', [\App\Http\Controllers\Api\CartController::class, 'addMycart'])->name('api.mycart.add');
         Route::post('/mycart/delete', [\App\Http\Controllers\Api\CartController::class, 'deleteCart'])->name('api.mycart.delete');

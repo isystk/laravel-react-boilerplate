@@ -1,21 +1,14 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers\Front\Auth;
+namespace Http\Controllers\Api\Auth;
 
 use App\Domain\Entities\User;
-use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
 
 class CreateNewUserTest extends BaseTest
 {
     use RefreshDatabase;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->withoutMiddleware(ValidateCsrfToken::class);
-    }
 
     public function test_create(): void
     {
@@ -25,8 +18,8 @@ class CreateNewUserTest extends BaseTest
             'password'              => 'password',
             'password_confirmation' => 'password',
         ];
-        $this->post('/register', $items)
-            ->assertStatus(302);
+        $this->postJson('/api/register', $items)
+            ->assertStatus(201);
 
         $user = User::where(['email' => $items['email']])->first();
         $this->assertSame($items['name'], $user->name, 'ユーザーが新規登録できることをテスト');
@@ -39,8 +32,9 @@ class CreateNewUserTest extends BaseTest
             'password'              => 'password',
             'password_confirmation' => 'password',
         ];
-        $this->post('/register', $items)
-            ->assertSessionHasErrors('name');
+        $this->postJson('/api/register', $items)
+            ->assertStatus(422)
+            ->assertJsonValidationErrors('name');
     }
 
     public function test_create_validation_error_email_required(): void
@@ -50,8 +44,9 @@ class CreateNewUserTest extends BaseTest
             'password'              => 'password',
             'password_confirmation' => 'password',
         ];
-        $this->post('/register', $items)
-            ->assertSessionHasErrors('email');
+        $this->postJson('/api/register', $items)
+            ->assertStatus(422)
+            ->assertJsonValidationErrors('email');
     }
 
     public function test_create_validation_error_email_duplicate(): void
@@ -64,8 +59,9 @@ class CreateNewUserTest extends BaseTest
             'password'              => 'password',
             'password_confirmation' => 'password',
         ];
-        $this->post('/register', $items)
-            ->assertSessionHasErrors('email');
+        $this->postJson('/api/register', $items)
+            ->assertStatus(422)
+            ->assertJsonValidationErrors('email');
     }
 
     public function test_create_validation_error_password_confirmation_mismatch(): void
@@ -76,7 +72,8 @@ class CreateNewUserTest extends BaseTest
             'password'              => 'password',
             'password_confirmation' => 'different',
         ];
-        $this->post('/register', $items)
-            ->assertSessionHasErrors('password');
+        $this->postJson('/api/register', $items)
+            ->assertStatus(422)
+            ->assertJsonValidationErrors('password');
     }
 }

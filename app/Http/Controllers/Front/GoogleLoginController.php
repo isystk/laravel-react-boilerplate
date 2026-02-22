@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Front\Auth;
+namespace App\Http\Controllers\Front;
 
 use App\Enums\OperationLogType;
 use App\Http\Controllers\BaseController;

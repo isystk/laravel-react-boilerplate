@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers\Front\Auth;
+namespace Http\Controllers\Front;
 
 use App\Domain\Entities\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;

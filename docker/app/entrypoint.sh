@@ -25,9 +25,6 @@ npm run build || echo "Build failed: ignoring and continuing"
 echo "🔐 Generating app key..."
 php artisan key:generate
 
-echo "🔐 Generating jwt secret..."
-php artisan jwt:secret
-
 echo "🔒 Fixing permissions..."
 chmod -R 777 bootstrap/cache storage
 

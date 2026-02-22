@@ -14,8 +14,17 @@ require __DIR__ . '/admin.php';
 | Googleログイン
 |--------------------------------------------------------------------------
 */
-Route::get('auth/google', [App\Http\Controllers\Front\Auth\GoogleLoginController::class, 'redirectToGoogle'])->name('login.google');
-Route::get('auth/google/callback', [App\Http\Controllers\Front\Auth\GoogleLoginController::class, 'handleGoogleCallback']);
+Route::get('auth/google', [\App\Http\Controllers\Front\GoogleLoginController::class, 'redirectToGoogle'])->name('login.google');
+Route::get('auth/google/callback', [\App\Http\Controllers\Front\GoogleLoginController::class, 'handleGoogleCallback']);
+
+/*
+|--------------------------------------------------------------------------
+| メール認証
+|--------------------------------------------------------------------------
+*/
+Route::get('/email/verify/{id}/{hash}', [\App\Http\Controllers\Api\Auth\EmailVerificationController::class, 'verify'])
+    ->middleware(['signed'])
+    ->name('verification.verify');
 
 /*
 |--------------------------------------------------------------------------

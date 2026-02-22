@@ -14,7 +14,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
  * @property int         $id
@@ -32,7 +31,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property Carbon|null $deleted_at
  * @property-read Image|null $avatarImage
  */
-class User extends Authenticatable implements JWTSubject, MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
 
@@ -101,24 +100,6 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     public function sendEmailVerificationNotification(): void
     {
         $this->notify(new VerifyEmailToUser($this));
-    }
-
-    /**
-     * JWTの識別子を取得する
-     */
-    public function getJWTIdentifier(): string
-    {
-        return (string) $this->getKey();
-    }
-
-    /**
-     * JWTのカスタムペイロードを取得する
-     *
-     * @return array<int, mixed>
-     */
-    public function getJWTCustomClaims(): array
-    {
-        return [];
     }
 
     /**

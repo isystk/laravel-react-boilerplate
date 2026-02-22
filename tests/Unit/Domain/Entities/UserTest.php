@@ -70,18 +70,6 @@ class UserTest extends BaseTest
         Notification::assertSentTo($user, VerifyEmailToUser::class);
     }
 
-    public function test_getJWTIdentifier_キーが返却されること(): void
-    {
-        $user = $this->createDefaultUser(['id' => 123]);
-
-        $this->assertSame('123', $user->getJWTIdentifier());
-    }
-
-    public function test_getJWTCustomClaims_空の配列が返却されること(): void
-    {
-        $this->assertSame([], $this->sub->getJWTCustomClaims());
-    }
-
     public function test_avatarImage_リレーションが正しく動作すること(): void
     {
         $image = $this->createDefaultImage([
