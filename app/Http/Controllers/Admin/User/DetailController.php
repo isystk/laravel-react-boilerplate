@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\User;
 use App\Domain\Entities\User;
 use App\Http\Controllers\BaseController;
 use App\Services\Admin\User\SuspendService;
+use App\Services\Common\OperationLogService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
@@ -12,14 +13,16 @@ use Throwable;
 
 class DetailController extends BaseController
 {
+    public function __construct(private readonly OperationLogService $operationLogService) {}
+
     /**
      * 顧客詳細画面の初期表示
      */
     public function show(User $user): View
     {
-        return view('admin.user.show', compact([
-            'user',
-        ]));
+        $operationLogs = $this->operationLogService->getUserLogs($user->id);
+
+        return view('admin.user.show', compact('user', 'operationLogs'));
     }
 
     /**

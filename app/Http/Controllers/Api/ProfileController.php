@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Domain\Entities\User;
+use App\Services\Api\Profile\DestroyService;
 use App\Services\Api\Profile\UpdateService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -50,7 +51,7 @@ class ProfileController extends BaseApiController
         /** @var User $user */
         $user = $request->user();
 
-        $service = app(\App\Services\Api\Profile\DestroyService::class);
+        $service = app(DestroyService::class);
 
         DB::beginTransaction();
 

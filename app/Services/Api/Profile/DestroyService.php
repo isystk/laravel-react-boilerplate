@@ -7,7 +7,9 @@ use App\Domain\Repositories\Cart\CartRepositoryInterface;
 use App\Domain\Repositories\Order\OrderRepositoryInterface;
 use App\Domain\Repositories\Order\OrderStockRepositoryInterface;
 use App\Domain\Repositories\User\UserRepositoryInterface;
+use App\Enums\OperationLogType;
 use App\Services\Common\ImageService;
+use App\Services\Common\OperationLogService;
 use Throwable;
 
 class DestroyService
@@ -17,7 +19,8 @@ class DestroyService
         private readonly CartRepositoryInterface $cartRepository,
         private readonly OrderRepositoryInterface $orderRepository,
         private readonly OrderStockRepositoryInterface $orderStockRepository,
-        private readonly ImageService $imageService
+        private readonly ImageService $imageService,
+        private readonly OperationLogService $operationLogService,
     ) {}
 
     /**
@@ -27,6 +30,14 @@ class DestroyService
      */
     public function destroy(User $user): void
     {
+        // 削除前に操作ログを記録（削除後はユーザーIDが無効になるため）
+        $this->operationLogService->logUserAction(
+            $user->id,
+            OperationLogType::UserAccountDelete,
+            'アカウントを削除',
+            request()->ip()
+        );
+
         // 注文に関連するデータを削除
         $this->orderStockRepository->deleteByUserId($user->id);
         $this->orderRepository->deleteByUserId($user->id);

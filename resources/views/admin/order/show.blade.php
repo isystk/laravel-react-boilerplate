@@ -47,7 +47,14 @@
                     <tbody>
                         @foreach ($orderStocks as $orderStock)
                             <tr>
-                                <td>{{ $orderStock->stock->name }}</td>
+                                <td>
+                                    @if (is_null($orderStock->stock))
+                                        削除済み
+                                    @else
+                                        <a
+                                           href={{ route('admin.stock.show', ['stock' => $orderStock->stock]) }}>{{ $orderStock->stock->name }}</a>
+                                    @endif
+                                </td>
                                 <td class="text-end">{{ number_format($orderStock->price) }}</td>
                                 <td class="text-end">{{ number_format($orderStock->quantity) }}</td>
                             </tr>

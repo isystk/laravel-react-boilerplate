@@ -70,6 +70,39 @@
         </div>
     </div>
 
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">操作ログ（直近30日 / 最大50件）</h3>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>日時</th>
+                        <th>操作</th>
+                        <th>詳細</th>
+                        <th>IPアドレス</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($operationLogs as $log)
+                        <tr>
+                            <td>{{ $log['timestamp'] }}</td>
+                            <td>{{ $log['action'] }}</td>
+                            <td>{{ $log['description'] }}</td>
+                            <td>{{ $log['ip'] ?? '-' }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4"
+                                class="text-center">操作ログはありません</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 @endsection
 
 @section('scripts')

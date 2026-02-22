@@ -7,15 +7,22 @@ use App\Domain\Entities\ImportHistory;
 use App\Domain\Repositories\ImportHistory\ImportHistoryRepositoryInterface;
 use App\Enums\ImportType;
 use App\Enums\JobStatus;
+use App\Enums\OperationLogType;
+use App\Jobs\Import\ImportStaffJobs;
 use App\Services\BaseService;
+use App\Services\Common\OperationLogService;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use RuntimeException;
 
 class ImportService extends BaseService
 {
-    public function __construct(private readonly ImportHistoryRepositoryInterface $importHistoryRepository) {}
+    public function __construct(
+        private readonly ImportHistoryRepositoryInterface $importHistoryRepository,
+        private readonly OperationLogService $operationLogService,
+    ) {}
 
     /**
      * 管理者をインポートするJobを登録します。
@@ -51,6 +58,13 @@ class ImportService extends BaseService
             throw new RuntimeException('An unexpected error has occurred.');
         }
         // インポートJOBを溜める
-        dispatch(new \App\Jobs\Import\ImportStaffJobs($admin, $filePath, $importFile->getClientOriginalName(), $importHistory->id));
+        dispatch(new ImportStaffJobs($admin, $filePath, $importFile->getClientOriginalName(), $importHistory->id));
+
+        $this->operationLogService->logAdminAction(
+            Auth::guard('admin')->id(),
+            OperationLogType::AdminStaffImport,
+            "スタッフをインポート (インポート履歴 ID: {$importHistory->id})",
+            request()->ip()
+        );
     }
 }

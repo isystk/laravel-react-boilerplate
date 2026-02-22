@@ -6,14 +6,17 @@ use App\Domain\Entities\User;
 use App\Domain\Repositories\User\UserRepository;
 use App\Dto\Response\Api\Profile\UpdateDto;
 use App\Enums\ImageType;
+use App\Enums\OperationLogType;
 use App\Services\Common\ImageService;
+use App\Services\Common\OperationLogService;
 use App\Utils\UploadImage;
 
 class UpdateService
 {
     public function __construct(
         private readonly UserRepository $userRepository,
-        private readonly ImageService $imageService
+        private readonly ImageService $imageService,
+        private readonly OperationLogService $operationLogService,
     ) {}
 
     /**
@@ -39,6 +42,13 @@ class UpdateService
         $this->userRepository->update($model, $user->id);
 
         $avatarUrl = $image?->getImageUrl() ?? $user->avatar_url;
+
+        $this->operationLogService->logUserAction(
+            $user->id,
+            OperationLogType::UserProfileUpdate,
+            'プロフィールを更新',
+            request()->ip()
+        );
 
         return new UpdateDto($user->name, $avatarUrl);
     }

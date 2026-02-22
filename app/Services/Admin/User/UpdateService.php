@@ -6,14 +6,18 @@ use App\Domain\Entities\User;
 use App\Domain\Repositories\User\UserRepository;
 use App\Dto\Request\Admin\User\UpdateDto;
 use App\Enums\ImageType;
+use App\Enums\OperationLogType;
 use App\Services\BaseService;
 use App\Services\Common\ImageService;
+use App\Services\Common\OperationLogService;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateService extends BaseService
 {
     public function __construct(
         private readonly UserRepository $userRepository,
         private readonly ImageService $imageService,
+        private readonly OperationLogService $operationLogService,
     ) {}
 
     /**
@@ -46,6 +50,15 @@ class UpdateService extends BaseService
             $model['avatar_image_id'] = $image->id;
         }
 
-        return $this->userRepository->update($model, $userId);
+        $user = $this->userRepository->update($model, $userId);
+
+        $this->operationLogService->logAdminAction(
+            Auth::guard('admin')->id(),
+            OperationLogType::AdminUserUpdate,
+            "ユーザー情報を更新 (ユーザーID: {$userId})",
+            request()->ip()
+        );
+
+        return $user;
     }
 }

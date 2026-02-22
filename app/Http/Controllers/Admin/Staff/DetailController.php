@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Staff;
 use App\Domain\Entities\Admin;
 use App\Http\Controllers\BaseController;
 use App\Services\Admin\Staff\DestroyService;
+use App\Services\Common\OperationLogService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
@@ -13,14 +14,16 @@ use Throwable;
 
 class DetailController extends BaseController
 {
+    public function __construct(private readonly OperationLogService $operationLogService) {}
+
     /**
      * スタッフ詳細画面の初期表示
      */
     public function show(Admin $staff): View
     {
-        return view('admin.staff.show', compact([
-            'staff',
-        ]));
+        $operationLogs = $this->operationLogService->getAdminLogs($staff->id);
+
+        return view('admin.staff.show', compact('staff', 'operationLogs'));
     }
 
     /**

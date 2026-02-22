@@ -3,6 +3,7 @@
 namespace Tests\Unit\Domain\Entities;
 
 use App\Domain\Entities\Stock;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
 
@@ -16,6 +17,17 @@ class StockTest extends BaseTest
     {
         parent::setUp();
         $this->sub = new Stock;
+    }
+
+    public function test_正しくキャストされる事(): void
+    {
+        $model = $this->createDefaultUser([
+            'deleted_at' => Carbon::now(),
+        ]);
+
+        $this->assertInstanceOf(Carbon::class, $model->created_at);
+        $this->assertInstanceOf(Carbon::class, $model->updated_at);
+        $this->assertInstanceOf(Carbon::class, $model->deleted_at);
     }
 
     public function test_hasQuantity(): void

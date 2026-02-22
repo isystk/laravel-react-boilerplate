@@ -8,6 +8,7 @@ use App\Enums\AdminRole;
 use App\Http\Requests\Admin\Staff\StoreRequest;
 use App\Services\Admin\Staff\CreateService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
 use Tests\BaseTest;
 
 class CreateServiceTest extends BaseTest
@@ -19,6 +20,9 @@ class CreateServiceTest extends BaseTest
     protected function setUp(): void
     {
         parent::setUp();
+        Storage::fake('log');
+        $actingAdmin = $this->createDefaultAdmin();
+        $this->actingAs($actingAdmin, 'admin');
         $this->service = app(CreateService::class);
     }
 
