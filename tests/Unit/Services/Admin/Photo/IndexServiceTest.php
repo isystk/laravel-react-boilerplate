@@ -66,6 +66,7 @@ class IndexServiceTest extends BaseTest
         $image1 = $this->createDefaultImage(['file_name' => 'unused.jpg', 'type' => ImageType::Stock->value]);
         $image2 = $this->createDefaultImage(['file_name' => 'used_by_stock.jpg', 'type' => ImageType::Stock->value]);
         $image3 = $this->createDefaultImage(['file_name' => 'used_by_contact.jpg', 'type' => ImageType::Contact->value]);
+        $image4 = $this->createDefaultImage(['file_name' => 'used_by_user.jpg', 'type' => ImageType::User->value]);
 
         // Stockに参照されるImageを作成
         $this->createDefaultStock(['image_id' => $image2->id]);
@@ -73,11 +74,14 @@ class IndexServiceTest extends BaseTest
         // Contactに参照されるImageを作成
         $this->createDefaultContact(['image_id' => $image3->id]);
 
+        // Userに参照されるImageを作成
+        $this->createDefaultUser(['avatar_image_id' => $image4->id]);
+
         // unusedOnly=falseの場合は全件取得
         $input             = clone $default;
         $input->unusedOnly = false;
         $images            = $this->service->searchPhotoList($input)->getCollection();
-        $this->assertSame(3, $images->count(), 'unusedOnly=falseの場合は全件取得');
+        $this->assertSame(4, $images->count(), 'unusedOnly=falseの場合は全件取得');
 
         // unusedOnly=trueの場合は未参照のみ取得
         $input             = clone $default;

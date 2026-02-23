@@ -34,7 +34,8 @@ class ImageRepository extends BaseRepository implements ImageRepositoryInterface
 
         if ($conditions['unused_only']) {
             $query->whereRaw('NOT EXISTS(SELECT 1 FROM stocks WHERE stocks.image_id = images.id)')
-                ->whereRaw('NOT EXISTS(SELECT 1 FROM contacts WHERE contacts.image_id = images.id)');
+                ->whereRaw('NOT EXISTS(SELECT 1 FROM contacts WHERE contacts.image_id = images.id)')
+                ->whereRaw('NOT EXISTS(SELECT 1 FROM users WHERE users.avatar_image_id = images.id)');
         }
 
         $sortColumn = $this->validateSortColumn(
