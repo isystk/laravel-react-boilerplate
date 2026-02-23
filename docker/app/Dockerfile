@@ -1,11 +1,11 @@
-FROM php:8.4-apache
+FROM php:8.3-apache
 
 RUN apt-get update && apt-get install -y \
     git unzip libzip-dev zlib1g-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
     mariadb-client tzdata curl nano nodejs npm \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install zip pdo_mysql gd \
-    && pecl install xdebug-3.4.1 \
+    && pecl install xdebug-3.3.2 \
     && docker-php-ext-enable xdebug
 
 ENV TZ=Asia/Tokyo
