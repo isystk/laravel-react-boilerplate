@@ -154,6 +154,30 @@ class UserRepositoryTest extends BaseTest
         $this->assertSame($nonGoogleUser->id, $users->first()->id, 'Google連携なしのユーザーのみ取得できることをテスト');
     }
 
+    public function test_findByEmailWithTrashed_存在するメールアドレスの場合ユーザーが返却されること(): void
+    {
+        $user = $this->createDefaultUser([
+            'email' => 'user@example.com',
+        ]);
+
+        $result = $this->repository->findByEmailWithTrashed('user@example.com');
+
+        $this->assertNotNull($result);
+        $this->assertSame($user->id, $result->id);
+        $this->assertSame('user@example.com', $result->email);
+    }
+
+    public function test_findByEmailWithTrashed_存在しないメールアドレスの場合はnullが返却されること(): void
+    {
+        $this->createDefaultUser([
+            'email' => 'user@example.com',
+        ]);
+
+        $result = $this->repository->findByEmailWithTrashed('not-exist@example.com');
+
+        $this->assertNull($result);
+    }
+
     public function test_findByGoogleIdWithTrashed_存在するGoogleIDの場合ユーザーが返却されること(): void
     {
         $user = $this->createDefaultUser([

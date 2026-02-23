@@ -10,14 +10,11 @@ use App\Services\Common\OperationLogService;
 
 class DeleteCartService extends BaseCartService
 {
-    private readonly CartRepositoryInterface $cartRepository;
-
     public function __construct(
-        CartRepositoryInterface $cartRepository,
+        private readonly CartRepositoryInterface $cartRepository,
         private readonly OperationLogService $operationLogService
     ) {
         parent::__construct($cartRepository);
-        $this->cartRepository = $cartRepository;
     }
 
     /**

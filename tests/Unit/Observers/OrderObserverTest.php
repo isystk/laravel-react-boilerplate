@@ -32,7 +32,7 @@ class OrderObserverTest extends BaseTest
     public function test_created_MonthlySaleが存在する場合は既存レコードが更新されること(): void
     {
         $yearMonth = '202501';
-        MonthlySale::factory()->create([
+        $this->createDefaultMonthlySale([
             'year_month'  => $yearMonth,
             'order_count' => 5,
             'amount'      => 5000,

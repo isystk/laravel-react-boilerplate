@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Dto\Response\Api\Cart;
 
-use App\Domain\Entities\Image;
 use App\Dto\Response\Api\Cart\CartStockDto;
 use App\Enums\ImageType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,7 +15,7 @@ class CartStockDtoTest extends BaseTest
     {
         $cart = $this->createDefaultCart();
 
-        $image = Image::factory()->create([
+        $image = $this->createDefaultImage([
             'file_name' => 'test.jpg',
             'type'      => ImageType::Stock->value,
         ]);

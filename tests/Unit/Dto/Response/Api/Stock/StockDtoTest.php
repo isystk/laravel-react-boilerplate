@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Dto\Response\Api\Stock;
 
-use App\Domain\Entities\Image;
 use App\Dto\Response\Api\Stock\StockDto;
 use App\Enums\ImageType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -14,7 +13,7 @@ class StockDtoTest extends BaseTest
 
     public function test_construct_Stockモデルからプロパティが正しく設定されること(): void
     {
-        $image = Image::factory()->create([
+        $image = $this->createDefaultImage([
             'file_name' => 'test.jpg',
             'type'      => ImageType::Stock->value,
         ]);

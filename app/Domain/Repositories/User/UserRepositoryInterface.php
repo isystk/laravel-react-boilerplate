@@ -32,6 +32,11 @@ interface UserRepositoryInterface extends BaseRepositoryInterface
     public function findByGoogleIdWithTrashed(string $googleId): ?User;
 
     /**
+     * メールアドレスからレコードを取得します。削除済みのレコードも対象とします。
+     */
+    public function findByEmailWithTrashed(string $email): ?User;
+
+    /**
      * 月別の新規ユーザー数を返します。
      *
      * @param  int                                                            $months 取得する月数（直近N ヶ月）

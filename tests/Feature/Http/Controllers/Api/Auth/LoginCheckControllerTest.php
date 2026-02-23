@@ -2,7 +2,6 @@
 
 namespace Http\Controllers\Api\Auth;
 
-use App\Domain\Entities\Image;
 use App\Enums\ImageType;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -39,7 +38,7 @@ class LoginCheckControllerTest extends BaseTest
 
     public function test_index_アバター画像がある場合URLが返却されること(): void
     {
-        $image = Image::factory()->create([
+        $image = $this->createDefaultImage([
             'file_name' => 'avatar.png',
             'type'      => ImageType::User->value,
         ]);

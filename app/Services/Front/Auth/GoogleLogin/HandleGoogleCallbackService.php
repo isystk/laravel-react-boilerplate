@@ -3,7 +3,7 @@
 namespace App\Services\Front\Auth\GoogleLogin;
 
 use App\Domain\Entities\User;
-use App\Domain\Repositories\User\UserRepository;
+use App\Domain\Repositories\User\UserRepositoryInterface;
 use App\Enums\OperationLogType;
 use App\Enums\UserStatus;
 use App\Services\Common\OperationLogService;
@@ -12,7 +12,7 @@ use Illuminate\Support\Carbon;
 class HandleGoogleCallbackService
 {
     public function __construct(
-        private readonly UserRepository $userRepository,
+        private readonly UserRepositoryInterface $userRepository,
         private readonly OperationLogService $operationLogService,
     ) {}
 
@@ -22,6 +22,11 @@ class HandleGoogleCallbackService
     public function findOrCreate(\Laravel\Socialite\Contracts\User $googleUser): User
     {
         $user = $this->userRepository->findByGoogleIdWithTrashed($googleUser->getId());
+
+        if (is_null($user)) {
+            // Google IDで見つからない場合は、メールアドレスで検索
+            $user = $this->userRepository->findByEmailWithTrashed($googleUser->getEmail());
+        }
 
         if (is_null($user)) {
             $user = $this->userRepository->create([

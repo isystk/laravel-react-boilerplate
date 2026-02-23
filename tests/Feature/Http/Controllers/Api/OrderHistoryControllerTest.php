@@ -2,9 +2,6 @@
 
 namespace Tests\Feature\Http\Controllers\Api;
 
-use App\Domain\Entities\Order;
-use App\Domain\Entities\OrderStock;
-use App\Domain\Entities\Stock;
 use App\Domain\Entities\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
@@ -18,7 +15,7 @@ class OrderHistoryControllerTest extends BaseTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->user = User::factory()->create();
+        $this->user = $this->createDefaultUser();
     }
 
     public function test_index_unauthenticated(): void
@@ -31,9 +28,9 @@ class OrderHistoryControllerTest extends BaseTest
     public function test_index_authenticated(): void
     {
         // テストデータ作成
-        $stock = Stock::factory()->create();
-        $order = Order::factory()->create(['user_id' => $this->user->id]);
-        OrderStock::factory()->create([
+        $stock = $this->createDefaultStock();
+        $order = $this->createDefaultOrder(['user_id' => $this->user->id]);
+        $this->createDefaultOrderStock([
             'order_id' => $order->id,
             'stock_id' => $stock->id,
             'price'    => 1000,

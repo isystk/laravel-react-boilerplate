@@ -3,7 +3,7 @@
 namespace App\Services\Api\Profile;
 
 use App\Domain\Entities\User;
-use App\Domain\Repositories\User\UserRepository;
+use App\Domain\Repositories\User\UserRepositoryInterface;
 use App\Dto\Response\Api\Profile\UpdateDto;
 use App\Enums\ImageType;
 use App\Enums\OperationLogType;
@@ -14,7 +14,7 @@ use App\Utils\UploadImage;
 class UpdateService
 {
     public function __construct(
-        private readonly UserRepository $userRepository,
+        private readonly UserRepositoryInterface $userRepository,
         private readonly ImageService $imageService,
         private readonly OperationLogService $operationLogService,
     ) {}

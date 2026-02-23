@@ -15,17 +15,14 @@ use Illuminate\Support\Facades\Mail;
 
 class CheckoutService extends BaseCartService
 {
-    private readonly CartRepositoryInterface $cartRepository;
-
     public function __construct(
-        CartRepositoryInterface $cartRepository,
+        private readonly CartRepositoryInterface $cartRepository,
         private readonly StockRepositoryInterface $stockRepository,
         private readonly OrderRepositoryInterface $orderRepository,
         private readonly OrderStockRepositoryInterface $orderStockRepository,
         private readonly OperationLogService $operationLogService,
     ) {
         parent::__construct($cartRepository);
-        $this->cartRepository = $cartRepository;
     }
 
     /**

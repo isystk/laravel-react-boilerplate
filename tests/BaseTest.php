@@ -47,6 +47,16 @@ abstract class BaseTest extends TestCase
     }
 
     /**
+     * 環境を local にしてアプリケーションを再起動する
+     */
+    protected function refreshApplicationWithLocal(): void
+    {
+        putenv('APP_ENV=local');
+        $_SERVER['APP_ENV'] = 'local';
+        $this->refreshApplication();
+    }
+
+    /**
      * CSVファイルを読み込んで配列データを返却します。
      *
      * @return array<array<string>>

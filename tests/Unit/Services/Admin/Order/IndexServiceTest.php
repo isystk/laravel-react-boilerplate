@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Services\Admin\Order;
 
-use App\Domain\Entities\OrderStock;
 use App\Dto\Request\Admin\Order\SearchConditionDto;
 use App\Services\Admin\Order\IndexService;
 use App\Utils\DateUtil;
@@ -48,7 +47,7 @@ class IndexServiceTest extends BaseTest
         $this->createDefaultOrderStock(['order_id' => $order1->id, 'stock_id' => $stock1->id]);
         $this->createDefaultOrderStock(['order_id' => $order1->id, 'stock_id' => $stock2->id]);
         $order2 = $this->createDefaultOrder(['user_id' => $user2->id, 'created_at' => '2024-06-01']);
-        OrderStock::factory(['order_id' => $order2->id, 'stock_id' => $stock3->id])->create();
+        $this->createDefaultOrderStock(['order_id' => $order2->id, 'stock_id' => $stock3->id]);
 
         $input       = clone $default;
         $input->name = 'user2';
