@@ -132,6 +132,7 @@ class DetailControllerTest extends BaseTest
             $mock->shouldReceive('delete')->andThrow(new Exception('Service Error'));
         });
 
+        $this->withoutExceptionHandling();
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('Service Error');
 

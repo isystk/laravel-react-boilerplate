@@ -181,6 +181,8 @@ class EditControllerTest extends BaseTest
 
     public function test_update_service_error(): void
     {
+        Storage::fake('s3');
+
         $admin = $this->createDefaultAdmin([
             'role' => AdminRole::HighManager,
         ]);
@@ -192,14 +194,20 @@ class EditControllerTest extends BaseTest
             $mock->shouldReceive('update')->andThrow(new Exception('Service Error'));
         });
 
+        $this->withoutExceptionHandling();
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('Service Error');
 
+        $image        = UploadedFile::fake()->image('image2.jpg');
+        $base64String = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($image->path()));
+
         $this->put(route('admin.stock.update', $stock), [
-            'name'     => 'bbb',
-            'detail'   => 'bbbの説明',
-            'price'    => 222,
-            'quantity' => 2,
+            'name'            => 'bbb',
+            'detail'          => 'bbbの説明',
+            'price'           => 222,
+            'quantity'        => 2,
+            'image_file_name' => 'image2.jpg',
+            'image_base_64'   => $base64String,
         ]);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\Controllers\Api\Auth;
+namespace Tests\Feature\Http\Controllers\Api\Auth;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;

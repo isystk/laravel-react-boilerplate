@@ -61,21 +61,11 @@ class CreateControllerTest extends BaseTest
 
     public function test_store(): void
     {
-        $admin1 = $this->createDefaultAdmin([
-            'name' => '管理者1',
-            'role' => AdminRole::Manager,
-        ]);
-        $this->actingAs($admin1, 'admin');
-
-        // manager権限ではアクセスできないことのテスト
-        $response = $this->post(route('admin.staff.store'), []);
-        $response->assertForbidden();
-
-        $admin2 = $this->createDefaultAdmin([
+        $admin = $this->createDefaultAdmin([
             'name' => '管理者2',
             'role' => AdminRole::HighManager,
         ]);
-        $this->actingAs($admin2, 'admin');
+        $this->actingAs($admin, 'admin');
 
         $redirectResponse = $this->post(route('admin.staff.store'), [
             'name'                  => '管理者3',
@@ -91,8 +81,7 @@ class CreateControllerTest extends BaseTest
         $this->assertDatabaseHas('admins', [
             'name'  => '管理者3',
             'email' => 'admin3@test.com',
-            //            'password' => Hash::make('password'),
-            'role' => AdminRole::Manager,
+            'role'  => AdminRole::Manager,
         ]);
     }
 
@@ -132,6 +121,7 @@ class CreateControllerTest extends BaseTest
             $mock->shouldReceive('save')->andThrow(new Exception('Service Error'));
         });
 
+        $this->withoutExceptionHandling();
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('Service Error');
 

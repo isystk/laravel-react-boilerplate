@@ -178,6 +178,7 @@ class DetailControllerTest extends BaseTest
             $mock->shouldReceive('suspend')->andThrow(new Exception('Service Error'));
         });
 
+        $this->withoutExceptionHandling();
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('Service Error');
 
@@ -197,6 +198,7 @@ class DetailControllerTest extends BaseTest
             $mock->shouldReceive('activate')->andThrow(new Exception('Service Error'));
         });
 
+        $this->withoutExceptionHandling();
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('Service Error');
 

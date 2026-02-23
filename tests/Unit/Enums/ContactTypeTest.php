@@ -1,6 +1,6 @@
 <?php
 
-namespace Enums;
+namespace Tests\Unit\Enums;
 
 use App\Enums\ContactType;
 use Tests\BaseTest;

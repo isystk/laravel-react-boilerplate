@@ -147,6 +147,7 @@ class CreateControllerTest extends BaseTest
             $mock->shouldReceive('save')->andThrow(new Exception('Service Error'));
         });
 
+        $this->withoutExceptionHandling();
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('Service Error');
 

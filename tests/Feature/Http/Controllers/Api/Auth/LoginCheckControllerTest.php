@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\Controllers\Api\Auth;
+namespace Tests\Feature\Http\Controllers\Api\Auth;
 
 use App\Enums\ImageType;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\Controllers\Api\Auth;
+namespace Tests\Feature\Http\Controllers\Api\Auth;
 
 use App\Enums\UserStatus;
 use Illuminate\Foundation\Testing\RefreshDatabase;
