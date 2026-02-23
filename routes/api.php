@@ -27,7 +27,7 @@ Route::middleware(['web'])->group(function () {
         Route::post('/email/verification-notification', [\App\Http\Controllers\Api\Auth\EmailVerificationController::class, 'resend'])->name('api.verification.resend');
 
         // ログイン後
-        Route::get('/user', [\App\Http\Controllers\Api\SessionController::class, 'index'])->name('api.login-check');
+        Route::get('/user', [\App\Http\Controllers\Api\Auth\LoginCheckController::class, 'index'])->name('api.login-check');
         Route::post('/mycart', [\App\Http\Controllers\Api\CartController::class, 'mycart'])->name('api.mycart');
         Route::post('/mycart/add', [\App\Http\Controllers\Api\CartController::class, 'addMycart'])->name('api.mycart.add');
         Route::post('/mycart/delete', [\App\Http\Controllers\Api\CartController::class, 'deleteCart'])->name('api.mycart.delete');
@@ -35,5 +35,6 @@ Route::middleware(['web'])->group(function () {
         Route::post('/mycart/checkout', [\App\Http\Controllers\Api\CartController::class, 'checkout'])->name('api.mycart.checkout');
         Route::post('/profile/update', [\App\Http\Controllers\Api\ProfileController::class, 'update'])->name('api.profile.update');
         Route::post('/profile/destroy', [\App\Http\Controllers\Api\ProfileController::class, 'destroy'])->name('api.profile.destroy');
+        Route::get('/order-history', [\App\Http\Controllers\Api\OrderHistoryController::class, 'index'])->name('api.order-history');
     });
 });

@@ -10,6 +10,7 @@ export default class RootState {
   public const: ConstState;
   public cart: CartState;
   public like: LikeState;
+  public orderHistory: { orders: any[] };
 
   constructor() {
     this.isLoading = false;
@@ -18,5 +19,6 @@ export default class RootState {
     this.const = new ConstState();
     this.cart = new CartState();
     this.like = new LikeState();
+    this.orderHistory = { orders: [] }; // Simple state for now
   }
 }

@@ -19,7 +19,17 @@ class LikeController extends BaseApiController
             $configCookieKey = config('const.cookie.like.key');
             $stringStockIds  = CookieUtil::get($configCookieKey);
             $stockIds        = array_map(intval(...), $stringStockIds);
-            $result          = new SearchResultDto($stockIds);
+
+            $stocks = [];
+            if (!empty($stockIds)) {
+                $stockRepository = app(\App\Domain\Repositories\Stock\StockRepositoryInterface::class);
+                $stockEntities   = $stockRepository->getByIds($stockIds);
+                foreach ($stockEntities as $stock) {
+                    $stocks[] = new \App\Dto\Response\Api\Stock\StockDto($stock);
+                }
+            }
+
+            $result = new SearchResultDto($stockIds, $stocks);
         } catch (Throwable $e) {
             return $this->getErrorJsonResponse($e);
         }

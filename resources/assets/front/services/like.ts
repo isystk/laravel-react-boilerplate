@@ -16,8 +16,9 @@ export default class LikeService {
     this.main.showLoading();
     try {
       const response = await fetch(Api.LIKE);
-      const { stockIds } = await response.json();
+      const { stockIds, stocks } = await response.json();
       this.like.stockIds = stockIds;
+      this.like.stocks = stocks;
     } catch (e) {
       this.main.showToastMessage(i18n.t('error:service.likeFetchFailed'));
     }
@@ -39,7 +40,6 @@ export default class LikeService {
       });
       const { result } = await response.json();
       if (result) {
-        this.main.showToastMessage(i18n.t('error:service.likeAdded'));
         this.like.stockIds = [id, ...this.like.stockIds];
       }
     } catch (e) {

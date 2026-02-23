@@ -8,6 +8,7 @@
   "cartItem.removeFromCart": "Remove from Cart",
   "cartItem.confirmDelete": "Are you sure you want to remove this item?",
   "stock.like": "Like",
+  "stock.delete": "Delete",
   "stock.addToCart": "Add to Cart ({{quantity}} left)",
   "payment.title": "Payment Information",
   "payment.amount": "Amount",

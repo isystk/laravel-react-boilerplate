@@ -39,9 +39,9 @@ class UpdateService
             $model['avatar_image_id'] = $image->id;
         }
 
-        $this->userRepository->update($model, $user->id);
+        $user = $this->userRepository->update($model, $user->id);
 
-        $avatarUrl = $image?->getImageUrl() ?? $user->avatar_url;
+        $avatarUrl = $user->avatarImage?->getImageUrl() ?? $user->avatar_url;
 
         $this->operationLogService->logUserAction(
             $user->id,

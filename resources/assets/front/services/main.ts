@@ -5,6 +5,7 @@ import LikeService from '@/services/like';
 import CartService from '@/services/cart';
 import ContactService from '@/services/contact';
 import ProfileService from '@/services/profile';
+import OrderHistoryService from '@/services/orderHistory';
 import RootState from '@/states/root';
 
 export default class MainService {
@@ -17,6 +18,7 @@ export default class MainService {
   public like: LikeService;
   public contact: ContactService;
   public profile: ProfileService;
+  public orderHistory: OrderHistoryService;
 
   constructor(root: RootState, setRootState: (root: RootState) => void) {
     this.root = root;
@@ -28,6 +30,7 @@ export default class MainService {
     this.like = new LikeService(this);
     this.contact = new ContactService(this);
     this.profile = new ProfileService(this);
+    this.orderHistory = new OrderHistoryService(this);
   }
 
   public setRootState() {

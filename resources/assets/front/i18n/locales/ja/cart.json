@@ -8,6 +8,7 @@
   "cartItem.removeFromCart": "カートから削除する",
   "cartItem.confirmDelete": "削除します。よろしいですか？",
   "stock.like": "気になる",
+  "stock.delete": "削除",
   "stock.addToCart": "カートに入れる（残り{{quantity}}個）",
   "payment.title": "決済情報の入力",
   "payment.amount": "金額",

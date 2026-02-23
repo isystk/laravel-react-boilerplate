@@ -2,11 +2,9 @@ import styles from './styles.module.scss';
 import Logo from '@/components/atoms/Logo';
 import { Link, useNavigate } from 'react-router-dom';
 import { Url } from '@/constants/url';
-import Image from '@/components/atoms/Image';
 import DropDown from '@/components/atoms/DropDown';
 import SideMenu from '@/components/organisms/SideMenu';
 import useAppRoot from '@/states/useAppRoot';
-import cartImage from '@/assets/images/cart.png';
 import Avatar from '@/components/atoms/Avatar';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
@@ -51,6 +49,10 @@ const Header = () => {
                       label={userLabel}
                       items={[
                         {
+                          text: t('nav.myPage'),
+                          onClick: () => navigate(Url.HOME),
+                        },
+                        {
                           text: t('nav.viewCart'),
                           onClick: () => navigate(Url.MYCART),
                         },
@@ -85,11 +87,6 @@ const Header = () => {
                 );
               }
             })()}
-            <li>
-              <Link to={Url.MYCART}>
-                <Image src={cartImage as string} width={30} height={30} alt={t('nav.cartAlt')} />
-              </Link>
-            </li>
           </ul>
         </div>
         {/* サイドメニュー */}
@@ -97,18 +94,20 @@ const Header = () => {
           label={isLogined ? userLabel : ''}
           items={(() => {
             const items: Array<{ text: string; onClick?: () => void }> = [];
-            items.push(
-              {
-                text: t('nav.viewCart'),
-                onClick: () => navigate(Url.MYCART),
-              },
-              {
-                text: t('nav.contact'),
-                onClick: () => navigate(Url.CONTACT),
-              },
-            );
             if (isLogined) {
               items.push(
+                {
+                  text: t('nav.myPage'),
+                  onClick: () => navigate(Url.HOME),
+                },
+                {
+                  text: t('nav.viewCart'),
+                  onClick: () => navigate(Url.MYCART),
+                },
+                {
+                  text: t('nav.contact'),
+                  onClick: () => navigate(Url.CONTACT),
+                },
                 {
                   text: t('nav.editProfile'),
                   onClick: () => navigate(Url.PROFILE),

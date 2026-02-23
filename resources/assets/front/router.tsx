@@ -44,12 +44,15 @@ const Router = ({ user }: Props) => {
       <Route path={Url.PASSWORD_RESET} element={<EMailForm />} />
       <Route path={`${Url.PASSWORD_RESET}/:token`} element={<ResetForm />} />
       <Route path={Url.EMAIL_VERIFY} element={<Verify />} />
-      <Route path={Url.CONTACT_COMPLETE} element={<ContactComplete />} />
 
       {/* ★ログインユーザー専用ここから */}
       <Route path={Url.HOME} element={<AuthCheck user={user} component={<Home />} />} />
       <Route path={Url.PROFILE} element={<AuthCheck user={user} component={<ProfilePage />} />} />
-      <Route path={Url.CONTACT} element={<ContactCreate />} />
+      <Route path={Url.CONTACT} element={<AuthCheck user={user} component={<ContactCreate />} />} />
+      <Route
+        path={Url.CONTACT_COMPLETE}
+        element={<AuthCheck user={user} component={<ContactComplete />} />}
+      />
       <Route path={Url.MYCART} element={<AuthCheck user={user} component={<MyCart />} />} />
       <Route
         path={Url.PAY_COMPLETE}
