@@ -3,6 +3,8 @@
 namespace Tests\Feature\Http\Controllers\Admin\Staff;
 
 use App\Enums\AdminRole;
+use App\Services\Admin\Staff\CreateService;
+use Exception;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
@@ -117,5 +119,28 @@ class CreateControllerTest extends BaseTest
 
         $this->post(route('admin.staff.store'))
             ->assertRedirect(route('login'));
+    }
+
+    public function test_store_service_error(): void
+    {
+        $admin = $this->createDefaultAdmin([
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $this->mock(CreateService::class, function ($mock) {
+            $mock->shouldReceive('save')->andThrow(new Exception('Service Error'));
+        });
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Service Error');
+
+        $this->post(route('admin.staff.store'), [
+            'name'                  => '管理者3',
+            'email'                 => 'admin3@test.com',
+            'password'              => 'password',
+            'password_confirmation' => 'password',
+            'role'                  => AdminRole::Manager->value,
+        ]);
     }
 }

@@ -3,6 +3,8 @@
 namespace Tests\Feature\Http\Controllers\Api;
 
 use App\Domain\Entities\User;
+use App\Services\Api\OrderHistory\IndexService;
+use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
 
@@ -60,5 +62,20 @@ class OrderHistoryControllerTest extends BaseTest
 
         $this->assertCount(1, $response->json('orders'));
         $this->assertEquals($order->id, $response->json('orders.0.id'));
+    }
+
+    public function test_index_error(): void
+    {
+        $this->mock(IndexService::class, function ($mock) {
+            $mock->shouldReceive('getOrderHistory')->andThrow(new Exception('History error'));
+        });
+
+        $response = $this->actingAs($this->user)->getJson(route('api.order-history'));
+
+        $response->assertStatus(500);
+        $response->assertJson([
+            'result' => false,
+            'error'  => ['messages' => ['History error']],
+        ]);
     }
 }

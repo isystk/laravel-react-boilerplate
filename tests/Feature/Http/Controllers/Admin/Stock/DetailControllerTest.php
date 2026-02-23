@@ -3,6 +3,8 @@
 namespace Tests\Feature\Http\Controllers\Admin\Stock;
 
 use App\Enums\AdminRole;
+use App\Services\Admin\Stock\DestroyService;
+use Exception;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
@@ -121,5 +123,24 @@ class DetailControllerTest extends BaseTest
 
         $this->delete(route('admin.stock.destroy', $stock))
             ->assertRedirect(route('login'));
+    }
+
+    public function test_destroy_service_error(): void
+    {
+        $admin = $this->createDefaultAdmin([
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $stock = $this->createDefaultStock();
+
+        $this->mock(DestroyService::class, function ($mock) {
+            $mock->shouldReceive('delete')->andThrow(new Exception('Service Error'));
+        });
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Service Error');
+
+        $this->delete(route('admin.stock.destroy', $stock));
     }
 }

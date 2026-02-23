@@ -79,4 +79,17 @@ class FrontEmailVerificationTest extends BaseTest
 
         $response->assertRedirect(config('app.url') . '/home?verified=1');
     }
+
+    public function test_verify_failure_user_not_found(): void
+    {
+        $url = URL::temporarySignedRoute(
+            'verification.verify',
+            now()->addMinutes(60),
+            ['id' => 99999, 'hash' => 'some-hash']
+        );
+
+        $response = $this->get($url);
+
+        $response->assertStatus(403);
+    }
 }

@@ -4,6 +4,8 @@ namespace Tests\Feature\Http\Controllers\Admin\Stock;
 
 use App\Domain\Entities\Stock;
 use App\Enums\AdminRole;
+use App\Services\Admin\Stock\CreateService;
+use Exception;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -132,5 +134,32 @@ class CreateControllerTest extends BaseTest
 
         $this->post(route('admin.stock.store'))
             ->assertRedirect(route('login'));
+    }
+
+    public function test_store_service_error(): void
+    {
+        $admin = $this->createDefaultAdmin([
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $this->mock(CreateService::class, function ($mock) {
+            $mock->shouldReceive('save')->andThrow(new Exception('Service Error'));
+        });
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Service Error');
+
+        $image1       = UploadedFile::fake()->image('image1.jpg');
+        $base64String = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($image1->path()));
+
+        $this->post(route('admin.stock.store'), [
+            'name'            => 'aaa',
+            'detail'          => 'aaaの説明',
+            'price'           => 111,
+            'quantity'        => 1,
+            'image_file_name' => 'image1.jpg',
+            'image_base_64'   => $base64String,
+        ]);
     }
 }

@@ -33,4 +33,16 @@ class UploadImageTest extends BaseTest
         $this->assertInstanceOf(UploadedFile::class, $result);
         $this->assertSame('image/jpeg', $result->getMimeType());
     }
+
+    public function test_convertBase64_invalid_data(): void
+    {
+        // 全く無効なデータ
+        $invalidData = 'invalid-base64-data-that-is-not-an-image';
+
+        $result = UploadImage::convertBase64($invalidData);
+
+        $this->assertInstanceOf(UploadedFile::class, $result);
+        // 無効なデータの場合、mime_content_type は text/plain や application/octet-stream を返す可能性がある
+        $this->assertNotSame('image/jpeg', $result->getMimeType());
+    }
 }

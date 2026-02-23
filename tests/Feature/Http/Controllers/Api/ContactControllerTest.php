@@ -4,6 +4,8 @@ namespace Tests\Feature\Http\Controllers\Api;
 
 use App\Domain\Entities\Contact;
 use App\Enums\ContactType;
+use App\Services\Api\Contact\StoreService;
+use Exception;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -79,5 +81,28 @@ class ContactControllerTest extends BaseTest
         $this->assertSame('タイトル1', $contact->title);
         $this->assertSame(ContactType::Service, $contact->type);
         $this->assertSame('お問い合わせ1', $contact->message);
+    }
+
+    public function test_store_error(): void
+    {
+        $user = $this->createDefaultUser();
+        $this->actingAs($user);
+
+        $this->mock(StoreService::class, function ($mock) {
+            $mock->shouldReceive('save')->andThrow(new Exception('Store error'));
+        });
+
+        $response = $this->postJson(route('api.contact.store'), [
+            'title'   => 'タイトル1',
+            'type'    => ContactType::Service->value,
+            'message' => 'お問い合わせ1',
+            'caution' => 1,
+        ]);
+
+        $response->assertStatus(500);
+        $response->assertJson([
+            'result' => false,
+            'error'  => ['messages' => ['Store error']],
+        ]);
     }
 }
