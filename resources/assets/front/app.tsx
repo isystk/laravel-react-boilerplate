@@ -7,6 +7,9 @@ import '@/assets/styles/app.scss';
 import '@/i18n';
 import { Api } from '@/constants/api';
 
+axios.defaults.withCredentials = true;
+axios.defaults.withXSRFToken = true;
+
 const render = (user: User) => {
   const container = document.getElementById('react-root');
   if (!container) {
@@ -22,9 +25,11 @@ const render = (user: User) => {
 };
 
 const init = async () => {
-  const params = new URLSearchParams();
+  // Sanctum CSRF クッキーを取得
+  await axios.get('/sanctum/csrf-cookie').catch(() => {});
+
   try {
-    const { data: user } = await axios.post(Api.LOGIN_CHECK, params);
+    const { data: user } = await axios.get(Api.LOGIN_CHECK);
     render(user);
   } catch (e) {
     render({} as User);

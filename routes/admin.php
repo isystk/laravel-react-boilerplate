@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::prefix('admin')->group(function () {
     Route::get('/', [\App\Http\Controllers\Admin\IndexController::class, 'index'])->name('admin');
-    Route::get('login', [\App\Http\Controllers\Admin\LoginController::class, 'index'])->name('admin.login');
+    Route::get('login', [\App\Http\Controllers\Admin\LoginController::class, 'index'])->name('login');
     Route::post('login', [\App\Http\Controllers\Admin\LoginController::class, 'login'])->name('admin.login');
 
     // ログイン後

@@ -12,7 +12,7 @@ class AuthHelper
      */
     public static function frontLoginedUser(): ?User
     {
-        return Auth::user() ?? Auth::guard('api')->user();
+        return Auth::user();
     }
 
     /**
@@ -21,6 +21,5 @@ class AuthHelper
     public static function frontLogout(): void
     {
         Auth::logout();
-        Auth::guard('api')->logout();
     }
 }

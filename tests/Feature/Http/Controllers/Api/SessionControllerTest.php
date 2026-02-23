@@ -26,7 +26,7 @@ class SessionControllerTest extends BaseTest
         ]);
         $this->actingAs($user);
 
-        $response = $this->postJson(route('api.session'));
+        $response = $this->getJson(route('api.login-check'));
 
         $response->assertOk();
         $response->assertJson([
@@ -51,7 +51,7 @@ class SessionControllerTest extends BaseTest
         ]);
         $this->actingAs($user);
 
-        $response = $this->postJson(route('api.session'));
+        $response = $this->getJson(route('api.login-check'));
 
         $response->assertOk();
         $response->assertJson([
@@ -70,7 +70,7 @@ class SessionControllerTest extends BaseTest
         ]);
         $this->actingAs($user);
 
-        $response = $this->postJson(route('api.session'));
+        $response = $this->getJson(route('api.login-check'));
 
         $response->assertOk();
         $response->assertJson([
@@ -82,7 +82,7 @@ class SessionControllerTest extends BaseTest
 
     public function test_index_未認証の場合は401が返却されること(): void
     {
-        $response = $this->postJson(route('api.session'));
+        $response = $this->getJson(route('api.login-check'));
 
         $response->assertStatus(401);
     }

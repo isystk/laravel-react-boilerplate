@@ -6,10 +6,11 @@ import Image from '@/components/atoms/Image';
 import DropDown from '@/components/atoms/DropDown';
 import SideMenu from '@/components/organisms/SideMenu';
 import useAppRoot from '@/states/useAppRoot';
-import CSRFToken from '@/components/atoms/CSRFToken';
 import cartImage from '@/assets/images/cart.png';
 import Avatar from '@/components/atoms/Avatar';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
+import { Api } from '@/constants/api';
 
 const Header = () => {
   const { state } = useAppRoot();
@@ -26,10 +27,12 @@ const Header = () => {
     </div>
   );
 
-  const handleLogout = () => {
-    const element: HTMLFormElement = document.getElementById('logout-form') as HTMLFormElement;
-    if (element) {
-      element.submit();
+  const handleLogout = async () => {
+    try {
+      await axios.post(Api.LOGOUT);
+      window.location.href = Url.TOP;
+    } catch (error) {
+      console.error('Logout failed', error);
     }
   };
 
@@ -131,9 +134,6 @@ const Header = () => {
           })()}
         />
       </nav>
-      <form id="logout-form" action={Url.LOGOUT} method="POST">
-        <CSRFToken />
-      </form>
     </header>
   );
 };

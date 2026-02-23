@@ -23,25 +23,8 @@ class AuthHelperTest extends BaseTest
         $this->assertSame($user->id, $result->id);
     }
 
-    public function test_frontLoginedUser_APIガードでログインしている場合にユーザーを返すこと(): void
+    public function test_frontLoginedUser_ログインしていない場合はnullを返すこと(): void
     {
-        $user = $this->createDefaultUser();
-
-        // デフォルトは未ログイン、APIガードのみログイン状態を作る
-        Auth::shouldReceive('user')->once()->andReturn(null);
-        Auth::shouldReceive('guard')->with('api')->once()->andReturnSelf();
-        Auth::shouldReceive('user')->once()->andReturn($user);
-
-        $result = AuthHelper::frontLoginedUser();
-
-        $this->assertSame($user, $result);
-    }
-
-    public function test_frontLoginedUser_どちらもログインしていない場合はnullを返すこと(): void
-    {
-        // 全てのガードでログインしていない状態
-        Auth::shouldReceive('user')->once()->andReturn(null);
-        Auth::shouldReceive('guard')->with('api')->once()->andReturnSelf();
         Auth::shouldReceive('user')->once()->andReturn(null);
 
         $result = AuthHelper::frontLoginedUser();
@@ -49,11 +32,8 @@ class AuthHelperTest extends BaseTest
         $this->assertNull($result);
     }
 
-    public function test_frontLogout_全てのガードでログアウトが呼ばれること(): void
+    public function test_frontLogout_ログアウトが呼ばれること(): void
     {
-        // ログアウトメソッドがそれぞれのガードで呼ばれることを検証
-        Auth::shouldReceive('logout')->once();
-        Auth::shouldReceive('guard')->with('api')->once()->andReturnSelf();
         Auth::shouldReceive('logout')->once();
 
         AuthHelper::frontLogout();

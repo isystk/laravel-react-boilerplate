@@ -3,10 +3,16 @@
 namespace App\Providers;
 
 use App\Domain\Entities\Order;
+use App\Listeners\LogUserLogoutListener;
 use App\Observers\OrderObserver;
+use Illuminate\Auth\Events\Logout;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -25,6 +31,16 @@ class AppServiceProvider extends ServiceProvider
     {
         // ページネーションでBootstrapを利用する
         Paginator::useBootstrap();
+
+        // ログインのレートリミット設定
+        RateLimiter::for('login', static function (Request $request) {
+            $email = (string) $request->email;
+
+            return Limit::perMinute(5)->by($email . $request->ip());
+        });
+
+        // Event Listener
+        Event::listen(Logout::class, LogUserLogoutListener::class);
 
         // ルートのURLを強制する
         URL::forceRootUrl(Config::get('app.url'));

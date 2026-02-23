@@ -9,15 +9,13 @@
         "php": "^8.2",
         "barryvdh/laravel-dompdf": "^3.1",
         "davejamesmiller/laravel-breadcrumbs": "^5.3",
-        "laravel/fortify": "^1.25",
         "laravel/framework": "^12.0",
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.19",
         "laravel/tinker": "^2.10.1",
         "league/flysystem-aws-s3-v3": "^3.29",
         "maatwebsite/excel": "^3.1",
-        "stripe/stripe-php": "^17.1",
-        "tymon/jwt-auth": "^2.2"
+        "stripe/stripe-php": "^17.1"
     },
     "require-dev": {
         "driftingly/rector-laravel": "^2.1",

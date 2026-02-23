@@ -3,14 +3,11 @@
 namespace App\Http\Requests\Admin\User;
 
 use App\Domain\Entities\User;
-use App\Http\Controllers\Front\Auth\PasswordValidationRules;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
-    use PasswordValidationRules;
-
     /**
      * @return array<string, mixed>
      */
