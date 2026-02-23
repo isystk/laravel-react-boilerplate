@@ -7,6 +7,7 @@ use App\Domain\Entities\Image;
 class DisplayDto
 {
     public function __construct(
+        /** @var Image&object{used_by_stock_id: int|null, used_by_contact_id: int|null, used_by_user_id: int|null} $image */
         public readonly Image $image,
     ) {}
 
@@ -15,7 +16,6 @@ class DisplayDto
      */
     public function isUsed(): bool
     {
-        /** @var Image&object{used_by_stock_id: int|null, used_by_contact_id: int|null, used_by_user_id: int|null} $image */
         $image = $this->image;
 
         return $image->used_by_stock_id || $image->used_by_contact_id || $image->used_by_user_id;
@@ -26,7 +26,6 @@ class DisplayDto
      */
     public function getUsedUrl(): ?string
     {
-        /** @var Image&object{used_by_stock_id: int|null, used_by_contact_id: int|null, used_by_user_id: int|null} $image */
         $image   = $this->image;
         $usedUrl = null;
 

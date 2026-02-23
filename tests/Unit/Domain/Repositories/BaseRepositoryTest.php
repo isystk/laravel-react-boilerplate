@@ -89,7 +89,9 @@ class BaseRepositoryTest extends BaseTest
 
     public function test_getAll_全件取得できること(): void
     {
-        User::factory()->count(3)->create();
+        $this->createDefaultUser();
+        $this->createDefaultUser();
+        $this->createDefaultUser();
 
         $results = $this->repository->getAll();
 

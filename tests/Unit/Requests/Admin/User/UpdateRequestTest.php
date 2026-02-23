@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Requests\Admin\User;
 
-use App\Domain\Entities\User;
 use App\Http\Requests\Admin\User\UpdateRequest;
 use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -49,8 +48,8 @@ class UpdateRequestTest extends BaseTest
     {
         // ユーザIDが指定されている場合は、テストデータを投入し、ルートパラメータに設定する
         if ($userId) {
-            User::factory()->create(['id' => 1, 'email' => 'user1@test.com']);
-            User::factory()->create(['id' => 2, 'email' => 'already@test.com']);
+            $this->createDefaultUser(['id' => 1, 'email' => 'user1@test.com']);
+            $this->createDefaultUser(['id' => 2, 'email' => 'already@test.com']);
 
             $route = $this->createMock(Route::class);
             $route->method('parameter')->with('user')->willReturn($userId);

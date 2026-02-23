@@ -78,6 +78,15 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     /**
      * {@inheritDoc}
      */
+    public function findByEmailWithTrashed(string $email): ?User
+    {
+        /** @var ?User */
+        return User::withTrashed()->where('email', $email)->first();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function countByMonth(int $months = 12): Collection
     {
         $from = Carbon::now()->startOfMonth()->subMonths($months - 1);

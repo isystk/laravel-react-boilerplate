@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Http\Controllers\Api;
 
+use App\Services\Api\Stock\IndexService;
+use Exception;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
@@ -35,6 +37,21 @@ class StockControllerTest extends BaseTest
             $stock4->id,
             $stock3->id,
             $stock2->id,
+        ]);
+    }
+
+    public function test_index_error(): void
+    {
+        $this->mock(IndexService::class, function ($mock) {
+            $mock->shouldReceive('searchStock')->andThrow(new Exception('Stock error'));
+        });
+
+        $response = $this->getJson(route('api.stock'));
+
+        $response->assertStatus(500);
+        $response->assertJson([
+            'result' => false,
+            'error'  => ['messages' => ['Stock error']],
         ]);
     }
 }

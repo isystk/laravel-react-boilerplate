@@ -3,6 +3,9 @@
 namespace Tests\Feature\Http\Controllers\Api;
 
 use App\Domain\Entities\Image;
+use App\Services\Api\Profile\DestroyService;
+use App\Services\Api\Profile\UpdateService;
+use Exception;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
@@ -93,5 +96,43 @@ class ProfileControllerTest extends BaseTest
         $response->assertJson(['result' => true]);
 
         $this->assertSoftDeleted('users', ['id' => $user->id]);
+    }
+
+    public function test_update_error(): void
+    {
+        $user = $this->createDefaultUser();
+        $this->actingAs($user);
+
+        $this->mock(UpdateService::class, function ($mock) {
+            $mock->shouldReceive('update')->andThrow(new Exception('Update error'));
+        });
+
+        $response = $this->postJson(route('api.profile.update'), [
+            'name' => 'テスト',
+        ]);
+
+        $response->assertStatus(500);
+        $response->assertJson([
+            'result' => false,
+            'error'  => ['messages' => ['Update error']],
+        ]);
+    }
+
+    public function test_destroy_error(): void
+    {
+        $user = $this->createDefaultUser();
+        $this->actingAs($user);
+
+        $this->mock(DestroyService::class, function ($mock) {
+            $mock->shouldReceive('destroy')->andThrow(new Exception('Destroy error'));
+        });
+
+        $response = $this->postJson(route('api.profile.destroy'));
+
+        $response->assertStatus(500);
+        $response->assertJson([
+            'result' => false,
+            'error'  => ['messages' => ['Destroy error']],
+        ]);
     }
 }

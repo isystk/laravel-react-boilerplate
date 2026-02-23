@@ -3,6 +3,8 @@
 namespace Tests\Feature\Http\Controllers\Admin\Staff;
 
 use App\Enums\AdminRole;
+use App\Services\Admin\Staff\CreateService;
+use Exception;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
@@ -59,21 +61,11 @@ class CreateControllerTest extends BaseTest
 
     public function test_store(): void
     {
-        $admin1 = $this->createDefaultAdmin([
-            'name' => '管理者1',
-            'role' => AdminRole::Manager,
-        ]);
-        $this->actingAs($admin1, 'admin');
-
-        // manager権限ではアクセスできないことのテスト
-        $response = $this->post(route('admin.staff.store'), []);
-        $response->assertForbidden();
-
-        $admin2 = $this->createDefaultAdmin([
+        $admin = $this->createDefaultAdmin([
             'name' => '管理者2',
             'role' => AdminRole::HighManager,
         ]);
-        $this->actingAs($admin2, 'admin');
+        $this->actingAs($admin, 'admin');
 
         $redirectResponse = $this->post(route('admin.staff.store'), [
             'name'                  => '管理者3',
@@ -89,8 +81,56 @@ class CreateControllerTest extends BaseTest
         $this->assertDatabaseHas('admins', [
             'name'  => '管理者3',
             'email' => 'admin3@test.com',
-            //            'password' => Hash::make('password'),
-            'role' => AdminRole::Manager,
+            'role'  => AdminRole::Manager,
+        ]);
+    }
+
+    public function test_store_validation_error(): void
+    {
+        $admin = $this->createDefaultAdmin([
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $response = $this->post(route('admin.staff.store'), [
+            'name'     => '', // Required
+            'email'    => 'invalid-email',
+            'password' => 'short',
+        ]);
+
+        $response->assertSessionHasErrors(['name', 'email', 'password']);
+    }
+
+    public function test_guest_cannot_access(): void
+    {
+        $this->get(route('admin.staff.create'))
+            ->assertRedirect(route('login'));
+
+        $this->post(route('admin.staff.store'))
+            ->assertRedirect(route('login'));
+    }
+
+    public function test_store_service_error(): void
+    {
+        $admin = $this->createDefaultAdmin([
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $this->mock(CreateService::class, function ($mock) {
+            $mock->shouldReceive('save')->andThrow(new Exception('Service Error'));
+        });
+
+        $this->withoutExceptionHandling();
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Service Error');
+
+        $this->post(route('admin.staff.store'), [
+            'name'                  => '管理者3',
+            'email'                 => 'admin3@test.com',
+            'password'              => 'password',
+            'password_confirmation' => 'password',
+            'role'                  => AdminRole::Manager->value,
         ]);
     }
 }

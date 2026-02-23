@@ -3,7 +3,7 @@
 namespace App\Services\Admin\Photo;
 
 use App\Domain\Entities\Image;
-use App\Domain\Repositories\Image\ImageRepository;
+use App\Domain\Repositories\Image\ImageRepositoryInterface;
 use App\Dto\Request\Admin\Photo\SearchConditionDto;
 use App\Dto\View\Admin\Photo\DisplayDto;
 use App\Services\BaseService;
@@ -11,7 +11,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class IndexService extends BaseService
 {
-    public function __construct(private readonly ImageRepository $imageRepository) {}
+    public function __construct(private readonly ImageRepositoryInterface $imageRepository) {}
 
     /**
      * 画像を検索します。

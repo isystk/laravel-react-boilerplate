@@ -3,6 +3,8 @@
 namespace Tests\Feature\Http\Controllers\Admin\Staff;
 
 use App\Enums\AdminRole;
+use App\Services\Admin\Staff\UpdateService;
+use Exception;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
@@ -93,6 +95,83 @@ class EditControllerTest extends BaseTest
             'name'  => '管理者A',
             'email' => 'adminA@test.com',
             'role'  => AdminRole::HighManager,
+        ]);
+    }
+
+    public function test_edit_not_found(): void
+    {
+        $admin = $this->createDefaultAdmin([
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $this->get(route('admin.staff.edit', ['staff' => 999]))
+            ->assertNotFound();
+    }
+
+    public function test_update_not_found(): void
+    {
+        $admin = $this->createDefaultAdmin([
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $this->put(route('admin.staff.update', ['staff' => 999]), [
+            'name'  => '管理者A',
+            'email' => 'adminA@test.com',
+            'role'  => AdminRole::HighManager->value,
+        ])->assertNotFound();
+    }
+
+    public function test_update_validation_error(): void
+    {
+        $admin = $this->createDefaultAdmin([
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $staff = $this->createDefaultAdmin();
+
+        $response = $this->put(route('admin.staff.update', $staff), [
+            'name'  => '',
+            'email' => 'invalid-email',
+        ]);
+
+        $response->assertSessionHasErrors(['name', 'email']);
+    }
+
+    public function test_guest_cannot_access(): void
+    {
+        $staff = $this->createDefaultAdmin();
+
+        $this->get(route('admin.staff.edit', $staff))
+            ->assertRedirect(route('login'));
+
+        $this->put(route('admin.staff.update', $staff))
+            ->assertRedirect(route('login'));
+    }
+
+    public function test_update_service_error(): void
+    {
+        $admin = $this->createDefaultAdmin([
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $staff = $this->createDefaultAdmin();
+
+        $this->mock(UpdateService::class, function ($mock) {
+            $mock->shouldReceive('update')->andThrow(new Exception('Service Error'));
+        });
+
+        $this->withoutExceptionHandling();
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Service Error');
+
+        $this->put(route('admin.staff.update', $staff), [
+            'name'  => '管理者A',
+            'email' => 'adminA@test.com',
+            'role'  => AdminRole::HighManager->value,
         ]);
     }
 }

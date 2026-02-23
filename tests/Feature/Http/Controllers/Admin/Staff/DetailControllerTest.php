@@ -3,6 +3,8 @@
 namespace Tests\Feature\Http\Controllers\Admin\Staff;
 
 use App\Enums\AdminRole;
+use App\Services\Admin\Staff\DestroyService;
+use Exception;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
@@ -82,5 +84,58 @@ class DetailControllerTest extends BaseTest
 
         // データが削除されたことをテスト
         $this->assertDatabaseMissing('admins', ['id' => $admin1->id]);
+    }
+
+    public function test_show_not_found(): void
+    {
+        $admin = $this->createDefaultAdmin([
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $this->get(route('admin.staff.show', ['staff' => 999]))
+            ->assertNotFound();
+    }
+
+    public function test_destroy_not_found(): void
+    {
+        $admin = $this->createDefaultAdmin([
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $this->delete(route('admin.staff.destroy', ['staff' => 999]))
+            ->assertNotFound();
+    }
+
+    public function test_guest_cannot_access(): void
+    {
+        $staff = $this->createDefaultAdmin();
+
+        $this->get(route('admin.staff.show', $staff))
+            ->assertRedirect(route('login'));
+
+        $this->delete(route('admin.staff.destroy', $staff))
+            ->assertRedirect(route('login'));
+    }
+
+    public function test_destroy_service_error(): void
+    {
+        $admin = $this->createDefaultAdmin([
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $staff = $this->createDefaultAdmin();
+
+        $this->mock(DestroyService::class, function ($mock) {
+            $mock->shouldReceive('delete')->andThrow(new Exception('Service Error'));
+        });
+
+        $this->withoutExceptionHandling();
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Service Error');
+
+        $this->delete(route('admin.staff.destroy', $staff));
     }
 }

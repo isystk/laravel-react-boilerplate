@@ -50,4 +50,40 @@ class ListControllerTest extends BaseTest
                 ->assertStatus($case['status']);
         }
     }
+
+    public function test_export(): void
+    {
+        $admin = $this->createDefaultAdmin();
+        $this->actingAs($admin, 'admin');
+
+        $this->get(route('admin.stock.export', ['file_type' => 'csv']))
+            ->assertSuccessful()
+            ->assertHeader('content-disposition', 'attachment; filename=stocks.csv');
+
+        $this->get(route('admin.stock.export', ['file_type' => 'xlsx']))
+            ->assertSuccessful()
+            ->assertHeader('content-disposition', 'attachment; filename=stocks.xlsx');
+
+        $this->get(route('admin.stock.export', ['file_type' => 'pdf']))
+            ->assertSuccessful()
+            ->assertHeader('content-disposition', 'attachment; filename=stocks.pdf');
+    }
+
+    public function test_export_invalid_type(): void
+    {
+        $admin = $this->createDefaultAdmin();
+        $this->actingAs($admin, 'admin');
+
+        $this->get(route('admin.stock.export', ['file_type' => 'invalid']))
+            ->assertStatus(400);
+    }
+
+    public function test_guest_cannot_access(): void
+    {
+        $this->get(route('admin.stock'))
+            ->assertRedirect(route('login'));
+
+        $this->get(route('admin.stock.export', ['file_type' => 'csv']))
+            ->assertRedirect(route('login'));
+    }
 }

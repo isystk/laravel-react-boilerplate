@@ -2,6 +2,10 @@
 
 namespace Tests\Feature\Http\Controllers\Api;
 
+use App\Services\Api\Cart\AddCartService;
+use App\Services\Api\Cart\DeleteCartService;
+use App\Services\Api\Cart\MyCartService;
+use Exception;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
@@ -97,5 +101,56 @@ class CartControllerTest extends BaseTest
         $response = $this->post(route('api.mycart.delete'), ['cart_id' => $cart2->id]);
         $response->assertSuccessful();
         $this->assertDatabaseCount('carts', 0);
+    }
+
+    public function test_my_cart_error(): void
+    {
+        $user = $this->createDefaultUser();
+        $this->actingAs($user);
+
+        $this->mock(MyCartService::class, function ($mock) {
+            $mock->shouldReceive('getMyCart')->andThrow(new Exception('Error message'));
+        });
+
+        $response = $this->postJson(route('api.mycart'));
+        $response->assertStatus(500);
+        $response->assertJson([
+            'result' => false,
+            'error'  => ['messages' => ['Error message']],
+        ]);
+    }
+
+    public function test_add_cart_error(): void
+    {
+        $user = $this->createDefaultUser();
+        $this->actingAs($user);
+
+        $this->mock(AddCartService::class, function ($mock) {
+            $mock->shouldReceive('addMyCart')->andThrow(new Exception('Add error'));
+        });
+
+        $response = $this->postJson(route('api.mycart.add'), ['stock_id' => 1]);
+        $response->assertStatus(500);
+        $response->assertJson([
+            'result' => false,
+            'error'  => ['messages' => ['Add error']],
+        ]);
+    }
+
+    public function test_delete_cart_error(): void
+    {
+        $user = $this->createDefaultUser();
+        $this->actingAs($user);
+
+        $this->mock(DeleteCartService::class, function ($mock) {
+            $mock->shouldReceive('deleteMyCart')->andThrow(new Exception('Delete error'));
+        });
+
+        $response = $this->postJson(route('api.mycart.delete'), ['cart_id' => 1]);
+        $response->assertStatus(500);
+        $response->assertJson([
+            'result' => false,
+            'error'  => ['messages' => ['Delete error']],
+        ]);
     }
 }

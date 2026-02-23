@@ -3,7 +3,7 @@
 namespace App\Services\Admin\User;
 
 use App\Domain\Entities\User;
-use App\Domain\Repositories\User\UserRepository;
+use App\Domain\Repositories\User\UserRepositoryInterface;
 use App\Dto\Request\Admin\User\UpdateDto;
 use App\Enums\ImageType;
 use App\Enums\OperationLogType;
@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 class UpdateService extends BaseService
 {
     public function __construct(
-        private readonly UserRepository $userRepository,
+        private readonly UserRepositoryInterface $userRepository,
         private readonly ImageService $imageService,
         private readonly OperationLogService $operationLogService,
     ) {}

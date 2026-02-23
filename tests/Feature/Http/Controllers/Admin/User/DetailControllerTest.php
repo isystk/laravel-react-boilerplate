@@ -3,6 +3,8 @@
 namespace Tests\Feature\Http\Controllers\Admin\User;
 
 use App\Enums\AdminRole;
+use App\Services\Admin\User\SuspendService;
+use Exception;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
@@ -114,5 +116,92 @@ class DetailControllerTest extends BaseTest
             'id'     => $user1->id,
             'status' => \App\Enums\UserStatus::Active->value,
         ]);
+    }
+
+    public function test_show_not_found(): void
+    {
+        $admin = $this->createDefaultAdmin([
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $this->get(route('admin.user.show', ['user' => 999]))
+            ->assertNotFound();
+    }
+
+    public function test_suspend_not_found(): void
+    {
+        $admin = $this->createDefaultAdmin([
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $this->put(route('admin.user.suspend', ['user' => 999]))
+            ->assertNotFound();
+    }
+
+    public function test_activate_not_found(): void
+    {
+        $admin = $this->createDefaultAdmin([
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $this->put(route('admin.user.activate', ['user' => 999]))
+            ->assertNotFound();
+    }
+
+    public function test_guest_cannot_access(): void
+    {
+        $user = $this->createDefaultUser();
+
+        $this->get(route('admin.user.show', $user))
+            ->assertRedirect(route('login'));
+
+        $this->put(route('admin.user.suspend', $user))
+            ->assertRedirect(route('login'));
+
+        $this->put(route('admin.user.activate', $user))
+            ->assertRedirect(route('login'));
+    }
+
+    public function test_suspend_service_error(): void
+    {
+        $admin = $this->createDefaultAdmin([
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $user = $this->createDefaultUser();
+
+        $this->mock(SuspendService::class, function ($mock) {
+            $mock->shouldReceive('suspend')->andThrow(new Exception('Service Error'));
+        });
+
+        $this->withoutExceptionHandling();
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Service Error');
+
+        $this->put(route('admin.user.suspend', $user));
+    }
+
+    public function test_activate_service_error(): void
+    {
+        $admin = $this->createDefaultAdmin([
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $user = $this->createDefaultUser();
+
+        $this->mock(SuspendService::class, function ($mock) {
+            $mock->shouldReceive('activate')->andThrow(new Exception('Service Error'));
+        });
+
+        $this->withoutExceptionHandling();
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Service Error');
+
+        $this->put(route('admin.user.activate', $user));
     }
 }

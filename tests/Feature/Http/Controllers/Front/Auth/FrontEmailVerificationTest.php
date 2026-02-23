@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\Controllers\Front\Auth;
+namespace Tests\Feature\Http\Controllers\Front\Auth;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\URL;
@@ -78,5 +78,18 @@ class FrontEmailVerificationTest extends BaseTest
         $response = $this->get($url);
 
         $response->assertRedirect(config('app.url') . '/home?verified=1');
+    }
+
+    public function test_verify_failure_user_not_found(): void
+    {
+        $url = URL::temporarySignedRoute(
+            'verification.verify',
+            now()->addMinutes(60),
+            ['id' => 99999, 'hash' => 'some-hash']
+        );
+
+        $response = $this->get($url);
+
+        $response->assertStatus(403);
     }
 }
