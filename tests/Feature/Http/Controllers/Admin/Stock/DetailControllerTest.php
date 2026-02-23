@@ -89,4 +89,37 @@ class DetailControllerTest extends BaseTest
         // データが論理削除されたことをテスト
         $this->assertSoftDeleted($stock);
     }
+
+    public function test_show_not_found(): void
+    {
+        $admin = $this->createDefaultAdmin([
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $this->get(route('admin.stock.show', ['stock' => 999]))
+            ->assertNotFound();
+    }
+
+    public function test_destroy_not_found(): void
+    {
+        $admin = $this->createDefaultAdmin([
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $this->delete(route('admin.stock.destroy', ['stock' => 999]))
+            ->assertNotFound();
+    }
+
+    public function test_guest_cannot_access(): void
+    {
+        $stock = $this->createDefaultStock();
+
+        $this->get(route('admin.stock.show', $stock))
+            ->assertRedirect(route('login'));
+
+        $this->delete(route('admin.stock.destroy', $stock))
+            ->assertRedirect(route('login'));
+    }
 }

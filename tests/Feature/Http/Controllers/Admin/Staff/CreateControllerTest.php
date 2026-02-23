@@ -93,4 +93,29 @@ class CreateControllerTest extends BaseTest
             'role' => AdminRole::Manager,
         ]);
     }
+
+    public function test_store_validation_error(): void
+    {
+        $admin = $this->createDefaultAdmin([
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $response = $this->post(route('admin.staff.store'), [
+            'name'     => '', // Required
+            'email'    => 'invalid-email',
+            'password' => 'short',
+        ]);
+
+        $response->assertSessionHasErrors(['name', 'email', 'password']);
+    }
+
+    public function test_guest_cannot_access(): void
+    {
+        $this->get(route('admin.staff.create'))
+            ->assertRedirect(route('login'));
+
+        $this->post(route('admin.staff.store'))
+            ->assertRedirect(route('login'));
+    }
 }

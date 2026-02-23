@@ -102,7 +102,7 @@ test: ## テスト実行 [branch|staged|file_paths...]
 
 .PHONY: test-coverage
 test-coverage: ## コードカバレッジレポートを出力します。
-	$(DOCKER_CMD) exec -e XDEBUG_MODE=coverage app php -d memory_limit=1G ./vendor/bin/phpunit --coverage-text --display-phpunit-deprecations
+	$(DOCKER_CMD) exec -e XDEBUG_MODE=coverage laraec-app php -d memory_limit=1G ./vendor/bin/phpunit --coverage-text --display-phpunit-deprecations
 
 .PHONY: pre-commit
 pre-commit: ## コミット前にすべてのチェックを実行します。
@@ -131,7 +131,7 @@ aws-destroy: ## AWSスタックの削除
 
 .PHONY: awscli
 awscli: ## AWSコンテナに入ります
-	@$(DOCKER_CMD) exec aws /bin/bash
+	@$(DOCKER_CMD) exec laraec-aws /bin/bash
 
 .PHONY: login
 login: ## ユーザーまたは管理者を選択してログインします。

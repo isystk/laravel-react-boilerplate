@@ -53,4 +53,10 @@ class ListControllerTest extends BaseTest
                 ->assertStatus($case['status']);
         }
     }
+
+    public function test_guest_cannot_access(): void
+    {
+        $this->get(route('admin.staff'))
+            ->assertRedirect(route('login'));
+    }
 }

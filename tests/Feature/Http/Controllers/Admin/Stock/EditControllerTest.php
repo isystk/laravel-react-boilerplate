@@ -122,4 +122,58 @@ class EditControllerTest extends BaseTest
         // ファイルが存在することをテスト
         Storage::disk('s3')->assertExists($image->getS3Path());
     }
+
+    public function test_edit_not_found(): void
+    {
+        $admin = $this->createDefaultAdmin([
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $this->get(route('admin.stock.edit', ['stock' => 999]))
+            ->assertNotFound();
+    }
+
+    public function test_update_not_found(): void
+    {
+        $admin = $this->createDefaultAdmin([
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $this->put(route('admin.stock.update', ['stock' => 999]), [
+            'name'  => 'bbb',
+            'price' => 222,
+        ])->assertNotFound();
+    }
+
+    public function test_update_validation_error(): void
+    {
+        $admin = $this->createDefaultAdmin([
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $stock = $this->createDefaultStock();
+
+        $response = $this->put(route('admin.stock.update', $stock), [
+            'name'     => '',
+            'price'    => 'not-a-number',
+            'detail'   => '',
+            'quantity' => 'not-a-number',
+        ]);
+
+        $response->assertSessionHasErrors(['name', 'price', 'detail', 'quantity']);
+    }
+
+    public function test_guest_cannot_access(): void
+    {
+        $stock = $this->createDefaultStock();
+
+        $this->get(route('admin.stock.edit', $stock))
+            ->assertRedirect(route('login'));
+
+        $this->put(route('admin.stock.update', $stock))
+            ->assertRedirect(route('login'));
+    }
 }

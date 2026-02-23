@@ -106,4 +106,31 @@ class CreateControllerTest extends BaseTest
         // ファイルが存在することをテスト
         Storage::disk('s3')->assertExists($image->getS3Path());
     }
+
+    public function test_store_validation_error(): void
+    {
+        $admin = $this->createDefaultAdmin([
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $response = $this->post(route('admin.stock.store'), [
+            'name'            => '',
+            'price'           => 'not-a-number',
+            'detail'          => '',
+            'quantity'        => 'not-a-number',
+            'image_file_name' => '',
+        ]);
+
+        $response->assertSessionHasErrors(['name', 'price', 'detail', 'quantity', 'image_file_name']);
+    }
+
+    public function test_guest_cannot_access(): void
+    {
+        $this->get(route('admin.stock.create'))
+            ->assertRedirect(route('login'));
+
+        $this->post(route('admin.stock.store'))
+            ->assertRedirect(route('login'));
+    }
 }

@@ -83,4 +83,37 @@ class DetailControllerTest extends BaseTest
         // データが削除されたことをテスト
         $this->assertDatabaseMissing('admins', ['id' => $admin1->id]);
     }
+
+    public function test_show_not_found(): void
+    {
+        $admin = $this->createDefaultAdmin([
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $this->get(route('admin.staff.show', ['staff' => 999]))
+            ->assertNotFound();
+    }
+
+    public function test_destroy_not_found(): void
+    {
+        $admin = $this->createDefaultAdmin([
+            'role' => AdminRole::HighManager,
+        ]);
+        $this->actingAs($admin, 'admin');
+
+        $this->delete(route('admin.staff.destroy', ['staff' => 999]))
+            ->assertNotFound();
+    }
+
+    public function test_guest_cannot_access(): void
+    {
+        $staff = $this->createDefaultAdmin();
+
+        $this->get(route('admin.staff.show', $staff))
+            ->assertRedirect(route('login'));
+
+        $this->delete(route('admin.staff.destroy', $staff))
+            ->assertRedirect(route('login'));
+    }
 }

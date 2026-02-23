@@ -64,4 +64,49 @@ class HandleGoogleCallbackServiceTest extends BaseTest
         $this->assertSame('Existing User', $user->name, '既存ユーザーの名前は更新されない');
         $this->assertSame(1, User::where('google_id', 'google-existing-456')->count(), '重複ユーザーが作成されない');
     }
+
+    public function test_findOrCreate_削除済みユーザーが復元されること(): void
+    {
+        $deletedUser = $this->createDefaultUser([
+            'name'       => 'Deleted User',
+            'email'      => 'deleted@test.com',
+            'google_id'  => 'google-deleted-789',
+            'deleted_at' => now(),
+        ]);
+
+        $googleUser     = new SocialiteUser;
+        $googleUser->id = 'google-deleted-789';
+
+        $user = $this->service->findOrCreate($googleUser);
+
+        $this->assertSame($deletedUser->id, $user->id);
+        $this->assertNull($user->deleted_at);
+        $this->assertDatabaseHas('users', [
+            'id'         => $user->id,
+            'deleted_at' => null,
+        ]);
+    }
+
+    public function test_findOrCreate_GoogleID未設定の既存ユーザーにGoogleIDが設定されること(): void
+    {
+        $existingUser = $this->createDefaultUser([
+            'email'     => 'no-google-id@test.com',
+            'google_id' => null,
+        ]);
+
+        $googleUser         = new SocialiteUser;
+        $googleUser->id     = 'google-new-assigned-123';
+        $googleUser->name   = 'Existing User';
+        $googleUser->email  = 'no-google-id@test.com';
+        $googleUser->avatar = 'https://lh3.googleusercontent.com/avatar.png';
+
+        $user = $this->service->findOrCreate($googleUser);
+
+        $this->assertSame($existingUser->id, $user->id);
+        $this->assertSame('google-new-assigned-123', $user->google_id);
+        $this->assertDatabaseHas('users', [
+            'id'        => $user->id,
+            'google_id' => 'google-new-assigned-123',
+        ]);
+    }
 }
