@@ -45,17 +45,17 @@
     onClick={handleClick}
 />
 ```
- 
+
 ---
 
 ## 命名規則
 
-| 要素             | 命名規則                                    | 例                         |
+| 要素             | 命名規則                                    | 例                          |
 | -------------- |-----------------------------------------|---------------------------|
 | コンポーネント        | ディレクトリ + `/index.tsx` | `Button/index.tsx`        |
 | Storybook ファイル | ディレクトリ + `index.stories.tsx`            | `Button/index.stories.tsx` |
 | テストファイル        | ディレクトリ + `index.test.tsx`               | `Button/index.test.tsx`   |
-| CSSクラス         | ディレクトリ + `index.module.scss`                    | `Button/index.module.scss` |
+| CSSクラス         | ディレクトリ + `styles.module.scss`           | `Button/styles.module.scss` |
 | カスタム Hooks     | `use` + キャメルケース                         | `useAppData`              |
 | ファイル名          | キャメルケース（camelCase）                     | `app.ts`                  |
 | 関数・変数名         | キャメルケース（camelCase）                      | `handleSubmit`            |
@@ -84,20 +84,21 @@ const Button: React.FC<Props> = ({ title, onClick }) => (
 
 ## コンポーネント構成
 
-```cpp
-src/
+```
+resources/assets/front/
   components/
     atoms/
       ComponentName/
         index.tsx         // 本体
         index.stories.tsx // Storybook
         index.test.tsx    // テスト
-        index.module.scss // スタイル（任意）
+        styles.module.scss // スタイル（任意）
     interactions/
     molecules/
     organisms/
     templates/
   pages/
+    index.tsx             // / ページ用ファイル
     shop/
       index.tsx           // /shop ページ用ファイル
       [id].tsx            // /shop/[id] ページ用ファイル
@@ -108,7 +109,7 @@ src/
 - APIの呼び出しは、ページ用ファイルで行い、コンポーネントにはpropsとして渡す
 - API呼び出しはServiceに記述する
 - コンポーネントの粒度は「Atomic design」に基づく
-- コンポーネントは、その責務に応じて以下7つのレベルに分割、作成する。
+- コンポーネントは、その責務に応じて以下6つのレベルに分割、作成する。
 
 | 階層             | 役割・例                        |
 | -------------- | --------------------------- |
@@ -126,6 +127,61 @@ src/
 
 - コンポーネント内の状態は `useState` / `useReducer` を使用する。
 - グローバルステートには Context API を使用する。
+
+### グローバル状態のアーキテクチャ
+
+グローバル状態は以下の3層で構成します。
+
+| クラス | 配置 | 役割 |
+| --- | --- | --- |
+| `XxxState` | `states/xxx.ts` | 各ドメインの状態を保持するクラス |
+| `RootState` | `states/root.ts` | 全 State クラスをまとめたルート状態 |
+| `XxxService` | `services/xxx.ts` | 状態変更と外部API通信のロジックを担当 |
+| `MainService` | `services/main.ts` | 全 Service を束ねるコンテナ。ローディング・トースト表示も管理 |
+
+```typescript
+// states/auth.ts - 認証状態を保持するクラス
+export default class AuthState {
+  name: string | null;
+  email: string | null;
+
+  get isLogined(): boolean {
+    return !!this.email;
+  }
+}
+
+// states/root.ts - 全 State を束ねるルート状態
+export default class RootState {
+  public isLoading: boolean;
+  public toastMessage: string | null;
+  public auth: AuthState;
+  public cart: CartState;
+  // ...
+}
+
+// services/main.ts - 全 Service のコンテナ
+export default class MainService {
+  public auth: AuthService;
+  public stock: StockService;
+  public cart: CartService;
+  // ...
+
+  public showLoading() { ... }
+  public showToastMessage(message: string) { ... }
+}
+```
+
+コンポーネントからは `useAppRoot()` Hook を通じて状態とサービスにアクセスします。
+
+```typescript
+const { state, service } = useAppRoot();
+
+// 状態の参照
+const isLogined = state.auth.isLogined;
+
+// サービスの呼び出し
+await service.stock.readStocks(pageNo);
+```
 
 ## Hooks
 
@@ -181,4 +237,3 @@ describe('Header Storybook Tests', () => {
 const DEFAULT_LIMIT = 10;
 const API_ENDPOINT = 'https://example.com';
 ```
-

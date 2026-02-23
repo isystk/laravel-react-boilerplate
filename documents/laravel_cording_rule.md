@@ -14,6 +14,8 @@
 - [サービス](#サービス)
 - [リポジトリ](#リポジトリ)
 - [エンティティ](#エンティティ)
+- [DTO](#dto)
+- [Enum](#enum)
 - [フォームリクエスト](#フォームリクエスト)
 - [マイグレーション](#マイグレーション)
 - [ルーティング](#ルーティング)
@@ -27,15 +29,15 @@
 
 - [PSR-1](https://www.php-fig.org/psr/psr-1/) および [PSR-12](https://www.php-fig.org/psr/psr-12/) に準拠します。
 - PHP タグは `<?php` を使用し、閉じタグは記述しません。
-- Laravel 標準のディレクトリ構成に従います。
+- プロジェクト独自のドメイン分割ディレクトリ構成を採用します（`app/Domain/`、`app/Services/`、`app/Dto/`、`app/Enums/` 等）。
 
 ---
 
 ## 命名規則
 
 - クラス名は、`UpperCamelCase` で記載します。
-- 変数名・メソッド名は、`lowerCamelCase` で記載します。
-- プロパティ名は、`lower_snake_case` で記載します。
+- 変数名・メソッド名・プロパティ名は、`lowerCamelCase` で記載します。
+- ただし、Eloquentモデルのカラム名はデータベースのカラム名に対応するため `lower_snake_case` を使用します。
 - 定数は、`UPPER_SNAKE_CASE` で記載します。
 
 ---
@@ -105,20 +107,20 @@ sequenceDiagram
  */
 public function store(StoreRequest $request): RedirectResponse
 {
-    $dto = new StoreRequestDto($request);
-    
-    /** @var StoreService $service */
-    $service = app(StoreService::class);
-    
+    $dto = new CreateDto($request);
+
+    /** @var CreateService $service */
+    $service = app(CreateService::class);
+
     DB::beginTransaction();
     try {
-        $service->createStock($dto);
+        $stock = $service->save($dto);
         DB::commit();
     } catch (Throwable $e) {
         DB::rollBack();
         throw $e;
     }
-    return redirect(route('stock.index'));
+    return redirect(route('admin.stock.show', $stock));
 }
 ```
 
@@ -129,29 +131,38 @@ public function store(StoreRequest $request): RedirectResponse
 - ビジネスロジックの記述に集中します。
 - DB へのアクセスは Eloquent を直接使用せず、リポジトリを介します。
 - リポジトリの注入には、コンストラクタインジェクションを使用します。
+- リポジトリはインターフェース型で注入します。
+- すべてのサービスクラスは `BaseService` を継承します。
 
 ```php
 <?php
 
-namespace App\Services\Stock;
+namespace App\Services\Admin\Stock;
 
-class StoreService extends BaseService
+use App\Domain\Repositories\Stock\StockRepositoryInterface;
+use App\Dto\Request\Admin\Stock\CreateDto;
+use App\Services\BaseService;
+
+class CreateService extends BaseService
 {
-    protected StockRepository $stockRepository;
+    protected StockRepositoryInterface $stockRepository;
 
-    public function __construct(StockRepository $stockRepository) {
-        $this->stockRepository= $stockRepository;
+    public function __construct(StockRepositoryInterface $stockRepository)
+    {
+        $this->stockRepository = $stockRepository;
     }
 
     /**
      * 商品を登録します。
      */
-    public function createStock(StoreRequestDto $dto): void
+    public function save(CreateDto $dto): Stock
     {
-        $items = [];
-        $items['name'] = $dto->name;
-        $items['price'] = $dto->price;
-        $this->stockRepository->create($items);
+        return $this->stockRepository->create([
+            'name'     => $dto->name,
+            'detail'   => $dto->detail,
+            'price'    => $dto->price,
+            'quantity' => $dto->quantity,
+        ]);
     }
 }
 ```
@@ -161,29 +172,48 @@ class StoreService extends BaseService
 ## リポジトリ
 
 - リポジトリは `app/Domain/Repositories` に配置します。
+- 各リポジトリはインターフェース（`XxxRepositoryInterface`）と実装クラス（`XxxRepository`）の2ファイルで構成します。
+- `XxxRepositoryInterface` は `BaseRepositoryInterface` を継承し、固有のメソッドを定義します。
+- `XxxRepository` は `BaseRepository` を継承し、`XxxRepositoryInterface` を実装します。
 - `create`、`update`、`delete`、`getAll`、`findById` などは BaseRepository を継承して実装します。
 - 1メソッドで使用する SQL は原則1クエリとし、シンプルな構成にします。
 - 関数名は、単一レコードを返す場合は findXXX、複数の場合は getXXX とします。
 - すべての関数に、引数と戻り値の型定義を明記します。
 
 ```php
-class StockEloquentRepository extends BaseEloquentRepository implements StockRepository
+// インターフェース
+interface StockRepositoryInterface extends BaseRepositoryInterface
 {
+    public function getByLimit(int $limit = 0): LengthAwarePaginator;
 
+    /**
+     * @param array{
+     *   name: ?string,
+     *   sort_name: ?string,
+     *   sort_direction: 'asc'|'desc'|null,
+     *   limit?: ?int,
+     * } $conditions
+     */
+    public function getByConditions(array $conditions): Collection|LengthAwarePaginator;
+}
+
+// 実装クラス
+class StockRepository extends BaseRepository implements StockRepositoryInterface
+{
     protected function model(): string
     {
         return Stock::class;
     }
-    
+
     /**
-     * 指定された code に紐づくレコードを返却します。
+     * {@inheritDoc}
      */
-    public function getByCode(string $code): Collection
+    public function getByLimit(int $limit = 0): LengthAwarePaginator
     {
-        /** @var Collection<int, Stock> */
+        /** @var LengthAwarePaginator<int, Stock> */
         return $this->model
-            ->where('code', $code)
-            ->get();
+            ->orderBy('id', 'desc')
+            ->paginate($limit);
     }
 }
 ```
@@ -239,6 +269,72 @@ class Stock extends Model
     public function office(): BelongsTo
     {
         return $this->belongsTo(Office::class);
+    }
+}
+```
+
+---
+
+## DTO
+
+- DTO（Data Transfer Object）は `app/Dto` に配置します。
+- リクエスト系DTOは `app/Dto/Request/` に、レスポンス系は `app/Dto/Response/` に配置します。
+- FormRequest を受け取り、コントローラとサービス間でのデータ受け渡しに使用します。
+- プロパティ名は `lowerCamelCase` で記載します。
+
+```php
+<?php
+
+namespace App\Dto\Request\Admin\Stock;
+
+use App\Http\Requests\Admin\Stock\StoreRequest;
+
+class CreateDto
+{
+    public ?string $name;
+    public ?string $detail;
+    public ?int $price;
+    public ?int $quantity;
+    public ?string $imageFileName;
+
+    public function __construct(StoreRequest $request)
+    {
+        $this->name          = (string) $request->input('name');
+        $this->detail        = (string) $request->input('detail');
+        $this->price         = (int) $request->input('price');
+        $this->quantity      = (int) $request->input('quantity');
+        $this->imageFileName = (string) $request->input('image_file_name');
+    }
+}
+```
+
+---
+
+## Enum
+
+- Enum は `app/Enums` に配置します。
+- バックドEenumを使用し、整数型（`int`）または文字列型（`string`）のいずれかを選択します。
+- ラベル取得用の `label()` メソッドを定義します（翻訳ファイルと連携）。
+- ビジネスロジックに関連する判定メソッド（`isXxx()`）をEnumに持たせます。
+
+```php
+<?php
+
+namespace App\Enums;
+
+enum UserStatus: int
+{
+    case Active = 0;
+    case Suspended = 1;
+
+    public function label(): string
+    {
+        return __('enums.UserStatus' . $this->value);
+    }
+
+    public function isActive(): bool
+    {
+        return $this === self::Active;
     }
 }
 ```
@@ -400,23 +496,36 @@ Route::prefix('admin')->group(function () {
 - Laravel のテストヘルパー（actingAs、assertDatabaseHas など）を積極的に活用します。
 - テストメソッド名は、動作の内容がわかるように記述します。
 - `Storage:fake()`、`Mail::fake()` などのFacadeを積極的に利用します。
+- テスト共通のヘルパーメソッド（`createDefaultUser()`、`createDefaultAdmin()` など）は `BaseTest` クラスに定義します。
 
 ```php
-public function test_update(): void
+public function test_store(): void
 {
-    $user = $this->createDefaultUser([
-        'name' => 'aaa',
-        'email' => 'aaa@test.com',
+    Storage::fake('s3');
+
+    $admin = $this->createDefaultAdmin([
+        'role' => AdminRole::HighManager,
+    ]);
+    $this->actingAs($admin, 'admin');
+
+    $response = $this->post(route('admin.stock.store'), [
+        'name'     => 'テスト商品',
+        'price'    => 1000,
+        'quantity' => 10,
     ]);
 
-    $request = new UpdateRequest();
-    $request['name'] = 'bbb';
-    $request['email'] = 'bbb@test.com';
-    $this->service->update($user->id, $request);
+    $response->assertRedirect();
+    $this->assertDatabaseHas('stocks', ['name' => 'テスト商品']);
+}
 
-    $user->refresh();
-    $this->assertEquals('bbb', $user->name, '名前が変更されていること');
-    $this->assertEquals('bbb@test.com', $user->email, 'メールアドレスが変更されていること');
+public function test_store_service_error(): void
+{
+    $this->mock(CreateService::class, function ($mock) {
+        $mock->shouldReceive('save')->andThrow(new Exception('Service Error'));
+    });
+
+    $response = $this->post(route('admin.stock.store'), [...]);
+    $response->assertStatus(500);
 }
 ```
 
@@ -427,7 +536,7 @@ public function test_update(): void
 - 以下のツールを使用して、コードの品質を自動でチェック・整形します。
 - PHPStan：静的解析（./vendor/bin/phpstan analyse --memory-limit=1G）
 - PHPUnit：テスト実行（./vendor/bin/phpunit tests）
-- PinT：コード整形（./vendor/bin/pint）
+- Pint：コード整形（./vendor/bin/pint）
 - PHP Intelephense（VSCodeの拡張機能）：コード整形（設定画面からFormat On Saveを有効にします）
 
 ---
@@ -437,4 +546,3 @@ public function test_update(): void
 - コードは読みやすく、保守しやすく保つことを最優先とします。
 - 複雑な構成は避け、Laravel の「シンプルで表現力豊かな構文」を尊重します。
 - 判断に迷った場合は、Laravel 公式ドキュメントを参照してください。
-
