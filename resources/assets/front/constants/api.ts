@@ -52,4 +52,6 @@ export const Api = {
   PROFILE_UPDATE: getBffUrl('/profile/update'),
   /** アカウント削除 */
   PROFILE_DESTROY: getBffUrl('/profile/destroy'),
+  /** 購入履歴取得 */
+  ORDER_HISTORY: getBffUrl('/order-history'),
 };

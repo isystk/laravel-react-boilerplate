@@ -81,6 +81,18 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
     /**
      * {@inheritDoc}
      */
+    public function getByUserId(int $userId): Collection
+    {
+        /** @var Collection<int, Order> */
+        return $this->model
+            ->where('user_id', $userId)
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function deleteByUserId(int $userId): void
     {
         $this->model

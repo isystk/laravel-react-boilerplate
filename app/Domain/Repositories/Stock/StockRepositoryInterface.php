@@ -26,4 +26,12 @@ interface StockRepositoryInterface extends BaseRepositoryInterface
      * @return Collection<int, Stock>|LengthAwarePaginator<int, Stock>
      */
     public function getByConditions(array $conditions): Collection|LengthAwarePaginator;
+
+    /**
+     * IDリストから商品データを取得します。
+     *
+     * @param  array<int>             $ids
+     * @return Collection<int, Stock>
+     */
+    public function getByIds(array $ids): Collection;
 }

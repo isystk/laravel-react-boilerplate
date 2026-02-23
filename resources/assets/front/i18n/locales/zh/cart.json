@@ -8,6 +8,7 @@
   "cartItem.removeFromCart": "从购物车删除",
   "cartItem.confirmDelete": "确定要删除吗？",
   "stock.like": "收藏",
+  "stock.delete": "删除",
   "stock.addToCart": "加入购物车（剩余{{quantity}}件）",
   "payment.title": "支付信息",
   "payment.amount": "金额",

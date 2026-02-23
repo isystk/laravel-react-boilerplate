@@ -52,4 +52,15 @@ class StockRepository extends BaseRepository implements StockRepositoryInterface
         /** @var Collection<int, Stock> */
         return $query->get();
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getByIds(array $ids): Collection
+    {
+        /** @var Collection<int, Stock> */
+        return $this->model
+            ->whereIn('id', $ids)
+            ->get();
+    }
 }

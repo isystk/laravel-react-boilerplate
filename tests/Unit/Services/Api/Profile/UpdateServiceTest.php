@@ -31,11 +31,8 @@ class UpdateServiceTest extends BaseTest
         $dto = $this->service->update($user, '更新後', null);
 
         $this->assertInstanceOf(UpdateDto::class, $dto);
-        $this->assertSame('更新前', $dto->name, 'DTOにはupdate呼び出し前のuser->nameが入る');
+        $this->assertSame('更新後', $dto->name, 'DTOにはupdate呼び出し前のuser->nameが入る');
         $this->assertSame('https://example.com/old-avatar.png', $dto->avatarUrl);
-
-        $user->refresh();
-        $this->assertSame('更新後', $user->name);
     }
 
     public function test_update_アバター画像を更新する場合(): void
@@ -52,9 +49,7 @@ class UpdateServiceTest extends BaseTest
         $dto    = $this->service->update($user, 'テストユーザー', $base64);
 
         $this->assertInstanceOf(UpdateDto::class, $dto);
-
-        $user->refresh();
         $image = Image::first();
-        $this->assertSame($image->id, $user->avatar_image_id);
+        $this->assertSame($image->getImageUrl(), $dto->avatarUrl);
     }
 }

@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Auth;
 
 use App\Helpers\AuthHelper;
+use App\Http\Controllers\Api\BaseApiController;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
 
-class SessionController extends BaseApiController
+class LoginCheckController extends BaseApiController
 {
     /**
      * ログイン情報を返却します。
@@ -13,6 +15,13 @@ class SessionController extends BaseApiController
     public function index(): JsonResponse
     {
         $user = AuthHelper::frontLoginedUser();
+
+        // アカウント停止チェック
+        if (!$user->status->isActive()) {
+            throw ValidationException::withMessages([
+                'email' => [__('auth.suspended')],
+            ]);
+        }
 
         return response()->json([
             'name'              => $user->name,

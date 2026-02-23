@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers\Api;
+namespace Http\Controllers\Api\Auth;
 
 use App\Domain\Entities\Image;
 use App\Enums\ImageType;
@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
 
-class SessionControllerTest extends BaseTest
+class LoginCheckControllerTest extends BaseTest
 {
     use RefreshDatabase;
 

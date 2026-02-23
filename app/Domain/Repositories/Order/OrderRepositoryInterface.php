@@ -38,6 +38,13 @@ interface OrderRepositoryInterface extends BaseRepositoryInterface
     public function getLatestWithUser(int $limit): Collection;
 
     /**
+     * ユーザーIDから注文データを取得します。
+     *
+     * @return Collection<int, Order>
+     */
+    public function getByUserId(int $userId): Collection;
+
+    /**
      * ユーザーIDからデータを削除します。
      */
     public function deleteByUserId(int $userId): void;

@@ -14,9 +14,10 @@ export type Props = {
   detail: string;
   quantity: number;
   isLike: boolean;
+  isHome?: boolean;
 };
 
-const StockItem = ({ id, name, imageUrl, price, detail, quantity, isLike }: Props) => {
+const StockItem = ({ id, name, imageUrl, price, detail, quantity, isLike, isHome }: Props) => {
   const { state, service } = useAppRoot();
   const navigate = useNavigate();
   const { t } = useTranslation('cart');
@@ -44,13 +45,19 @@ const StockItem = ({ id, name, imageUrl, price, detail, quantity, isLike }: Prop
   return (
     <div className={styles.cardItem}>
       <div className="text-right mb-2">
-        <button
-          className={`btn btn-sm ${isLike ? 'btn-primary' : 'btn-secondary'}`}
-          data-id={id}
-          onClick={handleLikeClick}
-        >
-          {t('stock.like')}
-        </button>
+        {!isHome ? (
+          <button
+            className={`btn btn-sm ${isLike ? 'btn-primary' : 'btn-secondary'}`}
+            data-id={id}
+            onClick={handleLikeClick}
+          >
+            {t('stock.like')}
+          </button>
+        ) : (
+          <button className={`btn btn-sm btn-danger`} data-id={id} onClick={handleLikeClick}>
+            {t('stock.delete')}
+          </button>
+        )}
       </div>
       <Image src={imageUrl} width={276} height={184} alt={name} className="mb-2 w-100" />
       <p className="font-bold">{name}</p>
