@@ -38,7 +38,7 @@ if [ -z "$CONTAINER_NAME" ]; then
         exit 1
     fi
     select_container=$(select_from_list "$container_list" "操作するコンテナを選択してください")
-    CONTAINER_NAME=$(echo "$select_container" | cut -f1)
+    CONTAINER_NAME=$(echo "$select_container" | awk '{print $1}')
 fi
 
 # 第2引数: コマンド (任意)
