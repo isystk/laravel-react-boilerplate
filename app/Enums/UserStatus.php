@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum UserStatus: int
+enum UserStatus: int implements HasLabel
 {
     /** 有効 */
     case Active = 0;
@@ -14,7 +14,7 @@ enum UserStatus: int
      */
     public function label(): string
     {
-        return __('enums.UserStatus' . $this->value);
+        return __('enums.UserStatus_' . $this->value);
     }
 
     /**

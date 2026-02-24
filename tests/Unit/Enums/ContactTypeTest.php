@@ -9,8 +9,8 @@ class ContactTypeTest extends BaseTest
 {
     public function test_label_各ケースのラベルが返却されること(): void
     {
-        $this->assertSame(__('enums.ContactType1'), ContactType::Service->label());
-        $this->assertSame(__('enums.ContactType2'), ContactType::Support->label());
-        $this->assertSame(__('enums.ContactType9'), ContactType::Other->label());
+        $this->assertSame(__('enums.ContactType_1'), ContactType::Service->label());
+        $this->assertSame(__('enums.ContactType_2'), ContactType::Support->label());
+        $this->assertSame(__('enums.ContactType_9'), ContactType::Other->label());
     }
 }

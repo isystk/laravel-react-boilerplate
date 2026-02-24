@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum ImageType: int
+enum ImageType: int implements HasLabel
 {
     /** 商品 */
     case Stock = 1;
@@ -16,7 +16,7 @@ enum ImageType: int
      */
     public function label(): string
     {
-        return __('enums.ImageType' . $this->value);
+        return __('enums.ImageType_' . $this->value);
     }
 
     /**

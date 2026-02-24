@@ -21,6 +21,7 @@
 - [ルーティング](#ルーティング)
 - [Blade テンプレート](#blade-テンプレート)
 - [テストコード](#テストコード)
+- [アクセス制御](#アクセス制御)
 - [使用ツール](#使用ツール)
 
 ---
@@ -322,14 +323,14 @@ class CreateDto
 
 namespace App\Enums;
 
-enum UserStatus: int
+enum UserStatus: int implements HasLabel
 {
     case Active = 0;
     case Suspended = 1;
 
     public function label(): string
     {
-        return __('enums.UserStatus' . $this->value);
+        return __('enums.UserStatus_' . $this->value);
     }
 
     public function isActive(): bool
@@ -528,6 +529,44 @@ public function test_store_service_error(): void
     $response->assertStatus(500);
 }
 ```
+
+---
+
+## アクセス制御
+
+ロールに応じたアクセス制限には `config/access_control.php` と `App\Http\Middleware\AccessControlMiddleware` を使用します。
+
+### 仕組み
+
+- `config/access_control.php` の `permissions` にルート名とアクセスを許可するロールの対応を定義します。
+- `AccessControlMiddleware` がリクエストのたびにルート名を照合し、許可されていないロールのユーザーには 403 を返します。
+- 設定が存在しないルートはすべての認証済みユーザーが通過できます（デフォルト許可）。
+- ルート名にはワイルドカード（`*`）が使用できます。
+
+### アクセス制限の追加方法
+
+新たにロール制限が必要なルートは `config/access_control.php` の `permissions` に追記します。
+
+```php
+// config/access_control.php
+use App\Enums\AdminRole;
+
+return [
+    'permissions' => [
+        // 単一ルートへの制限
+        'admin.stock.create'   => [AdminRole::HighManager],
+        'admin.stock.store'    => [AdminRole::HighManager],
+
+        // ワイルドカードによる一括制限
+        'admin.staff.import.*' => [AdminRole::HighManager],
+    ],
+];
+```
+
+### 注意事項
+
+- ルートへのアクセス制限はミドルウェアで一元管理します。コントローラ内に独自のロールチェックを実装しないでください。
+- 複数ロールを許可する場合は配列に列挙します。
 
 ---
 
