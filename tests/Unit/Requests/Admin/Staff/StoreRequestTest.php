@@ -32,7 +32,7 @@ class StoreRequestTest extends BaseTest
             'email'                 => 'user1@test.com',
             'password'              => 'password',
             'password_confirmation' => 'password',
-            'role'                  => AdminRole::Manager->value,
+            'role'                  => AdminRole::Staff->value,
         ];
     }
 
@@ -193,7 +193,7 @@ class StoreRequestTest extends BaseTest
                 ],
             ],
             'OK : role が正常' => [
-                'attrs'     => ['role' => AdminRole::Manager->value],
+                'attrs'     => ['role' => AdminRole::Staff->value],
                 'expect'    => true,
                 'attribute' => 'role',
                 'messages'  => [],

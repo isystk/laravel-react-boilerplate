@@ -24,8 +24,8 @@ class ExportServiceTest extends BaseTest
         $export = $this->service->getExport();
         $this->assertSame(['ID', '名前', 'メールアドレス', '権限'], $export->headings(), 'ヘッダーが正しいこと');
 
-        $this->createDefaultAdmin(['name' => 'admin1', 'email' => 'admin1@test.com', 'role' => AdminRole::HighManager]);
-        $admin2 = $this->createDefaultAdmin(['name' => 'admin2', 'email' => 'admin2@test.com', 'role' => AdminRole::Manager]);
+        $this->createDefaultAdmin(['name' => 'admin1', 'email' => 'admin1@test.com', 'role' => AdminRole::SuperAdmin]);
+        $admin2 = $this->createDefaultAdmin(['name' => 'admin2', 'email' => 'admin2@test.com', 'role' => AdminRole::Staff]);
 
         $export = $this->service->getExport();
         $rows   = $export->collection();

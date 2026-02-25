@@ -26,6 +26,6 @@ class CreateDto
         $this->name     = $request->name;
         $this->email    = $request->email;
         $this->password = Hash::make($request->password);
-        $this->role     = AdminRole::Manager;
+        $this->role     = AdminRole::Staff;
     }
 }

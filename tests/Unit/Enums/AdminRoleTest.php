@@ -7,12 +7,12 @@ use Tests\BaseTest;
 
 class AdminRoleTest extends BaseTest
 {
-    public function test_isHighManager(): void
+    public function test_isSuperAdmin(): void
     {
-        $sut = AdminRole::Manager;
-        $this->assertFalse($sut->isHighManager(), '管理者の場合 → False');
+        $sut = AdminRole::Staff;
+        $this->assertFalse($sut->isSuperAdmin(), '管理者の場合 → False');
 
-        $sut = AdminRole::HighManager;
-        $this->assertTrue($sut->isHighManager(), 'システム管理者の場合 → True');
+        $sut = AdminRole::SuperAdmin;
+        $this->assertTrue($sut->isSuperAdmin(), 'システム管理者の場合 → True');
     }
 }

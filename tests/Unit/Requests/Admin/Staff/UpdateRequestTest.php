@@ -31,7 +31,7 @@ class UpdateRequestTest extends BaseTest
             'name'     => 'user1',
             'email'    => 'user1@test.com',
             'password' => 'password',
-            'role'     => AdminRole::HighManager,
+            'role'     => AdminRole::SuperAdmin,
         ]);
         $this->request->staff = $staff;
         $this->baseRequest    = [
@@ -148,7 +148,7 @@ class UpdateRequestTest extends BaseTest
                 ],
             ],
             'OK : role が正常' => [
-                'attrs'     => ['role' => AdminRole::Manager->value],
+                'attrs'     => ['role' => AdminRole::Staff->value],
                 'expect'    => true,
                 'attribute' => 'role',
                 'messages'  => [],

@@ -23,7 +23,7 @@ class CreateDtoTest extends BaseTest
         $this->assertSame('テスト管理者', $dto->name);
         $this->assertSame('staff@example.com', $dto->email);
         $this->assertTrue(Hash::check('password123', $dto->password));
-        $this->assertSame(AdminRole::Manager, $dto->role);
+        $this->assertSame(AdminRole::Staff, $dto->role);
     }
 
     public function test_construct_パスワードがハッシュ化されること(): void
@@ -50,6 +50,6 @@ class CreateDtoTest extends BaseTest
 
         $dto = new CreateDto($request);
 
-        $this->assertSame(AdminRole::Manager, $dto->role);
+        $this->assertSame(AdminRole::Staff, $dto->role);
     }
 }

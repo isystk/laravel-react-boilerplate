@@ -26,7 +26,7 @@ class DetailControllerTest extends BaseTest
     {
         $admin = $this->createDefaultAdmin([
             'name' => '管理者A',
-            'role' => AdminRole::Manager,
+            'role' => AdminRole::Staff,
         ]);
         $this->actingAs($admin, 'admin');
 
@@ -51,8 +51,8 @@ class DetailControllerTest extends BaseTest
     public function test_show_管理者ロール別アクセス権限検証(): void
     {
         $cases = [
-            ['role' => AdminRole::HighManager, 'status' => 200],
-            ['role' => AdminRole::Manager,     'status' => 200],
+            ['role' => AdminRole::SuperAdmin, 'status' => 200],
+            ['role' => AdminRole::Staff,     'status' => 200],
         ];
 
         $contact = $this->createDefaultContact();
@@ -80,7 +80,7 @@ class DetailControllerTest extends BaseTest
 
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
-            'role' => AdminRole::Manager,
+            'role' => AdminRole::Staff,
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -90,7 +90,7 @@ class DetailControllerTest extends BaseTest
 
         $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
-            'role' => AdminRole::HighManager,
+            'role' => AdminRole::SuperAdmin,
         ]);
         $this->actingAs($admin2, 'admin');
 
@@ -109,7 +109,7 @@ class DetailControllerTest extends BaseTest
         $contact = $this->createDefaultContact();
 
         $admin = $this->createDefaultAdmin([
-            'role' => AdminRole::HighManager,
+            'role' => AdminRole::SuperAdmin,
         ]);
         $this->actingAs($admin, 'admin');
 
@@ -133,7 +133,7 @@ class DetailControllerTest extends BaseTest
         $user  = $this->createDefaultUser(['email' => 'user@example.com']);
         $admin = $this->createDefaultAdmin([
             'name' => '管理者A',
-            'role' => AdminRole::Manager,
+            'role' => AdminRole::Staff,
         ]);
         $this->actingAs($admin, 'admin');
 
@@ -166,7 +166,7 @@ class DetailControllerTest extends BaseTest
     {
         Mail::fake();
 
-        $admin = $this->createDefaultAdmin(['role' => AdminRole::Manager]);
+        $admin = $this->createDefaultAdmin(['role' => AdminRole::Staff]);
         $this->actingAs($admin, 'admin');
 
         $contact = $this->createDefaultContact();
@@ -188,7 +188,7 @@ class DetailControllerTest extends BaseTest
     {
         $admin = $this->createDefaultAdmin([
             'name' => '管理者A',
-            'role' => AdminRole::Manager,
+            'role' => AdminRole::Staff,
         ]);
         $this->actingAs($admin, 'admin');
 
@@ -212,7 +212,7 @@ class DetailControllerTest extends BaseTest
         Mail::fake();
 
         $contact = $this->createDefaultContact();
-        $admin   = $this->createDefaultAdmin(['role' => AdminRole::Manager]);
+        $admin   = $this->createDefaultAdmin(['role' => AdminRole::Staff]);
         $this->actingAs($admin, 'admin');
 
         $this->mock(ReplyService::class, function ($mock) {

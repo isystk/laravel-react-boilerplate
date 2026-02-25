@@ -21,7 +21,7 @@ class ListControllerTest extends BaseTest
     {
         $admin = $this->createDefaultAdmin([
             'name' => '管理者A',
-            'role' => AdminRole::Manager->value,
+            'role' => AdminRole::Staff->value,
         ]);
         $this->actingAs($admin, 'admin');
 
@@ -38,8 +38,8 @@ class ListControllerTest extends BaseTest
     public function test_index_管理者ロール別アクセス権限検証(): void
     {
         $cases = [
-            ['role' => AdminRole::HighManager, 'status' => 200],
-            ['role' => AdminRole::Manager,     'status' => 200],
+            ['role' => AdminRole::SuperAdmin, 'status' => 200],
+            ['role' => AdminRole::Staff,     'status' => 200],
         ];
 
         foreach ($cases as $case) {
@@ -55,7 +55,7 @@ class ListControllerTest extends BaseTest
 
     public function test_index_初回アクセス時は未返信のみ表示されること(): void
     {
-        $admin = $this->createDefaultAdmin(['role' => AdminRole::Manager->value]);
+        $admin = $this->createDefaultAdmin(['role' => AdminRole::Staff->value]);
         $this->actingAs($admin, 'admin');
 
         $user1     = $this->createDefaultUser();
@@ -73,7 +73,7 @@ class ListControllerTest extends BaseTest
 
     public function test_index_searched指定時にonly_unrepliedチェックで未返信のみ表示されること(): void
     {
-        $admin = $this->createDefaultAdmin(['role' => AdminRole::Manager->value]);
+        $admin = $this->createDefaultAdmin(['role' => AdminRole::Staff->value]);
         $this->actingAs($admin, 'admin');
 
         $user1     = $this->createDefaultUser();
@@ -94,7 +94,7 @@ class ListControllerTest extends BaseTest
 
     public function test_index_searched指定時にonly_unrepliedなしで全件表示されること(): void
     {
-        $admin = $this->createDefaultAdmin(['role' => AdminRole::Manager->value]);
+        $admin = $this->createDefaultAdmin(['role' => AdminRole::Staff->value]);
         $this->actingAs($admin, 'admin');
 
         $user1     = $this->createDefaultUser();
@@ -114,7 +114,7 @@ class ListControllerTest extends BaseTest
 
     public function test_index_keywordで名前検索ができること(): void
     {
-        $admin = $this->createDefaultAdmin(['role' => AdminRole::Manager->value]);
+        $admin = $this->createDefaultAdmin(['role' => AdminRole::Staff->value]);
         $this->actingAs($admin, 'admin');
 
         $user1 = $this->createDefaultUser(['name' => 'yamada taro']);
@@ -134,7 +134,7 @@ class ListControllerTest extends BaseTest
 
     public function test_index_keywordでメールアドレス検索ができること(): void
     {
-        $admin = $this->createDefaultAdmin(['role' => AdminRole::Manager->value]);
+        $admin = $this->createDefaultAdmin(['role' => AdminRole::Staff->value]);
         $this->actingAs($admin, 'admin');
 
         $user1 = $this->createDefaultUser(['email' => 'target@example.com']);
@@ -154,7 +154,7 @@ class ListControllerTest extends BaseTest
 
     public function test_index_keywordでID検索ができること(): void
     {
-        $admin = $this->createDefaultAdmin(['role' => AdminRole::Manager->value]);
+        $admin = $this->createDefaultAdmin(['role' => AdminRole::Staff->value]);
         $this->actingAs($admin, 'admin');
 
         $user1   = $this->createDefaultUser();

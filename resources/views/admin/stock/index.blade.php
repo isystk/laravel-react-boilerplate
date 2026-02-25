@@ -11,7 +11,7 @@
         <div class="card-body text-center">
             <a href="{{ route('admin.stock.create') }}"
                class="btn btn-primary"
-               @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>
+               @if (!Auth::user()->role->isSuperAdmin()) disabled="disabled" @endif>
                 新規登録
             </a>
         </div>

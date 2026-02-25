@@ -42,12 +42,12 @@ class AdminRepositoryTest extends BaseTest
         $expectAdmin1 = $this->createDefaultAdmin([
             'name'  => 'admin1',
             'email' => 'admin1@test.com',
-            'role'  => AdminRole::HighManager->value,
+            'role'  => AdminRole::SuperAdmin->value,
         ]);
         $expectAdmin2 = $this->createDefaultAdmin([
             'name'  => 'admin2',
             'email' => 'admin2@test.com',
-            'role'  => AdminRole::Manager->value,
+            'role'  => AdminRole::Staff->value,
         ]);
 
         /** @var Admin $admin */
@@ -67,7 +67,7 @@ class AdminRepositoryTest extends BaseTest
         /** @var Admin $admin */
         $admin = $this->repository->getByConditions([
             ...$this->defaultConditions,
-            'role' => AdminRole::HighManager->value,
+            'role' => AdminRole::SuperAdmin->value,
         ])->first();
         $this->assertSame($expectAdmin1->id, $admin->id, 'roleで検索が出来ることをテスト');
 
@@ -81,9 +81,9 @@ class AdminRepositoryTest extends BaseTest
     public function test_getByConditions_ソートと複数条件の組み合わせ(): void
     {
         // テストデータの準備
-        $this->createDefaultAdmin(['name' => 'B-admin', 'email' => 'b@test.com', 'role' => AdminRole::Manager->value]);
-        $this->createDefaultAdmin(['name' => 'A-admin', 'email' => 'a@test.com', 'role' => AdminRole::Manager->value]);
-        $this->createDefaultAdmin(['name' => 'C-admin', 'email' => 'c@test.com', 'role' => AdminRole::HighManager->value]);
+        $this->createDefaultAdmin(['name' => 'B-admin', 'email' => 'b@test.com', 'role' => AdminRole::Staff->value]);
+        $this->createDefaultAdmin(['name' => 'A-admin', 'email' => 'a@test.com', 'role' => AdminRole::Staff->value]);
+        $this->createDefaultAdmin(['name' => 'C-admin', 'email' => 'c@test.com', 'role' => AdminRole::SuperAdmin->value]);
 
         // 1. ソート（名前の昇順）のテスト
         $results = $this->repository->getByConditions([
@@ -105,7 +105,7 @@ class AdminRepositoryTest extends BaseTest
         // 3. 複数条件（role かつ nameの一部一致）のテスト
         $results = $this->repository->getByConditions([
             ...$this->defaultConditions,
-            'role' => AdminRole::Manager->value,
+            'role' => AdminRole::Staff->value,
             'name' => 'A-',
         ]);
         $this->assertCount(1, $results);

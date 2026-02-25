@@ -29,7 +29,7 @@ class DetailControllerTest extends BaseTest
         $admin1 = $this->createDefaultAdmin([
             'name'  => '管理者A',
             'email' => 'admin1@test.com',
-            'role'  => AdminRole::HighManager,
+            'role'  => AdminRole::SuperAdmin,
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -42,8 +42,8 @@ class DetailControllerTest extends BaseTest
     public function test_show_管理者ロール別アクセス権限検証(): void
     {
         $cases = [
-            ['role' => AdminRole::HighManager, 'status' => 200],
-            ['role' => AdminRole::Manager,     'status' => 200],
+            ['role' => AdminRole::SuperAdmin, 'status' => 200],
+            ['role' => AdminRole::Staff,     'status' => 200],
         ];
 
         $user = $this->createDefaultUser();
@@ -68,7 +68,7 @@ class DetailControllerTest extends BaseTest
 
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
-            'role' => AdminRole::Manager,
+            'role' => AdminRole::Staff,
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -78,7 +78,7 @@ class DetailControllerTest extends BaseTest
 
         $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
-            'role' => AdminRole::HighManager,
+            'role' => AdminRole::SuperAdmin,
         ]);
         $this->actingAs($admin2, 'admin');
 
@@ -103,7 +103,7 @@ class DetailControllerTest extends BaseTest
 
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
-            'role' => AdminRole::HighManager,
+            'role' => AdminRole::SuperAdmin,
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -121,7 +121,7 @@ class DetailControllerTest extends BaseTest
     public function test_show_not_found(): void
     {
         $admin = $this->createDefaultAdmin([
-            'role' => AdminRole::HighManager,
+            'role' => AdminRole::SuperAdmin,
         ]);
         $this->actingAs($admin, 'admin');
 
@@ -132,7 +132,7 @@ class DetailControllerTest extends BaseTest
     public function test_suspend_not_found(): void
     {
         $admin = $this->createDefaultAdmin([
-            'role' => AdminRole::HighManager,
+            'role' => AdminRole::SuperAdmin,
         ]);
         $this->actingAs($admin, 'admin');
 
@@ -143,7 +143,7 @@ class DetailControllerTest extends BaseTest
     public function test_activate_not_found(): void
     {
         $admin = $this->createDefaultAdmin([
-            'role' => AdminRole::HighManager,
+            'role' => AdminRole::SuperAdmin,
         ]);
         $this->actingAs($admin, 'admin');
 
@@ -168,7 +168,7 @@ class DetailControllerTest extends BaseTest
     public function test_suspend_service_error(): void
     {
         $admin = $this->createDefaultAdmin([
-            'role' => AdminRole::HighManager,
+            'role' => AdminRole::SuperAdmin,
         ]);
         $this->actingAs($admin, 'admin');
 
@@ -188,7 +188,7 @@ class DetailControllerTest extends BaseTest
     public function test_activate_service_error(): void
     {
         $admin = $this->createDefaultAdmin([
-            'role' => AdminRole::HighManager,
+            'role' => AdminRole::SuperAdmin,
         ]);
         $this->actingAs($admin, 'admin');
 

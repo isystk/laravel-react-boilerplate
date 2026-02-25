@@ -26,7 +26,7 @@ class CreateControllerTest extends BaseTest
     {
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
-            'role' => AdminRole::Manager,
+            'role' => AdminRole::Staff,
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -36,7 +36,7 @@ class CreateControllerTest extends BaseTest
 
         $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
-            'role' => AdminRole::HighManager,
+            'role' => AdminRole::SuperAdmin,
         ]);
         $this->actingAs($admin2, 'admin');
 
@@ -47,8 +47,8 @@ class CreateControllerTest extends BaseTest
     public function test_create_管理者ロール別アクセス権限検証(): void
     {
         $cases = [
-            ['role' => AdminRole::HighManager, 'status' => 200],
-            ['role' => AdminRole::Manager,     'status' => 403],
+            ['role' => AdminRole::SuperAdmin, 'status' => 200],
+            ['role' => AdminRole::Staff,     'status' => 403],
         ];
 
         foreach ($cases as $case) {
@@ -68,7 +68,7 @@ class CreateControllerTest extends BaseTest
 
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者1',
-            'role' => AdminRole::Manager,
+            'role' => AdminRole::Staff,
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -78,7 +78,7 @@ class CreateControllerTest extends BaseTest
 
         $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
-            'role' => AdminRole::HighManager,
+            'role' => AdminRole::SuperAdmin,
         ]);
         $this->actingAs($admin2, 'admin');
 
@@ -112,7 +112,7 @@ class CreateControllerTest extends BaseTest
     public function test_store_validation_error(): void
     {
         $admin = $this->createDefaultAdmin([
-            'role' => AdminRole::HighManager,
+            'role' => AdminRole::SuperAdmin,
         ]);
         $this->actingAs($admin, 'admin');
 
@@ -139,7 +139,7 @@ class CreateControllerTest extends BaseTest
     public function test_store_service_error(): void
     {
         $admin = $this->createDefaultAdmin([
-            'role' => AdminRole::HighManager,
+            'role' => AdminRole::SuperAdmin,
         ]);
         $this->actingAs($admin, 'admin');
 

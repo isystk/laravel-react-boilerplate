@@ -52,10 +52,10 @@
                             <div class="form-group">
                                 <input type="file"
                                        name="upload_file"
-                                       @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>
+                                       @if (!Auth::user()->role->isSuperAdmin()) disabled="disabled" @endif>
                             </div>
                             <button class="btn btn-primary"
-                                    @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>登録する</button>
+                                    @if (!Auth::user()->role->isSuperAdmin()) disabled="disabled" @endif>登録する</button>
                         </form>
                     </div>
                 </div>

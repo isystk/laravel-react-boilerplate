@@ -29,17 +29,17 @@ class AdminTest extends BaseTest
         $this->assertInstanceOf(Carbon::class, $model->updated_at);
     }
 
-    public function test_isHighManager(): void
+    public function test_isSuperAdmin(): void
     {
-        $this->assertFalse($this->sub->isHighManager(), 'システム管理者以外の場合 → False');
-        $this->sub->role = AdminRole::HighManager;
-        $this->assertTrue($this->sub->isHighManager(), 'システム管理者の場合 → True');
+        $this->assertFalse($this->sub->isSuperAdmin(), 'システム管理者以外の場合 → False');
+        $this->sub->role = AdminRole::SuperAdmin;
+        $this->assertTrue($this->sub->isSuperAdmin(), 'システム管理者の場合 → True');
     }
 
     public function test_isManager(): void
     {
         $this->assertFalse($this->sub->isManager(), '管理者以外の場合 → False');
-        $this->sub->role = AdminRole::Manager;
+        $this->sub->role = AdminRole::Staff;
         $this->assertTrue($this->sub->isManager(), '管理者の場合 → True');
     }
 }

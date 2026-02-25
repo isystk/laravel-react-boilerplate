@@ -4,10 +4,10 @@ namespace App\Enums;
 
 enum AdminRole: string implements HasLabel
 {
-    /** 一般管理者 */
-    case Manager = 'manager';
+    /** スタッフ */
+    case Staff = 'staff';
     /** システム管理者 */
-    case HighManager = 'high-manager';
+    case SuperAdmin = 'super-admin';
 
     /**
      * ラベルを返却する
@@ -20,8 +20,8 @@ enum AdminRole: string implements HasLabel
     /**
      * システム管理者の場合にTrueを返却する
      */
-    public function isHighManager(): bool
+    public function isSuperAdmin(): bool
     {
-        return $this === self::HighManager;
+        return $this === self::SuperAdmin;
     }
 }
