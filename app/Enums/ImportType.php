@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum ImportType: int
+enum ImportType: int implements HasLabel
 {
     /** スタッフ */
     case Staff = 1;
@@ -12,6 +12,6 @@ enum ImportType: int
      */
     public function label(): string
     {
-        return __('enums.ImportType' . $this->value);
+        return __('enums.ImportType_' . $this->value);
     }
 }

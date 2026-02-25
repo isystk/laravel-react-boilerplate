@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum JobStatus: int
+enum JobStatus: int implements HasLabel
 {
     /** 処理待ち */
     case Waiting = 0;
@@ -18,6 +18,6 @@ enum JobStatus: int
      */
     public function label(): string
     {
-        return __('enums.JobStatus' . $this->value);
+        return __('enums.JobStatus_' . $this->value);
     }
 }

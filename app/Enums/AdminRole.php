@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum AdminRole: string
+enum AdminRole: string implements HasLabel
 {
     /** 一般管理者 */
     case Manager = 'manager';
@@ -14,7 +14,7 @@ enum AdminRole: string
      */
     public function label(): string
     {
-        return __('enums.AdminRole' . $this->value);
+        return __('enums.AdminRole_' . $this->value);
     }
 
     /**

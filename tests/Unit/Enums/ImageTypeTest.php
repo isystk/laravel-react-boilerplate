@@ -9,9 +9,9 @@ class ImageTypeTest extends BaseTest
 {
     public function test_label_各ケースのラベルが返却されること(): void
     {
-        $this->assertSame(__('enums.ImageType1'), ImageType::Stock->label());
-        $this->assertSame(__('enums.ImageType2'), ImageType::Contact->label());
-        $this->assertSame(__('enums.ImageType3'), ImageType::User->label());
+        $this->assertSame(__('enums.ImageType_1'), ImageType::Stock->label());
+        $this->assertSame(__('enums.ImageType_2'), ImageType::Contact->label());
+        $this->assertSame(__('enums.ImageType_3'), ImageType::User->label());
     }
 
     public function test_type_各ケースのタイプ文字列が返却されること(): void

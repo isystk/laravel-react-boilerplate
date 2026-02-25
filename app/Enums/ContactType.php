@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum ContactType: int
+enum ContactType: int implements HasLabel
 {
     /** サービスについて */
     case Service = 1;
@@ -16,6 +16,6 @@ enum ContactType: int
      */
     public function label(): string
     {
-        return __('enums.ContactType' . $this->value);
+        return __('enums.ContactType_' . $this->value);
     }
 }

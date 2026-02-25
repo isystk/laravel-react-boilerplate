@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum OperationLogType: string
+enum OperationLogType: string implements HasLabel
 {
     // フロントユーザー操作
     /** ログイン */
