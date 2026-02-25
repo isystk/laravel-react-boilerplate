@@ -25,7 +25,7 @@ class EditControllerTest extends BaseTest
     {
         $admin1 = $this->createDefaultAdmin([
             'name' => '管理者A',
-            'role' => AdminRole::Manager,
+            'role' => AdminRole::Staff,
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -39,7 +39,7 @@ class EditControllerTest extends BaseTest
 
         $admin2 = $this->createDefaultAdmin([
             'name' => '管理者2',
-            'role' => AdminRole::HighManager,
+            'role' => AdminRole::SuperAdmin,
         ]);
         $this->actingAs($admin2, 'admin');
 
@@ -50,8 +50,8 @@ class EditControllerTest extends BaseTest
     public function test_edit_管理者ロール別アクセス権限検証(): void
     {
         $cases = [
-            ['role' => AdminRole::HighManager, 'status' => 200],
-            ['role' => AdminRole::Manager,     'status' => 403],
+            ['role' => AdminRole::SuperAdmin, 'status' => 200],
+            ['role' => AdminRole::Staff,     'status' => 403],
         ];
 
         $stock = $this->createDefaultStock([
@@ -76,7 +76,7 @@ class EditControllerTest extends BaseTest
         $admin1 = $this->createDefaultAdmin([
             'name'  => '管理者1',
             'email' => 'admin1@test.com',
-            'role'  => AdminRole::Manager,
+            'role'  => AdminRole::Staff,
         ]);
         $this->actingAs($admin1, 'admin');
 
@@ -94,7 +94,7 @@ class EditControllerTest extends BaseTest
         $admin2 = $this->createDefaultAdmin([
             'name'  => '管理者2',
             'email' => 'admin2@test.com',
-            'role'  => AdminRole::HighManager,
+            'role'  => AdminRole::SuperAdmin,
         ]);
         $this->actingAs($admin2, 'admin');
 
@@ -128,7 +128,7 @@ class EditControllerTest extends BaseTest
     public function test_edit_not_found(): void
     {
         $admin = $this->createDefaultAdmin([
-            'role' => AdminRole::HighManager,
+            'role' => AdminRole::SuperAdmin,
         ]);
         $this->actingAs($admin, 'admin');
 
@@ -139,7 +139,7 @@ class EditControllerTest extends BaseTest
     public function test_update_not_found(): void
     {
         $admin = $this->createDefaultAdmin([
-            'role' => AdminRole::HighManager,
+            'role' => AdminRole::SuperAdmin,
         ]);
         $this->actingAs($admin, 'admin');
 
@@ -152,7 +152,7 @@ class EditControllerTest extends BaseTest
     public function test_update_validation_error(): void
     {
         $admin = $this->createDefaultAdmin([
-            'role' => AdminRole::HighManager,
+            'role' => AdminRole::SuperAdmin,
         ]);
         $this->actingAs($admin, 'admin');
 
@@ -184,7 +184,7 @@ class EditControllerTest extends BaseTest
         Storage::fake('s3');
 
         $admin = $this->createDefaultAdmin([
-            'role' => AdminRole::HighManager,
+            'role' => AdminRole::SuperAdmin,
         ]);
         $this->actingAs($admin, 'admin');
 

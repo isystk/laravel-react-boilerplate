@@ -31,13 +31,13 @@ class UpdateServiceTest extends BaseTest
         $admin1 = $this->createDefaultAdmin([
             'name'  => 'aaa',
             'email' => 'aaa@test.com',
-            'role'  => AdminRole::Manager->value,
+            'role'  => AdminRole::Staff->value,
         ]);
 
         $request          = new UpdateRequest;
         $request['name']  = 'bbb';
         $request['email'] = 'bbb@test.com';
-        $request['role']  = AdminRole::HighManager->value;
+        $request['role']  = AdminRole::SuperAdmin->value;
         $dto              = new UpdateDto($request);
         $this->service->update($admin1->id, $dto);
 
@@ -45,6 +45,6 @@ class UpdateServiceTest extends BaseTest
         $updatedAdmin = Admin::find($admin1->id);
         $this->assertEquals('bbb', $updatedAdmin->name);
         $this->assertEquals('bbb@test.com', $updatedAdmin->email);
-        $this->assertEquals(AdminRole::HighManager, $updatedAdmin->role);
+        $this->assertEquals(AdminRole::SuperAdmin, $updatedAdmin->role);
     }
 }

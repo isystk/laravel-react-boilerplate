@@ -15,13 +15,13 @@ class AdminsTableSeeder extends Seeder
             'name'     => '管理者1',
             'email'    => 'admin1@test.com',
             'password' => Hash::make('password'),
-            'role'     => AdminRole::HighManager->value,
+            'role'     => AdminRole::SuperAdmin->value,
         ]);
         Admin::create([
             'name'     => '管理者2',
             'email'    => 'admin2@test.com',
             'password' => Hash::make('password'),
-            'role'     => AdminRole::Manager->value,
+            'role'     => AdminRole::Staff->value,
         ]);
 
     }

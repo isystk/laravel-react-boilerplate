@@ -38,12 +38,12 @@ class IndexServiceTest extends BaseTest
         $admin1 = $this->createDefaultAdmin([
             'name'  => 'user1',
             'email' => 'user1@test.com',
-            'role'  => AdminRole::HighManager->value,
+            'role'  => AdminRole::SuperAdmin->value,
         ]);
         $admin2 = $this->createDefaultAdmin([
             'name'  => 'user2',
             'email' => 'user2@test.com',
-            'role'  => AdminRole::Manager->value,
+            'role'  => AdminRole::Staff->value,
         ]);
 
         $input         = $default;
@@ -59,7 +59,7 @@ class IndexServiceTest extends BaseTest
         $adminIds = $admins->pluck('id')->all();
         $this->assertSame([$admin2->id], $adminIds, 'emailで検索が出来ることをテスト');
 
-        $input['role'] = AdminRole::Manager->value;
+        $input['role'] = AdminRole::Staff->value;
         /** @var LengthAwarePaginator<int, Admin> $admins */
         $admins   = $this->service->searchStaff($input);
         $adminIds = $admins->pluck('id')->all();

@@ -12,13 +12,13 @@
             <div class="btn-container d-flex justify-content-between">
                 <a href="{{ route('admin.staff.create') }}"
                    class="btn btn-primary m-auto"
-                   @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>
+                   @if (!Auth::user()->role->isSuperAdmin()) disabled="disabled" @endif>
                     新規登録
                 </a>
                 <a href="{{ route('admin.staff.import') }}"
                    class="btn btn-primary position-absolute"
                    style="right: 20px"
-                   @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>
+                   @if (!Auth::user()->role->isSuperAdmin()) disabled="disabled" @endif>
                     一括登録
                 </a>
             </div>

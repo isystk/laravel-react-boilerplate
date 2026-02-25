@@ -72,7 +72,7 @@
                 <div class="mx-auto">
                     <a class="btn btn-primary"
                        href="{{ route('admin.user.edit', ['user' => $user]) }}"
-                       {{ !Auth::user()->role->isHighManager() ? 'disabled="disabled"' : '' }}>
+                       {{ !Auth::user()->role->isSuperAdmin() ? 'disabled="disabled"' : '' }}>
                         変更する
                     </a>
                 </div>
@@ -87,7 +87,7 @@
                         @csrf
                         <button class="btn btn-danger js-suspendBtn"
                                 data-id="{{ $user->id }}"
-                                {{ !Auth::user()->role->isHighManager() ? 'disabled="disabled"' : '' }}>
+                                {{ !Auth::user()->role->isSuperAdmin() ? 'disabled="disabled"' : '' }}>
                             アカウント停止
                         </button>
                     </form>
@@ -99,7 +99,7 @@
                         @csrf
                         <button class="btn btn-success js-activateBtn"
                                 data-id="{{ $user->id }}"
-                                {{ !Auth::user()->role->isHighManager() ? 'disabled="disabled"' : '' }}>
+                                {{ !Auth::user()->role->isSuperAdmin() ? 'disabled="disabled"' : '' }}>
                             有効にする
                         </button>
                     </form>

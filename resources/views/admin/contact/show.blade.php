@@ -73,7 +73,7 @@
                     <button href="#"
                             class="btn btn-danger js-deleteBtn"
                             data-id="{{ $contact->id }}"
-                            @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>
+                            @if (!Auth::user()->role->isSuperAdmin()) disabled="disabled" @endif>
                         削除する
                     </button>
                 </form>

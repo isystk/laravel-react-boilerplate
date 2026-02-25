@@ -138,7 +138,7 @@
                                     <td>
                                         <button class="btn btn-danger btn-sm js-deleteBtn"
                                                 data-id="{{ $displayDto->image->id }}"
-                                                @if (!Auth::user()->role->isHighManager() || $displayDto->isUsed()) disabled="disabled" @endif>削除する
+                                                @if (!Auth::user()->role->isSuperAdmin() || $displayDto->isUsed()) disabled="disabled" @endif>削除する
                                         </button>
                                         <form id="delete_{{ $displayDto->image->id }}"
                                               action="{{ route('admin.photo.destroy') }}"

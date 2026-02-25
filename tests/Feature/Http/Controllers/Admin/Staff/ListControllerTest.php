@@ -22,12 +22,12 @@ class ListControllerTest extends BaseTest
         $this->createDefaultAdmin([
             'name'  => 'user1',
             'email' => 'user1@test.com',
-            'role'  => AdminRole::HighManager->value,
+            'role'  => AdminRole::SuperAdmin->value,
         ]);
         $admin2 = $this->createDefaultAdmin([
             'name'  => 'user2',
             'email' => 'user2@test.com',
-            'role'  => AdminRole::Manager->value,
+            'role'  => AdminRole::Staff->value,
         ]);
         $this->actingAs($admin2, 'admin');
 
@@ -39,8 +39,8 @@ class ListControllerTest extends BaseTest
     public function test_index_管理者ロール別アクセス権限検証(): void
     {
         $cases = [
-            ['role' => AdminRole::HighManager, 'status' => 200],
-            ['role' => AdminRole::Manager,     'status' => 200],
+            ['role' => AdminRole::SuperAdmin, 'status' => 200],
+            ['role' => AdminRole::Staff,     'status' => 200],
         ];
 
         foreach ($cases as $case) {

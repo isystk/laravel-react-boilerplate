@@ -14,26 +14,26 @@ class UpdateDtoTest extends BaseTest
         $request = UpdateRequest::create('/', 'POST', [
             'name'  => '更新管理者',
             'email' => 'updated@example.com',
-            'role'  => 'manager',
+            'role'  => AdminRole::Staff->value,
         ]);
 
         $dto = new UpdateDto($request);
 
         $this->assertSame('更新管理者', $dto->name);
         $this->assertSame('updated@example.com', $dto->email);
-        $this->assertSame(AdminRole::Manager, $dto->role);
+        $this->assertSame(AdminRole::Staff, $dto->role);
     }
 
-    public function test_construct_roleがHighManagerの場合正しく設定されること(): void
+    public function test_construct_roleがSuperAdminの場合正しく設定されること(): void
     {
         $request = UpdateRequest::create('/', 'POST', [
             'name'  => 'テスト',
             'email' => 'test@example.com',
-            'role'  => 'high-manager',
+            'role'  => AdminRole::SuperAdmin->value,
         ]);
 
         $dto = new UpdateDto($request);
 
-        $this->assertSame(AdminRole::HighManager, $dto->role);
+        $this->assertSame(AdminRole::SuperAdmin, $dto->role);
     }
 }

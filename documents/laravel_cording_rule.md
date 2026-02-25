@@ -505,7 +505,7 @@ public function test_store(): void
     Storage::fake('s3');
 
     $admin = $this->createDefaultAdmin([
-        'role' => AdminRole::HighManager,
+        'role' => AdminRole::SuperAdmin,
     ]);
     $this->actingAs($admin, 'admin');
 
@@ -554,11 +554,11 @@ use App\Enums\AdminRole;
 return [
     'permissions' => [
         // 単一ルートへの制限
-        'admin.stock.create'   => [AdminRole::HighManager],
-        'admin.stock.store'    => [AdminRole::HighManager],
+        'admin.stock.create'   => [AdminRole::SuperAdmin],
+        'admin.stock.store'    => [AdminRole::SuperAdmin],
 
         // ワイルドカードによる一括制限
-        'admin.staff.import.*' => [AdminRole::HighManager],
+        'admin.staff.import.*' => [AdminRole::SuperAdmin],
     ],
 ];
 ```

@@ -21,7 +21,7 @@ class HomeControllerTest extends BaseTest
     {
         $admin = $this->createDefaultAdmin([
             'name' => '管理者A',
-            'role' => AdminRole::HighManager,
+            'role' => AdminRole::SuperAdmin,
         ]);
         $this->actingAs($admin, 'admin');
 
@@ -38,7 +38,7 @@ class HomeControllerTest extends BaseTest
 
     public function test_index_未返信件数がビューに渡される(): void
     {
-        $admin = $this->createDefaultAdmin(['role' => AdminRole::HighManager]);
+        $admin = $this->createDefaultAdmin(['role' => AdminRole::SuperAdmin]);
         $this->actingAs($admin, 'admin');
 
         // 未返信: 2件、返信済み: 1件
@@ -54,7 +54,7 @@ class HomeControllerTest extends BaseTest
 
     public function test_index_月別ユーザーデータがビューに渡される(): void
     {
-        $admin = $this->createDefaultAdmin(['role' => AdminRole::HighManager]);
+        $admin = $this->createDefaultAdmin(['role' => AdminRole::SuperAdmin]);
         $this->actingAs($admin, 'admin');
 
         $this->createDefaultUser(['created_at' => now()->startOfMonth()]);
@@ -70,8 +70,8 @@ class HomeControllerTest extends BaseTest
     public function test_index_管理者ロール別アクセス権限検証(): void
     {
         $cases = [
-            ['role' => AdminRole::HighManager, 'status' => 200],
-            ['role' => AdminRole::Manager,     'status' => 200],
+            ['role' => AdminRole::SuperAdmin, 'status' => 200],
+            ['role' => AdminRole::Staff,     'status' => 200],
         ];
 
         foreach ($cases as $case) {

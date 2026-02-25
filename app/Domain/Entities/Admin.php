@@ -53,9 +53,9 @@ class Admin extends Authenticatable
     /**
      * 権限がシステム管理者の場合にTrueを返却する
      */
-    public function isHighManager(): bool
+    public function isSuperAdmin(): bool
     {
-        return $this->role === AdminRole::HighManager;
+        return $this->role === AdminRole::SuperAdmin;
     }
 
     /**
@@ -63,7 +63,7 @@ class Admin extends Authenticatable
      */
     public function isManager(): bool
     {
-        return $this->role === AdminRole::Manager;
+        return $this->role === AdminRole::Staff;
     }
 
     /**

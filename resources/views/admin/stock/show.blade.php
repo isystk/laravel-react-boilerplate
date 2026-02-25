@@ -64,7 +64,7 @@
                 <div class="mx-auto">
                     <a class="btn btn-primary"
                        href="{{ route('admin.stock.edit', ['stock' => $stock]) }}"
-                       @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>
+                       @if (!Auth::user()->role->isSuperAdmin()) disabled="disabled" @endif>
                         変更する
                     </a>
                 </div>
@@ -78,7 +78,7 @@
                     @csrf
                     <button class="btn btn-danger js-deleteBtn"
                             data-id="{{ $stock->id }}"
-                            @if (!Auth::user()->role->isHighManager()) disabled="disabled" @endif>
+                            @if (!Auth::user()->role->isSuperAdmin()) disabled="disabled" @endif>
                         削除する
                     </button>
                 </form>
