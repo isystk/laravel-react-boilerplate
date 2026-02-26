@@ -1,12 +1,10 @@
 {
     "recommendations": [
-        "shufo.vscode-blade-formatter",
-        "onecentlin.laravel-blade",
-        "esbenp.prettier-vscode",
         "bmewburn.vscode-intelephense-client",
-        "editorconfig.editorconfig",
         "xdebug.php-debug",
-        "tyriar.sort-lines",
-        "streetsidesoftware.code-spell-checker"
+        "editorconfig.editorconfig",
+        "onecentlin.laravel-blade",
+        "shufo.vscode-blade-formatter",
+        "amiralizadeh9480.laravel-extra-intellisense"
     ]
 }

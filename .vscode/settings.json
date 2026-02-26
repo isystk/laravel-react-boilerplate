@@ -1,8 +1,102 @@
 {
-  "laravel_goto_view.folders": {
-    "default": "/resources/views",
-    "js": "/resources/js/Pages",
-    "vendor": "/resources/views/vendor"
+  // Blade ファイルの関連付けを設定
+  "files.associations": {
+    "*.blade.php": "blade"
   },
-  "git.ignoreLimitWarning": true
+
+  // Blade ファイルのフォーマッタを設定
+  "[blade]": {
+    "editor.defaultFormatter": "shufo.vscode-blade-formatter",
+    "editor.formatOnSave": false
+  },
+
+  // Laravel Extra Intellisense の設定
+  "LaravelExtraIntellisense.phpCommand": "docker compose -f /root/projects/laravel-react-boilerplate/docker/docker-compose.yml exec -T app php -r \"{code}\"",
+  "LaravelExtraIntellisense.basePathForCode": "/var/www/html",
+
+  // Intelephense の PHP バージョンを設定
+  "intelephense.environment.phpVersion": "8.2",
+
+  // Intelephense のスタブを設定
+  "intelephense.stubs": [
+    "apache",
+    "bcmath",
+    "bz2",
+    "calendar",
+    "com_dotnet",
+    "Core",
+    "ctype",
+    "curl",
+    "date",
+    "dba",
+    "dom",
+    "enchant",
+    "exif",
+    "FFI",
+    "fileinfo",
+    "filter",
+    "fpm",
+    "ftp",
+    "gd",
+    "gettext",
+    "gmp",
+    "hash",
+    "iconv",
+    "imap",
+    "intl",
+    "json",
+    "ldap",
+    "libxml",
+    "mbstring",
+    "meta",
+    "mysqli",
+    "oci8",
+    "odbc",
+    "openssl",
+    "pcntl",
+    "pcre",
+    "PDO",
+    "pgsql",
+    "Phar",
+    "posix",
+    "pspell",
+    "random",
+    "readline",
+    "Reflection",
+    "session",
+    "shmop",
+    "SimpleXML",
+    "snmp",
+    "soap",
+    "sockets",
+    "sodium",
+    "SPL",
+    "sqlite3",
+    "standard",
+    "superglobals",
+    "sysvmsg",
+    "sysvsem",
+    "sysvshm",
+    "tidy",
+    "tokenizer",
+    "uri",
+    "xml",
+    "xmlreader",
+    "xmlrpc",
+    "xmlwriter",
+    "xsl",
+    "Zend OPcache",
+    "zip",
+    "zlib"
+  ],
+
+  // Intelephense のファイル除外設定
+  "intelephense.files.exclude": [
+    "**/.git/**",
+    "**/node_modules/**"
+  ],
+
+  // Intelephense のファイルサイズ制限を設定
+  "intelephense.files.maxSize": 5000000
+
 }

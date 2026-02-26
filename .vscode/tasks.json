@@ -1,0 +1,27 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "MakeTest",
+      "type": "shell",
+      "command": "bash -c \"make test $(wslpath -u '${relativeFile}')\"",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "clear": true
+      }
+    },
+    {
+      "label": "MakeFormat",
+      "type": "shell",
+      "command": "bash -c \"make format $(wslpath -u '${relativeFile}')\"",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "clear": true
+      }
+    }
+  ]
+}
