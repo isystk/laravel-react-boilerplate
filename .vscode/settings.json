@@ -11,7 +11,7 @@
   },
 
   // Laravel Extra Intellisense の設定
-  "LaravelExtraIntellisense.phpCommand": "docker compose -f /root/projects/laravel-react-boilerplate/docker/docker-compose.yml exec -T app php -r \"{code}\"",
+  "LaravelExtraIntellisense.phpCommand": "docker compose -f /root/projects/laravel-react-boilerplate/docker/docker-compose.yml exec -T laraec-app php -r \"{code}\"",
   "LaravelExtraIntellisense.basePathForCode": "/var/www/html",
 
   // Intelephense の PHP バージョンを設定
