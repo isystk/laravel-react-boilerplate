@@ -1,0 +1,1796 @@
+{
+  "name": "musashi-trade",
+  "tables": [
+    {
+      "name": "admins",
+      "type": "BASE TABLE",
+      "comment": "管理者",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint unsigned",
+          "nullable": false,
+          "extra_def": "auto_increment"
+        },
+        {
+          "name": "name",
+          "type": "varchar(255)",
+          "nullable": false,
+          "comment": "管理者名"
+        },
+        {
+          "name": "email",
+          "type": "varchar(64)",
+          "nullable": false,
+          "comment": "メールアドレス"
+        },
+        {
+          "name": "password",
+          "type": "varchar(255)",
+          "nullable": false,
+          "comment": "パスワード"
+        },
+        {
+          "name": "role",
+          "type": "varchar(255)",
+          "nullable": false,
+          "default": "manager",
+          "comment": "権限名"
+        },
+        {
+          "name": "remember_token",
+          "type": "varchar(100)",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "datetime",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "datetime",
+          "nullable": false
+        }
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY",
+          "def": "PRIMARY KEY (id) USING BTREE",
+          "table": "admins",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "admins_email_unique",
+          "def": "UNIQUE KEY admins_email_unique (email) USING BTREE",
+          "table": "admins",
+          "columns": [
+            "email"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "admins_email_unique",
+          "type": "UNIQUE",
+          "def": "UNIQUE KEY admins_email_unique (email)",
+          "table": "admins",
+          "columns": [
+            "email"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "admins",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE `admins` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '管理者名',\n  `email` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'メールアドレス',\n  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'パスワード',\n  `role` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'manager' COMMENT '権限名',\n  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `created_at` datetime NOT NULL,\n  `updated_at` datetime NOT NULL,\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `admins_email_unique` (`email`)\n) ENGINE=InnoDB AUTO_INCREMENT=[Redacted by tbls] DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='管理者'"
+    },
+    {
+      "name": "alert_logs",
+      "type": "BASE TABLE",
+      "comment": "アラート通知履歴",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint unsigned",
+          "nullable": false,
+          "extra_def": "auto_increment",
+          "comment": "アラート通知履歴ID"
+        },
+        {
+          "name": "alert_id",
+          "type": "bigint unsigned",
+          "nullable": false,
+          "comment": "アラートID"
+        },
+        {
+          "name": "user_id",
+          "type": "bigint unsigned",
+          "nullable": false,
+          "comment": "ユーザーID"
+        },
+        {
+          "name": "message",
+          "type": "varchar(255)",
+          "nullable": false,
+          "comment": "メッセージ"
+        },
+        {
+          "name": "triggered_at",
+          "type": "datetime",
+          "nullable": false,
+          "comment": "発火日時"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_alert_id",
+          "def": "KEY idx_alert_id (alert_id) USING BTREE",
+          "table": "alert_logs",
+          "columns": [
+            "alert_id"
+          ]
+        },
+        {
+          "name": "idx_user_id_triggered",
+          "def": "KEY idx_user_id_triggered (user_id, triggered_at) USING BTREE",
+          "table": "alert_logs",
+          "columns": [
+            "user_id",
+            "triggered_at"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "def": "PRIMARY KEY (id) USING BTREE",
+          "table": "alert_logs",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "alert_logs_alert_id_foreign",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (alert_id) REFERENCES alerts (id)",
+          "table": "alert_logs",
+          "referenced_table": "alerts",
+          "columns": [
+            "alert_id"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "alert_logs",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE `alert_logs` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'アラート通知履歴ID',\n  `alert_id` bigint unsigned NOT NULL COMMENT 'アラートID',\n  `user_id` bigint unsigned NOT NULL COMMENT 'ユーザーID',\n  `message` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'メッセージ',\n  `triggered_at` datetime NOT NULL COMMENT '発火日時',\n  PRIMARY KEY (`id`),\n  KEY `idx_alert_id` (`alert_id`),\n  KEY `idx_user_id_triggered` (`user_id`,`triggered_at`),\n  CONSTRAINT `alert_logs_alert_id_foreign` FOREIGN KEY (`alert_id`) REFERENCES `alerts` (`id`) ON DELETE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='アラート通知履歴'"
+    },
+    {
+      "name": "alerts",
+      "type": "BASE TABLE",
+      "comment": "アラート設定",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint unsigned",
+          "nullable": false,
+          "extra_def": "auto_increment",
+          "comment": "アラートID"
+        },
+        {
+          "name": "user_id",
+          "type": "bigint unsigned",
+          "nullable": false,
+          "comment": "ユーザーID"
+        },
+        {
+          "name": "type",
+          "type": "varchar(30)",
+          "nullable": false,
+          "comment": "アラート種別"
+        },
+        {
+          "name": "symbol",
+          "type": "varchar(20)",
+          "nullable": false,
+          "default": "BTCUSDT",
+          "comment": "シンボル"
+        },
+        {
+          "name": "price_threshold",
+          "type": "decimal(12,2)",
+          "nullable": true,
+          "comment": "価格閾値"
+        },
+        {
+          "name": "price_direction",
+          "type": "varchar(10)",
+          "nullable": true,
+          "comment": "価格方向"
+        },
+        {
+          "name": "volume_threshold",
+          "type": "decimal(14,2)",
+          "nullable": true,
+          "comment": "ボリューム閾値"
+        },
+        {
+          "name": "volume_window",
+          "type": "int",
+          "nullable": true,
+          "comment": "ボリューム集計時間窓"
+        },
+        {
+          "name": "is_active",
+          "type": "tinyint",
+          "nullable": false,
+          "default": "1",
+          "comment": "有効フラグ"
+        },
+        {
+          "name": "last_triggered_at",
+          "type": "datetime",
+          "nullable": true,
+          "comment": "最終発火日時"
+        },
+        {
+          "name": "created_at",
+          "type": "datetime",
+          "nullable": false,
+          "comment": "作成日時"
+        },
+        {
+          "name": "updated_at",
+          "type": "datetime",
+          "nullable": false,
+          "comment": "更新日時"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_is_active",
+          "def": "KEY idx_is_active (is_active) USING BTREE",
+          "table": "alerts",
+          "columns": [
+            "is_active"
+          ]
+        },
+        {
+          "name": "idx_user_id",
+          "def": "KEY idx_user_id (user_id) USING BTREE",
+          "table": "alerts",
+          "columns": [
+            "user_id"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "def": "PRIMARY KEY (id) USING BTREE",
+          "table": "alerts",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "alerts_user_id_foreign",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (user_id) REFERENCES users (id)",
+          "table": "alerts",
+          "referenced_table": "users",
+          "columns": [
+            "user_id"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "alerts",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE `alerts` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'アラートID',\n  `user_id` bigint unsigned NOT NULL COMMENT 'ユーザーID',\n  `type` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'アラート種別',\n  `symbol` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'BTCUSDT' COMMENT 'シンボル',\n  `price_threshold` decimal(12,2) DEFAULT NULL COMMENT '価格閾値',\n  `price_direction` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '価格方向',\n  `volume_threshold` decimal(14,2) DEFAULT NULL COMMENT 'ボリューム閾値',\n  `volume_window` int DEFAULT NULL COMMENT 'ボリューム集計時間窓',\n  `is_active` tinyint NOT NULL DEFAULT '1' COMMENT '有効フラグ',\n  `last_triggered_at` datetime DEFAULT NULL COMMENT '最終発火日時',\n  `created_at` datetime NOT NULL COMMENT '作成日時',\n  `updated_at` datetime NOT NULL COMMENT '更新日時',\n  PRIMARY KEY (`id`),\n  KEY `idx_user_id` (`user_id`),\n  KEY `idx_is_active` (`is_active`),\n  CONSTRAINT `alerts_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE\n) ENGINE=InnoDB AUTO_INCREMENT=[Redacted by tbls] DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='アラート設定'"
+    },
+    {
+      "name": "cache",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "key",
+          "type": "varchar(255)",
+          "nullable": false
+        },
+        {
+          "name": "value",
+          "type": "mediumtext",
+          "nullable": false
+        },
+        {
+          "name": "expiration",
+          "type": "int",
+          "nullable": false
+        }
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY",
+          "def": "PRIMARY KEY (key) USING BTREE",
+          "table": "cache",
+          "columns": [
+            "key"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (key)",
+          "table": "cache",
+          "columns": [
+            "key"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE `cache` (\n  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,\n  `expiration` int NOT NULL,\n  PRIMARY KEY (`key`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+    },
+    {
+      "name": "cache_locks",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "key",
+          "type": "varchar(255)",
+          "nullable": false
+        },
+        {
+          "name": "owner",
+          "type": "varchar(255)",
+          "nullable": false
+        },
+        {
+          "name": "expiration",
+          "type": "int",
+          "nullable": false
+        }
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY",
+          "def": "PRIMARY KEY (key) USING BTREE",
+          "table": "cache_locks",
+          "columns": [
+            "key"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (key)",
+          "table": "cache_locks",
+          "columns": [
+            "key"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE `cache_locks` (\n  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `owner` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `expiration` int NOT NULL,\n  PRIMARY KEY (`key`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+    },
+    {
+      "name": "contact_replies",
+      "type": "BASE TABLE",
+      "comment": "お問い合わせ返信",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint unsigned",
+          "nullable": false,
+          "extra_def": "auto_increment"
+        },
+        {
+          "name": "contact_id",
+          "type": "bigint unsigned",
+          "nullable": false
+        },
+        {
+          "name": "admin_id",
+          "type": "bigint unsigned",
+          "nullable": false
+        },
+        {
+          "name": "body",
+          "type": "varchar(1000)",
+          "nullable": false,
+          "comment": "返信内容"
+        },
+        {
+          "name": "created_at",
+          "type": "datetime",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "datetime",
+          "nullable": false
+        }
+      ],
+      "indexes": [
+        {
+          "name": "contact_replies_admin_id_foreign",
+          "def": "KEY contact_replies_admin_id_foreign (admin_id) USING BTREE",
+          "table": "contact_replies",
+          "columns": [
+            "admin_id"
+          ]
+        },
+        {
+          "name": "contact_replies_contact_id_foreign",
+          "def": "KEY contact_replies_contact_id_foreign (contact_id) USING BTREE",
+          "table": "contact_replies",
+          "columns": [
+            "contact_id"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "def": "PRIMARY KEY (id) USING BTREE",
+          "table": "contact_replies",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "contact_replies_admin_id_foreign",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (admin_id) REFERENCES admins (id)",
+          "table": "contact_replies",
+          "referenced_table": "admins",
+          "columns": [
+            "admin_id"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "contact_replies_contact_id_foreign",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (contact_id) REFERENCES contacts (id)",
+          "table": "contact_replies",
+          "referenced_table": "contacts",
+          "columns": [
+            "contact_id"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "contact_replies",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE `contact_replies` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `contact_id` bigint unsigned NOT NULL,\n  `admin_id` bigint unsigned NOT NULL,\n  `body` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '返信内容',\n  `created_at` datetime NOT NULL,\n  `updated_at` datetime NOT NULL,\n  PRIMARY KEY (`id`),\n  KEY `contact_replies_contact_id_foreign` (`contact_id`),\n  KEY `contact_replies_admin_id_foreign` (`admin_id`),\n  CONSTRAINT `contact_replies_admin_id_foreign` FOREIGN KEY (`admin_id`) REFERENCES `admins` (`id`) ON DELETE CASCADE,\n  CONSTRAINT `contact_replies_contact_id_foreign` FOREIGN KEY (`contact_id`) REFERENCES `contacts` (`id`) ON DELETE CASCADE\n) ENGINE=InnoDB AUTO_INCREMENT=[Redacted by tbls] DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='お問い合わせ返信'"
+    },
+    {
+      "name": "contacts",
+      "type": "BASE TABLE",
+      "comment": "お問い合わせ",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint unsigned",
+          "nullable": false,
+          "extra_def": "auto_increment"
+        },
+        {
+          "name": "user_id",
+          "type": "bigint unsigned",
+          "nullable": false
+        },
+        {
+          "name": "type",
+          "type": "tinyint",
+          "nullable": false,
+          "comment": "お問い合わせ種類"
+        },
+        {
+          "name": "title",
+          "type": "varchar(100)",
+          "nullable": false,
+          "comment": "タイトル"
+        },
+        {
+          "name": "message",
+          "type": "varchar(500)",
+          "nullable": false,
+          "comment": "お問い合わせ内容"
+        },
+        {
+          "name": "image_id",
+          "type": "bigint unsigned",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "datetime",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "datetime",
+          "nullable": false
+        }
+      ],
+      "indexes": [
+        {
+          "name": "contacts_image_id_foreign",
+          "def": "KEY contacts_image_id_foreign (image_id) USING BTREE",
+          "table": "contacts",
+          "columns": [
+            "image_id"
+          ]
+        },
+        {
+          "name": "contacts_user_id_foreign",
+          "def": "KEY contacts_user_id_foreign (user_id) USING BTREE",
+          "table": "contacts",
+          "columns": [
+            "user_id"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "def": "PRIMARY KEY (id) USING BTREE",
+          "table": "contacts",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "contacts_image_id_foreign",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (image_id) REFERENCES images (id)",
+          "table": "contacts",
+          "referenced_table": "images",
+          "columns": [
+            "image_id"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "contacts_user_id_foreign",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (user_id) REFERENCES users (id)",
+          "table": "contacts",
+          "referenced_table": "users",
+          "columns": [
+            "user_id"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "contacts",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE `contacts` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `user_id` bigint unsigned NOT NULL,\n  `type` tinyint NOT NULL COMMENT 'お問い合わせ種類',\n  `title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'タイトル',\n  `message` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'お問い合わせ内容',\n  `image_id` bigint unsigned DEFAULT NULL,\n  `created_at` datetime NOT NULL,\n  `updated_at` datetime NOT NULL,\n  PRIMARY KEY (`id`),\n  KEY `contacts_user_id_foreign` (`user_id`),\n  KEY `contacts_image_id_foreign` (`image_id`),\n  CONSTRAINT `contacts_image_id_foreign` FOREIGN KEY (`image_id`) REFERENCES `images` (`id`),\n  CONSTRAINT `contacts_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE\n) ENGINE=InnoDB AUTO_INCREMENT=[Redacted by tbls] DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='お問い合わせ'"
+    },
+    {
+      "name": "failed_jobs",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint unsigned",
+          "nullable": false,
+          "extra_def": "auto_increment"
+        },
+        {
+          "name": "uuid",
+          "type": "varchar(255)",
+          "nullable": false
+        },
+        {
+          "name": "connection",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "queue",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "payload",
+          "type": "longtext",
+          "nullable": false
+        },
+        {
+          "name": "exception",
+          "type": "longtext",
+          "nullable": false
+        },
+        {
+          "name": "failed_at",
+          "type": "datetime",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "extra_def": "DEFAULT_GENERATED"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY",
+          "def": "PRIMARY KEY (id) USING BTREE",
+          "table": "failed_jobs",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "failed_jobs_uuid_unique",
+          "def": "UNIQUE KEY failed_jobs_uuid_unique (uuid) USING BTREE",
+          "table": "failed_jobs",
+          "columns": [
+            "uuid"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "failed_jobs_uuid_unique",
+          "type": "UNIQUE",
+          "def": "UNIQUE KEY failed_jobs_uuid_unique (uuid)",
+          "table": "failed_jobs",
+          "columns": [
+            "uuid"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "failed_jobs",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE `failed_jobs` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,\n  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,\n  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,\n  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,\n  `failed_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+    },
+    {
+      "name": "images",
+      "type": "BASE TABLE",
+      "comment": "画像",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint unsigned",
+          "nullable": false,
+          "extra_def": "auto_increment"
+        },
+        {
+          "name": "file_name",
+          "type": "varchar(200)",
+          "nullable": false,
+          "comment": "ファイル名"
+        },
+        {
+          "name": "type",
+          "type": "tinyint",
+          "nullable": false,
+          "comment": "画像タイプ"
+        },
+        {
+          "name": "created_at",
+          "type": "datetime",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "datetime",
+          "nullable": false
+        }
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY",
+          "def": "PRIMARY KEY (id) USING BTREE",
+          "table": "images",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "images",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE `images` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `file_name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ファイル名',\n  `type` tinyint NOT NULL COMMENT '画像タイプ',\n  `created_at` datetime NOT NULL,\n  `updated_at` datetime NOT NULL,\n  PRIMARY KEY (`id`)\n) ENGINE=InnoDB AUTO_INCREMENT=[Redacted by tbls] DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='画像'"
+    },
+    {
+      "name": "import_histories",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint unsigned",
+          "nullable": false,
+          "extra_def": "auto_increment"
+        },
+        {
+          "name": "job_id",
+          "type": "int unsigned",
+          "nullable": true,
+          "comment": "ジョブ管理テーブル（jobs）ID"
+        },
+        {
+          "name": "type",
+          "type": "varchar(32)",
+          "nullable": false,
+          "comment": "ジョブの種類"
+        },
+        {
+          "name": "file_name",
+          "type": "varchar(255)",
+          "nullable": false,
+          "comment": "インポートファイル名"
+        },
+        {
+          "name": "status",
+          "type": "tinyint",
+          "nullable": false,
+          "default": "0",
+          "comment": "ステータス"
+        },
+        {
+          "name": "import_user_id",
+          "type": "bigint unsigned",
+          "nullable": true,
+          "comment": "インポートしたユーザーID"
+        },
+        {
+          "name": "import_at",
+          "type": "datetime",
+          "nullable": true,
+          "comment": "インポートした日時"
+        },
+        {
+          "name": "save_file_name",
+          "type": "varchar(255)",
+          "nullable": false,
+          "comment": "サーバ上に格納されたファイル名"
+        },
+        {
+          "name": "created_at",
+          "type": "datetime",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "datetime",
+          "nullable": false
+        }
+      ],
+      "indexes": [
+        {
+          "name": "import_histories_type_index",
+          "def": "KEY import_histories_type_index (type) USING BTREE",
+          "table": "import_histories",
+          "columns": [
+            "type"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "def": "PRIMARY KEY (id) USING BTREE",
+          "table": "import_histories",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "import_histories",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE `import_histories` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `job_id` int unsigned DEFAULT NULL COMMENT 'ジョブ管理テーブル（jobs）ID',\n  `type` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ジョブの種類',\n  `file_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'インポートファイル名',\n  `status` tinyint NOT NULL DEFAULT '0' COMMENT 'ステータス',\n  `import_user_id` bigint unsigned DEFAULT NULL COMMENT 'インポートしたユーザーID',\n  `import_at` datetime DEFAULT NULL COMMENT 'インポートした日時',\n  `save_file_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'サーバ上に格納されたファイル名',\n  `created_at` datetime NOT NULL,\n  `updated_at` datetime NOT NULL,\n  PRIMARY KEY (`id`),\n  KEY `import_histories_type_index` (`type`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+    },
+    {
+      "name": "job_batches",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "id",
+          "type": "varchar(255)",
+          "nullable": false
+        },
+        {
+          "name": "name",
+          "type": "varchar(255)",
+          "nullable": false
+        },
+        {
+          "name": "total_jobs",
+          "type": "int",
+          "nullable": false
+        },
+        {
+          "name": "pending_jobs",
+          "type": "int",
+          "nullable": false
+        },
+        {
+          "name": "failed_jobs",
+          "type": "int",
+          "nullable": false
+        },
+        {
+          "name": "failed_job_ids",
+          "type": "longtext",
+          "nullable": false
+        },
+        {
+          "name": "options",
+          "type": "mediumtext",
+          "nullable": true
+        },
+        {
+          "name": "cancelled_at",
+          "type": "int",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "int",
+          "nullable": false
+        },
+        {
+          "name": "finished_at",
+          "type": "int",
+          "nullable": true
+        }
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY",
+          "def": "PRIMARY KEY (id) USING BTREE",
+          "table": "job_batches",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "job_batches",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE `job_batches` (\n  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `total_jobs` int NOT NULL,\n  `pending_jobs` int NOT NULL,\n  `failed_jobs` int NOT NULL,\n  `failed_job_ids` longtext COLLATE utf8mb4_unicode_ci NOT NULL,\n  `options` mediumtext COLLATE utf8mb4_unicode_ci,\n  `cancelled_at` int DEFAULT NULL,\n  `created_at` int NOT NULL,\n  `finished_at` int DEFAULT NULL,\n  PRIMARY KEY (`id`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+    },
+    {
+      "name": "jobs",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint unsigned",
+          "nullable": false,
+          "extra_def": "auto_increment"
+        },
+        {
+          "name": "queue",
+          "type": "varchar(255)",
+          "nullable": false
+        },
+        {
+          "name": "payload",
+          "type": "longtext",
+          "nullable": false
+        },
+        {
+          "name": "attempts",
+          "type": "tinyint unsigned",
+          "nullable": false
+        },
+        {
+          "name": "reserved_at",
+          "type": "int unsigned",
+          "nullable": true
+        },
+        {
+          "name": "available_at",
+          "type": "int unsigned",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "int unsigned",
+          "nullable": false
+        }
+      ],
+      "indexes": [
+        {
+          "name": "jobs_queue_index",
+          "def": "KEY jobs_queue_index (queue) USING BTREE",
+          "table": "jobs",
+          "columns": [
+            "queue"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "def": "PRIMARY KEY (id) USING BTREE",
+          "table": "jobs",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "jobs",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE `jobs` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `queue` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,\n  `attempts` tinyint unsigned NOT NULL,\n  `reserved_at` int unsigned DEFAULT NULL,\n  `available_at` int unsigned NOT NULL,\n  `created_at` int unsigned NOT NULL,\n  PRIMARY KEY (`id`),\n  KEY `jobs_queue_index` (`queue`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+    },
+    {
+      "name": "liquidations",
+      "type": "BASE TABLE",
+      "comment": "清算データ",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint unsigned",
+          "nullable": false,
+          "extra_def": "auto_increment",
+          "comment": "清算データID"
+        },
+        {
+          "name": "symbol",
+          "type": "varchar(20)",
+          "nullable": false,
+          "comment": "シンボル"
+        },
+        {
+          "name": "side",
+          "type": "tinyint",
+          "nullable": false,
+          "comment": "売買区分"
+        },
+        {
+          "name": "price",
+          "type": "decimal(12,2)",
+          "nullable": false,
+          "comment": "平均執行価格"
+        },
+        {
+          "name": "quantity",
+          "type": "decimal(12,4)",
+          "nullable": false,
+          "comment": "清算数量"
+        },
+        {
+          "name": "value_usd",
+          "type": "decimal(14,2)",
+          "nullable": false,
+          "comment": "清算額"
+        },
+        {
+          "name": "liq_time",
+          "type": "bigint",
+          "nullable": false,
+          "comment": "清算発生時刻"
+        },
+        {
+          "name": "created_at",
+          "type": "datetime",
+          "nullable": false,
+          "comment": "作成日時"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_symbol_liq_time",
+          "def": "KEY idx_symbol_liq_time (symbol, liq_time) USING BTREE",
+          "table": "liquidations",
+          "columns": [
+            "symbol",
+            "liq_time"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "def": "PRIMARY KEY (id) USING BTREE",
+          "table": "liquidations",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "liquidations",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE `liquidations` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '清算データID',\n  `symbol` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'シンボル',\n  `side` tinyint NOT NULL COMMENT '売買区分',\n  `price` decimal(12,2) NOT NULL COMMENT '平均執行価格',\n  `quantity` decimal(12,4) NOT NULL COMMENT '清算数量',\n  `value_usd` decimal(14,2) NOT NULL COMMENT '清算額',\n  `liq_time` bigint NOT NULL COMMENT '清算発生時刻',\n  `created_at` datetime NOT NULL COMMENT '作成日時',\n  PRIMARY KEY (`id`),\n  KEY `idx_symbol_liq_time` (`symbol`,`liq_time`)\n) ENGINE=InnoDB AUTO_INCREMENT=[Redacted by tbls] DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='清算データ'"
+    },
+    {
+      "name": "migrations",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "id",
+          "type": "int unsigned",
+          "nullable": false,
+          "extra_def": "auto_increment"
+        },
+        {
+          "name": "migration",
+          "type": "varchar(255)",
+          "nullable": false
+        },
+        {
+          "name": "batch",
+          "type": "int",
+          "nullable": false
+        }
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY",
+          "def": "PRIMARY KEY (id) USING BTREE",
+          "table": "migrations",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "migrations",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE `migrations` (\n  `id` int unsigned NOT NULL AUTO_INCREMENT,\n  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `batch` int NOT NULL,\n  PRIMARY KEY (`id`)\n) ENGINE=InnoDB AUTO_INCREMENT=[Redacted by tbls] DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+    },
+    {
+      "name": "password_reset_tokens",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "email",
+          "type": "varchar(255)",
+          "nullable": false
+        },
+        {
+          "name": "token",
+          "type": "varchar(255)",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "datetime",
+          "nullable": false
+        }
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY",
+          "def": "PRIMARY KEY (email) USING BTREE",
+          "table": "password_reset_tokens",
+          "columns": [
+            "email"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (email)",
+          "table": "password_reset_tokens",
+          "columns": [
+            "email"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE `password_reset_tokens` (\n  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `created_at` datetime NOT NULL,\n  PRIMARY KEY (`email`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+    },
+    {
+      "name": "push_subscriptions",
+      "type": "BASE TABLE",
+      "comment": "ブラウザプッシュ通知購読",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint unsigned",
+          "nullable": false,
+          "extra_def": "auto_increment",
+          "comment": "プッシュ通知購読ID"
+        },
+        {
+          "name": "user_id",
+          "type": "bigint unsigned",
+          "nullable": false,
+          "comment": "ユーザーID"
+        },
+        {
+          "name": "endpoint",
+          "type": "text",
+          "nullable": false,
+          "comment": "エンドポイント"
+        },
+        {
+          "name": "p256dh",
+          "type": "text",
+          "nullable": false,
+          "comment": "p256dhキー"
+        },
+        {
+          "name": "auth",
+          "type": "text",
+          "nullable": false,
+          "comment": "認証キー"
+        },
+        {
+          "name": "created_at",
+          "type": "datetime",
+          "nullable": false,
+          "comment": "作成日時"
+        },
+        {
+          "name": "updated_at",
+          "type": "datetime",
+          "nullable": false,
+          "comment": "更新日時"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_user_id",
+          "def": "KEY idx_user_id (user_id) USING BTREE",
+          "table": "push_subscriptions",
+          "columns": [
+            "user_id"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "def": "PRIMARY KEY (id) USING BTREE",
+          "table": "push_subscriptions",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "push_subscriptions",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "push_subscriptions_user_id_foreign",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (user_id) REFERENCES users (id)",
+          "table": "push_subscriptions",
+          "referenced_table": "users",
+          "columns": [
+            "user_id"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE `push_subscriptions` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'プッシュ通知購読ID',\n  `user_id` bigint unsigned NOT NULL COMMENT 'ユーザーID',\n  `endpoint` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'エンドポイント',\n  `p256dh` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'p256dhキー',\n  `auth` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '認証キー',\n  `created_at` datetime NOT NULL COMMENT '作成日時',\n  `updated_at` datetime NOT NULL COMMENT '更新日時',\n  PRIMARY KEY (`id`),\n  KEY `idx_user_id` (`user_id`),\n  CONSTRAINT `push_subscriptions_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='ブラウザプッシュ通知購読'"
+    },
+    {
+      "name": "sessions",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "id",
+          "type": "varchar(255)",
+          "nullable": false
+        },
+        {
+          "name": "user_id",
+          "type": "bigint unsigned",
+          "nullable": true
+        },
+        {
+          "name": "ip_address",
+          "type": "varchar(45)",
+          "nullable": true
+        },
+        {
+          "name": "user_agent",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "payload",
+          "type": "longtext",
+          "nullable": false
+        },
+        {
+          "name": "last_activity",
+          "type": "int",
+          "nullable": false
+        }
+      ],
+      "indexes": [
+        {
+          "name": "sessions_last_activity_index",
+          "def": "KEY sessions_last_activity_index (last_activity) USING BTREE",
+          "table": "sessions",
+          "columns": [
+            "last_activity"
+          ]
+        },
+        {
+          "name": "sessions_user_id_index",
+          "def": "KEY sessions_user_id_index (user_id) USING BTREE",
+          "table": "sessions",
+          "columns": [
+            "user_id"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "def": "PRIMARY KEY (id) USING BTREE",
+          "table": "sessions",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "sessions",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE `sessions` (\n  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,\n  `user_id` bigint unsigned DEFAULT NULL,\n  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `user_agent` text COLLATE utf8mb4_unicode_ci,\n  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,\n  `last_activity` int NOT NULL,\n  PRIMARY KEY (`id`),\n  KEY `sessions_user_id_index` (`user_id`),\n  KEY `sessions_last_activity_index` (`last_activity`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+    },
+    {
+      "name": "subscriptions",
+      "type": "BASE TABLE",
+      "comment": "サブスクリプション",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint unsigned",
+          "nullable": false,
+          "extra_def": "auto_increment",
+          "comment": "サブスクリプションID"
+        },
+        {
+          "name": "user_id",
+          "type": "bigint unsigned",
+          "nullable": false,
+          "comment": "ユーザーID"
+        },
+        {
+          "name": "stripe_customer_id",
+          "type": "varchar(255)",
+          "nullable": false,
+          "comment": "Stripe顧客ID"
+        },
+        {
+          "name": "stripe_subscription_id",
+          "type": "varchar(255)",
+          "nullable": true,
+          "comment": "StripeサブスクリプションID"
+        },
+        {
+          "name": "stripe_price_id",
+          "type": "varchar(255)",
+          "nullable": true,
+          "comment": "Stripe価格ID"
+        },
+        {
+          "name": "plan",
+          "type": "varchar(20)",
+          "nullable": false,
+          "default": "free",
+          "comment": "プラン"
+        },
+        {
+          "name": "status",
+          "type": "varchar(20)",
+          "nullable": false,
+          "default": "active",
+          "comment": "ステータス"
+        },
+        {
+          "name": "current_period_start",
+          "type": "datetime",
+          "nullable": true,
+          "comment": "課金期間開始日時"
+        },
+        {
+          "name": "current_period_end",
+          "type": "datetime",
+          "nullable": true,
+          "comment": "課金期間終了日時"
+        },
+        {
+          "name": "canceled_at",
+          "type": "datetime",
+          "nullable": true,
+          "comment": "解約日時"
+        },
+        {
+          "name": "created_at",
+          "type": "datetime",
+          "nullable": false,
+          "comment": "作成日時"
+        },
+        {
+          "name": "updated_at",
+          "type": "datetime",
+          "nullable": false,
+          "comment": "更新日時"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_stripe_subscription_id",
+          "def": "KEY idx_stripe_subscription_id (stripe_subscription_id) USING BTREE",
+          "table": "subscriptions",
+          "columns": [
+            "stripe_subscription_id"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "def": "PRIMARY KEY (id) USING BTREE",
+          "table": "subscriptions",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "uq_user_id",
+          "def": "UNIQUE KEY uq_user_id (user_id) USING BTREE",
+          "table": "subscriptions",
+          "columns": [
+            "user_id"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "subscriptions",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "subscriptions_user_id_foreign",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (user_id) REFERENCES users (id)",
+          "table": "subscriptions",
+          "referenced_table": "users",
+          "columns": [
+            "user_id"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "uq_user_id",
+          "type": "UNIQUE",
+          "def": "UNIQUE KEY uq_user_id (user_id)",
+          "table": "subscriptions",
+          "columns": [
+            "user_id"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE `subscriptions` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'サブスクリプションID',\n  `user_id` bigint unsigned NOT NULL COMMENT 'ユーザーID',\n  `stripe_customer_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Stripe顧客ID',\n  `stripe_subscription_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'StripeサブスクリプションID',\n  `stripe_price_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Stripe価格ID',\n  `plan` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'free' COMMENT 'プラン',\n  `status` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active' COMMENT 'ステータス',\n  `current_period_start` datetime DEFAULT NULL COMMENT '課金期間開始日時',\n  `current_period_end` datetime DEFAULT NULL COMMENT '課金期間終了日時',\n  `canceled_at` datetime DEFAULT NULL COMMENT '解約日時',\n  `created_at` datetime NOT NULL COMMENT '作成日時',\n  `updated_at` datetime NOT NULL COMMENT '更新日時',\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `uq_user_id` (`user_id`),\n  KEY `idx_stripe_subscription_id` (`stripe_subscription_id`),\n  CONSTRAINT `subscriptions_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE\n) ENGINE=InnoDB AUTO_INCREMENT=[Redacted by tbls] DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='サブスクリプション'"
+    },
+    {
+      "name": "users",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint unsigned",
+          "nullable": false,
+          "extra_def": "auto_increment"
+        },
+        {
+          "name": "name",
+          "type": "varchar(255)",
+          "nullable": false,
+          "comment": "表示名"
+        },
+        {
+          "name": "email",
+          "type": "varchar(255)",
+          "nullable": false,
+          "comment": "メールアドレス"
+        },
+        {
+          "name": "stripe_customer_id",
+          "type": "varchar(255)",
+          "nullable": true,
+          "comment": "Stripe顧客ID"
+        },
+        {
+          "name": "plan",
+          "type": "varchar(20)",
+          "nullable": false,
+          "default": "free",
+          "comment": "プラン"
+        },
+        {
+          "name": "plan_expires_at",
+          "type": "datetime",
+          "nullable": true,
+          "comment": "プラン有効期限"
+        },
+        {
+          "name": "email_verified_at",
+          "type": "datetime",
+          "nullable": true,
+          "comment": "メールアドレス確認日時"
+        },
+        {
+          "name": "password",
+          "type": "varchar(255)",
+          "nullable": true,
+          "comment": "パスワード"
+        },
+        {
+          "name": "avatar_image_id",
+          "type": "bigint unsigned",
+          "nullable": true
+        },
+        {
+          "name": "google_id",
+          "type": "varchar(255)",
+          "nullable": true,
+          "comment": "GoogleアカウントID(OAuthログイン専用)"
+        },
+        {
+          "name": "avatar_url",
+          "type": "varchar(255)",
+          "nullable": true,
+          "comment": "アバターURL(OAuthログイン専用)"
+        },
+        {
+          "name": "status",
+          "type": "tinyint",
+          "nullable": false,
+          "default": "0",
+          "comment": "ステータス"
+        },
+        {
+          "name": "remember_token",
+          "type": "varchar(100)",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "datetime",
+          "nullable": false
+        },
+        {
+          "name": "updated_at",
+          "type": "datetime",
+          "nullable": false
+        },
+        {
+          "name": "deleted_at",
+          "type": "datetime",
+          "nullable": true
+        }
+      ],
+      "indexes": [
+        {
+          "name": "users_avatar_image_id_foreign",
+          "def": "KEY users_avatar_image_id_foreign (avatar_image_id) USING BTREE",
+          "table": "users",
+          "columns": [
+            "avatar_image_id"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "def": "PRIMARY KEY (id) USING BTREE",
+          "table": "users",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "users_email_unique",
+          "def": "UNIQUE KEY users_email_unique (email) USING BTREE",
+          "table": "users",
+          "columns": [
+            "email"
+          ]
+        },
+        {
+          "name": "users_google_id_unique",
+          "def": "UNIQUE KEY users_google_id_unique (google_id) USING BTREE",
+          "table": "users",
+          "columns": [
+            "google_id"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "users",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "users_avatar_image_id_foreign",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (avatar_image_id) REFERENCES images (id)",
+          "table": "users",
+          "referenced_table": "images",
+          "columns": [
+            "avatar_image_id"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "users_email_unique",
+          "type": "UNIQUE",
+          "def": "UNIQUE KEY users_email_unique (email)",
+          "table": "users",
+          "columns": [
+            "email"
+          ]
+        },
+        {
+          "name": "users_google_id_unique",
+          "type": "UNIQUE",
+          "def": "UNIQUE KEY users_google_id_unique (google_id)",
+          "table": "users",
+          "columns": [
+            "google_id"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE `users` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '表示名',\n  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'メールアドレス',\n  `stripe_customer_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Stripe顧客ID',\n  `plan` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'free' COMMENT 'プラン',\n  `plan_expires_at` datetime DEFAULT NULL COMMENT 'プラン有効期限',\n  `email_verified_at` datetime DEFAULT NULL COMMENT 'メールアドレス確認日時',\n  `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'パスワード',\n  `avatar_image_id` bigint unsigned DEFAULT NULL,\n  `google_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'GoogleアカウントID(OAuthログイン専用)',\n  `avatar_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'アバターURL(OAuthログイン専用)',\n  `status` tinyint NOT NULL DEFAULT '0' COMMENT 'ステータス',\n  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,\n  `created_at` datetime NOT NULL,\n  `updated_at` datetime NOT NULL,\n  `deleted_at` datetime DEFAULT NULL,\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `users_email_unique` (`email`),\n  UNIQUE KEY `users_google_id_unique` (`google_id`),\n  KEY `users_avatar_image_id_foreign` (`avatar_image_id`),\n  CONSTRAINT `users_avatar_image_id_foreign` FOREIGN KEY (`avatar_image_id`) REFERENCES `images` (`id`)\n) ENGINE=InnoDB AUTO_INCREMENT=[Redacted by tbls] DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+    }
+  ],
+  "relations": [
+    {
+      "table": "alert_logs",
+      "columns": [
+        "alert_id"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "alerts",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (alert_id) REFERENCES alerts (id)"
+    },
+    {
+      "table": "alerts",
+      "columns": [
+        "user_id"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "users",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (user_id) REFERENCES users (id)"
+    },
+    {
+      "table": "contact_replies",
+      "columns": [
+        "admin_id"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "admins",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (admin_id) REFERENCES admins (id)"
+    },
+    {
+      "table": "contact_replies",
+      "columns": [
+        "contact_id"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "contacts",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (contact_id) REFERENCES contacts (id)"
+    },
+    {
+      "table": "contacts",
+      "columns": [
+        "image_id"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "images",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "zero_or_one",
+      "def": "FOREIGN KEY (image_id) REFERENCES images (id)"
+    },
+    {
+      "table": "contacts",
+      "columns": [
+        "user_id"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "users",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (user_id) REFERENCES users (id)"
+    },
+    {
+      "table": "push_subscriptions",
+      "columns": [
+        "user_id"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "users",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (user_id) REFERENCES users (id)"
+    },
+    {
+      "table": "subscriptions",
+      "columns": [
+        "user_id"
+      ],
+      "cardinality": "zero_or_one",
+      "parent_table": "users",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (user_id) REFERENCES users (id)"
+    },
+    {
+      "table": "users",
+      "columns": [
+        "avatar_image_id"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "images",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "zero_or_one",
+      "def": "FOREIGN KEY (avatar_image_id) REFERENCES images (id)"
+    }
+  ],
+  "driver": {
+    "name": "mysql",
+    "database_version": "8.4.8",
+    "meta": {
+      "dict": {
+        "Functions": "Stored procedures and functions"
+      }
+    }
+  }
+}
