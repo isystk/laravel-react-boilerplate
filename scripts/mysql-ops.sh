@@ -4,11 +4,12 @@
 # 概要: Docker上のMySQLコンテナに対して、対話的に各種操作を行う
 #
 # 主な機能:
-#   1. login: コンテナ内の環境変数を利用してMySQLクライアントへログイン
-#   2. export: 指定のディレクトリへmysqldumpを実行（ファイル名にタイムスタンプ付与）
-#   3. import: 指定ディレクトリ内のSQLファイルを一覧表示し、選択して流し込み
-#   4. query:  任意のSQLクエリを実行し、結果を表示する
-#   5. select: 任意のSQLクエリを実行し、結果をリストから選択して取得（他スクリプト連携用）
+#   1. login:    コンテナ内の環境変数を利用してMySQLクライアントへログイン
+#   2. export:   指定のディレクトリへmysqldumpを実行（ファイル名にタイムスタンプ付与）
+#   3. import:   指定ディレクトリ内のSQLファイルを一覧表示し、選択して流し込み
+#   4. query:    任意のSQLクエリを実行し、結果を表示する
+#   5. select:   任意のSQLクエリを実行し、結果をリストから選択して取得（他スクリプト連携用）
+#   6. gen-docs: k1low/tblsを使ってMarkdown形式のテーブル定義書とER図(SVG)を生成する
 #
 # 前提条件:
 #   - MySQLコンテナ内に $MYSQL_USER, $MYSQL_PASSWORD, $MYSQL_DATABASE が設定されていること
@@ -20,6 +21,7 @@ set -euo pipefail
 # --- 環境準備 ---
 UTILS_SH=$(dirname $0)/utils.sh
 DUMP_DIR=${DUMP_DIR:-"./dump"}
+DOCS_DIR=${DOCS_DIR:-"./documents/database"}
 
 if [ -f "$UTILS_SH" ]; then
     source "$UTILS_SH"
@@ -59,6 +61,7 @@ if [ -z "$COMMAND" ]; then
         "ログインする"
         "インポートする"
         "エクスポートする"
+        "テーブル定義書・ER図を生成する"
         "キャンセル"
     )
 
@@ -70,6 +73,7 @@ if [ -z "$COMMAND" ]; then
             "ログインする") COMMAND="login"; break ;;
             "インポートする") COMMAND="import"; break ;;
             "エクスポートする") COMMAND="export"; break ;;
+            "テーブル定義書・ER図を生成する") COMMAND="gen-docs"; break ;;
             "キャンセル") echo "🚫 終了します"; exit 0 ;;
             *) echo "無効な選択です。番号で入力してください。" ;;
         esac
@@ -146,8 +150,27 @@ case "$COMMAND" in
         echo "$SELECTED" | cut -d':' -f1
         ;;
 
+    "gen-docs")
+        mkdir -p "$DOCS_DIR"
+        ABS_DOCS_DIR=$(cd "$DOCS_DIR" && pwd)
+
+        DB_USER=$(docker exec "$CONTAINER_NAME" bash -c 'echo $MYSQL_USER')
+        DB_PASS=$(docker exec "$CONTAINER_NAME" bash -c 'echo $MYSQL_PASSWORD')
+        DB_NAME=$(docker exec "$CONTAINER_NAME" bash -c 'echo $MYSQL_DATABASE')
+        NETWORK=$(docker inspect "$CONTAINER_NAME" --format '{{range $k, $v := .NetworkSettings.Networks}}{{$k}} {{end}}' | awk '{print $1}')
+
+        echo "テーブル定義書・ER図を生成中..."
+        docker run --rm \
+            --network "$NETWORK" \
+            -v "$ABS_DOCS_DIR:/output" \
+            k1low/tbls doc --force \
+            "mysql://$DB_USER:$DB_PASS@$CONTAINER_NAME:3306/$DB_NAME" \
+            /output
+        echo "✅ $ABS_DOCS_DIR にテーブル定義書・ER図を生成しました"
+        ;;
+
     *)
-        echo "Usage: $0 [container] {login|export|import|query|select}"
+        echo "Usage: $0 [container] {login|export|import|query|select|gen-docs}"
         exit 1
         ;;
 esac
