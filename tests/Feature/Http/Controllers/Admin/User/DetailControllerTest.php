@@ -3,6 +3,7 @@
 namespace Tests\Feature\Http\Controllers\Admin\User;
 
 use App\Enums\AdminRole;
+use App\Enums\UserStatus;
 use App\Services\Admin\User\SuspendService;
 use Exception;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
@@ -89,7 +90,7 @@ class DetailControllerTest extends BaseTest
         // データのステータスが「アカウント停止」になったことをテスト
         $this->assertDatabaseHas('users', [
             'id'     => $user1->id,
-            'status' => \App\Enums\UserStatus::Suspended->value,
+            'status' => UserStatus::Suspended->value,
         ]);
     }
 
@@ -98,7 +99,7 @@ class DetailControllerTest extends BaseTest
         $user1 = $this->createDefaultUser([
             'name'   => 'user1',
             'email'  => 'user1@test.com',
-            'status' => \App\Enums\UserStatus::Suspended->value,
+            'status' => UserStatus::Suspended->value,
         ]);
 
         $admin1 = $this->createDefaultAdmin([
@@ -114,7 +115,7 @@ class DetailControllerTest extends BaseTest
         // データのステータスが「有効」になったことをテスト
         $this->assertDatabaseHas('users', [
             'id'     => $user1->id,
-            'status' => \App\Enums\UserStatus::Active->value,
+            'status' => UserStatus::Active->value,
         ]);
     }
 

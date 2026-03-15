@@ -3,11 +3,13 @@
 namespace Tests\Feature\Http\Controllers\Front\Auth;
 
 use App\Domain\Entities\User;
+use App\Enums\UserStatus;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\GoogleProvider;
 use Laravel\Socialite\Two\User as SocialiteUser;
 use Mockery;
+use Mockery\Expectation;
 use Tests\BaseTest;
 
 class GoogleLoginControllerTest extends BaseTest
@@ -41,7 +43,7 @@ class GoogleLoginControllerTest extends BaseTest
         $this->createDefaultUser([
             'email'     => 'suspended@test.com',
             'google_id' => 'google-456',
-            'status'    => \App\Enums\UserStatus::Suspended,
+            'status'    => UserStatus::Suspended,
         ]);
 
         $this->mockSocialiteUser('google-456', 'Suspended User', 'suspended@test.com', 'https://avatar.url');
@@ -58,7 +60,7 @@ class GoogleLoginControllerTest extends BaseTest
         $this->withoutExceptionHandling();
 
         $provider = Mockery::mock(GoogleProvider::class);
-        /** @var \Mockery\Expectation $expectation */
+        /** @var Expectation $expectation */
         $expectation = $provider->shouldReceive('user');
         $expectation->andThrow(new \Exception('Google auth failed'));
 

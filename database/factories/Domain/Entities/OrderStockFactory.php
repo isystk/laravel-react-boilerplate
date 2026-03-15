@@ -2,7 +2,9 @@
 
 namespace Database\Factories\Domain\Entities;
 
+use App\Domain\Entities\Order;
 use App\Domain\Entities\OrderStock;
+use App\Domain\Entities\Stock;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,8 +25,8 @@ class OrderStockFactory extends Factory
     public function definition(): array
     {
         return [
-            'order_id' => \App\Domain\Entities\Order::factory(),
-            'stock_id' => \App\Domain\Entities\Stock::factory(),
+            'order_id' => Order::factory(),
+            'stock_id' => Stock::factory(),
             'price'    => fake()->numberBetween(1000, 100000),
             'quantity' => fake()->numberBetween(0, 10),
         ];

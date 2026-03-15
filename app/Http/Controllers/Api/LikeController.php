@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Domain\Repositories\Stock\StockRepositoryInterface;
 use App\Dto\Response\Api\Like\SearchResultDto;
+use App\Dto\Response\Api\Stock\StockDto;
 use App\Utils\CookieUtil;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -22,10 +24,10 @@ class LikeController extends BaseApiController
 
             $stocks = [];
             if (!empty($stockIds)) {
-                $stockRepository = app(\App\Domain\Repositories\Stock\StockRepositoryInterface::class);
+                $stockRepository = app(StockRepositoryInterface::class);
                 $stockEntities   = $stockRepository->getByIds($stockIds);
                 foreach ($stockEntities as $stock) {
-                    $stocks[] = new \App\Dto\Response\Api\Stock\StockDto($stock);
+                    $stocks[] = new StockDto($stock);
                 }
             }
 

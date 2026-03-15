@@ -3,7 +3,14 @@
 @section('mainMenu', 'master')
 @section('subMenu', 'stock')
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('admin.stock.edit', $stock) }}
+    @include('admin.parts.breadcrumbs', [
+        'breadcrumbs' => [
+            ['title' => 'HOME', 'url' => route('admin.home')],
+            ['title' => '商品一覧', 'url' => route('admin.stock')],
+            ['title' => $stock->name, 'url' => route('admin.stock.show', ['stock' => $stock])],
+            ['title' => $stock->name . 'の変更'],
+        ],
+    ])
 @endsection
 
 @section('content')

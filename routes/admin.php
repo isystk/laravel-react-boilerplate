@@ -1,5 +1,14 @@
 <?php
 
+use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\IndexController;
+use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\Admin\PasswordChangeController;
+use App\Http\Controllers\Admin\Staff\ImportController;
+use App\Http\Controllers\Admin\Stock\CreateController;
+use App\Http\Controllers\Admin\User\DetailController;
+use App\Http\Controllers\Admin\User\EditController;
+use App\Http\Controllers\Admin\User\ListController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -8,55 +17,55 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 Route::prefix('admin')->group(function () {
-    Route::get('/', [\App\Http\Controllers\Admin\IndexController::class, 'index'])->name('admin');
-    Route::get('login', [\App\Http\Controllers\Admin\LoginController::class, 'index'])->name('login');
-    Route::post('login', [\App\Http\Controllers\Admin\LoginController::class, 'login'])->name('admin.login');
+    Route::get('/', [IndexController::class, 'index'])->name('admin');
+    Route::get('login', [LoginController::class, 'index'])->name('login');
+    Route::post('login', [LoginController::class, 'login'])->name('admin.login');
 
     // ログイン後
     Route::group(['middleware' => ['auth:admin', 'access_control']], static function () {
-        Route::post('logout', [\App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('admin.logout');
-        Route::get('home', [\App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
+        Route::post('logout', [LoginController::class, 'logout'])->name('admin.logout');
+        Route::get('home', [HomeController::class, 'index'])->name('admin.home');
 
-        Route::get('passwordChange', [\App\Http\Controllers\Admin\PasswordChangeController::class, 'index'])->name('admin.passwordChange');
-        Route::put('passwordChange/update', [\App\Http\Controllers\Admin\PasswordChangeController::class, 'update'])->name('admin.passwordChange.update');
+        Route::get('passwordChange', [PasswordChangeController::class, 'index'])->name('admin.passwordChange');
+        Route::put('passwordChange/update', [PasswordChangeController::class, 'update'])->name('admin.passwordChange.update');
 
-        Route::get('user', [\App\Http\Controllers\Admin\User\ListController::class, 'index'])->name('admin.user');
-        Route::get('user/{user}', [\App\Http\Controllers\Admin\User\DetailController::class, 'show'])->name('admin.user.show');
-        Route::put('user/{user}/suspend', [\App\Http\Controllers\Admin\User\DetailController::class, 'suspend'])->name('admin.user.suspend');
-        Route::put('user/{user}/activate', [\App\Http\Controllers\Admin\User\DetailController::class, 'activate'])->name('admin.user.activate');
-        Route::get('user/{user}/edit', [\App\Http\Controllers\Admin\User\EditController::class, 'edit'])->name('admin.user.edit');
-        Route::put('user/{user}/update', [\App\Http\Controllers\Admin\User\EditController::class, 'update'])->name('admin.user.update');
+        Route::get('user', [ListController::class, 'index'])->name('admin.user');
+        Route::get('user/{user}', [DetailController::class, 'show'])->name('admin.user.show');
+        Route::put('user/{user}/suspend', [DetailController::class, 'suspend'])->name('admin.user.suspend');
+        Route::put('user/{user}/activate', [DetailController::class, 'activate'])->name('admin.user.activate');
+        Route::get('user/{user}/edit', [EditController::class, 'edit'])->name('admin.user.edit');
+        Route::put('user/{user}/update', [EditController::class, 'update'])->name('admin.user.update');
 
-        Route::get('stock', [\App\Http\Controllers\Admin\Stock\ListController::class, 'index'])->name('admin.stock');
-        Route::get('stock/export', [\App\Http\Controllers\Admin\Stock\ListController::class, 'export'])->name('admin.stock.export');
-        Route::get('stock/create', [\App\Http\Controllers\Admin\Stock\CreateController::class, 'create'])->name('admin.stock.create');
-        Route::post('stock/store', [\App\Http\Controllers\Admin\Stock\CreateController::class, 'store'])->name('admin.stock.store');
-        Route::get('stock/{stock}', [\App\Http\Controllers\Admin\Stock\DetailController::class, 'show'])->name('admin.stock.show');
-        Route::delete('stock/{stock}/destroy', [\App\Http\Controllers\Admin\Stock\DetailController::class, 'destroy'])->name('admin.stock.destroy');
-        Route::get('stock/{stock}/edit', [\App\Http\Controllers\Admin\Stock\EditController::class, 'edit'])->name('admin.stock.edit');
-        Route::put('stock/{stock}/update', [\App\Http\Controllers\Admin\Stock\EditController::class, 'update'])->name('admin.stock.update');
+        Route::get('stock', [App\Http\Controllers\Admin\Stock\ListController::class, 'index'])->name('admin.stock');
+        Route::get('stock/export', [App\Http\Controllers\Admin\Stock\ListController::class, 'export'])->name('admin.stock.export');
+        Route::get('stock/create', [CreateController::class, 'create'])->name('admin.stock.create');
+        Route::post('stock/store', [CreateController::class, 'store'])->name('admin.stock.store');
+        Route::get('stock/{stock}', [App\Http\Controllers\Admin\Stock\DetailController::class, 'show'])->name('admin.stock.show');
+        Route::delete('stock/{stock}/destroy', [App\Http\Controllers\Admin\Stock\DetailController::class, 'destroy'])->name('admin.stock.destroy');
+        Route::get('stock/{stock}/edit', [App\Http\Controllers\Admin\Stock\EditController::class, 'edit'])->name('admin.stock.edit');
+        Route::put('stock/{stock}/update', [App\Http\Controllers\Admin\Stock\EditController::class, 'update'])->name('admin.stock.update');
 
-        Route::get('order', [\App\Http\Controllers\Admin\Order\ListController::class, 'index'])->name('admin.order');
-        Route::get('order/{order}', [\App\Http\Controllers\Admin\Order\DetailController::class, 'show'])->name('admin.order.show');
+        Route::get('order', [App\Http\Controllers\Admin\Order\ListController::class, 'index'])->name('admin.order');
+        Route::get('order/{order}', [App\Http\Controllers\Admin\Order\DetailController::class, 'show'])->name('admin.order.show');
 
-        Route::get('contact', [\App\Http\Controllers\Admin\Contact\ListController::class, 'index'])->name('admin.contact');
-        Route::get('contact/{contact}', [\App\Http\Controllers\Admin\Contact\DetailController::class, 'show'])->name('admin.contact.show');
-        Route::delete('contact/{contact}/destroy', [\App\Http\Controllers\Admin\Contact\DetailController::class, 'destroy'])->name('admin.contact.destroy');
-        Route::post('contact/{contact}/reply', [\App\Http\Controllers\Admin\Contact\DetailController::class, 'reply'])->name('admin.contact.reply');
+        Route::get('contact', [App\Http\Controllers\Admin\Contact\ListController::class, 'index'])->name('admin.contact');
+        Route::get('contact/{contact}', [App\Http\Controllers\Admin\Contact\DetailController::class, 'show'])->name('admin.contact.show');
+        Route::delete('contact/{contact}/destroy', [App\Http\Controllers\Admin\Contact\DetailController::class, 'destroy'])->name('admin.contact.destroy');
+        Route::post('contact/{contact}/reply', [App\Http\Controllers\Admin\Contact\DetailController::class, 'reply'])->name('admin.contact.reply');
 
-        Route::get('photo', [\App\Http\Controllers\Admin\Photo\ListController::class, 'index'])->name('admin.photo');
-        Route::delete('photo/destroy', [\App\Http\Controllers\Admin\Photo\ListController::class, 'destroy'])->name('admin.photo.destroy');
+        Route::get('photo', [App\Http\Controllers\Admin\Photo\ListController::class, 'index'])->name('admin.photo');
+        Route::delete('photo/destroy', [App\Http\Controllers\Admin\Photo\ListController::class, 'destroy'])->name('admin.photo.destroy');
 
-        Route::get('staff', [\App\Http\Controllers\Admin\Staff\ListController::class, 'index'])->name('admin.staff');
-        Route::get('staff/create', [\App\Http\Controllers\Admin\Staff\CreateController::class, 'create'])->name('admin.staff.create');
-        Route::post('staff/store', [\App\Http\Controllers\Admin\Staff\CreateController::class, 'store'])->name('admin.staff.store');
-        Route::get('staff/import', [\App\Http\Controllers\Admin\Staff\ImportController::class, 'index'])->name('admin.staff.import');
-        Route::post('staff/import/store', [\App\Http\Controllers\Admin\Staff\ImportController::class, 'store'])->name('admin.staff.import.store');
-        Route::get('staff/import/export', [\App\Http\Controllers\Admin\Staff\ImportController::class, 'export'])->name('admin.staff.import.export');
-        Route::get('staff/import/import_file/{importHistoryId}', [\App\Http\Controllers\Admin\Staff\ImportController::class, 'importFile'])->name('admin.staff.import.import_file');
-        Route::get('staff/{staff}', [\App\Http\Controllers\Admin\Staff\DetailController::class, 'show'])->name('admin.staff.show');
-        Route::delete('staff/{staff}/destroy', [\App\Http\Controllers\Admin\Staff\DetailController::class, 'destroy'])->name('admin.staff.destroy');
-        Route::get('staff/{staff}/edit', [\App\Http\Controllers\Admin\Staff\EditController::class, 'edit'])->name('admin.staff.edit');
-        Route::put('staff/{staff}/update', [\App\Http\Controllers\Admin\Staff\EditController::class, 'update'])->name('admin.staff.update');
+        Route::get('staff', [App\Http\Controllers\Admin\Staff\ListController::class, 'index'])->name('admin.staff');
+        Route::get('staff/create', [App\Http\Controllers\Admin\Staff\CreateController::class, 'create'])->name('admin.staff.create');
+        Route::post('staff/store', [App\Http\Controllers\Admin\Staff\CreateController::class, 'store'])->name('admin.staff.store');
+        Route::get('staff/import', [ImportController::class, 'index'])->name('admin.staff.import');
+        Route::post('staff/import/store', [ImportController::class, 'store'])->name('admin.staff.import.store');
+        Route::get('staff/import/export', [ImportController::class, 'export'])->name('admin.staff.import.export');
+        Route::get('staff/import/import_file/{importHistoryId}', [ImportController::class, 'importFile'])->name('admin.staff.import.import_file');
+        Route::get('staff/{staff}', [App\Http\Controllers\Admin\Staff\DetailController::class, 'show'])->name('admin.staff.show');
+        Route::delete('staff/{staff}/destroy', [App\Http\Controllers\Admin\Staff\DetailController::class, 'destroy'])->name('admin.staff.destroy');
+        Route::get('staff/{staff}/edit', [App\Http\Controllers\Admin\Staff\EditController::class, 'edit'])->name('admin.staff.edit');
+        Route::put('staff/{staff}/update', [App\Http\Controllers\Admin\Staff\EditController::class, 'update'])->name('admin.staff.update');
     });
 });

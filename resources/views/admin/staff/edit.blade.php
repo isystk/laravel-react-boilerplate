@@ -3,7 +3,14 @@
 @section('mainMenu', 'system')
 @section('subMenu', 'staff')
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('admin.staff.edit', $staff) }}
+    @include('admin.parts.breadcrumbs', [
+        'breadcrumbs' => [
+            ['title' => 'HOME', 'url' => route('admin.home')],
+            ['title' => 'スタッフ一覧', 'url' => route('admin.staff')],
+            ['title' => $staff->name, 'url' => route('admin.staff.show', ['staff' => $staff])],
+            ['title' => $staff->name . 'の変更'],
+        ],
+    ])
 @endsection
 
 @section('content')

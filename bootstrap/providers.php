@@ -1,8 +1,13 @@
 <?php
 
+use App\Providers\AppServiceProvider;
+use App\Providers\RepositoryServiceProvider;
+use Barryvdh\DomPDF\ServiceProvider;
+use Maatwebsite\Excel\ExcelServiceProvider;
+
 return [
-    App\Providers\AppServiceProvider::class,
-    App\Providers\RepositoryServiceProvider::class,
-    Barryvdh\DomPDF\ServiceProvider::class,
-    Maatwebsite\Excel\ExcelServiceProvider::class,
+    AppServiceProvider::class,
+    RepositoryServiceProvider::class,
+    ServiceProvider::class,
+    ExcelServiceProvider::class,
 ];

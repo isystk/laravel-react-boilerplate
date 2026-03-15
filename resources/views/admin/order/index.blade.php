@@ -3,7 +3,9 @@
 @section('mainMenu', 'master')
 @section('subMenu', 'order')
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('admin.order') }}
+    @include('admin.parts.breadcrumbs', [
+        'breadcrumbs' => [['title' => 'HOME', 'url' => route('admin.home')], ['title' => '注文履歴一覧']],
+    ])
 @endsection
 
 @section('content')

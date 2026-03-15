@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers\Admin;
 use App\Enums\AdminRole;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Collection;
 use Tests\BaseTest;
 
 class HomeControllerTest extends BaseTest
@@ -62,7 +63,7 @@ class HomeControllerTest extends BaseTest
         $response = $this->get(route('admin.home'));
         $response->assertSuccessful();
 
-        /** @var \Illuminate\Support\Collection<int, array{year_month: string, count: int}> $usersByMonth */
+        /** @var Collection<int, array{year_month: string, count: int}> $usersByMonth */
         $usersByMonth = $response->viewData('usersByMonth');
         $this->assertGreaterThanOrEqual(1, $usersByMonth->count());
     }

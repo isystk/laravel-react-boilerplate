@@ -30,14 +30,14 @@ class StockControllerTest extends BaseTest
 
         $response = $this->get(route('api.stock'));
         $response->assertSuccessful();
-        $response->assertSeeInOrder([
+        $response->assertSeeInOrder(array_map(strval(...), [
             $stock7->id,
             $stock6->id,
             $stock5->id,
             $stock4->id,
             $stock3->id,
             $stock2->id,
-        ]);
+        ]));
     }
 
     public function test_index_error(): void

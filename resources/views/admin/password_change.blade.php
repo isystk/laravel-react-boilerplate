@@ -2,7 +2,9 @@
 @section('title', 'パスワード変更')
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('admin.passwordChange') }}
+    @include('admin.parts.breadcrumbs', [
+        'breadcrumbs' => [['title' => 'HOME', 'url' => route('admin.home')], ['title' => 'パスワード変更']],
+    ])
 @endsection
 
 @section('content')

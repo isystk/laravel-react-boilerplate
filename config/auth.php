@@ -1,5 +1,8 @@
 <?php
 
+use App\Domain\Entities\Admin;
+use App\Domain\Entities\User;
+
 return [
 
     /*
@@ -70,11 +73,11 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model'  => \App\Domain\Entities\User::class,
+            'model'  => User::class,
         ],
         'admins' => [
             'driver' => 'eloquent',
-            'model'  => \App\Domain\Entities\Admin::class,
+            'model'  => Admin::class,
         ],
     ],
 
