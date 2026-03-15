@@ -3,7 +3,9 @@
 @section('mainMenu', 'system')
 @section('subMenu', 'photo')
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('admin.photo') }}
+    @include('admin.parts.breadcrumbs', [
+        'breadcrumbs' => [['title' => 'HOME', 'url' => route('admin.home')], ['title' => '画像一覧']],
+    ])
 @endsection
 
 @section('content')

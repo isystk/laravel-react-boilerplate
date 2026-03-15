@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use Closure;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
 abstract class BaseImportRequest extends FormRequest
@@ -89,7 +90,7 @@ abstract class BaseImportRequest extends FormRequest
     public function after(): array
     {
         return [
-            function (\Illuminate\Contracts\Validation\Validator $validator) {
+            function (Validator $validator) {
                 if (count($validator->errors()->messages()) === 0) {
                     // rules に記載のエラーチェックに問題がなければ、ファイルの中身をチェックする
                     $import = $this->createImporter()($this->upload_file->path());

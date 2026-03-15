@@ -4,7 +4,9 @@
 @section('mainMenu', 'user')
 @section('subMenu', 'user')
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('admin.user') }}
+    @include('admin.parts.breadcrumbs', [
+        'breadcrumbs' => [['title' => 'HOME', 'url' => route('admin.home')], ['title' => 'ユーザ一覧']],
+    ])
 @endsection
 
 @section('content')

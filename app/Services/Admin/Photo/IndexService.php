@@ -8,6 +8,7 @@ use App\Dto\Request\Admin\Photo\SearchConditionDto;
 use App\Dto\View\Admin\Photo\DisplayDto;
 use App\Services\BaseService;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class IndexService extends BaseService
 {
@@ -32,7 +33,7 @@ class IndexService extends BaseService
         /** @var LengthAwarePaginator<int, Image> $images */
         $images = $this->imageRepository->getByConditions($items);
 
-        /** @var \Illuminate\Support\Collection<int, Image> $mappedCollection */
+        /** @var Collection<int, Image> $mappedCollection */
         $mappedCollection = $images->getCollection()->map(fn (Image $image) => new DisplayDto($image));
 
         /** @var LengthAwarePaginator<int, DisplayDto> $result */

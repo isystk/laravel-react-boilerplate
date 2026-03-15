@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Domain\Entities\Admin;
 use App\Domain\Entities\Order;
+use App\Domain\Entities\User;
 use App\Listeners\LogUserLogoutListener;
 use App\Observers\OrderObserver;
 use Illuminate\Auth\Events\Logout;
@@ -56,8 +58,8 @@ class AppServiceProvider extends ServiceProvider
                 ])
                 ->group(function () {
                     Route::get('user', static function () {
-                        /** @var \App\Domain\Entities\User|null $user */
-                        $user = \App\Domain\Entities\User::find(request('id'));
+                        /** @var User|null $user */
+                        $user = User::find(request('id'));
                         if (is_null($user)) {
                             return 'User not found.';
                         }
@@ -74,8 +76,8 @@ class AppServiceProvider extends ServiceProvider
                         return redirect('/');
                     });
                     Route::get('admin', static function () {
-                        /** @var \App\Domain\Entities\Admin|null $admin */
-                        $admin = \App\Domain\Entities\Admin::find(request('id'));
+                        /** @var Admin|null $admin */
+                        $admin = Admin::find(request('id'));
                         if (is_null($admin)) {
                             return 'User not found.';
                         }

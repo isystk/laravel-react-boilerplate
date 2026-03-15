@@ -2,6 +2,7 @@
 
 namespace App\Services\Admin\Home;
 
+use App\Domain\Entities\Order;
 use App\Domain\Repositories\Contact\ContactRepositoryInterface;
 use App\Domain\Repositories\MonthlySale\MonthlySaleRepositoryInterface;
 use App\Domain\Repositories\Order\OrderRepositoryInterface;
@@ -52,7 +53,7 @@ class IndexService extends BaseService
     /**
      * 最新の注文を取得する。
      *
-     * @return Collection<int, \App\Domain\Entities\Order>
+     * @return Collection<int, Order>
      */
     public function getLatestOrders(int $limit = 10): Collection
     {

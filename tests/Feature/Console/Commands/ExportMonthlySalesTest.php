@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Console\Commands;
 
+use App\Services\Commands\ExportMonthlySalesService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Console\Command\Command;
@@ -64,7 +65,7 @@ class ExportMonthlySalesTest extends BaseTest
         $outputPath = Storage::path($fileName);
 
         // Serviceをモックして、必ずデータ（$detail）がある状態にする
-        $this->mock(\App\Services\Commands\ExportMonthlySalesService::class, function ($mock) {
+        $this->mock(ExportMonthlySalesService::class, function ($mock) {
             $mock->shouldReceive('validateArgs')->andReturn([]);
             $mock->shouldReceive('getCsvData')->andReturn([
                 ['Header1', 'Header2'], // $header
