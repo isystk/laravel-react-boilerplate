@@ -17,6 +17,10 @@ services:
       - ..:/var/www/html
     environment:
       - TZ=Asia/Tokyo
+      - NODE_OPTIONS=--max-old-space-size=2048
+      - APP_ENV=${APP_ENV:-local}
+      - LARAVEL_BYPASS_ENV_CHECK=1
+      - CI=${CI:-false}
 
   laraec-mysql:
     image: laraec/mysql
@@ -67,6 +71,7 @@ services:
     volumes:
       - laraec-s3-store:/data
 
+# AWS CLIを起動したい場合は、以下のコメントアウトを外してください
 #  laraec-aws:
 #    image: laraec/aws
 #    container_name: laraec-aws

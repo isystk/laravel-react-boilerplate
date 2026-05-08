@@ -2,9 +2,9 @@ FROM php:8.4-apache
 
 RUN apt-get update && apt-get install -y \
     git unzip libzip-dev zlib1g-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
-    mariadb-client tzdata curl nano nodejs npm \
+    mariadb-client tzdata curl nano nodejs npm libgmp-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install zip pdo_mysql gd \
+    && docker-php-ext-install zip pdo_mysql gd bcmath gmp \
     && pecl install xdebug-3.4.1 \
     && docker-php-ext-enable xdebug
 
@@ -21,9 +21,8 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV COMPOSER_HOME=/composer
 ENV PATH=$PATH:/composer/vendor/bin
 
-RUN curl -O https://dl.min.io/client/mc/release/linux-amd64/mc \
-    && chmod +x mc \
-    && mv mc /usr/local/bin/
+RUN curl -fsSL https://dl.min.io/client/mc/release/linux-amd64/mc -o /usr/local/bin/mc \
+    && chmod +x /usr/local/bin/mc
 
 # ブラウザ本体は入れず、実行に必要なシステムライブラリ（libnss3 等）だけを入れる
 RUN npx playwright install-deps chromium
