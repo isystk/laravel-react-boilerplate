@@ -31,9 +31,20 @@ jobs:
         run: |
           make up
 
-      - name: 60s 待機
-        run: sleep 60
+      - name: コンテナの準備完了を待機
+        timeout-minutes: 10
+        run: |
+          until docker exec laraec-app test -f /tmp/entrypoint-done 2>/dev/null; do
+            echo "Waiting for container setup to complete..."
+            sleep 15
+          done
+          echo "Container is ready."
 
       - name: すべてのチェックを実行
+        env:
+          # Node.jsの場合
+          NODE_OPTIONS: "--max-old-space-size=2048"
+          # PHPの場合 (php.iniを上書き)
+          PHP_OPTIONS: "-d memory_limit=2G"
         run: |
           make pre-commit
