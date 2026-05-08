@@ -109,6 +109,10 @@ case "$COMMAND" in
             echo "🚫 キャンセルされました。"
             exit 1
         fi
+
+        echo "♻️ データベースを初期化中 (Drop & Create)..."
+        docker exec -i "$CONTAINER_NAME" bash -c 'mysql -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "DROP DATABASE IF EXISTS \`$MYSQL_DATABASE\`; CREATE DATABASE \`$MYSQL_DATABASE\`;"'
+
         echo "🚀 $SELECTED をインポートしています..."
         docker exec -i "$CONTAINER_NAME" bash -c 'mysql -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" "$MYSQL_DATABASE"' < "$SELECTED"
         echo "✅ インポートが完了しました。"
