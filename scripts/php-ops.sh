@@ -90,7 +90,7 @@ case $COMMAND in
 
             if [ -n "$(echo "$PHP_FILES" | xargs)" ]; then
                 echo "📝 PHPファイル実行中 (Rector, Pint):"
-                $APP_CMD ./vendor/bin/rector process $PHP_FILES --clear-cache
+                $APP_CMD ./vendor/bin/rector process $PHP_FILES --clear-cache --debug
                 $APP_CMD ./vendor/bin/pint $PHP_FILES
                 $APP_CMD ./vendor/bin/phpstan analyse $PHP_FILES --memory-limit=1G
 
