@@ -3,7 +3,7 @@
 namespace Tests\Feature\Http\Controllers\Api\Auth;
 
 use App\Enums\ImageType;
-use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
+use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
 
@@ -14,7 +14,7 @@ class LoginCheckControllerTest extends BaseTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->withoutMiddleware(ValidateCsrfToken::class);
+        $this->withoutMiddleware(PreventRequestForgery::class);
     }
 
     public function test_index_ログイン情報が返却されること(): void

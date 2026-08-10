@@ -6,7 +6,7 @@ use App\Enums\AdminRole;
 use App\Enums\UserStatus;
 use App\Services\Admin\User\SuspendService;
 use Exception;
-use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
+use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
 
@@ -17,7 +17,7 @@ class DetailControllerTest extends BaseTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->withoutMiddleware(ValidateCsrfToken::class);
+        $this->withoutMiddleware(PreventRequestForgery::class);
     }
 
     public function test_show(): void

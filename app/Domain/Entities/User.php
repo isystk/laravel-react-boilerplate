@@ -89,6 +89,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * パスワードリセット時に送信するメールオブジェクトを返却する
      */
+    #[\Override]
     public function sendPasswordResetNotification($token): void
     {
         $this->notify(new ResetPasswordToUser($this, $token));
@@ -97,6 +98,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * 新規会員登録時に送信するメールオブジェクトを返却する
      */
+    #[\Override]
     public function sendEmailVerificationNotification(): void
     {
         $this->notify(new VerifyEmailToUser($this));
@@ -107,6 +109,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [

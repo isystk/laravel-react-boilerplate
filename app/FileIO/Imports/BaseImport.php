@@ -38,7 +38,7 @@ abstract class BaseImport implements WithMapping, WithStartRow, WithValidation
     public function __construct(protected string $filePath)
     {
         $this->readerType = match (mime_content_type($this->filePath)) {
-            'text/plain', 'text/csv' => Excel::CSV,
+            'text/plain', 'text/csv'                                            => Excel::CSV,
             'application/vnd.ms-excel'                                          => Excel::XLS,
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => Excel::XLSX,
             default                                                             => throw new \RuntimeException('$extension is an unknown value'),

@@ -5,6 +5,7 @@ namespace Tests\Unit\Dto\Request\Admin\Order;
 use App\Dto\Request\Admin\Order\SearchConditionDto;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
+use PHPUnit\Framework\Attributes\TestWith;
 use Tests\BaseTest;
 
 class SearchConditionDtoTest extends BaseTest
@@ -57,11 +58,9 @@ class SearchConditionDtoTest extends BaseTest
         $this->assertSame(20, $dto->limit);
     }
 
-    /**
-     * @testWith ["invalid"]
-     *           ["ASC"]
-     *           [""]
-     */
+    #[TestWith(['invalid'])]
+    #[TestWith(['ASC'])]
+    #[TestWith([''])]
     public function test_construct_sortDirectionが不正な値の場合descになること(string $direction): void
     {
         $request = Request::create('/', 'GET', [

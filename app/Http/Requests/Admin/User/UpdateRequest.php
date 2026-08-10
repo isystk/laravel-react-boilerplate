@@ -11,6 +11,7 @@ class UpdateRequest extends FormRequest
     /**
      * @return array<string, mixed>
      */
+    #[\Override]
     public function validationData(): array
     {
         return parent::validationData();
@@ -52,6 +53,7 @@ class UpdateRequest extends FormRequest
      *
      * @return array<string>
      */
+    #[\Override]
     public function attributes(): array
     {
         return [

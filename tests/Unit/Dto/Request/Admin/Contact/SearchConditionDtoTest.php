@@ -4,6 +4,7 @@ namespace Tests\Unit\Dto\Request\Admin\Contact;
 
 use App\Dto\Request\Admin\Contact\SearchConditionDto;
 use Illuminate\Http\Request;
+use PHPUnit\Framework\Attributes\TestWith;
 use Tests\BaseTest;
 
 class SearchConditionDtoTest extends BaseTest
@@ -86,11 +87,9 @@ class SearchConditionDtoTest extends BaseTest
         $this->assertFalse($dto->onlyUnreplied);
     }
 
-    /**
-     * @testWith ["invalid"]
-     *           ["ASC"]
-     *           [""]
-     */
+    #[TestWith(['invalid'])]
+    #[TestWith(['ASC'])]
+    #[TestWith([''])]
     public function test_construct_sortDirectionが不正な値の場合descになること(string $direction): void
     {
         $request = Request::create('/', 'GET', [
