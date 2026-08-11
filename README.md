@@ -8,7 +8,7 @@
 
 ## 📗 プロジェクトの概要
 
-Laravel 12 ＆ React 19 の学習用サンプルアプリケーションです。
+Laravel 13 ＆ React 19 の学習用サンプルアプリケーションです。
 Dockerを利用したクリーンな開発環境を提供し、ECサイトの基本機能を網羅しています。
 
 ### 対象としている方
@@ -31,7 +31,7 @@ Dockerを利用したクリーンな開発環境を提供し、ECサイトの基
 
 #### 使用しているライブラリ
 
-* **Backend**: Laravel 12 / PHP 8.2+
+* **Backend**: Laravel 13 / PHP 8.3+
 * **Frontend**: React 19 / TypeScript / Tailwind CSS
 * **Design**: AdminLTE 3 (管理画面) / Storybook (コンポーネント管理)
 
@@ -210,7 +210,7 @@ Docker起動後に以下のURLで利用可能です。
 | 種類 | リンク |
 | --- | --- |
 | コーディング規約 | [Laravel 規約](./documents/laravel_cording_rule.md) / [React 規約](./documents/react_cording_rule.md) |
-| 公式リファレンス | [Laravel 12](https://readouble.com/laravel/12.x/ja/releases.html) / [Tailwind CSS](https://v3.tailwindcss.com/docs/) |
+| 公式リファレンス | [Laravel 13](https://readouble.com/laravel/13.x/ja/releases.html) / [Tailwind CSS](https://v3.tailwindcss.com/docs/) |
 
 ## 🎫 Licence
 

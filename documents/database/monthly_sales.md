@@ -1,21 +1,22 @@
-# images
+# monthly_sales
 
 ## Description
 
-画像
+月別売上
 
 <details>
 <summary><strong>Table Definition</strong></summary>
 
 ```sql
-CREATE TABLE `images` (
+CREATE TABLE `monthly_sales` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `file_name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ファイル名',
-  `type` tinyint NOT NULL COMMENT '画像タイプ',
+  `year_month` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '年月',
+  `order_count` int NOT NULL DEFAULT '0' COMMENT '注文数',
+  `amount` int NOT NULL DEFAULT '0' COMMENT '売上金額',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=[Redacted by tbls] DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='画像'
+) ENGINE=InnoDB AUTO_INCREMENT=[Redacted by tbls] DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='月別売上'
 ```
 
 </details>
@@ -24,9 +25,10 @@ CREATE TABLE `images` (
 
 | Name | Type | Default | Nullable | Extra Definition | Children | Parents | Comment |
 | ---- | ---- | ------- | -------- | ---------------- | -------- | ------- | ------- |
-| id | bigint unsigned |  | false | auto_increment | [contacts](contacts.md) [stocks](stocks.md) [users](users.md) |  |  |
-| file_name | varchar(200) |  | false |  |  |  | ファイル名 |
-| type | tinyint |  | false |  |  |  | 画像タイプ |
+| id | bigint unsigned |  | false | auto_increment |  |  |  |
+| year_month | varchar(6) |  | false |  |  |  | 年月 |
+| order_count | int | 0 | false |  |  |  | 注文数 |
+| amount | int | 0 | false |  |  |  | 売上金額 |
 | created_at | datetime |  | false |  |  |  |  |
 | updated_at | datetime |  | false |  |  |  |  |
 
@@ -44,7 +46,7 @@ CREATE TABLE `images` (
 
 ## Relations
 
-![er](images.svg)
+![er](monthly_sales.svg)
 
 ---
 
