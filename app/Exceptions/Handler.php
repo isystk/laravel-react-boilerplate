@@ -25,6 +25,7 @@ class Handler extends ExceptionHandler
     /**
      * Register the exception handling callbacks for the application.
      */
+    #[\Override]
     public function register(): void
     {
         $this->reportable(function (Throwable $e) {
@@ -35,6 +36,7 @@ class Handler extends ExceptionHandler
     /**
      * @param Request $request
      */
+    #[\Override]
     protected function unauthenticated($request, AuthenticationException $exception): RedirectResponse|JsonResponse
     {
         if ($request->expectsJson()) {

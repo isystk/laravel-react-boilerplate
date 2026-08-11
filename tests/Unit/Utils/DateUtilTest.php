@@ -4,6 +4,7 @@ namespace Tests\Unit\Utils;
 
 use App\Utils\DateUtil;
 use Carbon\CarbonImmutable;
+use PHPUnit\Framework\Attributes\TestWith;
 use Tests\BaseTest;
 
 class DateUtilTest extends BaseTest
@@ -18,26 +19,20 @@ class DateUtilTest extends BaseTest
         $this->assertNull(DateUtil::toCarbon(null));
     }
 
-    /**
-     * @testWith ["2024-03-24 12:30:45"]
-     */
+    #[TestWith(['2024-03-24 12:30:45'])]
     public function test_toCarbon_有効な日付文字列が提供された場合toCarbonImmutableがCarbonImmutableオブジェクトを返すこと(string $date): void
     {
         $this->assertInstanceOf(CarbonImmutable::class, DateUtil::toCarbon($date));
     }
 
-    /**
-     * @testWith ["2024-03"]
-     */
+    #[TestWith(['2024-03'])]
     public function test_toCarbon_年月のみが提供された場合toCarbonImmutableが月初のCarbonImmutableオブジェクトを返すこと(string $date): void
     {
         $carbon = DateUtil::toCarbon($date);
         $this->assertEquals('2024-03-01 00:00:00', $carbon->format('Y-m-d H:i:s'));
     }
 
-    /**
-     * @testWith ["2024-03-24"]
-     */
+    #[TestWith(['2024-03-24'])]
     public function test_toCarbon_時間が含まれない場合CarbonImmutableオブジェクトを返すこと(string $date): void
     {
         $carbon = DateUtil::toCarbon($date);
@@ -49,9 +44,7 @@ class DateUtilTest extends BaseTest
         $this->assertNull(DateUtil::toCarbon('invalid_date'));
     }
 
-    /**
-     * @testWith ["2024-03-24 12:30:45", "2024/03/24 12:30:45"]
-     */
+    #[TestWith(['2024-03-24 12:30:45', '2024/03/24 12:30:45'])]
     public function test_toCarbon_ハイフンが含まれる日付文字列が提供された場合toCarbonImmutableがスラッシュでの日付変換を行うこと(string $dateHyphen, string $dateSlash): void
     {
         $carbonHyphen = DateUtil::toCarbon($dateHyphen);
@@ -59,9 +52,7 @@ class DateUtilTest extends BaseTest
         $this->assertEquals($carbonHyphen, $carbonSlash);
     }
 
-    /**
-     * @testWith ["2024/03"]
-     */
+    #[TestWith(['2024/03'])]
     public function test_toCarbon_スラッシュ区切りの年月のみが提供された場合も月初のCarbonImmutableオブジェクトを返すこと(string $date): void
     {
         $carbon = DateUtil::toCarbon($date);

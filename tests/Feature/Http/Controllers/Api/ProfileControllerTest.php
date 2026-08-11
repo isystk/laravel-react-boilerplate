@@ -6,7 +6,7 @@ use App\Domain\Entities\Image;
 use App\Services\Api\Profile\DestroyService;
 use App\Services\Api\Profile\UpdateService;
 use Exception;
-use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
+use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use Tests\BaseTest;
@@ -18,7 +18,7 @@ class ProfileControllerTest extends BaseTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->withoutMiddleware(ValidateCsrfToken::class);
+        $this->withoutMiddleware(PreventRequestForgery::class);
     }
 
     public function test_update_名前のみ更新する場合(): void

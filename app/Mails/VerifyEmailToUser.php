@@ -12,6 +12,7 @@ class VerifyEmailToUser extends BaseVerifyEmail
 {
     public function __construct(private readonly User $user) {}
 
+    #[\Override]
     public function toMail($notifiable): MailMessage
     {
         $verificationUrl = $this->verificationUrl($notifiable);
@@ -29,6 +30,7 @@ class VerifyEmailToUser extends BaseVerifyEmail
             ]);
     }
 
+    #[\Override]
     protected function verificationUrl($notifiable): string
     {
         return URL::temporarySignedRoute(

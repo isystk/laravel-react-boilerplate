@@ -6,7 +6,7 @@ use App\Services\Api\Cart\AddCartService;
 use App\Services\Api\Cart\DeleteCartService;
 use App\Services\Api\Cart\MyCartService;
 use Exception;
-use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
+use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
 
@@ -17,7 +17,7 @@ class CartControllerTest extends BaseTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->withoutMiddleware(ValidateCsrfToken::class);
+        $this->withoutMiddleware(PreventRequestForgery::class);
     }
 
     public function test_my_cart(): void

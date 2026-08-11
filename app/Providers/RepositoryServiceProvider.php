@@ -31,6 +31,7 @@ class RepositoryServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
+    #[\Override]
     public function register(): void
     {
         $this->app->bind(AdminRepositoryInterface::class, AdminRepository::class);

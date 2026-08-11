@@ -41,7 +41,7 @@ return [
         'log' => [
             'driver' => 'local',
             'root'   => storage_path('logs'),
-            'serve'  => true,
+            'serve'  => false,
             'throw'  => false,
             'report' => false,
         ],

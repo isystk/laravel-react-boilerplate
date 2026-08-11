@@ -52,6 +52,7 @@ class UpdateRequest extends FormRequest
      *
      * @return array<string>
      */
+    #[\Override]
     public function attributes(): array
     {
         return [

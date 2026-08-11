@@ -50,6 +50,7 @@ class UpdateRequest extends FormRequest
      *
      * @return array<string>
      */
+    #[\Override]
     public function attributes(): array
     {
         return [
@@ -69,6 +70,7 @@ class UpdateRequest extends FormRequest
      *
      * @return array<string>
      */
+    #[\Override]
     public function messages(): array
     {
         return [

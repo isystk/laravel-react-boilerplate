@@ -11,6 +11,7 @@ abstract class BaseImportRequest extends FormRequest
     /**
      * This method prepares file instante
      */
+    #[\Override]
     protected function prepareForValidation(): void
     {
         $files = $this->file('upload_file') ?? [];
@@ -113,6 +114,7 @@ abstract class BaseImportRequest extends FormRequest
      *
      * @return array<string>
      */
+    #[\Override]
     public function attributes(): array
     {
         return [
@@ -125,6 +127,7 @@ abstract class BaseImportRequest extends FormRequest
      *
      * @return array<string>
      */
+    #[\Override]
     public function messages(): array
     {
         return [

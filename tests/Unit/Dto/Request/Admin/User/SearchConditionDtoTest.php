@@ -5,6 +5,7 @@ namespace Tests\Unit\Dto\Request\Admin\User;
 use App\Dto\Request\Admin\User\SearchConditionDto;
 use App\Enums\UserStatus;
 use Illuminate\Http\Request;
+use PHPUnit\Framework\Attributes\TestWith;
 use Tests\BaseTest;
 
 class SearchConditionDtoTest extends BaseTest
@@ -85,10 +86,8 @@ class SearchConditionDtoTest extends BaseTest
         $this->assertNull($dto->keyword);
     }
 
-    /**
-     * @testWith [0]
-     *           [1]
-     */
+    #[TestWith([0])]
+    #[TestWith([1])]
     public function test_construct_statusに有効なEnumの値が設定されること(int $value): void
     {
         $request = Request::create('/', 'GET', ['status' => (string) $value]);
@@ -134,11 +133,9 @@ class SearchConditionDtoTest extends BaseTest
         $this->assertNull($dto->hasGoogle);
     }
 
-    /**
-     * @testWith ["invalid"]
-     *           ["ASC"]
-     *           [""]
-     */
+    #[TestWith(['invalid'])]
+    #[TestWith(['ASC'])]
+    #[TestWith([''])]
     public function test_construct_sortDirectionが不正な値の場合descになること(string $direction): void
     {
         $request = Request::create('/', 'GET', [

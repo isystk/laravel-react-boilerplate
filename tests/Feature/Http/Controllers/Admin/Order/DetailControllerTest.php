@@ -3,7 +3,7 @@
 namespace Tests\Feature\Http\Controllers\Admin\Order;
 
 use App\Enums\AdminRole;
-use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
+use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BaseTest;
 
@@ -14,7 +14,7 @@ class DetailControllerTest extends BaseTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->withoutMiddleware(ValidateCsrfToken::class);
+        $this->withoutMiddleware(PreventRequestForgery::class);
     }
 
     public function test_show(): void

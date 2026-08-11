@@ -43,6 +43,7 @@ class StoreRequest extends FormRequest
      *
      * @return array<string>
      */
+    #[\Override]
     public function attributes(): array
     {
         return [
@@ -58,6 +59,7 @@ class StoreRequest extends FormRequest
      *
      * @return array<string>
      */
+    #[\Override]
     public function messages(): array
     {
         return [

@@ -2,12 +2,12 @@
 
 ## Project Overview
 
-Laravel 12 + React(TypeScript) のボイラープレートプロジェクト。
+Laravel 13 + React(TypeScript) のボイラープレートプロジェクト。
 管理画面(Blade + vanilla JS)とフロント画面(React SPA)の2つのフロントエンドを持つ。
 
 ## Tech Stack
 
-- **Backend**: PHP 8.2+ / Laravel 12
+- **Backend**: PHP 8.3+ / Laravel 13
 - **Frontend (Admin)**: Blade templates + vanilla JS + SASS
 - **Frontend (Front)**: React + TypeScript (SPA)
 - **CSS**: Tailwind CSS (Front) / SASS (Admin)

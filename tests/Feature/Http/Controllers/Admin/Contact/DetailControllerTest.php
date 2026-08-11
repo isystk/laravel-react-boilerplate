@@ -7,7 +7,7 @@ use App\Enums\ContactType;
 use App\Mails\ContactReplyToUser;
 use App\Services\Admin\Contact\DestroyService;
 use App\Services\Admin\Contact\ReplyService;
-use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
+use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 use Tests\BaseTest;
@@ -19,7 +19,7 @@ class DetailControllerTest extends BaseTest
     protected function setUp(): void
     {
         parent::setUp();
-        $this->withoutMiddleware(ValidateCsrfToken::class);
+        $this->withoutMiddleware(PreventRequestForgery::class);
     }
 
     public function test_show(): void
