@@ -24,19 +24,6 @@ alwaysApply: false
 ## Style
 
 - ESLintおよびPrettierのルールに従う
-- 早期returnを優先する
-- ネストを浅く保つ
-- マジックナンバーを避ける
-- コメントよりコードで意図を表現する
-- 1つの関数・メソッドは単一責任を意識する
-
-## Design
-
-- 関数は小さく保つ
-- 重複コードを作らない
-- Utility関数を乱立させない
-- 共通処理は適切なモジュールへ切り出す
-- グローバル状態を増やさない
 
 ## Async
 
@@ -46,9 +33,7 @@ alwaysApply: false
 
 ## Error Handling
 
-- エラーを握りつぶさない
 - `catch`では適切にログ出力または再throwを検討する
-- 空の`catch`ブロックは禁止
 
 ## Performance
 
@@ -58,16 +43,13 @@ alwaysApply: false
 
 ## Imports
 
-- 使用していないimportは削除する
-- 循環参照を作らない
 - import順序はESLint設定に従う
 
 ## Quality
 
 - 型安全性を優先する
-- 可読性を最優先する
-- 小さな変更を心掛ける
-- 既存コードのスタイルに合わせる
+
+言語非依存の設計・コメント・例外方針は`coding-style.md`に従う。
 
 # React
 
@@ -80,4 +62,5 @@ alwaysApply: false
 - 状態はコンポーネントローカルを基本とし、複数コンポーネントで共有する場合のみ上位に持ち上げる／Context化する
 - 一覧描画には必ず安定した`key`を指定する（index key禁止、配列の並び替えがある場合は特に）
 - スタイルは既存プロジェクトの方式（CSS Modules / Tailwind等）に合わせ、混在させない
+- コンポーネントは`{Category}/{ComponentName}/`ディレクトリを1単位とし、`index.tsx`（実装）・`index.test.tsx`（テスト）・`index.stories.tsx`（Storybook）・`styles.module.scss`（CSS Modules）の4点セットで構成する
 - Remotion（script-to-reel）ではコンポーネントを`useCurrentFrame`ベースで純粋に保ち、副作用を持たせない
