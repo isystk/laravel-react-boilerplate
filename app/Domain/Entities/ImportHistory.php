@@ -2,6 +2,7 @@
 
 namespace App\Domain\Entities;
 
+use App\Domain\Concerns\SerializesJstTimestamps;
 use App\Enums\ImportType;
 use App\Enums\JobStatus;
 use Database\Factories\Domain\Entities\ImportHistoryFactory;
@@ -25,6 +26,8 @@ class ImportHistory extends Model
 {
     /** @phpstan-use HasFactory<ImportHistoryFactory> */
     use HasFactory;
+
+    use SerializesJstTimestamps;
 
     protected $table = 'import_histories';
 

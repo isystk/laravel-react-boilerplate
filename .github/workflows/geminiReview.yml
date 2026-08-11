@@ -1,0 +1,193 @@
+name: gemini-code-review
+
+on:
+  pull_request:
+    branches:
+      - master
+      - main
+      - develop
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: gemini-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  gemini-review:
+    runs-on: ubuntu-latest
+    environment: GEMINI_API_KEY
+    if: github.event.pull_request.draft == false
+    timeout-minutes: 10
+
+    steps:
+      - name: プロジェクトのチェックアウト
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Base branch を取得
+        run: git fetch origin ${{ github.base_ref }}
+
+      - name: PR差分を取得
+        run: |
+          git diff \
+            --unified=1 \
+            origin/${{ github.base_ref }}...HEAD \
+            -- . \
+            ':(exclude)package-lock.json' \
+            ':(exclude)yarn.lock' \
+            ':(exclude)pnpm-lock.yaml' \
+            ':(exclude)composer.lock' \
+            ':(exclude)*.png' \
+            ':(exclude)*.jpg' \
+            ':(exclude)*.jpeg' \
+            ':(exclude)*.gif' \
+            ':(exclude)*.webp' \
+            ':(exclude)*.svg' \
+            ':(exclude)*.pdf' \
+            ':(exclude)*.min.js' \
+            ':(exclude)**/*.snap' \
+            ':(exclude)**/generated/**' \
+            ':(exclude)dist/**' \
+            ':(exclude)build/**' \
+            ':(exclude)coverage/**' \
+            ':(exclude)node_modules/**' \
+            ':(exclude).next/**' \
+            > pr_diff.txt
+
+          echo "Diff size: $(wc -c < pr_diff.txt) bytes"
+          echo "Diff lines: $(wc -l < pr_diff.txt)"
+
+      - name: 巨大PRをスキップ
+        run: |
+          DIFF_LINES=$(wc -l < pr_diff.txt)
+          DIFF_BYTES=$(wc -c < pr_diff.txt)
+
+          echo "Diff lines: $DIFF_LINES"
+          echo "Diff bytes: $DIFF_BYTES"
+
+          if [ "$DIFF_LINES" -gt 5000 ] || [ "$DIFF_BYTES" -gt 2000000 ]; then
+            echo "PR diff too large. Skipping review."
+            echo "SKIP_REVIEW=true" >> $GITHUB_ENV
+          fi
+
+      - name: Gemini APIでコードレビューを実施
+        if: env.SKIP_REVIEW != 'true'
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python3 .github/scripts/gemini_review.py
+
+      - name: review_result.txt の存在確認
+        run: |
+          if [ ! -f review_result.txt ]; then
+            echo "レビュー生成失敗" > review_result.txt
+          fi
+
+      - name: レビュー未実施メッセージを生成
+        if: env.SKIP_REVIEW == 'true'
+        run: |
+          cat <<'EOF' > review_result.txt
+          ⚠️ PRの差分が大きすぎるため、自動レビューをスキップしました。
+
+          - 上限: 5000 lines / 2MB
+          - 対策:
+            - PRを分割する
+            - lock file を除外する
+            -機能単位でPRを分ける
+
+          EOF
+
+      - name: 既存のGeminiレビューコメントを削除
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const comments = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            for (const comment of comments.data) {
+              if (
+                comment.body.includes('Gemini API によって自動生成')
+              ) {
+                await github.rest.issues.deleteComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  comment_id: comment.id,
+                });
+              }
+            }
+
+      - name: PRにレビューコメントを投稿
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+
+            const reviewText = fs.readFileSync(
+              'review_result.txt',
+              'utf8'
+            );
+
+            const footer = `
+            ---
+            *このレビューは Gemini API によって自動生成されました*
+            `;
+
+            const MAX_LENGTH = 60000;
+
+            const lines = reviewText.split('\n');
+
+            const chunks = [];
+
+            let currentChunk =
+              '## 🤖 Gemini Code Review\n\n';
+
+            for (const line of lines) {
+
+              if (
+                currentChunk.length +
+                  line.length +
+                  footer.length >
+                MAX_LENGTH
+              ) {
+                chunks.push(currentChunk);
+                currentChunk = '';
+              }
+
+              currentChunk += line + '\n';
+            }
+
+            if (currentChunk.trim()) {
+              chunks.push(currentChunk);
+            }
+
+            for (let i = 0; i < chunks.length; i++) {
+
+              const body = `
+            ${chunks[i]}
+
+            ${
+              chunks.length > 1
+                ? `_part ${i + 1}/${chunks.length}_`
+                : ''
+            }
+
+            ${footer}
+            `;
+
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }

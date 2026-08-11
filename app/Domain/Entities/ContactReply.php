@@ -2,6 +2,7 @@
 
 namespace App\Domain\Entities;
 
+use App\Domain\Concerns\SerializesJstTimestamps;
 use Database\Factories\Domain\Entities\ContactReplyFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,6 +23,8 @@ class ContactReply extends Model
 {
     /** @phpstan-use HasFactory<ContactReplyFactory> */
     use HasFactory;
+
+    use SerializesJstTimestamps;
 
     protected $table = 'contact_replies';
 

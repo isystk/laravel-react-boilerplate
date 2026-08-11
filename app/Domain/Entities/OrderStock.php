@@ -2,6 +2,7 @@
 
 namespace App\Domain\Entities;
 
+use App\Domain\Concerns\SerializesJstTimestamps;
 use Database\Factories\Domain\Entities\OrderStockFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,6 +24,8 @@ class OrderStock extends Model
 {
     /** @phpstan-use HasFactory<OrderStockFactory> */
     use HasFactory;
+
+    use SerializesJstTimestamps;
 
     protected $table = 'order_stocks';
 

@@ -2,7 +2,7 @@ FROM php:8.4-apache
 
 RUN apt-get update && apt-get install -y \
     git unzip libzip-dev zlib1g-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
-    mariadb-client tzdata curl nano nodejs npm libgmp-dev \
+    mariadb-client tzdata curl nano nodejs npm libgmp-dev supervisor \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install zip pdo_mysql gd bcmath gmp \
     && pecl install xdebug-3.4.1 \
@@ -15,6 +15,7 @@ RUN a2enmod rewrite proxy proxy_http proxy_fcgi
 RUN rm -f /etc/apache2/sites-enabled/*
 COPY ./sites-enabled/local-default.conf /etc/apache2/sites-enabled/local-default.conf
 COPY ./php.ini /usr/local/etc/php/php.ini
+COPY ./supervisor/laraec.conf /etc/supervisor/conf.d/laraec.conf
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 ENV COMPOSER_ALLOW_SUPERUSER=1

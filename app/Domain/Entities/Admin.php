@@ -2,6 +2,7 @@
 
 namespace App\Domain\Entities;
 
+use App\Domain\Concerns\SerializesJstTimestamps;
 use App\Enums\AdminRole;
 use Database\Factories\Domain\Entities\AdminFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,6 +26,7 @@ class Admin extends Authenticatable
     use HasFactory;
 
     use Notifiable;
+    use SerializesJstTimestamps;
 
     protected $table = 'admins';
 

@@ -2,6 +2,7 @@
 
 namespace App\Domain\Entities;
 
+use App\Domain\Concerns\SerializesJstTimestamps;
 use Database\Factories\Domain\Entities\CartFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -21,6 +22,8 @@ class Cart extends Model
 {
     /** @phpstan-use HasFactory<CartFactory> */
     use HasFactory;
+
+    use SerializesJstTimestamps;
 
     protected $table = 'carts';
 
