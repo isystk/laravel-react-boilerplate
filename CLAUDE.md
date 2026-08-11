@@ -12,7 +12,7 @@ Laravel 13 + React(TypeScript) のボイラープレートプロジェクト。
 - **Frontend (Front)**: React + TypeScript (SPA)
 - **CSS**: Tailwind CSS (Front) / SASS (Admin)
 - **Build**: Vite
-- **Auth**: JWT (tymon/jwt-auth), Laravel Fortify, Sanctum, Socialite
+- **Auth**: Sanctum (SPA), セッション認証 (管理画面), Socialite (Google連携)
 - **Testing**: PHPUnit (PHP), Vitest (JS/TS)
 - **Linting**: Pint (PHP), ESLint + Prettier (JS/TS)
 - **Storybook**: コンポーネントカタログ

@@ -10,9 +10,6 @@ CREATE TABLE `users` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '表示名',
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'メールアドレス',
-  `stripe_customer_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Stripe顧客ID',
-  `plan` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'free' COMMENT 'プラン',
-  `plan_expires_at` datetime DEFAULT NULL COMMENT 'プラン有効期限',
   `email_verified_at` datetime DEFAULT NULL COMMENT 'メールアドレス確認日時',
   `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'パスワード',
   `avatar_image_id` bigint unsigned DEFAULT NULL,
@@ -37,12 +34,9 @@ CREATE TABLE `users` (
 
 | Name | Type | Default | Nullable | Extra Definition | Children | Parents | Comment |
 | ---- | ---- | ------- | -------- | ---------------- | -------- | ------- | ------- |
-| id | bigint unsigned |  | false | auto_increment | [alerts](alerts.md) [contacts](contacts.md) [push_subscriptions](push_subscriptions.md) [subscriptions](subscriptions.md) |  |  |
+| id | bigint unsigned |  | false | auto_increment | [carts](carts.md) [contacts](contacts.md) [orders](orders.md) |  |  |
 | name | varchar(255) |  | false |  |  |  | 表示名 |
 | email | varchar(255) |  | false |  |  |  | メールアドレス |
-| stripe_customer_id | varchar(255) |  | true |  |  |  | Stripe顧客ID |
-| plan | varchar(20) | free | false |  |  |  | プラン |
-| plan_expires_at | datetime |  | true |  |  |  | プラン有効期限 |
 | email_verified_at | datetime |  | true |  |  |  | メールアドレス確認日時 |
 | password | varchar(255) |  | true |  |  |  | パスワード |
 | avatar_image_id | bigint unsigned |  | true |  |  | [images](images.md) |  |

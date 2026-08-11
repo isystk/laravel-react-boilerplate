@@ -34,6 +34,9 @@ docker/mysql/logs
 !docker/mysql/logs/.gitkeep
 dump/*
 
+# backup
+/storage/backup
+
 docker/apache/logs
 !docker/apache/logs/.gitkeep
 docker/php/logs

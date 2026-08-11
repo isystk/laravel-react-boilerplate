@@ -4,6 +4,8 @@ MYSQL_OPS_SH := ./scripts/mysql-ops.sh
 JS_OPS_SH := ./scripts/js-ops.sh
 PHP_OPS_SH := ./scripts/php-ops.sh
 AWS_DEPLOY_SH := ./scripts/aws-deploy.sh
+BACKUP_DAILY_SH := ./scripts/backup-daily.sh
+BACKUP_RESTORE_SH := ./scripts/backup-restore.sh
 .SHELLFLAGS := -eu -o pipefail -c
 
 # 変数定義
@@ -58,6 +60,14 @@ down: ## 停止します。
 restart: ## 再起動します。
 	@make down
 	@make up
+
+.PHONY: backup
+backup: ## デイリーバックアップを実行します。
+	@bash $(BACKUP_DAILY_SH)
+
+.PHONY: restore
+restore: ## バックアップからDBとMinIOデータを復元します。
+	@bash $(BACKUP_RESTORE_SH)
 
 .PHONY: mysql
 mysql: ## MySQLデータベースに関する各種操作を行います。
