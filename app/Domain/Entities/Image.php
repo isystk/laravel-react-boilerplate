@@ -2,6 +2,7 @@
 
 namespace App\Domain\Entities;
 
+use App\Domain\Concerns\SerializesJstTimestamps;
 use App\Enums\ImageType;
 use Database\Factories\Domain\Entities\ImageFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,6 +20,8 @@ class Image extends Model
 {
     /** @phpstan-use HasFactory<ImageFactory> */
     use HasFactory;
+
+    use SerializesJstTimestamps;
 
     protected $table = 'images';
 

@@ -14,6 +14,7 @@ use App\Domain\Entities\OrderStock;
 use App\Domain\Entities\Stock;
 use App\Domain\Entities\User;
 use Illuminate\Foundation\Testing\TestCase;
+use Illuminate\Support\Carbon;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
@@ -44,6 +45,34 @@ abstract class BaseTest extends TestCase
         $property   = $reflection->getProperty($propertyName);
 
         return $property->getValue($target);
+    }
+
+    /**
+     * 指定した日時カラムがJSTでシリアライズされることを検証する
+     *
+     * @param array<string, mixed> $array
+     */
+    protected function assertJstSerializedDate(array $array, string $key, string $datetime): void
+    {
+        $this->assertArrayHasKey($key, $array);
+
+        $expected = Carbon::parse($datetime, config('app.timezone'))->toIso8601String();
+
+        $this->assertSame($expected, $array[$key]);
+    }
+
+    /**
+     * 指定した日時カラムがUTCでシリアライズされることを検証する
+     *
+     * @param array<string, mixed> $array
+     */
+    protected function assertUtcSerializedDate(array $array, string $key, string $datetime): void
+    {
+        $this->assertArrayHasKey($key, $array);
+
+        $expected = Carbon::parse($datetime, 'UTC')->toIso8601String();
+
+        $this->assertSame($expected, $array[$key]);
     }
 
     /**

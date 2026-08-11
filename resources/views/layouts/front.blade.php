@@ -17,7 +17,8 @@
 
     <body>
         <div id="react-root"></div>
-        <script type="module">
+        <script type="module"
+                nonce="{{ $cspNonce ?? '' }}">
             window.laravelSession = {};
             window.laravelSession['status'] =
                 @if (session('status'))

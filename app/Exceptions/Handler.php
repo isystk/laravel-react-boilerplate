@@ -42,7 +42,7 @@ class Handler extends ExceptionHandler
         if ($request->expectsJson()) {
             return response()->json(['message' => $exception->getMessage()], 401);
         }
-        if ($request->is('admin') || $request->is('admin/*')) {
+        if (in_array('admin', $exception->guards())) {
             return redirect()->guest(route('admin.login'));
         }
 

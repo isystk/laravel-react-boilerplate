@@ -54,3 +54,7 @@ storage/app/import_job
 
 storybook-static
 *storybook.log
+
+# python
+__pycache__/
+*.pyc

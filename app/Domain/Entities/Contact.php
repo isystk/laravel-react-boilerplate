@@ -2,6 +2,7 @@
 
 namespace App\Domain\Entities;
 
+use App\Domain\Concerns\SerializesJstTimestamps;
 use App\Enums\ContactType;
 use Database\Factories\Domain\Entities\ContactFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -28,6 +29,8 @@ class Contact extends Model
 {
     /** @phpstan-use HasFactory<ContactFactory> */
     use HasFactory;
+
+    use SerializesJstTimestamps;
 
     protected $table = 'contacts';
 

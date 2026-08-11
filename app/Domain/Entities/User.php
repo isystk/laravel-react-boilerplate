@@ -2,6 +2,7 @@
 
 namespace App\Domain\Entities;
 
+use App\Domain\Concerns\SerializesJstTimestamps;
 use App\Enums\UserStatus;
 use App\Mails\ResetPasswordToUser;
 use App\Mails\VerifyEmailToUser;
@@ -39,6 +40,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasFactory;
 
     use Notifiable;
+    use SerializesJstTimestamps;
     use SoftDeletes;
 
     protected $table = 'users';

@@ -30,6 +30,7 @@ echo "🔐 Generating app key..."
 php artisan key:generate
 
 echo "🔒 Fixing permissions..."
+chown -R www-data:www-data bootstrap/cache storage
 chmod -R 777 bootstrap/cache storage
 
 if [ "${CI}" != "true" ]; then
@@ -58,16 +59,6 @@ if [[ "${APP_ENV}" = "local" && "${CI}" != "true" ]]; then
   fi
 fi
 
-if [ "${CI}" != "true" ]; then
-  ## Laravel キューリスナをバックグラウンドで実行
-  echo "🎧 Starting queue listener..."
-  php artisan queue:listen --timeout=0 &
-
-  ## Laravel スケジューラをバックグラウンドで実行
-  echo "⏰ Starting scheduler..."
-  php artisan schedule:work &
-fi
-
 ## Storybook バックグラウンドで実行 (local環境のみ)
 if [[ "${APP_ENV}" = "local" && "${CI}" != "true" ]]; then
   echo "📖 Starting Storybook..."
@@ -77,6 +68,12 @@ fi
 # セットアップ完了フラグ
 touch /tmp/entrypoint-done
 
-# Apache をフォアグラウンドで起動
+# Supervisor で Apache / scheduler / queue worker を常駐管理する
+if [ "${CI}" != "true" ]; then
+  echo "🎧 Starting supervisor..."
+  exec /usr/bin/supervisord -n -c /etc/supervisor/conf.d/laraec.conf
+fi
+
+# CI では supervisor を使わず Apache をフォアグラウンドで起動
 echo "🚀 Starting Apache..."
 exec apache2-foreground
