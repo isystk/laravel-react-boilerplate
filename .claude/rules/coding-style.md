@@ -18,6 +18,7 @@ alwaysApply: true
 - 重複コードを作らない
 - グローバル状態・静的変数の乱用を避ける
 - 共通処理は適切なモジュールへ切り出す
+- private関数はpublic関数の下に書く
 
 ## Formatting
 
