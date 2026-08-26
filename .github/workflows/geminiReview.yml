@@ -84,41 +84,40 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python3 .github/scripts/gemini_review.py
 
-      - name: review_result.txt の存在確認
+      - name: review_result.json の存在確認
         run: |
-          if [ ! -f review_result.txt ]; then
-            echo "レビュー生成失敗" > review_result.txt
+          if [ ! -f review_result.json ]; then
+            echo '{"skip": false, "skip_reason": null, "summary": "レビュー生成に失敗しました", "findings": []}' > review_result.json
           fi
 
       - name: レビュー未実施メッセージを生成
         if: env.SKIP_REVIEW == 'true'
         run: |
-          cat <<'EOF' > review_result.txt
-          ⚠️ PRの差分が大きすぎるため、自動レビューをスキップしました。
-
-          - 上限: 5000 lines / 2MB
-          - 対策:
-            - PRを分割する
-            - lock file を除外する
-            -機能単位でPRを分ける
-
+          cat <<'EOF' > review_result.json
+          {
+            "skip": true,
+            "skip_reason": "PRの差分が大きすぎるため、自動レビューをスキップしました（上限: 5000 lines / 2MB）。PRを分割する・lock fileを除外する・機能単位でPRを分けるなどの対策を検討してください。",
+            "summary": "",
+            "findings": []
+          }
           EOF
 
       - name: 既存のGeminiレビューコメントを削除
         uses: actions/github-script@v7
         with:
           script: |
-            const comments = await github.rest.issues.listComments({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-            });
+            const comments = await github.paginate(
+              github.rest.pulls.listReviewComments,
+              {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.issue.number,
+              }
+            );
 
-            for (const comment of comments.data) {
-              if (
-                comment.body.includes('Gemini API によって自動生成')
-              ) {
-                await github.rest.issues.deleteComment({
+            for (const comment of comments) {
+              if (comment.body.includes('<!-- gemini-review -->')) {
+                await github.rest.pulls.deleteReviewComment({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   comment_id: comment.id,
@@ -132,62 +131,63 @@ jobs:
           script: |
             const fs = require('fs');
 
-            const reviewText = fs.readFileSync(
-              'review_result.txt',
-              'utf8'
+            const result = JSON.parse(
+              fs.readFileSync('review_result.json', 'utf8')
             );
 
-            const footer = `
-            ---
-            *このレビューは Gemini API によって自動生成されました*
-            `;
+            const marker = '<!-- gemini-review -->';
 
-            const MAX_LENGTH = 60000;
+            const severityLabel = {
+              Critical: '🔴 Critical',
+              Warning: '🟡 Warning',
+              Suggestion: '🟢 Suggestion',
+            };
 
-            const lines = reviewText.split('\n');
+            const findings = result.findings || [];
 
-            const chunks = [];
+            const comments = findings.map((f) => ({
+              path: f.file,
+              line: f.line,
+              side: 'RIGHT',
+              body: `${marker}\n**${severityLabel[f.severity] || f.severity}**\n\n${f.comment}`,
+            }));
 
-            let currentChunk =
-              '## 🤖 Gemini Code Review\n\n';
+            const summaryText = result.skip
+              ? `⚠️ ${result.skip_reason}`
+              : `## 🤖 Gemini Code Review\n\n${result.summary || '特に問題は見つかりませんでした'}`;
 
-            for (const line of lines) {
+            const footer = '---\n*このレビューは Gemini API によって自動生成されました*';
 
-              if (
-                currentChunk.length +
-                  line.length +
-                  footer.length >
-                MAX_LENGTH
-              ) {
-                chunks.push(currentChunk);
-                currentChunk = '';
-              }
+            const body = `${marker}\n${summaryText}\n\n${footer}`;
 
-              currentChunk += line + '\n';
-            }
-
-            if (currentChunk.trim()) {
-              chunks.push(currentChunk);
-            }
-
-            for (let i = 0; i < chunks.length; i++) {
-
-              const body = `
-            ${chunks[i]}
-
-            ${
-              chunks.length > 1
-                ? `_part ${i + 1}/${chunks.length}_`
-                : ''
-            }
-
-            ${footer}
-            `;
-
-              await github.rest.issues.createComment({
+            try {
+              await github.rest.pulls.createReview({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                issue_number: context.issue.number,
+                pull_number: context.issue.number,
+                commit_id: context.payload.pull_request.head.sha,
+                event: 'COMMENT',
                 body,
+                comments,
+              });
+            } catch (error) {
+              // インラインコメントの行番号がGitHub側で無効と判定された場合のフォールバック
+              core.warning(
+                `createReview failed with inline comments, retrying without them: ${error.message}`
+              );
+
+              const findingsList = findings
+                .map((f) => `- [${f.severity}] ${f.file}:${f.line} ${f.comment}`)
+                .join('\n');
+
+              const fallbackBody = `${body}\n\n⚠️ インラインコメントの投稿に失敗したため、サマリーのみ表示しています。\n\n${findingsList}`;
+
+              await github.rest.pulls.createReview({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.issue.number,
+                commit_id: context.payload.pull_request.head.sha,
+                event: 'COMMENT',
+                body: fallbackBody,
               });
             }

@@ -14,13 +14,23 @@ MAX_DIFF_CHARS = 20000
 MAX_RULE_CHARS = 10000
 MAX_OUTPUT_TOKENS = 4096
 
+SEVERITY_ORDER = {'Critical': 0, 'Warning': 1, 'Suggestion': 2}
+
+RESULT_JSON_PATH = 'review_result.json'
+
 # =========================
 # Utility
 # =========================
 
-def write_result(message: str):
-    with open('review_result.txt', 'w', encoding='utf-8') as f:
-        f.write(message)
+def write_result(summary: str, findings=None, skip=False, skip_reason=None):
+    payload = {
+        'skip': skip,
+        'skip_reason': skip_reason,
+        'summary': summary,
+        'findings': findings or [],
+    }
+    with open(RESULT_JSON_PATH, 'w', encoding='utf-8') as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
 
 def safe_read(path):
     try:
@@ -36,8 +46,74 @@ def safe_read(path):
 diff = safe_read('pr_diff.txt')
 
 if not diff.strip():
-    write_result('✅ 特に問題は見つかりませんでした')
+    write_result('特に問題は見つかりませんでした')
     sys.exit(0)
+
+# =========================
+# 差分から「コメント可能な新ファイル側行番号」を抽出
+# GitHubのPRレビューAPIはdiffのhunkに含まれる行（追加行・コンテキスト行）にしか
+# インラインコメントを付けられないため、指摘の行番号をここで検証・補正する。
+# =========================
+
+def parse_valid_lines(diff_text):
+    """
+    戻り値: { file_path: sorted([line_no, ...]) }
+    file_path は 'b/' プレフィックスを除いた新ファイル側のパス。
+    """
+    valid_lines = {}
+    current_file = None
+    new_lineno = None
+
+    file_header_re = re.compile(r'^\+\+\+ b/(.+)$')
+    hunk_header_re = re.compile(r'^@@ -\d+(?:,\d+)? \+(\d+)(?:,\d+)? @@')
+
+    for line in diff_text.splitlines():
+        m_file = file_header_re.match(line)
+        if m_file:
+            current_file = m_file.group(1)
+            valid_lines.setdefault(current_file, [])
+            new_lineno = None
+            continue
+
+        m_hunk = hunk_header_re.match(line)
+        if m_hunk:
+            new_lineno = int(m_hunk.group(1))
+            continue
+
+        if new_lineno is None or current_file is None:
+            continue
+
+        if line.startswith('+') and not line.startswith('+++'):
+            valid_lines[current_file].append(new_lineno)
+            new_lineno += 1
+        elif line.startswith('-') and not line.startswith('---'):
+            # 削除行は新ファイル側に存在しないため行番号を進めない
+            continue
+        else:
+            # コンテキスト行
+            valid_lines[current_file].append(new_lineno)
+            new_lineno += 1
+
+    return {f: sorted(set(ls)) for f, ls in valid_lines.items()}
+
+VALID_LINES = parse_valid_lines(diff)
+
+def resolve_line(file_path, line_no):
+    """
+    指摘の (file, line) がdiffのコメント可能行に含まれるか検証する。
+    含まれない場合は同ファイル内で最も近い有効行に補正する。
+    ファイル自体がdiffに存在しない場合は None を返す。
+    戻り値: (resolved_line, corrected: bool) または (None, False)
+    """
+    lines = VALID_LINES.get(file_path)
+    if not lines:
+        return None, False
+
+    if line_no in lines:
+        return line_no, False
+
+    nearest = min(lines, key=lambda l: abs(l - line_no))
+    return nearest, True
 
 # =========================
 # ノイズ除去
@@ -109,14 +185,12 @@ system_instruction_parts = [
     'Pull Request の差分レビューをしてください。',
     '',
     '## 絶対ルール',
+    '- comment フィールドは必ず日本語で書くこと（英語禁止）',
     '- PRの要約は禁止',
     '- コード変更の説明は禁止',
     '- 感想は禁止',
     '- 称賛は禁止',
     '- 問題点のみ指摘',
-    '- 問題が無い場合は次の1文のみ返す',
-    '  ✅ 特に問題は見つかりませんでした',
-    '- diff全文を引用しない',
     '- コード引用は最大10行',
     '- 長文コードブロック禁止',
     '- 推測ベースの指摘禁止',
@@ -133,14 +207,20 @@ system_instruction_parts = [
     '6. 保守性',
     '',
     '## 出力形式',
-    '### 🔴 Critical',
-    '- 内容',
+    '必ず次のJSONスキーマに従うJSON配列のみを出力してください（前後の説明文・コードフェンス禁止）。',
+    '問題が無い場合は空配列 [] を返してください。',
     '',
-    '### 🟡 Warning',
-    '- 内容',
+    '[',
+    '  {',
+    '    "file": "diffの +++ b/ に現れるファイルパス（b/ は含めない）",',
+    '    "line": diffのhunk内に実際に存在する新ファイル側の行番号（整数）,',
+    '    "severity": "Critical" | "Warning" | "Suggestion",',
+    '    "comment": "指摘内容と修正案"',
+    '  }',
+    ']',
     '',
-    '### 🟢 Suggestion',
-    '- 内容',
+    '- line は必ずdiffのhunkヘッダ（@@ -a,b +c,d @@）から正確に計算すること',
+    '- diffに含まれないファイル・行を指摘しないこと',
 ]
 
 system_instruction = '\n'.join(system_instruction_parts)
@@ -155,7 +235,7 @@ if coding_rules:
     ]
 
 user_content_parts += [
-    '以下のGit差分をレビューしてください。問題がある場合は、指示された出力形式に従って問題点のみを簡潔に指摘してください。問題がない場合は「✅ 特に問題は見つかりませんでした」とだけ出力してください。',
+    '以下のGit差分をレビューしてください。指示された出力形式（JSON配列）に厳密に従ってください。',
     '',
     '## Git差分',
     '```diff',
@@ -172,9 +252,7 @@ user_content = '\n'.join(user_content_parts)
 api_key = os.environ.get('GEMINI_API_KEY', '')
 
 if not api_key:
-    write_result(
-        '⚠️ GEMINI_API_KEY が未設定です'
-    )
+    write_result('GEMINI_API_KEY が未設定です')
     sys.exit(1)
 
 # =========================
@@ -203,6 +281,7 @@ data = {
         'maxOutputTokens': MAX_OUTPUT_TOKENS,
         'topP': 0.8,
         'topK': 20,
+        'responseMimeType': 'application/json',
     }
 }
 
@@ -234,9 +313,7 @@ try:
         candidates = result.get('candidates', [])
 
         if not candidates:
-            write_result(
-                '⚠️ Gemini から応答がありません'
-            )
+            write_result('Gemini から応答がありません')
             sys.exit(1)
 
         candidate = candidates[0]
@@ -253,29 +330,92 @@ try:
         )
 
         if not parts:
-            write_result(
-                '⚠️ Gemini のレスポンス形式が不正です'
-            )
+            write_result('Gemini のレスポンス形式が不正です')
             sys.exit(1)
 
-        review_text = (
+        raw_text = (
             parts[0]
             .get('text', '')
             .strip()
         )
 
-        if not review_text:
-            review_text = (
-                '⚠️ Gemini が空のレビューを返しました'
-            )
+        if not raw_text:
+            write_result('Gemini が空のレビューを返しました')
+            sys.exit(0)
 
-        # 出力途中切れ検知
+        # =========================
+        # JSON パース + 行番号検証・補正
+        # =========================
+
+        try:
+            raw_findings = json.loads(raw_text)
+            if not isinstance(raw_findings, list):
+                raise ValueError('response is not a JSON array')
+        except Exception:
+            # JSONとして解釈できない場合は、レビュー全文をサマリーとして扱う
+            summary = raw_text
+            if finish_reason == 'MAX_TOKENS':
+                summary += '\n\n⚠️ レビューが途中で省略されました'
+            write_result(summary)
+            sys.exit(0)
+
+        findings = []
+        skipped_findings = []
+
+        for item in raw_findings:
+            if not isinstance(item, dict):
+                continue
+
+            file_path = str(item.get('file', '')).strip()
+            severity = str(item.get('severity', '')).strip()
+            comment = str(item.get('comment', '')).strip()
+
+            try:
+                line_no = int(item.get('line'))
+            except (TypeError, ValueError):
+                line_no = None
+
+            if not file_path or not comment or line_no is None:
+                continue
+
+            if severity not in SEVERITY_ORDER:
+                severity = 'Suggestion'
+
+            resolved_line, corrected = resolve_line(file_path, line_no)
+
+            if resolved_line is None:
+                # diffに存在しないファイル → インラインコメント化できないためサマリー行として扱う
+                skipped_findings.append(
+                    f'- [{severity}] {file_path}:{line_no} {comment}'
+                )
+                continue
+
+            if corrected:
+                comment = f'(行番号を自動補正: 元指摘は{line_no}行目) {comment}'
+
+            findings.append({
+                'file': file_path,
+                'line': resolved_line,
+                'severity': severity,
+                'comment': comment,
+            })
+
+        findings.sort(key=lambda f: SEVERITY_ORDER.get(f['severity'], 9))
+
+        if not findings and not skipped_findings:
+            summary = '特に問題は見つかりませんでした'
+        else:
+            summary_parts = [f'{len(findings)}件の指摘があります']
+            if skipped_findings:
+                summary_parts.append('')
+                summary_parts.append('## インラインコメント化できなかった指摘（差分の文脈外）')
+                summary_parts += skipped_findings
+            summary = '\n'.join(summary_parts)
+
         if finish_reason == 'MAX_TOKENS':
-            review_text += (
-                '\n\n⚠️ レビューが途中で省略されました'
-            )
+            summary += '\n\n⚠️ レビューが途中で省略されました'
 
-        write_result(review_text)
+        write_result(summary, findings=findings)
 
 except urllib.error.HTTPError as e:
 
@@ -284,16 +424,12 @@ except urllib.error.HTTPError as e:
         errors='replace'
     )
 
-    write_result(
-        f'❌ Gemini API エラー (HTTP {e.code})\n\n{body}'
-    )
+    write_result(f'Gemini API エラー (HTTP {e.code})\n\n{body}')
 
     sys.exit(1)
 
 except Exception as e:
 
-    write_result(
-        f'❌ Gemini API 呼び出し失敗\n\n{str(e)}'
-    )
+    write_result(f'Gemini API 呼び出し失敗\n\n{str(e)}')
 
     sys.exit(1)
