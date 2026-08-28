@@ -1,5 +1,5 @@
 ---
-description: Docker/docker-compose運用ルール
+description: Docker / docker-compose operating rules
 paths:
   - "**/docker-compose*.yml"
   - "**/Dockerfile"
@@ -11,46 +11,46 @@ alwaysApply: false
 
 ## General
 
-- 開発環境はDockerを前提とする
-- ローカル環境へ依存ライブラリをインストールせず、コンテナ内で実行する
-- プロジェクトで定義されたDocker Compose設定を利用する
+- The dev environment is Docker-based. Don't install dependencies on the host; run everything inside containers
+- Use the project's `docker/docker-compose.yml` and the `make` targets in `Makefile` (`make up`, `make down`, `make restart`, `make ps`, `make logs`, `make app`) rather than raw `docker compose` invocations
+- **Local dev and production (Shin-VPS) share the same `docker/app/Dockerfile` and `docker/docker-compose.yml`.** Treat any change to these files as a production-impacting change
 
 ## Commands
 
-- PHP・Node.js・Pythonなどのコマンドは、可能な限りコンテナ内で実行する
-- コンテナ名やサービス名は既存のdocker-compose.ymlに従う
+- Run PHP/Node commands inside the container, e.g. `make app` to open a shell, or the existing `make test` / `make format` / `make migrate` / `make tinker` targets
+- Use container/service names exactly as defined in `docker/docker-compose.yml`
 
 ## Images
 
-- 既存のDockerfileを尊重し、不必要な変更を行わない
-- ベースイメージはユーザーの指示なく変更しない
-- イメージの更新が必要な場合は理由を明示する
+- Respect the existing Dockerfile; don't make unnecessary changes
+- Never change the base image without the user's instruction
+- `docker/app/Dockerfile.ecs` is a leftover from the old AWS ECS setup and is unused — don't edit or reference it
 
 ## Volumes
 
-- 永続ボリュームを削除しない
-- ボリューム初期化が必要な場合は事前にユーザーへ確認する
+- Never delete persistent volumes
+- Confirm with the user before any volume reset
 
 ## Safety
 
-- `docker compose down -v` を実行しない
-- `docker system prune` を実行しない
-- `docker volume rm` を実行しない
-- `docker image prune` を実行しない
-- データを削除する可能性のある操作は必ずユーザーへ確認する
+- Don't run `docker compose down -v`
+- Don't run `docker system prune`
+- Don't run `docker volume rm`
+- Don't run `docker image prune`
+- Always confirm with the user before any operation that could delete data
 
 ## Logs
 
-- エラー調査ではコンテナログを確認する
-- コンテナの再作成より原因調査を優先する
+- Check container logs when investigating errors
+- Prefer investigating the root cause over recreating the container
 
 ## Networking
 
-- コンテナ間通信を優先し、`localhost`へ依存しない
-- サービス名をホスト名として利用する
+- Prefer container-to-container communication over depending on `localhost`
+- Use service names as hostnames
 
 ## Quality
 
-- docker-compose.yml・Dockerfileは可読性を維持する
-- 不要なレイヤーや重複設定を増やさない
-- 既存の構成に合わせる
+- Keep `docker-compose.yml` / `Dockerfile` readable
+- Don't add unnecessary layers or duplicate config
+- Match the existing structure

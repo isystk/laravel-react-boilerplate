@@ -1,5 +1,5 @@
 ---
-description: セキュリティ方針
+description: Security policy
 alwaysApply: true
 ---
 
@@ -7,73 +7,68 @@ alwaysApply: true
 
 ## General
 
-- セキュリティを利便性より優先する
-- 不明な場合は安全な実装を選択する
-- セキュリティリスクがある変更はユーザーへ確認する
+- Prioritize security over convenience
+- When in doubt, choose the safer implementation
+- Confirm with the user before any change with security implications
 
 ## Secrets
 
-- APIキー・アクセストークン・パスワード・秘密鍵をソースコードへ記述しない
-- 機密情報は環境変数またはシークレット管理サービスから取得する
-- 機密情報をログへ出力しない
-- サンプルコードにはダミー値を使用する
+- Never write API keys, access tokens, passwords, or private keys into source code
+- Read secrets from environment variables or a secrets manager
+- Never log secrets
+- Use dummy values in example code
 
 ## Authentication & Authorization
 
-- 認証・認可をバイパスしない
-- 権限チェックを省略しない
-- 最小権限の原則を守る
+- Never bypass authentication or authorization
+- Never skip a permission check
+- Follow the principle of least privilege
 
 ## Input Validation
 
-- 外部入力は必ず検証する
-- 入力値を信用しない
-- SQL・HTML・シェルコマンドへ入力を直接埋め込まない
+- Always validate external input
+- Never trust input values
+- Never embed input directly into SQL, HTML, or shell commands
 
 ## Database
 
-- パラメータ化クエリまたはORMを利用する
-- SQL Injectionの原因となる実装を行わない
+- Use parameterized queries or the ORM (Eloquent)
+- Never write code that enables SQL injection
 
 ## Output
 
-- 出力時に適切なエスケープを行う
-- XSSの原因となるHTML出力を行わない
+- Escape output appropriately
+- Never produce HTML output that enables XSS
 
 ## File Handling
 
-- パストラバーサルを防止する
-- アップロードファイルはサイズ・拡張子・MIMEタイプを検証する
-- ユーザー入力からファイルパスを組み立てない
+- Prevent path traversal
+- Validate size, extension, and MIME type on uploaded files
+- Never build a file path from raw user input
 
 ## External APIs
 
-- HTTPSを使用する
-- タイムアウトを設定する
-- 必要に応じてリトライを実装する
-- 外部レスポンスを信用しない
+- Use HTTPS
+- Set timeouts
+- Implement retries where appropriate
+- Never trust an external response blindly
 
 ## Logging
 
-- 個人情報や機密情報をログへ出力しない
-- ログには必要最小限の情報のみ出力する
+- Never log personal information or secrets
+- Log only the minimum information needed
 
 ## Dependencies
 
-- 信頼できるライブラリを利用する
-- 不要な依存関係を追加しない
-- 脆弱性が報告されているライブラリの利用を避ける
+- Use trusted libraries
+- Don't add unnecessary dependencies
+- Avoid libraries with known vulnerabilities
 
 ## Git
 
-- `.env`
-- APIキー
-- 秘密鍵
-- 証明書
-
-はコミットしない
+Never commit: `.env`, API keys, private keys, certificates
 
 ## Safety
 
-- セキュリティ機能を無効化して問題を回避しない
-- 開発用の設定を本番環境へ持ち込まない
+- Never disable a security feature to work around a problem
+- Never carry dev-only settings into production

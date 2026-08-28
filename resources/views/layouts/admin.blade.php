@@ -50,9 +50,8 @@
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
-                                    <a class="dropdown-item"
-                                       href="#"
-                                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <a class="dropdown-item js-logout"
+                                       href="#">
                                         ログアウト
                                     </a>
                                 </li>

@@ -21,7 +21,9 @@ use Illuminate\Support\Facades\Route;
 | API
 |--------------------------------------------------------------------------
 */
-Route::middleware(['web'])->group(function () {
+// NOTE: EnsureFrontendRequestsAreStateful（bootstrap/app.php）が web 相当のミドルウェアを内包するため、
+// ここで重ねて web グループを適用しない（StartSession二重実行によるセッション消失を防ぐ）。
+Route::group([], function () {
     Route::get('/const', [ConstController::class, 'index'])->name('api.const');
     Route::resource('/like', LikeController::class);
     Route::post('/like/store', [LikeController::class, 'store']);
