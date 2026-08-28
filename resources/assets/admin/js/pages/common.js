@@ -4,6 +4,17 @@ $(function () {
   // ローディング
   $.loading();
 
+  // ログアウトリンク
+  $(document).on('click', '.js-logout', function (e) {
+    e.preventDefault();
+    $('#logout-form').trigger('submit');
+  });
+
+  // ソート可能な列見出しのクリック
+  $(document).on('click', '.sortable_th', function () {
+    window.location.href = $(this).data('url');
+  });
+
   // 数値入力補助
   $('.js-input-number').inputNumber();
 

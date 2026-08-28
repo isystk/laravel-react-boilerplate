@@ -13,8 +13,7 @@
 @endphp
 
 <th class="sortable_th"
-    data-url="{{ $url }}"
-    onclick="window.location.href = $(this).data('url')">
+    data-url="{{ $url }}">
     {!! $params[1] !!}
     <span class="sortable_arrow_asc {{ $isAsc ? 'enabled_arrow' : 'disabled_arrow' }}">↑</span>
     <span class="sortable_arrow_desc {{ $isDesc ? 'enabled_arrow' : 'disabled_arrow' }}">↓</span>
