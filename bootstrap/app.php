@@ -21,12 +21,10 @@ return Application::configure(basePath: dirname(__DIR__))
                 'api/*',
             ])
             ->append(SecurityHeadersMiddleware::class)
-            ->prependToGroup('api', EnsureFrontendRequestsAreStateful::class);
-    })
-    ->withMiddleware(function (Middleware $middleware) {
-        $middleware->alias([
-            'access_control' => AccessControlMiddleware::class,
-        ]);
+            ->prependToGroup('api', EnsureFrontendRequestsAreStateful::class)
+            ->alias([
+                'access_control' => AccessControlMiddleware::class,
+            ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

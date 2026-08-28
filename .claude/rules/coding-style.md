@@ -1,5 +1,5 @@
 ---
-description: 命名・コメント方針
+description: Naming and comment conventions
 alwaysApply: true
 ---
 
@@ -7,43 +7,49 @@ alwaysApply: true
 
 ## Naming
 
-- 命名は言語・プロジェクトの既存規約に合わせる（PHP: camelCase/PascalCase、TS: camelCase、Python: snake_case）
-- マジックナンバー・マジックストリングはEnum/定数化する
+- Follow existing language/project conventions (PHP: camelCase/PascalCase, TS: camelCase)
+- Use Enums/constants for magic numbers and magic strings, never inline
+- Name Repository upsert/overwrite methods by operation style (`upsertXxx`), not by use-case (`markXxx`, `setXxx`) — keep sibling methods symmetric (e.g. `upsertSuccess` / `upsertFailed`)
 
 ## Design
 
-- 早期returnを優先する
-- ネストを浅く保つ
-- 1関数1責務を意識する。50行を超えたら分割を検討する
-- 重複コードを作らない
-- グローバル状態・静的変数の乱用を避ける
-- 共通処理は適切なモジュールへ切り出す
-- private関数はpublic関数の下に書く
+- Prefer early returns
+- Keep nesting shallow — nesting 2 or more levels deep (`for`/`foreach`/`if`) is forbidden; flatten with early returns, guard clauses, or by extracting a helper
+- One function, one responsibility. Consider splitting past ~50 lines
+- Don't duplicate code
+- Avoid global state and overuse of static variables
+- Extract shared logic into an appropriate module
+- Precondition/guard checks (e.g. "skip if there's nothing to do") belong in the caller, not inside the callee — the callee should assume it's already relevant when invoked
 
 ## Formatting
 
-- フォーマットは各プロジェクトのLinter/Formatter設定（ESLint, PHP-CS-Fixer, Ruff/Black等）に従う。手動整形で崩さない
-- 未使用のimport・変数は残さない
-- 循環参照を作らない
+- Follow the project's formatter/linter config (ESLint, PHP Rector/Pint/PHPStan, blade-formatter). Don't hand-format against it
+- Never leave unused imports or variables
+- Never introduce circular references
+- Don't create unnecessary diffs for reasons unrelated to formatting
+- Break array literals with one value per line, not all on one line (applies to validation rule arrays, config arrays, etc.)
 
 ## Exceptions
 
-- 例外を握りつぶさない
-- 空のcatch/exceptブロックは禁止する
-- 捕捉する例外は可能な限り具体的に指定する
+- Never swallow an exception silently
+- Empty catch blocks are forbidden
+- Catch the most specific exception type possible
 
 ## Comments
 
-- クラスのDocに1行で簡潔に役割を書く
-- 関数のDoc（docstring/PHPDoc/JSDoc等）に1行で簡潔に処理概要を書く
-- 関数内コメントは基本的に不要。コードを読めば分かる内容はコメントしない
-- コメントよりコードで意図を表現する
-- 特に注意が必要な場合（非直感的な実装・トリッキーな回避策等）のみ、例外的に「なぜそうしたか」を関数内コメントに書く
-- 関数内の処理が複雑な場合は、関数のDocに処理の流れを箇条書きで追加する
-- Booleanを返却する関数のDocは「Xxxxxの場合にTrueを返却する」の形式で記載する
+- Give each class a one-line PHPDoc/JSDoc describing its role
+- Give each function a one-line doc describing what it does
+- Function-body comments are usually unnecessary — don't comment what the code already makes obvious
+- Express intent through code, not comments
+- Only add a "why" comment inside a function for genuinely non-obvious implementations or workarounds
+- For functions with complex logic, add a bullet-point flow summary to the function's doc
+- For a function returning a boolean, phrase the doc as "Returns true when Xxxxx"
+- Don't append supplementary notes in parentheses `（）`; fold them into a single concise sentence instead
+- Keep comments concise — say only what's needed, not everything that could be said
+- Never record change history in comments (e.g. "changed from X to Y", "removed as of 2026-08"); comments describe the current state only — history belongs in git/commit messages
 
 ## Quality
 
-- 可読性を最優先する
-- 既存コードのスタイルに合わせる
-- 小さな変更を心掛ける
+- Prioritize readability
+- Match the existing code style
+- Keep changes small

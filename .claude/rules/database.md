@@ -1,5 +1,5 @@
 ---
-description: DB設計・クエリ性能ルール
+description: DB design and query performance rules (MySQL / Eloquent)
 paths:
   - "**/*.php"
   - "**/*.sql"
@@ -10,61 +10,60 @@ alwaysApply: false
 
 ## Query
 
-- `SELECT *`は禁止
-- 必要なカラムのみ取得する
-- 大量データ取得時に全件ロードしない
-- 不要なJOINを避ける
-- クエリ発行数を意識する
+- Never use `SELECT *`
+- Fetch only the columns you need
+- Don't load an entire large result set at once
+- Avoid unnecessary JOINs
+- Be mindful of the number of queries issued
 
 ## Data Loading
 
-- 大量データ処理ではメモリ使用量を考慮する
-- 全件取得ではなく適切な分割処理を利用する
-- データ量に応じて以下を使い分ける
+- Consider memory usage when processing large datasets
+- Use appropriate chunking instead of loading everything at once:
   - pagination
   - chunk
   - cursor pagination
 
 ## Large Data
 
-- TEXT/BLOBなど大容量カラムは必要時のみ取得する
-- 一覧表示ではTEXT/BLOBを取得しない
-- 詳細表示時に遅延ロードを検討する
-- 大容量データを一括メモリ展開しない
+- Fetch TEXT/BLOB-like large columns only when actually needed
+- Don't fetch TEXT/BLOB columns in list views
+- Consider lazy-loading them in detail views
+- Never expand large data fully into memory at once
 
 ## N+1 Prevention
 
-- N+1クエリを発生させない
-- リレーション取得時はEager Loadingを検討する
-- ループ内でのクエリ発行を避ける
-- クエリ数を意識して実装する
+- Never introduce N+1 queries
+- Use eager loading (`with()`) when fetching relations
+- Avoid issuing queries inside loops
+- Stay conscious of query counts
 
 ## Streaming
 
-- 大量データのレスポンスはストリーミングを検討する
-- CSV出力など大量出力ではメモリ効率を考慮する
-- 大量データを一度にJSON化しない
+- Consider streaming responses for large datasets
+- Consider memory efficiency for large exports (e.g. CSV)
+- Don't serialize large datasets to JSON all at once
 
 ## Index
 
-- 検索条件・ソート条件を考慮してIndexを設計する
-- インデックス追加前にクエリ実行計画を確認する
-- 不要なIndexを増やさない
+- Design indexes based on actual search/sort conditions
+- Check the query execution plan before adding an index
+- Don't add unnecessary indexes
 
 ## Transaction
 
-- 複数テーブルを更新する処理ではTransactionを利用する
-- Transaction範囲は必要最小限にする
-- 長時間Transactionを避ける
+- Wrap multi-table updates in a transaction (`DB::transaction()`)
+- Keep transaction scope as small as possible
+- Avoid long-running transactions
 
 ## Migration
 
-- 本番適用済みMigrationを直接変更しない
-- Schema変更は新規Migrationで行う
-- 大量データMigrationではロック時間を考慮する
+- Never modify a migration that has already run in production
+- Make schema changes via a new migration
+- Consider lock duration for migrations touching large tables
 
 ## Quality
 
-- 可読性と性能のバランスを考慮する
-- 早すぎる最適化は避ける
-- データ量増加後も動作する設計を意識する
+- Balance readability against performance
+- Avoid premature optimization
+- Design for continued correctness as data volume grows

@@ -1,5 +1,5 @@
 ---
-description: バグ修正方針
+description: Bug-fixing policy
 alwaysApply: true
 ---
 
@@ -7,29 +7,29 @@ alwaysApply: true
 
 ## Root Cause
 
-- 対症療法ではなく、根本原因を特定して修正する
-- 修正前に原因を分析し、再発防止を意識する
-- 不明な点がある場合は推測で修正せず、ユーザーへ確認する
+- Fix the root cause, not the symptom
+- Analyze the cause before fixing; think about preventing recurrence
+- Never guess-fix. If anything is unclear, ask the user
 
 ## Similar Patterns
 
-- バグを修正したら、同じ実装パターンが他にも存在しないか確認する
-- 同じ原因による不具合が発生する可能性のある箇所を調査する
-- 同じ修正が必要な箇所は一覧化し、必要に応じてまとめて修正する
+- After fixing a bug, check whether the same implementation pattern exists elsewhere
+- Investigate other locations that could fail for the same underlying cause
+- List all locations needing the same fix and batch them when appropriate
 
 ## Scope
 
-- 修正範囲を明確にする
-- 関連するコードへの影響を確認する
-- 既存機能を壊さないことを優先する
+- Keep the fix scope explicit
+- Check impact on related code
+- Prioritize not breaking existing functionality
 
 ## Regression
 
-- 修正による副作用がないか確認する
-- 必要に応じて関連テストを追加・更新する
-- 同種の不具合を防ぐテストを検討する
+- Check for side effects from the fix
+- Add or update related tests as needed
+- Consider tests that prevent the same class of bug
 
 ## Quality
 
-- 一時しのぎの回避策ではなく、保守しやすい修正を行う
-- 重複した修正が必要な場合は共通化を検討する
+- Prefer a maintainable fix over a quick workaround
+- Consider extracting a shared fix when the same change is needed in multiple places

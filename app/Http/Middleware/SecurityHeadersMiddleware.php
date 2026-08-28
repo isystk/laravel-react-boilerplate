@@ -30,7 +30,7 @@ class SecurityHeadersMiddleware
             'frame-src https://js.stripe.com',
             "object-src 'none'",
             "base-uri 'self'",
-            "form-action 'self'",
+            "form-action 'self' https://accounts.google.com",
         ]));
 
         return $response;
