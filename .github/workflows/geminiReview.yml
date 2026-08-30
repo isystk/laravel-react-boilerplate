@@ -38,7 +38,7 @@ jobs:
       - name: PR差分を取得
         run: |
           git diff \
-            --unified=1 \
+            --unified=3 \
             origin/${{ github.base_ref }}...HEAD \
             -- . \
             ':(exclude)package-lock.json' \
