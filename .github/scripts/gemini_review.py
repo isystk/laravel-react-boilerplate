@@ -12,7 +12,7 @@ import re
 
 MAX_DIFF_CHARS = 20000
 MAX_RULE_CHARS = 10000
-MAX_OUTPUT_TOKENS = 4096
+MAX_OUTPUT_TOKENS = 8192
 
 SEVERITY_ORDER = {'Critical': 0, 'Warning': 1, 'Suggestion': 2}
 
@@ -287,7 +287,7 @@ data = {
 
 url = (
     'https://generativelanguage.googleapis.com/'
-    f'v1beta/models/gemini-3.1-flash-lite:generateContent?key={api_key}'
+    f'v1beta/models/gemini-3.6-flash:generateContent?key={api_key}'
 )
 
 req = urllib.request.Request(

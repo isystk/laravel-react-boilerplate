@@ -166,8 +166,8 @@ class IndexServiceTest extends BaseTest
     public function test_getUsersByMonth_昇順で返る(): void
     {
         $this->createDefaultUser(['created_at' => Carbon::now()->startOfMonth()]);
-        $this->createDefaultUser(['created_at' => Carbon::now()->subMonth()->startOfMonth()]);
-        $this->createDefaultUser(['created_at' => Carbon::now()->subMonths(2)->startOfMonth()]);
+        $this->createDefaultUser(['created_at' => Carbon::now()->startOfMonth()->subMonth()]);
+        $this->createDefaultUser(['created_at' => Carbon::now()->startOfMonth()->subMonths(2)]);
 
         $result = $this->service->getUsersByMonth();
 
