@@ -61,6 +61,7 @@ alwaysApply: false
 - Never modify a migration that has already run in production
 - Make schema changes via a new migration
 - Consider lock duration for migrations touching large tables
+- Don't use MySQL's native `enum()` column type; use `varchar` and manage the value set with a PHP Enum instead (cast via the Entity's `casts()`) — this avoids keeping the same value list in two places (DB schema and PHP Enum)
 
 ## Quality
 

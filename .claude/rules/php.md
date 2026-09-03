@@ -36,6 +36,8 @@ Language-agnostic design, comments, and exception-handling policy: see `coding-s
 - Throw Laravel's standard exception classes or custom exceptions under `app/Exceptions`. Never throw a raw `Exception`
 - Enums live under `app/Enums`; never hardcode magic numbers/strings
 - Enums implement a shared `HasLabel`-style interface and expose labels via `label()`, resolving to a `__('enums.ClassName_value')` translation key. Never hardcode label strings
+- Cast Entity attributes holding an enumerable value to their Enum type in `casts()` wherever possible; give a new column an Enum cast from the start
+- Prefer an Enum type over a `string` type hint for function/method parameters carrying an enumerable value (e.g. symbol, direction, exchange)
 - DB rules (N+1, migrations, etc.): see `database.md`
 - Controllers/Jobs/Batches never call Repositories or Eloquent directly — always go through a Service
 - Instantiate Services with `app(XxxService::class)`
