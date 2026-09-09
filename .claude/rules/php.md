@@ -39,6 +39,7 @@ Language-agnostic design, comments, and exception-handling policy: see `coding-s
 - Cast Entity attributes holding an enumerable value to their Enum type in `casts()` wherever possible; give a new column an Enum cast from the start
 - Prefer an Enum type over a `string` type hint for function/method parameters carrying an enumerable value (e.g. symbol, direction, exchange)
 - DB rules (N+1, migrations, etc.): see `database.md`
+- A Controller maps 1:1 to a screen/resource, not 1:1 to an action — group all actions for the same screen (`index`/`store`/`keep`/`destroy`, etc.) into one Controller class rather than splitting each action into its own Controller
 - Controllers/Jobs/Batches never call Repositories or Eloquent directly — always go through a Service
 - Instantiate Services with `app(XxxService::class)`
 - Create Services 1:1 with their caller **method** (a Controller action method, Job's `handle`, or Batch), not with the Controller/Job class as a whole; name the Service class after the action **method name**, not after the Controller's class name (e.g. an `edit()` action gets an `EditService`, a `store()` action gets a `StoreService` — never name it after an unrelated word like the Controller class name)
